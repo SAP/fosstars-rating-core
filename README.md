@@ -5,12 +5,14 @@ See more details in [docs](docs).
 
 ## Security rating for open-source projects
 
-Using open-source software helps a lot but it also may bring new security issues and therefore increase security risks. 
-Is it safe to use a particular open-source component? Sometimes answering this question is not easy.
-The security rating for open-source projects helps answering this question. 
-First, it gathers various data about an open-source project. 
-Then, it calculates a security rating for it. 
-The rating helps to assess the security risk which comes with this open-source project. 
+Using open-source software helps a lot but it also may bring new security issues
+and therefore increase security risks.
+Is it safe to use a particular open-source component?
+Sometimes answering this question is not easy.
+The security rating for open-source projects helps answering this question.
+First, it gathers various data about an open-source project.
+Then, it calculates a security rating for it.
+The rating helps to assess the security risk which comes with this open-source project.
 
 Such a rating can be based on multiple factors such as:
 
@@ -18,19 +20,26 @@ Such a rating can be based on multiple factors such as:
     For example, known vulnerabilities, statistics from code repositories,
     statistics from artifact repositories, data from mailing lists, etc.
 1.  **Data which can be manually entered by users**.
-    For example, results of security testing and review, companies which committed to support the project, etc.
+    For example, results of security testing and review,
+    companies which committed to support the project, etc.
 1.  **User's and expert's opinion**.
     When developers and security experts evaluate security of open-source projects,
-    they should be able to share their results and opinions, so that other users can benefit from this information.
+    they should be able to share their results and opinions,
+    so that other users can benefit from this information.
 
-## How to build the project
+## Download and installation
 
-The project can be built with `mvn package` command.
+The project can be built and installed with the following command:
+
+```
+mvn clean install
+```
 
 ## Open-source security rating calculator
 
 There is a command line tool which takes a URL to a project on GitHub, fetches data about it,
-and calculates a security rating. The tool can interact with a user to get more data about the project.
+and calculates a security rating.
+The tool can interact with a user to get more data about the project.
 
 The tool can be run with a command like the following:
 
@@ -38,8 +47,9 @@ The tool can be run with a command like the following:
 java -jar target/fosstars-github-rating-calc.jar --token ${TOKEN} --url https://github.com/apache/poi
 ```
 
-The `TOKEN` variable contains a token for accessing the GitHub API. 
-You can create a personal token in the [settings/tokens](https://github.com/settings/tokens) tab in your profile on GitHub.
+The `TOKEN` variable contains a token for accessing the GitHub API.
+You can create a personal token in the
+[settings/tokens](https://github.com/settings/tokens) tab in your profile on GitHub.
 
 The tool is a bit interactive, and can ask several question. The dialog looks like the following:
 
@@ -105,3 +115,20 @@ Using local NVD cache as last update was within two hours
 [+] Confidence: 10.00 out of 10.00
 [+] Bye!
 ```
+
+## Known issues
+
+Please see GitHub issues.
+
+## How to obtain support
+
+Please create a new GitHub issue if you've found a bug, or you'd like to propose an enhancement.
+We currently don't have a support channel.
+If you have a question, please also ask it via GitHub issues.
+
+## License
+
+Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+This file is licensed under the Apache License Version 2.0
+except as noted otherwise in [the LICENSE file](LICENCE).
+
