@@ -1,0 +1,74 @@
+package com.sap.sgs.phosphor.fosstars.model;
+
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.sap.sgs.phosphor.fosstars.model.rating.example.SecurityRatingExample;
+import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating;
+import java.util.Set;
+
+/**
+ * This is an interface for a rating. A rating takes feature values and calculate a score.
+ * Then, the rating can convert the score to a label.
+ *
+ * All ratings have to support serialization to JSON with Jackson.
+ */
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = SecurityRatingExample.class),
+    @JsonSubTypes.Type(value = OssSecurityRating.class)
+})
+public interface Rating {
+
+  /**
+   * @return A name of the rating.
+   */
+  String name();
+
+  /**
+   * @return A version of the rating.
+   */
+  Version version();
+
+  /**
+   * @return A score which the rating is based on.
+   */
+  Score score();
+
+  /**
+   * Takes a set of feature values and calculates a score.
+   *
+   * @param values A set of values.
+   * @return A rating value.
+   */
+  RatingValue calculate(Set<Value> values);
+
+  /**
+   * Takes a number of feature values and calculates a score.
+   *
+   * @param values A number of values.
+   * @return A rating value.
+   */
+  RatingValue calculate(Value... values);
+
+  /**
+   * Takes a set of feature values and calculates a score.
+   *
+   * @param values A set of values.
+   * @return A rating value.
+   */
+  RatingValue calculate(ValueSet values);
+
+  /**
+   * Returns all features which are used by the rating.
+   *
+   * @return A number of features.
+   */
+  Feature[] allFeatures();
+
+  /**
+   * Accept a visitor.
+   *
+   * @param visitor The visitor.
+   */
+  void accept(Visitor visitor);
+}

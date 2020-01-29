@@ -1,0 +1,83 @@
+{
+  "projectVulnerabilities" : {
+    "https://github.com/apache/httpcomponents-client" : {
+      "entries" : [ {
+        "id" : "https://issues.apache.org/jira/browse/HTTPCLIENT-1973",
+        "description" : null,
+        "cvss" : {
+          "version" : "UNKNOWN",
+          "value" : null
+        },
+        "references" : [ ],
+        "resolution" : "UNPATCHED"
+      } ]
+    },
+    "https://github.com/apache/commons-fileupload" : {
+      "entries" : [
+        {
+          "id" : "https://issues.apache.org/jira/browse/FILEUPLOAD-297",
+          "description" : null,
+          "cvss" : {
+            "version" : "UNKNOWN",
+            "value" : null
+          },
+          "references" : [ ],
+          "resolution" : "UNPATCHED"
+        },
+        {
+          "id" : "https://nvd.nist.gov/vuln/detail/CVE-2013-0248",
+          "description" : null,
+          "cvss" : {
+            "version" : "UNKNOWN",
+            "value" : null
+          },
+          "references" : [
+            {
+              "url": "https://issues.apache.org/jira/browse/FILEUPLOAD-298",
+              "description": ""
+            }
+          ],
+          "resolution" : "UNPATCHED"
+        }
+      ]
+    },
+    "https://github.com/spring-projects/spring-security-oauth" : {
+      "entries" : [
+        {
+          "id" : "https://github.com/spring-projects/spring-security-oauth/issues/1682",
+          "description" : null,
+          "cvss" : {
+            "version" : "UNKNOWN",
+            "value" : null
+          },
+          "references" : [ ],
+          "resolution" : "UNPATCHED"
+        },
+        {
+          "id": "https://github.com/spring-projects/spring-security-oauth/issues/1472",
+          "description": null,
+          "cvss": {
+            "version": "UNKNOWN",
+            "value": null
+          },
+          "references": [ ],
+          "resolution" : "UNPATCHED"
+        }
+      ]
+    },
+    "https://github.com/apache/batik" : {
+      "entries" : [
+        {
+          "id" : "https://issues.apache.org/jira/browse/BATIK-1189",
+          "description" : null,
+          "cvss" : {
+            "version" : "UNKNOWN",
+            "value" : null
+          },
+          "references" : [ ],
+          "resolution" : "UNPATCHED"
+        }
+      ]
+    }
+  }
+}

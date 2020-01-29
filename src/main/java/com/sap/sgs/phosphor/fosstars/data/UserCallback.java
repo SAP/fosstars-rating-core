@@ -1,0 +1,29 @@
+package com.sap.sgs.phosphor.fosstars.data;
+
+/**
+ * An interface which allows communicating with a user.
+ */
+public interface UserCallback {
+
+  /**
+   * Asks a user for a reply.
+   *
+   * @return User's reply.
+   */
+  String ask();
+
+  /**
+   * Prints a question to a user, and waits for his reply.
+   *
+   * @param question The questions to be asked.
+   * @return User's reply.
+   */
+  String ask(String question);
+
+  /**
+   * Prints a message to a user.
+   *
+   * @param phrase The message for user.
+   */
+  void say(String phrase);
+}

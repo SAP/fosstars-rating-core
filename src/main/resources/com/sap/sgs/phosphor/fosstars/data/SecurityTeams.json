@@ -1,0 +1,26 @@
+{
+  "securityTeams": {
+    "Apache projects": {
+      "urls": [
+        "https://github.com/apache",
+        "http://svn.apache.org"
+      ],
+      "contact": "security@apache.org",
+      "link": "https://www.apache.org/security"
+    },
+    "Eclipse projects": {
+      "urls": [
+        "https://github.com/eclipse"
+      ],
+      "contact": "security@eclipse.org",
+      "link": "https://www.eclipse.org/security"
+    },
+    "Spring projects": {
+      "urls": [
+        "https://github.com/spring-projects"
+      ],
+      "contact": "security@pivotal.io",
+      "link": "https://pivotal.io/security"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+.idea
+fosstars-model.iml
+target
+.attach_pid*
+.fosstars_model
+src/main/jupyter/oss/security/.ipynb_checkpoints

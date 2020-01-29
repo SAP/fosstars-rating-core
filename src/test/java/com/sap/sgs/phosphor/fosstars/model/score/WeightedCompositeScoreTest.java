@@ -1,0 +1,204 @@
+package com.sap.sgs.phosphor.fosstars.model.score;
+
+import static com.sap.sgs.phosphor.fosstars.TestUtils.assertScore;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
+
+import com.sap.sgs.phosphor.fosstars.model.Confidence;
+import com.sap.sgs.phosphor.fosstars.model.Feature;
+import com.sap.sgs.phosphor.fosstars.model.Score;
+import com.sap.sgs.phosphor.fosstars.model.ScoreValue;
+import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.Weight;
+import com.sap.sgs.phosphor.fosstars.model.score.WeightedCompositeScore.WeightedScore;
+import com.sap.sgs.phosphor.fosstars.model.weight.MutableWeight;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+import org.junit.Test;
+
+public class WeightedCompositeScoreTest {
+
+  @Test
+  public void scores() {
+    Score score = new WeightedScoreImpl();
+    assertEquals(0, score.features().size());
+    assertEquals(2, score.subScores().size());
+    assertTrue(score.subScores().contains(new FirstScore()));
+    assertTrue(score.subScores().contains(new SecondScore()));
+  }
+
+  @Test
+  public void calculate() {
+    Score score = new WeightedScoreImpl();
+    double weightedFirstScore = 0.8 * new FirstScore().calculate(Collections.emptySet()).score();
+    double weightedSecondScore = 0.3 * new SecondScore().calculate(Collections.emptySet()).score();
+    double weightSum = 0.8 + 0.3;
+    double expectedScore = (weightedFirstScore + weightedSecondScore) / weightSum;
+    assertScore(expectedScore, score.calculate(Collections.emptySet()));
+  }
+
+  @Test
+  public void equalsAndHashCode() {
+    Score one = new WeightedScoreImpl();
+    Score two = new WeightedScoreImpl();
+    assertEquals(one, two);
+    assertEquals(one.hashCode(), two.hashCode());
+    assertNotEquals(null, one);
+    assertEquals(one, one);
+  }
+
+  @Test
+  public void equalWeightedScores() {
+    MutableWeight mutableWeightOne = new MutableWeight(0.7);
+    MutableWeight mutableWeightTwo = new MutableWeight(0.7);
+    assertEquals(mutableWeightOne, mutableWeightTwo);
+
+    WeightedCompositeScore.WeightedScore one = new WeightedCompositeScore.WeightedScore(
+        new FirstScore(), mutableWeightOne);
+    WeightedCompositeScore.WeightedScore two = new WeightedCompositeScore.WeightedScore(
+        new FirstScore(), mutableWeightTwo);
+    assertEquals(one, two);
+    assertEquals(one.hashCode(), two.hashCode());
+
+    // check if WeightedScore considers only scores in equals() and hashCode()
+    mutableWeightOne.value(0.5);
+    assertNotEquals(mutableWeightOne, mutableWeightTwo);
+    assertEquals(one, two);
+    assertEquals(one.hashCode(), two.hashCode());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void zeroWeights() {
+    MutableWeight mutableWeightOne = new MutableWeight(0);
+    MutableWeight mutableWeightTwo = new MutableWeight(0);
+
+    WeightedCompositeScore.WeightedScore one = new WeightedCompositeScore.WeightedScore(
+        new FirstScore(), mutableWeightOne);
+    WeightedCompositeScore.WeightedScore two = new WeightedCompositeScore.WeightedScore(
+        new SecondScore(), mutableWeightTwo);
+
+    Set<WeightedScore> weightedScores = new HashSet<>();
+    weightedScores.add(one);
+    weightedScores.add(two);
+
+    WeightedCompositeScore score = new WeightedCompositeScore("test", weightedScores);
+    score.calculate();
+  }
+
+  @Test(expected = NullPointerException.class)
+  public void nullName() {
+    new WeightedCompositeScore(null, new FirstScore());
+  }
+
+  @Test(expected = NullPointerException.class)
+  public void nullScoreList() {
+    new WeightedCompositeScore("test", (Score[]) null);
+  }
+
+  @Test(expected = NullPointerException.class)
+  public void nullScoreSet() {
+    new WeightedCompositeScore("test", (Set<WeightedScore>) null);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void emptyScoreList() {
+    new WeightedCompositeScore("test", new Score[0]);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void emptyScoreSet() {
+    new WeightedCompositeScore("test", new HashSet<>());
+  }
+
+  private static class FirstScore extends AbstractScore {
+
+    FirstScore() {
+      super("First score");
+    }
+
+    @Override
+    public Optional<Weight> weightOf(Score score) {
+      return Optional.empty();
+    }
+
+    @Override
+    public Set<Feature> features() {
+      return Collections.emptySet();
+    }
+
+    @Override
+    public Set<Score> subScores() {
+      return Collections.emptySet();
+    }
+
+    @Override
+    public ScoreValue calculate(Value... values) {
+      return new ScoreValue(0.2, Confidence.MAX);
+    }
+
+    @Override
+    public int hashCode() {
+      return getClass().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      return obj.getClass() == getClass();
+    }
+  }
+
+  private static class SecondScore extends AbstractScore {
+
+    SecondScore() {
+      super("Second score");
+    }
+
+    @Override
+    public Optional<Weight> weightOf(Score score) {
+      return Optional.empty();
+    }
+
+    @Override
+    public Set<Feature> features() {
+      return Collections.emptySet();
+    }
+
+    @Override
+    public Set<Score> subScores() {
+      return Collections.emptySet();
+    }
+
+    @Override
+    public ScoreValue calculate(Value... values) {
+      return new ScoreValue(0.5, Confidence.MAX);
+    }
+
+    @Override
+    public int hashCode() {
+      return getClass().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      return obj.getClass() == getClass();
+    }
+  }
+
+  private static class WeightedScoreImpl extends WeightedCompositeScore {
+
+    WeightedScoreImpl() {
+      super("Test score", init());
+    }
+
+    private static Set<WeightedScore> init() {
+      Set<WeightedScore> scores = new HashSet<>();
+      scores.add(new WeightedScore(new FirstScore(), new MutableWeight(0.8)));
+      scores.add(new WeightedScore(new SecondScore(), new MutableWeight(0.3)));
+      return scores;
+    }
+  }
+
+}

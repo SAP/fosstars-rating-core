@@ -1,0 +1,11 @@
+{
+  "reviews" : {
+    "https://github.com/spring-projects/spring-security-oauth" : [
+      {
+        "who": "Artem Smotrakov, Phosphor (SAP)",
+        "when": "2019-06-06",
+        "link": ""
+      }
+    ]
+  }
+}

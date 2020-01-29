@@ -1,0 +1,73 @@
+{
+  "type" : "OssSecurityRating",
+  "version" : "OSS_SECURITY_RATING_1_0",
+  "name" : "Security rating for open-source projects",
+  "score" : {
+    "type" : "OssSecurityScore",
+    "name" : "Security score for open-source projects",
+    "weightedScore" : [ "java.util.HashSet", [ {
+      "score" : {
+        "type" : "CommunityCommitmentScore",
+        "name" : "How well open-source community commits to support an open-source project"
+      },
+      "weight" : {
+        "type" : "MutableWeight",
+        "value" : 0.5370922197737117
+      }
+    }, {
+      "score" : {
+        "type" : "ProjectActivityScore",
+        "name" : "Open-source project activity score"
+      },
+      "weight" : {
+        "type" : "MutableWeight",
+        "value" : 0.22171970989918993
+      }
+    }, {
+      "score" : {
+        "type" : "UnpatchedVulnerabilitiesScore",
+        "name" : "How well vulnerabilities are patched"
+      },
+      "weight" : {
+        "type" : "MutableWeight",
+        "value" : 0.9998095193012788
+      }
+    }, {
+      "score" : {
+        "type" : "ProjectSecurityTestingScore",
+        "name" : "How well security testing is done for an open-source project"
+      },
+      "weight" : {
+        "type" : "MutableWeight",
+        "value" : 0.9965144270021513
+      }
+    }, {
+      "score" : {
+        "type" : "VulnerabilityLifetimeScore",
+        "name" : "How fast vulnerabilities are patched"
+      },
+      "weight" : {
+        "type" : "MutableWeight",
+        "value" : 0.12086636510447794
+      }
+    }, {
+      "score" : {
+        "type" : "ProjectSecurityAwarenessScore",
+        "name" : "How well open-source community is aware about security"
+      },
+      "weight" : {
+        "type" : "MutableWeight",
+        "value" : 0.3442543262183617
+      }
+    }, {
+      "score" : {
+        "type" : "ProjectPopularityScore",
+        "name" : "Open-source project popularity score"
+      },
+      "weight" : {
+        "type" : "MutableWeight",
+        "value" : 0.10003574246320271
+      }
+    } ] ]
+  }
+}

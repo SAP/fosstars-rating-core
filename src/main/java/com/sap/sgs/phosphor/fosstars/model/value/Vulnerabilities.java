@@ -1,0 +1,89 @@
+package com.sap.sgs.phosphor.fosstars.model.value;
+
+import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
+/**
+ * A collection of vulnerabilities.
+ */
+public class Vulnerabilities {
+
+  /**
+   * A set of vulnerabilities.
+   */
+  private final Set<Vulnerability> entries;
+
+  /**
+   * @param entries A number of vulnerabilities.
+   */
+  public Vulnerabilities(Vulnerability... entries) {
+    this(entries != null
+            ? setOf("You've provided duplicate vulnerabilities", entries)
+            : new HashSet<>());
+  }
+
+  /**
+   * @param entries A set of vulnerabilities.
+   */
+  @JsonCreator
+  public Vulnerabilities(@JsonProperty("entries") Set<Vulnerability> entries) {
+    Objects.requireNonNull(entries, "You are not supposed to give me a null!");
+    this.entries = entries;
+  }
+
+  /**
+   * @return The set of vulnerabilities.
+   */
+  @JsonGetter("entries")
+  public Set<Vulnerability> entries() {
+    return Collections.unmodifiableSet(entries);
+  }
+
+  /**
+   * Adds a vulnerability.
+   *
+   * @param vulnerability The vulnerability to be added.
+   */
+  public void add(Vulnerability vulnerability) {
+    entries.add(vulnerability);
+  }
+
+  /**
+   * Adds vulnerabilities.
+   *
+   * @param vulnerabilities The vulnerabilities to be added.
+   */
+  public void add(Vulnerabilities vulnerabilities) {
+    this.entries.addAll(vulnerabilities.entries);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o instanceof Vulnerabilities == false) {
+      return false;
+    }
+    Vulnerabilities that = (Vulnerabilities) o;
+    return Objects.equals(entries, that.entries);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(entries);
+  }
+
+  @Override
+  public String toString() {
+    int n = entries.size();
+    return String.format("%d %s", n, n == 1 ? "vulnerability" : "vulnerabilities");
+  }
+}

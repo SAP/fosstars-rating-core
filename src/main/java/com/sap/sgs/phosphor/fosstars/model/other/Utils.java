@@ -1,0 +1,155 @@
+package com.sap.sgs.phosphor.fosstars.model.other;
+
+import com.sap.sgs.phosphor.fosstars.model.Feature;
+import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.Set;
+
+public class Utils {
+
+  // don't allow creating instances of this class
+  private Utils() {
+
+  }
+
+  /**
+   * Converts a number of objects to a set. An exception is thrown if there is any duplicate.
+   *
+   * @throws IllegalArgumentException if specified objects contain a duplicate.
+   */
+  public static <T> Set<T> setOf(String errorMessage, T... objects) {
+    Objects.requireNonNull(errorMessage, "Give me a error message but not a null please!");
+    Objects.requireNonNull(objects, "Give me objects but not a null please!");
+    Set<T> set = new HashSet<>();
+    for (T object : objects) {
+      boolean added = set.add(object);
+      if (!added) {
+        throw new IllegalArgumentException(String.format("%s %s", errorMessage, object.toString()));
+      }
+    }
+    return set;
+  }
+
+  /**
+   * Converts a number of values to a set of values. An exception is thrown if the values contains duplicates.
+   *
+   * @param values Values to be added to a set.
+   * @return A set of values.
+   * @throws IllegalArgumentException in case of duplicates.
+   */
+  public static Set<Value> setOf(Value... values) {
+    Objects.requireNonNull(values, "Give me values but not a null please!");
+    Set<Value> set = new HashSet<>();
+    for (Value value : values) {
+      boolean added = set.add(value);
+      if (!added) {
+        throw new IllegalArgumentException("You are supposed to give me unique values!");
+      }
+    }
+    return set;
+  }
+
+  /**
+   * Checks if a set of feature values already contains a feature.
+   *
+   * @param values A set of values.
+   * @param feature A feature.
+   * @return True if the specified set of values contains the feature, false otherwise.
+   */
+  public static boolean contains(Set<Value> values, Feature feature) {
+    Objects.requireNonNull(values, "Give me a set of values but not a null please!");
+    Objects.requireNonNull(feature, "Give me a feature but not a null please!");
+    for (Value value : values) {
+      if (value.feature().equals(feature)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Takes a number of features, and returns as set of unknown values for those features.
+   *
+   * @param features An array of features.
+   * @return A set of unknown values for the specified features.
+   */
+  public static Set<Value> allUnknown(Feature... features) {
+    Objects.requireNonNull(features, "Hey! Give me features but not a null!");
+    Set<Value> values = new HashSet<>();
+    for (Feature feature : features) {
+      values.add(UnknownValue.of(feature));
+    }
+    return values;
+  }
+
+  /**
+   * Looks for a value of the specified feature in a set of values.
+   */
+  public static <T> Value<T> findValue(Set<Value> values, Feature feature) {
+    return findValue(values.toArray(new Value[0]), feature);
+  }
+
+  private static <T> Value<T> findValue(Value[] values, Feature feature) {
+    Objects.requireNonNull(feature, "Oh no! Feature can't be null!");
+    Objects.requireNonNull(values, "Oh no! Feature values can't be null!");
+    for (Value value : values) {
+      if (feature.equals(value.feature())) {
+        return value;
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * Looks for a value of the specified feature in a set of values.
+   *
+   * @throws IllegalArgumentException with the specified error message if no such a getValue was
+   * found.
+   */
+  public static <T> Value<T> findValue(Set<Value> values, Feature feature, String errorMessage) {
+    return findValue(values.toArray(new Value[0]), feature, errorMessage);
+  }
+
+  public static <T> Value<T> findValue(Value[] values, Feature feature, String errorMessage) {
+    Value<T> value = findValue(values, feature);
+    if (value == null) {
+      throw new IllegalArgumentException(errorMessage);
+    }
+    return value;
+  }
+
+  /**
+   * Parses a string to produce a date.
+   *
+   * @param string The string to be parsed.
+   * @return An instance of {@link java.util.Date}
+   */
+  public static Date date(String string) {
+    int[] formats = { DateFormat.SHORT, DateFormat.MEDIUM, DateFormat.LONG, DateFormat.FULL };
+    for (int format : formats) {
+      try {
+        return DateFormat.getDateInstance(format, Locale.US).parse(string);
+      } catch (ParseException e) {
+        // no luck
+      }
+    }
+
+    try {
+      return new SimpleDateFormat("yyyy-MM-dd", Locale.US).parse(string);
+    } catch (ParseException e) {
+      // no luck
+    }
+
+    throw new IllegalArgumentException(String.format(
+        "Couldn't parse date '%s'", string));
+  }
+
+}

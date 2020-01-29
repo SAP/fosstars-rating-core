@@ -1,0 +1,28 @@
+{
+  "type" : "SecurityRatingExample",
+  "version" : "SECURITY_RATING_EXAMPLE_1_1",
+  "name" : "Security rating (example)",
+  "score" : {
+    "type" : "SecurityScoreExample",
+    "name" : "Security score (example)",
+    "weightedScore" : [ "java.util.HashSet", [ {
+      "score" : {
+        "type" : "SecurityTestingScoreExample",
+        "name" : "Security testing score (example)"
+      },
+      "weight" : {
+        "type" : "MutableWeight",
+        "value" : 0.7099999999999997
+      }
+    }, {
+      "score" : {
+        "type" : "ProjectActivityScoreExample",
+        "name" : "Project activity score (example)"
+      },
+      "weight" : {
+        "type" : "MutableWeight",
+        "value" : 0.46999999999999953
+      }
+    } ] ]
+  }
+}

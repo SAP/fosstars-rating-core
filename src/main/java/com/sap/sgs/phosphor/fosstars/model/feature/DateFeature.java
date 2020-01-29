@@ -1,0 +1,34 @@
+package com.sap.sgs.phosphor.fosstars.model.feature;
+
+import static com.sap.sgs.phosphor.fosstars.model.other.Utils.date;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.value.DateValue;
+import java.util.Date;
+
+/**
+ * A features which holds a date.
+ */
+public class DateFeature extends AbstractFeature<Date> {
+
+  /**
+   * @param name Feature name.
+   */
+  @JsonCreator
+  public DateFeature(@JsonProperty("name") String name) {
+    super(name);
+  }
+
+  @Override
+  public Value<Date> value(Date date) {
+    return new DateValue(this, date);
+  }
+
+  @Override
+  public Value<Date> parse(String string) {
+    return value(date(string));
+  }
+
+}
