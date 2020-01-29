@@ -27,6 +27,13 @@ Such a rating can be based on multiple factors such as:
     they should be able to share their results and opinions,
     so that other users can benefit from this information.
 
+## Requirements
+
+*  Java 8+
+*  Maven 3.6.0+
+*  Python 3.6.8+
+*  Jupyter Notebook 4.4.0+
+
 ## Download and installation
 
 The project can be built and installed with the following command:
