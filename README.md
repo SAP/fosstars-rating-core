@@ -137,5 +137,5 @@ If you have a question, please also ask it via GitHub issues.
 
 Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
 This file is licensed under the Apache License Version 2.0
-except as noted otherwise in [the LICENSE file](LICENCE).
+except as noted otherwise in [the LICENSE file](LICENSE).
 
