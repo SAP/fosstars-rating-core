@@ -2,7 +2,7 @@ package com.sap.sgs.phosphor.fosstars.data;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.IS_ECLIPSE;
 
-import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
 
 /**
@@ -24,13 +24,14 @@ public class IsEclipse implements DataProvider {
   }
 
   @Override
-  public Value<Boolean> get(UserCallback callback) {
+  public IsEclipse update(ValueSet values) {
     System.out.println("[+] Figuring out if the project belongs to the Eclipse Software Foundation ...");
-    return new BooleanValue(IS_ECLIPSE, "eclipse".equalsIgnoreCase(where));
+    values.update(new BooleanValue(IS_ECLIPSE, "eclipse".equalsIgnoreCase(where)));
+    return this;
   }
 
   @Override
-  public boolean mayTalk() {
-    return false;
+  public DataProvider set(UserCallback callback) {
+    return this;
   }
 }

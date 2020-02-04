@@ -2,11 +2,12 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.PROJECT_START_DATE;
 
-import com.sap.sgs.phosphor.fosstars.data.UserCallback;
 import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.DateValue;
 import java.io.IOException;
 import java.util.Date;
+import java.util.Objects;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
 
@@ -20,25 +21,30 @@ public class ProjectStarted extends FirstCommit {
    * @param where A GitHub organization of user name.
    * @param name A name of a repository.
    * @param github An interface to the GitHub API.
-   * @param mayTalk A flag which shows if the provider can communicate with a user or not.
    */
-  public ProjectStarted(String where, String name, GitHub github, boolean mayTalk) {
-    super(where, name, github, mayTalk);
+  public ProjectStarted(String where, String name, GitHub github) {
+    super(where, name, github);
   }
 
   @Override
-  public Value<Date> get(UserCallback callback) throws IOException {
+  public ProjectStarted update(ValueSet values) throws IOException {
+    Objects.requireNonNull(values, "Hey! Values can't be null!");
     System.out.println("[+] Figuring out when the project started ...");
 
-    Date firstCommitDate = super.get(callback).get();
+    Date firstCommitDate = firstCommitDate().get();
 
     GHRepository repository = github.getRepository(path);
     Date repositoryCreated = repository.getCreatedAt();
 
+    Value<Date> projectStarted;
     if (firstCommitDate.before(repositoryCreated)) {
-      return new DateValue(PROJECT_START_DATE, firstCommitDate);
+      projectStarted = new DateValue(PROJECT_START_DATE, firstCommitDate);
+    } else {
+      projectStarted = new DateValue(PROJECT_START_DATE, repositoryCreated);
     }
 
-    return new DateValue(PROJECT_START_DATE, repositoryCreated);
+    values.update(projectStarted);
+
+    return this;
   }
 }

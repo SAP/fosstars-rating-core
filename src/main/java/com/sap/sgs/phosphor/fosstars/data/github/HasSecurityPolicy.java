@@ -2,10 +2,10 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
 
-import com.sap.sgs.phosphor.fosstars.data.UserCallback;
-import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
 import java.io.IOException;
+import java.util.Objects;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
@@ -37,25 +37,28 @@ public class HasSecurityPolicy extends AbstractGitHubDataProvider {
    * @param where A GitHub organization of user name.
    * @param name A name of a repository.
    * @param github An interface to the GitHub API.
-   * @param mayTalk A flag which shows if the provider can communicate with a user or not.
    */
-  public HasSecurityPolicy(String where, String name, GitHub github, boolean mayTalk) {
-    super(where, name, github, mayTalk);
+  public HasSecurityPolicy(String where, String name, GitHub github) {
+    super(where, name, github);
   }
 
   @Override
-  public Value<Boolean> get(UserCallback callback) throws IOException {
+  public HasSecurityPolicy update(ValueSet values) throws IOException {
+    Objects.requireNonNull(values, "Hey! Values can't be null!");
     System.out.println("[+] Figuring out if the project has a security policy ...");
 
     GHRepository repository = github.getRepository(path);
 
+    boolean found = false;
     for (String path : POLICY_LOCATIONS) {
       if (exists(repository, path)) {
-        return new BooleanValue(HAS_SECURITY_POLICY, true);
+        found = true;
+        break;
       }
     }
 
-    return new BooleanValue(HAS_SECURITY_POLICY, false);
+    values.update(new BooleanValue(HAS_SECURITY_POLICY, found));
+    return this;
   }
 
   /**

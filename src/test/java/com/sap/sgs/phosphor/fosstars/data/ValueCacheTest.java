@@ -1,4 +1,4 @@
-package com.sap.sgs.phosphor.fosstars.tool.github;
+package com.sap.sgs.phosphor.fosstars.data;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

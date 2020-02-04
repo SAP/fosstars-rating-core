@@ -6,6 +6,13 @@ package com.sap.sgs.phosphor.fosstars.data;
 public interface UserCallback {
 
   /**
+   * Checks if the user callback can interact with a user.
+   *
+   * @return True is the user callback can interact with a user, false otherwise
+   */
+  boolean canTalk();
+
+  /**
    * Asks a user for a reply.
    *
    * @return User's reply.
