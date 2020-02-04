@@ -11,8 +11,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import org.junit.Ignore;
 import org.junit.Test;
 
+/**
+ * The test is unstable since it tries downloading data from NVD.
+ * It needs to be improved to test only parsing data from NVD.
+ * Meanwhile, the test is ignored.
+ */
+@Ignore
 public class NVDTest {
 
   @Test
