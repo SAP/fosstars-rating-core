@@ -18,7 +18,9 @@
     <version.commons-csv>1.7</version.commons-csv>
     <version.nist-data-mirror>1.4.0</version.nist-data-mirror>
     <version.maven-model>3.6.2</version.maven-model>
+    <version.httpclient>4.5.10</version.httpclient>
     <version.junit>4.12</version.junit>
+    <version.mockito-core>3.2.4</version.mockito-core>
   </properties>
 
   <build>
@@ -126,11 +128,23 @@
       <version>${version.maven-model}</version>
     </dependency>
     <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>${version.httpclient}</version>
+    </dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>${version.junit}</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>${version.mockito-core}</version>
+      <scope>test</scope>
+    </dependency>
+
   </dependencies>
 
 </project>

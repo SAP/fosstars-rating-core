@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.sap.sgs.phosphor.fosstars.model.feature.BooleanFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.BoundedIntegerFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.DateFeature;
+import com.sap.sgs.phosphor.fosstars.model.feature.LgtmGradeFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.PositiveIntegerFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.example.NumberOfCommitsLastMonthExample;
 import com.sap.sgs.phosphor.fosstars.model.feature.example.NumberOfContributorsLastMonthExample;
@@ -36,7 +37,8 @@ import com.sap.sgs.phosphor.fosstars.model.feature.oss.VulnerabilitiesInProject;
     @JsonSubTypes.Type(value = SecurityReviewDoneExample.class),
     @JsonSubTypes.Type(value = StaticCodeAnalysisDoneExample.class),
     @JsonSubTypes.Type(value = NumberOfCommitsLastMonthExample.class),
-    @JsonSubTypes.Type(value = NumberOfContributorsLastMonthExample.class)
+    @JsonSubTypes.Type(value = NumberOfContributorsLastMonthExample.class),
+    @JsonSubTypes.Type(value = LgtmGradeFeature.class)
 })
 public interface Feature<T> {
 

@@ -18,6 +18,7 @@ public abstract class AbstractValue<T> implements Value<T> {
   private final Feature<T> feature;
 
   AbstractValue(@JsonProperty("feature") Feature<T> feature) {
+    Objects.requireNonNull(feature, "Feature can't be null!");
     this.feature = feature;
   }
 
@@ -31,6 +32,14 @@ public abstract class AbstractValue<T> implements Value<T> {
   @JsonIgnore
   public boolean isUnknown() {
     return false;
+  }
+
+  @Override
+  public Value<T> processIfKnown(Processor<T> processor) {
+    if (!isUnknown()) {
+      processor.process(get());
+    }
+    return this;
   }
 
   @Override

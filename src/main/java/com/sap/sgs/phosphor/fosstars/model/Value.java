@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.sgs.phosphor.fosstars.model.value.DateValue;
+import com.sap.sgs.phosphor.fosstars.model.value.EnumValue;
 import com.sap.sgs.phosphor.fosstars.model.value.ExpiringValue;
 import com.sap.sgs.phosphor.fosstars.model.value.IntegerValue;
+import com.sap.sgs.phosphor.fosstars.model.value.LgtmGradeValue;
 import com.sap.sgs.phosphor.fosstars.model.value.SecurityReviewsDoneValue;
 import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
 import com.sap.sgs.phosphor.fosstars.model.value.VulnerabilitiesValue;
@@ -24,6 +26,8 @@ import com.sap.sgs.phosphor.fosstars.model.value.VulnerabilitiesValue;
     @JsonSubTypes.Type(value = VulnerabilitiesValue.class),
     @JsonSubTypes.Type(value = UnknownValue.class),
     @JsonSubTypes.Type(value = SecurityReviewsDoneValue.class),
+    @JsonSubTypes.Type(value = EnumValue.class),
+    @JsonSubTypes.Type(value = LgtmGradeValue.class),
 })
 public interface Value<T> {
 
@@ -41,4 +45,27 @@ public interface Value<T> {
    * @return The value.
    */
   T get();
+
+  /**
+   * Call a processor to process the value if the value is known.
+   *
+   * @param processor The processor to be called.
+   * @return This Value instance.
+   */
+  Value<T> processIfKnown(Processor<T> processor);
+
+  /**
+   * An interface of a processor which can process a value.
+   *
+   * @param <T> A type of a value.
+   */
+  interface Processor<T> {
+
+    /**
+     * Process a value.
+     *
+     * @param value The value to be processed.
+     */
+    void process(T value);
+  }
 }

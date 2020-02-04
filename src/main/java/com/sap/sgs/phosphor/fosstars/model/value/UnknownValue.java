@@ -44,6 +44,11 @@ public final class UnknownValue<T> implements Value<T> {
   }
 
   @Override
+  public Value<T> processIfKnown(Processor<T> processor) {
+    return this;
+  }
+
+  @Override
   public boolean equals(Object o) {
     if (this == o) {
       return true;
