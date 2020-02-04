@@ -2,10 +2,11 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_WATCHERS_ON_GITHUB;
 
-import com.sap.sgs.phosphor.fosstars.data.UserCallback;
-import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.data.DataProvider;
+import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.IntegerValue;
 import java.io.IOException;
+import java.util.Objects;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
 
@@ -18,17 +19,18 @@ public class NumberOfWatchers extends AbstractGitHubDataProvider {
    * @param where A GitHub organization of user name.
    * @param name A name of a repository.
    * @param github An interface to the GitHub API.
-   * @param mayTalk A flag which shows if the provider can communicate with a user or not.
    */
-  public NumberOfWatchers(String where, String name, GitHub github, boolean mayTalk) {
-    super(where, name, github, mayTalk);
+  public NumberOfWatchers(String where, String name, GitHub github) {
+    super(where, name, github);
   }
 
   @Override
-  public Value<Integer> get(UserCallback callback) throws IOException {
+  public DataProvider update(ValueSet values) throws IOException {
+    Objects.requireNonNull(values, "Hey! Values can't be null!");
     System.out.println("[+] Counting how many watchers the project has ...");
     GHRepository repository = github.getRepository(path);
     int watchers = repository.getSubscribersCount();
-    return new IntegerValue(NUMBER_OF_WATCHERS_ON_GITHUB, watchers);
+    values.update(new IntegerValue(NUMBER_OF_WATCHERS_ON_GITHUB, watchers));
+    return this;
   }
 }

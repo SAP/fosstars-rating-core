@@ -2,7 +2,7 @@ package com.sap.sgs.phosphor.fosstars.data;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.IS_APACHE;
 
-import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
 
 /**
@@ -24,13 +24,15 @@ public class IsApache implements DataProvider {
   }
 
   @Override
-  public Value<Boolean> get(UserCallback callback) {
+  public IsApache update(ValueSet values) {
     System.out.println("[+] Figuring out if the project belongs to the Apache Software Foundation ...");
-    return new BooleanValue(IS_APACHE, "apache".equalsIgnoreCase(where));
+    values.update(new BooleanValue(IS_APACHE, "apache".equalsIgnoreCase(where)));
+    return this;
   }
 
   @Override
-  public boolean mayTalk() {
-    return false;
+  public DataProvider set(UserCallback callback) {
+    return this;
   }
+
 }

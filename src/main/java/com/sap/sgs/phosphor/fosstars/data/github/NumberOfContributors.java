@@ -2,12 +2,13 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS;
 
-import com.sap.sgs.phosphor.fosstars.data.UserCallback;
 import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.IntegerValue;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import org.kohsuke.github.GHCommit;
@@ -31,19 +32,20 @@ public class NumberOfContributors extends AbstractGitHubDataProvider {
    * @param where A GitHub organization of user name.
    * @param name A name of a repository.
    * @param github An interface to the GitHub API.
-   * @param mayTalk A flag which shows if the provider can communicate with a user or not.
    */
-  public NumberOfContributors(String where, String name, GitHub github, boolean mayTalk) {
-    super(where, name, github, mayTalk);
+  public NumberOfContributors(String where, String name, GitHub github) {
+    super(where, name, github);
   }
 
   @Override
-  public Value<Integer> get(UserCallback callback) throws IOException {
+  public NumberOfContributors update(ValueSet values) throws IOException {
+    Objects.requireNonNull(values, "Hey! Values can't be null!");
     System.out.println("[+] Counting how many people contributed to the project last three months ...");
 
     Optional<Value> something = cache().get(url, NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS);
     if (something.isPresent()) {
-      return something.get();
+      values.update(something.get());
+      return this;
     }
 
     GHRepository repository = github.getRepository(path);
@@ -66,8 +68,9 @@ public class NumberOfContributors extends AbstractGitHubDataProvider {
 
     Value<Integer> numberOfContributors = new IntegerValue(
         NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS, contributors.size());
+    values.update(numberOfContributors);
     cache().put(url, numberOfContributors, tomorrow());
 
-    return numberOfContributors;
+    return this;
   }
 }

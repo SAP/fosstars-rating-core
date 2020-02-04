@@ -1,9 +1,8 @@
-package com.sap.sgs.phosphor.fosstars.data;
+package com.sap.sgs.phosphor.fosstars.data.json;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import com.sap.sgs.phosphor.fosstars.data.json.SecurityTeamStorage;
 import java.io.IOException;
 import org.junit.Test;
 

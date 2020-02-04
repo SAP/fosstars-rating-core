@@ -1,10 +1,9 @@
-package com.sap.sgs.phosphor.fosstars.data;
+package com.sap.sgs.phosphor.fosstars.data.json;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import com.sap.sgs.phosphor.fosstars.data.json.UnpatchedVulnerabilitiesStorage;
 import com.sap.sgs.phosphor.fosstars.model.value.CVSS;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerability;

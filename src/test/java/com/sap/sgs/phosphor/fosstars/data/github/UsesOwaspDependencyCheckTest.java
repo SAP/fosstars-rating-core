@@ -1,13 +1,16 @@
-package com.sap.sgs.phosphor.fosstars.tool.github;
+package com.sap.sgs.phosphor.fosstars.data.github;
 
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeNotNull;
 
 import com.sap.sgs.phosphor.fosstars.data.Terminal;
-import com.sap.sgs.phosphor.fosstars.data.github.UsesOwaspDependencyCheck;
 import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import java.io.IOException;
+import java.util.Optional;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -39,8 +42,14 @@ public class UsesOwaspDependencyCheckTest {
   public void testApacheCxf() throws IOException {
     assumeNotNull(github);
     UsesOwaspDependencyCheck provider = new UsesOwaspDependencyCheck(
-        "apache", "cxf", github, false);
-    Value value = provider.get(new Terminal());
+        "apache", "cxf", github);
+    ValueHashSet values = new ValueHashSet();
+    provider.set(new Terminal()).update(values);
+    assertTrue(values.has(SCANS_FOR_VULNERABLE_DEPENDENCIES));
+    Optional<Value> something = values.of(SCANS_FOR_VULNERABLE_DEPENDENCIES);
+    assertNotNull(something);
+    assertTrue(something.isPresent());
+    Value<Boolean> value = something.get();
     assertNotNull(value);
     assertEquals(Boolean.TRUE, value.get());
   }
@@ -49,8 +58,14 @@ public class UsesOwaspDependencyCheckTest {
   public void testApachePoi() throws IOException {
     assumeNotNull(github);
     UsesOwaspDependencyCheck provider = new UsesOwaspDependencyCheck(
-        "apache", "poi", github, false);
-    Value value = provider.get(new Terminal());
+        "apache", "poi", github);
+    ValueHashSet values = new ValueHashSet();
+    provider.set(new Terminal()).update(values);
+    assertTrue(values.has(SCANS_FOR_VULNERABLE_DEPENDENCIES));
+    Optional<Value> something = values.of(SCANS_FOR_VULNERABLE_DEPENDENCIES);
+    assertNotNull(something);
+    assertTrue(something.isPresent());
+    Value<Boolean> value = something.get();
     assertNotNull(value);
     assertEquals(Boolean.FALSE, value.get());
   }
@@ -59,8 +74,14 @@ public class UsesOwaspDependencyCheckTest {
   public void testSpringSecurityOAuth() throws IOException {
     assumeNotNull(github);
     UsesOwaspDependencyCheck provider = new UsesOwaspDependencyCheck(
-        "spring-projects", "spring-security-oauth", github, false);
-    Value value = provider.get(new Terminal());
+        "spring-projects", "spring-security-oauth", github);
+    ValueHashSet values = new ValueHashSet();
+    provider.set(new Terminal()).update(values);
+    assertTrue(values.has(SCANS_FOR_VULNERABLE_DEPENDENCIES));
+    Optional<Value> something = values.of(SCANS_FOR_VULNERABLE_DEPENDENCIES);
+    assertNotNull(something);
+    assertTrue(something.isPresent());
+    Value<Boolean> value = something.get();
     assertNotNull(value);
     assertEquals(Boolean.FALSE, value.get());
   }

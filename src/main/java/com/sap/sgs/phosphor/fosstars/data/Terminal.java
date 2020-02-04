@@ -3,9 +3,14 @@ package com.sap.sgs.phosphor.fosstars.data;
 import java.util.Scanner;
 
 /**
- * A {@link UserCallback} which interacts with a user via terminal (console).
+ * A {@link UserCallback} which interacts with a user via terminal.
  */
 public class Terminal implements UserCallback {
+
+  @Override
+  public boolean canTalk() {
+    return true;
+  }
 
   @Override
   public String ask() {

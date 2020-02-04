@@ -1,11 +1,10 @@
-package com.sap.sgs.phosphor.fosstars.data;
+package com.sap.sgs.phosphor.fosstars.data.json;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import com.sap.sgs.phosphor.fosstars.data.json.SecurityReviewStorage;
 import com.sap.sgs.phosphor.fosstars.model.value.SecurityReview;
 import com.sap.sgs.phosphor.fosstars.model.value.SecurityReviews;
 import java.io.IOException;

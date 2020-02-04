@@ -4,18 +4,23 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SE
 
 import com.sap.sgs.phosphor.fosstars.data.UserCallback;
 import com.sap.sgs.phosphor.fosstars.data.json.SecurityTeamStorage;
-import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
 import com.sap.sgs.phosphor.fosstars.tool.YesNoSkipQuestion;
 import com.sap.sgs.phosphor.fosstars.tool.YesNoSkipQuestion.Answer;
 import java.io.IOException;
+import java.util.Objects;
 import org.kohsuke.github.GitHub;
 
 /**
  * This data provider tries to figure out if a project has a security team. First, it checks if a
  * project belongs to an organization which provides a security team such as Apache Software
  * Foundation. Next, it tries to ask a user if {@link UserCallback} is available.
+ *
+ * TODO: This class doesn't talk to GitHub. Instead, it uses a local storage
+ *       which contains info about known security teams.
+ *       SecurityTeamStorage may be converted to a data provider.
  */
 public class HasSecurityTeam extends AbstractGitHubDataProvider {
 
@@ -28,22 +33,23 @@ public class HasSecurityTeam extends AbstractGitHubDataProvider {
    * @param where A GitHub organization of user name.
    * @param name A name of a repository.
    * @param github An interface to the GitHub API.
-   * @param mayTalk A flag which shows if the provider can communicate with a user or not.
    */
-  public HasSecurityTeam(String where, String name, GitHub github, boolean mayTalk) throws IOException {
-    super(where, name, github, mayTalk);
+  public HasSecurityTeam(String where, String name, GitHub github) throws IOException {
+    super(where, name, github);
     storage = SecurityTeamStorage.load();
   }
 
   @Override
-  public Value<Boolean> get(UserCallback callback) {
+  public HasSecurityTeam update(ValueSet values) {
+    Objects.requireNonNull(values, "Hey! Values can't be null!");
     System.out.println("[+] Figuring out if the project has a security team ...");
 
-    if (storage.supported(url)) {
-      return new BooleanValue(HAS_SECURITY_TEAM, true);
-    }
+    values.update(UnknownValue.of(HAS_SECURITY_TEAM));
 
-    if (mayTalk()) {
+
+    if (storage.supported(url)) {
+      values.update(new BooleanValue(HAS_SECURITY_TEAM, true));
+    } else if (callback.canTalk()) {
       String question = String.format(
           "Does project %s/%s have a security team? Say yes, no, or skip, please.",
           where, name);
@@ -51,14 +57,16 @@ public class HasSecurityTeam extends AbstractGitHubDataProvider {
       Answer answer = new YesNoSkipQuestion(callback, question).ask();
       switch (answer) {
         case YES:
-          return new BooleanValue(HAS_SECURITY_TEAM, true);
+          values.update(new BooleanValue(HAS_SECURITY_TEAM, true));
+          break;
         case NO:
-          return new BooleanValue(HAS_SECURITY_TEAM, false);
+          values.update(new BooleanValue(HAS_SECURITY_TEAM, false));
+          break;
       }
 
       // TODO: store the answer in the SecurityTeamStorage
     }
 
-    return UnknownValue.of(HAS_SECURITY_TEAM);
+    return this;
   }
 }

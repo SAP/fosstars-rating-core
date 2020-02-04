@@ -6,9 +6,9 @@ import static com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.UNKNOWN_FI
 import static com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.UNKNOWN_INTRODUCED_DATE;
 import static com.sap.sgs.phosphor.fosstars.tool.YesNoQuestion.Answer.YES;
 
-import com.sap.sgs.phosphor.fosstars.data.UserCallback;
 import com.sap.sgs.phosphor.fosstars.data.json.UnpatchedVulnerabilitiesStorage;
 import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.CVSS;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerability;
@@ -18,11 +18,16 @@ import com.sap.sgs.phosphor.fosstars.tool.YesNoQuestion;
 import com.sap.sgs.phosphor.fosstars.tool.YesNoQuestion.Answer;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.Objects;
 import org.kohsuke.github.GitHub;
 
 /**
  * This data provider tries to figure out if an open-source project has any unpatched
  * vulnerabilities.
+ *
+ * TODO: This class doesn't talk to GitHub. Instead, it uses a local storage
+ *       which contains info about known security teams.
+ *       UnpatchedVulnerabilities may be converted to a data provider.
  */
 public class UnpatchedVulnerabilities extends AbstractGitHubDataProvider {
 
@@ -43,24 +48,24 @@ public class UnpatchedVulnerabilities extends AbstractGitHubDataProvider {
    * @param where A GitHub organization of user name.
    * @param name A name of a repository.
    * @param github An interface to the GitHub API.
-   * @param mayTalk A flag which shows if the provider can communicate with a user or not.
    * @param vulnerabilities A list of vulnerabilities to be updated by this data provider.
    * @throws IOException If the info about unpatched vulnerabilities can't be loaded.
    */
-  public UnpatchedVulnerabilities(String where, String name, GitHub github, boolean mayTalk,
+  public UnpatchedVulnerabilities(String where, String name, GitHub github,
       Value<Vulnerabilities> vulnerabilities) throws IOException {
-    super(where, name, github, mayTalk);
+    super(where, name, github);
     storage = UnpatchedVulnerabilitiesStorage.load();
     this.vulnerabilities = vulnerabilities;
   }
 
   @Override
-  public Value<Vulnerabilities> get(UserCallback callback) throws MalformedURLException {
+  public UnpatchedVulnerabilities update(ValueSet values) throws MalformedURLException {
+    Objects.requireNonNull(values, "Hey! Values can't be null!");
     System.out.println("[+] Figuring out if the project has any unpatched vulnerability ...");
 
     Vulnerabilities unpatchedVulnerabilities = storage.get(url);
 
-    if (mayTalk()) {
+    if (callback.canTalk()) {
       Answer answer = new YesNoQuestion(
           callback, "Are you aware about any unpatched vulnerability in the project?").ask();
 
@@ -86,7 +91,8 @@ public class UnpatchedVulnerabilities extends AbstractGitHubDataProvider {
     }
 
     vulnerabilities.get().add(unpatchedVulnerabilities);
+    values.update(vulnerabilities);
 
-    return vulnerabilities;
+    return this;
   }
 }

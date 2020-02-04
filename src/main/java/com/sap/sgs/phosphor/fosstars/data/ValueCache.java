@@ -1,4 +1,4 @@
-package com.sap.sgs.phosphor.fosstars.tool.github;
+package com.sap.sgs.phosphor.fosstars.data;
 
 import static com.sap.sgs.phosphor.fosstars.model.value.ExpiringValue.NO_EXPIRATION;
 

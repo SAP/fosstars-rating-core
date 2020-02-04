@@ -2,13 +2,14 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.FIRST_COMMIT_DATE;
 
-import com.sap.sgs.phosphor.fosstars.data.UserCallback;
 import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.DateValue;
 import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHRepository;
@@ -25,14 +26,23 @@ public class FirstCommit extends AbstractGitHubDataProvider {
    */
   private static final long DELTA = 7 * 24 * 60 * 60 * 1000L;
 
-  public FirstCommit(String where, String name, GitHub github, boolean mayTalk) {
-    super(where, name, github, mayTalk);
+  public FirstCommit(String where, String name, GitHub github) {
+    super(where, name, github);
   }
 
   @Override
-  public Value<Date> get(UserCallback callback) throws IOException {
+  public FirstCommit update(ValueSet values) throws IOException {
+    Objects.requireNonNull(values, "Hey! Values can't be null!");
     System.out.println("[+] Figuring out when the first commit was done ...");
 
+    Value<Date> firstCommit = firstCommitDate();
+    cache().put(url, firstCommit);
+    values.update(firstCommit);
+
+    return this;
+  }
+
+  protected Value<Date> firstCommitDate() throws IOException {
     Optional<Value> something = cache().get(url, FIRST_COMMIT_DATE);
     if (something.isPresent()) {
       return something.get();
@@ -56,8 +66,6 @@ public class FirstCommit extends AbstractGitHubDataProvider {
           FIRST_COMMIT_DATE,
           lastPage.get(lastPage.size() - 1).getCommitDate());
     }
-
-    cache().put(url, firstCommit);
 
     return firstCommit;
   }
