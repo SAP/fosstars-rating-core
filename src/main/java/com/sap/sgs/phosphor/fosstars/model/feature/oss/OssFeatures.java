@@ -4,8 +4,10 @@ import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.feature.BooleanFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.BoundedIntegerFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.DateFeature;
+import com.sap.sgs.phosphor.fosstars.model.feature.LgtmGradeFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.PositiveIntegerFeature;
 import com.sap.sgs.phosphor.fosstars.model.value.FuzzingAttempts;
+import com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.sgs.phosphor.fosstars.model.value.SecurityReviews;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
 import java.util.Date;
@@ -183,4 +185,14 @@ public class OssFeatures {
    */
   public static final Feature<Date> FIRST_COMMIT_DATE
       = new DateFeature("When first commit was done");
+
+  /**
+   * Shows if an open-source project uses <a href="https://lgtm.com">LGTM</a> for static analysis.
+   */
+  public static final Feature<Boolean> USES_LGTM = new BooleanFeature("If a project uses LGTM");
+
+  /**
+   * Holds the worse grade assigned by <a href="https://lgtm.com">LGTM</a>.
+   */
+  public static final Feature<LgtmGrade> WORSE_LGTM_GRADE = new LgtmGradeFeature("The worse LGTM grade of a project");
 }

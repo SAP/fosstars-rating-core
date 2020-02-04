@@ -21,6 +21,11 @@ public abstract class AbstractFeature<T> implements Feature<T> {
    * @param name Feature name.
    */
   public AbstractFeature(String name) {
+    Objects.requireNonNull(name, "Hey! Name can't be null!");
+    name = name.trim();
+    if (name.isEmpty()) {
+      throw new IllegalArgumentException("Hey! Name can't be empty!");
+    }
     this.name = name;
   }
 

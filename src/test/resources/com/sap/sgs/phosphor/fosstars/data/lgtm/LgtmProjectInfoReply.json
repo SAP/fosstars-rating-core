@@ -1,0 +1,35 @@
+{
+  "id": 1234567,
+  "url-identifier": "g/org/project",
+  "name": "apache/nifi",
+  "url": "https://lgtm.com/projects/g/org/project",
+  "languages": [
+    {
+      "language": "javascript",
+      "status": "success",
+      "alerts": 75,
+      "lines": 51117,
+      "commit-id": "aedccb8297cab014103df2a98803259334ceb15c",
+      "commit-date": "2020-01-28T01:07:21.000+0000",
+      "grade": "A"
+    },
+    {
+      "language": "python",
+      "status": "success",
+      "alerts": 1,
+      "lines": 45,
+      "commit-id": "aedccb8297cab014103df2a98803259334ceb15c",
+      "commit-date": "2020-01-28T01:07:21.000+0000",
+      "grade": "C"
+    },
+    {
+      "language": "java",
+      "status": "success",
+      "alerts": 411,
+      "lines": 453269,
+      "commit-id": "aedccb8297cab014103df2a98803259334ceb15c",
+      "commit-date": "2020-01-28T01:07:21.000+0000",
+      "grade": "C"
+    }
+  ]
+}

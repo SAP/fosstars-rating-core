@@ -1,11 +1,15 @@
 package com.sap.sgs.phosphor.fosstars.tool.github;
 
-import com.sap.sgs.phosphor.fosstars.data.CompositeBooleanDataProvider;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES;
+
+import com.sap.sgs.phosphor.fosstars.data.CompositeDataProvider;
 import com.sap.sgs.phosphor.fosstars.data.DataProvider;
 import com.sap.sgs.phosphor.fosstars.data.IsApache;
 import com.sap.sgs.phosphor.fosstars.data.IsEclipse;
+import com.sap.sgs.phosphor.fosstars.data.NoUserCallback;
 import com.sap.sgs.phosphor.fosstars.data.Terminal;
 import com.sap.sgs.phosphor.fosstars.data.UserCallback;
+import com.sap.sgs.phosphor.fosstars.data.ValueCache;
 import com.sap.sgs.phosphor.fosstars.data.github.FirstCommit;
 import com.sap.sgs.phosphor.fosstars.data.github.HasCompanySupport;
 import com.sap.sgs.phosphor.fosstars.data.github.HasSecurityPolicy;
@@ -82,10 +86,10 @@ public class SecurityRatingCalculator {
       return;
     }
 
-    UserCallback callback = new Terminal();
     boolean mayTalk = !commandLine.hasOption("no-questions");
+    UserCallback callback = mayTalk ? new Terminal() : NoUserCallback.INSTANCE;
 
-    GitHub github = connectToGithub(commandLine.getOptionValue("token"), mayTalk, callback);
+    GitHub github = connectToGithub(commandLine.getOptionValue("token"), callback);
     if (github == null) {
       System.out.println("[x] Couldn't connect to GitHub!");
       return;
@@ -104,23 +108,24 @@ public class SecurityRatingCalculator {
     Value<Vulnerabilities> vulnerabilities = new VulnerabilitiesValue();
 
     DataProvider[] providers = {
-        new NumberOfCommits(where, name, github, mayTalk),
-        new NumberOfContributors(where, name, github, mayTalk),
-        new NumberOfStars(where, name, github, mayTalk),
-        new NumberOfWatchers(where, name, github, mayTalk),
-        new FirstCommit(where, name, github, mayTalk),
-        new ProjectStarted(where, name, github, mayTalk),
-        new HasSecurityTeam(where, name, github, mayTalk),
-        new HasCompanySupport(where, name, github, mayTalk),
-        new HasSecurityPolicy(where, name, github, mayTalk),
-        new SecurityReviewForProject(where, name, github, mayTalk),
-        new UnpatchedVulnerabilities(where, name, github, mayTalk, vulnerabilities),
-        new VulnerabilitiesFromNVD(where, name, github, mayTalk, vulnerabilities),
+        new NumberOfCommits(where, name, github),
+        new NumberOfContributors(where, name, github),
+        new NumberOfStars(where, name, github),
+        new NumberOfWatchers(where, name, github),
+        new FirstCommit(where, name, github),
+        new ProjectStarted(where, name, github),
+        new HasSecurityTeam(where, name, github),
+        new HasCompanySupport(where, name, github),
+        new HasSecurityPolicy(where, name, github),
+        new SecurityReviewForProject(where, name, github),
+        new UnpatchedVulnerabilities(where, name, github, vulnerabilities),
+        new VulnerabilitiesFromNVD(where, name, github, vulnerabilities),
         new IsApache(where),
         new IsEclipse(where),
-        new CompositeBooleanDataProvider.RequireOne(where, name, github, mayTalk,
-            new UsesOwaspDependencyCheck(where, name, github, mayTalk),
-            new UsesSnykDependencyCheck(where, name, github, mayTalk))
+        new CompositeDataProvider(
+            new UsesOwaspDependencyCheck(where, name, github),
+            new UsesSnykDependencyCheck(where, name, github)
+        ).stopWhenFilledOut(SCANS_FOR_VULNERABLE_DEPENDENCIES)
     };
 
     OssSecurityRating rating = RatingRepository.INSTANCE.get(OssSecurityRating.class);
@@ -129,8 +134,7 @@ public class SecurityRatingCalculator {
     System.out.printf("[+] Let's get info about the project and calculate a security rating%n");
     ValueSet values = ValueHashSet.unknown(rating.allFeatures());
     for (DataProvider provider : providers) {
-      Value value = provider.get(callback);
-      values.update(value);
+      provider.set(callback).update(values);
     }
 
     System.out.println("[+] Here is what we know about the project:");
@@ -157,8 +161,8 @@ public class SecurityRatingCalculator {
    * @param token A GitHub token (may be null).
    * @return An interface for the GitHub API, or null if it couldn't establish a connection.
    */
-  private static GitHub connectToGithub(String token, boolean mayTalk, UserCallback callback) {
-    if (token == null && mayTalk) {
+  private static GitHub connectToGithub(String token, UserCallback callback) {
+    if (token == null && callback.canTalk()) {
       System.out.println("[!] You didn't provide an access token for GitHub ...");
       System.out.println("[!] But you can create it now. Do the following:");
       System.out.println("    1. Go to https://github.com/settings/tokens");

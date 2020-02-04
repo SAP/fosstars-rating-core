@@ -47,4 +47,9 @@ public class BooleanValue extends AbstractValue<Boolean> {
   public int hashCode() {
     return Objects.hash(super.hashCode(), flag);
   }
+
+  @Override
+  public String toString() {
+    return flag ? "Yes" : "No";
+  }
 }
