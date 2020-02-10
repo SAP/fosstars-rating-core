@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -48,6 +47,8 @@ public abstract class AbstractWeightsOptimization {
   protected final String path;
 
   /**
+   * Initialize a new instance.
+   *
    * @param rating A rating to be tuned.
    * @param vectors A list of test vectors.
    * @param path A path where a serialized rating should be stored to.
@@ -71,7 +72,8 @@ public abstract class AbstractWeightsOptimization {
   /**
    * Starts weights optimization for the specified rating.
    *
-   * @throws VerificationFailedException If some test vectors still fail after the optimization was done.
+   * @throws VerificationFailedException If some test vectors still fail
+   *                                     after the optimization was done.
    * @throws IOException If something went wrong during storing the rating to a file.
    */
   public final void run() throws VerificationFailedException, IOException {
@@ -89,7 +91,7 @@ public abstract class AbstractWeightsOptimization {
       }
     }
 
-    Set<FailedTestVector> failedVectors = new RatingVerifier(rating, vectors).failedVectors();
+    List<FailedTestVector> failedVectors = new RatingVerifier(rating, vectors).runImpl();
     for (FailedTestVector failedVector : failedVectors) {
       LOGGER.info("Test vector #{} failed", failedVector.index);
       LOGGER.info("  reason: {}", failedVector.reason);
@@ -99,7 +101,8 @@ public abstract class AbstractWeightsOptimization {
       LOGGER.info("    expected label: {}", failedVector.vector.expectedLabel());
       LOGGER.info("    features:");
       for (Value value : failedVector.vector.values()) {
-        LOGGER.info("      {}: {}", value.feature(), value.isUnknown() ? "unknown" : value.get());
+        LOGGER.info("      {}: {}",
+            value.feature(), value.isUnknown() ? "unknown" : value.get());
       }
     }
 
@@ -107,7 +110,8 @@ public abstract class AbstractWeightsOptimization {
       LOGGER.info("Gut gemacht, all test vectors passed!");
       RatingRepository.INSTANCE.store(rating, path);
     } else {
-      LOGGER.warn("{} test vector{} failed!", failedVectors.size(), failedVectors.size() == 1 ? "" : "s");
+      LOGGER.warn("{} test vector{} failed!",
+          failedVectors.size(), failedVectors.size() == 1 ? "" : "s");
       throw new VerificationFailedException("Some test vectors failed!");
     }
   }

@@ -68,7 +68,7 @@ public class MonteCarloWeightsOptimization extends AbstractWeightsOptimization {
    * @return True if all test vector are passes, and false otherwise.
    */
   private boolean passTestVectors() {
-    Set<FailedTestVector> failedVectors = verifier.failedVectors();
+    List<FailedTestVector> failedVectors = verifier.runImpl();
     return failedVectors.isEmpty();
   }
 

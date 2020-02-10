@@ -8,7 +8,6 @@ import com.sap.sgs.phosphor.fosstars.model.qa.RatingVerifier;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
 import com.sap.sgs.phosphor.fosstars.model.weight.MutableWeight;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import org.apache.commons.math3.analysis.MultivariateFunction;
 import org.apache.commons.math3.optim.ConvergenceChecker;
@@ -36,7 +35,6 @@ public class CMAESWeightsOptimization extends AbstractWeightsOptimization {
 
   /**
    * Minimal weight to be assigned.
-   *
    * TODO: minimal weight should be specified for particular scores
    */
   private static final double MIN_WEIGHT = 0.1;
@@ -67,6 +65,8 @@ public class CMAESWeightsOptimization extends AbstractWeightsOptimization {
   private final RatingVerifier verifier;
 
   /**
+   * Initializes a new {@link CMAESWeightsOptimization}.
+   *
    * @param rating A rating to be tuned.
    * @param vectors A list of test vectors.
    * @param path A path where a serialized rating should be stored to.
@@ -121,7 +121,8 @@ public class CMAESWeightsOptimization extends AbstractWeightsOptimization {
     double[] steps = new double[fitnessFunction.numberOfWeights()];
 
     for (int i = 0; i < n; i++) {
-      startWeights[i] = fitnessFunction.weight(i) < MIN_WEIGHT ? MIN_WEIGHT : fitnessFunction.weight(i);
+      double weight = fitnessFunction.weight(i);
+      startWeights[i] = weight < MIN_WEIGHT ? MIN_WEIGHT : fitnessFunction.weight(i);
       lowerWeightsBound[i] = MIN_WEIGHT;
       upperWeightsBound[i] = Weight.MAX;
       steps[i] = 0.1;
@@ -139,7 +140,8 @@ public class CMAESWeightsOptimization extends AbstractWeightsOptimization {
      */
     return optimizer.optimize(
         // required by BaseOptimizer
-        // are these parameters required? we have specified them already in the constructor of CMAESOptimizer
+        // are these parameters required?
+        // we have specified them already in the constructor of CMAESOptimizer
         MaxEval.unlimited(), MaxIter.unlimited(),
 
         // required by BaseMultivariateOptimizer
@@ -149,7 +151,8 @@ public class CMAESWeightsOptimization extends AbstractWeightsOptimization {
         new ObjectiveFunction(fitnessFunction), GoalType.MINIMIZE,
 
         // required by CMAESOptimizer
-        new CMAESOptimizer.Sigma(steps), new CMAESOptimizer.PopulationSize(candidateSamplesPerIteration)
+        new CMAESOptimizer.Sigma(steps),
+        new CMAESOptimizer.PopulationSize(candidateSamplesPerIteration)
     );
   }
 
@@ -174,10 +177,10 @@ public class CMAESWeightsOptimization extends AbstractWeightsOptimization {
             for (int i = 0; i < point.length; i++) {
               weights.get(i).value(point[i]);
             }
-            Set<FailedTestVector> failedTestVectors = verifier.failedVectors();
+            List<FailedTestVector> failedTestVectors = verifier.runImpl();
             String indexes = failedTestVectors.stream()
                 .map(v -> String.format("#%d", v.index))
-                .collect(Collectors.joining( ", " ));
+                .collect(Collectors.joining(", "));
 
             if (isBetter(currentSolution, solution)) {
               LOGGER.info("Hooray! Found a better value of the fitness function!");
@@ -186,7 +189,8 @@ public class CMAESWeightsOptimization extends AbstractWeightsOptimization {
               LOGGER.info("Algorithm parameters:");
               LOGGER.info("    max iterations = {}", maxIterations);
               LOGGER.info("    samples per iteration = {}", samplesPerIteration);
-              LOGGER.info("    candidate samples per iteration = {}", candidateSamplesPerIteration);
+              LOGGER.info("    candidate samples per iteration = {}",
+                  candidateSamplesPerIteration);
               LOGGER.info("    step = {}", step);
               currentSolution = solution;
             }
@@ -221,7 +225,8 @@ public class CMAESWeightsOptimization extends AbstractWeightsOptimization {
   }
 
   /**
-   * This is a fitness function for minimization. For each test vector, the function does the following:
+   * This is a fitness function for minimization.
+   * For each test vector, the function does the following:
    * <ul>
    *   <li>Adds a penalty if the test vector failed.</li>
    *   <li>Calculates a mean value for the expected score interval,
@@ -256,6 +261,8 @@ public class CMAESWeightsOptimization extends AbstractWeightsOptimization {
     private final RatingVerifier verifier;
 
     /**
+     * Initialize a fitness function.
+     *
      * @param rating A rating to be tuned.
      * @param vectors A list of test vectors.
      * @param weights A list of weights which may be adjusted.
@@ -281,7 +288,7 @@ public class CMAESWeightsOptimization extends AbstractWeightsOptimization {
       }
 
       double result = MIN;
-      Set<FailedTestVector> failedTestVectors = verifier.failedVectors();
+      List<FailedTestVector> failedTestVectors = verifier.runImpl();
       result += PENALTY * failedTestVectors.size();
 
       for (TestVector vector : vectors) {
@@ -293,7 +300,7 @@ public class CMAESWeightsOptimization extends AbstractWeightsOptimization {
     }
 
     /**
-     * @return A number of weights which may be adjusted.
+     * Returns the number of weights which may be adjusted.
      */
     int numberOfWeights() {
       return weights.size();
@@ -302,8 +309,8 @@ public class CMAESWeightsOptimization extends AbstractWeightsOptimization {
     /**
      * Return a weight by its index.
      *
-     * @param i An index of a weight.
-     * @return A weight.
+     * @param i An index of the weight.
+     * @return The weight.
      */
     double weight(int i) {
       return weights.get(i).value();
