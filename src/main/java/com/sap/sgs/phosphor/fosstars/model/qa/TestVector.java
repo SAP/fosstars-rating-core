@@ -49,6 +49,8 @@ public class TestVector {
   private final String alias;
 
   /**
+   * Initializes a new {@link TestVector}.
+   *
    * @param values A set of feature values.
    * @param expectedScore An interval for an expected score.
    * @param expectedLabel An expected label (can be null).
@@ -75,7 +77,7 @@ public class TestVector {
   }
 
   /**
-   * @return The feature values.
+   * Returns the feature values.
    */
   @JsonGetter("values")
   public final Set<Value> values() {
@@ -83,7 +85,7 @@ public class TestVector {
   }
 
   /**
-   * @return The expected score.
+   * Returns the expected score.
    */
   @JsonGetter("expectedScore")
   public final Interval expectedScore() {
@@ -91,6 +93,18 @@ public class TestVector {
   }
 
   /**
+   * Checks if a score belongs to the expected interval.
+   *
+   * @param score The score to be checked.
+   * @return True if the score belongs to the expected interval, false otherwise.
+   */
+  public boolean containsExpected(double score) {
+    return expectedScore.contains(score);
+  }
+
+  /**
+   * Checks if the test vector has a label.
+   *
    * @return True if the test vector has a label, false otherwise.
    */
   public boolean hasLabel() {
@@ -98,7 +112,7 @@ public class TestVector {
   }
 
   /**
-   * @return The expected label.
+   * Returns the expected label.
    */
   @JsonGetter("expectedLabel")
   public final Label expectedLabel() {
@@ -106,7 +120,7 @@ public class TestVector {
   }
 
   /**
-   * @return The alias.
+   * Returns the alias.
    */
   @JsonGetter("alias")
   public final String alias() {
@@ -122,10 +136,10 @@ public class TestVector {
       return false;
     }
     TestVector vector = (TestVector) o;
-    return Objects.equals(values, vector.values) &&
-        Objects.equals(expectedScore, vector.expectedScore) &&
-        Objects.equals(expectedLabel, vector.expectedLabel) &&
-        Objects.equals(alias, vector.alias);
+    return Objects.equals(values, vector.values)
+        && Objects.equals(expectedScore, vector.expectedScore)
+        && Objects.equals(expectedLabel, vector.expectedLabel)
+        && Objects.equals(alias, vector.alias);
   }
 
   @Override
@@ -151,19 +165,6 @@ public class TestVector {
     return MAPPER.readValue(
         is,
         MAPPER.getTypeFactory().constructCollectionType(List.class, TestVector.class));
-  }
-
-  /**
-   * Loads test vectors from a resource.
-   *
-   * @param name A name of the resource.
-   * @return A list of test vectors.
-   * @throws IOException If something went wrong.
-   */
-  static List<TestVector> loadFromResource(String name) throws IOException {
-    try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(name)) {
-      return TestVector.loadTestVectorsFromJson(is);
-    }
   }
 
 }
