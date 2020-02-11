@@ -12,7 +12,7 @@ import com.sap.sgs.phosphor.fosstars.model.Interval;
 import com.sap.sgs.phosphor.fosstars.model.Label;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.math.DoubleInterval;
-import com.sap.sgs.phosphor.fosstars.model.qa.AbstractVerification;
+import com.sap.sgs.phosphor.fosstars.model.qa.RatingVerification;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
 import java.util.Arrays;
 import java.util.Collections;
@@ -21,16 +21,16 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * This class implements a verification procedure for {@link SecurityRatingExample}. The class defines a set
- * of test vectors, and provides methods to verify a SecurityRatingExample against those test
- * vectors.
+ * This class implements a verification procedure for {@link SecurityRatingExample}.
+ * The class defines a set of test vectors, and provides methods
+ * to verify a SecurityRatingExample against those test vectors.
  */
-public class SecurityRatingExampleVerification extends AbstractVerification {
+public class SecurityRatingExampleVerification extends RatingVerification {
 
-  private static final Interval AWFUL_SCORE = DoubleInterval.init().from(0).to(1).closed().make();
-  private static final Interval BAD_SCORE = DoubleInterval.init().from(1).to(5).closed().make();
-  private static final Interval OKAY_SCORE = DoubleInterval.init().from(5).to(7).closed().make();
-  private static final Interval AWESOME_SCORE = DoubleInterval.init().from(9).to(10).closed().make();
+  private static final Interval AWFUL_SCORE = DoubleInterval.closed(0, 1);
+  private static final Interval BAD_SCORE = DoubleInterval.closed(1, 5);
+  private static final Interval OKAY_SCORE = DoubleInterval.closed(5, 7);
+  private static final Interval AWESOME_SCORE = DoubleInterval.closed(9, 10);
 
   /**
    * Test vectors for {@link SecurityRatingExample}.

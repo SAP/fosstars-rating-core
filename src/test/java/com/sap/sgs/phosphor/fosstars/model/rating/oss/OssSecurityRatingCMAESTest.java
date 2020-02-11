@@ -14,6 +14,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SECURITY_REVIEWS_DONE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
+import static com.sap.sgs.phosphor.fosstars.model.qa.RatingVerification.loadTestVectorsFromCsvResource;
 import static com.sap.sgs.phosphor.fosstars.model.qa.TestVectorBuilder.newTestVector;
 import static com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel.BAD;
 import static com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel.GOOD;
@@ -25,6 +26,7 @@ import com.sap.sgs.phosphor.fosstars.model.Version;
 import com.sap.sgs.phosphor.fosstars.model.math.DoubleInterval;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
 import com.sap.sgs.phosphor.fosstars.model.qa.VerificationFailedException;
+import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel;
 import com.sap.sgs.phosphor.fosstars.model.value.SecurityReview;
 import com.sap.sgs.phosphor.fosstars.model.value.SecurityReviews;
 import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
@@ -125,7 +127,7 @@ public class OssSecurityRatingCMAESTest {
     assertNotNull(rating);
 
     OssSecurityRatingVerification verification
-        = OssSecurityRatingVerification.createFor(rating, SIMPLE_TEST_VECTORS);
+        = new OssSecurityRatingVerification(rating, SIMPLE_TEST_VECTORS);
     assertNotNull(verification);
 
     Path path = Files.createTempFile("fosstars", "oss_security_rating");
@@ -150,8 +152,10 @@ public class OssSecurityRatingCMAESTest {
 
     String filename = "com/sap/sgs/phosphor/fosstars/model/rating/oss/SimpleTestVectors.csv";
     try (InputStream is = getClass().getClassLoader().getResourceAsStream(filename)) {
+      List<TestVector> vectors = loadTestVectorsFromCsvResource(
+          rating.allFeatures(), is, SecurityLabel::valueOf);
       OssSecurityRatingVerification verification
-          = OssSecurityRatingVerification.loadTestVectorsFromCSVResource(rating, is);
+          = new OssSecurityRatingVerification(rating, vectors);
       assertNotNull(verification);
 
       Path path = Files.createTempFile("fosstars", "oss_security_rating");
