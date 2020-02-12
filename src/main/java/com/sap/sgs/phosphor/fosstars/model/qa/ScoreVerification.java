@@ -19,7 +19,7 @@ public class ScoreVerification extends AbstractVerification {
   /**
    * Initializes a {@link ScoreVerification} for a {@link Score}.
    *
-   * @param score A rating to be verified.
+   * @param score A score to be verified.
    * @param vectors A list of test vectors.
    */
   public ScoreVerification(Score score, List<TestVector> vectors) {

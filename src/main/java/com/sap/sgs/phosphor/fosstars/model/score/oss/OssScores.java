@@ -15,7 +15,7 @@ public class OssScores {
   /**
    * Shows how actively an open-source project is developed.
    */
-  public static final Score PROJECT_ACTIVITY = new ProjectActivityScore();
+  public static final ProjectActivityScore PROJECT_ACTIVITY = new ProjectActivityScore();
 
   /**
    * Shows how popular an open-source project is.
