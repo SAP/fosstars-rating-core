@@ -20,6 +20,7 @@ import com.sap.sgs.phosphor.fosstars.model.Weight;
 import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.sgs.phosphor.fosstars.model.value.IntegerValue;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -70,15 +71,13 @@ public class SecurityRatingExampleTest {
   @Test
   public void allFeatures() {
     Rating rating = RatingRepository.INSTANCE.get(SecurityRatingExample.class);
-    Feature[] features = rating.allFeatures();
+    Set<Feature> features = rating.allFeatures();
     assertNotNull(features);
-    assertEquals(4, features.length);
-    Set<Feature> set = new HashSet<>(Arrays.asList(features));
-    assertEquals(4, set.size());
-    assertTrue(set.contains(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE));
-    assertTrue(set.contains(NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE));
-    assertTrue(set.contains(SECURITY_REVIEW_DONE_EXAMPLE));
-    assertTrue(set.contains(STATIC_CODE_ANALYSIS_DONE_EXAMPLE));
+    assertEquals(4, features.size());
+    assertTrue(features.contains(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE));
+    assertTrue(features.contains(NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE));
+    assertTrue(features.contains(SECURITY_REVIEW_DONE_EXAMPLE));
+    assertTrue(features.contains(STATIC_CODE_ANALYSIS_DONE_EXAMPLE));
   }
 
   @Test

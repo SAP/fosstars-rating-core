@@ -6,6 +6,8 @@ import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Locale;
@@ -38,7 +40,8 @@ public class Utils {
   }
 
   /**
-   * Converts a number of values to a set of values. An exception is thrown if the values contains duplicates.
+   * Converts a number of values to a set of values.
+   * An exception is thrown if the values contains duplicates.
    *
    * @param values Values to be added to a set.
    * @return A set of values.
@@ -81,6 +84,16 @@ public class Utils {
    * @return A set of unknown values for the specified features.
    */
   public static Set<Value> allUnknown(Feature... features) {
+    return allUnknown(Arrays.asList(features));
+  }
+
+  /**
+   * Takes a number of features, and returns as set of unknown values for those features.
+   *
+   * @param features A collection of features.
+   * @return A set of unknown values for the specified features.
+   */
+  public static Set<Value> allUnknown(Collection<Feature> features) {
     Objects.requireNonNull(features, "Hey! Give me features but not a null!");
     Set<Value> values = new HashSet<>();
     for (Feature feature : features) {
@@ -111,13 +124,29 @@ public class Utils {
   /**
    * Looks for a value of the specified feature in a set of values.
    *
-   * @throws IllegalArgumentException with the specified error message if no such a getValue was
-   * found.
+   * @param values The set of values.
+   * @param feature The feature.
+   * @param errorMessage The error message for an exception
+   * @param <T> Type of the value.
+   * @return The value of the specified feature.
+   * @throws IllegalArgumentException with the specified error message
+   *                                  if no value was found for the specified feature.
    */
   public static <T> Value<T> findValue(Set<Value> values, Feature feature, String errorMessage) {
     return findValue(values.toArray(new Value[0]), feature, errorMessage);
   }
 
+  /**
+   * Looks for a value of the specified feature in an array of values.
+   *
+   * @param values The array of values.
+   * @param feature The feature.
+   * @param errorMessage The error message for an exception
+   * @param <T> Type of the value.
+   * @return The value of the specified feature.
+   * @throws IllegalArgumentException with the specified error message
+   *                                  if no value was found for the specified feature.
+   */
   public static <T> Value<T> findValue(Value[] values, Feature feature, String errorMessage) {
     Value<T> value = findValue(values, feature);
     if (value == null) {

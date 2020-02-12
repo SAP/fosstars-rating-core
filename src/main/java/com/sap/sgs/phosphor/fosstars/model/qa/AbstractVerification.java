@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +32,7 @@ public abstract class AbstractVerification {
 
   private static final Label NO_LABEL = null;
 
-  static final LabelParser DUMMY_LABEL_PARSER = string -> NO_LABEL;
+  private static final LabelParser DUMMY_LABEL_PARSER = string -> NO_LABEL;
 
   /**
    * A list of test vectors.
@@ -60,6 +61,25 @@ public abstract class AbstractVerification {
    * The method expects only specified features.
    * Then, it uses the loaded test vectors to create an instance of
    * {@link RatingVerification} for a specified rating.
+   * The method ignores labels in the test vectors.
+   *
+   * @param features A list of expected features.
+   * @param is An input stream with test vectors in CSV format.
+   * @return A list of loaded test vectors.
+   * @throws IOException If something went wrong.
+   */
+  public static List<TestVector> loadTestVectorsFromCsvResource(
+      Collection<Feature> features, InputStream is) throws IOException {
+
+    return loadTestVectorsFromCsvResource(features, is, DUMMY_LABEL_PARSER);
+  }
+
+  /**
+   * First, the method loads test vectors from an input stream.
+   * The method expects the test vectors to be in CSV format.
+   * The method expects only specified features.
+   * Then, it uses the loaded test vectors to create an instance of
+   * {@link RatingVerification} for a specified rating.
    *
    * @param features A list of expected features.
    * @param is An input stream with test vectors in CSV format.
@@ -68,7 +88,15 @@ public abstract class AbstractVerification {
    * @throws IOException If something went wrong.
    */
   public static List<TestVector> loadTestVectorsFromCsvResource(
-      Feature[] features, InputStream is, LabelParser labelParser) throws IOException {
+      Collection<Feature> features, InputStream is, LabelParser labelParser) throws IOException {
+
+    Objects.requireNonNull(is, "Input stream can't be null!");
+    Objects.requireNonNull(labelParser, "Label parser can't be null!");
+    Objects.requireNonNull(features, "Features can't be null!");
+
+    if (features.isEmpty()) {
+      throw new IllegalArgumentException("Features can't be empty!");
+    }
 
     List<TestVector> vectors = new ArrayList<>();
     try (Reader reader = new InputStreamReader(is)) {
