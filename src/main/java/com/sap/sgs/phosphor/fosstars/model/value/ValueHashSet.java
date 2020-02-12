@@ -16,6 +16,8 @@ import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -35,7 +37,7 @@ public class ValueHashSet implements ValueSet {
   private final Map<Feature, Value> featureToValue = new HashMap<>();
 
   /**
-   * @return An empty {@link ValueHashSet}
+   * Returns an empty {@link ValueHashSet}.
    */
   public static ValueHashSet empty() {
     return new ValueHashSet();
@@ -44,10 +46,10 @@ public class ValueHashSet implements ValueSet {
   /**
    * Fills out a {@link ValueHashSet} with unknown values for the specified features.
    *
-   * @param features A number of features.
+   * @param features A collection of features.
    * @return An instance of {@link ValueHashSet}.
    */
-  public static ValueHashSet unknown(Feature... features) {
+  public static ValueHashSet unknown(Collection<Feature> features) {
     ValueHashSet values = empty();
     for (Feature feature : features) {
       if (values.has(feature)) {
@@ -57,6 +59,16 @@ public class ValueHashSet implements ValueSet {
       values.update(UnknownValue.of(feature));
     }
     return values;
+  }
+
+  /**
+   * Fills out a {@link ValueHashSet} with unknown values for the specified features.
+   *
+   * @param features A number of features.
+   * @return An instance of {@link ValueHashSet}.
+   */
+  public static ValueHashSet unknown(Feature... features) {
+    return unknown(Arrays.asList(features));
   }
 
   @Override

@@ -9,7 +9,6 @@ import java.util.Set;
 /**
  * This is an interface for a rating. A rating takes feature values and calculate a score.
  * Then, the rating can convert the score to a label.
- *
  * All ratings have to support serialization to JSON with Jackson.
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
@@ -20,17 +19,17 @@ import java.util.Set;
 public interface Rating {
 
   /**
-   * @return A name of the rating.
+   * Returns a name of the rating.
    */
   String name();
 
   /**
-   * @return A version of the rating.
+   * Returns a version of the rating.
    */
   Version version();
 
   /**
-   * @return A score which the rating is based on.
+   * Returns a score which the rating is based on.
    */
   Score score();
 
@@ -63,7 +62,7 @@ public interface Rating {
    *
    * @return A number of features.
    */
-  Feature[] allFeatures();
+  Set<Feature> allFeatures();
 
   /**
    * Accept a visitor.

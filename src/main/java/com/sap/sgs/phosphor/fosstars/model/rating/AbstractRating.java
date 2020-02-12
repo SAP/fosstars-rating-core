@@ -11,6 +11,7 @@ import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.Version;
 import com.sap.sgs.phosphor.fosstars.model.Visitor;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -35,7 +36,17 @@ public abstract class AbstractRating implements Rating {
    */
   private final Version version;
 
+  /**
+   * Initializes a rating.
+   *
+   * @param name A name of the rating.
+   * @param score A score which the rating is based on.
+   * @param version A version of the rating.
+   */
   public AbstractRating(String name, Score score, Version version) {
+    Objects.requireNonNull(name, "Name can't be null!");
+    Objects.requireNonNull(score, "Score can't be null!");
+    Objects.requireNonNull(version, "Version can't be null!");
     this.name = name;
     this.score = score;
     this.version = version;
@@ -81,10 +92,10 @@ public abstract class AbstractRating implements Rating {
   }
 
   @Override
-  public Feature[] allFeatures() {
+  public Set<Feature> allFeatures() {
     Set<Feature> allFeatures = new HashSet<>();
-    findFeatures(score, allFeatures);
-    return allFeatures.toArray(new Feature[0]);
+    fillOutFeatures(score, allFeatures);
+    return Collections.unmodifiableSet(allFeatures);
   }
 
   @Override
@@ -102,8 +113,7 @@ public abstract class AbstractRating implements Rating {
       return false;
     }
     AbstractRating that = (AbstractRating) o;
-    return Objects.equals(score, that.score) &&
-        version == that.version;
+    return Objects.equals(score, that.score) && version == that.version;
   }
 
   @Override
@@ -111,10 +121,10 @@ public abstract class AbstractRating implements Rating {
     return Objects.hash(score, version);
   }
 
-  private static void findFeatures(Score score, Set<Feature> allFeatures) {
+  private static void fillOutFeatures(Score score, Set<Feature> allFeatures) {
     allFeatures.addAll(score.features());
     for (Score subScore : score.subScores()) {
-      findFeatures(subScore, allFeatures);
+      fillOutFeatures(subScore, allFeatures);
     }
   }
 
