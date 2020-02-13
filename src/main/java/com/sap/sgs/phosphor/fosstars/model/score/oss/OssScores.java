@@ -31,7 +31,8 @@ public class OssScores {
   /**
    * Shows how well developers and community are aware about security.
    */
-  public static final Score PROJECT_SECURITY_AWARENESS = new ProjectSecurityAwarenessScore();
+  public static final ProjectSecurityAwarenessScore PROJECT_SECURITY_AWARENESS
+      = new ProjectSecurityAwarenessScore();
 
   /**
    * Shows how well security testing is done for an open-source project.

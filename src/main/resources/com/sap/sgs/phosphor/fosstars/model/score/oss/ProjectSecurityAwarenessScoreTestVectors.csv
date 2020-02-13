@@ -1,0 +1,6 @@
+,alias,score_from,score_to,label,If an open-source project has a security policy,If an open-source project has a security team
+0,test_vector_0,0.0,0.1,,unknown,unknown
+1,test_vector_1,0.0,1.0,,False,False
+2,test_vector_2,5.0,8.0,,False,True
+3,test_vector_3,4.0,6.0,,True,False
+4,test_vector_4,9.0,10.0,,True,True
