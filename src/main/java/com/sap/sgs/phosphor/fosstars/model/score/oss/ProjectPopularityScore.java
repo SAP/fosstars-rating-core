@@ -8,13 +8,19 @@ import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.ScoreValue;
 import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
+import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
 import com.sap.sgs.phosphor.fosstars.model.score.FeatureBasedScore;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * The project popularity score is currently based on two features:
- * - number of stars on GitHub
- * - number of watchers on GitHub
- *
+ * <ul>
+ *   <li>number of stars on GitHub</li>
+ *   <li>number of watchers on GitHub</li>
+ * </ul>
  * First, it calculates a stars sub-score. Next, it calculates a watchers sub-score.
  * It uses linear functions to transform the numbers to sub-scores.
  * Then, the sub-scores are added to each other.
@@ -63,6 +69,7 @@ public class ProjectPopularityScore extends FeatureBasedScore {
   /**
    * Calculates a stars sub-score.
    *
+   * @param stars A number of stars.
    * @throws IllegalArgumentException if a number of stars is negative.
    */
   private double starsScore(Value<Integer> stars) {
@@ -84,6 +91,7 @@ public class ProjectPopularityScore extends FeatureBasedScore {
   /**
    * Calculates a watchers sub-score.
    *
+   * @param watchers A number of watchers.
    * @throws IllegalArgumentException if a number of watchers is negative.
    */
   private double watchersScore(Value<Integer> watchers) {
@@ -100,5 +108,43 @@ public class ProjectPopularityScore extends FeatureBasedScore {
     }
 
     return MAX;
+  }
+
+  /**
+   * This class implements a verification procedure for {@link ProjectPopularityScore}.
+   * The class loads test vectors, and provides methods to verify a {@link ProjectPopularityScore}
+   * against those test vectors.
+   */
+  public static class Verification extends ScoreVerification {
+
+    /**
+     * A name of a resource which contains the test vectors.
+     */
+    private static final String DEFAULT_TEST_VECTORS_CSV = "ProjectPopularityScoreTestVectors.csv";
+
+    /**
+     * Initializes a {@link Verification} for a {@link ProjectPopularityScore}.
+     *
+     * @param score A score to be verified.
+     * @param vectors A list of test vectors.
+     */
+    public Verification(ProjectPopularityScore score, List<TestVector> vectors) {
+      super(score, vectors);
+    }
+
+    /**
+     * Creates an instance of {@link Verification} for a specified score. The method loads test
+     * vectors from a default resource.
+     *
+     * @param score The score to be verified.
+     * @return An instance of {@link Verification}.
+     */
+    static Verification createFor(ProjectPopularityScore score) throws IOException {
+      try (InputStream is = Verification.class.getResourceAsStream(DEFAULT_TEST_VECTORS_CSV)) {
+
+        return new Verification(
+            score, loadTestVectorsFromCsvResource(score.features(), is));
+      }
+    }
   }
 }
