@@ -20,7 +20,7 @@ public class OssScores {
   /**
    * Shows how popular an open-source project is.
    */
-  public static final Score PROJECT_POPULARITY = new ProjectPopularityScore();
+  public static final ProjectPopularityScore PROJECT_POPULARITY = new ProjectPopularityScore();
 
   /**
    * Shows how an open-source community is committed to support and maintain an open-source project.
