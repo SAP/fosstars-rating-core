@@ -43,7 +43,8 @@ public class OssScores {
   /**
    * Shows how well vulnerabilities are patched.
    */
-  public static final Score UNPATCHED_VULNERABILITIES = new UnpatchedVulnerabilitiesScore();
+  public static final UnpatchedVulnerabilitiesScore UNPATCHED_VULNERABILITIES
+      = new UnpatchedVulnerabilitiesScore();
 
   /**
    * Shows how fast vulnerabilities are patched.

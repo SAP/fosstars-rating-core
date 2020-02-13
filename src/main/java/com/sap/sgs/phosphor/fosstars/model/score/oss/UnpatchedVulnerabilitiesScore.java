@@ -8,10 +8,15 @@ import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.ScoreValue;
 import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
+import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
 import com.sap.sgs.phosphor.fosstars.model.score.FeatureBasedScore;
 import com.sap.sgs.phosphor.fosstars.model.value.CVSS;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerability;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * The score analyses unpatched vulnerabilities in an open-source project.
@@ -85,5 +90,44 @@ public class UnpatchedVulnerabilitiesScore extends FeatureBasedScore {
     score -= LOW_SEVERITY_PENALTY * lowSeverity;
 
     return new ScoreValue(Score.adjust(score), Confidence.MAX);
+  }
+
+  /**
+   * This class implements a verification procedure for {@link UnpatchedVulnerabilitiesScore}.
+   * The class loads test vectors,
+   * and provides methods to verify a {@link UnpatchedVulnerabilitiesScore}
+   * against those test vectors.
+   */
+  public static class Verification extends ScoreVerification {
+
+    /**
+     * A name of a resource which contains the test vectors.
+     */
+    private static final String TEST_VECTORS_CSV = "UnpatchedVulnerabilitiesScoreTestVectors.csv";
+
+    /**
+     * Initializes a {@link Verification} for a {@link UnpatchedVulnerabilitiesScore}.
+     *
+     * @param score A score to be verified.
+     * @param vectors A list of test vectors.
+     */
+    public Verification(UnpatchedVulnerabilitiesScore score, List<TestVector> vectors) {
+      super(score, vectors);
+    }
+
+    /**
+     * Creates an instance of {@link Verification} for a specified score. The method loads test
+     * vectors from a default resource.
+     *
+     * @param score The score to be verified.
+     * @return An instance of {@link UnpatchedVulnerabilitiesScore}.
+     */
+    static Verification createFor(UnpatchedVulnerabilitiesScore score) throws IOException {
+      try (InputStream is = UnpatchedVulnerabilitiesScore.Verification.class
+          .getResourceAsStream(TEST_VECTORS_CSV)) {
+
+        return new Verification(score, loadTestVectorsFromCsvResource(score.features(), is));
+      }
+    }
   }
 }
