@@ -9,22 +9,30 @@ import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.ScoreValue;
 import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
+import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
 import com.sap.sgs.phosphor.fosstars.model.score.FeatureBasedScore;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * The community commitment score depends on the following features:
- *
  * <ul>
  *   <li>if a project is supported by a company</li>
  *   <li>if a project is part of the Apache Software Foundation</li>
  *   <li>if a project is part of the Eclipse Foundation</li>
  * </ul>
- *
- * A project gets the maximum score if it's supported by a company and is part of one of the foundations.
- * A project gets the minimum score if it's not supported by a company and doesn't belong to any foundation.
+ * A project gets the maximum score if it's supported by a company
+ * and is part of one of the foundations.
+ * A project gets the minimum score if it's not supported by a company
+ * and doesn't belong to any foundation.
  */
 public class CommunityCommitmentScore extends FeatureBasedScore {
 
+  /**
+   * Initializes a {@link CommunityCommitmentScore}.
+   */
   CommunityCommitmentScore() {
     super("How well open-source community commits to support an open-source project",
         SUPPORTED_BY_COMPANY, IS_APACHE, IS_ECLIPSE);
@@ -35,9 +43,9 @@ public class CommunityCommitmentScore extends FeatureBasedScore {
     Value<Boolean> hasResponsibleCompany = findValue(values, SUPPORTED_BY_COMPANY,
         "Hey! You have to tell me if the project is supported by a company or not!");
     Value<Boolean> isApacheProject = findValue(values, IS_APACHE,
-        "Hey! You have to tell me if the project belongs to the Apache Software Foundation!");
+        "Hey! Tell me if the project belongs to the Apache Software Foundation!");
     Value<Boolean> isEclipseProject = findValue(values, IS_ECLIPSE,
-        "Hey! You have to tell me if the project belongs to the Eclipse Foundation!");
+        "Hey! Tell me if the project belongs to the Eclipse Foundation!");
 
     double scorePoints = Score.MIN;
 
@@ -60,5 +68,44 @@ public class CommunityCommitmentScore extends FeatureBasedScore {
     return new ScoreValue(
         Score.adjust(scorePoints),
         Confidence.make(hasResponsibleCompany, isApacheProject, isEclipseProject));
+  }
+
+  /**
+   * This class implements a verification procedure for {@link CommunityCommitmentScore}.
+   * The class loads test vectors, and provides methods to verify a {@link CommunityCommitmentScore}
+   * against those test vectors.
+   */
+  public static class Verification extends ScoreVerification {
+
+    /**
+     * A name of a resource which contains the test vectors.
+     */
+    private static final String TEST_VECTORS_CSV = "CommunityCommitmentScoreTestVectors.csv";
+
+    /**
+     * Initializes a {@link Verification}
+     * for a {@link CommunityCommitmentScore}.
+     *
+     * @param score A score to be verified.
+     * @param vectors A list of test vectors.
+     */
+    public Verification(CommunityCommitmentScore score, List<TestVector> vectors) {
+      super(score, vectors);
+    }
+
+    /**
+     * Creates an instance of {@link Verification} for a specified score. The method loads test
+     * vectors from a default resource.
+     *
+     * @param score The score to be verified.
+     * @return An instance of {@link CommunityCommitmentScore}.
+     */
+    static Verification createFor(CommunityCommitmentScore score) throws IOException {
+      try (InputStream is = CommunityCommitmentScore.Verification.class
+          .getResourceAsStream(TEST_VECTORS_CSV)) {
+
+        return new Verification(score, loadTestVectorsFromCsvResource(score.features(), is));
+      }
+    }
   }
 }
