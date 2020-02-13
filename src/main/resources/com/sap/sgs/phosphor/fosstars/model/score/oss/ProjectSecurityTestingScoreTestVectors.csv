@@ -1,0 +1,9 @@
+,alias,score_from,score_to,label,Security reviews for an open-source project,If an open-source project is regularly scanned for vulnerable dependencies
+0,test_vector_0,0.0,0.1,,unknown,unknown
+1,test_vector_1,0.0,1.0,,{'reviews': []},False
+2,test_vector_2,0.0,1.0,,unknown,False
+3,test_vector_3,4.0,7.0,,"{'reviews': [{'when': '2019-02-13', 'who': 'Wolfgang Amadeus Mozart', 'link': 'https://site/proof'}]}",False
+4,test_vector_4,4.0,7.0,,"{'reviews': [{'when': '2019-02-13', 'who': 'Wolfgang Amadeus Mozart', 'link': 'https://site/proof'}]}",unknown
+5,test_vector_5,3.0,6.0,,{'reviews': []},True
+6,test_vector_6,3.0,6.0,,unknown,True
+7,test_vector_7,7.0,10.0,,"{'reviews': [{'when': '2019-02-13', 'who': 'Wolfgang Amadeus Mozart', 'link': 'https://site/proof'}]}",True
