@@ -37,7 +37,8 @@ public class OssScores {
   /**
    * Shows how well security testing is done for an open-source project.
    */
-  public static final Score PROJECT_SECURITY_TESTING = new ProjectSecurityTestingScore();
+  public static final ProjectSecurityTestingScore PROJECT_SECURITY_TESTING
+      = new ProjectSecurityTestingScore();
 
   /**
    * Shows how well vulnerabilities are patched.
