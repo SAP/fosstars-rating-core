@@ -49,7 +49,8 @@ public class OssScores {
   /**
    * Shows how fast vulnerabilities are patched.
    */
-  public static final Score VULNERABILITY_LIFETIME = new VulnerabilityLifetimeScore();
+  public static final VulnerabilityLifetimeScore VULNERABILITY_LIFETIME
+      = new VulnerabilityLifetimeScore();
 
   /**
    * A security rating for an open-source project.
