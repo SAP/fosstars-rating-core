@@ -6,7 +6,6 @@ import static com.sap.sgs.phosphor.fosstars.model.other.Utils.findValue;
 
 import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
-import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.ScoreValue;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
@@ -158,12 +157,12 @@ public class ProjectActivityScore extends FeatureBasedScore {
     private static final String DEFAULT_TEST_VECTORS_CSV = "ProjectActivityScoreTestVectors.csv";
 
     /**
-     * Initializes a {@link Verification} for a {@link Score}.
+     * Initializes a {@link Verification} for a {@link ProjectActivityScore}.
      *
      * @param score A score to be verified.
      * @param vectors A list of test vectors.
      */
-    public Verification(Score score, List<TestVector> vectors) {
+    public Verification(ProjectActivityScore score, List<TestVector> vectors) {
       super(score, vectors);
     }
 
