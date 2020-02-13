@@ -1,0 +1,8 @@
+,alias,score_from,score_to,label,If an open-source project belongs to Eclipse Foundation,If an open-source project belongs to Apache Foundation,If an open-source project is supported by a company
+0,test_vector_0,0.0,0.1,,unknown,unknown,unknown
+1,test_vector_1,0.0,1.0,,False,False,False
+2,test_vector_2,5.0,9.0,,False,True,False
+3,test_vector_3,5.0,9.0,,True,False,False
+4,test_vector_4,6.0,9.0,,False,False,True
+5,test_vector_5,9.0,10.0,,False,True,True
+6,test_vector_6,9.0,10.0,,True,False,True

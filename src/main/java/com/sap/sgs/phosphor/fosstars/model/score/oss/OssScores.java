@@ -25,7 +25,8 @@ public class OssScores {
   /**
    * Shows how an open-source community is committed to support and maintain an open-source project.
    */
-  public static final Score COMMUNITY_COMMITMENT = new CommunityCommitmentScore();
+  public static final CommunityCommitmentScore COMMUNITY_COMMITMENT
+      = new CommunityCommitmentScore();
 
   /**
    * Shows how well developers and community are aware about security.
