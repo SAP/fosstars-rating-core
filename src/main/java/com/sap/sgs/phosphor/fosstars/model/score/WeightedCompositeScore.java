@@ -37,7 +37,6 @@ public class WeightedCompositeScore extends AbstractScore {
 
   /**
    * This is a constructor which is used by Jackson during deserialization.
-   *
    * TODO: Check if Jackson changes access for this constructor, and don't revert it back.
    *       If so, is it a security issue?
    */
@@ -54,7 +53,6 @@ public class WeightedCompositeScore extends AbstractScore {
    * This is a getter for Jackson to get the weighted scores. It might be good if the method
    * returned an unmodifiable set, but it breaks deserialization process. Let's make the method at
    * least private then.
-   *
    * TODO: Figure out if Jackson changes access level for this method, and don't revert it back.
    *       If so, is it a security issue?
    */
