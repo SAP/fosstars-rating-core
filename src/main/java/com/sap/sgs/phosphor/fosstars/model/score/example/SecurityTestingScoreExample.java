@@ -5,9 +5,9 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.example.ExampleFeature
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.findValue;
 
 import com.sap.sgs.phosphor.fosstars.model.Confidence;
-import com.sap.sgs.phosphor.fosstars.model.ScoreValue;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.score.FeatureBasedScore;
+import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 
 /**
  * This is a sample score which represents a status of security testing. The score is based on

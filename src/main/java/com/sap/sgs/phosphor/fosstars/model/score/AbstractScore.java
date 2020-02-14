@@ -2,11 +2,11 @@ package com.sap.sgs.phosphor.fosstars.model.score;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.sap.sgs.phosphor.fosstars.model.Score;
-import com.sap.sgs.phosphor.fosstars.model.ScoreValue;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.Visitor;
 import com.sap.sgs.phosphor.fosstars.model.value.DoubleValue;
+import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
 import java.util.Objects;
 import java.util.Set;

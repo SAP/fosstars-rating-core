@@ -1,4 +1,4 @@
-package com.sap.sgs.phosphor.fosstars.model;
+package com.sap.sgs.phosphor.fosstars.model.value;
 
 import static com.sap.sgs.phosphor.fosstars.model.score.example.ExampleScores.PROJECT_ACTIVITY_SCORE_EXAMPLE;
 import static org.junit.Assert.assertEquals;
@@ -7,7 +7,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sap.sgs.phosphor.fosstars.model.Score;
 import java.io.IOException;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class ScoreValueTest {
@@ -17,7 +19,7 @@ public class ScoreValueTest {
   @Test
   public void increase() {
     ScoreValue value = new ScoreValue(PROJECT_ACTIVITY_SCORE_EXAMPLE);
-    assertEquals(Score.MIN, value.get(), ACCURACY);
+    Assert.assertEquals(Score.MIN, value.get(), ACCURACY);
     value.increase(2.1);
     assertEquals(2.1, value.get(), ACCURACY);
     value.increase(4.9);

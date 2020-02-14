@@ -2,7 +2,7 @@ package com.sap.sgs.phosphor.fosstars;
 
 import static org.junit.Assert.assertEquals;
 
-import com.sap.sgs.phosphor.fosstars.model.ScoreValue;
+import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 
 public class TestUtils {
 

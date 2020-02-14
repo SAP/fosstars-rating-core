@@ -1,9 +1,12 @@
-package com.sap.sgs.phosphor.fosstars.model;
+package com.sap.sgs.phosphor.fosstars.model.value;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sap.sgs.phosphor.fosstars.model.Confidence;
+import com.sap.sgs.phosphor.fosstars.model.Score;
+import com.sap.sgs.phosphor.fosstars.model.Value;
 import java.util.Objects;
 
 /**

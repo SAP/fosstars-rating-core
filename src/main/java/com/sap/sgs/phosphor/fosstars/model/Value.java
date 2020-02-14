@@ -9,6 +9,7 @@ import com.sap.sgs.phosphor.fosstars.model.value.EnumValue;
 import com.sap.sgs.phosphor.fosstars.model.value.ExpiringValue;
 import com.sap.sgs.phosphor.fosstars.model.value.IntegerValue;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGradeValue;
+import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.sgs.phosphor.fosstars.model.value.SecurityReviewsDoneValue;
 import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
 import com.sap.sgs.phosphor.fosstars.model.value.VulnerabilitiesValue;

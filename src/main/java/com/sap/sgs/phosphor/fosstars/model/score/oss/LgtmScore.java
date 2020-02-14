@@ -5,10 +5,10 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.WORSE_
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.findValue;
 
 import com.sap.sgs.phosphor.fosstars.model.Confidence;
-import com.sap.sgs.phosphor.fosstars.model.ScoreValue;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.score.FeatureBasedScore;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade;
+import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.util.EnumMap;
 
 /**
