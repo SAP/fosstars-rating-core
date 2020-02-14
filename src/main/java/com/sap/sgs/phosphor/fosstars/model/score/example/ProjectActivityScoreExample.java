@@ -64,7 +64,7 @@ public class ProjectActivityScoreExample extends FeatureBasedScore {
       score += 5.0;
     }
 
-    return new ScoreValue(score, Confidence.MAX);
+    return new ScoreValue(this, score, Confidence.MAX);
   }
 
 }

@@ -24,6 +24,7 @@ public class LgtmScore extends FeatureBasedScore {
   private static final double LGTM_USAGE_POINTS = 2.0;
 
   private static final EnumMap<LgtmGrade, Double> GRADE_TO_POINTS = new EnumMap<>(LgtmGrade.class);
+
   static {
     GRADE_TO_POINTS.put(LgtmGrade.A_PLUS, 8.0);
     GRADE_TO_POINTS.put(LgtmGrade.A, 8.0);
@@ -33,6 +34,9 @@ public class LgtmScore extends FeatureBasedScore {
     GRADE_TO_POINTS.put(LgtmGrade.E, 8.0);
   }
 
+  /**
+   * Initializes a new {@link LgtmScore}.
+   */
   LgtmScore() {
     super("If and how a project addresses issues reported by LGTM.",
         USES_LGTM, WORSE_LGTM_GRADE);
@@ -45,7 +49,7 @@ public class LgtmScore extends FeatureBasedScore {
     Value<LgtmGrade> worseLgtmGrade = findValue(values, WORSE_LGTM_GRADE,
         "Hey! You have to tell me the worse LGTM grade for the project!");
 
-    ScoreValue scoreValue = new ScoreValue();
+    ScoreValue scoreValue = new ScoreValue(this);
 
     usesLgtm.processIfKnown(uses -> {
       if (uses) {

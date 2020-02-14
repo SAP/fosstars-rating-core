@@ -88,7 +88,7 @@ public class WeightedCompositeScore extends AbstractScore {
     for (WeightedScore weightedScore : weightedScores) {
       double weight = weightedScore.weight.value();
       ScoreValue scoreValue = weightedScore.score.calculate(values);
-      scoreSum += weight * scoreValue.score();
+      scoreSum += weight * scoreValue.get();
       confidenceSum += weight * scoreValue.confidence();
       weightSum += weight;
     }
@@ -98,6 +98,7 @@ public class WeightedCompositeScore extends AbstractScore {
     }
 
     return new ScoreValue(
+        this,
         Score.adjust(scoreSum / weightSum),
         Confidence.adjust(confidenceSum / weightSum));
   }

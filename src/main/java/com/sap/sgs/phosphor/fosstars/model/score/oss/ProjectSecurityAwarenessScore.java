@@ -49,7 +49,10 @@ public class ProjectSecurityAwarenessScore extends FeatureBasedScore {
       points += 8.0;
     }
 
-    return new ScoreValue(Score.adjust(points), Confidence.make(securityAdvisories, securityTeam));
+    return new ScoreValue(
+        this,
+        Score.adjust(points),
+        Confidence.make(securityAdvisories, securityTeam));
   }
 
   /**

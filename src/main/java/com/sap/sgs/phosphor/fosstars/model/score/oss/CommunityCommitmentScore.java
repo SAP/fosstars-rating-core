@@ -66,6 +66,7 @@ public class CommunityCommitmentScore extends FeatureBasedScore {
     }
 
     return new ScoreValue(
+        this,
         Score.adjust(scorePoints),
         Confidence.make(hasResponsibleCompany, isApacheProject, isEclipseProject));
   }

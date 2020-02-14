@@ -34,8 +34,8 @@ public class WeightedCompositeScoreTest {
   @Test
   public void calculate() {
     Score score = new WeightedScoreImpl();
-    double weightedFirstScore = 0.8 * new FirstScore().calculate(Collections.emptySet()).score();
-    double weightedSecondScore = 0.3 * new SecondScore().calculate(Collections.emptySet()).score();
+    double weightedFirstScore = 0.8 * new FirstScore().calculate(Collections.emptySet()).get();
+    double weightedSecondScore = 0.3 * new SecondScore().calculate(Collections.emptySet()).get();
     double weightSum = 0.8 + 0.3;
     double expectedScore = (weightedFirstScore + weightedSecondScore) / weightSum;
     assertScore(expectedScore, score.calculate(Collections.emptySet()));
@@ -155,7 +155,7 @@ public class WeightedCompositeScoreTest {
 
     @Override
     public ScoreValue calculate(Value... values) {
-      return new ScoreValue(0.2, Confidence.MAX);
+      return new ScoreValue(this, 0.2, Confidence.MAX);
     }
 
     @Override
@@ -192,7 +192,7 @@ public class WeightedCompositeScoreTest {
 
     @Override
     public ScoreValue calculate(Value... values) {
-      return new ScoreValue(0.5, Confidence.MAX);
+      return new ScoreValue(this, 0.5, Confidence.MAX);
     }
 
     @Override

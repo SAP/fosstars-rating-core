@@ -40,7 +40,7 @@ public class ScoreVerifier extends AbstractVerifier {
     int index = 0;
     for (TestVector vector : vectors) {
       ScoreValue scoreValue = score.calculate(vector.values());
-      double actualScore = scoreValue.score();
+      double actualScore = scoreValue.get();
       if (!vector.expectedScore().contains(actualScore)) {
         failedVectors.add(new FailedTestVector(
             vector,

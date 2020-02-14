@@ -7,10 +7,10 @@ import com.sap.sgs.phosphor.fosstars.model.ScoreValue;
 public class TestUtils {
 
   public static void assertScore(double expectedScore, ScoreValue scoreValue, double delta) {
-    assertEquals(expectedScore, scoreValue.score(), delta);
+    assertEquals(expectedScore, scoreValue.get(), delta);
   }
 
   public static void assertScore(double expectedScore, ScoreValue scoreValue) {
-    assertEquals(expectedScore, scoreValue.score(), 0.0);
+    assertEquals(expectedScore, scoreValue.get(), 0.0);
   }
 }

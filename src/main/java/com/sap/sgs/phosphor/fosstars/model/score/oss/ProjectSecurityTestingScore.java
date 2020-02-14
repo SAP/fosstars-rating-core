@@ -49,7 +49,10 @@ public class ProjectSecurityTestingScore extends FeatureBasedScore {
       points += 3.0;
     }
 
-    return new ScoreValue(Score.adjust(points), Confidence.make(reviews, dependenciesScanned));
+    return new ScoreValue(
+        this,
+        Score.adjust(points),
+        Confidence.make(reviews, dependenciesScanned));
   }
 
   /**

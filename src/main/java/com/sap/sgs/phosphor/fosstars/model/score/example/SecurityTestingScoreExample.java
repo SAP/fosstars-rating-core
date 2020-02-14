@@ -41,7 +41,7 @@ public class SecurityTestingScoreExample extends FeatureBasedScore {
     if (staticCodeAnalysisDone) {
       score += 5.0;
     }
-    return new ScoreValue(score, Confidence.MAX);
+    return new ScoreValue(this, score, Confidence.MAX);
   }
 
 }
