@@ -24,27 +24,28 @@ import com.sap.sgs.phosphor.fosstars.model.value.VulnerabilitiesValue;
     @JsonSubTypes.Type(value = DoubleValue.class),
     @JsonSubTypes.Type(value = BooleanValue.class),
     @JsonSubTypes.Type(value = DateValue.class),
+    @JsonSubTypes.Type(value = ScoreValue.class),
     @JsonSubTypes.Type(value = ExpiringValue.class),
     @JsonSubTypes.Type(value = VulnerabilitiesValue.class),
     @JsonSubTypes.Type(value = UnknownValue.class),
     @JsonSubTypes.Type(value = SecurityReviewsDoneValue.class),
     @JsonSubTypes.Type(value = EnumValue.class),
-    @JsonSubTypes.Type(value = LgtmGradeValue.class),
+    @JsonSubTypes.Type(value = LgtmGradeValue.class)
 })
 public interface Value<T> {
 
   /**
-   * @return A feature which the value is for.
+   * Returns a feature which the value is for.
    */
   Feature feature();
 
   /**
-   * @return True if the value is unknown, false otherwise.
+   * Returns true if the value is unknown, false otherwise.
    */
   boolean isUnknown();
 
   /**
-   * @return The value.
+   * Returns the value.
    */
   T get();
 

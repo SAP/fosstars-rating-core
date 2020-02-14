@@ -1,40 +1,88 @@
 package com.sap.sgs.phosphor.fosstars.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Objects;
 
 /**
  * The class holds a score produced by {@link Score}.
  */
-public class ScoreValue implements Confidence {
+public class ScoreValue implements Value<Double>, Confidence {
+
+  /**
+   * A score.
+   */
+  private final Score score;
 
   /**
    * A score value.
    */
-  private double score = Score.MIN;
+  private double value;
 
   /**
    * A confidence.
    */
-  private double confidence = Confidence.MIN;
+  private double confidence;
 
   /**
-   * The default constructor.
+   * Initializes a score value for a specified score.
+   *
+   * @param score The score.
    */
-  public ScoreValue() {
-
+  public ScoreValue(Score score) {
+    this(score, Score.MIN, Confidence.MIN);
   }
 
   /**
-   * @param score A score value.
-   * @param confidence A confidence.
+   * Initializes a score value for a specified score and confidence.
+   *
+   * @param score The score.
+   * @param value The score value.
+   * @param confidence The confidence.
    */
-  public ScoreValue(double score, double confidence) {
-    this.score = Score.check(score);
+  @JsonCreator
+  public ScoreValue(
+      @JsonProperty("score") Score score,
+      @JsonProperty("value") double value,
+      @JsonProperty("confidence") double confidence) {
+
+    Objects.requireNonNull(score, "Score can't be null!");
+    this.score = score;
+    this.value = Score.check(value);
     this.confidence = Confidence.check(confidence);
   }
 
+  @Override
+  @JsonGetter("score")
+  public Score feature() {
+    return score;
+  }
+
+  @Override
+  @JsonIgnore
+  public boolean isUnknown() {
+    return false;
+  }
+
+  @Override
+  @JsonGetter("value")
+  public Double get() {
+    return value;
+  }
+
+  @Override
+  public Value<Double> processIfKnown(Processor<Double> processor) {
+    if (!isUnknown()) {
+      processor.process(get());
+    }
+    return this;
+  }
+
   /**
-   * Increase the score with a specified value. If the resulting score value is more than {@link Score#MAX},
+   * Increase the score with a specified value.
+   * If the resulting score value is more than {@link Score#MAX},
    * then the score value is set to {@link Score#MAX}.
    *
    * @param delta The value (must be positive).
@@ -45,15 +93,16 @@ public class ScoreValue implements Confidence {
     if (delta < 0) {
       throw new IllegalArgumentException("Delta can't be negative!");
     }
-    score += delta;
-    if (score > Score.MAX) {
-      score = Score.MAX;
+    value += delta;
+    if (value > Score.MAX) {
+      value = Score.MAX;
     }
     return this;
   }
 
   /**
-   * Decrease the score with a specified value. In the resulting score value is less than {@link Score#MIN},
+   * Decrease the score with a specified value.
+   * In the resulting score value is less than {@link Score#MIN},
    * then the score value is set to {@link Score#MIN}.
    *
    * @param delta The value (must be positive).
@@ -64,9 +113,9 @@ public class ScoreValue implements Confidence {
     if (delta < 0) {
       throw new IllegalArgumentException("Delta can't be negative!");
     }
-    score -= delta;
-    if (score < Score.MIN) {
-      score = Score.MIN;
+    value -= delta;
+    if (value < Score.MIN) {
+      value = Score.MIN;
     }
     return this;
   }
@@ -83,16 +132,10 @@ public class ScoreValue implements Confidence {
   }
 
   /**
-   * @return The score value.
-   */
-  public double score() {
-    return score;
-  }
-
-  /**
-   * @return The confidence.
+   * Returns the confidence.
    */
   @Override
+  @JsonGetter("confidence")
   public double confidence() {
     return confidence;
   }
@@ -106,12 +149,12 @@ public class ScoreValue implements Confidence {
       return false;
     }
     ScoreValue that = (ScoreValue) o;
-    return Double.compare(that.score, score) == 0 &&
-        Double.compare(that.confidence, confidence) == 0;
+    return Double.compare(that.value, value) == 0
+        && Double.compare(that.confidence, confidence) == 0;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(score, confidence);
+    return Objects.hash(value, confidence);
   }
 }

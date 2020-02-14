@@ -58,7 +58,7 @@ public class UnpatchedVulnerabilitiesScore extends FeatureBasedScore {
         "Hey! Give me info about vulnerabilities!");
 
     if (vulnerabilities.isUnknown()) {
-      return new ScoreValue(Score.MIN, Confidence.MIN);
+      return new ScoreValue(this, Score.MIN, Confidence.MIN);
     }
 
     int highSeverity = 0;
@@ -89,7 +89,7 @@ public class UnpatchedVulnerabilitiesScore extends FeatureBasedScore {
     score -= MEDIUM_SEVERITY_PENALTY * mediumSeverity;
     score -= LOW_SEVERITY_PENALTY * lowSeverity;
 
-    return new ScoreValue(Score.adjust(score), Confidence.MAX);
+    return new ScoreValue(this, Score.adjust(score), Confidence.MAX);
   }
 
   /**

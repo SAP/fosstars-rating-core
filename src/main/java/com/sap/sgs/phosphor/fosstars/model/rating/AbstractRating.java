@@ -68,7 +68,7 @@ public abstract class AbstractRating implements Rating {
   }
 
   private RatingValue calculate(ScoreValue scoreValue) {
-    return new RatingValue(scoreValue, label(scoreValue.score()));
+    return new RatingValue(scoreValue, label(scoreValue.get()));
   }
 
   protected abstract Label label(double score);

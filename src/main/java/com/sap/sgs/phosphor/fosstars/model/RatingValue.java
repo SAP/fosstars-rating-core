@@ -3,7 +3,7 @@ package com.sap.sgs.phosphor.fosstars.model;
 import java.util.Objects;
 
 /**
- * The class holds a rating value produced by {@link Rating}
+ * The class holds a rating value produced by {@link Rating}.
  */
 public class RatingValue implements Confidence {
 
@@ -18,8 +18,10 @@ public class RatingValue implements Confidence {
   private final Label label;
 
   /**
-   * @param scoreValue A score value.
-   * @param label A label.
+   * Initializes a {@link RatingValue} with a score value and a label.
+   *
+   * @param scoreValue The score value.
+   * @param label The label.
    */
   public RatingValue(ScoreValue scoreValue, Label label) {
     Objects.requireNonNull(scoreValue, "Hey! Score value can't be null");
@@ -29,14 +31,14 @@ public class RatingValue implements Confidence {
   }
 
   /**
-   * @return The score value.
+   * Returns the score value.
    */
   public double score() {
-    return scoreValue.score();
+    return scoreValue.get();
   }
 
   /**
-   * @return The confidence.
+   * Returns the confidence.
    */
   @Override
   public double confidence() {
@@ -44,7 +46,7 @@ public class RatingValue implements Confidence {
   }
 
   /**
-   * @return The label.
+   * Returns the label.
    */
   public Label label() {
     return label;
@@ -59,8 +61,7 @@ public class RatingValue implements Confidence {
       return false;
     }
     RatingValue that = (RatingValue) o;
-    return Objects.equals(scoreValue, that.scoreValue) &&
-        Objects.equals(label, that.label);
+    return Objects.equals(scoreValue, that.scoreValue) && Objects.equals(label, that.label);
   }
 
   @Override

@@ -29,11 +29,11 @@ public class LgtmScoreTest {
     LgtmScore score = new LgtmScore();
     ScoreValue value = score.calculate(USES_LGTM.unknown(), WORSE_LGTM_GRADE.unknown());
     assertNotNull(value);
-    assertTrue(Score.INTERVAL.contains(value.score()));
+    assertTrue(Score.INTERVAL.contains(value.get()));
 
     value = score.calculate(USES_LGTM.value(true), WORSE_LGTM_GRADE.value(LgtmGrade.A_PLUS));
     assertNotNull(value);
-    assertTrue(Score.INTERVAL.contains(value.score()));
+    assertTrue(Score.INTERVAL.contains(value.get()));
   }
 
   @Test(expected = IllegalArgumentException.class)

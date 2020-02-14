@@ -71,7 +71,7 @@ public class ProjectActivityScore extends FeatureBasedScore {
       score = MAX;
     }
 
-    return new ScoreValue(score, Confidence.make(n, m));
+    return new ScoreValue(this, score, Confidence.make(n, m));
   }
 
   /**

@@ -62,6 +62,7 @@ public class ProjectPopularityScore extends FeatureBasedScore {
         "Hey! You have to give me a number of watchers!");
 
     return new ScoreValue(
+        this,
         Score.adjust(starsScore(n) + watchersScore(m)),
         Confidence.make(n, m));
   }

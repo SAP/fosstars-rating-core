@@ -32,11 +32,11 @@ public class ProjectActivityScoreExampleTest {
   @Test
   public void calculate() {
     Set<Value> values = makeValues(1, 2);
-    assertTrue(Score.INTERVAL.contains(PROJECT_ACTIVITY_SCORE_EXAMPLE.calculate(values).score()));
+    assertTrue(Score.INTERVAL.contains(PROJECT_ACTIVITY_SCORE_EXAMPLE.calculate(values).get()));
     values = makeValues(0, 0);
-    assertTrue(Score.INTERVAL.contains(PROJECT_ACTIVITY_SCORE_EXAMPLE.calculate(values).score()));
+    assertTrue(Score.INTERVAL.contains(PROJECT_ACTIVITY_SCORE_EXAMPLE.calculate(values).get()));
     values = makeValues(Integer.MAX_VALUE, Integer.MAX_VALUE);
-    assertTrue(Score.INTERVAL.contains(PROJECT_ACTIVITY_SCORE_EXAMPLE.calculate(values).score()));
+    assertTrue(Score.INTERVAL.contains(PROJECT_ACTIVITY_SCORE_EXAMPLE.calculate(values).get()));
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -45,7 +45,7 @@ public class ProjectActivityScoreExampleTest {
     Set<Value> values = new HashSet<>();
     values.add(new IntegerValue(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, -1));
     values.add(new IntegerValue(NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, 11));
-    Score.INTERVAL.contains(score.calculate(values).score());
+    Score.INTERVAL.contains(score.calculate(values).get());
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -53,21 +53,21 @@ public class ProjectActivityScoreExampleTest {
     Set<Value> values = new HashSet<>();
     values.add(new IntegerValue(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 11));
     values.add(new IntegerValue(NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, -1));
-    Score.INTERVAL.contains(PROJECT_ACTIVITY_SCORE_EXAMPLE.calculate(values).score());
+    Score.INTERVAL.contains(PROJECT_ACTIVITY_SCORE_EXAMPLE.calculate(values).get());
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void noCommitsNumber() {
     Set<Value> values = new HashSet<>();
     values.add(new IntegerValue(NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, 11));
-    Score.INTERVAL.contains(PROJECT_ACTIVITY_SCORE_EXAMPLE.calculate(values).score());
+    Score.INTERVAL.contains(PROJECT_ACTIVITY_SCORE_EXAMPLE.calculate(values).get());
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void noContributorsNumber() {
     Set<Value> values = new HashSet<>();
     values.add(new IntegerValue(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 11));
-    Score.INTERVAL.contains(PROJECT_ACTIVITY_SCORE_EXAMPLE.calculate(values).score());
+    Score.INTERVAL.contains(PROJECT_ACTIVITY_SCORE_EXAMPLE.calculate(values).get());
   }
 
   private static Set<Value> makeValues(int numberOfCommitsLastMonth, int numberOfContributorsLastMonth) {
