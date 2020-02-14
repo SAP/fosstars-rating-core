@@ -3,6 +3,7 @@ package com.sap.sgs.phosphor.fosstars.model.score;
 import static com.sap.sgs.phosphor.fosstars.TestUtils.assertScore;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import com.sap.sgs.phosphor.fosstars.model.Confidence;
@@ -68,6 +69,24 @@ public class WeightedCompositeScoreTest {
     assertNotEquals(mutableWeightOne, mutableWeightTwo);
     assertEquals(one, two);
     assertEquals(one.hashCode(), two.hashCode());
+  }
+
+  @Test
+  public void validValue() {
+    Score score = new WeightedScoreImpl();
+    Value<Double> value = score.value(7.54);
+    assertNotNull(value);
+    assertEquals(7.54, value.get(), 0.001);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void negativeValue() {
+    new WeightedScoreImpl().value(-3.0);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void tooBigValue() {
+    new WeightedScoreImpl().value(42.0);
   }
 
   @Test(expected = IllegalArgumentException.class)

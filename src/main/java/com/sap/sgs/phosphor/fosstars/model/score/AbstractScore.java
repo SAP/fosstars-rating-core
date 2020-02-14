@@ -6,6 +6,8 @@ import com.sap.sgs.phosphor.fosstars.model.ScoreValue;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.Visitor;
+import com.sap.sgs.phosphor.fosstars.model.value.DoubleValue;
+import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
 import java.util.Objects;
 import java.util.Set;
 
@@ -19,6 +21,11 @@ public abstract class AbstractScore implements Score {
    */
   private final String name;
 
+  /**
+   * Initializes a new score.
+   *
+   * @param name A name of the score.
+   */
   AbstractScore(String name) {
     Objects.requireNonNull(name, "Hey! Score name can't be null!");
     this.name = name;
@@ -45,6 +52,21 @@ public abstract class AbstractScore implements Score {
   @Override
   public void accept(Visitor visitor) {
     visitor.visit(this);
+  }
+
+  @Override
+  public Value<Double> unknown() {
+    return UnknownValue.of(this);
+  }
+
+  @Override
+  public Value<Double> value(Double n) {
+    return new DoubleValue(this, Score.check(n));
+  }
+
+  @Override
+  public Value<Double> parse(String string) {
+    return value(Double.parseDouble(string));
   }
 
   @Override

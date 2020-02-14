@@ -38,7 +38,7 @@ import java.util.Set;
     @JsonSubTypes.Type(value = VulnerabilityLifetimeScore.class),
     @JsonSubTypes.Type(value = OssSecurityScore.class),
 })
-public interface Score {
+public interface Score extends Feature<Double> {
 
   /**
    * The minimum value of a score.
@@ -56,17 +56,17 @@ public interface Score {
   Interval INTERVAL = DoubleInterval.init().from(0).to(10).closed().make();
 
   /**
-   * @return A name of the score.
+   * Returns a name of the score.
    */
   String name();
 
   /**
-   *@return A set of features which the score uses directly.
+   * Returns a set of features which the score uses directly.
    */
   Set<Feature> features();
 
   /**
-   * @return A set of sub-scores which the score uses directly.
+   * Returns a set of sub-scores which the score uses directly.
    */
   Set<Score> subScores();
 
@@ -91,7 +91,7 @@ public interface Score {
   ScoreValue calculate(Value... values);
 
   /**
-   * Takes an instance of {@link ValueSet} and calculates a score
+   * Takes an instance of {@link ValueSet} and calculates a score.
    *
    * @param values A set of values.
    * @return A score value.
@@ -101,7 +101,7 @@ public interface Score {
   ScoreValue calculate(ValueSet values);
 
   /**
-   * @return A weight for a sub-score.
+   * Returns a weight for a sub-score.
    */
   Optional<Weight> weightOf(Score score);
 
