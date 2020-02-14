@@ -1,5 +1,6 @@
 package com.sap.sgs.phosphor.fosstars.model;
 
+import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.util.Objects;
 
 /**

@@ -15,6 +15,7 @@ import com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectSecurityAwarenessSco
 import com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectSecurityTestingScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.UnpatchedVulnerabilitiesScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.VulnerabilityLifetimeScore;
+import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.util.Optional;
 import java.util.Set;
 

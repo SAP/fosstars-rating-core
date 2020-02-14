@@ -8,8 +8,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import com.sap.sgs.phosphor.fosstars.model.Score;
-import com.sap.sgs.phosphor.fosstars.model.ScoreValue;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade;
+import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import org.junit.Test;
 
 public class LgtmScoreTest {
