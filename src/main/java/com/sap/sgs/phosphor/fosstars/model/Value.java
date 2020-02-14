@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.sgs.phosphor.fosstars.model.value.DateValue;
+import com.sap.sgs.phosphor.fosstars.model.value.DoubleValue;
 import com.sap.sgs.phosphor.fosstars.model.value.EnumValue;
 import com.sap.sgs.phosphor.fosstars.model.value.ExpiringValue;
 import com.sap.sgs.phosphor.fosstars.model.value.IntegerValue;
@@ -20,6 +21,7 @@ import com.sap.sgs.phosphor.fosstars.model.value.VulnerabilitiesValue;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
     @JsonSubTypes.Type(value = IntegerValue.class),
+    @JsonSubTypes.Type(value = DoubleValue.class),
     @JsonSubTypes.Type(value = BooleanValue.class),
     @JsonSubTypes.Type(value = DateValue.class),
     @JsonSubTypes.Type(value = ExpiringValue.class),

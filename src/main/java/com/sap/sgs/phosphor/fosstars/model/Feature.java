@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.sap.sgs.phosphor.fosstars.model.feature.BooleanFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.BoundedIntegerFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.DateFeature;
+import com.sap.sgs.phosphor.fosstars.model.feature.DoubleFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.LgtmGradeFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.PositiveIntegerFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.example.NumberOfCommitsLastMonthExample;
@@ -16,19 +17,19 @@ import com.sap.sgs.phosphor.fosstars.model.feature.oss.VulnerabilitiesInProject;
 
 /**
  * An interface for a feature.
- *
  * All implementations must:
- *   <ul>
- *      <li>provide equals() and hashCode() methods.</li>
- *      <li>be stateless</li>
- *      <li>support serialization to JSON with Jackson</li>
- *   <ul/>
+ * <ul>
+ *   <li>provide equals() and hashCode() methods.</li>
+ *   <li>be stateless</li>
+ *   <li>support serialization to JSON with Jackson</li>
+ * </ul>
  *
  * @param <T> Type of data of a feature
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
     @JsonSubTypes.Type(value = PositiveIntegerFeature.class),
+    @JsonSubTypes.Type(value = DoubleFeature.class),
     @JsonSubTypes.Type(value = BooleanFeature.class),
     @JsonSubTypes.Type(value = BoundedIntegerFeature.class),
     @JsonSubTypes.Type(value = DateFeature.class),
@@ -43,7 +44,7 @@ import com.sap.sgs.phosphor.fosstars.model.feature.oss.VulnerabilitiesInProject;
 public interface Feature<T> {
 
   /**
-   * @return The name of the feature.
+   * Returns a name of the feature.
    */
   String name();
 
@@ -68,7 +69,7 @@ public interface Feature<T> {
   Value<T> parse(String string);
 
   /**
-   * @return An unknown value of the feature.
+   * Returns an unknown value of the feature.
    */
   Value<T> unknown();
 
