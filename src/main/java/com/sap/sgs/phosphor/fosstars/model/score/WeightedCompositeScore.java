@@ -9,6 +9,7 @@ import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.Visitor;
 import com.sap.sgs.phosphor.fosstars.model.Weight;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
+import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.model.weight.MutableWeight;
 import java.util.Collections;
 import java.util.HashSet;
@@ -56,8 +57,8 @@ public class WeightedCompositeScore extends AbstractScore {
    * TODO: Figure out if Jackson changes access level for this method, and don't revert it back.
    *       If so, is it a security issue?
    */
-  @JsonProperty("weightedScore")
-  private Set<WeightedScore> getWeightedScores() {
+  @JsonProperty("weightedScores")
+  private Set<WeightedScore> weightedScores() {
     return weightedScores;
   }
 
@@ -82,12 +83,14 @@ public class WeightedCompositeScore extends AbstractScore {
    */
   @Override
   public final ScoreValue calculate(Value... values) {
+    ValueHashSet valueSet = new ValueHashSet(values);
+
     double weightSum = 0.0;
     double scoreSum = 0.0;
     double confidenceSum = 0.0;
     for (WeightedScore weightedScore : weightedScores) {
       double weight = weightedScore.weight.value();
-      ScoreValue scoreValue = weightedScore.score.calculate(values);
+      ScoreValue scoreValue = calculate(weightedScore.score, valueSet);
       scoreSum += weight * scoreValue.get();
       confidenceSum += weight * scoreValue.confidence();
       weightSum += weight;
@@ -144,6 +147,32 @@ public class WeightedCompositeScore extends AbstractScore {
   @Override
   public int hashCode() {
     return Objects.hash(super.hashCode(), weightedScores);
+  }
+
+  /**
+   * The method tries to get a value for a specified score. First, the method checks
+   * if the set of values already contains a value for the specified score. If yes, the method
+   * just returns the existing value. Otherwise, the method tries to calculate a value
+   * of the specified score.
+   *
+   * @param score The score.
+   * @param values The set of values.
+   * @return A value of the specified score.
+   */
+  private static ScoreValue calculate(Score score, ValueHashSet values) {
+    Optional<Value> something = values.of(score);
+
+    // if the set of values already contains a value for the specified score, then just return it
+    if (something.isPresent()) {
+      Value value = something.get();
+      if (value instanceof ScoreValue == false) {
+        throw new IllegalArgumentException("Hey! I expected a ScoreValue for a score!");
+      }
+      return  (ScoreValue) value;
+    }
+
+    // otherwise, try to calculate a value for the score
+    return score.calculate(values);
   }
 
   /**
