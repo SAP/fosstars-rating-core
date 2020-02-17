@@ -1,7 +1,5 @@
 package com.sap.sgs.phosphor.fosstars.model.score.oss;
 
-import com.sap.sgs.phosphor.fosstars.model.Score;
-
 /**
  * This class holds a list of scores for open-source projects.
  */
@@ -55,6 +53,6 @@ public class OssScores {
   /**
    * A security rating for an open-source project.
    */
-  public static final Score SECURITY_SCORE = new OssSecurityScore();
+  public static final OssSecurityScore SECURITY_SCORE = new OssSecurityScore();
 
 }

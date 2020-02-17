@@ -1,12 +1,14 @@
-# Preparing test vectors for ratings
+# Test vectors for the open-source security rating
 
-First, install [Jupyter Notebook](https://jupyter.org/install).
+First, to work with test the vectors,
+you need to install [Jupyter Notebook](https://jupyter.org/install).
 
-## Test vectors for OSS security rating
-
-To work with the test vectors for the OSS security rating,
-start the following notebook:
+Then, start `jupyter` with the following command:
 
 ```
-jupyter notebook OssSecurityRatingTestVectors.ipynb
+jupyter notebook
 ```
+
+Next, open one of the notebooks for specific scores or the entire open-source security rating.
+
+The notebooks allow updating the test vectors and saving them to the corresponding CSV files.
