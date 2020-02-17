@@ -9,6 +9,7 @@ import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.Visitor;
 import com.sap.sgs.phosphor.fosstars.model.Weight;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
+import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.model.weight.MutableWeight;
 import java.util.Collections;
@@ -90,7 +91,7 @@ public class WeightedCompositeScore extends AbstractScore {
     double confidenceSum = 0.0;
     for (WeightedScore weightedScore : weightedScores) {
       double weight = weightedScore.weight.value();
-      ScoreValue scoreValue = calculate(weightedScore.score, valueSet);
+      ScoreValue scoreValue = calculateIfNecessary(weightedScore.score, valueSet);
       scoreSum += weight * scoreValue.get();
       confidenceSum += weight * scoreValue.confidence();
       weightSum += weight;
@@ -158,21 +159,24 @@ public class WeightedCompositeScore extends AbstractScore {
    * @param score The score.
    * @param values The set of values.
    * @return A value of the specified score.
+   * @throws IllegalArgumentException If a value for the score is not a {@link ScoreValue}.
    */
-  private static ScoreValue calculate(Score score, ValueHashSet values) {
+  private static ScoreValue calculateIfNecessary(Score score, ValueHashSet values) {
     Optional<Value> something = values.of(score);
 
-    // if the set of values already contains a value for the specified score, then just return it
-    if (something.isPresent()) {
-      Value value = something.get();
-      if (value instanceof ScoreValue == false) {
-        throw new IllegalArgumentException("Hey! I expected a ScoreValue for a score!");
-      }
-      return  (ScoreValue) value;
+    // if the set of values doesn't contains a value for the specified score, then calculate it
+    Value value = something.orElseGet(() -> UnknownValue.of(score));
+    if (value.isUnknown()) {
+      return score.calculate(values);
     }
 
-    // otherwise, try to calculate a value for the score
-    return score.calculate(values);
+    // if the set of values contains a value for the specified score, then return it
+    if (value instanceof ScoreValue) {
+      return (ScoreValue) value;
+    }
+
+    throw new IllegalArgumentException(String.format(
+        "Hey! I expected a ScoreValue for a score but got %s!", value.getClass()));
   }
 
   /**

@@ -1,11 +1,11 @@
 package com.sap.sgs.phosphor.fosstars.model.score;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.Visitor;
-import com.sap.sgs.phosphor.fosstars.model.value.DoubleValue;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
 import java.util.Objects;
@@ -61,7 +61,7 @@ public abstract class AbstractScore implements Score {
 
   @Override
   public Value<Double> value(Double n) {
-    return new DoubleValue(this, Score.check(n));
+    return new ScoreValue(this, Score.check(n), Confidence.MAX);
   }
 
   @Override

@@ -68,8 +68,8 @@ public abstract class AbstractVerification {
    * @return A list of loaded test vectors.
    * @throws IOException If something went wrong.
    */
-  public static List<TestVector> loadTestVectorsFromCsvResource(
-      Collection<Feature> features, InputStream is) throws IOException {
+  public static <T extends Feature> List<TestVector> loadTestVectorsFromCsvResource(
+      Collection<T> features, InputStream is) throws IOException {
 
     return loadTestVectorsFromCsvResource(features, is, DUMMY_LABEL_PARSER);
   }
@@ -87,8 +87,8 @@ public abstract class AbstractVerification {
    * @return A list of loaded test vectors.
    * @throws IOException If something went wrong.
    */
-  public static List<TestVector> loadTestVectorsFromCsvResource(
-      Collection<Feature> features, InputStream is, LabelParser labelParser) throws IOException {
+  public static <T extends Feature> List<TestVector> loadTestVectorsFromCsvResource(
+      Collection<T> features, InputStream is, LabelParser labelParser) throws IOException {
 
     Objects.requireNonNull(is, "Input stream can't be null!");
     Objects.requireNonNull(labelParser, "Label parser can't be null!");
@@ -108,7 +108,7 @@ public abstract class AbstractVerification {
 
         String label = record.get("label");
         Label expectedLabel = null;
-        if (!"None".equals(label) && !label.isEmpty() && labelParser != null) {
+        if (!"none".equalsIgnoreCase(label) && !label.isEmpty()) {
           expectedLabel = labelParser.parse(label);
         }
 
@@ -118,7 +118,7 @@ public abstract class AbstractVerification {
         for (Feature feature : features) {
           String raw = findValue(feature, record);
 
-          if ("unknown".equals(raw)) {
+          if ("unknown".equalsIgnoreCase(raw)) {
             values.add(feature.unknown());
             continue;
           }

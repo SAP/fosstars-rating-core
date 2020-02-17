@@ -20,9 +20,13 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * This is an interface for a score. A score can be based on features and other scores (sub-scores).
- * A score takes a number of features, and calculates a score values based on them. The score value
- * has to belong to the interval [0, 10].
+ * <p>This is an interface for a score.
+ * A score can be based on features and other scores (sub-scores).
+ * A score takes a number of features, and calculates a score values based on them.
+ * The score value has to belong to the interval [0, 10].</p>
+ *
+ * <p>A score itself is a feature which holds a score value (a double in the range [0, 10])
+ * for a specific score.</p>
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
