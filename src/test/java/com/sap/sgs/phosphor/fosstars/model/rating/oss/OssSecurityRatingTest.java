@@ -7,12 +7,12 @@ import static org.junit.Assert.assertTrue;
 
 import com.sap.sgs.phosphor.fosstars.model.Rating;
 import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
-import com.sap.sgs.phosphor.fosstars.model.RatingValue;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.Weight;
 import com.sap.sgs.phosphor.fosstars.model.other.Utils;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel;
+import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import java.util.Optional;
 import java.util.Set;
 import org.junit.Test;

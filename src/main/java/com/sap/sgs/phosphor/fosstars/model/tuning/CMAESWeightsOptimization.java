@@ -1,11 +1,11 @@
 package com.sap.sgs.phosphor.fosstars.model.tuning;
 
 import com.sap.sgs.phosphor.fosstars.model.Rating;
-import com.sap.sgs.phosphor.fosstars.model.RatingValue;
 import com.sap.sgs.phosphor.fosstars.model.Weight;
 import com.sap.sgs.phosphor.fosstars.model.qa.FailedTestVector;
 import com.sap.sgs.phosphor.fosstars.model.qa.RatingVerifier;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
+import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import com.sap.sgs.phosphor.fosstars.model.weight.MutableWeight;
 import java.util.List;
 import java.util.stream.Collectors;
