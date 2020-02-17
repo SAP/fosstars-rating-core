@@ -20,8 +20,18 @@ import org.junit.Test;
 public class ValueHashSetTest {
 
   @Test
-  public void empty() {
+  public void createEmptyValueHashSet() {
     assertEquals(0, ValueHashSet.empty().toArray().length);
+  }
+
+  @Test
+  public void createNotEmptyValueHashSet() {
+    ValueSet values = new ValueHashSet(
+        NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(10),
+        NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(5));
+    assertEquals(2, values.toArray().length);
+    assertTrue(values.has(NUMBER_OF_COMMITS_LAST_THREE_MONTHS));
+    assertTrue(values.has(NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS));
   }
 
   @Test

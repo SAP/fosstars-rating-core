@@ -132,7 +132,51 @@ public class WeightedCompositeScoreTest {
     new WeightedCompositeScore("test", new HashSet<>());
   }
 
+  @Test
+  public void allScoresPreCalculated() {
+    Score score = new WeightedScoreImpl();
+
+    double firstValue = 3.0;
+    double secondValue = 2.0;
+
+    ScoreValue firstPreCalculatedScoreValue = new ScoreValue(
+        new FirstScore(), firstValue, Confidence.MAX);
+    ScoreValue secondPreCalculatedScoreValue = new ScoreValue(
+        new SecondScore(), secondValue, Confidence.MAX);
+    ScoreValue scoreValue = score.calculate(
+        firstPreCalculatedScoreValue, secondPreCalculatedScoreValue);
+    assertNotNull(scoreValue);
+
+    double weightedSum = firstValue * WeightedScoreImpl.FIRST_WEIGHT
+        + secondValue * WeightedScoreImpl.SECOND_WEIGHT;
+    double weightSum = WeightedScoreImpl.FIRST_WEIGHT + WeightedScoreImpl.SECOND_WEIGHT;
+    double expectedScore = weightedSum / weightSum;
+
+    assertEquals(expectedScore, scoreValue.get(), 0.001);
+  }
+
+  @Test
+  public void oneScoresPreCalculated() {
+    Score score = new WeightedScoreImpl();
+
+    double firstValue = 3.0;
+
+    ScoreValue preCalculatedScoreValue = new ScoreValue(
+        new FirstScore(), firstValue, Confidence.MAX);
+    ScoreValue scoreValue = score.calculate(preCalculatedScoreValue);
+    assertNotNull(scoreValue);
+
+    double weightedSum = firstValue * WeightedScoreImpl.FIRST_WEIGHT
+        + SecondScore.VALUE * WeightedScoreImpl.SECOND_WEIGHT;
+    double weightSum = WeightedScoreImpl.FIRST_WEIGHT + WeightedScoreImpl.SECOND_WEIGHT;
+    double expectedScore = weightedSum / weightSum;
+
+    assertEquals(expectedScore, scoreValue.get(), 0.001);
+  }
+
   private static class FirstScore extends AbstractScore {
+
+    private static final double VALUE = 0.2;
 
     FirstScore() {
       super("First score");
@@ -155,7 +199,7 @@ public class WeightedCompositeScoreTest {
 
     @Override
     public ScoreValue calculate(Value... values) {
-      return new ScoreValue(this, 0.2, Confidence.MAX);
+      return new ScoreValue(this, VALUE, Confidence.MAX);
     }
 
     @Override
@@ -170,6 +214,8 @@ public class WeightedCompositeScoreTest {
   }
 
   private static class SecondScore extends AbstractScore {
+
+    private static final double VALUE = 0.5;
 
     SecondScore() {
       super("Second score");
@@ -192,7 +238,7 @@ public class WeightedCompositeScoreTest {
 
     @Override
     public ScoreValue calculate(Value... values) {
-      return new ScoreValue(this, 0.5, Confidence.MAX);
+      return new ScoreValue(this, VALUE, Confidence.MAX);
     }
 
     @Override
@@ -208,14 +254,17 @@ public class WeightedCompositeScoreTest {
 
   private static class WeightedScoreImpl extends WeightedCompositeScore {
 
+    private static final double FIRST_WEIGHT = 0.8;
+    private static final double SECOND_WEIGHT = 0.3;
+
     WeightedScoreImpl() {
       super("Test score", init());
     }
 
     private static Set<WeightedScore> init() {
       Set<WeightedScore> scores = new HashSet<>();
-      scores.add(new WeightedScore(new FirstScore(), new MutableWeight(0.8)));
-      scores.add(new WeightedScore(new SecondScore(), new MutableWeight(0.3)));
+      scores.add(new WeightedScore(new FirstScore(), new MutableWeight(FIRST_WEIGHT)));
+      scores.add(new WeightedScore(new SecondScore(), new MutableWeight(SECOND_WEIGHT)));
       return scores;
     }
   }

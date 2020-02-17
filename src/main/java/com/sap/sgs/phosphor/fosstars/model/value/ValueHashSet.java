@@ -37,6 +37,25 @@ public class ValueHashSet implements ValueSet {
   private final Map<Feature, Value> featureToValue = new HashMap<>();
 
   /**
+   * Initializes an empty {@link ValueHashSet}.
+   */
+  public ValueHashSet() {
+
+  }
+
+  /**
+   * Initializes a {@link ValueHashSet} with a number of values.
+   *
+   * @param values The values.
+   */
+  public ValueHashSet(Value... values) {
+    Objects.requireNonNull(values, "Values can't be null!");
+    for (Value value : values) {
+      update(value);
+    }
+  }
+
+  /**
    * Returns an empty {@link ValueHashSet}.
    */
   public static ValueHashSet empty() {
