@@ -153,11 +153,12 @@ public class ScoreValue implements Value<Double>, Confidence {
     }
     ScoreValue that = (ScoreValue) o;
     return Double.compare(that.value, value) == 0
-        && Double.compare(that.confidence, confidence) == 0;
+        && Double.compare(that.confidence, confidence) == 0
+        && Objects.equals(score, that.score);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(value, confidence);
+    return Objects.hash(score, value, confidence);
   }
 }
