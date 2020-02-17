@@ -26,11 +26,11 @@ import com.sap.sgs.phosphor.fosstars.data.github.UsesSnykDependencyCheck;
 import com.sap.sgs.phosphor.fosstars.data.github.VulnerabilitiesFromNVD;
 import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
-import com.sap.sgs.phosphor.fosstars.model.RatingValue;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating;
+import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.sgs.phosphor.fosstars.model.value.VulnerabilitiesValue;
@@ -52,6 +52,9 @@ public class SecurityRatingCalculator {
   private static final String USAGE =
       "java -jar fosstars-model.jar [options]";
 
+  /**
+   * Entry point.
+   */
   public static void main(String... args) throws IOException {
     Options options = new Options();
     options.addOption("h", "help", false,
@@ -187,6 +190,9 @@ public class SecurityRatingCalculator {
         case NO:
           System.out.println("Okay ...");
           break;
+        default:
+          throw new IllegalArgumentException(
+              String.format("Not sure what I can do with '%s'", answer));
       }
     }
     if (token != null) {

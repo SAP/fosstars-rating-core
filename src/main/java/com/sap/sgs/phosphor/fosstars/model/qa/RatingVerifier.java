@@ -2,7 +2,7 @@ package com.sap.sgs.phosphor.fosstars.model.qa;
 
 import com.sap.sgs.phosphor.fosstars.model.Label;
 import com.sap.sgs.phosphor.fosstars.model.Rating;
-import com.sap.sgs.phosphor.fosstars.model.RatingValue;
+import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

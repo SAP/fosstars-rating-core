@@ -1,6 +1,8 @@
-package com.sap.sgs.phosphor.fosstars.model;
+package com.sap.sgs.phosphor.fosstars.model.value;
 
-import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
+import com.sap.sgs.phosphor.fosstars.model.Confidence;
+import com.sap.sgs.phosphor.fosstars.model.Label;
+import com.sap.sgs.phosphor.fosstars.model.Rating;
 import java.util.Objects;
 
 /**
@@ -62,7 +64,8 @@ public class RatingValue implements Confidence {
       return false;
     }
     RatingValue that = (RatingValue) o;
-    return Objects.equals(scoreValue, that.scoreValue) && Objects.equals(label, that.label);
+    return Objects.equals(scoreValue, that.scoreValue)
+        && label == that.label;
   }
 
   @Override
