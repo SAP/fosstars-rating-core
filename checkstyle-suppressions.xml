@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC
+     "-//Checkstyle//DTD SuppressionFilter Configuration 1.0//EN"
+     "https://checkstyle.org/dtds/suppressions_1_0.dtd">
+<suppressions>
+  <suppress checks="AbbreviationAsWordInName"
+    files="OssSecurityRatingWithCMAES.java"
+    lines="10"/>
+  <suppress checks="AbbreviationAsWordInName"
+    files="WeightsOptimizationWithCMAES.java"
+    lines="32"/>
+  <suppress checks="AbbreviationAsWordInName"
+    files="WeightsOptimizationWithCMAES.java"
+    lines="99"/>
+  <suppress checks="AbbreviationAsWordInName"
+    files="CVSS.java"
+    lines="11"/>
+  <suppress checks="AbbreviationAsWordInName"
+    files="NVD.java"
+    lines="22"/>
+  <suppress checks="AbbreviationAsWordInName"
+    files="CVE.java"
+    lines="23"/>
+  <suppress checks="AbbreviationAsWordInName"
+    files="CVEDataMeta.java"
+    lines="17"/>
+  <suppress checks="AbbreviationAsWordInName"
+    files="InputURL.java"
+    lines="11"/>
+  <suppress checks="LineLength"
+    files="package-info.java"
+    lines="142"/>
+</suppressions>
+
