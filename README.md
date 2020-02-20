@@ -125,17 +125,24 @@ Using local NVD cache as last update was within two hours
 
 ## Known issues
 
-Please see GitHub issues.
+Please see [GitHub issues](https://github.com/SAP/fosstars-rating-core/issues).
 
 ## How to obtain support
 
-Please create a new GitHub issue if you've found a bug, or you'd like to propose an enhancement.
+Please create a new [GitHub issue](https://github.com/SAP/fosstars-rating-core/issues)
+if you found a bug, or you'd like to propose an enhancement.
+If you think you found a security issue, please follow [this guideline](SECURITY.md).
+
 We currently don't have a support channel.
 If you have a question, please also ask it via GitHub issues.
+
+# Contributing to the project
+
+We welcome ideas for improvements and pull requests.
+Please follow [this guideline](CONTRIBUTING.md) if you'd like to contribute to the project.
 
 ## License
 
 Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
 This file is licensed under the Apache License Version 2.0
 except as noted otherwise in [the LICENSE file](LICENSE).
-
