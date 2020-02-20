@@ -93,11 +93,12 @@
           <linkXRef>false</linkXRef>
           <suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
           <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
+          <includeTestSourceDirectory>true</includeTestSourceDirectory>
         </configuration>
         <executions>
           <execution>
             <id>validate</id>
-            <phase>validate</phase>
+            <phase>package</phase>
             <goals>
               <goal>checkstyle</goal>
               <goal>check</goal>

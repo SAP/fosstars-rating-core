@@ -15,7 +15,8 @@ public class SecurityRatingExampleMonteCarloTest {
     Path path = Files.createTempFile("fosstars", "oss_security_rating_example");
     SecurityRatingExample rating = new SecurityRatingExample(Version.SECURITY_RATING_EXAMPLE_1_1);
     try {
-      new SecurityRatingExampleMonteCarlo(rating, SecurityRatingExampleVerification.TEST_VECTORS, path.toString()).run();
+      new SecurityRatingExampleMonteCarlo(
+          rating, SecurityRatingExampleVerification.TEST_VECTORS, path.toString()).run();
       byte[] content = Files.readAllBytes(path);
 
       // smoke test

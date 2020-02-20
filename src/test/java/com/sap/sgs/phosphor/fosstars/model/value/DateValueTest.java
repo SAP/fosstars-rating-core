@@ -27,10 +27,10 @@ public class DateValueTest {
 
   @Test
   public void equals() {
-    Value<Date> one = new DateValue(OssFeatures.PROJECT_START_DATE, new Date(1));
-    Value<Date> two = new DateValue(OssFeatures.PROJECT_START_DATE, new Date(1));
-    Value<Date> three = new DateValue(OssFeatures.PROJECT_START_DATE, new Date(2));
-    Value<Date> four = new DateValue(OssFeatures.FIRST_COMMIT_DATE, new Date(1));
+    final Value<Date> one = new DateValue(OssFeatures.PROJECT_START_DATE, new Date(1));
+    final Value<Date> two = new DateValue(OssFeatures.PROJECT_START_DATE, new Date(1));
+    final Value<Date> three = new DateValue(OssFeatures.PROJECT_START_DATE, new Date(2));
+    final Value<Date> four = new DateValue(OssFeatures.FIRST_COMMIT_DATE, new Date(1));
 
     assertEquals(one, one);
     assertEquals(one.hashCode(), one.hashCode());

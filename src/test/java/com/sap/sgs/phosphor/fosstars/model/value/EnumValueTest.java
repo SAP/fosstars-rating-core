@@ -59,10 +59,10 @@ public class EnumValueTest {
 
   @Test
   public void equalsAndHashCode() {
-    Value a = new EnumFeatureImpl("feature").value(TestEnum.A);
-    Value b = new EnumFeatureImpl("feature").value(TestEnum.B);
-    Value aa = new EnumFeatureImpl("feature").value(TestEnum.A);
-    Value unknown = new EnumFeatureImpl("test").unknown();
+    final Value a = new EnumFeatureImpl("feature").value(TestEnum.A);
+    final Value b = new EnumFeatureImpl("feature").value(TestEnum.B);
+    final Value aa = new EnumFeatureImpl("feature").value(TestEnum.A);
+    final Value unknown = new EnumFeatureImpl("test").unknown();
 
     assertEquals(a, a);
     assertEquals(a, aa);

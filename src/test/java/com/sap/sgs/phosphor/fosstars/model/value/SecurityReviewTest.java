@@ -12,11 +12,16 @@ public class SecurityReviewTest {
 
   @Test
   public void equalsAndHashCode() throws MalformedURLException {
-    SecurityReview one = new SecurityReview(new URL("http://one/info"), new Date(3), "Rulon Oboev");
-    SecurityReview two = new SecurityReview(new URL("http://one/info"), new Date(3), "Rulon Oboev");
-    SecurityReview three = new SecurityReview(new URL("http://three/info"), new Date(), "Rulon Oboev");
-    SecurityReview four = new SecurityReview(new URL("http://one/info"), new Date(1), "Rulon Oboev");
-    SecurityReview five = new SecurityReview(new URL("http://one/info"), new Date(), "Ashot");
+    final SecurityReview one = new SecurityReview(
+        new URL("http://one/info"), new Date(3), "Rulon Oboev");
+    final SecurityReview two = new SecurityReview(
+        new URL("http://one/info"), new Date(3), "Rulon Oboev");
+    final SecurityReview three = new SecurityReview(
+        new URL("http://three/info"), new Date(), "Rulon Oboev");
+    final SecurityReview four = new SecurityReview(
+        new URL("http://one/info"), new Date(1), "Rulon Oboev");
+    final SecurityReview five = new SecurityReview(
+        new URL("http://one/info"), new Date(), "Ashot");
 
     assertEquals(one, one);
     assertEquals(one, two);

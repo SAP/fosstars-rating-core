@@ -38,7 +38,7 @@ public class RatingRepositoryTest {
   private static class TestRating extends AbstractRating {
 
     public TestRating(Score score, Version version) {
-      super("test rating" ,score, version);
+      super("test rating", score, version);
     }
 
     @Override

@@ -18,7 +18,8 @@ public class FailedTestVectorTest {
     BAD, GOOD
   }
 
-  private static final Interval ALMOST_MIN = DoubleInterval.init().from(Score.MIN).to(0.001).closed().make();
+  private static final Interval ALMOST_MIN
+      = DoubleInterval.init().from(Score.MIN).to(0.001).closed().make();
 
   @Test
   public void smoke() {
@@ -27,7 +28,8 @@ public class FailedTestVectorTest {
         .expectedScore(ALMOST_MIN)
         .expectedLabel(TestLabel.BAD)
         .make();
-    FailedTestVector failedTestVector = new FailedTestVector(vector, 0, "Alles kaputt!");
+    FailedTestVector failedTestVector
+        = new FailedTestVector(vector, 0, "Alles kaputt!");
     assertEquals(0, failedTestVector.index);
     assertEquals("Alles kaputt!", failedTestVector.reason);
     assertEquals(ALMOST_MIN, failedTestVector.vector.expectedScore());
