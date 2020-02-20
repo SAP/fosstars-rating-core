@@ -79,7 +79,9 @@ public class ValueHashSetTest {
     assertEquals(UnknownValue.of(NUMBER_OF_WATCHERS_ON_GITHUB), values.of(
         NUMBER_OF_WATCHERS_ON_GITHUB).get());
     assertEquals(UnknownValue.of(NUMBER_OF_GITHUB_STARS), values.of(NUMBER_OF_GITHUB_STARS).get());
-    assertEquals(UnknownValue.of(NUMBER_OF_COLLABORATORS), values.of(NUMBER_OF_COLLABORATORS).get());
+    assertEquals(
+        UnknownValue.of(NUMBER_OF_COLLABORATORS),
+        values.of(NUMBER_OF_COLLABORATORS).get());
   }
 
   @Test

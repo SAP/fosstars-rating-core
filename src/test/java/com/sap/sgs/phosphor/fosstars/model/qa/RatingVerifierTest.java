@@ -30,6 +30,7 @@ public class RatingVerifierTest {
       .make();
 
   private static final List<TestVector> TEST_VECTORS = new ArrayList<>();
+
   static {
     TEST_VECTORS.addAll(SecurityRatingExampleVerification.TEST_VECTORS);
     TEST_VECTORS.add(FAILING_TEST_VECTOR);

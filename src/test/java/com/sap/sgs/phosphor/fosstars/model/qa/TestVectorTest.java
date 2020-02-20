@@ -79,8 +79,8 @@ public class TestVectorTest {
 
   @Test
   public void equalsAndHashcode() {
-    Interval expectedScoreOne = DoubleInterval.init().from(4.0).to(6.4).closed().make();
-    Interval expectedScoreTwo = DoubleInterval.init().from(1.0).to(3.2).closed().make();
+    final Interval expectedScoreOne = DoubleInterval.init().from(4.0).to(6.4).closed().make();
+    final Interval expectedScoreTwo = DoubleInterval.init().from(1.0).to(3.2).closed().make();
 
     assertEquals(
         newTestVector()
@@ -147,7 +147,8 @@ public class TestVectorTest {
       byte[] content = Files.readAllBytes(path);
       assertNotNull(content);
       assertEquals(0, content.length);
-      TestVector.storeTestVectorsToJson(path.toString(), SecurityRatingExampleVerification.TEST_VECTORS);
+      TestVector.storeTestVectorsToJson(
+          path.toString(), SecurityRatingExampleVerification.TEST_VECTORS);
       content = Files.readAllBytes(path);
       assertNotNull(content);
       assertTrue(content.length > 0);

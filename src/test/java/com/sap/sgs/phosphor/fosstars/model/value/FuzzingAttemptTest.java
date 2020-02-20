@@ -12,11 +12,11 @@ public class FuzzingAttemptTest {
 
   @Test
   public void equalsAndHashCode() throws MalformedURLException {
-    FuzzingAttempt one = new FuzzingAttempt(new URL("http://one/info"), new Date(3), "Rulon Oboev");
-    FuzzingAttempt two = new FuzzingAttempt(new URL("http://one/info"), new Date(3), "Rulon Oboev");
-    FuzzingAttempt three = new FuzzingAttempt(new URL("http://three/info"), new Date(), "Rulon Oboev");
-    FuzzingAttempt four = new FuzzingAttempt(new URL("http://one/info"), new Date(1), "Rulon Oboev");
-    FuzzingAttempt five = new FuzzingAttempt(new URL("http://one/info"), new Date(), "Ashot");
+    final FuzzingAttempt one = new FuzzingAttempt(new URL("http://one/info"), new Date(3), "Rulon Oboev");
+    final FuzzingAttempt two = new FuzzingAttempt(new URL("http://one/info"), new Date(3), "Rulon Oboev");
+    final FuzzingAttempt three = new FuzzingAttempt(new URL("http://three/info"), new Date(), "Rulon Oboev");
+    final FuzzingAttempt four = new FuzzingAttempt(new URL("http://one/info"), new Date(1), "Rulon Oboev");
+    final FuzzingAttempt five = new FuzzingAttempt(new URL("http://one/info"), new Date(), "Ashot");
 
     assertEquals(one, one);
     assertEquals(one, two);

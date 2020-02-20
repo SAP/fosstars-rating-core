@@ -70,7 +70,9 @@ public class ProjectActivityScoreExampleTest {
     Score.INTERVAL.contains(PROJECT_ACTIVITY_SCORE_EXAMPLE.calculate(values).get());
   }
 
-  private static Set<Value> makeValues(int numberOfCommitsLastMonth, int numberOfContributorsLastMonth) {
+  private static Set<Value> makeValues(
+      int numberOfCommitsLastMonth, int numberOfContributorsLastMonth) {
+
     Set<Value> values = new HashSet<>();
     values.add(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE.value(numberOfCommitsLastMonth));
     values.add(NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE.value(numberOfContributorsLastMonth));

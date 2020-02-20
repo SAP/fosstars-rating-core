@@ -19,8 +19,9 @@ public class NumberOfCommitsLastMonthExampleTest {
   @Test
   public void equalsAndHashCode() {
     assertEquals(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE);
-    assertEquals(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE.hashCode(), NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE
-        .hashCode());
+    assertEquals(
+        NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE.hashCode(),
+        NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE.hashCode());
   }
 
   @Test

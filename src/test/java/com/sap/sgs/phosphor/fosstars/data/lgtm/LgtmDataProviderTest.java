@@ -72,7 +72,9 @@ public class LgtmDataProviderTest {
     HttpEntity entity = mock(HttpEntity.class);
     when(response.getEntity()).thenReturn(entity);
 
-    try (InputStream content = getClass().getResourceAsStream("LgtmProjectDoesNotExistReply.json")) {
+    try (InputStream content =
+        getClass().getResourceAsStream("LgtmProjectDoesNotExistReply.json")) {
+
       when(entity.getContent()).thenReturn(content);
 
       ValueHashSet values = new ValueHashSet();

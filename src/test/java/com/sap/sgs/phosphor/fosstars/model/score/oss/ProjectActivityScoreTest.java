@@ -87,10 +87,16 @@ public class ProjectActivityScoreTest {
     assertScore(9.74, PROJECT_ACTIVITY.calculate(values(200, 10)), delta);
 
     // I wish all open-source projects were like that
-    assertScore(Score.MAX, PROJECT_ACTIVITY.calculate(values(10000, 500)), 0.0);
+    assertScore(
+        Score.MAX,
+        PROJECT_ACTIVITY.calculate(values(10000, 500)),
+        0.0);
 
     // or, even like that
-    assertScore(Score.MAX, PROJECT_ACTIVITY.calculate(values(Integer.MAX_VALUE, Integer.MAX_VALUE)), 0.0);
+    assertScore(
+        Score.MAX,
+        PROJECT_ACTIVITY.calculate(values(Integer.MAX_VALUE, Integer.MAX_VALUE)),
+        0.0);
   }
 
   @Test(expected = IllegalArgumentException.class)

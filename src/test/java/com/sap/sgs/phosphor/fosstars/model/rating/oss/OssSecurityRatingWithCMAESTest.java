@@ -47,6 +47,7 @@ public class OssSecurityRatingWithCMAESTest {
 
   private static final SecurityReviews NO_SECURITY_REVIEWS = new SecurityReviews();
   private static final SecurityReviews ONE_SECURITY_REVIEW;
+
   static {
     try {
       ONE_SECURITY_REVIEW = new SecurityReviews(
@@ -55,10 +56,13 @@ public class OssSecurityRatingWithCMAESTest {
       throw new IllegalArgumentException("Looks like something is wrong with the URL", e);
     }
   }
-  private static final Vulnerabilities NO_VULNERABILITIES = new Vulnerabilities();
-  private static final Date FIVE_YEARS_AGO = new Date(System.currentTimeMillis() - 5 * 365 * 24 * 60 * 60 * 1000L);
 
-  private static final List<TestVector> SIMPLE_TEST_VECTORS = Collections.unmodifiableList(Arrays.asList(
+  private static final Vulnerabilities NO_VULNERABILITIES = new Vulnerabilities();
+  private static final Date FIVE_YEARS_AGO
+      = new Date(System.currentTimeMillis() - 5 * 365 * 24 * 60 * 60 * 1000L);
+
+  private static final List<TestVector> SIMPLE_TEST_VECTORS
+      = Collections.unmodifiableList(Arrays.asList(
 
       // all values are unknown
       newTestVector()

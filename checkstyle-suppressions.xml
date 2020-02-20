@@ -30,5 +30,6 @@
   <suppress checks="LineLength"
     files="package-info.java"
     lines="142"/>
+  <suppress checks="MissingJavadocMethod|AbbreviationAsWordInName" files=".*Test.java"/>
 </suppressions>
 

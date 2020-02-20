@@ -49,7 +49,8 @@ public class CommunityCommitmentScoreTest {
   }
 
   private static Set<Value> values(boolean company, boolean apache, boolean eclipse) {
-    return setOf(SUPPORTED_BY_COMPANY.value(company), IS_APACHE.value(apache), IS_ECLIPSE.value(eclipse));
+    return setOf(
+        SUPPORTED_BY_COMPANY.value(company), IS_APACHE.value(apache), IS_ECLIPSE.value(eclipse));
   }
 
 }
