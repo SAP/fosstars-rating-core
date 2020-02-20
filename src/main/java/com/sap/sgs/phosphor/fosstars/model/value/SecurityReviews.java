@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * A number of security reviews.
+ * A collection of security reviews.
  */
 public final class SecurityReviews {
 
@@ -25,6 +25,8 @@ public final class SecurityReviews {
   private final Set<SecurityReview> reviews;
 
   /**
+   * Initializes a new collection of security reviews.
+   *
    * @param reviews An array of security reviews.
    */
   public SecurityReviews(SecurityReview... reviews) {
@@ -32,6 +34,8 @@ public final class SecurityReviews {
   }
 
   /**
+   * Initializes a {@link SecurityReviews} with a number of security reviews.
+   *
    * @param reviews A set of security reviews.
    */
   public SecurityReviews(@JsonProperty("reviews") Set<SecurityReview> reviews) {
@@ -40,7 +44,7 @@ public final class SecurityReviews {
   }
 
   /**
-   * @return A set of security reviews.
+   * Returns a set of security reviews.
    */
 
   @JsonGetter("reviews")
@@ -49,7 +53,7 @@ public final class SecurityReviews {
   }
 
   /**
-   * @return True if at least one security review has been done, false otherwise.
+   * Returns true if at least one security review has been done, false otherwise.
    */
   @JsonIgnore
   public boolean done() {

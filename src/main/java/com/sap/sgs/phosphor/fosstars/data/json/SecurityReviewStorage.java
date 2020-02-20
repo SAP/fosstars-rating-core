@@ -1,10 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.data.json;
 
-import static com.sap.sgs.phosphor.fosstars.common.Utils.checkHttps;
-
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.sgs.phosphor.fosstars.model.value.SecurityReview;
 import com.sap.sgs.phosphor.fosstars.model.value.SecurityReviews;
 import java.io.File;
@@ -16,10 +13,10 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * The class maintains a list of security reviews which have been done for open-source projects. An
- * open-source project is represented by the URL it its source code repository.
+ * The class maintains a list of security reviews which have been done for open-source projects.
+ * An open-source project is represented by the URL it its source code repository.
  */
-public class SecurityReviewStorage {
+public class SecurityReviewStorage extends AbstractJsonStorage {
 
   /**
    * Path to a resource which contains the information about security reviews.
@@ -28,18 +25,15 @@ public class SecurityReviewStorage {
       "com/sap/sgs/phosphor/fosstars/data/SecurityReview.json";
 
   /**
-   * An ObjectMapper for serialization and deserialization.
-   */
-  private static final ObjectMapper MAPPER = new ObjectMapper();
-
-  /**
-   * Maps a project's code repository URL to a set of security reviews which have been done for the
-   * project.
+   * Maps a project's code repository URL to a set of security reviews
+   * which have been done for the project.
    */
   private final Map<String, Set<SecurityReview>> reviews;
 
   /**
-   * @param reviews Security reviews.
+   * Initializes a storage with a number of security reviews.
+   *
+   * @param reviews The Security reviews (can't be null).
    */
   private SecurityReviewStorage(
       @JsonProperty("reviews") Map<String, Set<SecurityReview>> reviews) {

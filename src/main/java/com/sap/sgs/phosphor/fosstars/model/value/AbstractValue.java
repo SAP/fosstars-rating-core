@@ -17,6 +17,11 @@ public abstract class AbstractValue<T> implements Value<T> {
    */
   private final Feature<T> feature;
 
+  /**
+   * Initializes a value for a feature.
+   *
+   * @param feature The feature.
+   */
   AbstractValue(@JsonProperty("feature") Feature<T> feature) {
     Objects.requireNonNull(feature, "Feature can't be null!");
     this.feature = feature;

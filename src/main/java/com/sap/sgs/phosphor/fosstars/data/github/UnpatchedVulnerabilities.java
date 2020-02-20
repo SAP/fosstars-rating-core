@@ -24,7 +24,6 @@ import org.kohsuke.github.GitHub;
 /**
  * This data provider tries to figure out if an open-source project has any unpatched
  * vulnerabilities.
- *
  * TODO: This class doesn't talk to GitHub. Instead, it uses a local storage
  *       which contains info about known security teams.
  *       UnpatchedVulnerabilities may be converted to a data provider.
@@ -45,6 +44,8 @@ public class UnpatchedVulnerabilities extends AbstractGitHubDataProvider {
   private final Value<Vulnerabilities> vulnerabilities;
 
   /**
+   * Initializes a data provider.
+   *
    * @param where A GitHub organization of user name.
    * @param name A name of a repository.
    * @param github An interface to the GitHub API.

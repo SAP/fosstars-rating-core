@@ -10,6 +10,11 @@ import com.sap.sgs.phosphor.fosstars.model.value.IntegerValue;
  */
 public class PositiveIntegerFeature extends AbstractFeature<Integer> {
 
+  /**
+   * Initializes a new feature.
+   *
+   * @param name A name of the feature.
+   */
   @JsonCreator
   public PositiveIntegerFeature(@JsonProperty("name") String name) {
     super(name);
@@ -27,6 +32,8 @@ public class PositiveIntegerFeature extends AbstractFeature<Integer> {
 
   /**
    * Checks if an integer is more or equal to 0.
+   *
+   * @param n The integer to be checked.
    */
   private static Integer check(Integer n) {
     if (n < 0) {

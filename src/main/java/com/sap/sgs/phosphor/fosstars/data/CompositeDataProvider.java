@@ -32,7 +32,9 @@ public class CompositeDataProvider implements DataProvider {
   private StopCondition stopCondition = NO_STOP_CONDITION;
 
   /**
-   * @param providers Underlying data providers.
+   * Initializes a {@link CompositeDataProvider}.
+   *
+   * @param providers A number of underlying data providers. It can't be null or empty.
    */
   public CompositeDataProvider(DataProvider... providers) {
     Objects.requireNonNull(providers, "Providers can't be null!");
@@ -113,11 +115,22 @@ public class CompositeDataProvider implements DataProvider {
     return Collections.unmodifiableList(providers);
   }
 
+  /**
+   * This stop condition checks if all specified features have values.
+   */
   public static class AllFeaturesFilledOut implements StopCondition {
 
+    /**
+     * A list of features.
+     */
     private final List<Feature> features = new ArrayList<>();
 
-    public AllFeaturesFilledOut(Feature... features) {
+    /**
+     * Initializes a stop condition with a number of features.
+     *
+     * @param features The features. It can't be null or empty.
+     */
+    AllFeaturesFilledOut(Feature... features) {
       Objects.requireNonNull(features, "Features can't be null!");
       if (features.length == 0) {
         throw new IllegalArgumentException("No features provided!");

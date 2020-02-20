@@ -12,6 +12,9 @@ import java.util.Objects;
  */
 public final class UnknownValue<T> implements Value<T> {
 
+  /**
+   * A feature.
+   */
   private final Feature feature;
 
   /**
@@ -21,6 +24,11 @@ public final class UnknownValue<T> implements Value<T> {
     return new UnknownValue<>(feature);
   }
 
+  /**
+   * Initializes an unknown value for a feature.
+   *
+   * @param feature The feature.
+   */
   public UnknownValue(@JsonProperty("feature") Feature feature) {
     this.feature = feature;
   }

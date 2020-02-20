@@ -6,8 +6,8 @@ import com.sap.sgs.phosphor.fosstars.model.math.DoubleInterval;
 import com.sap.sgs.phosphor.fosstars.model.weight.MutableWeight;
 
 /**
- * An interface for a weight. All implementations have to support serialization to JSON with
- * Jackson.
+ * An interface for a weight.
+ * All implementations have to support serialization to JSON with Jackson.
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
@@ -31,7 +31,7 @@ public interface Weight {
   Interval INTERVAL = DoubleInterval.init().from(MIN).to(MAX).openLeft().closedRight().make();
 
   /**
-   * @return The weight's value.
+   * Returns the weight's value.
    */
   double value();
 

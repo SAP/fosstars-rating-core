@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sap.sgs.phosphor.fosstars.nvd.data.NVDEntry;
+import com.sap.sgs.phosphor.fosstars.nvd.data.NvdEntry;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -57,6 +57,8 @@ public class NVD {
   }
 
   /**
+   * Initializes a new {@link NVD} instance.
+   *
    * @param downloadDirectory A directory where the date from the NVD should be stored.
    */
   public NVD(String downloadDirectory) {
@@ -71,9 +73,9 @@ public class NVD {
   }
 
   /**
-   * @return True if downloading the data from the NVD failed, false otherwise.
+   * Returns true if downloading the data from the NVD failed, false otherwise.
    */
-  public boolean downloadFailed() {
+  boolean downloadFailed() {
     try {
       return jsonFiles().isEmpty();
     } catch (IOException e) {
@@ -82,17 +84,19 @@ public class NVD {
   }
 
   /**
-   * @return Where the data from the NVD is stored.
+   * Returns where the data from the NVD is stored.
    */
-  public String location() {
+  String location() {
     return downloadDirectory;
   }
 
   /**
+   * Returns a list of JSON files downloaded from the NVD.
+   *
    * @return A list of downloaded JSON files.
    * @throws IOException If something went wrong.
    */
-  public List<String> jsonFiles() throws IOException {
+  List<String> jsonFiles() throws IOException {
     try (Stream<Path> walk = Files.walk(Paths.get(downloadDirectory))) {
       return walk
           .filter(Files::isRegularFile)
@@ -111,8 +115,8 @@ public class NVD {
    * @return A list of NVD entries for the specified vendor and product.
    * @throws IOException If something went wrong.
    */
-  public List<NVDEntry> find(String vendor, String product) throws IOException {
-    List<NVDEntry> nvdEntries = new ArrayList<>();
+  public List<NvdEntry> find(String vendor, String product) throws IOException {
+    List<NvdEntry> nvdEntries = new ArrayList<>();
 
     JsonFactory factory = MAPPER.getFactory();
     for (String path : jsonFiles()) {
@@ -130,7 +134,7 @@ public class NVD {
           throw new IllegalArgumentException("Hmm ... Looks like 'CVE_Items' is not an array!");
         }
 
-        for (NVDEntry entry : MAPPER.readValue(parser, NVDEntry[].class)) {
+        for (NvdEntry entry : MAPPER.readValue(parser, NvdEntry[].class)) {
           for (Matcher matcher : MATCHERS) {
             if (matcher.match(entry, vendor, product)) {
               nvdEntries.add(entry);

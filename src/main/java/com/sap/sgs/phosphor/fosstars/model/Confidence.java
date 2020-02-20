@@ -1,10 +1,10 @@
 package com.sap.sgs.phosphor.fosstars.model;
 
-
 import java.util.Objects;
 
 /**
- * The interface shows that a class can provide a level of confidence for the result which it holds or provides.
+ * The interface shows that a class can provide a level of confidence for the result
+ * which it holds or provides.
  */
 public interface Confidence {
 
@@ -19,7 +19,7 @@ public interface Confidence {
   double MAX = 10.0;
 
   /**
-   * @return A level of confidence.
+   * Return a level of confidence.
    */
   double confidence();
 

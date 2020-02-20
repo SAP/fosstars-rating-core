@@ -27,6 +27,13 @@ public final class SecurityReview {
    */
   public final String who;
 
+  /**
+   * Initializes a security review.
+   *
+   * @param link A URL to a document which describes the security review.
+   * @param when When the review was done.
+   * @param who Who did the review.
+   */
   public SecurityReview(
       @JsonProperty("link") URL link,
       @JsonProperty("when") Date when,
@@ -49,9 +56,9 @@ public final class SecurityReview {
       return false;
     }
     SecurityReview that = (SecurityReview) o;
-    return Objects.equals(link, that.link) &&
-        Objects.equals(when, that.when) &&
-        Objects.equals(who, that.who);
+    return Objects.equals(link, that.link)
+        && Objects.equals(when, that.when)
+        && Objects.equals(who, that.who);
   }
 
   @Override

@@ -12,7 +12,7 @@ import com.sap.sgs.phosphor.fosstars.model.value.Vulnerability;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.Resolution;
 import com.sap.sgs.phosphor.fosstars.nvd.NVD;
 import com.sap.sgs.phosphor.fosstars.nvd.data.DescriptionData;
-import com.sap.sgs.phosphor.fosstars.nvd.data.NVDEntry;
+import com.sap.sgs.phosphor.fosstars.nvd.data.NvdEntry;
 import com.sap.sgs.phosphor.fosstars.nvd.data.ReferenceData;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -26,12 +26,11 @@ import org.kohsuke.github.GitHub;
 
 /**
  * This data provider looks for vulnerabilities in NVD.
- *
  * TODO: This class doesn't talk to GitHub. Instead, it uses a local storage
  *       which contains info about known security teams.
- *       VulnerabilitiesFromNVD may be converted to a data provider.
+ *       VulnerabilitiesFromNvd may be converted to a data provider.
  */
-public class VulnerabilitiesFromNVD extends AbstractGitHubDataProvider {
+public class VulnerabilitiesFromNvd extends AbstractGitHubDataProvider {
 
   /**
    * A list of vulnerabilities to be updated by this data provider.
@@ -44,12 +43,14 @@ public class VulnerabilitiesFromNVD extends AbstractGitHubDataProvider {
   private final NVD nvd;
 
   /**
+   * Initializes a data provider.
+   *
    * @param where A GitHub organization of user name.
    * @param name A name of a repository.
    * @param github An interface to the GitHub API.
    * @param vulnerabilities A list of vulnerabilities to be updated by this data provider.
    */
-  public VulnerabilitiesFromNVD(String where, String name, GitHub github,
+  public VulnerabilitiesFromNvd(String where, String name, GitHub github,
       Value<Vulnerabilities> vulnerabilities) {
 
     super(where, name, github);
@@ -58,12 +59,12 @@ public class VulnerabilitiesFromNVD extends AbstractGitHubDataProvider {
   }
 
   @Override
-  public VulnerabilitiesFromNVD update(ValueSet values) throws IOException {
+  public VulnerabilitiesFromNvd update(ValueSet values) throws IOException {
     Objects.requireNonNull(values, "Hey! Values can't be null!");
     System.out.println("[+] Looking for vulnerabilities in NVD ...");
 
     nvd.download();
-    for (NVDEntry entry : nvd.find(where, name)) {
+    for (NvdEntry entry : nvd.find(where, name)) {
       vulnerabilities.get().add(vulnerabilityFrom(entry));
     }
     values.update(vulnerabilities);
@@ -72,13 +73,13 @@ public class VulnerabilitiesFromNVD extends AbstractGitHubDataProvider {
   }
 
   /**
-   * Converts an {@link NVDEntry} to a {@link Vulnerability}.
+   * Converts an {@link NvdEntry} to a {@link Vulnerability}.
    *
-   * @param entry The {@link NVDEntry} to be converted.
+   * @param entry The {@link NvdEntry} to be converted.
    * @return An instance of {@link Vulnerability}.
    */
-  private static Vulnerability vulnerabilityFrom(NVDEntry entry) {
-    String id = entry.getCve().getCVEDataMeta().getID();
+  private static Vulnerability vulnerabilityFrom(NvdEntry entry) {
+    String id = entry.getCve().getCveDataMeta().getID();
 
     String description = entry.getCve().getDescription().getDescriptionData().stream()
         .map(DescriptionData::getValue).collect(Collectors.joining("\n\n"));
@@ -100,8 +101,8 @@ public class VulnerabilitiesFromNVD extends AbstractGitHubDataProvider {
 
     Date fixed = date(entry.getPublishedDate());
 
-    return new Vulnerability(id, description, cvss, references, resolution, UNKNOWN_INTRODUCED_DATE,
-        fixed);
+    return new Vulnerability(
+        id, description, cvss, references, resolution, UNKNOWN_INTRODUCED_DATE, fixed);
   }
 
 }

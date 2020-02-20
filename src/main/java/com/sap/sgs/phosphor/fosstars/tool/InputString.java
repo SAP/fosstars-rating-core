@@ -13,11 +13,19 @@ public class InputString {
    */
   private final UserCallback callback;
 
+  /**
+   * Initializes a new {@link InputString}.
+   *
+   * @param callback A callback to interact with a user.
+   */
   public InputString(UserCallback callback) {
     Objects.requireNonNull(callback, "Hey! User callback can't be null!");
     this.callback = callback;
   }
 
+  /**
+   * Asks a user to provide a string.
+   */
   public String get() {
     String string;
     while (true) {

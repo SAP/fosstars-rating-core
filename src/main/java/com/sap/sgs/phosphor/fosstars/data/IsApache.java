@@ -12,12 +12,14 @@ import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
 public class IsApache implements DataProvider {
 
   /**
-   * A GitHub organization.
+   * An organization or username on GitHub.
    */
   private final String where;
 
   /**
-   * @param where A GitHub organization.
+   * Initializes a data provider.
+   *
+   * @param where An organization or username on GitHub.
    */
   public IsApache(String where) {
     this.where = where;
@@ -25,7 +27,8 @@ public class IsApache implements DataProvider {
 
   @Override
   public IsApache update(ValueSet values) {
-    System.out.println("[+] Figuring out if the project belongs to the Apache Software Foundation ...");
+    System.out.println(
+        "[+] Figuring out if the project belongs to the Apache Software Foundation ...");
     values.update(new BooleanValue(IS_APACHE, "apache".equalsIgnoreCase(where)));
     return this;
   }

@@ -10,12 +10,14 @@ import org.kohsuke.github.GitHub;
 /**
  * This data provider checks if an open-source project uses OWASP Dependency Check Maven plugin to
  * scan dependencies for known vulnerabilities. If it does, the provider sets {@link
- * com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#SCANS_FOR_VULNERABLE_DEPENDENCIES} to
- * true.
+ * com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#SCANS_FOR_VULNERABLE_DEPENDENCIES}
+ * to true.
  */
 public class UsesSnykDependencyCheck extends AbstractGitHubDataProvider {
 
   /**
+   * Initializes a data provider.
+   *
    * @param where A GitHub organization of user name.
    * @param name A name of a repository.
    * @param github An interface to the GitHub API.

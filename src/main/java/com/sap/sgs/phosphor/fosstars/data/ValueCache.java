@@ -57,6 +57,8 @@ public class ValueCache {
   }
 
   /**
+   * Initializes a value cache.
+   *
    * @param entries The cache entries.
    */
   private ValueCache(Map<String, ValueSet> entries) {
@@ -179,7 +181,7 @@ public class ValueCache {
   }
 
   /**
-   * @return The default cache.
+   * Returns the default cache.
    */
   public static ValueCache shared() {
     return SHARED;

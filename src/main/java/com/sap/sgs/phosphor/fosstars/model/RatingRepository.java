@@ -164,8 +164,9 @@ public class RatingRepository {
   }
 
   /**
-   * Loads a rating of a particular {@link Version}. First, the method checks if the {@link Version#path}
-   * points to an existing file, and if so, the method tries to load a rating from the file.
+   * Loads a rating of a particular {@link Version}. First, the method checks
+   * if the {@link Version#path} points to an existing file,
+   * and if so, the method tries to load a rating from the file.
    * If the {@link Version#path} doesn't point to an existing file, then the method tries to load
    * the {@link Version#path} as a resource.
    *
@@ -180,7 +181,8 @@ public class RatingRepository {
     if (file.exists()) {
       return MAPPER.readValue(file, Rating.class);
     } else {
-      InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(version.path);
+      InputStream is = Thread.currentThread().getContextClassLoader()
+          .getResourceAsStream(version.path);
       if (is != null) {
         try {
           return MAPPER.readValue(is, Rating.class);

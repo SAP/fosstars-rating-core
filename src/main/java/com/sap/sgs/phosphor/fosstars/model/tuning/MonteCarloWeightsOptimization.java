@@ -7,7 +7,6 @@ import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
 import com.sap.sgs.phosphor.fosstars.model.weight.MutableWeight;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 /**
  * This class applies Monte Carlo method to search for weights which can be used in a rating, so

@@ -21,6 +21,13 @@ public class BoundedIntegerFeature extends AbstractFeature<Integer> {
    */
   private final int to;
 
+  /**
+   * Initializes a new feature.
+   *
+   * @param name A name of the feature.
+   * @param from A left boundary.
+   * @param to A right boundary.
+   */
   @JsonCreator
   public BoundedIntegerFeature(
       @JsonProperty("name") String name,
@@ -60,8 +67,7 @@ public class BoundedIntegerFeature extends AbstractFeature<Integer> {
       return false;
     }
     BoundedIntegerFeature that = (BoundedIntegerFeature) o;
-    return from == that.from &&
-    	to == that.to;
+    return from == that.from && to == that.to;
   }
 
   @Override
@@ -71,10 +77,13 @@ public class BoundedIntegerFeature extends AbstractFeature<Integer> {
 
   /**
    * Checks if an integer belongs to the interval.
+   *
+   * @param n The integer to be checked.
    */
   private Integer check(Integer n) {
     if (n < from || n > to) {
-      throw new IllegalArgumentException(String.format("Feature value has to be in [%d, %d] but %d given!", from, to, n));
+      throw new IllegalArgumentException(
+          String.format("Feature value has to be in [%d, %d] but %d given!", from, to, n));
     }
 
     return n;

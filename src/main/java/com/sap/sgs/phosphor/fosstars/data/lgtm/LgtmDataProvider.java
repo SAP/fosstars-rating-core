@@ -9,6 +9,7 @@ import com.sap.sgs.phosphor.fosstars.data.DataProvider;
 import com.sap.sgs.phosphor.fosstars.data.UserCallback;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
+import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
@@ -47,12 +48,16 @@ public class LgtmDataProvider implements DataProvider {
   protected final String name;
 
   /**
-   * @param where A GitHub organization or a user name.
-   * @param name A name of a repository.
+   * Initializes a data provider.
+   *
+   * @param where A GitHub organization or a user name (can't be null).
+   * @param name A name of a repository (can"t be null).
    */
   public LgtmDataProvider(String where, String name) {
-    Objects.requireNonNull(where, "Oh no! You gave me a null instead of an organization or user name!");
-    Objects.requireNonNull(name, "Oh no! You gave me a null instead of a project name!");
+    Objects.requireNonNull(where,
+        "Oh no! You gave me a null instead of an organization or user name!");
+    Objects.requireNonNull(name,
+        "Oh no! You gave me a null instead of a project name!");
 
     this.where = where;
     this.name = name;
@@ -92,27 +97,29 @@ public class LgtmDataProvider implements DataProvider {
   }
 
   /**
-   * @return An HTTP client.
+   * Returns an HTTP client.
    */
   CloseableHttpClient httpClient() {
     return HttpClients.createDefault();
   }
 
   /**
-   * Parses a JSON response from the LGTM API and tries to figure out if the project has been analysed.
+   * Parses a JSON response from the LGTM API
+   * and tries to figure out if the project has been analysed.
    *
    * @param json The JSON response from LGTM to be parsed.
-   * @return A value of the {@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#USES_LGTM} feature.
+   * @return A value of the {@link OssFeatures#USES_LGTM} feature.
    */
   private static Value<Boolean> usesLgtm(JsonNode json) {
     return new BooleanValue(USES_LGTM, json.has("id"));
   }
 
   /**
-   * Parses a JSON response from the LGTM API and tries to figure out the worse grade for the project.
+   * Parses a JSON response from the LGTM API
+   * and tries to figure out the worse grade for the project.
    *
    * @param json The JSON response from LGTM to be parsed.
-   * @return A value of the {@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#WORSE_LGTM_GRADE} feature.
+   * @return A value of the {@link OssFeatures#WORSE_LGTM_GRADE} feature.
    */
   private static Value<LgtmGrade> worseLgtmGrade(JsonNode json) {
     LgtmGrade worseGrade = null;
@@ -147,7 +154,9 @@ public class LgtmDataProvider implements DataProvider {
     System.out.printf("[+] check project: https://github.com/%s/%s%n", where, name);
     new LgtmDataProvider("apache", "nifi").update(values);
 
-    System.out.printf("[+] Uses LGTM:   %s%n", values.of(USES_LGTM).orElse(UnknownValue.of(USES_LGTM)));
-    System.out.printf("[+] Worse grade: %s%n", values.of(WORSE_LGTM_GRADE).orElse(UnknownValue.of(WORSE_LGTM_GRADE)));
+    System.out.printf("[+] Uses LGTM:   %s%n",
+        values.of(USES_LGTM).orElse(UnknownValue.of(USES_LGTM)));
+    System.out.printf("[+] Worse grade: %s%n",
+        values.of(WORSE_LGTM_GRADE).orElse(UnknownValue.of(WORSE_LGTM_GRADE)));
   }
 }

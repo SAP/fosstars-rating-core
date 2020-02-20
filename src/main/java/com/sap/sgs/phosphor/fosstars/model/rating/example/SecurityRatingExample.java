@@ -11,8 +11,8 @@ import com.sap.sgs.phosphor.fosstars.model.rating.AbstractRating;
 import com.sap.sgs.phosphor.fosstars.model.score.example.SecurityScoreExample;
 
 /**
- * This is a sample implementation of a security rating. Only for demo purposes. The rating is based
- * on SecurityScoreExample.
+ * This is a sample implementation of a security rating. Only for demo purposes.
+ * The rating is based on SecurityScoreExample.
  */
 public class SecurityRatingExample extends AbstractRating {
 

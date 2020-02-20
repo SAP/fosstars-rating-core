@@ -27,6 +27,8 @@ public class VulnerabilitiesValue extends AbstractValue<Vulnerabilities> {
   }
 
   /**
+   * Initializes a new value with a collection of vulnerabilities.
+   *
    * @param vulnerabilities The vulnerabilities.
    */
   @JsonCreator

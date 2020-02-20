@@ -26,6 +26,13 @@ public class FirstCommit extends AbstractGitHubDataProvider {
    */
   private static final long DELTA = 7 * 24 * 60 * 60 * 1000L;
 
+  /**
+   * Initializes a data provider.
+   *
+   * @param where A GitHub organization of user name.
+   * @param name A name of a repository.
+   * @param github An interface to the GitHub API.
+   */
   public FirstCommit(String where, String name, GitHub github) {
     super(where, name, github);
   }
@@ -42,7 +49,7 @@ public class FirstCommit extends AbstractGitHubDataProvider {
     return this;
   }
 
-  protected Value<Date> firstCommitDate() throws IOException {
+  Value<Date> firstCommitDate() throws IOException {
     Optional<Value> something = cache().get(url, FIRST_COMMIT_DATE);
     if (something.isPresent()) {
       return something.get();

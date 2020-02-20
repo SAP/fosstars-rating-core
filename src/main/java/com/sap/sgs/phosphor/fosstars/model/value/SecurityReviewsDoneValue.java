@@ -8,7 +8,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Objects;
 
 /**
- * A value for the {@link com.sap.sgs.phosphor.fosstars.model.feature.oss.SecurityReviewsDone} feature.
+ * A value for the {@link com.sap.sgs.phosphor.fosstars.model.feature.oss.SecurityReviewsDone}
+ * feature.
  */
 public class SecurityReviewsDoneValue extends AbstractValue<SecurityReviews> {
 
@@ -18,6 +19,8 @@ public class SecurityReviewsDoneValue extends AbstractValue<SecurityReviews> {
   private final SecurityReviews reviews;
 
   /**
+   * Initializes a {@link SecurityReviewsDoneValue}.
+   *
    * @param reviews A collection of security reviews.
    */
   public SecurityReviewsDoneValue(@JsonProperty("reviews") SecurityReviews reviews) {

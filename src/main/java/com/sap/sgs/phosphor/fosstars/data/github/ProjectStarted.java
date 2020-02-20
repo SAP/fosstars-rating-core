@@ -18,6 +18,8 @@ import org.kohsuke.github.GitHub;
 public class ProjectStarted extends FirstCommit {
 
   /**
+   * Initializes a data provider.
+   *
    * @param where A GitHub organization of user name.
    * @param name A name of a repository.
    * @param github An interface to the GitHub API.

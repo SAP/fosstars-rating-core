@@ -9,7 +9,6 @@ import org.kohsuke.github.GitHub;
 
 /**
  * This data provider provides info about security reviews for an open-source project.
- *
  * TODO: This class doesn't talk to GitHub. Instead, it uses a local storage
  *       which contains info about known security teams.
  *       SecurityReviewForProject may be converted to a data provider.
@@ -22,6 +21,8 @@ public class SecurityReviewForProject extends AbstractGitHubDataProvider {
   private final SecurityReviewStorage storage;
 
   /**
+   * Initializes a data provider.
+   *
    * @param where A GitHub organization of user name.
    * @param name A name of a repository.
    * @param github An interface to the GitHub API.

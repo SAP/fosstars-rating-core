@@ -20,6 +20,16 @@ public class DoubleInterval implements Interval {
   private final boolean openRight;
   private final boolean positiveInfinity;
 
+  /**
+   * Initializes an interval.
+   *
+   * @param from A left boundary.
+   * @param openLeft If a left boundary is open.
+   * @param negativeInfinity If a left boundary is infinity.
+   * @param to A right boundary.
+   * @param openRight If a right boundary is open.
+   * @param positiveInfinity If a right boundary is infinity.
+   */
   private DoubleInterval(
       @JsonProperty("from") double from,
       @JsonProperty("openLeft") boolean openLeft,
@@ -136,12 +146,19 @@ public class DoubleInterval implements Interval {
       return false;
     }
     DoubleInterval that = (DoubleInterval) o;
-    return Double.compare(that.from, from) == 0 &&
-        openLeft == that.openLeft &&
-        negativeInfinity == that.negativeInfinity &&
-        Double.compare(that.to, to) == 0 &&
-        openRight == that.openRight &&
-        positiveInfinity == that.positiveInfinity;
+    return Double.compare(that.from, from) == 0
+        && openLeft == that.openLeft
+        && negativeInfinity == that.negativeInfinity
+        && Double.compare(that.to, to) == 0
+        && openRight == that.openRight
+        && positiveInfinity == that.positiveInfinity;
+  }
+
+  /**
+   * Check if two double are equal by checking abs(a-b) < delta.
+   */
+  private static boolean equals(double a, double b) {
+    return Math.abs(a - b) < PRECISION;
   }
 
   @Override
@@ -158,13 +175,6 @@ public class DoubleInterval implements Interval {
 
   public static DoubleInterval closed(double from, double to) {
     return new DoubleInterval(from, false, false, to, false, false);
-  }
-
-  /**
-   * Check if two double are equal by checking abs(a-b) < delta.
-   */
-  private static boolean equals(double a, double b) {
-    return Math.abs(a - b) < PRECISION;
   }
 
   /**

@@ -1,10 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.data.json;
 
-import static com.sap.sgs.phosphor.fosstars.common.Utils.checkHttps;
-
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,7 +13,7 @@ import java.util.Objects;
 /**
  * This class maintains information about open-source projects which are supported by companies.
  */
-public class CompanySupportStorage {
+public class CompanySupportStorage extends AbstractJsonStorage {
 
   /**
    * Path to a resource which contains the information company support.
@@ -25,16 +22,13 @@ public class CompanySupportStorage {
       "com/sap/sgs/phosphor/fosstars/data/CompanySupport.json";
 
   /**
-   * An ObjectMapper for serialization and deserialization.
-   */
-  private static final ObjectMapper MAPPER = new ObjectMapper();
-
-  /**
    * Maps a project's code repository URL to a list of companies which support the project.
    */
   private final Map<String, List<String>> projects;
 
   /**
+   * Initializes a storage.
+   *
    * @param projects Information about projects which are supported by companies.
    */
   public CompanySupportStorage(@JsonProperty("projects") Map<String, List<String>> projects) {

@@ -13,6 +13,12 @@ public class BooleanValue extends AbstractValue<Boolean> {
 
   private final Boolean flag;
 
+  /**
+   * Initializes a value for a feature.
+   *
+   * @param feature The feature.
+   * @param flag True or false.
+   */
   @JsonCreator
   public BooleanValue(
       @JsonProperty("feature") Feature<Boolean> feature,

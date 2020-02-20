@@ -2,7 +2,6 @@ package com.sap.sgs.phosphor.fosstars.data.json;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerability;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.Resolution;
@@ -21,7 +20,7 @@ import java.util.Objects;
  * The class maintains a list of unpatched vulnerabilities for open-source projects. An open-source
  * project is represented by the URL it its source code repository.
  */
-public class UnpatchedVulnerabilitiesStorage {
+public class UnpatchedVulnerabilitiesStorage extends AbstractJsonStorage {
 
   /**
    * Path to a resource which contains the information about unpatched vulnerabilities.
@@ -30,19 +29,16 @@ public class UnpatchedVulnerabilitiesStorage {
       "com/sap/sgs/phosphor/fosstars/data/UnpatchedVulnerabilities.json";
 
   /**
-   * An ObjectMapper for serialization and deserialization.
-   */
-  private static final ObjectMapper MAPPER = new ObjectMapper();
-
-  /**
    * This mapping allows retrieving vulnerabilities for an open-source project by providing an URL
    * to the source code repository.
    */
   private final Map<URL, Vulnerabilities> projectVulnerabilities;
 
   /**
+   * Initializes a storage.
+   *
    * @param projectVulnerabilities A mapping which maps an URL to source code repository to a list
-   * of unpatched vulnerabilities.
+   *                               of unpatched vulnerabilities.
    */
   public UnpatchedVulnerabilitiesStorage(
       @JsonProperty("projectVulnerabilities") Map<URL, Vulnerabilities> projectVulnerabilities) {
@@ -63,7 +59,7 @@ public class UnpatchedVulnerabilitiesStorage {
    *
    * @param url A URL to source code repository for the project.
    * @return An instance of {@link Vulnerabilities} with all known unpatched vulnerabilities for the
-   * project.
+   *         project.
    * @throws MalformedURLException If the URL is not valid.
    */
   public Vulnerabilities get(String url) throws MalformedURLException {
@@ -79,7 +75,7 @@ public class UnpatchedVulnerabilitiesStorage {
    *
    * @param url A URL to source code repository for the project.
    * @return An instance of {@link Vulnerabilities} with all known unpatched vulnerabilities for the
-   * project.
+   *         project.
    */
   public Vulnerabilities get(URL url) {
     Vulnerabilities vulnerabilities = projectVulnerabilities.get(url);

@@ -29,9 +29,9 @@ import org.apache.logging.log4j.Logger;
  *
  * @see <a href="https://en.wikipedia.org/wiki/CMA-ES">CMA-ES algorithm on Wikipedia</a>
  */
-public class CMAESWeightsOptimization extends AbstractWeightsOptimization {
+public class WeightsOptimizationWithCMAES extends AbstractWeightsOptimization {
 
-  private static final Logger LOGGER = LogManager.getLogger(CMAESWeightsOptimization.class);
+  private static final Logger LOGGER = LogManager.getLogger(WeightsOptimizationWithCMAES.class);
 
   /**
    * Minimal weight to be assigned.
@@ -65,13 +65,13 @@ public class CMAESWeightsOptimization extends AbstractWeightsOptimization {
   private final RatingVerifier verifier;
 
   /**
-   * Initializes a new {@link CMAESWeightsOptimization}.
+   * Initializes a new {@link WeightsOptimizationWithCMAES}.
    *
    * @param rating A rating to be tuned.
    * @param vectors A list of test vectors.
    * @param path A path where a serialized rating should be stored to.
    */
-  public CMAESWeightsOptimization(Rating rating, List<TestVector> vectors, String path) {
+  public WeightsOptimizationWithCMAES(Rating rating, List<TestVector> vectors, String path) {
     super(rating, vectors, path);
     this.weights = mutableWeights();
     this.verifier = new RatingVerifier(rating, vectors);

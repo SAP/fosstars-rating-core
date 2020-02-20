@@ -13,12 +13,14 @@ import java.util.Objects;
 public abstract class AbstractFeature<T> implements Feature<T> {
 
   /**
-   * Feature name.
+   * The feature name.
    */
   protected final String name;
 
   /**
-   * @param name Feature name.
+   * Initializes a feature.
+   *
+   * @param name The feature name.
    */
   public AbstractFeature(String name) {
     Objects.requireNonNull(name, "Hey! Name can't be null!");

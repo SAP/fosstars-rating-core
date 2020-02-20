@@ -23,7 +23,9 @@ public enum Version {
   public final String path;
 
   /**
-   * @param path the path of the JSON file which contains the serialized rating.
+   * Initializes a version with a path to a JSON file.
+   *
+   * @param path The path of the JSON file which contains the serialized rating.
    */
   Version(String path) {
     this.path = path;

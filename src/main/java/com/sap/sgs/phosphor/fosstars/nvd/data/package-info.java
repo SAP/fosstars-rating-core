@@ -1,6 +1,6 @@
 /**
- * The classes in this package have been originally generated from the following CVE entry in NVD:
- *
+ * <p>The classes in this package have been originally generated
+ * from the following CVE entry in NVD.</p>
  * <pre>
  *   {
  *     "cve" : {
@@ -245,14 +245,17 @@
  *     "lastModifiedDate" : "2010-12-16T05:00Z"
  *   }
  * </pre>
- *
- * Then, the classes were updated to follow the code style guideline.
- *
- * <i>jsonschema2pojo</i> has been used to generate the classes:
- * <ul>
- * <li><a href="http://www.jsonschema2pojo.org">http://www.jsonschema2pojo.org<a/></li>
- * <li><a href="https://github.com/joelittlejohn/jsonschema2pojo/wiki/Getting-Started">Getting
- * started</a></li>
- * </ul>
+ * <p>Then, the classes were updated to follow the code style guideline.</p>
+ * <p>
+ *   <i>jsonschema2pojo</i> has been used to generate the classes:
+ *   <ul>
+ *     <li><a href="http://www.jsonschema2pojo.org">http://www.jsonschema2pojo.org</a></li>
+ *     <li>
+ *       <a href="https://github.com/joelittlejohn/jsonschema2pojo/wiki/Getting-Started">
+ *         Getting started
+ *       </a>
+ *     </li>
+ *   </ul>
+ * </p>
  */
 package com.sap.sgs.phosphor.fosstars.nvd.data;

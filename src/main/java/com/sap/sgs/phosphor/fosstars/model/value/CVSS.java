@@ -33,6 +33,8 @@ public class CVSS {
   private final Double value;
 
   /**
+   * Initializes a CVSS score.
+   *
    * @param version CVSS version.
    * @param value A score in the interval [0, 10].
    */
@@ -45,7 +47,7 @@ public class CVSS {
   }
 
   /**
-   * @return The score.
+   * Returns the score.
    */
   @JsonGetter("value")
   public Double value() {
@@ -53,7 +55,7 @@ public class CVSS {
   }
 
   /**
-   * @return The version.
+   * Returns the version.
    */
   @JsonGetter("version")
   public Version version() {
@@ -61,7 +63,7 @@ public class CVSS {
   }
 
   /**
-   * @return True if the score is unknown, false otherwise.
+   * Return true if the score is unknown, false otherwise.
    */
   @JsonIgnore
   public boolean isUnknown() {
@@ -77,8 +79,7 @@ public class CVSS {
       return false;
     }
     CVSS cvss = (CVSS) o;
-    return version == cvss.version &&
-        Objects.equals(value, cvss.value);
+    return version == cvss.version && Objects.equals(value, cvss.value);
   }
 
   @Override

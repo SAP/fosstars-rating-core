@@ -19,6 +19,7 @@ public class SecurityReviewsDone extends AbstractFeature<SecurityReviews> {
    * For deserialization.
    */
   private static final ObjectMapper MAPPER = new ObjectMapper();
+
   static {
     MAPPER.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
   }
@@ -36,10 +37,10 @@ public class SecurityReviewsDone extends AbstractFeature<SecurityReviews> {
   }
 
   /**
-   * Takes a JSON string and tries to convert it to a {@link Value<SecurityReviews>} object.
+   * Takes a JSON string and tries to convert it to a {@link Value} object.
    *
    * @param string The JSON string.
-   * @return An instance of {@link Value<SecurityReviews>}.
+   * @return An instance of {@link Value}.
    * @throws IllegalArgumentException If something went wrong.
    */
   @Override

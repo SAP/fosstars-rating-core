@@ -7,12 +7,12 @@ import com.sap.sgs.phosphor.fosstars.model.Feature;
 import java.util.Objects;
 
 /**
- * A value of a feature which contains a enum item.
+ * <p>A value of a feature which contains a enum item.</p>
  *
- * For some reason, deserialization of this class doesn't work.
- * It currently fails with the "Cannot deserialize Class java.lang.Enum (of type enum) as a Bean" error.
- * It looks like a problem with Jackson Databind, maybe it is related to the
- * <a href="https://github.com/FasterXML/jackson-databind/issues/2605">issue #2605</a>.
+ * <p>For some reason, deserialization of this class doesn't work.
+ * It currently fails with the "Cannot deserialize Class java.lang.Enum (of type enum) as a Bean"
+ * error. It looks like a problem with Jackson Databind, maybe it is related to the
+ * <a href="https://github.com/FasterXML/jackson-databind/issues/2605">issue #2605</a>.</p>
  *
  * @param <T> Enum type.
  */
@@ -23,6 +23,12 @@ public class EnumValue<T extends Enum> extends AbstractValue<T> {
    */
   private final T value;
 
+  /**
+   * Initialize {@link EnumValue} for a feature with a value.
+   *
+   * @param feature The feature.
+   * @param value The value.
+   */
   @JsonCreator
   public EnumValue(
       @JsonProperty("feature") Feature feature,

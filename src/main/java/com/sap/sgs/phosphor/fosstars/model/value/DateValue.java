@@ -17,6 +17,12 @@ public class DateValue extends AbstractValue<Date> {
    */
   private final Date date;
 
+  /**
+   * Initializes a value for a feature.
+   *
+   * @param feature The feature.
+   * @param date A date.
+   */
   @JsonCreator
   public DateValue(
       @JsonProperty("feature") Feature<Date> feature,
