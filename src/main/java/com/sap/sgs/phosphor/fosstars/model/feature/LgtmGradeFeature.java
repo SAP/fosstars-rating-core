@@ -11,6 +11,11 @@ import com.sap.sgs.phosphor.fosstars.model.value.LgtmGradeValue;
  */
 public class LgtmGradeFeature extends AbstractFeature<LgtmGrade> {
 
+  /**
+   * Initializes a new feature.
+   *
+   * @param name A name of the feature.
+   */
   @JsonCreator
   public LgtmGradeFeature(@JsonProperty("name") String name) {
     super(name);

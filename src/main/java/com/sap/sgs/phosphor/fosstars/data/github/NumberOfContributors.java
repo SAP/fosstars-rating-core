@@ -29,6 +29,8 @@ public class NumberOfContributors extends AbstractGitHubDataProvider {
   private static final long DELTA = 90 * 24 * 60 * 60 * 1000L;
 
   /**
+   * Initializes a data provider.
+   *
    * @param where A GitHub organization of user name.
    * @param name A name of a repository.
    * @param github An interface to the GitHub API.
@@ -40,7 +42,8 @@ public class NumberOfContributors extends AbstractGitHubDataProvider {
   @Override
   public NumberOfContributors update(ValueSet values) throws IOException {
     Objects.requireNonNull(values, "Hey! Values can't be null!");
-    System.out.println("[+] Counting how many people contributed to the project last three months ...");
+    System.out.println(
+        "[+] Counting how many people contributed to the project last three months ...");
 
     Optional<Value> something = cache().get(url, NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS);
     if (something.isPresent()) {

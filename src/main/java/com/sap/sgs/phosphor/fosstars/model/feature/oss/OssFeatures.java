@@ -17,7 +17,9 @@ import java.util.Date;
  */
 public class OssFeatures {
 
-  // don't allow creating instances of this class
+  /**
+   * Don't allow creating instances of this class.
+   */
   private OssFeatures() {
 
   }
@@ -56,7 +58,8 @@ public class OssFeatures {
       = new BooleanFeature("If an open-source project has a security team");
 
   /**
-   * Shows if an open-source project has a security policy which describes how a vulnerability should be reported,
+   * Shows if an open-source project has a security policy
+   * which describes how a vulnerability should be reported,
    * how security problems are getting fixed, etc.
    *
    * @see <a href="https://help.github.com/en/github/managing-security-vulnerabilities/adding-a-security-policy-to-your-repository">
@@ -90,35 +93,37 @@ public class OssFeatures {
       = new BooleanFeature("If an open-source project uses C or C++");
 
   /**
-   * Shows if an open-source project has been scanned in Coverity Scan project. See https://scan.coverity.com/projects
-   *
+   * Shows if an open-source project has been scanned in Coverity Scan project.
+   * See <a href="https://scan.coverity.com/projects">https://scan.coverity.com/projects</a>.
    * The project provides additions metrics which may be also useful.
    */
   public static final Feature<Boolean> SCANNED_WITH_COVERITY
       = new BooleanFeature("If an open-source project scanned in Coverity Scan project");
 
   /**
-   * Shows if an open-source project uses AddressSanitizer, for example, for running tests, fuzzing, and so on.
+   * Shows if an open-source project uses AddressSanitizer,
+   * for example, for running tests, fuzzing, and so on.
    */
   public static final Feature<Boolean> USES_ADDRESS_SANITIZER
       = new BooleanFeature("If an open-source project uses AddressSanitizer (ASan)");
 
   /**
-   * Shows if an open-source project uses UndefinedBehaviorSanitizer, for example, for running tests, fuzzing, and so on.
+   * Shows if an open-source project uses UndefinedBehaviorSanitizer,
+   * for example, for running tests, fuzzing, and so on.
    */
   public static final Feature<Boolean> USES_UNDEFINED_BEHAVIOR_SANITIZER
       = new BooleanFeature("If an open-source project uses UndefinedBehaviorSanitizer (UBSan)");
 
   /**
-   * Shows if an open-source project is added to Google's open-source-Fuzz project to be regularly fuzzed.
-   *
-   * See https://github.com/google/oss-fuzz
+   * Shows if an open-source project is added to Google's open-source-Fuzz project
+   * to be regularly fuzzed.
+   * See <a href="https://github.com/google/oss-fuzz">https://github.com/google/oss-fuzz</a>.
    */
   public static final Feature<Boolean> FUZZED_IN_OSS_FUZZ
       = new BooleanFeature("If an open-source project is included to Google's OSS-Fuzz project");
 
   /**
-   * Provides information about vulnerabilities,
+   * Provides information about vulnerabilities.
    */
   public static final Feature<Vulnerabilities> VULNERABILITIES = new VulnerabilitiesInProject();
 
@@ -133,7 +138,8 @@ public class OssFeatures {
   public static final Feature<FuzzingAttempts> FUZZING_ATTEMPTS_DONE = new FuzzingAttemptsDone();
 
   public static final Feature<Boolean> SCANS_FOR_VULNERABLE_DEPENDENCIES
-      = new BooleanFeature("If an open-source project is regularly scanned for vulnerable dependencies");
+      = new BooleanFeature(
+          "If an open-source project is regularly scanned for vulnerable dependencies");
 
   // Below are features specific to GitHub
 
@@ -145,7 +151,6 @@ public class OssFeatures {
 
   /**
    * Shows how many GitHub users watch an open-source project.
-   *
    * See https://developer.github.com/v3/activity/watching/
    */
   public static final Feature<Integer> NUMBER_OF_WATCHERS_ON_GITHUB
@@ -159,16 +164,14 @@ public class OssFeatures {
 
   /**
    * Holds an overall health score for an open-source project on GitHub.
-   *
-   * See https://developer.github.com/v3/repos/community/
+   * See <a href="https://developer.github.com/v3/repos/community">https://developer.github.com/v3/repos/community</a>.
    */
   public static final Feature<Integer> GITHUB_OVERALL_HEALTH_SCORE
       = new BoundedIntegerFeature("Overall health score for a GitHub repository", 0, 100);
 
   /**
    * Show how many collaborators an open-source project has on GitHub.
-   *
-   * See https://developer.github.com/v3/repos/collaborators/
+   * See <a href="https://developer.github.com/v3/repos/collaborators">https://developer.github.com/v3/repos/collaborators/</a>.
    */
   public static final Feature<Integer> NUMBER_OF_COLLABORATORS
       = new PositiveIntegerFeature("Number of collaborators for a GitHub repository");
@@ -194,5 +197,6 @@ public class OssFeatures {
   /**
    * Holds the worse grade assigned by <a href="https://lgtm.com">LGTM</a>.
    */
-  public static final Feature<LgtmGrade> WORSE_LGTM_GRADE = new LgtmGradeFeature("The worse LGTM grade of a project");
+  public static final Feature<LgtmGrade> WORSE_LGTM_GRADE = new LgtmGradeFeature(
+      "The worse LGTM grade of a project");
 }

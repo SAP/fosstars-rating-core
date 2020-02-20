@@ -22,8 +22,7 @@ public class TestVectorBuilder {
   private String description = "unknown";
 
   /**
-   * Factory method.
-   * @return An instance of TestVectorBuilder.
+   * Creates a new test vector.
    */
   public static TestVectorBuilder newTestVector() {
     return new TestVectorBuilder();
@@ -49,6 +48,18 @@ public class TestVectorBuilder {
   }
 
   /**
+   * Set an expected label.
+   *
+   * @param label A label to be set.
+   * @return This instance of TestVectorBuilder.
+   */
+  public TestVectorBuilder expectedLabel(Label label) {
+    Objects.requireNonNull(label, "Hey! You have to give me a label but not null!");
+    expectedLabel = label;
+    return this;
+  }
+
+  /**
    * Set a value for a feature.
    *
    * @param feature The feature.
@@ -60,18 +71,6 @@ public class TestVectorBuilder {
     Objects.requireNonNull(feature, "Hey! Feature can't be null!");
     Objects.requireNonNull(object, "Hey! Feature can't be null!");
     return set(feature.value(object));
-  }
-
-  /**
-   * Set an expected label.
-   *
-   * @param label A label to be set.
-   * @return This instance of TestVectorBuilder.
-   */
-  public TestVectorBuilder expectedLabel(Label label) {
-    Objects.requireNonNull(label, "Hey! You have to give me a label but not null!");
-    expectedLabel = label;
-    return this;
   }
 
   /**
@@ -122,11 +121,14 @@ public class TestVectorBuilder {
    * @return An instance of TestVector.
    */
   public TestVector make() {
-    Objects.requireNonNull(expectedScore, "Oh no! Looks like you forgot to tell me about an expected score!");
+    Objects.requireNonNull(expectedScore,
+        "Oh no! Looks like you forgot to tell me about an expected score!");
     if (values.isEmpty()) {
-      throw new IllegalArgumentException("Oh no! Looks like you forgot to give me features values!");
+      throw new IllegalArgumentException(
+          "Oh no! Looks like you forgot to give me features values!");
     }
-    return new TestVector(Collections.unmodifiableSet(values), expectedScore, expectedLabel, description);
+    return new TestVector(
+        Collections.unmodifiableSet(values), expectedScore, expectedLabel, description);
   }
 
 }

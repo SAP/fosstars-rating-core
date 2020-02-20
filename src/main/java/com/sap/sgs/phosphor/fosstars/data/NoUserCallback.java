@@ -5,9 +5,17 @@ package com.sap.sgs.phosphor.fosstars.data;
  */
 public class NoUserCallback implements UserCallback {
 
+  /**
+   * Singleton.
+   */
   public static final NoUserCallback INSTANCE = new NoUserCallback();
 
-  private NoUserCallback() {}
+  /**
+   * Initialize a fake user callback.
+   */
+  private NoUserCallback() {
+
+  }
 
   @Override
   public boolean canTalk() {

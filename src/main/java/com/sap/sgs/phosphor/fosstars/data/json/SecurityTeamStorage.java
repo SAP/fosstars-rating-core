@@ -2,7 +2,6 @@ package com.sap.sgs.phosphor.fosstars.data.json;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,7 +13,7 @@ import java.util.Objects;
 /**
  * This class maintains information about security teams for open-source projects.
  */
-public class SecurityTeamStorage {
+public class SecurityTeamStorage extends AbstractJsonStorage {
 
   /**
    * Path to a resource which contains the information security teams.
@@ -23,16 +22,13 @@ public class SecurityTeamStorage {
       "com/sap/sgs/phosphor/fosstars/data/SecurityTeams.json";
 
   /**
-   * An ObjectMapper for serialization and deserialization.
-   */
-  private static final ObjectMapper MAPPER = new ObjectMapper();
-
-  /**
    * Maps a project's code repository URL to info about security team.
    */
   private final Map<String, Info> securityTeams;
 
   /**
+   * Initializes a storage.
+   *
    * @param securityTeams Information about security teams for open-source projects.
    */
   public SecurityTeamStorage(
@@ -43,7 +39,7 @@ public class SecurityTeamStorage {
   }
 
   /**
-   * Checks if a project has a security team
+   * Checks if a project has a security team.
    *
    * @param url The project's code repository URL.
    * @return True if the project has a security team, false otherwise.
@@ -140,6 +136,8 @@ public class SecurityTeamStorage {
     private final URL[] urls;
 
     /**
+     * Creates an instance.
+     *
      * @param contact Describes how the security team can be contacted.
      * @param link A link to the team's page.
      * @param urls A number of URLs to open-source projects covered by the security team.

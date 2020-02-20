@@ -31,6 +31,8 @@ public class ExpiringValue<T> implements Value<T> {
   private final Date expiration;
 
   /**
+   * Initializes an expiring value.
+   *
    * @param value A value to wrap.
    * @param expiration An expiration date for the value.
    */
@@ -65,14 +67,14 @@ public class ExpiringValue<T> implements Value<T> {
   }
 
   /**
-   * @return True if the value never expires, false otherwise.
+   * Returns true if the value never expires, false otherwise.
    */
   public boolean neverExpires() {
     return expiration == NO_EXPIRATION;
   }
 
   /**
-   * @return True if the value has expired, false otherwise.
+   * Return true if the value has expired, false otherwise.
    */
   public boolean expired() {
     Date now = new Date();
@@ -98,8 +100,7 @@ public class ExpiringValue<T> implements Value<T> {
       return false;
     }
     ExpiringValue<?> that = (ExpiringValue<?>) o;
-    return Objects.equals(value, that.value) &&
-        Objects.equals(expiration, that.expiration);
+    return Objects.equals(value, that.value) && Objects.equals(expiration, that.expiration);
   }
 
   @Override

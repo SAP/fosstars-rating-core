@@ -24,6 +24,8 @@ public class NumberOfCommits extends AbstractGitHubDataProvider {
   private static final long DELTA = 90 * 24 * 60 * 60 * 1000L;
 
   /**
+   * Initializes a data provider.
+   *
    * @param where A GitHub organization of user name.
    * @param name A name of a repository.
    * @param github An interface to the GitHub API.

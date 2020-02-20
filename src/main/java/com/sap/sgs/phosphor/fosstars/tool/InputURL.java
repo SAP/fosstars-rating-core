@@ -15,11 +15,19 @@ public class InputURL {
    */
   private final UserCallback callback;
 
+  /**
+   * Initializes a new {@link InputURL}.
+   *
+   * @param callback A callback to interact with a user.
+   */
   public InputURL(UserCallback callback) {
     Objects.requireNonNull(callback, "Hey! User callback can't be null!");
     this.callback = callback;
   }
 
+  /**
+   * Ask a user to provide a URL.
+   */
   public URL get() {
     String string;
     URL url;

@@ -24,6 +24,13 @@ public final class FuzzingAttempt {
    */
   public final String who;
 
+  /**
+   * Initializes a {@link FuzzingAttempt}.
+   *
+   * @param link A URL to a document which describes the fuzzing setup and the results.
+   * @param when A date when fuzzing was done.
+   * @param who Who did fuzzing.
+   */
   public FuzzingAttempt(URL link, Date when, String who) {
     this.link = link;
     this.when = when;
@@ -42,9 +49,9 @@ public final class FuzzingAttempt {
       return false;
     }
     FuzzingAttempt that = (FuzzingAttempt) o;
-    return Objects.equals(link, that.link) &&
-        Objects.equals(when, that.when) &&
-        Objects.equals(who, that.who);
+    return Objects.equals(link, that.link)
+        && Objects.equals(when, that.when)
+        && Objects.equals(who, that.who);
   }
 
   @Override

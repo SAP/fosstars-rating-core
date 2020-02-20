@@ -23,7 +23,7 @@ import com.sap.sgs.phosphor.fosstars.data.github.SecurityReviewForProject;
 import com.sap.sgs.phosphor.fosstars.data.github.UnpatchedVulnerabilities;
 import com.sap.sgs.phosphor.fosstars.data.github.UsesOwaspDependencyCheck;
 import com.sap.sgs.phosphor.fosstars.data.github.UsesSnykDependencyCheck;
-import com.sap.sgs.phosphor.fosstars.data.github.VulnerabilitiesFromNVD;
+import com.sap.sgs.phosphor.fosstars.data.github.VulnerabilitiesFromNvd;
 import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
 import com.sap.sgs.phosphor.fosstars.model.Score;
@@ -122,7 +122,7 @@ public class SecurityRatingCalculator {
         new HasSecurityPolicy(where, name, github),
         new SecurityReviewForProject(where, name, github),
         new UnpatchedVulnerabilities(where, name, github, vulnerabilities),
-        new VulnerabilitiesFromNVD(where, name, github, vulnerabilities),
+        new VulnerabilitiesFromNvd(where, name, github, vulnerabilities),
         new IsApache(where),
         new IsEclipse(where),
         new CompositeDataProvider(

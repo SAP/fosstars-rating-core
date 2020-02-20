@@ -17,7 +17,6 @@ import org.kohsuke.github.GitHub;
  * This data provider tries to figure out if a project has a security team. First, it checks if a
  * project belongs to an organization which provides a security team such as Apache Software
  * Foundation. Next, it tries to ask a user if {@link UserCallback} is available.
- *
  * TODO: This class doesn't talk to GitHub. Instead, it uses a local storage
  *       which contains info about known security teams.
  *       SecurityTeamStorage may be converted to a data provider.
@@ -30,6 +29,8 @@ public class HasSecurityTeam extends AbstractGitHubDataProvider {
   private final SecurityTeamStorage storage;
 
   /**
+   * Initializes a data provider.
+   *
    * @param where A GitHub organization of user name.
    * @param name A name of a repository.
    * @param github An interface to the GitHub API.
@@ -62,6 +63,9 @@ public class HasSecurityTeam extends AbstractGitHubDataProvider {
         case NO:
           values.update(new BooleanValue(HAS_SECURITY_TEAM, false));
           break;
+        default:
+          throw new IllegalArgumentException(
+              String.format("Hey! You gave me an unexpected answer: %s", answer));
       }
 
       // TODO: store the answer in the SecurityTeamStorage

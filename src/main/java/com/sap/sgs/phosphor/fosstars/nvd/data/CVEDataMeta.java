@@ -31,8 +31,8 @@ public class CVEDataMeta {
   }
 
   @JsonProperty("ID")
-  public void setID(String iD) {
-    this.id = iD;
+  public void setID(String id) {
+    this.id = id;
   }
 
   @JsonProperty("ASSIGNER")

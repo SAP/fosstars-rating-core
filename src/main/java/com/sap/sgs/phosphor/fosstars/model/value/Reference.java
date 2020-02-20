@@ -21,6 +21,8 @@ public class Reference {
   private final String description;
 
   /**
+   * Initializes a reference.
+   *
    * @param description A description for the reference.
    * @param url A URL to a document which contains information about a vulnerability.
    */
@@ -32,7 +34,7 @@ public class Reference {
   }
 
   /**
-   * @return The description for the reference.
+   * Returns the description for the reference.
    */
   @JsonGetter("description")
   public String description() {
@@ -40,7 +42,7 @@ public class Reference {
   }
 
   /**
-   * @return The URL to a document which contains information about a vulnerability.
+   * Returns the URL to a document which contains information about a vulnerability.
    */
   @JsonGetter("url")
   public URL url() {
@@ -56,8 +58,8 @@ public class Reference {
       return false;
     }
     Reference reference = (Reference) o;
-    return Objects.equals(description, reference.description) &&
-        Objects.equals(url, reference.url);
+    return Objects.equals(description, reference.description)
+        && Objects.equals(url, reference.url);
   }
 
   @Override

@@ -20,7 +20,7 @@ import java.util.Map;
     "references",
     "description"
 })
-public class Cve {
+public class CVE {
 
   @JsonProperty("data_type")
   private String dataType;
@@ -80,13 +80,13 @@ public class Cve {
   }
 
   @JsonProperty("CVE_data_meta")
-  public CVEDataMeta getCVEDataMeta() {
+  public CVEDataMeta getCveDataMeta() {
     return cveDataMeta;
   }
 
   @JsonProperty("CVE_data_meta")
-  public void setCVEDataMeta(CVEDataMeta cVEDataMeta) {
-    this.cveDataMeta = cVEDataMeta;
+  public void setCveDataMeta(CVEDataMeta cveDataMeta) {
+    this.cveDataMeta = cveDataMeta;
   }
 
   @JsonProperty("affects")

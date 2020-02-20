@@ -17,10 +17,10 @@ import java.util.Map;
     "publishedDate",
     "lastModifiedDate"
 })
-public class NVDEntry {
+public class NvdEntry {
 
   @JsonProperty("cve")
-  private Cve cve;
+  private CVE cve;
 
   @JsonProperty("configurations")
   private Configurations configurations;
@@ -38,12 +38,12 @@ public class NVDEntry {
   private Map<String, Object> additionalProperties = new HashMap<>();
 
   @JsonProperty("cve")
-  public Cve getCve() {
+  public CVE getCve() {
     return cve;
   }
 
   @JsonProperty("cve")
-  public void setCve(Cve cve) {
+  public void setCve(CVE cve) {
     this.cve = cve;
   }
 

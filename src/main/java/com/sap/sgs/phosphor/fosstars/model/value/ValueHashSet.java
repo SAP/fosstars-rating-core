@@ -150,7 +150,7 @@ public class ValueHashSet implements ValueSet {
    */
   static class Serializer extends StdSerializer<ValueHashSet> {
 
-    /*
+    /**
      * This default constructor is to make Jackson happy.
      */
     Serializer() {
@@ -194,7 +194,7 @@ public class ValueHashSet implements ValueSet {
    */
   static class Deserializer extends StdDeserializer<ValueHashSet> {
 
-    /*
+    /**
      * This default constructor is to make Jackson happy.
      */
     Deserializer() {

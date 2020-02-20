@@ -1,7 +1,8 @@
 package com.sap.sgs.phosphor.fosstars.model;
 
 /**
- * A visitor for the following objects:
+ * This is an interface of a visitor for browsing the internal structure of ratings and scores.
+ * Visitors can visit the following objects:
  * <ul>
  *   <li>{@link Rating}</li>
  *   <li>{@link Score}</li>

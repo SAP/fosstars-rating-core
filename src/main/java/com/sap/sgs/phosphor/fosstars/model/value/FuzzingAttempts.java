@@ -13,14 +13,27 @@ public final class FuzzingAttempts {
 
   private final Set<FuzzingAttempt> attempts;
 
-  public FuzzingAttempts(FuzzingAttempt... attempts) {
+  /**
+   * Initializes {@link FuzzingAttempts}.
+   *
+   * @param attempts A number of fuzzing attempts.
+   */
+  FuzzingAttempts(FuzzingAttempt... attempts) {
     this(setOf("You've provided a duplicate fuzzing attempt!", attempts));
   }
 
-  public FuzzingAttempts(Set<FuzzingAttempt> attempts) {
+  /**
+   * Initializes {@link FuzzingAttempts}.
+   *
+   * @param attempts A set of fuzzing attempts.
+   */
+  FuzzingAttempts(Set<FuzzingAttempt> attempts) {
     this.attempts = Collections.unmodifiableSet(attempts);
   }
 
+  /**
+   * Returns a set of the fuzzing attempts.
+   */
   public Set<FuzzingAttempt> get() {
     return attempts;
   }

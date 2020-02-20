@@ -1,5 +1,8 @@
 package com.sap.sgs.phosphor.fosstars.model;
 
+/**
+ * A base class for visitors.
+ */
 public abstract class AbstractVisitor implements Visitor {
 
   @Override

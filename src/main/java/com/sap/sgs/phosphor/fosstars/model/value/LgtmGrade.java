@@ -22,7 +22,9 @@ public enum LgtmGrade {
   private final String grade;
 
   /**
-   * @param grade LGTM grade.
+   * Initializes an {@link LgtmGrade}.
+   *
+   * @param grade The LGTM grade.
    */
   LgtmGrade(String grade) {
     this.grade = grade;

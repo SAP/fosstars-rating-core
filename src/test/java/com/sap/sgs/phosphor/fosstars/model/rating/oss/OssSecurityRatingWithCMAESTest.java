@@ -43,7 +43,7 @@ import java.util.Date;
 import java.util.List;
 import org.junit.Test;
 
-public class OssSecurityRatingCMAESTest {
+public class OssSecurityRatingWithCMAESTest {
 
   private static final SecurityReviews NO_SECURITY_REVIEWS = new SecurityReviews();
   private static final SecurityReviews ONE_SECURITY_REVIEW;
@@ -132,7 +132,7 @@ public class OssSecurityRatingCMAESTest {
 
     Path path = Files.createTempFile("fosstars", "oss_security_rating");
     try {
-      new OssSecurityRatingCMAES(rating, SIMPLE_TEST_VECTORS, path.toString()).run();
+      new OssSecurityRatingWithCMAES(rating, SIMPLE_TEST_VECTORS, path.toString()).run();
       byte[] content = Files.readAllBytes(path);
 
       // smoke test
@@ -160,7 +160,7 @@ public class OssSecurityRatingCMAESTest {
 
       Path path = Files.createTempFile("fosstars", "oss_security_rating");
       try {
-        new OssSecurityRatingCMAES(rating, verification.vectors(), path.toString()).run();
+        new OssSecurityRatingWithCMAES(rating, verification.vectors(), path.toString()).run();
         byte[] content = Files.readAllBytes(path);
 
         // smoke test

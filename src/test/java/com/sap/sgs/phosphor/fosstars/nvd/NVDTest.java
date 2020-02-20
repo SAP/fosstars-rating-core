@@ -5,7 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import com.sap.sgs.phosphor.fosstars.nvd.data.NVDEntry;
+import com.sap.sgs.phosphor.fosstars.nvd.data.NvdEntry;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -58,7 +58,7 @@ public class NVDTest {
       return;
     }
 
-    List<NVDEntry> entries = nvd.find("apache", "poi");
+    List<NvdEntry> entries = nvd.find("apache", "poi");
     assertNotNull(entries);
 
     assertTrue(entries.size() >= 7);

@@ -11,6 +11,11 @@ public class FuzzingAttemptsDoneValue extends AbstractValue<FuzzingAttempts> {
 
   private final FuzzingAttempts fuzzingAttempts;
 
+  /**
+   * Initializes a {@link FuzzingAttemptsDoneValue} with a {@link FuzzingAttempts}.
+   *
+   * @param fuzzingAttempts The instance of {@link FuzzingAttempts}.
+   */
   public FuzzingAttemptsDoneValue(FuzzingAttempts fuzzingAttempts) {
     super(FUZZING_ATTEMPTS_DONE);
 

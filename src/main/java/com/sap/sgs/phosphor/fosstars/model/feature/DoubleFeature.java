@@ -11,6 +11,11 @@ import java.util.Objects;
  */
 public class DoubleFeature extends AbstractFeature<Double> {
 
+  /**
+   * Initializes a new feature.
+   *
+   * @param name A name of the feature.
+   */
   @JsonCreator
   public DoubleFeature(@JsonProperty("name") String name) {
     super(name);

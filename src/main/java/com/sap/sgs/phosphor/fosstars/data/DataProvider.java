@@ -5,8 +5,10 @@ import java.io.IOException;
 
 /**
  * An interface of a data provider which knows how to gather values for specific features.
- * A data provider may be configured with a {@link UserCallback} which allows asking a user for data.
- * A data provider may ignore the specified {@link UserCallback} if it's able to gather data without a user.
+ * A data provider may be configured with a {@link UserCallback}
+ * which allows asking a user for data.
+ * A data provider may ignore the specified {@link UserCallback}
+ * if it's able to gather data without a user.
  */
 public interface DataProvider {
 
@@ -21,6 +23,7 @@ public interface DataProvider {
 
   /**
    * Sets an interface for interacting with a user.
+   *
    * @param callback An interface for interacting with a user.
    * @return This data provider.
    */

@@ -27,13 +27,13 @@ public class Configurations {
   private Map<String, Object> additionalProperties = new HashMap<>();
 
   @JsonProperty("CVE_data_version")
-  public String getCVEDataVersion() {
+  public String getCveDataVersion() {
     return cveDataVersion;
   }
 
   @JsonProperty("CVE_data_version")
-  public void setCVEDataVersion(String cVEDataVersion) {
-    this.cveDataVersion = cVEDataVersion;
+  public void setCveDataVersion(String cveDataVersion) {
+    this.cveDataVersion = cveDataVersion;
   }
 
   @JsonProperty("nodes")

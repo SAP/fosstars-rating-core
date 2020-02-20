@@ -15,10 +15,14 @@ public class VulnerabilitiesInProject extends AbstractFeature<Vulnerabilities> {
    * For deserialization.
    */
   private static final ObjectMapper MAPPER = new ObjectMapper();
+
   static {
     MAPPER.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
   }
 
+  /**
+   * Initializes a new feature.
+   */
   VulnerabilitiesInProject() {
     super("Info about vulnerabilities in open-source project");
   }
@@ -29,10 +33,10 @@ public class VulnerabilitiesInProject extends AbstractFeature<Vulnerabilities> {
   }
 
   /**
-   * Takes a JSON string and tries to convert it to a {@link Value<Vulnerabilities>} object.
+   * Takes a JSON string and tries to convert it to a {@link Value} object.
    *
    * @param string The JSON string.
-   * @return An instance of {@link Value<Vulnerabilities>}.
+   * @return An instance of {@link Value}.
    * @throws IllegalArgumentException If something went wrong.
    */
   @Override

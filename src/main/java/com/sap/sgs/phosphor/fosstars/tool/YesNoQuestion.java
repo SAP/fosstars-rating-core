@@ -26,6 +26,8 @@ public class YesNoQuestion {
   private final String question;
 
   /**
+   * Initializes a new {@link YesNoQuestion}.
+   *
    * @param callback A callback to interact with a user.
    * @param question A question for a user.
    */
@@ -36,6 +38,11 @@ public class YesNoQuestion {
     this.question = question;
   }
 
+  /**
+   * Asks a user a question and reads their reply.
+   *
+   * @return The user's answer.
+   */
   public Answer ask() {
     String reply;
     while (true) {

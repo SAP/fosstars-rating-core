@@ -14,7 +14,9 @@ import java.util.Date;
 public class DateFeature extends AbstractFeature<Date> {
 
   /**
-   * @param name Feature name.
+   * Initializes a new feature.
+   *
+   * @param name A name of the feature.
    */
   @JsonCreator
   public DateFeature(@JsonProperty("name") String name) {

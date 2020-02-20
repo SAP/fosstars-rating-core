@@ -1,9 +1,18 @@
-package com.sap.sgs.phosphor.fosstars.common;
+package com.sap.sgs.phosphor.fosstars.data.json;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class Utils {
+/**
+ * This is a base class for all storage classes in this package.
+ */
+class AbstractJsonStorage {
+
+  /**
+   * An ObjectMapper for serialization and deserialization.
+   */
+  static final ObjectMapper MAPPER = new ObjectMapper();
 
   /**
    * Checks if a URL is valid and uses HTTPS.
@@ -11,7 +20,7 @@ public class Utils {
    * @param url A URL to be checked.
    * @throws IllegalArgumentException If the URL is not valid or doesn't use HTTPS.
    */
-  public static void checkHttps(String url) {
+  static void checkHttps(String url) {
     URL u;
     try {
       u = new URL(url);
@@ -23,4 +32,5 @@ public class Utils {
       throw new IllegalArgumentException("Only HTTPS schema supported!");
     }
   }
+
 }

@@ -1,9 +1,9 @@
 package com.sap.sgs.phosphor.fosstars.nvd;
 
 import com.sap.sgs.phosphor.fosstars.nvd.data.Affects;
+import com.sap.sgs.phosphor.fosstars.nvd.data.CVE;
 import com.sap.sgs.phosphor.fosstars.nvd.data.CVEDataMeta;
-import com.sap.sgs.phosphor.fosstars.nvd.data.Cve;
-import com.sap.sgs.phosphor.fosstars.nvd.data.NVDEntry;
+import com.sap.sgs.phosphor.fosstars.nvd.data.NvdEntry;
 import com.sap.sgs.phosphor.fosstars.nvd.data.ProductData;
 import com.sap.sgs.phosphor.fosstars.nvd.data.Vendor;
 import com.sap.sgs.phosphor.fosstars.nvd.data.VendorData;
@@ -16,18 +16,18 @@ public class ExactMatcher implements Matcher {
   private static final Logger LOGGER = LogManager.getLogger(ExactMatcher.class);
 
   @Override
-  public boolean match(NVDEntry entry, String vendor, String product) {
+  public boolean match(NvdEntry entry, String vendor, String product) {
     Objects.requireNonNull(entry, "NVD entry can't be null!");
     Objects.requireNonNull(vendor, "Vendor can't be null!");
     Objects.requireNonNull(product, "Product can't be null!");
 
-    Cve cve = entry.getCve();
+    CVE cve = entry.getCve();
     if (cve == null) {
       LOGGER.warn("No CVE in NVD entry");
       return false;
     }
 
-    CVEDataMeta meta = cve.getCVEDataMeta();
+    CVEDataMeta meta = cve.getCveDataMeta();
     if (meta == null) {
       LOGGER.warn("No metadata in NVD entry");
       return false;

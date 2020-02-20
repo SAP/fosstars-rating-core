@@ -21,6 +21,8 @@ public class Vulnerabilities {
   private final Set<Vulnerability> entries;
 
   /**
+   * Initializes an instance of {@link Vulnerabilities}.
+   *
    * @param entries A number of vulnerabilities.
    */
   public Vulnerabilities(Vulnerability... entries) {
@@ -30,6 +32,8 @@ public class Vulnerabilities {
   }
 
   /**
+   * Initializes an instance of {@link Vulnerabilities}.
+   *
    * @param entries A set of vulnerabilities.
    */
   @JsonCreator
@@ -39,7 +43,7 @@ public class Vulnerabilities {
   }
 
   /**
-   * @return The set of vulnerabilities.
+   * Return the set of vulnerabilities.
    */
   @JsonGetter("entries")
   public Set<Vulnerability> entries() {

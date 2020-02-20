@@ -12,6 +12,9 @@ import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
 @JsonSerialize
 public class SecurityReviewDoneExample extends AbstractFeature<Boolean> {
 
+  /**
+   * Initializes a new feature.
+   */
   SecurityReviewDoneExample() {
     super("Security review status (example)");
   }

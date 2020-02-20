@@ -13,6 +13,12 @@ public class LgtmGradeValue extends AbstractValue<LgtmGrade> {
    */
   private final LgtmGrade value;
 
+  /**
+   * Initializes an {@link LgtmGradeValue} for a feature.
+   *
+   * @param feature The feature.
+   * @param value The value.
+   */
   @JsonCreator
   public LgtmGradeValue(
       @JsonProperty("feature") Feature feature,

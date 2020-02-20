@@ -11,13 +11,24 @@ import java.util.Objects;
  */
 public class BooleanFeature extends AbstractFeature<Boolean> {
 
+  /**
+   * Initializes a feature.
+   *
+   * @param name The feature name.
+   */
   @JsonCreator
   public BooleanFeature(@JsonProperty("name") String name) {
     super(name);
   }
 
-  public BooleanValue value(Boolean object) {
-    return new BooleanValue(this, object);
+  /**
+   * Creates a value of the features.
+   *
+   * @param value True or false.
+   * @return A value of the features.
+   */
+  public BooleanValue value(Boolean value) {
+    return new BooleanValue(this, value);
   }
 
   @Override

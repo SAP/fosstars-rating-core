@@ -12,6 +12,9 @@ import com.sap.sgs.phosphor.fosstars.model.value.IntegerValue;
 @JsonSerialize
 public class NumberOfContributorsLastMonthExample extends AbstractFeature<Integer> {
 
+  /**
+   * Initializes a new feature.
+   */
   NumberOfContributorsLastMonthExample() {
     super("Number of contributors last month (example)");
   }

@@ -11,21 +11,30 @@ import java.util.Objects;
  */
 public class IntegerValue extends AbstractValue<Integer> {
 
-  private final Integer n;
+  /**
+   * The integer.
+   */
+  private final Integer number;
 
+  /**
+   * Initializes an integer value of a feature.
+   *
+   * @param feature The feature.
+   * @param number The integer.
+   */
   @JsonCreator
   public IntegerValue(
       @JsonProperty("feature") Feature<Integer> feature,
-      @JsonProperty("n") Integer n) {
+      @JsonProperty("number") Integer number) {
 
     super(feature);
-    this.n = n;
+    this.number = number;
   }
 
   @Override
-  @JsonGetter("n")
+  @JsonGetter("number")
   public Integer get() {
-    return n;
+    return number;
   }
 
   @Override
@@ -40,11 +49,11 @@ public class IntegerValue extends AbstractValue<Integer> {
       return false;
     }
     IntegerValue that = (IntegerValue) o;
-    return Objects.equals(n, that.n);
+    return Objects.equals(number, that.number);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), n);
+    return Objects.hash(super.hashCode(), number);
   }
 }

@@ -38,7 +38,7 @@ public interface ValueSet {
   Value[] toArray();
 
   /**
-   * @return A number of values in the set.
+   * Return a number of values in the set.
    */
   int size();
 
