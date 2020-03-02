@@ -1,13 +1,12 @@
 package com.sap.sgs.phosphor.fosstars.model.tuning;
 
 import com.sap.sgs.phosphor.fosstars.model.AbstractVisitor;
-import com.sap.sgs.phosphor.fosstars.model.Rating;
 import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.Weight;
 import com.sap.sgs.phosphor.fosstars.model.qa.FailedTestVector;
-import com.sap.sgs.phosphor.fosstars.model.qa.RatingVerifier;
+import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerifier;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
 import com.sap.sgs.phosphor.fosstars.model.qa.VerificationFailedException;
 import com.sap.sgs.phosphor.fosstars.model.weight.MutableWeight;
@@ -24,74 +23,73 @@ import org.apache.logging.log4j.Logger;
  */
 public abstract class AbstractWeightsOptimization {
 
+  // TODO: initialize a logger in child classes
   private static final Logger LOGGER = LogManager.getLogger(AbstractWeightsOptimization.class);
 
   /**
-   * A rating to be adjusted.
+   * A score to be adjusted.
    */
-  protected final Rating rating;
+  protected final Score score;
 
   /**
    * A verifier to be used to check test vectors.
    */
-  final RatingVerifier verifier;
+  final ScoreVerifier verifier;
 
   /**
-   * A list of test vectors which defines a desirable behaviour of the rating.
+   * A list of test vectors which defines a desirable behaviour of the score.
    */
   protected final List<TestVector> vectors;
 
   /**
-   * A path where a serialized rating should be stored to.
+   * A path where a serialized score should be stored to.
    */
   protected final String path;
 
   /**
    * Initialize a new instance.
    *
-   * @param rating A rating to be tuned.
+   * @param score A score to be tuned.
    * @param vectors A list of test vectors.
-   * @param path A path where a serialized rating should be stored to.
+   * @param path A path where a serialized score should be stored to.
    */
-  AbstractWeightsOptimization(Rating rating, List<TestVector> vectors, String path) {
-    this.rating = rating;
+  AbstractWeightsOptimization(Score score, List<TestVector> vectors, String path) {
+    this.score = score;
     this.vectors = vectors;
     this.path = path;
-    this.verifier = new RatingVerifier(rating, vectors);
+    this.verifier = new ScoreVerifier(score, vectors);
   }
 
   /**
-   * Returns a list of mutable weights which are used in the rating.
+   * Returns a list of mutable weights which are used in the score.
    */
   List<MutableWeight> mutableWeights() {
     MutableWeightsCollector collector = new MutableWeightsCollector();
-    rating.accept(collector);
+    score.accept(collector);
     return Collections.unmodifiableList(collector.weights);
   }
 
   /**
-   * Starts weights optimization for the specified rating.
+   * Starts weights optimization for the specified score.
    *
    * @throws VerificationFailedException If some test vectors still fail
    *                                     after the optimization was done.
-   * @throws IOException If something went wrong during storing the rating to a file.
    */
   public final void run() throws VerificationFailedException, IOException {
     optimize();
 
     LOGGER.info("Weights:");
-    Score securityScore = rating.score();
-    for (Score score : securityScore.subScores()) {
-      Optional<Weight> value = securityScore.weightOf(score);
+    for (Score subScore : score.subScores()) {
+      Optional<Weight> value = score.weightOf(subScore);
       if (value.isPresent()) {
         Weight weight = value.get();
-        LOGGER.info("    {} -> {}", () -> String.format("%.2f", weight.value()), score::name);
+        LOGGER.info("    {} -> {}", () -> String.format("%.2f", weight.value()), subScore::name);
       } else {
-        LOGGER.info("    {}: no weight assigned", score.name());
+        LOGGER.info("    {}: no weight assigned", subScore.name());
       }
     }
 
-    List<FailedTestVector> failedVectors = new RatingVerifier(rating, vectors).runImpl();
+    List<FailedTestVector> failedVectors = new ScoreVerifier(score, vectors).runImpl();
     for (FailedTestVector failedVector : failedVectors) {
       LOGGER.info("Test vector #{} failed", failedVector.index);
       LOGGER.info("  reason: {}", failedVector.reason);
@@ -108,7 +106,7 @@ public abstract class AbstractWeightsOptimization {
 
     if (failedVectors.isEmpty()) {
       LOGGER.info("Gut gemacht, all test vectors passed!");
-      RatingRepository.INSTANCE.store(rating, path);
+      RatingRepository.INSTANCE.store(score, path);
     } else {
       LOGGER.warn("{} test vector{} failed!",
           failedVectors.size(), failedVectors.size() == 1 ? "" : "s");

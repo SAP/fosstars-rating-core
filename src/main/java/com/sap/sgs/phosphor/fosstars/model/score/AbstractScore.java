@@ -2,12 +2,15 @@ package com.sap.sgs.phosphor.fosstars.model.score;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.sap.sgs.phosphor.fosstars.model.Confidence;
+import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.Visitor;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -70,6 +73,13 @@ public abstract class AbstractScore implements Score {
   }
 
   @Override
+  public Set<Feature> allFeatures() {
+    Set<Feature> allFeatures = new HashSet<>();
+    fillOutFeatures(this, allFeatures);
+    return Collections.unmodifiableSet(allFeatures);
+  }
+
+  @Override
   public boolean equals(Object o) {
     if (this == o) {
       return true;
@@ -84,5 +94,12 @@ public abstract class AbstractScore implements Score {
   @Override
   public int hashCode() {
     return Objects.hashCode(name);
+  }
+
+  private static void fillOutFeatures(Score score, Set<Feature> allFeatures) {
+    allFeatures.addAll(score.features());
+    for (Score subScore : score.subScores()) {
+      fillOutFeatures(subScore, allFeatures);
+    }
   }
 }
