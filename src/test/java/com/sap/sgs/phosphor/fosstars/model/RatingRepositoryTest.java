@@ -1,11 +1,11 @@
 package com.sap.sgs.phosphor.fosstars.model;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 import com.sap.sgs.phosphor.fosstars.model.rating.AbstractRating;
 import com.sap.sgs.phosphor.fosstars.model.rating.example.SecurityRatingExample;
-import java.io.IOException;
 import org.junit.Test;
 
 public class RatingRepositoryTest {
@@ -17,19 +17,12 @@ public class RatingRepositoryTest {
 
     assertThat(rating.name(), is("Security rating (example)"));
     assertThat(rating.version().name(), is("SECURITY_RATING_EXAMPLE_1_1"));
-    assertThat(rating.version().path, is(
-        "com/sap/sgs/phosphor/fosstars/model/rating/example/SecurityRatingExample_1_1.json"));
+    assertEquals(rating.version().clazz, SecurityRatingExample.class);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void getByVersionAndClassWrongClass() {
     RatingRepository.INSTANCE.get(Version.SECURITY_RATING_EXAMPLE_1_1, TestRating.class);
-  }
-
-  @Test
-  public void loadRatingFromResource() throws IOException {
-    Rating r = RatingRepository.load(Version.OSS_SECURITY_RATING_1_0);
-    assertThat(r.version().name(), is("OSS_SECURITY_RATING_1_0"));
   }
 
   /**
