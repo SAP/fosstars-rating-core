@@ -71,6 +71,13 @@ public interface Score extends Feature<Double> {
   Set<Feature> features();
 
   /**
+   * Returns all features which are used by the score.
+   *
+   * @return A number of features.
+   */
+  Set<Feature> allFeatures();
+
+  /**
    * Returns a set of sub-scores which the score uses directly.
    */
   Set<Score> subScores();

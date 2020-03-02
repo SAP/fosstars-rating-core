@@ -11,8 +11,6 @@ import com.sap.sgs.phosphor.fosstars.model.Version;
 import com.sap.sgs.phosphor.fosstars.model.Visitor;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -93,9 +91,7 @@ public abstract class AbstractRating implements Rating {
 
   @Override
   public Set<Feature> allFeatures() {
-    Set<Feature> allFeatures = new HashSet<>();
-    fillOutFeatures(score, allFeatures);
-    return Collections.unmodifiableSet(allFeatures);
+    return score.allFeatures();
   }
 
   @Override
@@ -119,13 +115,6 @@ public abstract class AbstractRating implements Rating {
   @Override
   public int hashCode() {
     return Objects.hash(score, version);
-  }
-
-  private static void fillOutFeatures(Score score, Set<Feature> allFeatures) {
-    allFeatures.addAll(score.features());
-    for (Score subScore : score.subScores()) {
-      fillOutFeatures(subScore, allFeatures);
-    }
   }
 
 }

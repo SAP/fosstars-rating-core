@@ -1,4 +1,4 @@
-package com.sap.sgs.phosphor.fosstars.model.rating.oss;
+package com.sap.sgs.phosphor.fosstars.model.score.oss;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.FIRST_COMMIT_DATE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
@@ -16,17 +16,13 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPOR
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
 import static com.sap.sgs.phosphor.fosstars.model.qa.RatingVerification.loadTestVectorsFromCsvResource;
 import static com.sap.sgs.phosphor.fosstars.model.qa.TestVectorBuilder.newTestVector;
-import static com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel.BAD;
-import static com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel.GOOD;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
 import com.sap.sgs.phosphor.fosstars.model.Score;
-import com.sap.sgs.phosphor.fosstars.model.Version;
 import com.sap.sgs.phosphor.fosstars.model.math.DoubleInterval;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
 import com.sap.sgs.phosphor.fosstars.model.qa.VerificationFailedException;
-import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel;
 import com.sap.sgs.phosphor.fosstars.model.value.SecurityReview;
 import com.sap.sgs.phosphor.fosstars.model.value.SecurityReviews;
 import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
@@ -43,7 +39,7 @@ import java.util.Date;
 import java.util.List;
 import org.junit.Test;
 
-public class OssSecurityRatingWithCMAESTest {
+public class OssSecurityScoreTuningWithCMAESTest {
 
   private static final SecurityReviews NO_SECURITY_REVIEWS = new SecurityReviews();
   private static final SecurityReviews ONE_SECURITY_REVIEW;
@@ -81,7 +77,6 @@ public class OssSecurityRatingWithCMAESTest {
           .set(UnknownValue.of(PROJECT_START_DATE))
           .set(UnknownValue.of(FIRST_COMMIT_DATE))
           .expectedScore(DoubleInterval.closed(Score.MIN, 0.1))
-          .expectedLabel(BAD)
           .make(),
 
       // very bad project
@@ -101,7 +96,6 @@ public class OssSecurityRatingWithCMAESTest {
           .set(PROJECT_START_DATE.value(FIVE_YEARS_AGO))
           .set(FIRST_COMMIT_DATE.value(FIVE_YEARS_AGO))
           .expectedScore(DoubleInterval.closed(Score.MIN, 1.0))
-          .expectedLabel(BAD)
           .make(),
 
       // very good project
@@ -121,22 +115,20 @@ public class OssSecurityRatingWithCMAESTest {
           .set(PROJECT_START_DATE.value(FIVE_YEARS_AGO))
           .set(FIRST_COMMIT_DATE.value(FIVE_YEARS_AGO))
           .expectedScore(DoubleInterval.init().from(9.0).to(Score.MAX).make())
-          .expectedLabel(GOOD)
           .make()
   ));
 
   @Test
   public void simpleTestVectors() throws Exception {
-    OssSecurityRating rating = new OssSecurityRating(Version.OSS_SECURITY_RATING_1_0);
-    assertNotNull(rating);
+    OssSecurityScore score = new OssSecurityScore();
 
-    OssSecurityRatingVerification verification
-        = new OssSecurityRatingVerification(rating, SIMPLE_TEST_VECTORS);
+    OssSecurityScore.Verification verification
+        = new OssSecurityScore.Verification(score, SIMPLE_TEST_VECTORS);
     assertNotNull(verification);
 
-    Path path = Files.createTempFile("fosstars", "oss_security_rating");
+    Path path = Files.createTempFile("fosstars", "oss_security_score");
     try {
-      new OssSecurityRatingWithCMAES(rating, SIMPLE_TEST_VECTORS, path.toString()).run();
+      new OssSecurityScoreTuningWithCMAES(score, SIMPLE_TEST_VECTORS, path.toString()).run();
       byte[] content = Files.readAllBytes(path);
 
       // smoke test
@@ -151,20 +143,18 @@ public class OssSecurityRatingWithCMAESTest {
 
   @Test
   public void loadTestVectorsFromCSV() throws IOException, VerificationFailedException {
-    OssSecurityRating rating = new OssSecurityRating(Version.OSS_SECURITY_RATING_1_0);
-    assertNotNull(rating);
+    OssSecurityScore score = new OssSecurityScore();
 
-    String filename = "com/sap/sgs/phosphor/fosstars/model/rating/oss/SimpleTestVectors.csv";
+    String filename = "com/sap/sgs/phosphor/fosstars/model/score/oss/SimpleTestVectors.csv";
     try (InputStream is = getClass().getClassLoader().getResourceAsStream(filename)) {
-      List<TestVector> vectors = loadTestVectorsFromCsvResource(
-          rating.allFeatures(), is, SecurityLabel::valueOf);
-      OssSecurityRatingVerification verification
-          = new OssSecurityRatingVerification(rating, vectors);
+      List<TestVector> vectors = loadTestVectorsFromCsvResource(score.allFeatures(), is);
+      OssSecurityScore.Verification verification
+          = new OssSecurityScore.Verification(score, vectors);
       assertNotNull(verification);
 
-      Path path = Files.createTempFile("fosstars", "oss_security_rating");
+      Path path = Files.createTempFile("fosstars", "oss_security_score");
       try {
-        new OssSecurityRatingWithCMAES(rating, verification.vectors(), path.toString()).run();
+        new OssSecurityScoreTuningWithCMAES(score, verification.vectors(), path.toString()).run();
         byte[] content = Files.readAllBytes(path);
 
         // smoke test

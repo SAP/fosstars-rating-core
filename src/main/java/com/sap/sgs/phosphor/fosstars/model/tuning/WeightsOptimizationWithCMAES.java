@@ -1,11 +1,11 @@
 package com.sap.sgs.phosphor.fosstars.model.tuning;
 
-import com.sap.sgs.phosphor.fosstars.model.Rating;
+import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Weight;
 import com.sap.sgs.phosphor.fosstars.model.qa.FailedTestVector;
-import com.sap.sgs.phosphor.fosstars.model.qa.RatingVerifier;
+import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerifier;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
-import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
+import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.sgs.phosphor.fosstars.model.weight.MutableWeight;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -60,22 +60,22 @@ public class WeightsOptimizationWithCMAES extends AbstractWeightsOptimization {
   private final List<MutableWeight> weights;
 
   /**
-   * A rating verifier.
+   * A score verifier.
    */
-  private final RatingVerifier verifier;
+  private final ScoreVerifier verifier;
 
   /**
    * Initializes a new {@link WeightsOptimizationWithCMAES}.
    *
-   * @param rating A rating to be tuned.
+   * @param score A score to be tuned.
    * @param vectors A list of test vectors.
-   * @param path A path where a serialized rating should be stored to.
+   * @param path A path where a serialized score should be stored to.
    */
-  public WeightsOptimizationWithCMAES(Rating rating, List<TestVector> vectors, String path) {
-    super(rating, vectors, path);
+  public WeightsOptimizationWithCMAES(Score score, List<TestVector> vectors, String path) {
+    super(score, vectors, path);
     this.weights = mutableWeights();
-    this.verifier = new RatingVerifier(rating, vectors);
-    fitnessFunction = new FitnessFunction(rating, verifier, vectors, weights);
+    this.verifier = new ScoreVerifier(score, vectors);
+    fitnessFunction = new FitnessFunction(score, verifier, vectors, weights);
   }
 
   /**
@@ -241,9 +241,9 @@ public class WeightsOptimizationWithCMAES extends AbstractWeightsOptimization {
     static final double MIN = 0;
 
     /**
-     * A rating to be tuned.
+     * A score to be tuned.
      */
-    private final Rating rating;
+    private final Score score;
 
     /**
      * A list of test vectors.
@@ -258,18 +258,18 @@ public class WeightsOptimizationWithCMAES extends AbstractWeightsOptimization {
     /**
      * A verifier for checking the test vectors.
      */
-    private final RatingVerifier verifier;
+    private final ScoreVerifier verifier;
 
     /**
      * Initialize a fitness function.
      *
-     * @param rating A rating to be tuned.
+     * @param score A score to be tuned.
      * @param vectors A list of test vectors.
      * @param weights A list of weights which may be adjusted.
      */
-    FitnessFunction(Rating rating, RatingVerifier verifier,
+    FitnessFunction(Score score, ScoreVerifier verifier,
         List<TestVector> vectors, List<MutableWeight> weights) {
-      this.rating = rating;
+      this.score = score;
       this.vectors = vectors;
       this.verifier = verifier;
       this.weights = weights;
@@ -292,8 +292,8 @@ public class WeightsOptimizationWithCMAES extends AbstractWeightsOptimization {
       result += PENALTY * failedTestVectors.size();
 
       for (TestVector vector : vectors) {
-        RatingValue ratingValue = rating.calculate(vector.values());
-        result += Math.abs(vector.expectedScore().mean() - ratingValue.score());
+        ScoreValue scoreValue = score.calculate(vector.values());
+        result += Math.abs(vector.expectedScore().mean() - scoreValue.get());
       }
 
       return result;

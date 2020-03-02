@@ -1,4 +1,4 @@
-package com.sap.sgs.phosphor.fosstars.model.rating.oss;
+package com.sap.sgs.phosphor.fosstars.model.score.oss;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.FIRST_COMMIT_DATE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
@@ -21,7 +21,6 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
 import com.sap.sgs.phosphor.fosstars.model.Score;
-import com.sap.sgs.phosphor.fosstars.model.Version;
 import com.sap.sgs.phosphor.fosstars.model.math.DoubleInterval;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
 import com.sap.sgs.phosphor.fosstars.model.value.SecurityReview;
@@ -38,7 +37,7 @@ import java.util.Date;
 import java.util.List;
 import org.junit.Test;
 
-public class OssSecurityRatingMonteCarloTest {
+public class OssSecurityScoreTuningWithMonteCarloTest {
 
   private static final SecurityReviews NO_SECURITY_REVIEWS = new SecurityReviews();
   private static final SecurityReviews ONE_SECURITY_REVIEW;
@@ -123,10 +122,10 @@ public class OssSecurityRatingMonteCarloTest {
 
   @Test
   public void run() throws Exception {
-    Path path = Files.createTempFile("fosstars", "oss_security_rating");
-    OssSecurityRating rating = new OssSecurityRating(Version.SECURITY_RATING_EXAMPLE_1_1);
+    Path path = Files.createTempFile("fosstars", "oss_security_score");
+    OssSecurityScore rating = new OssSecurityScore();
     try {
-      new OssSecurityRatingMonteCarlo(rating, SIMPLE_TEST_VECTORS, path.toString()).run();
+      new OssSecurityScoreTuningWithMonteCarlo(rating, SIMPLE_TEST_VECTORS, path.toString()).run();
       byte[] content = Files.readAllBytes(path);
 
       // smoke test

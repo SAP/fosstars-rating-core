@@ -28,7 +28,10 @@ import java.util.List;
  */
 public class OssSecurityScore extends WeightedCompositeScore {
 
-  OssSecurityScore() {
+  /**
+   * Initializes a new open-source security score.
+   */
+  public OssSecurityScore() {
     super("Security score for open-source projects",
         PROJECT_ACTIVITY,
         PROJECT_POPULARITY,

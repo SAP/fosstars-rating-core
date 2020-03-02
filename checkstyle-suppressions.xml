@@ -4,8 +4,8 @@
      "https://checkstyle.org/dtds/suppressions_1_0.dtd">
 <suppressions>
   <suppress checks="AbbreviationAsWordInName"
-    files="OssSecurityRatingWithCMAES.java"
-    lines="10"/>
+    files="OssSecurityScoreTuningWithCMAES.java"
+    lines="9"/>
   <suppress checks="AbbreviationAsWordInName"
     files="WeightsOptimizationWithCMAES.java"
     lines="32"/>

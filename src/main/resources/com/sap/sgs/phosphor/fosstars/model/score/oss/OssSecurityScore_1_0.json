@@ -1,0 +1,68 @@
+{
+  "type" : "OssSecurityScore",
+  "name" : "Security score for open-source projects",
+  "weightedScores" : [ "java.util.HashSet", [ {
+    "score" : {
+      "type" : "CommunityCommitmentScore",
+      "name" : "How well open-source community commits to support an open-source project"
+    },
+    "weight" : {
+      "type" : "MutableWeight",
+      "value" : 0.730187683286869
+    }
+  }, {
+    "score" : {
+      "type" : "ProjectActivityScore",
+      "name" : "Open-source project activity score"
+    },
+    "weight" : {
+      "type" : "MutableWeight",
+      "value" : 0.9055537161983725
+    }
+  }, {
+    "score" : {
+      "type" : "UnpatchedVulnerabilitiesScore",
+      "name" : "How well vulnerabilities are patched"
+    },
+    "weight" : {
+      "type" : "MutableWeight",
+      "value" : 0.39919170319550507
+    }
+  }, {
+    "score" : {
+      "type" : "ProjectSecurityTestingScore",
+      "name" : "How well security testing is done for an open-source project"
+    },
+    "weight" : {
+      "type" : "MutableWeight",
+      "value" : 0.9462060029594794
+    }
+  }, {
+    "score" : {
+      "type" : "VulnerabilityLifetimeScore",
+      "name" : "How fast vulnerabilities are patched"
+    },
+    "weight" : {
+      "type" : "MutableWeight",
+      "value" : 0.5910384868885997
+    }
+  }, {
+    "score" : {
+      "type" : "ProjectSecurityAwarenessScore",
+      "name" : "How well open-source community is aware about security"
+    },
+    "weight" : {
+      "type" : "MutableWeight",
+      "value" : 0.5390737714895961
+    }
+  }, {
+    "score" : {
+      "type" : "ProjectPopularityScore",
+      "name" : "Open-source project popularity score"
+    },
+    "weight" : {
+      "type" : "MutableWeight",
+      "value" : 0.8397391072072166
+    }
+  } ] ]
+}

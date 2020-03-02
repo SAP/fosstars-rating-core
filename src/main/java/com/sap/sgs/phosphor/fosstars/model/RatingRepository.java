@@ -145,6 +145,28 @@ public class RatingRepository {
   }
 
   /**
+   * Stores a score to a file.
+   *
+   * @param score The score to be stored.
+   * @param path The path to a file.
+   * @throws IOException If something went wrong.
+   */
+  public void store(Score score, String path) throws IOException {
+    store(score, Paths.get(path));
+  }
+
+  /**
+   * Stores a score to a file.
+   *
+   * @param score The score to be stored.
+   * @param path The path to a file.
+   * @throws IOException If something went wrong.
+   */
+  private void store(Score score, Path path) throws IOException {
+    Files.write(path, MAPPER.writerWithDefaultPrettyPrinter().writeValueAsBytes(score));
+  }
+
+  /**
    * Loads a rating of a particular type and version.
    *
    * @param version The version of a rating to be loaded.

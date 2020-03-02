@@ -1,6 +1,6 @@
 package com.sap.sgs.phosphor.fosstars.model.tuning;
 
-import com.sap.sgs.phosphor.fosstars.model.Rating;
+import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Weight;
 import com.sap.sgs.phosphor.fosstars.model.qa.FailedTestVector;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * This class applies Monte Carlo method to search for weights which can be used in a rating, so
- * that the rating passes test vectors. In other words, the class just tries random mutableWeights
+ * This class applies Monte Carlo method to search for weights which can be used in a score, so
+ * that the score passes test vectors. In other words, the class just tries random mutableWeights
  * to find a right combination.
  */
 public class MonteCarloWeightsOptimization extends AbstractWeightsOptimization {
@@ -28,8 +28,8 @@ public class MonteCarloWeightsOptimization extends AbstractWeightsOptimization {
    */
   private final Random coin = new Random();
 
-  public MonteCarloWeightsOptimization(Rating rating, List<TestVector> vectors, String path) {
-    super(rating, vectors, path);
+  public MonteCarloWeightsOptimization(Score score, List<TestVector> vectors, String path) {
+    super(score, vectors, path);
   }
 
   /**
@@ -62,7 +62,7 @@ public class MonteCarloWeightsOptimization extends AbstractWeightsOptimization {
   }
 
   /**
-   * Checks if the rating passes all the test vectors.
+   * Checks if the score passes all the test vectors.
    *
    * @return True if all test vector are passes, and false otherwise.
    */
