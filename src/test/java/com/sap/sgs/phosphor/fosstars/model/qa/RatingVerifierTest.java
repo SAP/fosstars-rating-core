@@ -39,7 +39,7 @@ public class RatingVerifierTest {
   @Test
   public void failedVectors() {
     RatingVerifier verifier = new RatingVerifier(
-        RatingRepository.INSTANCE.get(SecurityRatingExample.class),
+        RatingRepository.INSTANCE.rating(SecurityRatingExample.class),
         TEST_VECTORS);
 
     List<FailedTestVector> failedVectors = verifier.runImpl();
@@ -70,7 +70,7 @@ public class RatingVerifierTest {
   @Test(expected = VerificationFailedException.class)
   public void run() throws VerificationFailedException {
     RatingVerifier verifier = new RatingVerifier(
-        RatingRepository.INSTANCE.get(SecurityRatingExample.class),
+        RatingRepository.INSTANCE.rating(SecurityRatingExample.class),
         TEST_VECTORS);
 
     verifier.run();

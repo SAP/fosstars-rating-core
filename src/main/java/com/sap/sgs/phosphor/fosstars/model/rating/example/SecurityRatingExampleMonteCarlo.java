@@ -33,7 +33,7 @@ public class SecurityRatingExampleMonteCarlo extends MonteCarloWeightsOptimizati
    * Runs the tuning with Monte Carlo method for the {@link SecurityRatingExample}.
    */
   public static void main(String... args) throws VerificationFailedException, IOException {
-    SecurityRatingExample rating = RatingRepository.INSTANCE.get(SecurityRatingExample.class);
+    SecurityRatingExample rating = RatingRepository.INSTANCE.rating(SecurityRatingExample.class);
     new MonteCarloWeightsOptimization(
         rating.score(), SecurityRatingExampleVerification.TEST_VECTORS, PATH).run();
   }

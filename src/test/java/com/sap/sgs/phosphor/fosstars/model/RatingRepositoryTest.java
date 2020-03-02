@@ -12,7 +12,7 @@ public class RatingRepositoryTest {
 
   @Test
   public void getByVersionAndClass() {
-    Rating rating = RatingRepository.INSTANCE.get(
+    Rating rating = RatingRepository.INSTANCE.rating(
         Version.SECURITY_RATING_EXAMPLE_1_1, SecurityRatingExample.class);
 
     assertThat(rating.name(), is("Security rating (example)"));
@@ -22,7 +22,7 @@ public class RatingRepositoryTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void getByVersionAndClassWrongClass() {
-    RatingRepository.INSTANCE.get(Version.SECURITY_RATING_EXAMPLE_1_1, TestRating.class);
+    RatingRepository.INSTANCE.rating(Version.SECURITY_RATING_EXAMPLE_1_1, TestRating.class);
   }
 
   /**

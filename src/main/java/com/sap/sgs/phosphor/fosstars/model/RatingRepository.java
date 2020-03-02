@@ -68,28 +68,27 @@ public class RatingRepository {
   }
 
   /**
-   * Searches for a rating with the specified version. The method has to return an immutable rating.
+   * Looks for a rating with a specified version.
    *
-   * @param version The version to search for.
+   * @param version The version to look for.
    * @return A rating of the specified version.
    */
-  public Rating get(Version version) {
+  public Rating rating(Version version) {
     return ratings.get(version);
   }
 
   /**
-   * Searches for a specific type of rating with the specified version. The method has to return
-   * an immutable rating.
+   * Looks for a specific type of rating with the specified version.
    *
    * @param version The version to search for.
    * @param clazz The type of rating.
    * @return A rating of the specified type and with the specified version.
    * @throws IllegalArgumentException If such a rating was not found.
    */
-  public <T extends Rating> T get(Version version, Class<T> clazz) {
+  public <T extends Rating> T rating(Version version, Class<T> clazz) {
     Objects.requireNonNull(version, "Version is null!");
     Objects.requireNonNull(clazz, "Clazz is null");
-    Rating rating = get(version);
+    Rating rating = rating(version);
     if (rating.getClass() != clazz) {
       throw new IllegalArgumentException("Classes don't match!");
     }
@@ -103,7 +102,7 @@ public class RatingRepository {
    * @return An instance of rating of the specified class.
    * @throws IllegalArgumentException If no rating of the specified class was found.
    */
-  public <T extends Rating> T get(Class<T> clazz) {
+  public <T extends Rating> T rating(Class<T> clazz) {
     Objects.requireNonNull(clazz, "You just gave me a null instead of class!");
 
     Rating currentRating = null;

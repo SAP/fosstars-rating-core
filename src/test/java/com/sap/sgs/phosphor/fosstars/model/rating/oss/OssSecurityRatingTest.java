@@ -22,7 +22,7 @@ public class OssSecurityRatingTest {
 
   @Test
   public void calculate() {
-    Rating rating = RatingRepository.INSTANCE.get(OSS_SECURITY_RATING_1_0);
+    Rating rating = RatingRepository.INSTANCE.rating(OSS_SECURITY_RATING_1_0);
     Set<Value> values = Utils.allUnknown(rating.allFeatures());
     RatingValue ratingValue = rating.calculate(values);
     assertTrue(Score.INTERVAL.contains(ratingValue.score()));
@@ -31,7 +31,7 @@ public class OssSecurityRatingTest {
 
   @Test
   public void immutable() {
-    Rating rating = RatingRepository.INSTANCE.get(OSS_SECURITY_RATING_1_0);
+    Rating rating = RatingRepository.INSTANCE.rating(OSS_SECURITY_RATING_1_0);
     Score securityScoreExample = rating.score();
     for (Score subScore : securityScoreExample.subScores()) {
       Optional<Weight> optional = securityScoreExample.weightOf(subScore);
@@ -43,7 +43,7 @@ public class OssSecurityRatingTest {
 
   @Test
   public void version() {
-    Rating rating = RatingRepository.INSTANCE.get(OSS_SECURITY_RATING_1_0);
+    Rating rating = RatingRepository.INSTANCE.rating(OSS_SECURITY_RATING_1_0);
     assertEquals(OSS_SECURITY_RATING_1_0, rating.version());
   }
 

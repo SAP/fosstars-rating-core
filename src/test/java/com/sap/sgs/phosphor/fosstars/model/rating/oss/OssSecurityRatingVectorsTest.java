@@ -11,7 +11,7 @@ public class OssSecurityRatingVectorsTest {
 
   @Test
   public void verify() throws VerificationFailedException, IOException {
-    OssSecurityRating rating = RatingRepository.INSTANCE.get(OssSecurityRating.class);
+    OssSecurityRating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
     assertNotNull(rating);
     OssSecurityRatingVerification.createFor(rating).run();
   }

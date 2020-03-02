@@ -10,7 +10,7 @@ public class SecurityRatingExampleVectorsTest {
 
   @Test
   public void verify() throws VerificationFailedException {
-    SecurityRatingExample rating = RatingRepository.INSTANCE.get(SecurityRatingExample.class);
+    SecurityRatingExample rating = RatingRepository.INSTANCE.rating(SecurityRatingExample.class);
     assertNotNull(rating);
     new SecurityRatingExampleVerification(rating).run();
   }
