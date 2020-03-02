@@ -36,7 +36,7 @@ public class ScoreVerifierTest {
   @Test
   public void failedVectors() {
     ScoreVerifier verifier = new ScoreVerifier(
-        RatingRepository.INSTANCE.get(SecurityRatingExample.class).score(),
+        RatingRepository.INSTANCE.rating(SecurityRatingExample.class).score(),
         TEST_VECTORS);
 
     List<FailedTestVector> failedVectors = verifier.runImpl();
@@ -53,7 +53,7 @@ public class ScoreVerifierTest {
   @Test(expected = VerificationFailedException.class)
   public void run() throws VerificationFailedException {
     ScoreVerifier verifier = new ScoreVerifier(
-        RatingRepository.INSTANCE.get(SecurityRatingExample.class).score(),
+        RatingRepository.INSTANCE.rating(SecurityRatingExample.class).score(),
         TEST_VECTORS);
 
     verifier.run();

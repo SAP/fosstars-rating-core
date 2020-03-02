@@ -34,7 +34,7 @@ public class SecurityRatingExampleTest {
     values.add(new BooleanValue(SECURITY_REVIEW_DONE_EXAMPLE, true));
     values.add(new BooleanValue(STATIC_CODE_ANALYSIS_DONE_EXAMPLE, false));
 
-    Rating rating = RatingRepository.INSTANCE.get(SECURITY_RATING_EXAMPLE_1_1);
+    Rating rating = RatingRepository.INSTANCE.rating(SECURITY_RATING_EXAMPLE_1_1);
     RatingValue ratingValue = rating.calculate(values);
     assertTrue(Score.INTERVAL.contains(ratingValue.score()));
     assertEquals(SecurityRatingExample.SecurityLabelExample.OKAY, ratingValue.label());
@@ -42,7 +42,7 @@ public class SecurityRatingExampleTest {
 
   @Test
   public void immutable() {
-    Rating rating = RatingRepository.INSTANCE.get(SECURITY_RATING_EXAMPLE_1_1);
+    Rating rating = RatingRepository.INSTANCE.rating(SECURITY_RATING_EXAMPLE_1_1);
     Score securityScoreExample = rating.score();
     for (Score subScore : securityScoreExample.subScores()) {
       Optional<Weight> optional = securityScoreExample.weightOf(subScore);
@@ -53,7 +53,7 @@ public class SecurityRatingExampleTest {
 
   @Test
   public void version() {
-    Rating rating = RatingRepository.INSTANCE.get(SECURITY_RATING_EXAMPLE_1_1);
+    Rating rating = RatingRepository.INSTANCE.rating(SECURITY_RATING_EXAMPLE_1_1);
     assertEquals(SECURITY_RATING_EXAMPLE_1_1, rating.version());
   }
 
@@ -68,7 +68,7 @@ public class SecurityRatingExampleTest {
 
   @Test
   public void allFeatures() {
-    Rating rating = RatingRepository.INSTANCE.get(SecurityRatingExample.class);
+    Rating rating = RatingRepository.INSTANCE.rating(SecurityRatingExample.class);
     Set<Feature> features = rating.allFeatures();
     assertNotNull(features);
     assertEquals(4, features.size());
@@ -80,7 +80,7 @@ public class SecurityRatingExampleTest {
 
   @Test
   public void count() {
-    Rating rating = RatingRepository.INSTANCE.get(SecurityRatingExample.class);
+    Rating rating = RatingRepository.INSTANCE.rating(SecurityRatingExample.class);
     assertNotNull(rating);
     Counter counter = new Counter();
     rating.accept(counter);

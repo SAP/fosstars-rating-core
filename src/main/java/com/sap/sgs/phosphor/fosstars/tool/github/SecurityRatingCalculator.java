@@ -131,7 +131,7 @@ public class SecurityRatingCalculator {
         ).stopWhenFilledOut(SCANS_FOR_VULNERABLE_DEPENDENCIES)
     };
 
-    OssSecurityRating rating = RatingRepository.INSTANCE.get(OssSecurityRating.class);
+    OssSecurityRating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
 
     System.out.printf("[+] Project: %s%n", url);
     System.out.printf("[+] Let's get info about the project and calculate a security rating%n");
