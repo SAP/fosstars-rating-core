@@ -1,8 +1,11 @@
 package com.sap.sgs.phosphor.fosstars.model;
 
+import static com.sap.sgs.phosphor.fosstars.model.Version.OSS_SECURITY_RATING_1_0;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.sgs.phosphor.fosstars.model.rating.example.SecurityRatingExample;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating;
+import com.sap.sgs.phosphor.fosstars.model.score.oss.OssSecurityScore;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,6 +22,10 @@ import org.apache.logging.log4j.Logger;
  * This is a repository for all available ratings.
  */
 public class RatingRepository {
+
+  private interface RatingFactory {
+    Rating create() throws IOException;
+  }
 
   /**
    * A logger.
@@ -48,8 +55,16 @@ public class RatingRepository {
    * This constructor loads all available ratings.
    */
   private RatingRepository() {
-    add(Version.SECURITY_RATING_EXAMPLE_1_1, SecurityRatingExample.class);
-    add(Version.OSS_SECURITY_RATING_1_0, OssSecurityRating.class);
+    register(() -> load(
+        "com/sap/sgs/phosphor/fosstars/model/rating/example/SecurityRatingExample_1_1.json",
+        SecurityRatingExample.class));
+
+    register(() -> {
+      OssSecurityScore score = load(
+          "com/sap/sgs/phosphor/fosstars/model/score/oss/OssSecurityScore_1_0.json",
+          OssSecurityScore.class);
+      return new OssSecurityRating(score, OSS_SECURITY_RATING_1_0);
+    });
   }
 
   /**
@@ -113,13 +128,20 @@ public class RatingRepository {
     return clazz.cast(currentRating);
   }
 
-  private void add(Version version, Class<? extends Rating> clazz) {
+  private void register(RatingFactory factory) {
     try {
-      Rating rating = load(version, clazz);
-      ratings.put(version, rating);
+      Rating rating = factory.create();
+      register(rating.version(), rating);
     } catch (IOException e) {
-      LOGGER.error("Initialization failed:", e);
+      LOGGER.warn("Initialization failed", e);
     }
+  }
+
+  private void register(Version version, Rating rating) {
+    if (rating.getClass() != version.clazz) {
+      throw new IllegalArgumentException("Hey! Classes should match!");
+    }
+    ratings.put(version, rating);
   }
 
   /**
@@ -167,52 +189,36 @@ public class RatingRepository {
   }
 
   /**
-   * Loads a rating of a particular type and version.
+   * Loads a serialized object from a resource specified by a path. First, the method checks
+   * if the path points to an existing file,
+   * and if so, the method tries to load the object from the file.
+   * If the path doesn't point to an existing file,
+   * then the method tries to load the object from a resource.
    *
-   * @param version The version of a rating to be loaded.
-   * @param clazz The class of a rating to be loaded.
-   * @param <T> The type of a {@link Rating}.
-   * @return A rating of the specified type and version.
-   * @throws IOException If a rating couldn't be loaded.
-   * @throws IllegalArgumentException If the rating with the specified version was found, but
-   *                                  its type doesn't match with the specified class.
+   * @param path The path to a stored rating.
+   * @param clazz The class of the object to be loaded.
+   * @param <T> The type of the object.
+   * @return The loaded object.
+   * @throws IOException If the object can't be loaded
+   * @throws NullPointerException If the specified path is null
    */
-  private static <T extends Rating> T load(Version version, Class<T> clazz) throws IOException {
-    Rating rating = load(version);
-    if (rating.getClass() != clazz) {
-      throw new IllegalArgumentException("Classes don't match!");
-    }
-    return clazz.cast(rating);
-  }
+  private static <T> T load(String path, Class<T> clazz) throws IOException {
+    Objects.requireNonNull(path, "Hey! Path can't be null!");
 
-  /**
-   * Loads a rating of a particular {@link Version}. First, the method checks
-   * if the {@link Version#path} points to an existing file,
-   * and if so, the method tries to load a rating from the file.
-   * If the {@link Version#path} doesn't point to an existing file, then the method tries to load
-   * the {@link Version#path} as a resource.
-   *
-   * @param version The version
-   * @return The loaded rating
-   * @throws IOException If a rating can't be loaded
-   * @throws NullPointerException If the specified version is null
-   */
-  static Rating load(Version version) throws IOException {
-    Objects.requireNonNull(version, "Hey! Version can't be null!");
-    File file = Paths.get(version.path.replace('/', File.separatorChar)).toFile();
+    File file = Paths.get(path.replace('/', File.separatorChar)).toFile();
     if (file.exists()) {
-      return MAPPER.readValue(file, Rating.class);
-    } else {
-      InputStream is = Thread.currentThread().getContextClassLoader()
-          .getResourceAsStream(version.path);
-      if (is != null) {
-        try {
-          return MAPPER.readValue(is, Rating.class);
-        } finally {
-          is.close();
-        }
+      return MAPPER.readValue(file, clazz);
+    }
+
+    InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
+    if (is != null) {
+      try {
+        return MAPPER.readValue(is, clazz);
+      } finally {
+        is.close();
       }
     }
-    throw new IOException(String.format("Could not load a rating for %s from %s", version, file));
+
+    throw new IOException(String.format("Could not load a rating from %s", file));
   }
 }

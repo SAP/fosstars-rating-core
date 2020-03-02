@@ -12,6 +12,7 @@ import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.Weight;
 import com.sap.sgs.phosphor.fosstars.model.other.Utils;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel;
+import com.sap.sgs.phosphor.fosstars.model.score.oss.OssSecurityScore;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import java.util.Optional;
 import java.util.Set;
@@ -48,8 +49,8 @@ public class OssSecurityRatingTest {
 
   @Test
   public void equalsAndHashCode() {
-    OssSecurityRating one = new OssSecurityRating(OSS_SECURITY_RATING_1_0);
-    OssSecurityRating two = new OssSecurityRating(OSS_SECURITY_RATING_1_0);
+    OssSecurityRating one = new OssSecurityRating(new OssSecurityScore(), OSS_SECURITY_RATING_1_0);
+    OssSecurityRating two = new OssSecurityRating(new OssSecurityScore(), OSS_SECURITY_RATING_1_0);
 
     assertEquals(one, two);
     assertEquals(one.hashCode(), two.hashCode());

@@ -1,5 +1,8 @@
 package com.sap.sgs.phosphor.fosstars.model;
 
+import com.sap.sgs.phosphor.fosstars.model.rating.example.SecurityRatingExample;
+import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating;
+
 /**
  * This is a list of all registered versions of ratings.
  */
@@ -8,26 +11,24 @@ public enum Version {
   /**
    * A sample security rating for demo purposes only.
    */
-  SECURITY_RATING_EXAMPLE_1_1(
-      "com/sap/sgs/phosphor/fosstars/model/rating/example/SecurityRatingExample_1_1.json"),
+  SECURITY_RATING_EXAMPLE_1_1(SecurityRatingExample.class),
 
   /**
    * A security rating for open-source projects.
    */
-  OSS_SECURITY_RATING_1_0(
-      "com/sap/sgs/phosphor/fosstars/model/rating/oss/OssSecurityRating_1_0.json");
+  OSS_SECURITY_RATING_1_0(OssSecurityRating.class);
 
   /**
-   * A path to a JSON file which contains a serialized rating.
+   * A class that represents a rating.
    */
-  public final String path;
+  public final Class clazz;
 
   /**
-   * Initializes a version with a path to a JSON file.
+   * Initializes a new version.
    *
-   * @param path The path of the JSON file which contains the serialized rating.
+   * @param clazz A class that represents a rating.
    */
-  Version(String path) {
-    this.path = path;
+  Version(Class clazz) {
+    this.clazz = clazz;
   }
 }

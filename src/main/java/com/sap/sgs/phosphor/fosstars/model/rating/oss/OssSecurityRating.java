@@ -1,7 +1,5 @@
 package com.sap.sgs.phosphor.fosstars.model.rating.oss;
 
-import static com.sap.sgs.phosphor.fosstars.model.score.oss.OssScores.SECURITY_SCORE;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.sgs.phosphor.fosstars.model.Label;
@@ -24,8 +22,11 @@ public class OssSecurityRating extends AbstractRating {
    * Initializes a security rating based on the security score for open-source projects.
    */
   @JsonCreator
-  OssSecurityRating(@JsonProperty("version") Version version) {
-    super("Security rating for open-source projects", SECURITY_SCORE, version);
+  public OssSecurityRating(
+      @JsonProperty("score") OssSecurityScore score,
+      @JsonProperty("version") Version version) {
+
+    super("Security rating for open-source projects", score, version);
   }
 
   @Override
