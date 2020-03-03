@@ -3,7 +3,6 @@ package com.sap.sgs.phosphor.fosstars.model.score.oss;
 import static com.sap.sgs.phosphor.fosstars.TestUtils.assertScore;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SECURITY_REVIEWS_DONE;
-import static com.sap.sgs.phosphor.fosstars.model.score.oss.OssScores.PROJECT_SECURITY_TESTING;
 
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.value.SecurityReview;
@@ -14,6 +13,9 @@ import java.util.Date;
 import org.junit.Test;
 
 public class ProjectSecurityTestingScoreTest {
+
+  private static ProjectSecurityTestingScore PROJECT_SECURITY_TESTING
+      = new ProjectSecurityTestingScore();
 
   @Test(expected = IllegalArgumentException.class)
   public void noInfoAboutDependencyScans() {

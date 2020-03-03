@@ -4,7 +4,6 @@ import static com.sap.sgs.phosphor.fosstars.TestUtils.assertScore;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_COMMITS_LAST_THREE_MONTHS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
-import static com.sap.sgs.phosphor.fosstars.model.score.oss.OssScores.PROJECT_ACTIVITY;
 import static com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectActivityScore.LOGISTIC_FOR_NUMBER_OF_COMMITS;
 import static com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectActivityScore.LOGISTIC_FOR_NUMBER_OF_CONTRIBUTORS;
 import static org.junit.Assert.assertEquals;
@@ -17,6 +16,7 @@ import org.junit.Test;
 
 public class ProjectActivityScoreTest {
 
+  private static final ProjectActivityScore PROJECT_ACTIVITY = new ProjectActivityScore();
   private static final double delta = 0.01;
 
   @Test
