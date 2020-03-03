@@ -3,6 +3,8 @@ package com.sap.sgs.phosphor.fosstars.model;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.sap.sgs.phosphor.fosstars.model.math.DoubleInterval;
+import com.sap.sgs.phosphor.fosstars.model.tuning.Parameter;
+import com.sap.sgs.phosphor.fosstars.model.weight.ImmutableWeight;
 import com.sap.sgs.phosphor.fosstars.model.weight.MutableWeight;
 
 /**
@@ -12,8 +14,9 @@ import com.sap.sgs.phosphor.fosstars.model.weight.MutableWeight;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
     @JsonSubTypes.Type(value = MutableWeight.class),
+    @JsonSubTypes.Type(value = ImmutableWeight.class)
 })
-public interface Weight {
+public interface Weight extends Parameter {
 
   /**
    * Min weight.
@@ -33,7 +36,7 @@ public interface Weight {
   /**
    * Returns the weight's value.
    */
-  double value();
+  Double value();
 
   /**
    * Accept a visitor.
