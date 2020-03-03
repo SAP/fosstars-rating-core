@@ -2,7 +2,6 @@ package com.sap.sgs.phosphor.fosstars.model;
 
 import com.sap.sgs.phosphor.fosstars.model.rating.example.SecurityRatingExample;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating;
-import com.sap.sgs.phosphor.fosstars.model.score.oss.OssSecurityScore;
 
 /**
  * This is a list of all registered versions of ratings.
@@ -17,12 +16,7 @@ public enum Version {
   /**
    * A security rating for open-source projects.
    */
-  OSS_SECURITY_RATING_1_0(OssSecurityRating.class),
-
-  /**
-   * A security score for open-source projects.
-   */
-  OSS_SECURITY_SCORE_1_0(OssSecurityScore.class);
+  OSS_SECURITY_RATING_1_0(OssSecurityRating.class);
 
   /**
    * A class that represents a rating.
