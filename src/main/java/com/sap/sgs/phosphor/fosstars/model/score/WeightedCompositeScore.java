@@ -121,6 +121,27 @@ public class WeightedCompositeScore extends AbstractScore {
     return scores;
   }
 
+  /**
+   * Looks for a sub-score by its type.
+   *
+   * @param clazz The class instance of the sub-score.
+   * @param <T> The type of the sub-score
+   * @return An {@link Optional} instance with the sub-score.
+   */
+  public <T> Optional<T> subScore(Class<T> clazz) {
+    Objects.requireNonNull(clazz, "Hey! Class can't be null!");
+    if (!Score.class.isAssignableFrom(clazz)) {
+      throw new IllegalArgumentException(String.format(
+          "I expected an instance of Score but you gave me %s!", clazz.getCanonicalName()));
+    }
+    for (Score subScore : subScores()) {
+      if (subScore.getClass() == clazz) {
+        return Optional.of(clazz.cast(subScore));
+      }
+    }
+    return Optional.empty();
+  }
+
   @Override
   public void accept(Visitor visitor) {
     super.accept(visitor);

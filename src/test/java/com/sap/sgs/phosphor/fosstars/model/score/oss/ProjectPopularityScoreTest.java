@@ -4,7 +4,6 @@ import static com.sap.sgs.phosphor.fosstars.TestUtils.assertScore;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_GITHUB_STARS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_WATCHERS_ON_GITHUB;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
-import static com.sap.sgs.phosphor.fosstars.model.score.oss.OssScores.PROJECT_POPULARITY;
 
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
@@ -14,6 +13,7 @@ import org.junit.Test;
 
 public class ProjectPopularityScoreTest {
 
+  private static final ProjectPopularityScore PROJECT_POPULARITY = new ProjectPopularityScore();
   private static final double delta = 0.001;
 
   @Test(expected = IllegalArgumentException.class)

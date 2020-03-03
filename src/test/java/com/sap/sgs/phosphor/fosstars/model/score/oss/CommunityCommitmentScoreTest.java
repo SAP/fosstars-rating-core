@@ -5,7 +5,6 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.IS_APA
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.IS_ECLIPSE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
-import static com.sap.sgs.phosphor.fosstars.model.score.oss.OssScores.COMMUNITY_COMMITMENT;
 
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
@@ -14,7 +13,8 @@ import org.junit.Test;
 
 public class CommunityCommitmentScoreTest {
 
-  private static final double delta = 0.000001;
+  private static final CommunityCommitmentScore COMMUNITY_COMMITMENT
+      = new CommunityCommitmentScore();
 
   @Test(expected = IllegalArgumentException.class)
   public void noValueForCompanySupport() {
