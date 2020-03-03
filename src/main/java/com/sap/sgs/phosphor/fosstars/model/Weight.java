@@ -2,8 +2,8 @@ package com.sap.sgs.phosphor.fosstars.model;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.sap.sgs.phosphor.fosstars.Parameter;
 import com.sap.sgs.phosphor.fosstars.model.math.DoubleInterval;
-import com.sap.sgs.phosphor.fosstars.model.tuning.Parameter;
 import com.sap.sgs.phosphor.fosstars.model.weight.ImmutableWeight;
 import com.sap.sgs.phosphor.fosstars.model.weight.MutableWeight;
 

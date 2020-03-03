@@ -16,6 +16,7 @@ import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.sgs.phosphor.fosstars.model.weight.MutableWeight;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import org.junit.Test;
@@ -172,6 +173,25 @@ public class WeightedCompositeScoreTest {
     double expectedScore = weightedSum / weightSum;
 
     assertEquals(expectedScore, scoreValue.get(), 0.001);
+  }
+
+  @Test
+  public void parameters() {
+    WeightedScoreImpl score = new WeightedScoreImpl();
+    Set<Score> subScores = score.subScores();
+    assertNotNull(subScores);
+    assertEquals(2, subScores.size());
+
+    List<Weight> weights = score.parameters();
+    assertNotNull(weights);
+    assertEquals(2, weights.size());
+
+    for (Score subScore : subScores) {
+      Optional<Weight> something = score.weightOf(subScore);
+      assertNotNull(something);
+      assertTrue(something.isPresent());
+      assertTrue(weights.contains(something.get()));
+    }
   }
 
   private static class FirstScore extends AbstractScore {
