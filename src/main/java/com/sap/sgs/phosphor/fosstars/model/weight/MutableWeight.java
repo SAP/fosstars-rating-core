@@ -3,15 +3,17 @@ package com.sap.sgs.phosphor.fosstars.model.weight;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sap.sgs.phosphor.fosstars.model.Visitor;
 import com.sap.sgs.phosphor.fosstars.model.Weight;
 import java.util.Objects;
 
 /**
  * A mutable weight which should be used during weights adjustment.
  */
-public class MutableWeight implements Weight {
+public class MutableWeight extends AbstractWeight {
 
+  /**
+   * Weight value.
+   */
   private double value;
 
   @JsonCreator
@@ -21,18 +23,13 @@ public class MutableWeight implements Weight {
 
   @Override
   @JsonGetter("value")
-  public final double value() {
+  public final Double value() {
     return value;
   }
 
   public final MutableWeight value(double value) {
     this.value = Weight.check(value);
     return this;
-  }
-
-  @Override
-  public void accept(Visitor visitor) {
-    visitor.visit(this);
   }
 
   @Override
