@@ -2,6 +2,7 @@ package com.sap.sgs.phosphor.fosstars.model.score;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sap.sgs.phosphor.fosstars.Tunable;
 import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Score;
@@ -12,8 +13,10 @@ import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.model.weight.MutableWeight;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -21,7 +24,7 @@ import java.util.Set;
 /**
  * A base class for scores which are based on a weighted average of other scores (sub-scores).
  */
-public class WeightedCompositeScore extends AbstractScore {
+public class WeightedCompositeScore extends AbstractScore implements Tunable {
 
   private static final double DEFAULT_WEIGHT = 1.0;
 
@@ -77,6 +80,16 @@ public class WeightedCompositeScore extends AbstractScore {
       }
     }
     return Optional.empty();
+  }
+
+  @Override
+  public List<Weight> parameters() {
+    // TODO: should it return all parameters which are used by underlying sub-scores?
+    List<Weight> weights = new ArrayList<>();
+    for (WeightedScore weightedScore : weightedScores) {
+      weights.add(weightedScore.weight);
+    }
+    return weights;
   }
 
   /**
