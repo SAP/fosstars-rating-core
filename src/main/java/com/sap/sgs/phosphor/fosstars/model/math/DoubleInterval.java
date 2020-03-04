@@ -79,11 +79,11 @@ public class DoubleInterval implements Interval {
   @Override
   public boolean contains(double x) {
     if (!negativeInfinity) {
-      if (equals(x, from)) {
+      if (Double.compare(x, from) == 0) {
         if (openLeft) {
           return false;
         }
-      } else if (x < from) {
+      } else if (Double.compare(x, from) < 0) {
         return false;
       }
     }
@@ -93,7 +93,7 @@ public class DoubleInterval implements Interval {
         if (openRight) {
           return false;
         }
-      } else if (x > to) {
+      } else if (Double.compare(x, to) > 0) {
         return false;
       }
     }
