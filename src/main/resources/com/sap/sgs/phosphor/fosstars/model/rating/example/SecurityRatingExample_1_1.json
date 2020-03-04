@@ -5,7 +5,7 @@
   "score" : {
     "type" : "SecurityScoreExample",
     "name" : "Security score (example)",
-    "weightedScores" : [ "java.util.HashSet", [ {
+    "weightedScores" : [ {
       "score" : {
         "type" : "SecurityTestingScoreExample",
         "name" : "Security testing score (example)"
@@ -23,6 +23,6 @@
         "type" : "MutableWeight",
         "value" : 0.46999999999999953
       }
-    } ] ]
+    } ]
   }
 }
