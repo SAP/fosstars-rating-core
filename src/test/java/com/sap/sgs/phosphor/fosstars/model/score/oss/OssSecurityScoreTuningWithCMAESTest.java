@@ -95,7 +95,7 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(VULNERABILITIES.value(NO_VULNERABILITIES))
           .set(PROJECT_START_DATE.value(FIVE_YEARS_AGO))
           .set(FIRST_COMMIT_DATE.value(FIVE_YEARS_AGO))
-          .expectedScore(DoubleInterval.closed(Score.MIN, 1.0))
+          .expectedScore(DoubleInterval.closed(1.0, 4.0))
           .make(),
 
       // very good project

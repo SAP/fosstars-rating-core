@@ -35,7 +35,7 @@ public class RatingVerification extends AbstractVerification {
    * @throws VerificationFailedException If the verification failed.
    */
   public final void run() throws VerificationFailedException {
-    new RatingVerifier(rating, vectors).run();
+    new RatingVerifier(rating, vectors).verify();
   }
 
 }

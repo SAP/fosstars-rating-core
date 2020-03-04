@@ -4,10 +4,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
 import com.sap.sgs.phosphor.fosstars.model.feature.example.ExampleFeatures;
 import com.sap.sgs.phosphor.fosstars.model.math.DoubleInterval;
+import com.sap.sgs.phosphor.fosstars.model.qa.TestVectorResult.Status;
 import com.sap.sgs.phosphor.fosstars.model.rating.example.SecurityRatingExample;
 import com.sap.sgs.phosphor.fosstars.model.rating.example.SecurityRatingExample.SecurityLabelExample;
 import com.sap.sgs.phosphor.fosstars.model.rating.example.SecurityRatingExampleVerification;
@@ -42,29 +44,23 @@ public class RatingVerifierTest {
         RatingRepository.INSTANCE.rating(SecurityRatingExample.class),
         TEST_VECTORS);
 
-    List<FailedTestVector> failedVectors = verifier.runImpl();
+    List<TestVectorResult> results = verifier.run();
 
-    assertEquals(2, failedVectors.size());
-
-    FailedTestVector failedVector = failedVectors.get(0);
-    assertNotNull(failedVector);
-    assertEquals(6, failedVector.index);
-    assertNotNull(failedVector.reason);
-    String firstReason = failedVector.reason;
-    assertNotNull(firstReason);
-    assertFalse(firstReason.isEmpty());
-    assertEquals(FAILING_TEST_VECTOR, failedVector.vector);
-
-    failedVector = failedVectors.get(1);
-    assertNotNull(failedVector);
-    assertEquals(6, failedVector.index);
-    assertNotNull(failedVector.reason);
-    String secondReason = failedVector.reason;
-    assertNotNull(secondReason);
-    assertFalse(secondReason.isEmpty());
-    assertEquals(FAILING_TEST_VECTOR, failedVector.vector);
-
-    assertNotEquals(firstReason, secondReason);
+    assertEquals(7, results.size());
+    for (TestVectorResult result : results) {
+      assertNotNull(result);
+      if (result.failed()) {
+        assertEquals(FAILING_TEST_VECTOR, result.vector);
+        assertEquals(Status.FAILED, result.status);
+        assertFalse(result.vector.expectedScore().contains(result.scoreValue));
+      } else {
+        assertNotEquals(FAILING_TEST_VECTOR, result.vector);
+        assertEquals(Status.PASSED, result.status);
+        assertTrue(result.vector.expectedScore().contains(result.scoreValue));
+      }
+      assertNotNull(result.message);
+      assertFalse(result.message.isEmpty());
+    }
   }
 
   @Test(expected = VerificationFailedException.class)
@@ -73,7 +69,7 @@ public class RatingVerifierTest {
         RatingRepository.INSTANCE.rating(SecurityRatingExample.class),
         TEST_VECTORS);
 
-    verifier.run();
+    verifier.verify();
   }
 
 }
