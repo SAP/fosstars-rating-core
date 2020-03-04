@@ -35,7 +35,7 @@ public class ScoreVerification extends AbstractVerification {
    * @throws VerificationFailedException If the verification failed.
    */
   public final void run() throws VerificationFailedException {
-    new ScoreVerifier(score, vectors).run();
+    new ScoreVerifier(score, vectors).verify();
   }
 
 }

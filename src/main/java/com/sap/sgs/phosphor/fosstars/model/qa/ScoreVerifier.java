@@ -1,6 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.model.qa;
 
 import com.sap.sgs.phosphor.fosstars.model.Score;
+import com.sap.sgs.phosphor.fosstars.model.qa.TestVectorResult.Status;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,30 +30,25 @@ public class ScoreVerifier extends AbstractVerifier {
     this.score = score;
   }
 
-  /**
-   * Check if the score produces expected score values defined by the test vectors.
-   *
-   * @return A list of failed test vectors.
-   */
-  public List<FailedTestVector> runImpl() {
-    List<FailedTestVector> failedVectors = new ArrayList<>();
+  List<TestVectorResult> runImpl() {
+    List<TestVectorResult> results = new ArrayList<>();
 
     int index = 0;
     for (TestVector vector : vectors) {
       ScoreValue scoreValue = score.calculate(vector.values());
       double actualScore = scoreValue.get();
-      if (!vector.expectedScore().contains(actualScore)) {
-        failedVectors.add(new FailedTestVector(
-            vector,
-            index,
-            String.format("Expected a score in the interval %s but %s returned",
-                vector.expectedScore(), actualScore)));
-      }
 
-      index++;
+      if (vector.expectedScore().contains(actualScore)) {
+        results.add(new TestVectorResult(vector, index++, actualScore, Status.PASSED, "Ok"));
+      } else {
+        String message = String.format(
+            "Expected a score in the interval %s but %s returned",
+            vector.expectedScore(), actualScore);
+        results.add(new TestVectorResult(vector, index++, actualScore, Status.FAILED, message));
+      }
     }
 
-    return failedVectors;
+    return results;
   }
 
 }

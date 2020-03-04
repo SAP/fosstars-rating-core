@@ -1,12 +1,10 @@
 package com.sap.sgs.phosphor.fosstars.model.tuning;
 
-import com.sap.sgs.phosphor.fosstars.model.Score;
+import com.sap.sgs.phosphor.fosstars.Parameter;
+import com.sap.sgs.phosphor.fosstars.Tunable;
 import com.sap.sgs.phosphor.fosstars.model.Weight;
-import com.sap.sgs.phosphor.fosstars.model.qa.FailedTestVector;
-import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerifier;
-import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
-import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
-import com.sap.sgs.phosphor.fosstars.model.weight.MutableWeight;
+import com.sap.sgs.phosphor.fosstars.model.qa.TestVectorResult;
+import com.sap.sgs.phosphor.fosstars.model.qa.Verifier;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.apache.commons.math3.analysis.MultivariateFunction;
@@ -21,17 +19,13 @@ import org.apache.commons.math3.optim.nonlinear.scalar.ObjectiveFunction;
 import org.apache.commons.math3.optim.nonlinear.scalar.noderiv.CMAESOptimizer;
 import org.apache.commons.math3.random.MersenneTwister;
 import org.apache.commons.math3.random.RandomGenerator;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
  * Weight optimization with CMA-ES algorithm.
  *
  * @see <a href="https://en.wikipedia.org/wiki/CMA-ES">CMA-ES algorithm on Wikipedia</a>
  */
-public class WeightsOptimizationWithCMAES extends AbstractWeightsOptimization {
-
-  private static final Logger LOGGER = LogManager.getLogger(WeightsOptimizationWithCMAES.class);
+public class TuningWithCMAES extends AbstractTuning {
 
   /**
    * Minimal weight to be assigned.
@@ -55,27 +49,15 @@ public class WeightsOptimizationWithCMAES extends AbstractWeightsOptimization {
   private final FitnessFunction fitnessFunction;
 
   /**
-   * A list of mutable weights which can be adjusted during optimization.
-   */
-  private final List<MutableWeight> weights;
-
-  /**
-   * A score verifier.
-   */
-  private final ScoreVerifier verifier;
-
-  /**
-   * Initializes a new {@link WeightsOptimizationWithCMAES}.
+   * Initializes a new {@link TuningWithCMAES}.
    *
-   * @param score A score to be tuned.
-   * @param vectors A list of test vectors.
+   * @param object An object to be tuned.
+   * @param verifier A verifier.
    * @param path A path where a serialized score should be stored to.
    */
-  public WeightsOptimizationWithCMAES(Score score, List<TestVector> vectors, String path) {
-    super(score, vectors, path);
-    this.weights = mutableWeights();
-    this.verifier = new ScoreVerifier(score, vectors);
-    fitnessFunction = new FitnessFunction(score, verifier, vectors, weights);
+  public TuningWithCMAES(Tunable object, Verifier verifier, String path) {
+    super(object, verifier, path);
+    fitnessFunction = new FitnessFunction(verifier, object.parameters());
   }
 
   /**
@@ -157,13 +139,14 @@ public class WeightsOptimizationWithCMAES extends AbstractWeightsOptimization {
   }
 
   @Override
-  public void optimize() {
+  public void runTuning() {
     double[] steps = { 0.1, 0.25, 0.05 };
     int[] differentMaxIterations = { 100, 1000, 10000 };
     int[] differentSamplesPerIteration = { 4, 8, 10, 16 };
     int[] differentCandidateSamplesPerIteration = { 10, 50, 100 };
 
     PointValuePair currentSolution = null;
+    List<? extends Parameter> parameters = object.parameters();
 
     main_loop:
     for (double step : steps) {
@@ -175,29 +158,29 @@ public class WeightsOptimizationWithCMAES extends AbstractWeightsOptimization {
 
             double[] point = solution.getPoint();
             for (int i = 0; i < point.length; i++) {
-              weights.get(i).value(point[i]);
+              parameters.get(i).value(point[i]);
             }
-            List<FailedTestVector> failedTestVectors = verifier.runImpl();
-            String indexes = failedTestVectors.stream()
+            List<TestVectorResult> testVectorResults = verifier.run();
+            String indexes = testVectorResults.stream()
                 .map(v -> String.format("#%d", v.index))
                 .collect(Collectors.joining(", "));
 
             if (isBetter(currentSolution, solution)) {
-              LOGGER.info("Hooray! Found a better value of the fitness function!");
-              LOGGER.info("Fitness function = {}, failed {} test vectors: {}",
-                  String.format("%.3f", solution.getValue()), failedTestVectors.size(), indexes);
-              LOGGER.info("Algorithm parameters:");
-              LOGGER.info("    max iterations = {}", maxIterations);
-              LOGGER.info("    samples per iteration = {}", samplesPerIteration);
-              LOGGER.info("    candidate samples per iteration = {}",
+              logger.info("Hooray! Found a better value of the fitness function!");
+              logger.info("Fitness function = {}, failed {} test vectors: {}",
+                  String.format("%.3f", solution.getValue()), testVectorResults.size(), indexes);
+              logger.info("Algorithm parameters:");
+              logger.info("    max iterations = {}", maxIterations);
+              logger.info("    samples per iteration = {}", samplesPerIteration);
+              logger.info("    candidate samples per iteration = {}",
                   candidateSamplesPerIteration);
-              LOGGER.info("    step = {}", step);
+              logger.info("    step = {}", step);
               currentSolution = solution;
             }
 
-            if (failedTestVectors.isEmpty()) {
+            if (testVectorResults.isEmpty()) {
               // TODO: introduce a system property which controls early break
-              LOGGER.info("Found a solution which passes all test vectors");
+              logger.info("Found a solution which passes all test vectors");
               break main_loop;
             }
           }
@@ -241,69 +224,56 @@ public class WeightsOptimizationWithCMAES extends AbstractWeightsOptimization {
     static final double MIN = 0;
 
     /**
-     * A score to be tuned.
-     */
-    private final Score score;
-
-    /**
-     * A list of test vectors.
-     */
-    private final List<TestVector> vectors;
-
-    /**
      * A list of weights which may be adjusted.
      */
-    private final List<MutableWeight> weights;
+    private final List<? extends Parameter> parameters;
 
     /**
      * A verifier for checking the test vectors.
      */
-    private final ScoreVerifier verifier;
+    private final Verifier verifier;
 
     /**
      * Initialize a fitness function.
      *
-     * @param score A score to be tuned.
-     * @param vectors A list of test vectors.
-     * @param weights A list of weights which may be adjusted.
+     * @param verifier A verifier.
+     * @param parameters A list of weights which may be adjusted.
      */
-    FitnessFunction(Score score, ScoreVerifier verifier,
-        List<TestVector> vectors, List<MutableWeight> weights) {
-      this.score = score;
-      this.vectors = vectors;
+    FitnessFunction(Verifier verifier, List<? extends Parameter> parameters) {
       this.verifier = verifier;
-      this.weights = weights;
+      this.parameters = parameters;
     }
 
     @Override
     public double value(double[] parameters) {
-      if (parameters.length != weights.size()) {
+      if (parameters.length != this.parameters.size()) {
         throw new IllegalArgumentException(String.format(
             "The number of parameters (%d) doesn't match with the number of weights (%d)",
-            parameters.length, weights.size()));
+            parameters.length, this.parameters.size()));
       }
 
       for (int i = 0; i < parameters.length; i++) {
-        weights.get(i).value(parameters[i]);
+        this.parameters.get(i).value(parameters[i]);
       }
 
-      double result = MIN;
-      List<FailedTestVector> failedTestVectors = verifier.runImpl();
-      result += PENALTY * failedTestVectors.size();
-
-      for (TestVector vector : vectors) {
-        ScoreValue scoreValue = score.calculate(vector.values());
-        result += Math.abs(vector.expectedScore().mean() - scoreValue.get());
+      double value = MIN;
+      List<TestVectorResult> results = verifier.run();
+      for (TestVectorResult result : results) {
+        if (result.failed()) {
+          value += PENALTY;
+        } else {
+          value += Math.abs(result.vector.expectedScore().mean() - result.scoreValue);
+        }
       }
 
-      return result;
+      return value;
     }
 
     /**
      * Returns the number of weights which may be adjusted.
      */
     int numberOfWeights() {
-      return weights.size();
+      return parameters.size();
     }
 
     /**
@@ -313,7 +283,7 @@ public class WeightsOptimizationWithCMAES extends AbstractWeightsOptimization {
      * @return The weight.
      */
     double weight(int i) {
-      return weights.get(i).value();
+      return parameters.get(i).value();
     }
   }
 

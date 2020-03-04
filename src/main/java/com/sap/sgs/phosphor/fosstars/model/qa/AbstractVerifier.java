@@ -6,7 +6,7 @@ import java.util.Objects;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public abstract class AbstractVerifier {
+public abstract class AbstractVerifier implements Verifier {
 
   /**
    * A list of test vectors.
@@ -38,24 +38,28 @@ public abstract class AbstractVerifier {
    *
    * @return A list of failed test vectors.
    */
-  abstract List<FailedTestVector> runImpl();
+  abstract List<TestVectorResult> runImpl();
 
-  /**
-   * Check the rating against the test vectors, and throws a {@link VerificationFailedException} if
-   * at least one test vector failed.
-   *
-   * @throws VerificationFailedException If at least one test vector failed.
-   */
-  public final void run() throws VerificationFailedException {
-    List<FailedTestVector> failedVectors = runImpl();
-    for (FailedTestVector vector : failedVectors) {
-      logger.info("Test vector #{} failed", vector.index);
-      logger.info("    reason: {}", vector.reason);
-      logger.info("    alias:  {}", vector.vector.alias());
+  @Override
+  public final List<TestVectorResult> run() {
+    List<TestVectorResult> results = runImpl();
+    for (TestVectorResult vector : results) {
+      if (vector.failed()) {
+        logger.info("Test vector #{} failed", vector.index);
+        logger.info("    reason: {}", vector.message);
+        logger.info("    alias:  {}", vector.vector.alias());
+      }
     }
+    return results;
+  }
 
-    if (!failedVectors.isEmpty()) {
-      throw new VerificationFailedException();
+  @Override
+  public void verify() throws VerificationFailedException {
+    List<TestVectorResult> results = run();
+    for (TestVectorResult result : results) {
+      if (result.failed()) {
+        throw new VerificationFailedException();
+      }
     }
   }
 }

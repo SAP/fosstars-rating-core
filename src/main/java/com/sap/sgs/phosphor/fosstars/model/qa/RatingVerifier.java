@@ -2,6 +2,7 @@ package com.sap.sgs.phosphor.fosstars.model.qa;
 
 import com.sap.sgs.phosphor.fosstars.model.Label;
 import com.sap.sgs.phosphor.fosstars.model.Rating;
+import com.sap.sgs.phosphor.fosstars.model.qa.TestVectorResult.Status;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,34 +36,39 @@ public class RatingVerifier extends AbstractVerifier {
    *
    * @return A list of failed test vectors.
    */
-  public List<FailedTestVector> runImpl() {
-    List<FailedTestVector> failedVectors = new ArrayList<>();
+  List<TestVectorResult> runImpl() {
+    List<TestVectorResult> results = new ArrayList<>();
 
     int index = 0;
     for (TestVector vector : vectors) {
       RatingValue ratingValue = rating.calculate(vector.values());
       double score = ratingValue.score();
+      Label actualLabel = ratingValue.label();
+
       if (!vector.containsExpected(score)) {
-        failedVectors.add(new FailedTestVector(
+        results.add(new TestVectorResult(
             vector,
             index,
+            score,
+            Status.FAILED,
             String.format("Expected a score in the interval %s but %s returned",
                 vector.expectedScore(), score)));
-      }
-
-      Label actualLabel = ratingValue.label();
-      if (vector.hasLabel() && vector.expectedLabel() != actualLabel) {
-        failedVectors.add(new FailedTestVector(
+      } else if (vector.hasLabel() && vector.expectedLabel() != actualLabel) {
+        results.add(new TestVectorResult(
             vector,
             index,
+            score,
+            Status.FAILED,
             String.format("Expected label '%s' but '%s' returned",
                 vector.expectedLabel(), actualLabel)));
+      } else {
+        results.add(new TestVectorResult(vector, index++, score, Status.PASSED, "Ok"));
       }
 
       index++;
     }
 
-    return failedVectors;
+    return results;
   }
 
 }
