@@ -37,10 +37,6 @@ public class RatingRepository {
    */
   private static final ObjectMapper MAPPER = new ObjectMapper();
 
-  static {
-    MAPPER.enableDefaultTyping();
-  }
-
   /**
    * Singleton.
    */
