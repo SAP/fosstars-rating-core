@@ -20,7 +20,6 @@ import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.sgs.phosphor.fosstars.model.value.IntegerValue;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 import org.junit.Test;
 
@@ -38,17 +37,6 @@ public class SecurityRatingExampleTest {
     RatingValue ratingValue = rating.calculate(values);
     assertTrue(Score.INTERVAL.contains(ratingValue.score()));
     assertEquals(SecurityRatingExample.SecurityLabelExample.OKAY, ratingValue.label());
-  }
-
-  @Test
-  public void immutable() {
-    Rating rating = RatingRepository.INSTANCE.rating(SECURITY_RATING_EXAMPLE_1_1);
-    Score securityScoreExample = rating.score();
-    for (Score subScore : securityScoreExample.subScores()) {
-      Optional<Weight> optional = securityScoreExample.weightOf(subScore);
-      assertTrue(optional.isPresent());
-      Weight weight = optional.get();
-    }
   }
 
   @Test

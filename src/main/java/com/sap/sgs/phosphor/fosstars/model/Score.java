@@ -16,7 +16,6 @@ import com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectSecurityTestingScore
 import com.sap.sgs.phosphor.fosstars.model.score.oss.UnpatchedVulnerabilitiesScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.VulnerabilityLifetimeScore;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -111,11 +110,6 @@ public interface Score extends Feature<Double> {
    *                                  which are used by the score.
    */
   ScoreValue calculate(ValueSet values);
-
-  /**
-   * Returns a weight for a sub-score.
-   */
-  Optional<Weight> weightOf(Score score);
 
   /**
    * Accept a visitor.

@@ -66,22 +66,6 @@ public class WeightedCompositeScore extends AbstractScore implements Tunable {
     return weightedScores;
   }
 
-  /**
-   * Returns a weight of a particular sub-score if the score has it.
-   *
-   * @param score A sub-score to be searched for.
-   * @return An instance of Optional with a weight.
-   */
-  @Override
-  public final Optional<Weight> weightOf(Score score) {
-    for (WeightedScore weightedScore : weightedScores) {
-      if (weightedScore.score.equals(score)) {
-        return Optional.of(weightedScore.weight);
-      }
-    }
-    return Optional.empty();
-  }
-
   @Override
   public List<Weight> parameters() {
     // TODO: should it return all parameters which are used by underlying sub-scores?

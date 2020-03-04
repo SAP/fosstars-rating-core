@@ -6,10 +6,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Visitor;
-import com.sap.sgs.phosphor.fosstars.model.Weight;
 import java.util.Collections;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -38,11 +36,6 @@ public abstract class FeatureBasedScore extends AbstractScore {
   @JsonIgnore
   public final Set<Score> subScores() {
     return Collections.emptySet();
-  }
-
-  @Override
-  public Optional<Weight> weightOf(Score score) {
-    return Optional.empty();
   }
 
   @Override
