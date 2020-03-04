@@ -1,7 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.model.tuning;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sap.sgs.phosphor.fosstars.Tunable;
+import com.sap.sgs.phosphor.fosstars.model.Tunable;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVectorResult;
 import com.sap.sgs.phosphor.fosstars.model.qa.VerificationFailedException;

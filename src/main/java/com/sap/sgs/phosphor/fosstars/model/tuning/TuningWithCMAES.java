@@ -1,7 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.model.tuning;
 
-import com.sap.sgs.phosphor.fosstars.Parameter;
-import com.sap.sgs.phosphor.fosstars.Tunable;
+import com.sap.sgs.phosphor.fosstars.model.Parameter;
+import com.sap.sgs.phosphor.fosstars.model.Tunable;
 import com.sap.sgs.phosphor.fosstars.model.Weight;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVectorResult;
 import com.sap.sgs.phosphor.fosstars.model.qa.Verifier;
