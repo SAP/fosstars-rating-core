@@ -1,6 +1,4 @@
-package com.sap.sgs.phosphor.fosstars;
-
-import com.sap.sgs.phosphor.fosstars.model.Interval;
+package com.sap.sgs.phosphor.fosstars.model;
 
 /**
  * The interface represents a tunable parameter of a score or rating.

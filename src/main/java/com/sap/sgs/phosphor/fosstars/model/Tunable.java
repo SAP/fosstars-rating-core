@@ -1,4 +1,4 @@
-package com.sap.sgs.phosphor.fosstars;
+package com.sap.sgs.phosphor.fosstars.model;
 
 import java.util.List;
 

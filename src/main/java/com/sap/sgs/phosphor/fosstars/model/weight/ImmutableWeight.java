@@ -3,7 +3,7 @@ package com.sap.sgs.phosphor.fosstars.model.weight;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sap.sgs.phosphor.fosstars.Parameter;
+import com.sap.sgs.phosphor.fosstars.model.Parameter;
 import com.sap.sgs.phosphor.fosstars.model.Weight;
 import java.util.Objects;
 
