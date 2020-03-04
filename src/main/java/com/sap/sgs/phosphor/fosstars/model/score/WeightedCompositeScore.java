@@ -1,6 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.model.score;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
@@ -12,6 +13,7 @@ import com.sap.sgs.phosphor.fosstars.model.Weight;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
+import com.sap.sgs.phosphor.fosstars.model.weight.ImmutableWeight;
 import com.sap.sgs.phosphor.fosstars.model.weight.MutableWeight;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -55,15 +57,14 @@ public class WeightedCompositeScore extends AbstractScore implements Tunable {
   }
 
   /**
-   * This is a getter for Jackson to get the weighted scores. It might be good if the method
-   * returned an unmodifiable set, but it breaks deserialization process. Let's make the method at
-   * least private then.
+   * This is a getter for Jackson to get the set of weighted scores.
+   * The method returns a copy of the set to prevent modification of the set by the caller.
    * TODO: Figure out if Jackson changes access level for this method, and don't revert it back.
    *       If so, is it a security issue?
    */
   @JsonProperty("weightedScores")
   private Set<WeightedScore> weightedScores() {
-    return weightedScores;
+    return new HashSet<>(weightedScores);
   }
 
   @Override
@@ -74,6 +75,35 @@ public class WeightedCompositeScore extends AbstractScore implements Tunable {
       weights.add(weightedScore.weight);
     }
     return weights;
+  }
+
+  @Override
+  @JsonIgnore
+  public boolean isImmutable() {
+    for (WeightedScore weightedScore : weightedScores) {
+      if (!weightedScore.weight.isImmutable()) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  @Override
+  public void makeImmutable() {
+    Set<WeightedScore> immutableWeightedScores = new HashSet<>();
+    for (WeightedScore weightedScore : weightedScores) {
+      if (weightedScore.weight.isImmutable()) {
+        immutableWeightedScores.add(weightedScore);
+      } else {
+        immutableWeightedScores.add(
+            new WeightedScore(
+                weightedScore.score,
+                new ImmutableWeight(weightedScore.weight.value())));
+      }
+    }
+
+    weightedScores.clear();
+    weightedScores.addAll(immutableWeightedScores);
   }
 
   /**
@@ -230,10 +260,12 @@ public class WeightedCompositeScore extends AbstractScore implements Tunable {
     if (weightedScores.isEmpty()) {
       throw new IllegalArgumentException("Hey! Weighted scores can't be empty!");
     }
+
     for (WeightedScore weightedScore : weightedScores) {
       Objects.requireNonNull(weightedScore, "Weighted score can't be null!");
       Objects.requireNonNull(weightedScore.weight, "Weight can't be null!");
       Objects.requireNonNull(weightedScore.score, "Score can't be null!");
+
       double weight = weightedScore.weight.value();
       if (!Weight.INTERVAL.contains(weight)) {
         throw new IllegalArgumentException(
@@ -241,7 +273,9 @@ public class WeightedCompositeScore extends AbstractScore implements Tunable {
                 String.valueOf(weight), Weight.INTERVAL));
       }
     }
-    return weightedScores;
+
+    // return a new set to prevent modification of the set by the caller
+    return new HashSet<>(weightedScores);
   }
 
   /**

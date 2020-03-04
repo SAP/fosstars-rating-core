@@ -2,12 +2,15 @@ package com.sap.sgs.phosphor.fosstars.model.score;
 
 import static com.sap.sgs.phosphor.fosstars.TestUtils.assertScore;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
+import com.sap.sgs.phosphor.fosstars.model.Parameter;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.Weight;
@@ -190,6 +193,33 @@ public class WeightedCompositeScoreTest {
       weightSum += weight.value();
     }
     assertEquals(WeightedScoreImpl.FIRST_WEIGHT + WeightedScoreImpl.SECOND_WEIGHT, weightSum, 0.1);
+  }
+
+  @Test
+  public void notImmutableByDefault() {
+    WeightedScoreImpl score = new WeightedScoreImpl();
+    assertFalse(score.isImmutable());
+    for (Parameter parameter : score.parameters()) {
+      final double w = 1.0;
+      assertNotEquals(w, parameter.value());
+      parameter.value(w);
+      assertEquals(w, parameter.value(), 0.1);
+    }
+  }
+
+  @Test
+  public void makeImmutable() {
+    WeightedScoreImpl score = new WeightedScoreImpl();
+    score.makeImmutable();
+    assertTrue(score.isImmutable());
+    for (Parameter parameter : score.parameters()) {
+      try {
+        parameter.value(0.1);
+        fail("Oh no! The parameter should not be modifiable!");
+      } catch (UnsupportedOperationException e) {
+        // expected
+      }
+    }
   }
 
   private static class FirstScore extends AbstractScore {

@@ -23,4 +23,11 @@ public interface Parameter {
    * Returns the value of the parameter.
    */
   Double value();
+
+  /**
+   * Checks if the entity is immutable.
+   *
+   * @return True if the entity is immutable, false otherwise.
+   */
+  boolean isImmutable();
 }

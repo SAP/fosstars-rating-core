@@ -11,4 +11,16 @@ public interface Tunable {
    * Returns a list of parameters which may be tuned.
    */
   List<? extends Parameter> parameters();
+
+  /**
+   * Checks if the entity is immutable.
+   *
+   * @return True if the entity is immutable, false otherwise.
+   */
+  boolean isImmutable();
+
+  /**
+   * Make the entity immutable.
+   */
+  void makeImmutable();
 }

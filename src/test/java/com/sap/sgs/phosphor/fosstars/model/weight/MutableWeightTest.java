@@ -1,6 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.model.weight;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
@@ -34,6 +35,7 @@ public class MutableWeightTest {
   @Test
   public void update() {
     MutableWeight weight = new MutableWeight(0.5);
+    assertFalse(weight.isImmutable());
     assertEquals(0.5, weight.value(), 0.001);
     MutableWeight link = weight.value(0.9);
     assertEquals(0.9, weight.value(), 0.001);
