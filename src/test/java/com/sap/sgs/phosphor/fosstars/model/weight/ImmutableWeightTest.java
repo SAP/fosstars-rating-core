@@ -33,6 +33,7 @@ public class ImmutableWeightTest {
   @Test(expected = UnsupportedOperationException.class)
   public void update() {
     ImmutableWeight weight = new ImmutableWeight(0.5);
+    assertTrue(weight.isImmutable());
     assertEquals(0.5, weight.value(), 0.001);
     weight.value(0.9);
   }
