@@ -135,8 +135,8 @@ public class ProjectActivityScore extends FeatureBasedScore {
     int n = commits.get();
     int m = contributors.get();
 
-    if (m > n) {
-      throw new IllegalArgumentException("More commits than contributors! How is that possible?");
+    if (m > 0 && n == 0) {
+      throw new IllegalArgumentException("Contributor without commits! How is that possible?");
     }
 
     if (n > 0 && m == 0) {

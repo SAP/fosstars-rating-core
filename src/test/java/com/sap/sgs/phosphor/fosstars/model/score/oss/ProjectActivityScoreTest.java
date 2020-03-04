@@ -109,9 +109,14 @@ public class ProjectActivityScoreTest {
     PROJECT_ACTIVITY.calculate(values(0, 1));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void moreContributorsThanCommits() {
     PROJECT_ACTIVITY.calculate(values(1, 2));
+  }
+  
+  @Test
+  public void moreCommitsThanContributors() {
+    PROJECT_ACTIVITY.calculate(values(2, 1));
   }
 
   private static Set<Value> values(int commits, int contributors) {
