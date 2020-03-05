@@ -61,8 +61,7 @@
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
         <configuration>
-          <finalName>fosstars-github-rating-calc</finalName>
-          <appendAssemblyId>false</appendAssemblyId>
+          <finalName>fosstars-github-rating</finalName>
           <archive>
             <manifest>
               <mainClass>com.sap.sgs.phosphor.fosstars.tool.github.SecurityRatingCalculator</mainClass>
