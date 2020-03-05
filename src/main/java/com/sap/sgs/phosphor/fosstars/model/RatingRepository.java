@@ -3,6 +3,7 @@ package com.sap.sgs.phosphor.fosstars.model;
 import static com.sap.sgs.phosphor.fosstars.model.Version.OSS_SECURITY_RATING_1_0;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sap.sgs.phosphor.fosstars.model.other.MakeImmutable;
 import com.sap.sgs.phosphor.fosstars.model.rating.example.SecurityRatingExample;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.OssSecurityScore;
@@ -23,7 +24,17 @@ import org.apache.logging.log4j.Logger;
  */
 public class RatingRepository {
 
+  /**
+   * An interface of a factory that can create a rating.
+   */
   private interface RatingFactory {
+
+    /**
+     * Create a new rating.
+     *
+     * @return A new rating.
+     * @throws IOException If something went wrong.
+     */
     Rating create() throws IOException;
   }
 
@@ -123,20 +134,31 @@ public class RatingRepository {
     return clazz.cast(currentRating);
   }
 
+  /**
+   * Calls a rating factory to create a rating,
+   * and then registers the created rating in the repository.
+   *
+   * @param factory The rating factory.
+   */
   private void register(RatingFactory factory) {
     try {
-      Rating rating = factory.create();
-      register(rating.version(), rating);
+      register(factory.create());
     } catch (IOException e) {
       LOGGER.warn("Initialization failed", e);
     }
   }
 
-  private void register(Version version, Rating rating) {
-    if (rating.getClass() != version.clazz) {
+  /**
+   * Registers a new rating in the repository. The method makes the rating immutable.
+   *
+   * @param rating The rating to be registered.
+   */
+  private void register(Rating rating) {
+    if (rating.getClass() != rating.version().clazz) {
       throw new IllegalArgumentException("Hey! Classes should match!");
     }
-    ratings.put(version, rating);
+    rating.accept(new MakeImmutable());
+    ratings.put(rating.version(), rating);
   }
 
   /**
