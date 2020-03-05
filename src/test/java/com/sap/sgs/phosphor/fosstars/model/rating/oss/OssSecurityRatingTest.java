@@ -2,12 +2,16 @@ package com.sap.sgs.phosphor.fosstars.model.rating.oss;
 
 import static com.sap.sgs.phosphor.fosstars.model.Version.OSS_SECURITY_RATING_1_0;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import com.sap.sgs.phosphor.fosstars.model.Parameter;
 import com.sap.sgs.phosphor.fosstars.model.Rating;
 import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.other.ImmutabilityChecker;
+import com.sap.sgs.phosphor.fosstars.model.other.MakeImmutable;
 import com.sap.sgs.phosphor.fosstars.model.other.Utils;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.OssSecurityScore;
@@ -39,5 +43,31 @@ public class OssSecurityRatingTest {
 
     assertEquals(one, two);
     assertEquals(one.hashCode(), two.hashCode());
+  }
+
+  @Test
+  public void makeImmutableWithVisitor() {
+    OssSecurityRating r = new OssSecurityRating(new OssSecurityScore(), OSS_SECURITY_RATING_1_0);
+
+    // first, check that the underlying score is mutable
+    assertFalse(r.score().isImmutable());
+    for (Parameter parameter : r.score().parameters()) {
+      assertFalse(parameter.isImmutable());
+    }
+    ImmutabilityChecker checker = new ImmutabilityChecker();
+    r.accept(checker);
+    assertFalse(checker.allImmutable());
+
+    // next, make it immutable
+    r.accept(new MakeImmutable());
+
+    // then, check that the underlying score became immutable
+    assertTrue(r.score().isImmutable());
+    for (Parameter parameter : r.score().parameters()) {
+      assertTrue(parameter.isImmutable());
+    }
+    checker = new ImmutabilityChecker();
+    r.accept(checker);
+    assertTrue(checker.allImmutable());
   }
 }

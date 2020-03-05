@@ -6,6 +6,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.example.ExampleFeature
 import static com.sap.sgs.phosphor.fosstars.model.feature.example.ExampleFeatures.SECURITY_REVIEW_DONE_EXAMPLE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.example.ExampleFeatures.STATIC_CODE_ANALYSIS_DONE_EXAMPLE;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -16,6 +17,8 @@ import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.Visitor;
+import com.sap.sgs.phosphor.fosstars.model.other.ImmutabilityChecker;
+import com.sap.sgs.phosphor.fosstars.model.other.MakeImmutable;
 import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.sgs.phosphor.fosstars.model.value.IntegerValue;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
@@ -76,6 +79,32 @@ public class SecurityRatingExampleTest {
     assertEquals(2, counter.weights);
     assertEquals(3, counter.scores);
     assertEquals(4, counter.features);
+  }
+
+  @Test
+  public void makeImmutableWithVisitor() {
+    SecurityRatingExample r = new SecurityRatingExample(SECURITY_RATING_EXAMPLE_1_1);
+
+    // first, check that the underlying score is mutable
+    assertFalse(r.score().isImmutable());
+    for (Parameter parameter : r.score().parameters()) {
+      assertFalse(parameter.isImmutable());
+    }
+    ImmutabilityChecker checker = new ImmutabilityChecker();
+    r.accept(checker);
+    assertFalse(checker.allImmutable());
+
+    // next, make it immutable
+    r.accept(new MakeImmutable());
+
+    // then, check that the underlying score became immutable
+    assertTrue(r.score().isImmutable());
+    for (Parameter parameter : r.score().parameters()) {
+      assertTrue(parameter.isImmutable());
+    }
+    checker = new ImmutabilityChecker();
+    r.accept(checker);
+    assertTrue(checker.allImmutable());
   }
 
   private static class Counter implements Visitor {
