@@ -7,7 +7,7 @@ package com.sap.sgs.phosphor.fosstars.model;
  *   <li>{@link Rating}</li>
  *   <li>{@link Score}</li>
  *   <li>{@link Feature}</li>
- *   <li>{@link Weight}</li>
+ *   <li>{@link Parameter}</li>
  * </ul>
  */
 public interface Visitor {
@@ -34,9 +34,9 @@ public interface Visitor {
   void visit(Feature feature);
 
   /**
-   * Visit a {@link Weight}.
+   * Visit a {@link Parameter}.
    *
-   * @param weight The weight to be visited.
+   * @param parameter The parameter to be visited.
    */
-  void visit(Weight weight);
+  void visit(Parameter parameter);
 }
