@@ -2,13 +2,27 @@ package com.sap.sgs.phosphor.fosstars.model;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
+import com.sap.sgs.phosphor.fosstars.model.other.ImmutabilityChecker;
 import com.sap.sgs.phosphor.fosstars.model.rating.AbstractRating;
 import com.sap.sgs.phosphor.fosstars.model.rating.example.SecurityRatingExample;
 import org.junit.Test;
 
 public class RatingRepositoryTest {
+
+  @Test
+  public void allRatingsAreImmutable() {
+    for (Version version : Version.values()) {
+      Rating rating = RatingRepository.INSTANCE.rating(version);
+      assertNotNull(rating);
+      ImmutabilityChecker checker = new ImmutabilityChecker();
+      rating.accept(checker);
+      assertTrue(checker.allImmutable());
+    }
+  }
 
   @Test
   public void getByVersionAndClass() {
