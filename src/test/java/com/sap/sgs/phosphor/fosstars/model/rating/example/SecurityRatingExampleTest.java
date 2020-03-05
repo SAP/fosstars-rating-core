@@ -10,12 +10,12 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import com.sap.sgs.phosphor.fosstars.model.Feature;
+import com.sap.sgs.phosphor.fosstars.model.Parameter;
 import com.sap.sgs.phosphor.fosstars.model.Rating;
 import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.Visitor;
-import com.sap.sgs.phosphor.fosstars.model.Weight;
 import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.sgs.phosphor.fosstars.model.value.IntegerValue;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
@@ -104,8 +104,8 @@ public class SecurityRatingExampleTest {
     }
 
     @Override
-    public void visit(Weight weight) {
-      assertNotNull(weight);
+    public void visit(Parameter parameter) {
+      assertNotNull(parameter);
       weights++;
     }
   }
