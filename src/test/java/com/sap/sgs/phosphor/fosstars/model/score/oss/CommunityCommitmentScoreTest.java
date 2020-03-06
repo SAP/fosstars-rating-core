@@ -33,19 +33,18 @@ public class CommunityCommitmentScoreTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void bothApacheAndEclipse() {
-    COMMUNITY_COMMITMENT
-        .calculate(SUPPORTED_BY_COMPANY.value(false), IS_APACHE.value(true), IS_ECLIPSE
-        .value(true));
+    COMMUNITY_COMMITMENT.calculate(
+        SUPPORTED_BY_COMPANY.value(false), IS_APACHE.value(true), IS_ECLIPSE.value(true));
   }
 
   @Test
   public void calculate() {
-    assertScore(Score.MIN, COMMUNITY_COMMITMENT.calculate(values(false, false, false)));
-    assertScore(7.0, COMMUNITY_COMMITMENT.calculate(values(false, true, false)));
-    assertScore(7.0, COMMUNITY_COMMITMENT.calculate(values(false, false, true)));
-    assertScore(8.0, COMMUNITY_COMMITMENT.calculate(values(true, false, false)));
-    assertScore(Score.MAX, COMMUNITY_COMMITMENT.calculate(values(true, true, false)));
-    assertScore(Score.MAX, COMMUNITY_COMMITMENT.calculate(values(true, false, true)));
+    assertScore(Score.MIN, COMMUNITY_COMMITMENT, values(false, false, false));
+    assertScore(7.0, COMMUNITY_COMMITMENT, values(false, true, false));
+    assertScore(7.0, COMMUNITY_COMMITMENT, values(false, false, true));
+    assertScore(8.0, COMMUNITY_COMMITMENT, values(true, false, false));
+    assertScore(Score.MAX, COMMUNITY_COMMITMENT, values(true, true, false));
+    assertScore(Score.MAX, COMMUNITY_COMMITMENT, values(true, false, true));
   }
 
   private static Set<Value> values(boolean company, boolean apache, boolean eclipse) {

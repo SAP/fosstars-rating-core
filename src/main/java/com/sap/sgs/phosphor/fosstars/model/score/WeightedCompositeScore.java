@@ -16,6 +16,7 @@ import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.model.weight.ImmutableWeight;
 import com.sap.sgs.phosphor.fosstars.model.weight.MutableWeight;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -131,7 +132,8 @@ public class WeightedCompositeScore extends AbstractScore implements Tunable {
     return new ScoreValue(
         this,
         Score.adjust(scoreSum / weightSum),
-        Confidence.adjust(confidenceSum / weightSum));
+        Confidence.adjust(confidenceSum / weightSum),
+        Arrays.asList(values));
   }
 
   @Override

@@ -4,7 +4,6 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.VULNER
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.findValue;
 import static com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.Resolution.UNPATCHED;
 
-import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
@@ -58,7 +57,7 @@ public class UnpatchedVulnerabilitiesScore extends FeatureBasedScore {
         "Hey! Give me info about vulnerabilities!");
 
     if (vulnerabilities.isUnknown()) {
-      return new ScoreValue(this, Score.MIN, Confidence.MIN);
+      return scoreValue(Score.MIN, vulnerabilities);
     }
 
     int highSeverity = 0;
@@ -83,13 +82,13 @@ public class UnpatchedVulnerabilitiesScore extends FeatureBasedScore {
       }
     }
 
-    double score = Score.MAX;
+    double scorePoints = Score.MAX;
 
-    score -= HIGH_SEVERITY_PENALTY * highSeverity;
-    score -= MEDIUM_SEVERITY_PENALTY * mediumSeverity;
-    score -= LOW_SEVERITY_PENALTY * lowSeverity;
+    scorePoints -= HIGH_SEVERITY_PENALTY * highSeverity;
+    scorePoints -= MEDIUM_SEVERITY_PENALTY * mediumSeverity;
+    scorePoints -= LOW_SEVERITY_PENALTY * lowSeverity;
 
-    return new ScoreValue(this, Score.adjust(score), Confidence.MAX);
+    return scoreValue(scorePoints, vulnerabilities);
   }
 
   /**

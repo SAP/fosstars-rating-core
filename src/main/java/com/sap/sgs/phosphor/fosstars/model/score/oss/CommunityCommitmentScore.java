@@ -5,7 +5,6 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.IS_ECL
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.findValue;
 
-import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
@@ -47,8 +46,6 @@ public class CommunityCommitmentScore extends FeatureBasedScore {
     Value<Boolean> isEclipseProject = findValue(values, IS_ECLIPSE,
         "Hey! Tell me if the project belongs to the Eclipse Foundation!");
 
-    double scorePoints = Score.MIN;
-
     boolean belongsToApache = !isApacheProject.isUnknown() && isApacheProject.get();
     boolean belongsToEclipse = !isEclipseProject.isUnknown() && isEclipseProject.get();
 
@@ -57,6 +54,7 @@ public class CommunityCommitmentScore extends FeatureBasedScore {
           "How can the project belong to both Apache and Eclipse foundations?");
     }
 
+    double scorePoints = Score.MIN;
     if (belongsToApache || belongsToEclipse) {
       scorePoints += 7.0;
     }
@@ -65,10 +63,7 @@ public class CommunityCommitmentScore extends FeatureBasedScore {
       scorePoints += 8.0;
     }
 
-    return new ScoreValue(
-        this,
-        Score.adjust(scorePoints),
-        Confidence.make(hasResponsibleCompany, isApacheProject, isEclipseProject));
+    return scoreValue(scorePoints, hasResponsibleCompany, isApacheProject, isEclipseProject);
   }
 
   /**

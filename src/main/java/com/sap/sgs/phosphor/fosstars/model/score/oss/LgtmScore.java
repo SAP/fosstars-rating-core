@@ -60,6 +60,7 @@ public class LgtmScore extends FeatureBasedScore {
     worseLgtmGrade.processIfKnown(grade -> scoreValue.increase(GRADE_TO_POINTS.get(grade)));
 
     scoreValue.confidence(Confidence.make(usesLgtm, worseLgtmGrade));
+    scoreValue.usedValues(usesLgtm, worseLgtmGrade);
 
     return scoreValue;
   }

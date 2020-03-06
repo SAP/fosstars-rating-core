@@ -1,5 +1,6 @@
 package com.sap.sgs.phosphor.fosstars.model;
 
+import com.sap.sgs.phosphor.fosstars.model.math.DoubleInterval;
 import java.util.Objects;
 
 /**
@@ -19,6 +20,11 @@ public interface Confidence {
   double MAX = 10.0;
 
   /**
+   * A valid interval for a score value.
+   */
+  Interval INTERVAL = DoubleInterval.init().from(MIN).to(MAX).closed().make();
+
+  /**
    * Return a level of confidence.
    */
   double confidence();
@@ -31,7 +37,7 @@ public interface Confidence {
    * @throws IllegalArgumentException If the confidence level is not correct.
    */
   static double check(double confidence) {
-    if (confidence < MIN || confidence > MAX) {
+    if (!INTERVAL.contains(confidence)) {
       throw new IllegalArgumentException(String.format(
           "Hey! Confidence must be in interval [%.2f, %.2f] but you gave me %.02f",
           MIN, MAX, confidence));

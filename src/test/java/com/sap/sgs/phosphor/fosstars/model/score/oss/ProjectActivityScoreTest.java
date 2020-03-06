@@ -39,64 +39,52 @@ public class ProjectActivityScoreTest {
 
   @Test
   public void calculate() {
-    assertScore(0.00,
-        PROJECT_ACTIVITY.calculate(
+    assertScore(Score.MIN, PROJECT_ACTIVITY, setOf(
             UnknownValue.of(NUMBER_OF_COMMITS_LAST_THREE_MONTHS),
-            UnknownValue.of(NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS)),
-        delta);
+            UnknownValue.of(NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS)));
 
-    assertScore(0.00,
-        PROJECT_ACTIVITY.calculate(
+    assertScore(Score.MIN, PROJECT_ACTIVITY, setOf(
             NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(0),
-            UnknownValue.of(NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS)),
-        delta);
+            UnknownValue.of(NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS)));
 
-    assertScore(0.00,
-        PROJECT_ACTIVITY.calculate(
+    assertScore(Score.MIN, PROJECT_ACTIVITY, setOf(
             UnknownValue.of(NUMBER_OF_COMMITS_LAST_THREE_MONTHS),
-            NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(0)),
-        delta);
+            NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(0)));
 
-    assertScore(0.00, PROJECT_ACTIVITY.calculate(values(0, 0)), delta);
+    assertScore(Score.MIN, PROJECT_ACTIVITY, values(0, 0));
 
     // for one contributor
-    assertScore(2.42, PROJECT_ACTIVITY.calculate(values(1, 1)), delta);
-    assertScore(2.74, PROJECT_ACTIVITY.calculate(values(10, 1)), delta);
-    assertScore(3.75, PROJECT_ACTIVITY.calculate(values(30, 1)), delta);
-    assertScore(6.44, PROJECT_ACTIVITY.calculate(values(70, 1)), delta);
-    assertScore(7.80, PROJECT_ACTIVITY.calculate(values(100, 1)), delta);
-    assertScore(8.63, PROJECT_ACTIVITY.calculate(values(200, 1)), delta);
+    assertScore(2.42, PROJECT_ACTIVITY, values(1, 1));
+    assertScore(2.74, PROJECT_ACTIVITY, values(10, 1));
+    assertScore(3.75, PROJECT_ACTIVITY, values(30, 1));
+    assertScore(6.44, PROJECT_ACTIVITY, values(70, 1));
+    assertScore(7.80, PROJECT_ACTIVITY, values(100, 1));
+    assertScore(8.63, PROJECT_ACTIVITY, values(200, 1));
 
     // for more many contributors
-    assertScore(2.89, PROJECT_ACTIVITY.calculate(values(10, 2)), delta);
-    assertScore(3.90, PROJECT_ACTIVITY.calculate(values(30, 2)), delta);
-    assertScore(6.60, PROJECT_ACTIVITY.calculate(values(70, 2)), delta);
-    assertScore(7.95, PROJECT_ACTIVITY.calculate(values(100, 2)), delta);
-    assertScore(8.78, PROJECT_ACTIVITY.calculate(values(200, 2)), delta);
+    assertScore(2.89, PROJECT_ACTIVITY, values(10, 2));
+    assertScore(3.90, PROJECT_ACTIVITY, values(30, 2));
+    assertScore(6.60, PROJECT_ACTIVITY, values(70, 2));
+    assertScore(7.95, PROJECT_ACTIVITY, values(100, 2));
+    assertScore(8.78, PROJECT_ACTIVITY, values(200, 2));
 
     // for more many contributors
-    assertScore(3.33, PROJECT_ACTIVITY.calculate(values(10, 5)), delta);
-    assertScore(4.34, PROJECT_ACTIVITY.calculate(values(30, 5)), delta);
-    assertScore(7.03, PROJECT_ACTIVITY.calculate(values(70, 5)), delta);
-    assertScore(8.39, PROJECT_ACTIVITY.calculate(values(100, 5)), delta);
-    assertScore(9.22, PROJECT_ACTIVITY.calculate(values(200, 5)), delta);
-    assertScore(3.85, PROJECT_ACTIVITY.calculate(values(10, 10)), delta);
-    assertScore(4.86, PROJECT_ACTIVITY.calculate(values(30, 10)), delta);
-    assertScore(7.55, PROJECT_ACTIVITY.calculate(values(70, 10)), delta);
-    assertScore(8.91, PROJECT_ACTIVITY.calculate(values(100, 10)), delta);
-    assertScore(9.74, PROJECT_ACTIVITY.calculate(values(200, 10)), delta);
+    assertScore(3.33, PROJECT_ACTIVITY, values(10, 5));
+    assertScore(4.34, PROJECT_ACTIVITY, values(30, 5));
+    assertScore(7.03, PROJECT_ACTIVITY, values(70, 5));
+    assertScore(8.39, PROJECT_ACTIVITY, values(100, 5));
+    assertScore(9.22, PROJECT_ACTIVITY, values(200, 5));
+    assertScore(3.85, PROJECT_ACTIVITY, values(10, 10));
+    assertScore(4.86, PROJECT_ACTIVITY, values(30, 10));
+    assertScore(7.55, PROJECT_ACTIVITY, values(70, 10));
+    assertScore(8.91, PROJECT_ACTIVITY, values(100, 10));
+    assertScore(9.74, PROJECT_ACTIVITY, values(200, 10));
 
     // I wish all open-source projects were like that
-    assertScore(
-        Score.MAX,
-        PROJECT_ACTIVITY.calculate(values(10000, 500)),
-        0.0);
+    assertScore(Score.MAX, PROJECT_ACTIVITY, values(10000, 500));
 
     // or, even like that
-    assertScore(
-        Score.MAX,
-        PROJECT_ACTIVITY.calculate(values(Integer.MAX_VALUE, Integer.MAX_VALUE)),
-        0.0);
+    assertScore(Score.MAX, PROJECT_ACTIVITY, values(Integer.MAX_VALUE, Integer.MAX_VALUE));
   }
 
   @Test(expected = IllegalArgumentException.class)
