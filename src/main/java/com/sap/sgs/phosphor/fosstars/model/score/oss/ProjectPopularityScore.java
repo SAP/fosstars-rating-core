@@ -4,8 +4,6 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_WATCHERS_ON_GITHUB;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.findValue;
 
-import com.sap.sgs.phosphor.fosstars.model.Confidence;
-import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
@@ -61,10 +59,7 @@ public class ProjectPopularityScore extends FeatureBasedScore {
     Value<Integer> m = findValue(values, NUMBER_OF_WATCHERS_ON_GITHUB,
         "Hey! You have to give me a number of watchers!");
 
-    return new ScoreValue(
-        this,
-        Score.adjust(starsScore(n) + watchersScore(m)),
-        Confidence.make(n, m));
+    return scoreValue(starsScore(n) + watchersScore(m), n, m);
   }
 
   /**

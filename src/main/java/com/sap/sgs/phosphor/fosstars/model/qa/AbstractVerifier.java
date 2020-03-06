@@ -16,7 +16,7 @@ public abstract class AbstractVerifier implements Verifier {
   /**
    * A logger.
    */
-  private final Logger logger = LogManager.getLogger(getClass());
+  final Logger logger = LogManager.getLogger(getClass());
 
   /**
    * Initialize a verifier.

@@ -1,6 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.model.score;
 
 import static com.sap.sgs.phosphor.fosstars.TestUtils.assertScore;
+import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -14,6 +15,7 @@ import com.sap.sgs.phosphor.fosstars.model.Parameter;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.Weight;
+import com.sap.sgs.phosphor.fosstars.model.feature.DoubleFeature;
 import com.sap.sgs.phosphor.fosstars.model.score.WeightedCompositeScore.WeightedScore;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.sgs.phosphor.fosstars.model.weight.MutableWeight;
@@ -37,11 +39,16 @@ public class WeightedCompositeScoreTest {
   @Test
   public void calculate() {
     Score score = new WeightedScoreImpl();
-    double weightedFirstScore = 0.8 * new FirstScore().calculate(Collections.emptySet()).get();
-    double weightedSecondScore = 0.3 * new SecondScore().calculate(Collections.emptySet()).get();
+
+    Value<Double> firstValue = FirstScore.FEATURE.value(FirstScore.VALUE);
+    Value<Double> secondValue = SecondScore.FEATURE.value(SecondScore.VALUE);
+
+    double weightedFirstScore = 0.8 * new FirstScore().calculate(firstValue).get();
+    double weightedSecondScore = 0.3 * new SecondScore().calculate(secondValue).get();
     double weightSum = 0.8 + 0.3;
     double expectedScore = (weightedFirstScore + weightedSecondScore) / weightSum;
-    assertScore(expectedScore, score.calculate(Collections.emptySet()));
+
+    assertScore(expectedScore, score, setOf(firstValue, secondValue));
   }
 
   @Test
@@ -143,9 +150,9 @@ public class WeightedCompositeScoreTest {
     double secondValue = 2.0;
 
     ScoreValue firstPreCalculatedScoreValue = new ScoreValue(
-        new FirstScore(), firstValue, Confidence.MAX);
+        new FirstScore(), firstValue, Confidence.MAX, Collections.emptyList());
     ScoreValue secondPreCalculatedScoreValue = new ScoreValue(
-        new SecondScore(), secondValue, Confidence.MAX);
+        new SecondScore(), secondValue, Confidence.MAX, Collections.emptyList());
     ScoreValue scoreValue = score.calculate(
         firstPreCalculatedScoreValue, secondPreCalculatedScoreValue);
     assertNotNull(scoreValue);
@@ -165,7 +172,7 @@ public class WeightedCompositeScoreTest {
     double firstValue = 3.0;
 
     ScoreValue preCalculatedScoreValue = new ScoreValue(
-        new FirstScore(), firstValue, Confidence.MAX);
+        new FirstScore(), firstValue, Confidence.MAX, Collections.emptyList());
     ScoreValue scoreValue = score.calculate(preCalculatedScoreValue);
     assertNotNull(scoreValue);
 
@@ -224,6 +231,8 @@ public class WeightedCompositeScoreTest {
 
   private static class FirstScore extends AbstractScore {
 
+    private static final Feature<Double> FEATURE = new DoubleFeature("first feature");
+
     private static final double VALUE = 0.2;
 
     FirstScore() {
@@ -242,7 +251,7 @@ public class WeightedCompositeScoreTest {
 
     @Override
     public ScoreValue calculate(Value... values) {
-      return new ScoreValue(this, VALUE, Confidence.MAX);
+      return scoreValue(VALUE, values);
     }
 
     @Override
@@ -256,27 +265,19 @@ public class WeightedCompositeScoreTest {
     }
   }
 
-  private static class SecondScore extends AbstractScore {
+  private static class SecondScore extends FeatureBasedScore {
+
+    private static final Feature<Double> FEATURE = new DoubleFeature("second feature");
 
     private static final double VALUE = 0.5;
 
     SecondScore() {
-      super("Second score");
-    }
-
-    @Override
-    public Set<Feature> features() {
-      return Collections.emptySet();
-    }
-
-    @Override
-    public Set<Score> subScores() {
-      return Collections.emptySet();
+      super("Second score", FEATURE);
     }
 
     @Override
     public ScoreValue calculate(Value... values) {
-      return new ScoreValue(this, VALUE, Confidence.MAX);
+      return scoreValue(VALUE, values);
     }
 
     @Override

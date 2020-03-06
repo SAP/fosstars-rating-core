@@ -9,6 +9,7 @@ import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.Visitor;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -101,5 +102,18 @@ public abstract class AbstractScore implements Score {
     for (Score subScore : score.subScores()) {
       fillOutFeatures(subScore, allFeatures);
     }
+  }
+
+  /**
+   * Initializes a score value for the score.
+   * The method adjusts the specified score value so that it fits to the valid range [0, 10].
+   *
+   * @param value The score value.
+   * @param usedValues The values which were used to produce the score value.
+   * @return A new {@link ScoreValue}.
+   */
+  protected ScoreValue scoreValue(double value, Value... usedValues) {
+    return new ScoreValue(
+        this, Score.adjust(value), Confidence.make(usedValues), Arrays.asList(usedValues));
   }
 }

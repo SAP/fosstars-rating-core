@@ -41,53 +41,53 @@ public class ProjectPopularityScoreTest {
   @Test
   public void calculate() {
     assertScore(Score.MIN,
-        PROJECT_POPULARITY.calculate(
+        PROJECT_POPULARITY, setOf(
             UnknownValue.of(NUMBER_OF_GITHUB_STARS),
             UnknownValue.of(NUMBER_OF_WATCHERS_ON_GITHUB)));
 
     assertScore(Score.MIN,
-        PROJECT_POPULARITY.calculate(
+        PROJECT_POPULARITY, setOf(
             NUMBER_OF_GITHUB_STARS.value(0),
             NUMBER_OF_WATCHERS_ON_GITHUB.value(0)));
 
     assertScore(Score.MAX,
-        PROJECT_POPULARITY.calculate(
+        PROJECT_POPULARITY, setOf(
             NUMBER_OF_GITHUB_STARS.value(Integer.MAX_VALUE),
             NUMBER_OF_WATCHERS_ON_GITHUB.value(Integer.MAX_VALUE)));
 
     // no watchers
-    assertScore(0.001, PROJECT_POPULARITY.calculate(values(1, 0)), delta);
-    assertScore(0.010, PROJECT_POPULARITY.calculate(values(10, 0)), delta);
-    assertScore(0.100, PROJECT_POPULARITY.calculate(values(100, 0)), delta);
-    assertScore(1.000, PROJECT_POPULARITY.calculate(values(1000, 0)), delta);
-    assertScore(5.000, PROJECT_POPULARITY.calculate(values(5000, 0)), delta);
-    assertScore(Score.MAX, PROJECT_POPULARITY.calculate(values(10000, 0)), delta);
-    assertScore(Score.MAX, PROJECT_POPULARITY.calculate(values(15000, 0)), delta);
+    assertScore(0.001, PROJECT_POPULARITY, values(1, 0));
+    assertScore(0.010, PROJECT_POPULARITY, values(10, 0));
+    assertScore(0.100, PROJECT_POPULARITY, values(100, 0));
+    assertScore(1.000, PROJECT_POPULARITY, values(1000, 0));
+    assertScore(5.000, PROJECT_POPULARITY, values(5000, 0));
+    assertScore(Score.MAX, PROJECT_POPULARITY, values(10000, 0));
+    assertScore(Score.MAX, PROJECT_POPULARITY, values(15000, 0));
 
     // no stars
-    assertScore(0.003, PROJECT_POPULARITY.calculate(values(0, 1)), delta);
-    assertScore(0.033, PROJECT_POPULARITY.calculate(values(0, 10)), delta);
-    assertScore(0.333, PROJECT_POPULARITY.calculate(values(0, 100)), delta);
-    assertScore(3.333, PROJECT_POPULARITY.calculate(values(0, 1000)), delta);
-    assertScore(6.666, PROJECT_POPULARITY.calculate(values(0, 2000)), delta);
-    assertScore(8.333, PROJECT_POPULARITY.calculate(values(0, 2500)), delta);
-    assertScore(Score.MAX, PROJECT_POPULARITY.calculate(values(0, 3000)), delta);
-    assertScore(Score.MAX, PROJECT_POPULARITY.calculate(values(0, 5000)), delta);
+    assertScore(0.003, PROJECT_POPULARITY, values(0, 1));
+    assertScore(0.033, PROJECT_POPULARITY, values(0, 10));
+    assertScore(0.333, PROJECT_POPULARITY, values(0, 100));
+    assertScore(3.333, PROJECT_POPULARITY, values(0, 1000));
+    assertScore(6.666, PROJECT_POPULARITY, values(0, 2000));
+    assertScore(8.333, PROJECT_POPULARITY, values(0, 2500));
+    assertScore(Score.MAX, PROJECT_POPULARITY, values(0, 3000));
+    assertScore(Score.MAX, PROJECT_POPULARITY, values(0, 5000));
 
     // both stars and watchers
-    assertScore(0.133, PROJECT_POPULARITY.calculate(values(100, 10)), delta);
-    assertScore(1.100, PROJECT_POPULARITY.calculate(values(100, 300)), delta);
-    assertScore(2.666, PROJECT_POPULARITY.calculate(values(2000, 200)), delta);
-    assertScore(3.833, PROJECT_POPULARITY.calculate(values(500, 1000)), delta);
-    assertScore(4.000, PROJECT_POPULARITY.calculate(values(3000, 300)), delta);
-    assertScore(4.333, PROJECT_POPULARITY.calculate(values(1000, 1000)), delta);
-    assertScore(4.333, PROJECT_POPULARITY.calculate(values(1000, 1000)), delta);
-    assertScore(6.000, PROJECT_POPULARITY.calculate(values(5000, 300)), delta);
-    assertScore(6.000, PROJECT_POPULARITY.calculate(values(1000, 1500)), delta);
-    assertScore(8.333, PROJECT_POPULARITY.calculate(values(5000, 1000)), delta);
-    assertScore(8.666, PROJECT_POPULARITY.calculate(values(2000, 2000)), delta);
-    assertScore(Score.MAX, PROJECT_POPULARITY.calculate(values(5000, 4000)), delta);
-    assertScore(Score.MAX, PROJECT_POPULARITY.calculate(values(11000, 1000)), delta);
+    assertScore(0.133, PROJECT_POPULARITY, values(100, 10));
+    assertScore(1.100, PROJECT_POPULARITY, values(100, 300));
+    assertScore(2.666, PROJECT_POPULARITY, values(2000, 200));
+    assertScore(3.833, PROJECT_POPULARITY, values(500, 1000));
+    assertScore(4.000, PROJECT_POPULARITY, values(3000, 300));
+    assertScore(4.333, PROJECT_POPULARITY, values(1000, 1000));
+    assertScore(4.333, PROJECT_POPULARITY, values(1000, 1000));
+    assertScore(6.000, PROJECT_POPULARITY, values(5000, 300));
+    assertScore(6.000, PROJECT_POPULARITY, values(1000, 1500));
+    assertScore(8.333, PROJECT_POPULARITY, values(5000, 1000));
+    assertScore(8.666, PROJECT_POPULARITY, values(2000, 2000));
+    assertScore(Score.MAX, PROJECT_POPULARITY, values(5000, 4000));
+    assertScore(Score.MAX, PROJECT_POPULARITY, values(11000, 1000));
   }
 
   private static Set<Value> values(int stars, int watchers) {

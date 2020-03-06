@@ -4,16 +4,41 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.example.ExampleFeature
 import static com.sap.sgs.phosphor.fosstars.model.feature.example.ExampleFeatures.NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.findValue;
 
-import com.sap.sgs.phosphor.fosstars.model.Confidence;
+import com.sap.sgs.phosphor.fosstars.model.Interval;
 import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.math.DoubleInterval;
 import com.sap.sgs.phosphor.fosstars.model.score.FeatureBasedScore;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This is a sample score which represent a project activity. Only for demo purposes. The score is
  * based on NumberOfCommitsLastMonthExample and NumberOfContributorsLastMonthExample features.
  */
 public class ProjectActivityScoreExample extends FeatureBasedScore {
+
+  private static final Map<Interval, Double> NUMBER_OF_COMMITS_TO_POINTS = new HashMap<>();
+
+  static {
+    NUMBER_OF_COMMITS_TO_POINTS.put(
+        DoubleInterval.init().from(0).to(10).openLeft().closedRight().make(), 2.0);
+    NUMBER_OF_COMMITS_TO_POINTS.put(
+        DoubleInterval.init().from(10).to(30).openLeft().closedRight().make(), 3.0);
+    NUMBER_OF_COMMITS_TO_POINTS.put(
+        DoubleInterval.init().from(30).openLeft().positiveInfinity().make(), 5.0);
+  }
+
+  private static final Map<Interval, Double> NUMBER_OF_CONTRIBUTORS_TO_POINTS = new HashMap<>();
+
+  static {
+    NUMBER_OF_CONTRIBUTORS_TO_POINTS.put(
+        DoubleInterval.init().from(0).to(1).openLeft().closedRight().make(), 2.0);
+    NUMBER_OF_CONTRIBUTORS_TO_POINTS.put(
+        DoubleInterval.init().from(1).to(5).openLeft().closedRight().make(), 3.0);
+    NUMBER_OF_CONTRIBUTORS_TO_POINTS.put(
+        DoubleInterval.init().from(5).openLeft().positiveInfinity().make(), 5.0);
+  }
 
   ProjectActivityScoreExample() {
     super("Project activity score (example)",
@@ -22,20 +47,16 @@ public class ProjectActivityScoreExample extends FeatureBasedScore {
 
   @Override
   public ScoreValue calculate(Value... values) {
-    Value<Integer> numberOfCommitsLastMonth = findValue(values,
+    Value<Integer> numberOfCommitsLastMonthValue = findValue(values,
         NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE,
         "Couldn't find number of commits last month!");
-    Value<Integer> numberOfContributorsLastMonth = findValue(values,
+    Value<Integer> numberOfContributorsLastMonthValue = findValue(values,
         NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE,
         "Couldn't find number of contributors last month!");
 
-    return calculate(numberOfCommitsLastMonth.get(), numberOfContributorsLastMonth.get());
-  }
+    int numberOfCommitsLastMonth = numberOfCommitsLastMonthValue.get();
+    int numberOfContributorsLastMonth = numberOfContributorsLastMonthValue.get();
 
-  /**
-   * The score function.
-   */
-  private ScoreValue calculate(int numberOfCommitsLastMonth, int numberOfContributorsLastMonth) {
     if (numberOfCommitsLastMonth < 0) {
       throw new IllegalArgumentException("Number of commits can't be negative!");
     }
@@ -44,27 +65,21 @@ public class ProjectActivityScoreExample extends FeatureBasedScore {
           "Number of contributors can't be negative!");
     }
 
-    double score = 0.0;
-    if (numberOfCommitsLastMonth > 0 && numberOfCommitsLastMonth <= 10) {
-      score = 2.0;
+    double points = 0.0;
+    for (Map.Entry<Interval, Double> entry : NUMBER_OF_COMMITS_TO_POINTS.entrySet()) {
+      if (entry.getKey().contains(numberOfCommitsLastMonth)) {
+        points += entry.getValue();
+        break;
+      }
     }
-    if (numberOfCommitsLastMonth > 10 && numberOfCommitsLastMonth <= 30) {
-      score = 3.0;
-    }
-    if (numberOfCommitsLastMonth > 30) {
-      score = 5.0;
-    }
-    if (numberOfContributorsLastMonth > 0 && numberOfContributorsLastMonth <= 1) {
-      score += 2.0;
-    }
-    if (numberOfContributorsLastMonth > 1 && numberOfContributorsLastMonth <= 5) {
-      score += 3.0;
-    }
-    if (numberOfContributorsLastMonth > 5) {
-      score += 5.0;
+    for (Map.Entry<Interval, Double> entry : NUMBER_OF_CONTRIBUTORS_TO_POINTS.entrySet()) {
+      if (entry.getKey().contains(numberOfContributorsLastMonth)) {
+        points += entry.getValue();
+        break;
+      }
     }
 
-    return new ScoreValue(this, score, Confidence.MAX);
+    return scoreValue(points, numberOfCommitsLastMonthValue, numberOfContributorsLastMonthValue);
   }
 
 }

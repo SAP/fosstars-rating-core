@@ -4,8 +4,6 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SECURITY_REVIEWS_DONE;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.findValue;
 
-import com.sap.sgs.phosphor.fosstars.model.Confidence;
-import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
@@ -49,10 +47,7 @@ public class ProjectSecurityTestingScore extends FeatureBasedScore {
       points += 3.0;
     }
 
-    return new ScoreValue(
-        this,
-        Score.adjust(points),
-        Confidence.make(reviews, dependenciesScanned));
+    return scoreValue(points, reviews, dependenciesScanned);
   }
 
   /**

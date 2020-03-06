@@ -7,10 +7,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 /**
- * The class holds a score produced by {@link Score}.
+ * The class holds a score value produced by {@link Score}.
  */
 public class ScoreValue implements Value<Double>, Confidence {
 
@@ -30,31 +34,50 @@ public class ScoreValue implements Value<Double>, Confidence {
   private double confidence;
 
   /**
+   * A list of values which were used to build the score value.
+   */
+  private final List<Value> usedValues;
+
+  /**
    * Initializes a score value for a specified score.
    *
    * @param score The score.
    */
   public ScoreValue(Score score) {
-    this(score, Score.MIN, Confidence.MIN);
+    this(score, Score.MIN, Confidence.MIN, Collections.emptyList());
   }
 
   /**
-   * Initializes a score value for a specified score and confidence.
+   * Initializes a score value for a specified score.
    *
    * @param score The score.
    * @param value The score value.
    * @param confidence The confidence.
+   * @param usedValues The values which were used to produce the score value.
+   */
+  public ScoreValue(Score score, double value, double confidence, Value... usedValues) {
+    this(score, value, confidence, Arrays.asList(usedValues));
+  }
+
+  /**
+   * Initializes a score value for a specified score.
+   *
+   * @param score The score.
+   * @param value The score value.
+   * @param confidence The confidence.
+   * @param usedValues A list of values which were used to produce the score value.
    */
   @JsonCreator
   public ScoreValue(
       @JsonProperty("score") Score score,
       @JsonProperty("value") double value,
-      @JsonProperty("confidence") double confidence) {
+      @JsonProperty("confidence") double confidence,
+      @JsonProperty("usedValues") List<Value> usedValues) {
 
-    Objects.requireNonNull(score, "Score can't be null!");
-    this.score = score;
+    this.score = Objects.requireNonNull(score, "Score can't be null!");
     this.value = Score.check(value);
     this.confidence = Confidence.check(confidence);
+    this.usedValues = new ArrayList<>(Objects.requireNonNull(usedValues, "Values can't be null!"));
   }
 
   @Override
@@ -73,6 +96,23 @@ public class ScoreValue implements Value<Double>, Confidence {
   @JsonGetter("value")
   public Double get() {
     return value;
+  }
+
+  @JsonGetter("usedValues")
+  public List<Value> usedValues() {
+    return usedValues;
+  }
+
+  /**
+   * Add a number of values to the list of used values.
+   *
+   * @param values The values to be added.
+   * @return The same score value.
+   */
+  public ScoreValue usedValues(Value... values) {
+    Objects.requireNonNull(values, "Hey! Values can't be null!");
+    this.usedValues.addAll(Arrays.asList(values));
+    return this;
   }
 
   @Override
@@ -154,11 +194,12 @@ public class ScoreValue implements Value<Double>, Confidence {
     ScoreValue that = (ScoreValue) o;
     return Double.compare(that.value, value) == 0
         && Double.compare(that.confidence, confidence) == 0
-        && Objects.equals(score, that.score);
+        && Objects.equals(score, that.score)
+        && Objects.equals(usedValues, that.usedValues);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(score, value, confidence);
+    return Objects.hash(score, value, confidence, usedValues);
   }
 }

@@ -4,7 +4,6 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.findValue;
 
-import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
@@ -66,12 +65,7 @@ public class ProjectActivityScore extends FeatureBasedScore {
 
     check(n, m);
 
-    double score = commitsScore(n) + contributorsScore(m);
-    if (score > MAX) {
-      score = MAX;
-    }
-
-    return new ScoreValue(this, score, Confidence.make(n, m));
+    return scoreValue(commitsPoints(n) + contributorsPoints(m), n, m);
   }
 
   /**
@@ -80,7 +74,7 @@ public class ProjectActivityScore extends FeatureBasedScore {
    * @param numberOfCommits The number of commits.
    * @return The sub-score.
    */
-  private double commitsScore(Value<Integer> numberOfCommits) {
+  private double commitsPoints(Value<Integer> numberOfCommits) {
     if (numberOfCommits.isUnknown()) {
       return 0;
     }
@@ -103,7 +97,7 @@ public class ProjectActivityScore extends FeatureBasedScore {
    * @param numberOfContributors The number of contributors.
    * @return The sub-score value.
    */
-  private double contributorsScore(Value<Integer> numberOfContributors) {
+  private double contributorsPoints(Value<Integer> numberOfContributors) {
     if (numberOfContributors.isUnknown()) {
       return 0;
     }

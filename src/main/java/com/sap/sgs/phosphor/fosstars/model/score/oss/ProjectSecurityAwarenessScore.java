@@ -4,8 +4,6 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SE
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_TEAM;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.findValue;
 
-import com.sap.sgs.phosphor.fosstars.model.Confidence;
-import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
@@ -41,7 +39,6 @@ public class ProjectSecurityAwarenessScore extends FeatureBasedScore {
         "Hey! You have to tell me if the project has a security team!");
 
     double points = 0.0;
-
     if (!securityAdvisories.isUnknown() && securityAdvisories.get().equals(true)) {
       points += 5.0;
     }
@@ -49,10 +46,7 @@ public class ProjectSecurityAwarenessScore extends FeatureBasedScore {
       points += 8.0;
     }
 
-    return new ScoreValue(
-        this,
-        Score.adjust(points),
-        Confidence.make(securityAdvisories, securityTeam));
+    return scoreValue(points, securityAdvisories, securityTeam);
   }
 
   /**

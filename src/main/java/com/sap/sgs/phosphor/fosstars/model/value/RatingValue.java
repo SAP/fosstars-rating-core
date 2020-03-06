@@ -7,6 +7,7 @@ import java.util.Objects;
 
 /**
  * The class holds a rating value produced by {@link Rating}.
+ * TODO: RatingValue should implement the Value interface.
  */
 public class RatingValue implements Confidence {
 
@@ -53,6 +54,13 @@ public class RatingValue implements Confidence {
    */
   public Label label() {
     return label;
+  }
+
+  /**
+   * Returns the score value.
+   */
+  public ScoreValue scoreValue() {
+    return scoreValue;
   }
 
   @Override

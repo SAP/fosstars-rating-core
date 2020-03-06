@@ -4,7 +4,6 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.example.ExampleFeature
 import static com.sap.sgs.phosphor.fosstars.model.feature.example.ExampleFeatures.STATIC_CODE_ANALYSIS_DONE_EXAMPLE;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.findValue;
 
-import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.score.FeatureBasedScore;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
@@ -27,21 +26,14 @@ public class SecurityTestingScoreExample extends FeatureBasedScore {
     Value<Boolean> staticCodeAnalysisDone = findValue(values, STATIC_CODE_ANALYSIS_DONE_EXAMPLE,
         "Couldn't find static code analysis status!");
 
-    return calculate(securityReviewDone.get(), staticCodeAnalysisDone.get());
-  }
-
-  /**
-   * The score function.
-   */
-  private ScoreValue calculate(boolean securityReviewDone, boolean staticCodeAnalysisDone) {
-    double score = 0.0;
-    if (securityReviewDone) {
-      score = 5.0;
+    double points = 0.0;
+    if (securityReviewDone.get()) {
+      points = 5.0;
     }
-    if (staticCodeAnalysisDone) {
-      score += 5.0;
+    if (staticCodeAnalysisDone.get()) {
+      points += 5.0;
     }
-    return new ScoreValue(this, score, Confidence.MAX);
+    return scoreValue(points, securityReviewDone, staticCodeAnalysisDone);
   }
 
 }

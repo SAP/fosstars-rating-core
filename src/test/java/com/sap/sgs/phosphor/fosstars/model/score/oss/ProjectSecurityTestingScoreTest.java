@@ -3,6 +3,7 @@ package com.sap.sgs.phosphor.fosstars.model.score.oss;
 import static com.sap.sgs.phosphor.fosstars.TestUtils.assertScore;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SECURITY_REVIEWS_DONE;
+import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
 
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.value.SecurityReview;
@@ -34,27 +35,27 @@ public class ProjectSecurityTestingScoreTest {
     SecurityReviews oneReview = new SecurityReviews(review);
 
     assertScore(Score.MIN,
-        PROJECT_SECURITY_TESTING.calculate(
+        PROJECT_SECURITY_TESTING, setOf(
             SECURITY_REVIEWS_DONE.unknown(),
             SCANS_FOR_VULNERABLE_DEPENDENCIES.unknown()));
 
     assertScore(Score.MIN,
-        PROJECT_SECURITY_TESTING.calculate(
+        PROJECT_SECURITY_TESTING, setOf(
             SECURITY_REVIEWS_DONE.value(SecurityReviews.NO_REVIEWS),
             SCANS_FOR_VULNERABLE_DEPENDENCIES.value(false)));
 
     assertScore(7.0,
-        PROJECT_SECURITY_TESTING.calculate(
+        PROJECT_SECURITY_TESTING, setOf(
             SECURITY_REVIEWS_DONE.value(oneReview),
             SCANS_FOR_VULNERABLE_DEPENDENCIES.value(false)));
 
     assertScore(3.0,
-        PROJECT_SECURITY_TESTING.calculate(
+        PROJECT_SECURITY_TESTING, setOf(
             SECURITY_REVIEWS_DONE.value(SecurityReviews.NO_REVIEWS),
             SCANS_FOR_VULNERABLE_DEPENDENCIES.value(true)));
 
     assertScore(Score.MAX,
-        PROJECT_SECURITY_TESTING.calculate(
+        PROJECT_SECURITY_TESTING, setOf(
             SECURITY_REVIEWS_DONE.value(oneReview),
             SCANS_FOR_VULNERABLE_DEPENDENCIES.value(true)));
   }
