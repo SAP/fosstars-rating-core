@@ -85,7 +85,7 @@ public interface Confidence {
       return MAX;
     }
 
-    return (MAX * unknown) / values.length;
+    return MAX * (values.length - unknown) / values.length;
   }
 
 }
