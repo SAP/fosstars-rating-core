@@ -16,7 +16,6 @@ import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.model.weight.ImmutableWeight;
 import com.sap.sgs.phosphor.fosstars.model.weight.MutableWeight;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -117,11 +116,13 @@ public class WeightedCompositeScore extends AbstractScore implements Tunable {
     double weightSum = 0.0;
     double scoreSum = 0.0;
     double confidenceSum = 0.0;
+    ScoreValue scoreValue = new ScoreValue(this);
     for (WeightedScore weightedScore : weightedScores) {
       double weight = weightedScore.weight.value();
-      ScoreValue scoreValue = calculateIfNecessary(weightedScore.score, valueSet);
-      scoreSum += weight * scoreValue.get();
-      confidenceSum += weight * scoreValue.confidence();
+      ScoreValue subScoreValue = calculateIfNecessary(weightedScore.score, valueSet);
+      scoreValue.usedValues(subScoreValue);
+      scoreSum += weight * subScoreValue.get();
+      confidenceSum += weight * subScoreValue.confidence();
       weightSum += weight;
     }
 
@@ -129,11 +130,10 @@ public class WeightedCompositeScore extends AbstractScore implements Tunable {
       throw new IllegalArgumentException("Oh no! Looks like all weights are zero!");
     }
 
-    return new ScoreValue(
-        this,
-        Score.adjust(scoreSum / weightSum),
-        Confidence.adjust(confidenceSum / weightSum),
-        Arrays.asList(values));
+    scoreValue.set(Score.adjust(scoreSum / weightSum));
+    scoreValue.confidence(Confidence.adjust(confidenceSum / weightSum));
+
+    return scoreValue;
   }
 
   @Override
