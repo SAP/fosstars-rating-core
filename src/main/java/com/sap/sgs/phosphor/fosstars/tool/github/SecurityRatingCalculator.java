@@ -24,9 +24,7 @@ import com.sap.sgs.phosphor.fosstars.data.github.UnpatchedVulnerabilities;
 import com.sap.sgs.phosphor.fosstars.data.github.UsesOwaspDependencyCheck;
 import com.sap.sgs.phosphor.fosstars.data.github.UsesSnykDependencyCheck;
 import com.sap.sgs.phosphor.fosstars.data.github.VulnerabilitiesFromNvd;
-import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
-import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating;
@@ -35,6 +33,7 @@ import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.sgs.phosphor.fosstars.model.value.VulnerabilitiesValue;
 import com.sap.sgs.phosphor.fosstars.tool.InputString;
+import com.sap.sgs.phosphor.fosstars.tool.PrettyPrinter;
 import com.sap.sgs.phosphor.fosstars.tool.YesNoQuestion;
 import com.sap.sgs.phosphor.fosstars.tool.YesNoQuestion.Answer;
 import java.io.IOException;
@@ -147,11 +146,7 @@ public class SecurityRatingCalculator {
     }
 
     RatingValue ratingValue = rating.calculate(values);
-
-    System.out.printf("[+] Rating: %2.2f out of %2.2f, %s%n",
-        ratingValue.score(), Score.MAX, ratingValue.label());
-    System.out.printf("[+] Confidence: %2.2f out of %2.2f%n",
-        ratingValue.confidence(), Confidence.MAX);
+    System.out.print(new PrettyPrinter().print(ratingValue));
     System.out.printf("[+] Bye!%n");
 
     // store the default value cache
