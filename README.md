@@ -46,82 +46,114 @@ mvn clean install
 
 There is a command line tool which takes a URL to a project on GitHub, fetches data about it,
 and calculates a security rating.
-The tool can interact with a user to get more data about the project.
 
 The tool can be run with a command like the following:
 
 ```
-java -jar target/fosstars-github-rating-calc.jar --token ${TOKEN} --url https://github.com/apache/poi
+java -jar target/fosstars-github-rating-calc.jar --token ${TOKEN} --url https://github.com/apache/poi --no-questions
 ```
 
 The `TOKEN` variable contains a token for accessing the GitHub API.
 You can create a personal token in the
 [settings/tokens](https://github.com/settings/tokens) tab in your profile on GitHub.
 
-The tool is a bit interactive, and can ask several question. The dialog looks like the following:
+The output is going to look like the following:
 
 ```
 [+] Project: https://github.com/apache/poi
-[+] Let's get info about the project and calculate a rating
-[?] Are you aware about any unpatched vulnerability in the project? (yes/no)
->>> no
-Downloading files at Wed Oct 23 13:35:52 CEST 2019
-Using local NVD cache as last update was within two hours
+[+] Let's get info about the project and calculate a security rating
+[+] Counting how many commits have been done in the last three months ...
+[+] Counting how many people contributed to the project in the last three months ...
+[+] Counting how many stars the project has ...
+[+] Counting how many watchers the project has ...
+[+] Figuring out when the first commit was done ...
+[+] Figuring out when the project started ...
+[+] Figuring out if the project has a security team ...
+[+] Figuring out if the project is supported by a company ...
+[+] Figuring out if the project has a security policy ...
+[+] Figuring out if any security review has been done for the project ...
+[+] Figuring out if the project has any unpatched vulnerability ...
+[+] Looking for vulnerabilities in NVD ...
+[+] Figuring out if the project belongs to the Apache Software Foundation ...
+[+] Figuring out if the project belongs to the Eclipse Software Foundation ...
+[+] Figuring out if the project uses OWASP Dependency Check ...
 [+] Here is what we know about the project:
 [+]    If an open-source project belongs to Eclipse Foundation: false
 [+]    If an open-source project is regularly scanned for vulnerable dependencies: false
 [+]    If an open-source project has a security team: true
 [+]    Number of watchers for a GitHub repository: 78
-[+]    Number of contributors last three months: 4
+[+]    Number of contributors in the last three months: 5
 [+]    If an open-source project has a security policy: false
 [+]    Info about vulnerabilities in open-source project: 8 vulnerabilities
-[+]    Security reviews for an OSS project: 0 security reviews
-[+]    Number of stars for a GitHub repository: 861
+[+]    Number of stars for a GitHub repository: 923
 [+]    When first commit was done: Thu Jan 31 03:22:28 CET 2002
-[+]    Number of commits last three months: 91
+[+]    Number of commits in the last three months: 143
+[+]    Security reviews for an open-source project: 0 security reviews
 [+]    When a project started: Thu Jan 31 03:22:28 CET 2002
 [+]    If an open-source project belongs to Apache Foundation: true
 [+]    If an open-source project is supported by a company: false
-[+] Rating: 5.92 out of 10.00, OKAY
+[+] Rating: 5.43 out of 10.00 -> OKAY
 [+] Confidence: 10.00 out of 10.00
+[+] Here is how the rating was calculated:
+[+]   Score:........Security score for open-source projects
+[+]   Value:........5.43  out of 10.00
+[+]   Confidence:...10.00 out of 10.00
+[+]   Based on:.....7 sub-scores:
+[+]       Score:........How well open-source community commits to support an open-source project
+[+]       Value:........7.00  out of 10.00
+[+]       Confidence:...10.00 out of 10.00
+[+]         Based on:...3 features:
+[+]           If an open-source project is supported by a company:.......false
+[+]           If an open-source project belongs to Apache Foundation:....true
+[+]           If an open-source project belongs to Eclipse Foundation:...false
+[+]
+[+]       Score:........Open-source project activity score
+[+]       Value:........9.07  out of 10.00
+[+]       Confidence:...10.00 out of 10.00
+[+]         Based on:...2 features:
+[+]           Number of commits in the last three months:........143
+[+]           Number of contributors in the last three months:...5
+[+]
+[+]       Score:........How well vulnerabilities are patched
+[+]       Value:........10.00 out of 10.00
+[+]       Confidence:...10.00 out of 10.00
+[+]         Based on:...1 features:
+[+]           Info about vulnerabilities in open-source project:...8 vulnerabilities
+[+]
+[+]       Score:........How well security testing is done for an open-source project
+[+]       Value:........0.00  out of 10.00
+[+]       Confidence:...10.00 out of 10.00
+[+]         Based on:...2 features:
+[+]           Security reviews for an open-source project:..................................0 security reviews
+[+]           If an open-source project is regularly scanned for vulnerable dependencies:...false
+[+]
+[+]       Score:........How fast vulnerabilities are patched
+[+]       Value:........7.17  out of 10.00
+[+]       Confidence:...10.00 out of 10.00
+[+]         Based on:...3 features:
+[+]           Info about vulnerabilities in open-source project:...8 vulnerabilities
+[+]           When a project started:..............................Thu Jan 31 03:22:28 CET 2002
+[+]           When first commit was done:..........................Thu Jan 31 03:22:28 CET 2002
+[+]
+[+]       Score:........How well open-source community is aware about security
+[+]       Value:........8.00  out of 10.00
+[+]       Confidence:...10.00 out of 10.00
+[+]         Based on:...2 features:
+[+]           If an open-source project has a security policy:...false
+[+]           If an open-source project has a security team:.....true
+[+]
+[+]       Score:........Open-source project popularity score
+[+]       Value:........1.18  out of 10.00
+[+]       Confidence:...10.00 out of 10.00
+[+]         Based on:...2 features:
+[+]           Number of stars for a GitHub repository:......923
+[+]           Number of watchers for a GitHub repository:...78
+[+]
 [+] Bye!
 ```
 
-A user can ask the tool to be silent by passing `--no-questions`.
-Then, the tool is going to use only data which may be collected automatically.
-Here is an example:
-
-```
-java -jar target/fosstars-github-rating-calc.jar --token ${TOKEN} --no-questions \
-        --url https://github.com/apache/poi
-```
-
-The output looks like the following:
-
-```
-[+] Project: https://github.com/apache/poi
-[+] Let's get info about the project and calculate a rating
-Downloading files at Wed Oct 23 13:41:21 CEST 2019
-Using local NVD cache as last update was within two hours
-[+] Here is what we know about the project:
-[+]    If an open-source project belongs to Eclipse Foundation: false
-[+]    If an open-source project is regularly scanned for vulnerable dependencies: false
-[+]    If an open-source project has a security team: true
-[+]    Number of watchers for a GitHub repository: 78
-[+]    Number of contributors last three months: 4
-[+]    If an open-source project has a security policy: false
-[+]    Info about vulnerabilities in open-source project: 8 vulnerabilities
-[+]    Security reviews for an OSS project: 0 security reviews
-[+]    Number of stars for a GitHub repository: 861
-[+]    When first commit was done: Thu Jan 31 03:22:28 CET 2002
-[+]    Number of commits last three months: 91
-[+]    When a project started: Thu Jan 31 03:22:28 CET 2002
-[+]    If an open-source project belongs to Apache Foundation: true
-[+]    If an open-source project is supported by a company: false
-[+] Rating: 5.92 out of 10.00, OKAY
-[+] Confidence: 10.00 out of 10.00
-[+] Bye!
-```
+If no `--no-questions` option is specified, the tool becomes a bit interactive,
+and may ask the user a couple of questions.
 
 ## Known issues
 
