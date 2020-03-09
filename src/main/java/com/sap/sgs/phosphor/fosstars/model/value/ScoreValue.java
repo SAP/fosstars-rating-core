@@ -80,10 +80,14 @@ public class ScoreValue implements Value<Double>, Confidence {
     this.usedValues = new ArrayList<>(Objects.requireNonNull(usedValues, "Values can't be null!"));
   }
 
-  @Override
   @JsonGetter("score")
-  public Score feature() {
+  public Score score() {
     return score;
+  }
+
+  @Override
+  public Score feature() {
+    return score();
   }
 
   @Override
@@ -120,6 +124,17 @@ public class ScoreValue implements Value<Double>, Confidence {
     if (!isUnknown()) {
       processor.process(get());
     }
+    return this;
+  }
+
+  /**
+   * Set a value.
+   *
+   * @param value The value.
+   * @return The same score value.
+   */
+  public ScoreValue set(double value) {
+    this.value = Score.check(value);
     return this;
   }
 

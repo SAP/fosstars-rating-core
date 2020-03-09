@@ -1,7 +1,5 @@
 package com.sap.sgs.phosphor.fosstars.model.score;
 
-import static com.sap.sgs.phosphor.fosstars.TestUtils.assertScore;
-import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -43,12 +41,28 @@ public class WeightedCompositeScoreTest {
     Value<Double> firstValue = FirstScore.FEATURE.value(FirstScore.VALUE);
     Value<Double> secondValue = SecondScore.FEATURE.value(SecondScore.VALUE);
 
-    double weightedFirstScore = 0.8 * new FirstScore().calculate(firstValue).get();
-    double weightedSecondScore = 0.3 * new SecondScore().calculate(secondValue).get();
+    double firstScoreValue = new FirstScore().calculate(firstValue).get();
+    double secondScoreValue = new SecondScore().calculate(secondValue).get();
+    double weightedFirstScore = 0.8 * firstScoreValue;
+    double weightedSecondScore = 0.3 * secondScoreValue;
     double weightSum = 0.8 + 0.3;
     double expectedScore = (weightedFirstScore + weightedSecondScore) / weightSum;
 
-    assertScore(expectedScore, score, setOf(firstValue, secondValue));
+    ScoreValue scoreValue = score.calculate(firstValue, secondValue);
+    assertEquals(expectedScore, scoreValue.get(), 0.01);
+    assertEquals(Confidence.MAX, scoreValue.confidence(), 0.01);
+    assertEquals(2, scoreValue.usedValues().size());
+    for (Value value : scoreValue.usedValues()) {
+      if (value.feature() instanceof FirstScore) {
+        assertEquals(firstScoreValue, value.get());
+        continue;
+      }
+      if (value.feature() instanceof SecondScore) {
+        assertEquals(secondScoreValue, value.get());
+        continue;
+      }
+      fail("Unexpected score: " + value.feature().name());
+    }
   }
 
   @Test
