@@ -164,9 +164,17 @@ public class WeightedCompositeScoreTest {
     double secondValue = 2.0;
 
     ScoreValue firstPreCalculatedScoreValue = new ScoreValue(
-        new FirstScore(), firstValue, Confidence.MAX, Collections.emptyList());
+        new FirstScore(),
+        firstValue,
+        WeightedScoreImpl.FIRST_WEIGHT,
+        Confidence.MAX,
+        Collections.emptyList());
     ScoreValue secondPreCalculatedScoreValue = new ScoreValue(
-        new SecondScore(), secondValue, Confidence.MAX, Collections.emptyList());
+        new SecondScore(),
+        secondValue,
+        WeightedScoreImpl.SECOND_WEIGHT,
+        Confidence.MAX,
+        Collections.emptyList());
     ScoreValue scoreValue = score.calculate(
         firstPreCalculatedScoreValue, secondPreCalculatedScoreValue);
     assertNotNull(scoreValue);
@@ -186,7 +194,11 @@ public class WeightedCompositeScoreTest {
     double firstValue = 3.0;
 
     ScoreValue preCalculatedScoreValue = new ScoreValue(
-        new FirstScore(), firstValue, Confidence.MAX, Collections.emptyList());
+        new FirstScore(),
+        firstValue,
+        WeightedScoreImpl.FIRST_WEIGHT,
+        Confidence.MAX,
+        Collections.emptyList());
     ScoreValue scoreValue = score.calculate(preCalculatedScoreValue);
     assertNotNull(scoreValue);
 

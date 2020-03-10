@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.Weight;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -34,6 +35,11 @@ public class ScoreValue implements Value<Double>, Confidence {
   private double confidence;
 
   /**
+   * A weight of the score.
+   */
+  private double weight;
+
+  /**
    * A list of values which were used to build the score value.
    */
   private final List<Value> usedValues;
@@ -44,19 +50,7 @@ public class ScoreValue implements Value<Double>, Confidence {
    * @param score The score.
    */
   public ScoreValue(Score score) {
-    this(score, Score.MIN, Confidence.MIN, Collections.emptyList());
-  }
-
-  /**
-   * Initializes a score value for a specified score.
-   *
-   * @param score The score.
-   * @param value The score value.
-   * @param confidence The confidence.
-   * @param usedValues The values which were used to produce the score value.
-   */
-  public ScoreValue(Score score, double value, double confidence, Value... usedValues) {
-    this(score, value, confidence, Arrays.asList(usedValues));
+    this(score, Score.MIN, Weight.MAX, Confidence.MIN, Collections.emptyList());
   }
 
   /**
@@ -71,11 +65,13 @@ public class ScoreValue implements Value<Double>, Confidence {
   public ScoreValue(
       @JsonProperty("score") Score score,
       @JsonProperty("value") double value,
+      @JsonProperty("weight") double weight,
       @JsonProperty("confidence") double confidence,
       @JsonProperty("usedValues") List<Value> usedValues) {
 
     this.score = Objects.requireNonNull(score, "Score can't be null!");
     this.value = Score.check(value);
+    this.weight = Weight.check(weight);
     this.confidence = Confidence.check(confidence);
     this.usedValues = new ArrayList<>(Objects.requireNonNull(usedValues, "Values can't be null!"));
   }
@@ -102,6 +98,9 @@ public class ScoreValue implements Value<Double>, Confidence {
     return value;
   }
 
+  /**
+   * Returns a list of values which were used to calculate the score value.
+   */
   @JsonGetter("usedValues")
   public List<Value> usedValues() {
     return usedValues;
@@ -116,6 +115,26 @@ public class ScoreValue implements Value<Double>, Confidence {
   public ScoreValue usedValues(Value... values) {
     Objects.requireNonNull(values, "Hey! Values can't be null!");
     this.usedValues.addAll(Arrays.asList(values));
+    return this;
+  }
+
+  /**
+   * Returns the weight of the score value.
+   */
+  @JsonGetter("weight")
+  public Double weight() {
+    return weight;
+  }
+
+  /**
+   * Sets a weight.
+   *
+   * @param value The weight to be set.
+   * @return The same score value.
+   * @throws IllegalArgumentException If the weight is incorrect.
+   */
+  public ScoreValue weight(double value) {
+    this.weight = Weight.check(value);
     return this;
   }
 
@@ -208,6 +227,7 @@ public class ScoreValue implements Value<Double>, Confidence {
     }
     ScoreValue that = (ScoreValue) o;
     return Double.compare(that.value, value) == 0
+        && Double.compare(that.weight, weight) == 0
         && Double.compare(that.confidence, confidence) == 0
         && Objects.equals(score, that.score)
         && Objects.equals(usedValues, that.usedValues);
@@ -215,6 +235,6 @@ public class ScoreValue implements Value<Double>, Confidence {
 
   @Override
   public int hashCode() {
-    return Objects.hash(score, value, confidence, usedValues);
+    return Objects.hash(score, value, weight, confidence, usedValues);
   }
 }

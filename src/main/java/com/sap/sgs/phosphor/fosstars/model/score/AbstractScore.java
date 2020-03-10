@@ -7,6 +7,7 @@ import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.Visitor;
+import com.sap.sgs.phosphor.fosstars.model.Weight;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
 import java.util.Arrays;
@@ -65,7 +66,8 @@ public abstract class AbstractScore implements Score {
 
   @Override
   public Value<Double> value(Double n) {
-    return new ScoreValue(this, Score.check(n), Confidence.MAX);
+    return new ScoreValue(
+        this, Score.check(n), Weight.MAX, Confidence.MAX, Collections.emptyList());
   }
 
   @Override
@@ -114,6 +116,10 @@ public abstract class AbstractScore implements Score {
    */
   protected ScoreValue scoreValue(double value, Value... usedValues) {
     return new ScoreValue(
-        this, Score.adjust(value), Confidence.make(usedValues), Arrays.asList(usedValues));
+        this,
+        Score.adjust(value),
+        Weight.MAX,
+        Confidence.make(usedValues),
+        Arrays.asList(usedValues));
   }
 }
