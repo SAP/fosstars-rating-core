@@ -1,12 +1,23 @@
 package com.sap.sgs.phosphor.fosstars.tool;
 
 import com.sap.sgs.phosphor.fosstars.model.Confidence;
+import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
+import com.sap.sgs.phosphor.fosstars.model.score.oss.CommunityCommitmentScore;
+import com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectActivityScore;
+import com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectPopularityScore;
+import com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectSecurityAwarenessScore;
+import com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectSecurityTestingScore;
+import com.sap.sgs.phosphor.fosstars.model.score.oss.UnpatchedVulnerabilitiesScore;
+import com.sap.sgs.phosphor.fosstars.model.score.oss.VulnerabilityLifetimeScore;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The class print a pretty rating value.
@@ -16,9 +27,42 @@ public class PrettyPrinter {
   private static final String INDENT_STEP = "  ";
 
   /**
-   * Print a formatted rating value.
+   * Maps a class of feature to its shorter name which should be used in output.
+   */
+  private static final Map<Class, String> FEATURE_CLASS_TO_NAME = new HashMap<>();
+
+  static {
+    FEATURE_CLASS_TO_NAME.put(CommunityCommitmentScore.class, "Community commitment");
+    FEATURE_CLASS_TO_NAME.put(ProjectActivityScore.class, "Project activity");
+    FEATURE_CLASS_TO_NAME.put(ProjectPopularityScore.class, "Project popularity");
+    FEATURE_CLASS_TO_NAME.put(ProjectSecurityAwarenessScore.class, "Security awareness");
+    FEATURE_CLASS_TO_NAME.put(ProjectSecurityTestingScore.class, "Security testing");
+    FEATURE_CLASS_TO_NAME.put(UnpatchedVulnerabilitiesScore.class, "Unpatched vulnerabilities");
+    FEATURE_CLASS_TO_NAME.put(VulnerabilityLifetimeScore.class, "Vulnerability lifetime");
+  }
+
+  /**
+   * Maps a feature to its shorter name which should be used in output.
+   */
+  private static final Map<Feature, String> FEATURE_TO_NAME = new HashMap<>();
+
+  static {
+    FEATURE_TO_NAME.put(OssFeatures.HAS_SECURITY_TEAM, "Does it have a security team?");
+    FEATURE_TO_NAME.put(OssFeatures.HAS_SECURITY_POLICY, "Does it have a security policy?");
+    FEATURE_TO_NAME.put(OssFeatures.VULNERABILITIES, "Info about vulnerabilities");
+    FEATURE_TO_NAME.put(OssFeatures.SECURITY_REVIEWS_DONE, "Security reviews");
+    FEATURE_TO_NAME.put(OssFeatures.IS_APACHE, "Does it belong to Apache?");
+    FEATURE_TO_NAME.put(OssFeatures.IS_ECLIPSE, "Does it belong to Eclipse?");
+    FEATURE_TO_NAME.put(OssFeatures.SUPPORTED_BY_COMPANY, "Is it supported by a company?");
+    FEATURE_TO_NAME.put(
+        OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES, "Does it scan for vulnerable dependencies?");
+  }
+
+  /**
+   * Print out a formatted rating value.
    *
    * @param ratingValue The rating value to be printed.
+   * @return A string to be displayed.
    */
   public String print(RatingValue ratingValue) {
     StringBuilder sb = new StringBuilder();
@@ -31,9 +75,16 @@ public class PrettyPrinter {
     return sb.toString();
   }
 
+  /**
+   * Print out a formatted score value with a specified indent.
+   *
+   * @param scoreValue The score value to be printed.
+   * @param indent The indent.
+   * @return A string to be displayed.
+   */
   private String print(ScoreValue scoreValue, String indent) {
     StringBuilder sb = new StringBuilder();
-    sb.append(String.format("[+] %sScore:........%s%n", indent, scoreValue.score().name()));
+    sb.append(String.format("[+] %sSub-score:....%s%n", indent, nameOf(scoreValue.score())));
 
     sb.append(String.format("[+] %sValue:........%s out of %2.2f%n",
         indent,
@@ -65,34 +116,65 @@ public class PrettyPrinter {
 
     if (!featureValues.isEmpty()) {
       sb.append(String.format("[+] %s  Based on:...%d features:%n", indent, featureValues.size()));
-      int maxLength = maxFeatureNameLength(featureValues) + 3;
+      Map<String, Object> nameToValue = new HashMap<>();
+      int maxLength = 0;
       for (Value usedValue : featureValues) {
+        String name = nameOf(usedValue.feature());
+        nameToValue.put(name, usedValue.get());
+        if (maxLength < name.length()) {
+          maxLength = name.length();
+        }
+      }
+      for (Map.Entry<String, Object> entry : nameToValue.entrySet()) {
+        String name = entry.getKey();
+        name += name.endsWith("?") ? "." : ":";
         sb.append(String.format("[+] %s  %s%s%n",
-            indent + INDENT_STEP, append(usedValue.feature().name() + ":", '.', maxLength),
-            usedValue.get()));
+            indent + INDENT_STEP,
+            append(name, '.', maxLength + 3),
+            entry.getValue()));
       }
     }
 
     return sb.toString();
   }
 
-  private static int maxFeatureNameLength(List<Value> featureValues) {
-    int maxLength = 0;
-    for (Value usedValue : featureValues) {
-      int length = usedValue.feature().name().length();
-      if (length > maxLength) {
-        maxLength = length;
-      }
-    }
-    return maxLength;
-  }
-
+  /**
+   * Adds a number of specified characters to the end of a string
+   * to make it fit to the specified length.
+   *
+   * @param string The original string.
+   * @param c The character to be appended.
+   * @param length The final length of the string.
+   * @return A string with appended characters
+   *         if the length of the original string is less than the specified length,
+   *         otherwise the original string.
+   */
   private static String append(String string, char c, int length) {
     StringBuilder sb = new StringBuilder(string);
     while (sb.length() <= length) {
       sb.append(c);
     }
     return sb.toString();
+  }
+
+  /**
+   * Figures out how a name of a feature should be printed out.
+   *
+   * @param feature The feature.
+   * @return A name of the feature.
+   */
+  static String nameOf(Feature feature) {
+    for (Map.Entry<Class, String> entry : FEATURE_CLASS_TO_NAME.entrySet()) {
+      if (feature.getClass() == entry.getKey()) {
+        return entry.getValue();
+      }
+    }
+    for (Map.Entry<Feature, String> entry : FEATURE_TO_NAME.entrySet()) {
+      if (feature.equals(entry.getKey())) {
+        return entry.getValue();
+      }
+    }
+    return feature.name();
   }
 
 }

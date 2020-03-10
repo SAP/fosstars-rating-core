@@ -60,10 +60,10 @@ public class PrettyPrinterTest {
     assertFalse(text.isEmpty());
     System.out.println(text);
     for (Value value : ratingValue.scoreValue().usedValues()) {
-      assertTrue(text.contains(value.feature().name()));
+      assertTrue(text.contains(PrettyPrinter.nameOf(value.feature())));
     }
     for (Feature feature : rating.allFeatures()) {
-      assertTrue(text.contains(feature.name()));
+      assertTrue(text.contains(PrettyPrinter.nameOf(feature)));
     }
   }
 }
