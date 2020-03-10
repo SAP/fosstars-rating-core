@@ -4,8 +4,10 @@ import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.Weight;
 import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.CommunityCommitmentScore;
+import com.sap.sgs.phosphor.fosstars.model.score.oss.OssSecurityScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectActivityScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectPopularityScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectSecurityAwarenessScore;
@@ -32,6 +34,7 @@ public class PrettyPrinter {
   private static final Map<Class, String> FEATURE_CLASS_TO_NAME = new HashMap<>();
 
   static {
+    FEATURE_CLASS_TO_NAME.put(OssSecurityScore.class, "Security of project");
     FEATURE_CLASS_TO_NAME.put(CommunityCommitmentScore.class, "Community commitment");
     FEATURE_CLASS_TO_NAME.put(ProjectActivityScore.class, "Project activity");
     FEATURE_CLASS_TO_NAME.put(ProjectPopularityScore.class, "Project popularity");
@@ -71,7 +74,7 @@ public class PrettyPrinter {
     sb.append(String.format("[+] Confidence: %2.2f out of %2.2f%n",
         ratingValue.confidence(), Confidence.MAX));
     sb.append(String.format("[+] Here is how the rating was calculated:%n"));
-    sb.append(print(ratingValue.scoreValue(), INDENT_STEP));
+    sb.append(print(ratingValue.scoreValue(), INDENT_STEP, true));
     return sb.toString();
   }
 
@@ -82,9 +85,16 @@ public class PrettyPrinter {
    * @param indent The indent.
    * @return A string to be displayed.
    */
-  private String print(ScoreValue scoreValue, String indent) {
+  private String print(ScoreValue scoreValue, String indent, boolean isMainScore) {
     StringBuilder sb = new StringBuilder();
-    sb.append(String.format("[+] %sSub-score:....%s%n", indent, nameOf(scoreValue.score())));
+
+    if (!isMainScore) {
+      sb.append(String.format("[+] %sSub-score:....%s%n", indent, nameOf(scoreValue.score())));
+      sb.append(String.format("[+] %sImportance:...%s (weight %2.2f out of %2.2f)%n",
+          indent, importance(scoreValue.weight()), scoreValue.weight(), Weight.MAX));
+    } else {
+      sb.append(String.format("[+] %sScore:........%s%n", indent, nameOf(scoreValue.score())));
+    }
 
     sb.append(String.format("[+] %sValue:........%s out of %2.2f%n",
         indent,
@@ -109,7 +119,7 @@ public class PrettyPrinter {
       sb.append(String.format(
           "[+] %sBased on:.....%d sub-scores:%n", indent, subScoreValues.size()));
       for (ScoreValue usedValue : subScoreValues) {
-        sb.append(print(usedValue, indent + INDENT_STEP + INDENT_STEP));
+        sb.append(print(usedValue, indent + INDENT_STEP + INDENT_STEP, false));
         sb.append("[+]\n");
       }
     }
@@ -175,6 +185,22 @@ public class PrettyPrinter {
       }
     }
     return feature.name();
+  }
+
+  /**
+   * Returns a human-readable label for a weight.
+   *
+   * @param weight The weight.
+   * @return A human-readable label.
+   */
+  private static String importance(double weight) {
+    if (weight < 0.3) {
+      return "Low";
+    }
+    if (weight < 0.66) {
+      return "Medium";
+    }
+    return "High";
   }
 
 }

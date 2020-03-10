@@ -65,5 +65,9 @@ public class PrettyPrinterTest {
     for (Feature feature : rating.allFeatures()) {
       assertTrue(text.contains(PrettyPrinter.nameOf(feature)));
     }
+    assertTrue(text.contains("Value"));
+    assertTrue(text.contains("Confidence"));
+    assertTrue(text.contains("Importance"));
+    assertTrue(text.contains("Based on"));
   }
 }
