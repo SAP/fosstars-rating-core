@@ -42,7 +42,7 @@ public class ScoreValueTest {
   @Test
   public void decrease() {
     ScoreValue value = new ScoreValue(
-        PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.0, 10.0, Collections.emptyList());
+        PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.0, 1.0, 10.0, Collections.emptyList());
     assertEquals(5.0, value.get(), ACCURACY);
     value.decrease(2.3);
     assertEquals(2.7, value.get(), ACCURACY);
@@ -60,7 +60,7 @@ public class ScoreValueTest {
   @Test
   public void confidence() {
     ScoreValue value = new ScoreValue(
-        PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.0, 10.0, Collections.emptyList());
+        PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.0, 1.0, 10.0, Collections.emptyList());
     assertEquals(10.0, value.confidence(), ACCURACY);
     value.confidence(5.1);
     assertEquals(5.1, value.confidence(), ACCURACY);
@@ -73,7 +73,7 @@ public class ScoreValueTest {
         NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE.value(3));
 
     ScoreValue scoreValue = new ScoreValue(
-        PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.0, 10.0, usedValues);
+        PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.0, 1.0, 10.0, usedValues);
 
     assertNotNull(scoreValue.usedValues());
     assertEquals(2, scoreValue.usedValues().size());
@@ -86,31 +86,61 @@ public class ScoreValueTest {
   }
 
   @Test
+  public void weight() {
+    ScoreValue value = new ScoreValue(
+        PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.0, 0.7, 10.0, Collections.emptyList());
+    assertEquals(0.7, value.weight(), 0.01);
+    value.weight(0.42);
+    assertEquals(0.42, value.weight(), 0.01);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void negativeWeight() {
+    new ScoreValue(
+        PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.0, 0.7, 10.0, Collections.emptyList())
+        .weight(-1);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void zeroWeight() {
+    new ScoreValue(
+        PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.0, 0.7, 10.0, Collections.emptyList())
+        .weight(0.0);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void tooBigWeight() {
+    new ScoreValue(
+        PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.0, 0.7, 10.0, Collections.emptyList())
+        .weight(1.1);
+  }
+
+  @Test
   public void equalsAndHashCode() {
     List<Value> usedValues = Arrays.asList(
         NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE.value(10),
         NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE.value(3));
 
     ScoreValue one = new ScoreValue(
-        PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.0, 10.0, usedValues);
+        PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.0, 1.0, 10.0, usedValues);
 
     ScoreValue two = new ScoreValue(
-        PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.0, 10.0, usedValues);
+        PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.0, 1.0, 10.0, usedValues);
     assertEquals(one, two);
     assertEquals(one.hashCode(), two.hashCode());
 
     ScoreValue three = new ScoreValue(
-        PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.1, 10.0, usedValues);
+        PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.1, 1.0, 10.0, usedValues);
     assertNotEquals(one, three);
     assertNotEquals(one.hashCode(), three.hashCode());
 
     ScoreValue four = new ScoreValue(
-        PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.0, 9.0, usedValues);
+        PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.0, 1.0, 9.0, usedValues);
     assertNotEquals(one, four);
     assertNotEquals(one.hashCode(), four.hashCode());
 
     ScoreValue five = new ScoreValue(
-        PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.0, 10.0, Collections.emptyList());
+        PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.0, 1.0, 10.0, Collections.emptyList());
     assertNotEquals(one, five);
     assertNotEquals(one.hashCode(), five.hashCode());
   }
@@ -123,7 +153,7 @@ public class ScoreValueTest {
 
     ObjectMapper mapper = new ObjectMapper();
     ScoreValue value = new ScoreValue(
-        PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.1, 7.2, usedValues);
+        PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.1, 1.0, 7.2, usedValues);
     byte[] bytes = mapper.writeValueAsBytes(value);
     assertNotNull(bytes);
     assertTrue(bytes.length > 0);

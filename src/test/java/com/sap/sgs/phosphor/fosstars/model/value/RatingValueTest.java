@@ -14,7 +14,7 @@ public class RatingValueTest {
   @Test
   public void smokeTest() {
     ScoreValue scoreValue = new ScoreValue(
-        PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.1, 9.0, Collections.emptyList());
+        PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.1, 0.8, 9.0, Collections.emptyList());
     RatingValue ratingValue = new RatingValue(scoreValue, SecurityLabelExample.OKAY);
     assertEquals(scoreValue.get(), ratingValue.score(), 0.01);
     assertEquals(9.0, ratingValue.confidence(), 0.01);
@@ -24,9 +24,9 @@ public class RatingValueTest {
   @Test
   public void equalsAndHashCode() {
     ScoreValue scoreValue = new ScoreValue(
-        PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.1, 9.0, Collections.emptyList());
+        PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.1, 0.8, 9.0, Collections.emptyList());
     ScoreValue scoreValueClone = new ScoreValue(
-        PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.1, 9.0, Collections.emptyList());
+        PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.1, 0.8, 9.0, Collections.emptyList());
     assertEquals(scoreValue, scoreValueClone);
     assertEquals(scoreValue.hashCode(), scoreValueClone.hashCode());
 
@@ -35,9 +35,9 @@ public class RatingValueTest {
     assertEquals(ratingValue, ratingValueClone);
 
     ScoreValue[] scoreValues = {
-        new ScoreValue(SECURITY_TESTING_SCORE_EXAMPLE, 5.1, 9.0, Collections.emptyList()),
-        new ScoreValue(PROJECT_ACTIVITY_SCORE_EXAMPLE, 4.1, 9.0, Collections.emptyList()),
-        new ScoreValue(PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.1, 7.0, Collections.emptyList())
+        new ScoreValue(SECURITY_TESTING_SCORE_EXAMPLE, 5.1, 0.8, 9.0, Collections.emptyList()),
+        new ScoreValue(PROJECT_ACTIVITY_SCORE_EXAMPLE, 4.1, 0.8, 9.0, Collections.emptyList()),
+        new ScoreValue(PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.1, 0.8, 7.0, Collections.emptyList())
     };
 
     for (ScoreValue anotherScoreValue : scoreValues) {
