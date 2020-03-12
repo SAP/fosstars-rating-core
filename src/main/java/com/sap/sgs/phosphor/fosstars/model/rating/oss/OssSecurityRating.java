@@ -15,7 +15,7 @@ import com.sap.sgs.phosphor.fosstars.model.score.oss.OssSecurityScore;
 public class OssSecurityRating extends AbstractRating {
 
   public enum SecurityLabel implements Label {
-    BAD, OKAY, GOOD
+    BAD, MODERATE, GOOD
   }
 
   /**
@@ -46,7 +46,7 @@ public class OssSecurityRating extends AbstractRating {
     }
 
     if (score < 8.0) {
-      return SecurityLabel.OKAY;
+      return SecurityLabel.MODERATE;
     }
 
     return SecurityLabel.GOOD;
