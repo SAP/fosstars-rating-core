@@ -100,22 +100,15 @@ The output is going to look like the following:
 [+]   Value:........5.42  out of 10.00
 [+]   Confidence:...10.00 out of 10.00
 [+]   Based on:.....7 sub-scores:
-[+]       Sub-score:....Unpatched vulnerabilities
-[+]       Importance:...Medium (weight 0.40 out of 1.00)
-[+]       Value:........10.00 out of 10.00
+[+]       Sub-score:....Security testing
+[+]       Importance:...High (weight 0.95 out of 1.00)
+[+]       Value:........0.00  out of 10.00
 [+]       Confidence:...10.00 out of 10.00
-[+]       Based on:...1 features:
-[+]           Info about vulnerabilities:...8 vulnerabilities
-[+]       Explanation:..No unpatched vulnerabilities found which is good
-[+]
-[+]       Sub-score:....Community commitment
-[+]       Importance:...High (weight 0.73 out of 1.00)
-[+]       Value:........7.00  out of 10.00
-[+]       Confidence:...10.00 out of 10.00
-[+]       Based on:...3 features:
-[+]           Is it supported by a company?....false
-[+]           Does it belong to Eclipse?.......false
-[+]           Does it belong to Apache?........true
+[+]       Based on:...2 features:
+[+]           Does it scan for vulnerable dependencies?....false
+[+]           Security reviews:............................0 security reviews
+[+]       Explanation:..If the project had security reviews, the score would be higher (+7.00)
+[+]                     If the project scanned dependencies, the score would be higher (+3.00)
 [+]
 [+]       Sub-score:....Project activity
 [+]       Description:..The score is based on number of commits and contributors.
@@ -130,17 +123,6 @@ The output is going to look like the following:
 [+]           Number of commits last three months:........139
 [+]           Number of contributors last three months:...5
 [+]
-[+]       Sub-score:....Security awareness
-[+]       Description:..The score checks if a project has a security policy and a security team.
-[+]                     If the project has a security policy, then the score adds 5.00.
-[+]                     If the project has a security team, then the score adds 8.00.
-[+]       Importance:...Medium (weight 0.54 out of 1.00)
-[+]       Value:........8.00  out of 10.00
-[+]       Confidence:...10.00 out of 10.00
-[+]       Based on:...2 features:
-[+]           Does it have a security team?......true
-[+]           Does it have a security policy?....false
-[+]
 [+]       Sub-score:....Project popularity
 [+]       Description:..The score is based on number of stars and watchers.
 [+]                     Here is how a number of stars contributes to the score:
@@ -154,24 +136,42 @@ The output is going to look like the following:
 [+]           Number of stars for a GitHub repository:......924
 [+]           Number of watchers for a GitHub repository:...78
 [+]
+[+]       Sub-score:....Community commitment
+[+]       Importance:...High (weight 0.73 out of 1.00)
+[+]       Value:........7.00  out of 10.00
+[+]       Confidence:...10.00 out of 10.00
+[+]       Based on:...3 features:
+[+]           Does it belong to Apache?........true
+[+]           Does it belong to Eclipse?.......false
+[+]           Is it supported by a company?....false
+[+]
 [+]       Sub-score:....Vulnerability lifetime
 [+]       Importance:...Medium (weight 0.59 out of 1.00)
 [+]       Value:........7.17  out of 10.00
 [+]       Confidence:...10.00 out of 10.00
 [+]       Based on:...3 features:
-[+]           When first commit was done:...Thu Jan 31 03:22:28 CET 2002
 [+]           Info about vulnerabilities:...8 vulnerabilities
 [+]           When a project started:.......Thu Jan 31 03:22:28 CET 2002
+[+]           When first commit was done:...Thu Jan 31 03:22:28 CET 2002
 [+]
-[+]       Sub-score:....Security testing
-[+]       Importance:...High (weight 0.95 out of 1.00)
-[+]       Value:........0.00  out of 10.00
+[+]       Sub-score:....Security awareness
+[+]       Description:..The score checks if a project has a security policy and a security team.
+[+]                     If the project has a security policy, then the score adds 5.00.
+[+]                     If the project has a security team, then the score adds 8.00.
+[+]       Importance:...Medium (weight 0.54 out of 1.00)
+[+]       Value:........8.00  out of 10.00
 [+]       Confidence:...10.00 out of 10.00
 [+]       Based on:...2 features:
-[+]           Does it scan for vulnerable dependencies?....false
-[+]           Security reviews:............................0 security reviews
-[+]       Explanation:..If the project had security reviews, the score would be higher (+7.00)
-[+]                     If the project scanned dependencies, the score would be higher (+3.00)
+[+]           Does it have a security policy?....false
+[+]           Does it have a security team?......true
+[+]
+[+]       Sub-score:....Unpatched vulnerabilities
+[+]       Importance:...Medium (weight 0.40 out of 1.00)
+[+]       Value:........10.00 out of 10.00
+[+]       Confidence:...10.00 out of 10.00
+[+]       Based on:...1 features:
+[+]           Info about vulnerabilities:...8 vulnerabilities
+[+]       Explanation:..No unpatched vulnerabilities found which is good
 [+]
 [+] Bye!
 ```
