@@ -17,10 +17,13 @@ import com.sap.sgs.phosphor.fosstars.model.score.oss.VulnerabilityLifetimeScore;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * The class print a pretty rating value.
@@ -129,6 +132,10 @@ public class PrettyPrinter {
     }
 
     if (!subScoreValues.isEmpty()) {
+
+      // sort the sub-score values by their importance
+      subScoreValues.sort(Collections.reverseOrder(Comparator.comparingDouble(ScoreValue::weight)));
+
       sb.append(String.format(
           "[+] %sBased on:.....%d sub-scores:%n", indent, subScoreValues.size()));
       for (ScoreValue usedValue : subScoreValues) {
@@ -139,7 +146,7 @@ public class PrettyPrinter {
 
     if (!featureValues.isEmpty()) {
       sb.append(String.format("[+] %sBased on:...%d features:%n", indent, featureValues.size()));
-      Map<String, Object> nameToValue = new HashMap<>();
+      Map<String, Object> nameToValue = new TreeMap<>(String::compareTo);
       int maxLength = 0;
       for (Value usedValue : featureValues) {
         String name = nameOf(usedValue.feature());
