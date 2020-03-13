@@ -57,6 +57,13 @@ public final class UnknownValue<T> implements Value<T> {
   }
 
   @Override
+  public Value<T> processIfUnknown(Runnable processor) {
+    Objects.requireNonNull(processor, "Processor can't be null!");
+    processor.run();
+    return this;
+  }
+
+  @Override
   public boolean equals(Object o) {
     if (this == o) {
       return true;

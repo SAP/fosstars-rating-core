@@ -55,14 +55,17 @@ public class AbstractValueTest {
     value.processIfKnown(object -> {
       assertEquals("test", object);
       processedValues.add(object);
-    });
+    }).processIfUnknown(() -> fail("This should not be called!"));
 
     Value unknown = new FeatureImpl("feature").unknown();
     unknown.processIfKnown(object -> {
       fail("this should not be reached");
+    }).processIfUnknown(() -> {
+      processedValues.add("unknown");
     });
 
-    assertEquals(1, processedValues.size());
+    assertEquals(2, processedValues.size());
     assertEquals("test", processedValues.get(0));
+    assertEquals("unknown", processedValues.get(1));
   }
 }

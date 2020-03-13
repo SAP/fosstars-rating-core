@@ -140,8 +140,18 @@ public class ScoreValue implements Value<Double>, Confidence {
 
   @Override
   public Value<Double> processIfKnown(Processor<Double> processor) {
+    Objects.requireNonNull(processor, "Processor can't be null!");
     if (!isUnknown()) {
       processor.process(get());
+    }
+    return this;
+  }
+
+  @Override
+  public Value<Double> processIfUnknown(Runnable processor) {
+    Objects.requireNonNull(processor, "Processor can't be null!");
+    if (isUnknown()) {
+      processor.run();
     }
     return this;
   }

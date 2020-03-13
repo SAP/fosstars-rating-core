@@ -41,8 +41,18 @@ public abstract class AbstractValue<T> implements Value<T> {
 
   @Override
   public Value<T> processIfKnown(Processor<T> processor) {
+    Objects.requireNonNull(processor, "Processor can't be null!");
     if (!isUnknown()) {
       processor.process(get());
+    }
+    return this;
+  }
+
+  @Override
+  public Value<T> processIfUnknown(Runnable processor) {
+    Objects.requireNonNull(processor, "Processor can't be null!");
+    if (isUnknown()) {
+      processor.run();
     }
     return this;
   }
