@@ -62,8 +62,8 @@ The output is going to look like the following:
 ```
 [+] Project: https://github.com/apache/poi
 [+] Let's get info about the project and calculate a security rating
-[+] Counting how many commits have been done last three months ...
-[+] Counting how many people contributed to the project last three months ...
+[+] Counting how many commits have been done in the last three months ...
+[+] Counting how many people contributed to the project in the last three months ...
 [+] Counting how many stars the project has ...
 [+] Counting how many watchers the project has ...
 [+] Figuring out when the first commit was done ...
@@ -82,14 +82,14 @@ The output is going to look like the following:
 [+]    If an open-source project is regularly scanned for vulnerable dependencies: false
 [+]    If an open-source project has a security team: true
 [+]    Number of watchers for a GitHub repository: 78
-[+]    Number of contributors last three months: 5
 [+]    If an open-source project has a security policy: false
 [+]    Info about vulnerabilities in open-source project: 8 vulnerabilities
 [+]    Number of stars for a GitHub repository: 924
 [+]    When first commit was done: Thu Jan 31 03:22:28 CET 2002
-[+]    Number of commits last three months: 139
+[+]    Number of contributors in the last three months: 5
 [+]    When a project started: Thu Jan 31 03:22:28 CET 2002
 [+]    Security reviews for an open-source project: 0 security reviews
+[+]    Number of commits in the last three months: 139
 [+]    If an open-source project belongs to Apache Foundation: true
 [+]    If an open-source project is supported by a company: false
 [+] Rating: 5.42 out of 10.00 -> MODERATE
@@ -120,8 +120,8 @@ The output is going to look like the following:
 [+]       Value:........9.04  out of 10.00
 [+]       Confidence:...10.00 out of 10.00
 [+]       Based on:...2 features:
-[+]           Number of commits last three months:........139
-[+]           Number of contributors last three months:...5
+[+]           Number of commits in the last three months:........139
+[+]           Number of contributors in the last three months:...5
 [+]
 [+]       Sub-score:....Project popularity
 [+]       Description:..The score is based on number of stars and watchers.

@@ -1,4 +1,4 @@
-,alias,score_from,score_to,label,Number of contributors last three months,Number of commits last three months
+,alias,score_from,score_to,label,Number of contributors in the last three months,Number of commits in the last three months
 0,test_vector_0,0.0,0.1,,unknown,unknown
 1,test_vector_1,0.0,0.5,,0,0
 2,test_vector_2,0.0,3.0,,1,5

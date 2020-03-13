@@ -18,15 +18,16 @@ import org.apache.commons.math3.analysis.function.Logistic;
 /**
  * The project activity score is currently based on two features:
  * <ul>
- *  <li>number of commits last three months</li>
- *  <li>number of contributors last three months</li>
+ *  <li>number of commits in the last three months</li>
+ *  <li>number of contributors in the last three months</li>
  * </ul>
  * The score uses the logistic function to transform the numbers to a score value.
  */
 public class ProjectActivityScore extends FeatureBasedScore {
 
   /**
-   * y(n) = 7.1 / (1 + e ^ (0.04 * (50 - n))) , where n is a number of commits last three months.
+   * y(n) = 7.1 / (1 + e ^ (0.04 * (50 - n))),
+   * where n is a number of commits in the last three months.
    * y(n) belongs to the interval (0.8, 7.1) when n > 0
    * Number of commits can contribute up to 7 to the overall project activity score.
    */
@@ -34,7 +35,8 @@ public class ProjectActivityScore extends FeatureBasedScore {
       = new Logistic(7.1, 50, 0.04, 1, 0, 1);
 
   /**
-   * y(m) = 3.1 / (1 + e ^ (0.2 * (1 - m))) , where m is a number of contributors last three months.
+   * y(m) = 3.1 / (1 + e ^ (0.2 * (1 - m))),
+   * where m is a number of contributors in the last three months.
    * y(m) belongs to the interval (1.3, 3.1) when m > 0
    * Number of contributors can contribute up to 3 to the overall project activity score.
    */

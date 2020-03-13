@@ -25,16 +25,16 @@ public class OssFeatures {
   }
 
   /**
-   * Shows how many commits have been integrated last three months.
+   * Shows how many commits have been integrated in the last three months.
    */
   public static final Feature<Integer> NUMBER_OF_COMMITS_LAST_THREE_MONTHS
-      = new PositiveIntegerFeature("Number of commits last three months");
+      = new PositiveIntegerFeature("Number of commits in the last three months");
 
   /**
-   * Shows how many people contributed to an open-source project last three months.
+   * Shows how many people contributed to an open-source project in the last three months.
    */
   public static final Feature<Integer> NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS
-      = new PositiveIntegerFeature("Number of contributors last three months");
+      = new PositiveIntegerFeature("Number of contributors in the last three months");
 
   /**
    * Shows when the latest version of an open-source project was released.

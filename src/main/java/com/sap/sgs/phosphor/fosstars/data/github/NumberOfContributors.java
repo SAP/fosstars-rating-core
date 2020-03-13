@@ -43,7 +43,7 @@ public class NumberOfContributors extends AbstractGitHubDataProvider {
   public NumberOfContributors update(ValueSet values) throws IOException {
     Objects.requireNonNull(values, "Hey! Values can't be null!");
     System.out.println(
-        "[+] Counting how many people contributed to the project last three months ...");
+        "[+] Counting how many people contributed to the project in the last three months ...");
 
     Optional<Value> something = cache().get(url, NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS);
     if (something.isPresent()) {
