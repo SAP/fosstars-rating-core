@@ -56,6 +56,7 @@ public class PrettyPrinterTest {
 
     PrettyPrinter printer = new PrettyPrinter();
     String text = printer.print(ratingValue);
+
     assertNotNull(text);
     assertFalse(text.isEmpty());
     System.out.println(text);
@@ -69,5 +70,6 @@ public class PrettyPrinterTest {
     assertTrue(text.contains("Confidence"));
     assertTrue(text.contains("Importance"));
     assertTrue(text.contains("Based on"));
+    assertTrue(text.contains("Description"));
   }
 }
