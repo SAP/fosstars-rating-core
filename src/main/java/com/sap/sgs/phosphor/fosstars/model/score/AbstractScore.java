@@ -1,6 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.model.score;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Score;
@@ -21,10 +22,18 @@ import java.util.Set;
  */
 public abstract class AbstractScore implements Score {
 
+  static final String EMPTY_DESCRIPTION = "";
+
   /**
    * Score name.
    */
   private final String name;
+
+  /**
+   * Description.
+   */
+  @JsonIgnore
+  private final String description;
 
   /**
    * Initializes a new score.
@@ -32,14 +41,34 @@ public abstract class AbstractScore implements Score {
    * @param name A name of the score.
    */
   AbstractScore(String name) {
+    this(name, EMPTY_DESCRIPTION);
+  }
+
+  /**
+   * Initializes a new score.
+   *
+   * @param name A name of the score.
+   * @param description A description of the score (may be empty).
+   */
+  AbstractScore(String name, String description) {
     Objects.requireNonNull(name, "Hey! Score name can't be null!");
+    Objects.requireNonNull(description, "Hey! Score description can't be null!");
+    if (name.isEmpty()) {
+      throw new IllegalArgumentException("Hey! Score name can't be empty!");
+    }
     this.name = name;
+    this.description = description;
   }
 
   @Override
   @JsonGetter("name")
   public final String name() {
     return name;
+  }
+
+  @Override
+  public String description() {
+    return description;
   }
 
   @Override
@@ -91,12 +120,12 @@ public abstract class AbstractScore implements Score {
       return false;
     }
     AbstractScore that = (AbstractScore) o;
-    return Objects.equals(name, that.name);
+    return Objects.equals(name, that.name) && Objects.equals(description, this.description);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(name);
+    return Objects.hash(name, description);
   }
 
   private static void fillOutFeatures(Score score, Set<Feature> allFeatures) {

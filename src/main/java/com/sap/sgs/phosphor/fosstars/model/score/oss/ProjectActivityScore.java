@@ -4,8 +4,8 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.findValue;
 
-import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.math.MathHelper;
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
 import com.sap.sgs.phosphor.fosstars.model.score.FeatureBasedScore;
@@ -26,7 +26,7 @@ import org.apache.commons.math3.analysis.function.Logistic;
 public class ProjectActivityScore extends FeatureBasedScore {
 
   /**
-   * y(n) = 7.1 / (1 + e ^ (0.04 * (50 - x))) , where n is a number of commits last three months.
+   * y(n) = 7.1 / (1 + e ^ (0.04 * (50 - n))) , where n is a number of commits last three months.
    * y(n) belongs to the interval (0.8, 7.1) when n > 0
    * Number of commits can contribute up to 7 to the overall project activity score.
    */
@@ -41,19 +41,38 @@ public class ProjectActivityScore extends FeatureBasedScore {
   static final Logistic LOGISTIC_FOR_NUMBER_OF_CONTRIBUTORS
       = new Logistic(3.1, 1, 0.2, 1, 0, 1);
 
-  /**
-   * A list of features which are used in the score.
-   */
-  private static final Feature[] FEATURES = {
-      NUMBER_OF_COMMITS_LAST_THREE_MONTHS,
-      NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS
-  };
+  private static final String DESCRIPTION;
+
+  static {
+    StringBuilder sb = new StringBuilder();
+
+    sb.append("The score is based on number of commits and contributors.\n");
+    sb.append("Here is how a number of commits contributes to the score:\n");
+    sb.append(String.format("%d -> %2.2f (min), ", 0, LOGISTIC_FOR_NUMBER_OF_COMMITS.value(0)));
+    sb.append(String.format("%d -> %2.2f, %d -> %2.2f, ",
+        MathHelper.invert(LOGISTIC_FOR_NUMBER_OF_COMMITS, 0, 1000, 2.5, 0.01), 0.25,
+        MathHelper.invert(LOGISTIC_FOR_NUMBER_OF_COMMITS, 0, 1000, 5.0, 0.01), 5.0));
+    sb.append(String.format("%d -> %2.2f (max)", 500, LOGISTIC_FOR_NUMBER_OF_COMMITS.value(500)));
+
+    sb.append("\n");
+    sb.append("Here is how a number of contributors contributes to the score:\n");
+    sb.append(String.format("%d -> %2.2f (min), ",
+        0, LOGISTIC_FOR_NUMBER_OF_CONTRIBUTORS.value(0)));
+    sb.append(String.format("%d -> %2.2f, %d -> %2.2f, ",
+        MathHelper.invert(LOGISTIC_FOR_NUMBER_OF_CONTRIBUTORS, 0, 50, 1.5, 0.01), 1.5,
+        MathHelper.invert(LOGISTIC_FOR_NUMBER_OF_CONTRIBUTORS, 0, 100, 2.5, 0.01), 2.5));
+    sb.append(String.format("%d -> %2.2f (max)",
+        500, LOGISTIC_FOR_NUMBER_OF_CONTRIBUTORS.value(500)));
+
+    DESCRIPTION = sb.toString();
+  }
 
   /**
    * Initializes a new score.
    */
   ProjectActivityScore() {
-    super("Open-source project activity score", FEATURES);
+    super("Open-source project activity score", DESCRIPTION,
+        NUMBER_OF_COMMITS_LAST_THREE_MONTHS, NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS);
   }
 
   @Override

@@ -15,14 +15,41 @@ import java.util.Set;
  */
 public abstract class FeatureBasedScore extends AbstractScore {
 
+  /**
+   * A set of features which are used in the score.
+   */
   private final Set<Feature> features;
 
+  /**
+   * Initializes a feature-based score with an empty description.
+   *
+   * @param name A name of the score.
+   * @param features A number of features which are used in the score.
+   */
   public FeatureBasedScore(String name, Feature... features) {
-    this(name, setOf("You gave me a duplicate feature!", features));
+    this(name, EMPTY_DESCRIPTION, setOf("You gave me a duplicate feature!", features));
   }
 
-  public FeatureBasedScore(String name, Set<Feature> features) {
-    super(name);
+  /**
+   * Initializes a feature-based score.
+   *
+   * @param name A name of the score.
+   * @param description A description of the score (may be empty).
+   * @param features A number of features which are used in the score.
+   */
+  public FeatureBasedScore(String name, String description, Feature... features) {
+    this(name, description, setOf("You gave me a duplicate feature!", features));
+  }
+
+  /**
+   * Initializes a feature-based score.
+   *
+   * @param name A name of the score.
+   * @param description A description of the score (may be empty).
+   * @param features A set of features which are used in the score.
+   */
+  public FeatureBasedScore(String name, String description, Set<Feature> features) {
+    super(name, description);
     this.features = Collections.unmodifiableSet(features);
   }
 

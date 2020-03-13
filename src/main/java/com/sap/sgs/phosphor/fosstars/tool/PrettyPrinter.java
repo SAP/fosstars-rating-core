@@ -73,6 +73,7 @@ public class PrettyPrinter {
         ratingValue.score(), Score.MAX, ratingValue.label()));
     sb.append(String.format("[+] Confidence: %2.2f out of %2.2f%n",
         ratingValue.confidence(), Confidence.MAX));
+    sb.append("[+]\n");
     sb.append(String.format("[+] Here is how the rating was calculated:%n"));
     sb.append(print(ratingValue.scoreValue(), INDENT_STEP, true));
     return sb.toString();
@@ -90,10 +91,21 @@ public class PrettyPrinter {
 
     if (!isMainScore) {
       sb.append(String.format("[+] %sSub-score:....%s%n", indent, nameOf(scoreValue.score())));
-      sb.append(String.format("[+] %sImportance:...%s (weight %2.2f out of %2.2f)%n",
-          indent, importance(scoreValue.weight()), scoreValue.weight(), Weight.MAX));
     } else {
       sb.append(String.format("[+] %sScore:........%s%n", indent, nameOf(scoreValue.score())));
+    }
+
+    if (!scoreValue.score().description().isEmpty()) {
+      String[] lines = scoreValue.score().description().split("\n");
+      sb.append(String.format("[+] %sDescription:..%s%n", indent, lines[0]));
+      for (int i = 1; i < lines.length; i++) {
+        sb.append(String.format("[+] %s              %s%n", indent, lines[i]));
+      }
+    }
+
+    if (!isMainScore) {
+      sb.append(String.format("[+] %sImportance:...%s (weight %2.2f out of %2.2f)%n",
+          indent, importance(scoreValue.weight()), scoreValue.weight(), Weight.MAX));
     }
 
     sb.append(String.format("[+] %sValue:........%s out of %2.2f%n",
