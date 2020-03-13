@@ -49,7 +49,7 @@ import org.kohsuke.github.GitHub;
 public class SecurityRatingCalculator {
 
   private static final String USAGE =
-      "java -jar fosstars-model.jar [options]";
+      "java -jar fosstars-github-rating-calc.jar [options]";
 
   /**
    * Entry point.

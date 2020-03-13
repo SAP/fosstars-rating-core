@@ -44,8 +44,12 @@ public class UnpatchedVulnerabilitiesScore extends FeatureBasedScore {
    */
   private static final double LOW_SEVERITY_PENALTY = 1.0;
 
+  private static final String EXPLANATION_TEMPLATE =
+      "Found %d unpatched vulnerabilities with %s severity "
+          + "which decreased the score on %2.2f (%d * %2.2f)";
+
   /**
-   * Default constructor.
+   * Initializes a new score.
    */
   UnpatchedVulnerabilitiesScore() {
     super("How well vulnerabilities are patched", VULNERABILITIES);
@@ -60,9 +64,9 @@ public class UnpatchedVulnerabilitiesScore extends FeatureBasedScore {
       return scoreValue(Score.MIN, vulnerabilities);
     }
 
-    int highSeverity = 0;
-    int mediumSeverity = 0;
-    int lowSeverity = 0;
+    int highSeverityIssues = 0;
+    int mediumSeverityIssues = 0;
+    int lowSeverityIssues = 0;
 
     // TODO: should confidence depend on a number of vulnerabilities with unknown resolution?
     for (Vulnerability entry : vulnerabilities.get().entries()) {
@@ -74,21 +78,44 @@ public class UnpatchedVulnerabilitiesScore extends FeatureBasedScore {
       double value = cvss.isUnknown() ? DEFAULT_CVSS : cvss.value();
 
       if (value >= 7.0) {
-        highSeverity++;
+        highSeverityIssues++;
       } else if (value >= 4) {
-        mediumSeverity++;
+        mediumSeverityIssues++;
       } else {
-        lowSeverity++;
+        lowSeverityIssues++;
       }
     }
 
-    double scorePoints = Score.MAX;
+    ScoreValue scoreValue = scoreValue(Score.MAX, vulnerabilities);
 
-    scorePoints -= HIGH_SEVERITY_PENALTY * highSeverity;
-    scorePoints -= MEDIUM_SEVERITY_PENALTY * mediumSeverity;
-    scorePoints -= LOW_SEVERITY_PENALTY * lowSeverity;
+    applyPenaltyIfNecessary(scoreValue, highSeverityIssues, "high", HIGH_SEVERITY_PENALTY);
+    applyPenaltyIfNecessary(scoreValue, mediumSeverityIssues, "medium", MEDIUM_SEVERITY_PENALTY);
+    applyPenaltyIfNecessary(scoreValue, lowSeverityIssues, "low", LOW_SEVERITY_PENALTY);
 
-    return scoreValue(scorePoints, vulnerabilities);
+    if (highSeverityIssues == 0 && mediumSeverityIssues == 0 && lowSeverityIssues == 0) {
+      scoreValue.explain("No unpatched vulnerabilities found which is good");
+    }
+
+    return scoreValue;
+  }
+
+  /**
+   * Apply a penalty to a score value if issues found.
+   *
+   * @param scoreValue The score value to be updated.
+   * @param issues The number of issues.
+   * @param severity The severity of issues in human-readable format.
+   * @param penalty The penalty for one issue.
+   */
+  private static void applyPenaltyIfNecessary(
+      ScoreValue scoreValue, int issues, String severity, double penalty) {
+
+    if (issues > 0) {
+      double overallPenalty = penalty * issues;
+      scoreValue.decrease(overallPenalty);
+      scoreValue.explain(String.format(EXPLANATION_TEMPLATE,
+          issues, severity, overallPenalty, issues, penalty));
+    }
   }
 
   /**

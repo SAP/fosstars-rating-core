@@ -71,6 +71,7 @@ public interface Value<T> {
    *
    * @param <T> A type of a value.
    */
+  @FunctionalInterface
   interface Processor<T> {
 
     /**

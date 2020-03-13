@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -113,6 +114,27 @@ public class ScoreValueTest {
     new ScoreValue(
         PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.0, 0.7, 10.0, Collections.emptyList())
         .weight(1.1);
+  }
+
+  @Test
+  public void explanation() {
+    List<String> notes = new ArrayList<>();
+    notes.add("first note");
+    notes.add("second note");
+
+    ScoreValue value = new ScoreValue(PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.0, 1.0, 10.0,
+        Collections.emptyList(), notes);
+    assertNotNull(value.explanation());
+    assertEquals(2, value.explanation().size());
+    assertTrue(value.explanation().containsAll(notes));
+
+    // check if the explanation can't be modified
+    notes.add("new note");
+    assertEquals(2, value.explanation().size());
+
+    value.explain("third note");
+    assertEquals(3, value.explanation().size());
+    assertTrue(value.explanation().contains("third note"));
   }
 
   @Test

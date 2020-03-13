@@ -18,6 +18,7 @@ import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -137,7 +138,7 @@ public class PrettyPrinter {
     }
 
     if (!featureValues.isEmpty()) {
-      sb.append(String.format("[+] %s  Based on:...%d features:%n", indent, featureValues.size()));
+      sb.append(String.format("[+] %sBased on:...%d features:%n", indent, featureValues.size()));
       Map<String, Object> nameToValue = new HashMap<>();
       int maxLength = 0;
       for (Value usedValue : featureValues) {
@@ -154,6 +155,14 @@ public class PrettyPrinter {
             indent + INDENT_STEP,
             append(name, '.', maxLength + 3),
             entry.getValue()));
+      }
+    }
+
+    if (!scoreValue.explanation().isEmpty()) {
+      Iterator<String> iterator = scoreValue.explanation().iterator();
+      sb.append(String.format("[+] %sExplanation:..%s%n", indent, iterator.next()));
+      while (iterator.hasNext()) {
+        sb.append(String.format("[+] %s              %s%n", indent, iterator.next()));
       }
     }
 
