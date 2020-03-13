@@ -65,6 +65,11 @@ public interface Score extends Feature<Double> {
   String name();
 
   /**
+   * Returns a description of the score.
+   */
+  String description();
+
+  /**
    * Returns a set of features which the score uses directly.
    */
   Set<Feature> features();

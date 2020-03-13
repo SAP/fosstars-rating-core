@@ -255,6 +255,12 @@ public class WeightedCompositeScoreTest {
     }
   }
 
+  @Test
+  public void description() {
+    assertNotNull(new WeightedScoreImpl().description());
+    assertTrue(new WeightedScoreImpl().description().isEmpty());
+  }
+
   private static class FirstScore extends AbstractScore {
 
     private static final Feature<Double> FEATURE = new DoubleFeature("first feature");

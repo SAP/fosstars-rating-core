@@ -7,6 +7,8 @@ import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
 import static com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectActivityScore.LOGISTIC_FOR_NUMBER_OF_COMMITS;
 import static com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectActivityScore.LOGISTIC_FOR_NUMBER_OF_CONTRIBUTORS;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
@@ -105,6 +107,12 @@ public class ProjectActivityScoreTest {
   @Test
   public void moreCommitsThanContributors() {
     PROJECT_ACTIVITY.calculate(values(2, 1));
+  }
+
+  @Test
+  public void description() {
+    assertNotNull(PROJECT_ACTIVITY.description());
+    assertFalse(PROJECT_ACTIVITY.description().isEmpty());
   }
 
   private static Set<Value> values(int commits, int contributors) {
