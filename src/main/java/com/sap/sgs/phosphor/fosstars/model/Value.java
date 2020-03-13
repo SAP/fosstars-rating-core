@@ -51,12 +51,20 @@ public interface Value<T> {
   T get();
 
   /**
-   * Call a processor to process the value if the value is known.
+   * Call a processor to process the value if it's known.
    *
    * @param processor The processor to be called.
    * @return This Value instance.
    */
   Value<T> processIfKnown(Processor<T> processor);
+
+  /**
+   * Call a processor to process the value if it's unknown.
+   *
+   * @param processor The processor to be called.
+   * @return This Value instance.
+   */
+  Value<T> processIfUnknown(Runnable processor);
 
   /**
    * An interface of a processor which can process a value.

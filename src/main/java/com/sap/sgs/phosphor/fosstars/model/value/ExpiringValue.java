@@ -66,6 +66,12 @@ public class ExpiringValue<T> implements Value<T> {
     return this;
   }
 
+  @Override
+  public Value<T> processIfUnknown(Runnable processor) {
+    value.processIfUnknown(processor);
+    return this;
+  }
+
   /**
    * Returns true if the value never expires, false otherwise.
    */
