@@ -4,6 +4,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SECURITY_REVIEWS_DONE;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.findValue;
 
+import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
@@ -26,6 +27,20 @@ import java.util.List;
  */
 public class ProjectSecurityTestingScore extends FeatureBasedScore {
 
+  /**
+   * A number of points which are added to a score value if a project has security reviews.
+   */
+  private static final double SECURITY_REVIEW_POINTS = 7.0;
+
+  /**
+   * A number of points which are added to a score value
+   * if a project scans for vulnerable dependencies.
+   */
+  private static final double DEPENDENCY_SCAN_POINTS = 3.0;
+
+  /**
+   * Initializes a new score.
+   */
   ProjectSecurityTestingScore() {
     super("How well security testing is done for an open-source project",
         SECURITY_REVIEWS_DONE,
@@ -34,20 +49,42 @@ public class ProjectSecurityTestingScore extends FeatureBasedScore {
 
   @Override
   public ScoreValue calculate(Value... values) {
-    Value<SecurityReviews> reviews = findValue(values, SECURITY_REVIEWS_DONE,
+    Value<SecurityReviews> securityReviewsDone = findValue(values, SECURITY_REVIEWS_DONE,
         "Hey! Tell me if any security review have been done for the project!");
     Value<Boolean> dependenciesScanned = findValue(values, SCANS_FOR_VULNERABLE_DEPENDENCIES,
         "Hey! Tell me if the project is scanned for vulnerable dependencies");
 
-    double points = 0.0;
-    if (!reviews.isUnknown() && reviews.get().done()) {
-      points += 7.0;
-    }
-    if (!dependenciesScanned.isUnknown() && dependenciesScanned.get().equals(true)) {
-      points += 3.0;
-    }
+    ScoreValue scoreValue =  scoreValue(Score.MIN, securityReviewsDone, dependenciesScanned);
 
-    return scoreValue(points, reviews, dependenciesScanned);
+    securityReviewsDone.processIfKnown(reviews -> {
+      if (reviews.done()) {
+        scoreValue.increase(SECURITY_REVIEW_POINTS);
+        scoreValue.explain(String.format(
+            "The score increased on %2.2f because the project has security reviews",
+            SECURITY_REVIEW_POINTS));
+      } else {
+        scoreValue.explain(String.format(
+            "If the project had security reviews, the score would be higher (+%2.2f)",
+            SECURITY_REVIEW_POINTS));
+      }
+    }).processIfUnknown(() -> scoreValue.explain(
+        "If we knew that the project has security reviews, then the score might be higher"));
+
+    dependenciesScanned.processIfKnown(scansDependencies -> {
+      if (scansDependencies) {
+        scoreValue.increase(DEPENDENCY_SCAN_POINTS);
+        scoreValue.explain(String.format(
+            "The score increased on %2.2f because the project scans dependencies",
+            DEPENDENCY_SCAN_POINTS));
+      } else {
+        scoreValue.explain(String.format(
+            "If the project scanned dependencies, the score would be higher (+%2.2f)",
+            DEPENDENCY_SCAN_POINTS));
+      }
+    }).processIfUnknown(() -> scoreValue.explain(
+        "If we knew that the project scans dependencies, then the score might be higher"));
+
+    return scoreValue;
   }
 
   /**

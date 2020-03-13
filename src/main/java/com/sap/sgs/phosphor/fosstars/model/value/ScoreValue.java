@@ -45,6 +45,11 @@ public class ScoreValue implements Value<Double>, Confidence {
   private final List<Value> usedValues;
 
   /**
+   * A list of notes which explain how the score value was calculated.
+   */
+  private final List<String> explanation;
+
+  /**
    * Initializes a score value for a specified score.
    *
    * @param score The score.
@@ -61,19 +66,42 @@ public class ScoreValue implements Value<Double>, Confidence {
    * @param confidence The confidence.
    * @param usedValues A list of values which were used to produce the score value.
    */
+  public ScoreValue(
+      Score score,
+      double value,
+      double weight,
+      double confidence,
+      List<Value> usedValues) {
+
+    this(score, value, weight, confidence, usedValues, Collections.emptyList());
+  }
+
+  /**
+   * Initializes a score value for a specified score.
+   *
+   * @param score The score.
+   * @param value The score value.
+   * @param confidence The confidence.
+   * @param usedValues A list of values which were used to produce the score value.
+   * @param explanation A list of explanation which explain how the score value was calculated.
+   */
   @JsonCreator
   public ScoreValue(
       @JsonProperty("score") Score score,
       @JsonProperty("value") double value,
       @JsonProperty("weight") double weight,
       @JsonProperty("confidence") double confidence,
-      @JsonProperty("usedValues") List<Value> usedValues) {
+      @JsonProperty("usedValues") List<Value> usedValues,
+      @JsonProperty("explanation") List<String> explanation) {
 
     this.score = Objects.requireNonNull(score, "Score can't be null!");
     this.value = Score.check(value);
     this.weight = Weight.check(weight);
     this.confidence = Confidence.check(confidence);
-    this.usedValues = new ArrayList<>(Objects.requireNonNull(usedValues, "Values can't be null!"));
+    this.usedValues = new ArrayList<>(
+        Objects.requireNonNull(usedValues, "Values can't be null!"));
+    this.explanation = new ArrayList<>(
+        Objects.requireNonNull(explanation, "Explanation can't be null!"));
   }
 
   @JsonGetter("score")
@@ -135,6 +163,30 @@ public class ScoreValue implements Value<Double>, Confidence {
    */
   public ScoreValue weight(double value) {
     this.weight = Weight.check(value);
+    return this;
+  }
+
+  /**
+   * Returns a list of explanation which explain how the score value was calculated.
+   */
+  @JsonGetter("explanation")
+  public List<String> explanation() {
+    return new ArrayList<>(explanation);
+  }
+
+  /**
+   * Add a note which explains how the score value was calculated.
+   *
+   * @param note The note to be added.
+   * @return The same score value.
+   */
+  public ScoreValue explain(String note) {
+    Objects.requireNonNull(note, "Note can't be null!");
+    note = note.trim();
+    if (note.isEmpty()) {
+      throw new IllegalArgumentException("Note can't be empty!");
+    }
+    explanation.add(note);
     return this;
   }
 
@@ -237,14 +289,15 @@ public class ScoreValue implements Value<Double>, Confidence {
     }
     ScoreValue that = (ScoreValue) o;
     return Double.compare(that.value, value) == 0
-        && Double.compare(that.weight, weight) == 0
         && Double.compare(that.confidence, confidence) == 0
+        && Double.compare(that.weight, weight) == 0
         && Objects.equals(score, that.score)
-        && Objects.equals(usedValues, that.usedValues);
+        && Objects.equals(usedValues, that.usedValues)
+        && Objects.equals(explanation, that.explanation);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(score, value, weight, confidence, usedValues);
+    return Objects.hash(score, value, confidence, weight, usedValues, explanation);
   }
 }

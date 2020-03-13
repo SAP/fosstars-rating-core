@@ -62,8 +62,8 @@ The output is going to look like the following:
 ```
 [+] Project: https://github.com/apache/poi
 [+] Let's get info about the project and calculate a security rating
-[+] Counting how many commits have been done in the last three months ...
-[+] Counting how many people contributed to the project in the last three months ...
+[+] Counting how many commits have been done last three months ...
+[+] Counting how many people contributed to the project last three months ...
 [+] Counting how many stars the project has ...
 [+] Counting how many watchers the project has ...
 [+] Figuring out when the first commit was done ...
@@ -82,72 +82,96 @@ The output is going to look like the following:
 [+]    If an open-source project is regularly scanned for vulnerable dependencies: false
 [+]    If an open-source project has a security team: true
 [+]    Number of watchers for a GitHub repository: 78
-[+]    Number of contributors in the last three months: 5
+[+]    Number of contributors last three months: 5
 [+]    If an open-source project has a security policy: false
 [+]    Info about vulnerabilities in open-source project: 8 vulnerabilities
-[+]    Number of stars for a GitHub repository: 923
+[+]    Number of stars for a GitHub repository: 924
 [+]    When first commit was done: Thu Jan 31 03:22:28 CET 2002
-[+]    Number of commits in the last three months: 143
-[+]    Security reviews for an open-source project: 0 security reviews
+[+]    Number of commits last three months: 139
 [+]    When a project started: Thu Jan 31 03:22:28 CET 2002
+[+]    Security reviews for an open-source project: 0 security reviews
 [+]    If an open-source project belongs to Apache Foundation: true
 [+]    If an open-source project is supported by a company: false
-[+] Rating: 5.43 out of 10.00 -> OKAY
+[+] Rating: 5.42 out of 10.00 -> MODERATE
 [+] Confidence: 10.00 out of 10.00
+[+]
 [+] Here is how the rating was calculated:
-[+]   Score:........Security score for open-source projects
-[+]   Value:........5.43  out of 10.00
+[+]   Score:........Security of project
+[+]   Value:........5.42  out of 10.00
 [+]   Confidence:...10.00 out of 10.00
 [+]   Based on:.....7 sub-scores:
-[+]       Score:........How well open-source community commits to support an open-source project
-[+]       Value:........7.00  out of 10.00
-[+]       Confidence:...10.00 out of 10.00
-[+]         Based on:...3 features:
-[+]           If an open-source project is supported by a company:.......false
-[+]           If an open-source project belongs to Apache Foundation:....true
-[+]           If an open-source project belongs to Eclipse Foundation:...false
-[+]
-[+]       Score:........Open-source project activity score
-[+]       Value:........9.07  out of 10.00
-[+]       Confidence:...10.00 out of 10.00
-[+]         Based on:...2 features:
-[+]           Number of commits in the last three months:........143
-[+]           Number of contributors in the last three months:...5
-[+]
-[+]       Score:........How well vulnerabilities are patched
+[+]       Sub-score:....Unpatched vulnerabilities
+[+]       Importance:...Medium (weight 0.40 out of 1.00)
 [+]       Value:........10.00 out of 10.00
 [+]       Confidence:...10.00 out of 10.00
-[+]         Based on:...1 features:
-[+]           Info about vulnerabilities in open-source project:...8 vulnerabilities
+[+]       Based on:...1 features:
+[+]           Info about vulnerabilities:...8 vulnerabilities
+[+]       Explanation:..No unpatched vulnerabilities found which is good
 [+]
-[+]       Score:........How well security testing is done for an open-source project
-[+]       Value:........0.00  out of 10.00
+[+]       Sub-score:....Community commitment
+[+]       Importance:...High (weight 0.73 out of 1.00)
+[+]       Value:........7.00  out of 10.00
 [+]       Confidence:...10.00 out of 10.00
-[+]         Based on:...2 features:
-[+]           Security reviews for an open-source project:..................................0 security reviews
-[+]           If an open-source project is regularly scanned for vulnerable dependencies:...false
+[+]       Based on:...3 features:
+[+]           Is it supported by a company?....false
+[+]           Does it belong to Eclipse?.......false
+[+]           Does it belong to Apache?........true
 [+]
-[+]       Score:........How fast vulnerabilities are patched
-[+]       Value:........7.17  out of 10.00
+[+]       Sub-score:....Project activity
+[+]       Description:..The score is based on number of commits and contributors.
+[+]                     Here is how a number of commits contributes to the score:
+[+]                     0 -> 0.85 (min), 35 -> 2.50, 72 -> 5.00, 500 -> 7.10 (max)
+[+]                     Here is how a number of contributors contributes to the score:
+[+]                     0 -> 1.40 (min), 1 -> 1.50, 8 -> 2.50, 500 -> 3.10 (max)
+[+]       Importance:...High (weight 0.91 out of 1.00)
+[+]       Value:........9.04  out of 10.00
 [+]       Confidence:...10.00 out of 10.00
-[+]         Based on:...3 features:
-[+]           Info about vulnerabilities in open-source project:...8 vulnerabilities
-[+]           When a project started:..............................Thu Jan 31 03:22:28 CET 2002
-[+]           When first commit was done:..........................Thu Jan 31 03:22:28 CET 2002
+[+]       Based on:...2 features:
+[+]           Number of commits last three months:........139
+[+]           Number of contributors last three months:...5
 [+]
-[+]       Score:........How well open-source community is aware about security
+[+]       Sub-score:....Security awareness
+[+]       Description:..The score checks if a project has a security policy and a security team.
+[+]                     If the project has a security policy, then the score adds 5.00.
+[+]                     If the project has a security team, then the score adds 8.00.
+[+]       Importance:...Medium (weight 0.54 out of 1.00)
 [+]       Value:........8.00  out of 10.00
 [+]       Confidence:...10.00 out of 10.00
-[+]         Based on:...2 features:
-[+]           If an open-source project has a security policy:...false
-[+]           If an open-source project has a security team:.....true
+[+]       Based on:...2 features:
+[+]           Does it have a security team?......true
+[+]           Does it have a security policy?....false
 [+]
-[+]       Score:........Open-source project popularity score
+[+]       Sub-score:....Project popularity
+[+]       Description:..The score is based on number of stars and watchers.
+[+]                     Here is how a number of stars contributes to the score:
+[+]                     0 -> 0.00 (min), 2500 -> 2.50, 5000 -> 5.00, 10000 -> 10.00 (max)
+[+]                     Here is how a number of watchers contributes to the score:
+[+]                     0 -> 0.00 (min), 450 -> 1.50, 750 -> 2.50, 3000 -> 10.00 (max)
+[+]       Importance:...High (weight 0.84 out of 1.00)
 [+]       Value:........1.18  out of 10.00
 [+]       Confidence:...10.00 out of 10.00
-[+]         Based on:...2 features:
-[+]           Number of stars for a GitHub repository:......923
+[+]       Based on:...2 features:
+[+]           Number of stars for a GitHub repository:......924
 [+]           Number of watchers for a GitHub repository:...78
+[+]
+[+]       Sub-score:....Vulnerability lifetime
+[+]       Importance:...Medium (weight 0.59 out of 1.00)
+[+]       Value:........7.17  out of 10.00
+[+]       Confidence:...10.00 out of 10.00
+[+]       Based on:...3 features:
+[+]           When first commit was done:...Thu Jan 31 03:22:28 CET 2002
+[+]           Info about vulnerabilities:...8 vulnerabilities
+[+]           When a project started:.......Thu Jan 31 03:22:28 CET 2002
+[+]
+[+]       Sub-score:....Security testing
+[+]       Importance:...High (weight 0.95 out of 1.00)
+[+]       Value:........0.00  out of 10.00
+[+]       Confidence:...10.00 out of 10.00
+[+]       Based on:...2 features:
+[+]           Does it scan for vulnerable dependencies?....false
+[+]           Security reviews:............................0 security reviews
+[+]       Explanation:..If the project had security reviews, the score would be higher (+7.00)
+[+]                     If the project scanned dependencies, the score would be higher (+3.00)
 [+]
 [+] Bye!
 ```

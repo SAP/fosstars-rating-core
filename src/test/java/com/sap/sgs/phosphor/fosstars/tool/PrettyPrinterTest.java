@@ -71,5 +71,6 @@ public class PrettyPrinterTest {
     assertTrue(text.contains("Importance"));
     assertTrue(text.contains("Based on"));
     assertTrue(text.contains("Description"));
+    assertTrue(text.contains("Explanation"));
   }
 }
