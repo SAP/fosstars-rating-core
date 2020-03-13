@@ -4,6 +4,8 @@ import static com.sap.sgs.phosphor.fosstars.TestUtils.assertScore;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_TEAM;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
@@ -70,6 +72,12 @@ public class ProjectSecurityAwarenessScoreTest {
         PROJECT_SECURITY_AWARENESS, setOf(
             HAS_SECURITY_TEAM.value(true),
             HAS_SECURITY_POLICY.value(true)));
+  }
+
+  @Test
+  public void description() {
+    assertNotNull(PROJECT_SECURITY_AWARENESS.description());
+    assertFalse(PROJECT_SECURITY_AWARENESS.description().isEmpty());
   }
 
 }

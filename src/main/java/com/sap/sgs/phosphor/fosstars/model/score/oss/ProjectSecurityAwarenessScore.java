@@ -4,6 +4,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SE
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_TEAM;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.findValue;
 
+import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
@@ -24,29 +25,53 @@ import java.util.List;
 public class ProjectSecurityAwarenessScore extends FeatureBasedScore {
 
   /**
+   * A number of points which are added to a score value if a project has a security policy.
+   */
+  private static final double SECURITY_POLICY_POINTS = 5.0;
+
+  /**
+   * A number of points which are added to a score value if a project has a security team.
+   */
+  private static final double SECURITY_TEAM_POINTS = 8.0;
+
+  private static final String DESCRIPTION = String.format(
+      "The score checks if a project has a security policy and a security team.\n"
+          + "If the project has a security policy, then the score adds %2.2f.\n"
+          + "If the project has a security team, then the score adds %2.2f.",
+      SECURITY_POLICY_POINTS, SECURITY_TEAM_POINTS);
+
+  /**
    * Initializes a new {@link ProjectSecurityAwarenessScore}.
    */
   ProjectSecurityAwarenessScore() {
-    super("How well open-source community is aware about security",
+    super("How well open-source community is aware about security", DESCRIPTION,
         HAS_SECURITY_POLICY, HAS_SECURITY_TEAM);
   }
 
   @Override
   public ScoreValue calculate(Value... values) {
-    Value<Boolean> securityAdvisories = findValue(values, HAS_SECURITY_POLICY,
-        "Hey! You have to tell me if the project publishes security advisories!");
+    Value<Boolean> securityPolicy = findValue(values, HAS_SECURITY_POLICY,
+        "Hey! You have to tell me if the project has a security policy!");
     Value<Boolean> securityTeam = findValue(values, HAS_SECURITY_TEAM,
         "Hey! You have to tell me if the project has a security team!");
 
-    double points = 0.0;
-    if (!securityAdvisories.isUnknown() && securityAdvisories.get().equals(true)) {
-      points += 5.0;
-    }
-    if (!securityTeam.isUnknown() && securityTeam.get().equals(true)) {
-      points += 8.0;
-    }
+    ScoreValue scoreValue = new ScoreValue(this);
+    securityPolicy.processIfKnown(exist -> {
+      if (exist) {
+        scoreValue.increase(SECURITY_POLICY_POINTS);
+      }
+    });
 
-    return scoreValue(points, securityAdvisories, securityTeam);
+    securityTeam.processIfKnown(exist -> {
+      if (exist) {
+        scoreValue.increase(SECURITY_TEAM_POINTS);
+      }
+    });
+
+    scoreValue.usedValues(securityPolicy, securityTeam);
+    scoreValue.confidence(Confidence.make(securityPolicy, securityTeam));
+
+    return scoreValue;
   }
 
   /**

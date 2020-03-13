@@ -50,7 +50,7 @@ public class ProjectActivityScore extends FeatureBasedScore {
     sb.append("Here is how a number of commits contributes to the score:\n");
     sb.append(String.format("%d -> %2.2f (min), ", 0, LOGISTIC_FOR_NUMBER_OF_COMMITS.value(0)));
     sb.append(String.format("%d -> %2.2f, %d -> %2.2f, ",
-        MathHelper.invert(LOGISTIC_FOR_NUMBER_OF_COMMITS, 0, 1000, 2.5, 0.01), 0.25,
+        MathHelper.invert(LOGISTIC_FOR_NUMBER_OF_COMMITS, 0, 1000, 2.5, 0.01), 2.5,
         MathHelper.invert(LOGISTIC_FOR_NUMBER_OF_COMMITS, 0, 1000, 5.0, 0.01), 5.0));
     sb.append(String.format("%d -> %2.2f (max)", 500, LOGISTIC_FOR_NUMBER_OF_COMMITS.value(500)));
 

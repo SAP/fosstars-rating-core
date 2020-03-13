@@ -4,6 +4,8 @@ import static com.sap.sgs.phosphor.fosstars.TestUtils.assertScore;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_GITHUB_STARS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_WATCHERS_ON_GITHUB;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
@@ -88,6 +90,12 @@ public class ProjectPopularityScoreTest {
     assertScore(8.666, PROJECT_POPULARITY, values(2000, 2000));
     assertScore(Score.MAX, PROJECT_POPULARITY, values(5000, 4000));
     assertScore(Score.MAX, PROJECT_POPULARITY, values(11000, 1000));
+  }
+
+  @Test
+  public void description() {
+    assertNotNull(PROJECT_POPULARITY.description());
+    assertFalse(PROJECT_POPULARITY.description().isEmpty());
   }
 
   private static Set<Value> values(int stars, int watchers) {

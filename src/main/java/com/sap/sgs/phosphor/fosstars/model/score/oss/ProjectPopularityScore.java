@@ -5,6 +5,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.findValue;
 
 import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.math.MathHelper;
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
 import com.sap.sgs.phosphor.fosstars.model.score.FeatureBasedScore;
@@ -12,6 +13,7 @@ import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * The project popularity score is currently based on two features:
@@ -47,8 +49,39 @@ public class ProjectPopularityScore extends FeatureBasedScore {
    */
   private static final double WATCHERS_SCORE_FACTOR = MAX / BEST_WATCHERS_AMOUNT;
 
+  private static final String DESCRIPTION;
+
+  static {
+    StringBuilder sb = new StringBuilder();
+
+    sb.append("The score is based on number of stars and watchers.\n");
+
+    Function<Integer, Double> starsSubScore = n -> starsSubScore(NUMBER_OF_GITHUB_STARS.value(n));
+    sb.append("Here is how a number of stars contributes to the score:\n");
+    sb.append(String.format("%d -> %2.2f (min), ", 0, starsSubScore.apply(0)));
+    sb.append(String.format("%d -> %2.2f, %d -> %2.2f, ",
+        MathHelper.invert(starsSubScore, 0, BEST_STARS_AMOUNT, 2.5, 0.01), 2.5,
+        MathHelper.invert(starsSubScore, 0, BEST_STARS_AMOUNT, 5.0, 0.01), 5.0));
+    sb.append(String.format("%d -> %2.2f (max)",
+        BEST_STARS_AMOUNT, starsSubScore.apply(BEST_STARS_AMOUNT)));
+    sb.append("\n");
+
+    Function<Integer, Double> watchersSubScore
+        = n -> watchersSubScore(NUMBER_OF_WATCHERS_ON_GITHUB.value(n));
+    sb.append("Here is how a number of watchers contributes to the score:\n");
+    sb.append(String.format("%d -> %2.2f (min), ",
+        0, watchersSubScore.apply(0)));
+    sb.append(String.format("%d -> %2.2f, %d -> %2.2f, ",
+        MathHelper.invert(watchersSubScore, 0, BEST_WATCHERS_AMOUNT, 1.5, 0.01), 1.5,
+        MathHelper.invert(watchersSubScore, 0, BEST_WATCHERS_AMOUNT, 2.5, 0.01), 2.5));
+    sb.append(String.format("%d -> %2.2f (max)",
+        BEST_WATCHERS_AMOUNT, watchersSubScore.apply(BEST_WATCHERS_AMOUNT)));
+
+    DESCRIPTION = sb.toString();
+  }
+
   ProjectPopularityScore() {
-    super("Open-source project popularity score",
+    super("Open-source project popularity score", DESCRIPTION,
         NUMBER_OF_GITHUB_STARS, NUMBER_OF_WATCHERS_ON_GITHUB);
   }
 
@@ -59,7 +92,7 @@ public class ProjectPopularityScore extends FeatureBasedScore {
     Value<Integer> m = findValue(values, NUMBER_OF_WATCHERS_ON_GITHUB,
         "Hey! You have to give me a number of watchers!");
 
-    return scoreValue(starsScore(n) + watchersScore(m), n, m);
+    return scoreValue(starsSubScore(n) + watchersSubScore(m), n, m);
   }
 
   /**
@@ -68,7 +101,7 @@ public class ProjectPopularityScore extends FeatureBasedScore {
    * @param stars A number of stars.
    * @throws IllegalArgumentException if a number of stars is negative.
    */
-  private double starsScore(Value<Integer> stars) {
+  private static double starsSubScore(Value<Integer> stars) {
     if (stars.isUnknown()) {
       return 0.0;
     }
@@ -90,7 +123,7 @@ public class ProjectPopularityScore extends FeatureBasedScore {
    * @param watchers A number of watchers.
    * @throws IllegalArgumentException if a number of watchers is negative.
    */
-  private double watchersScore(Value<Integer> watchers) {
+  private static double watchersSubScore(Value<Integer> watchers) {
     if (watchers.isUnknown()) {
       return 0.0;
     }

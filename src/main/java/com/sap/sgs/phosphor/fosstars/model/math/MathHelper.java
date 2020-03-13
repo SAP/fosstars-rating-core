@@ -21,34 +21,58 @@ public class MathHelper {
    * @throws IllegalArgumentException If the parameters are incorrect.
    */
   public static int invert(Logistic func, int a, int b, double value, double precision) {
+    return invert(func::value, a, b, value, precision);
+  }
+
+  /**
+   * Invert a value of a monotonic function on a specified interval.
+   * Note that the method expects a caller to pass a valid monotonic function.
+   * The method doesn't check whether the specified function is monotonic or not.
+   * If the function is not monotonic, the method may not produce a correct result.
+   *
+   * @param func The function to be inverted.
+   * @param a The beginning of the interval.
+   * @param b The end of the interval.
+   * @param value The value to be inverted.
+   * @param precision The precision for comparison of doubles.
+   * @return The argument of the function, which belongs to the specified interval [a, b],
+   *         which produces the closest value to the specified value.
+   * @throws IllegalArgumentException If the parameters are incorrect.
+   */
+  public static int invert(
+      Function<Integer, Double> func, int a, int b, double value, double precision) {
+
     if (a > b) {
       throw new IllegalArgumentException("a > b");
     }
-    double funcA = func.value(a);
-    if (equals(funcA, value, precision)) {
+    double funcOfA = func.apply(a);
+    if (equals(funcOfA, value, precision)) {
       return a;
     }
     if (a == b) {
       throw new IllegalArgumentException(String.format("a == b and func(a) != %2.2f", value));
     }
-    if (Double.compare(funcA, value) > 0) {
+    if (Double.compare(funcOfA, value) > 0) {
       throw new IllegalArgumentException(String.format(
-          "func(%d) is %2.2f which is greater than %2.2f", a, funcA, value));
+          "func(%d) is %2.2f which is greater than %2.2f", a, funcOfA, value));
     }
-    double funcB = func.value(b);
-    if (equals(funcB, value, precision)) {
+    double funcOfB = func.apply(b);
+    if (equals(funcOfB, value, precision)) {
       return b;
     }
-    if (Double.compare(funcB, value) < 0) {
+    if (Double.compare(funcOfB, value) < 0) {
       throw new IllegalArgumentException(String.format(
-          "func(%d) is %2.2f which is less than %2.2f", b, funcB, value));
+          "func(%d) is %2.2f which is less than %2.2f", b, funcOfB, value));
     }
 
-    return binarySearch(func::value, a, b, value, precision);
+    return binarySearch(func, a, b, value, precision);
   }
 
   /**
    * Inverses a monotonic function on a specified interval using binary search.
+   * Note that the method expects a caller to pass a valid monotonic function.
+   * The method doesn't check whether the specified function is monotonic or not.
+   * If the function is not monotonic, the method may not produce a correct result.
    *
    * @param func The function to be inverted.
    * @param a The beginning of the interval.
@@ -63,21 +87,21 @@ public class MathHelper {
 
     while (b - a > 1) {
       int m = a + (Math.abs(b - a)) / 2;
-      double funcM = func.apply(m);
-      if (equals(funcM, value, precision)) {
+      double funcOfM = func.apply(m);
+      if (equals(funcOfM, value, precision)) {
         return m;
       }
-      if (Double.compare(value, funcM) > 0) {
+      if (Double.compare(value, funcOfM) > 0) {
         a = m;
       } else {
         b = m;
       }
     }
 
-    double funcA = func.apply(a);
-    double funcB = func.apply(b);
+    double funcOfA = func.apply(a);
+    double funcOfB = func.apply(b);
 
-    if (Math.abs(funcA - value) < Math.abs(funcB - value)) {
+    if (Math.abs(funcOfA - value) < Math.abs(funcOfB - value)) {
       return a;
     }
 
