@@ -1,0 +1,9 @@
+,alias,score_from,score_to,label,If a project uses LGTM,The worse LGTM grade of a project
+0,test_vector_0,0.0,1.0,,unknown,unknown
+1,test_vector_1,0.0,1.0,,False,unknown
+2,test_vector_2,1.0,3.0,,True,E
+3,test_vector_3,3.0,5.0,,True,D
+4,test_vector_4,5.0,7.0,,True,C
+5,test_vector_5,7.0,9.0,,True,B
+6,test_vector_6,9.0,10.0,,True,A
+7,test_vector_7,9.0,10.0,,True,A+
