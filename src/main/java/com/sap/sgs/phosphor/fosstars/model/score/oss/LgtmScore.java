@@ -6,10 +6,15 @@ import static com.sap.sgs.phosphor.fosstars.model.other.Utils.findValue;
 
 import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
+import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
 import com.sap.sgs.phosphor.fosstars.model.score.FeatureBasedScore;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.EnumMap;
+import java.util.List;
 
 /**
  * The score shows if and how a project addresses issues reported by LGTM.
@@ -31,14 +36,14 @@ public class LgtmScore extends FeatureBasedScore {
     GRADE_TO_POINTS.put(LgtmGrade.B, 6.0);
     GRADE_TO_POINTS.put(LgtmGrade.C, 4.0);
     GRADE_TO_POINTS.put(LgtmGrade.D, 2.0);
-    GRADE_TO_POINTS.put(LgtmGrade.E, 8.0);
+    GRADE_TO_POINTS.put(LgtmGrade.E, 0.0);
   }
 
   /**
    * Initializes a new {@link LgtmScore}.
    */
   LgtmScore() {
-    super("If and how a project addresses issues reported by LGTM.",
+    super("How a project addresses issues reported by LGTM",
         USES_LGTM, WORSE_LGTM_GRADE);
   }
 
@@ -49,11 +54,19 @@ public class LgtmScore extends FeatureBasedScore {
     Value<LgtmGrade> worseLgtmGrade = findValue(values, WORSE_LGTM_GRADE,
         "Hey! You have to tell me the worse LGTM grade for the project!");
 
+    if (usesLgtm.isUnknown() && !worseLgtmGrade.isUnknown()) {
+      throw new IllegalArgumentException(
+          "Hey! It's unknown if the project uses LGTM but then you gave me the worse grade!");
+    }
+
     ScoreValue scoreValue = new ScoreValue(this);
 
     usesLgtm.processIfKnown(uses -> {
       if (uses) {
         scoreValue.increase(LGTM_USAGE_POINTS);
+      } else if (!worseLgtmGrade.isUnknown()) {
+        throw new IllegalArgumentException(
+            "Hey! You told me that LGTM is not used but then provided the worse grade!");
       }
     });
 
@@ -63,5 +76,43 @@ public class LgtmScore extends FeatureBasedScore {
     scoreValue.usedValues(usesLgtm, worseLgtmGrade);
 
     return scoreValue;
+  }
+
+  /**
+   * This class implements a verification procedure for {@link LgtmScore}.
+   * The class loads test vectors, and provides methods to verify a {@link LgtmScore}
+   * against those test vectors.
+   */
+  public static class Verification extends ScoreVerification {
+
+    /**
+     * A name of a resource which contains the test vectors.
+     */
+    private static final String DEFAULT_TEST_VECTORS_CSV = "LgtmScoreTestVectors.csv";
+
+    /**
+     * Initializes a {@link Verification} for a {@link LgtmScore}.
+     *
+     * @param score A score to be verified.
+     * @param vectors A list of test vectors.
+     */
+    public Verification(LgtmScore score, List<TestVector> vectors) {
+      super(score, vectors);
+    }
+
+    /**
+     * Creates an instance of {@link Verification} for a specified score. The method loads test
+     * vectors from a default resource.
+     *
+     * @param score The score to be verified.
+     * @return An instance of {@link Verification}.
+     */
+    static Verification createFor(LgtmScore score) throws IOException {
+      try (InputStream is = Verification.class.getResourceAsStream(DEFAULT_TEST_VECTORS_CSV)) {
+
+        return new Verification(
+            score, loadTestVectorsFromCsvResource(score.features(), is));
+      }
+    }
   }
 }

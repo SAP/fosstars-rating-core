@@ -41,4 +41,16 @@ public class LgtmScoreTest {
   public void calculateWithoutUsesWorseLgtmGradeValue() {
     new LgtmScore().calculate(USES_LGTM.unknown());
   }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void doesNotUseLgtmButHasWorseGrade() {
+    new LgtmScore().calculate(
+        USES_LGTM.value(false), WORSE_LGTM_GRADE.value(LgtmGrade.A_PLUS));
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void unknownUseLgtmButHasWorseGrade() {
+    new LgtmScore().calculate(
+        USES_LGTM.unknown(), WORSE_LGTM_GRADE.value(LgtmGrade.A_PLUS));
+  }
 }
