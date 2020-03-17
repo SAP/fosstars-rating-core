@@ -25,10 +25,18 @@ import org.junit.Test;
 
 public class WeightedCompositeScoreTest {
 
+  private static final double PRECISION = 0.001;
+
   @Test
-  public void scores() {
-    Score score = new WeightedScoreImpl();
-    assertEquals(0, score.features().size());
+  public void smokeTest() {
+    WeightedScoreImpl score = new WeightedScoreImpl();
+    assertEquals(WeightedScoreImpl.NAME, score.name());
+    assertEquals(2, score.allFeatures().size());
+    assertTrue(score.allFeatures().contains(FirstScore.FEATURE));
+    assertTrue(score.allFeatures().contains(SecondScore.FEATURE));
+    assertTrue(score.features().isEmpty());
+    assertNotNull(score.description());
+    assertTrue(score.description().isEmpty());
     assertEquals(2, score.subScores().size());
     assertTrue(score.subScores().contains(new FirstScore()));
     assertTrue(score.subScores().contains(new SecondScore()));
@@ -49,8 +57,8 @@ public class WeightedCompositeScoreTest {
     double expectedScore = (weightedFirstScore + weightedSecondScore) / weightSum;
 
     ScoreValue scoreValue = score.calculate(firstValue, secondValue);
-    assertEquals(expectedScore, scoreValue.get(), 0.01);
-    assertEquals(Confidence.MAX, scoreValue.confidence(), 0.01);
+    assertEquals(expectedScore, scoreValue.get(), PRECISION);
+    assertEquals(Confidence.MAX, scoreValue.confidence(), PRECISION);
     assertEquals(2, scoreValue.usedValues().size());
     for (Value value : scoreValue.usedValues()) {
       if (value.feature() instanceof FirstScore) {
@@ -100,7 +108,7 @@ public class WeightedCompositeScoreTest {
     Score score = new WeightedScoreImpl();
     Value<Double> value = score.value(7.54);
     assertNotNull(value);
-    assertEquals(7.54, value.get(), 0.001);
+    assertEquals(7.54, value.get(), PRECISION);
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -163,51 +171,65 @@ public class WeightedCompositeScoreTest {
     double firstValue = 3.0;
     double secondValue = 2.0;
 
+    final double firstConfidence = 7.3;
+    final double secondConfidence = 6.1;
+
     ScoreValue firstPreCalculatedScoreValue = new ScoreValue(
         new FirstScore(),
         firstValue,
         WeightedScoreImpl.FIRST_WEIGHT,
-        Confidence.MAX,
+        firstConfidence,
         Collections.emptyList());
     ScoreValue secondPreCalculatedScoreValue = new ScoreValue(
         new SecondScore(),
         secondValue,
         WeightedScoreImpl.SECOND_WEIGHT,
-        Confidence.MAX,
+        secondConfidence,
         Collections.emptyList());
     ScoreValue scoreValue = score.calculate(
         firstPreCalculatedScoreValue, secondPreCalculatedScoreValue);
     assertNotNull(scoreValue);
 
-    double weightedSum = firstValue * WeightedScoreImpl.FIRST_WEIGHT
-        + secondValue * WeightedScoreImpl.SECOND_WEIGHT;
-    double weightSum = WeightedScoreImpl.FIRST_WEIGHT + WeightedScoreImpl.SECOND_WEIGHT;
-    double expectedScore = weightedSum / weightSum;
+    final double weightSum = WeightedScoreImpl.FIRST_WEIGHT + WeightedScoreImpl.SECOND_WEIGHT;
 
-    assertEquals(expectedScore, scoreValue.get(), 0.001);
+    double weightedValueSum = firstValue * WeightedScoreImpl.FIRST_WEIGHT
+        + secondValue * WeightedScoreImpl.SECOND_WEIGHT;
+    double expectedScore = weightedValueSum / weightSum;
+    assertEquals(expectedScore, scoreValue.get(), PRECISION);
+
+    double weightedConfidenceSum = firstConfidence * WeightedScoreImpl.FIRST_WEIGHT
+        + secondConfidence * WeightedScoreImpl.SECOND_WEIGHT;
+    double expectedConfidence = weightedConfidenceSum / weightSum;
+    assertEquals(expectedConfidence, scoreValue.confidence(), PRECISION);
   }
 
   @Test
-  public void oneScoresPreCalculated() {
+  public void oneScorePreCalculated() {
     Score score = new WeightedScoreImpl();
 
-    double firstValue = 3.0;
+    final double firstValue = 3.0;
+    final double firstConfidence = 7.2;
 
     ScoreValue preCalculatedScoreValue = new ScoreValue(
         new FirstScore(),
         firstValue,
         WeightedScoreImpl.FIRST_WEIGHT,
-        Confidence.MAX,
+        firstConfidence,
         Collections.emptyList());
     ScoreValue scoreValue = score.calculate(preCalculatedScoreValue);
     assertNotNull(scoreValue);
 
-    double weightedSum = firstValue * WeightedScoreImpl.FIRST_WEIGHT
-        + SecondScore.VALUE * WeightedScoreImpl.SECOND_WEIGHT;
-    double weightSum = WeightedScoreImpl.FIRST_WEIGHT + WeightedScoreImpl.SECOND_WEIGHT;
-    double expectedScore = weightedSum / weightSum;
+    final double weightSum = WeightedScoreImpl.FIRST_WEIGHT + WeightedScoreImpl.SECOND_WEIGHT;
 
-    assertEquals(expectedScore, scoreValue.get(), 0.001);
+    double weightedValueSum = firstValue * WeightedScoreImpl.FIRST_WEIGHT
+        + SecondScore.VALUE * WeightedScoreImpl.SECOND_WEIGHT;
+    double expectedScore = weightedValueSum / weightSum;
+    assertEquals(expectedScore, scoreValue.get(), PRECISION);
+
+    double weightedConfidenceSum = firstConfidence * WeightedScoreImpl.FIRST_WEIGHT
+        + Confidence.MAX * WeightedScoreImpl.SECOND_WEIGHT;
+    double expectedConfidence = weightedConfidenceSum / weightSum;
+    assertEquals(expectedConfidence, scoreValue.confidence(), PRECISION);
   }
 
   @Test
@@ -225,7 +247,10 @@ public class WeightedCompositeScoreTest {
     for (Weight weight : weights) {
       weightSum += weight.value();
     }
-    assertEquals(WeightedScoreImpl.FIRST_WEIGHT + WeightedScoreImpl.SECOND_WEIGHT, weightSum, 0.1);
+    assertEquals(
+        WeightedScoreImpl.FIRST_WEIGHT + WeightedScoreImpl.SECOND_WEIGHT,
+        weightSum,
+        PRECISION);
   }
 
   @Test
@@ -236,7 +261,7 @@ public class WeightedCompositeScoreTest {
       final double w = 1.0;
       assertNotEquals(w, parameter.value());
       parameter.value(w);
-      assertEquals(w, parameter.value(), 0.1);
+      assertEquals(w, parameter.value(), PRECISION);
     }
   }
 
@@ -261,24 +286,14 @@ public class WeightedCompositeScoreTest {
     assertTrue(new WeightedScoreImpl().description().isEmpty());
   }
 
-  private static class FirstScore extends AbstractScore {
+  private static class FirstScore extends FeatureBasedScore {
 
     private static final Feature<Double> FEATURE = new DoubleFeature("first feature");
 
     private static final double VALUE = 0.2;
 
     FirstScore() {
-      super("First score");
-    }
-
-    @Override
-    public Set<Feature> features() {
-      return Collections.emptySet();
-    }
-
-    @Override
-    public Set<Score> subScores() {
-      return Collections.emptySet();
+      super("First score", FEATURE);
     }
 
     @Override
@@ -325,11 +340,13 @@ public class WeightedCompositeScoreTest {
 
   private static class WeightedScoreImpl extends WeightedCompositeScore {
 
+    private static final String NAME = "Test score";
+
     private static final double FIRST_WEIGHT = 0.8;
     private static final double SECOND_WEIGHT = 0.3;
 
     WeightedScoreImpl() {
-      super("Test score", init());
+      super(NAME, init());
     }
 
     private static Set<WeightedScore> init() {
