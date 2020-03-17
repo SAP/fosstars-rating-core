@@ -1,6 +1,10 @@
-,alias,score_from,score_to,label,If an open-source project has a security policy,If an open-source project has a security team
-0,test_vector_0,0.0,0.1,,unknown,unknown
-1,test_vector_1,0.0,1.0,,False,False
-2,test_vector_2,5.0,8.0,,False,True
-3,test_vector_3,4.0,6.0,,True,False
-4,test_vector_4,9.0,10.0,,True,True
+,If a project uses verified signed commits,If an open-source project has a security policy,If an open-source project has a security team,alias,label,score_from,score_to
+0,unknown,unknown,unknown,test_vector_0,,0.0,0.1
+1,False,False,False,test_vector_1,,0.0,1.0
+2,False,True,True,test_vector_2,,6.0,8.0
+3,True,False,True,test_vector_3,,5.0,7.0
+4,False,False,True,test_vector_4,,4.0,6.0
+5,False,True,False,test_vector_5,,3.0,5.0
+6,True,False,False,test_vector_6,,2.0,4.0
+7,True,True,False,test_vector_7,,5.0,7.0
+8,True,True,True,test_vector_8,,9.0,10.0
