@@ -199,4 +199,14 @@ public class OssFeatures {
    */
   public static final Feature<LgtmGrade> WORSE_LGTM_GRADE = new LgtmGradeFeature(
       "The worse LGTM grade of a project");
+
+  /**
+   * Shows if an open-source project uses verified signed commits.
+   * 
+   * @see <a link=
+   *      "https://help.github.com/en/github/authenticating-to-github/managing-commit-signature-verification">Managing
+   *      commit signature verification</a> on GitHub.
+   */
+  public static final Feature<Boolean> USES_VERIFIED_SIGNED_COMMITS =
+      new BooleanFeature("If a project uses verified signed commits");
 }
