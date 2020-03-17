@@ -14,6 +14,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.PROJEC
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SECURITY_REVIEWS_DONE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_VERIFIED_SIGNED_COMMITS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
 import static org.junit.Assert.assertEquals;
@@ -51,7 +52,8 @@ public class PrettyPrinterTest {
         SCANS_FOR_VULNERABLE_DEPENDENCIES.value(false),
         VULNERABILITIES.value(new Vulnerabilities()),
         PROJECT_START_DATE.value(new Date()),
-        FIRST_COMMIT_DATE.value(new Date()));
+        FIRST_COMMIT_DATE.value(new Date()),
+        USES_VERIFIED_SIGNED_COMMITS.value(false));
     RatingValue ratingValue = rating.calculate(values);
 
     PrettyPrinter printer = new PrettyPrinter();
@@ -91,7 +93,8 @@ public class PrettyPrinterTest {
         SCANS_FOR_VULNERABLE_DEPENDENCIES.value(false),
         VULNERABILITIES.value(new Vulnerabilities()),
         PROJECT_START_DATE.value(new Date()),
-        FIRST_COMMIT_DATE.value(new Date()));
+        FIRST_COMMIT_DATE.value(new Date()),
+        USES_VERIFIED_SIGNED_COMMITS.value(false));
     RatingValue ratingValue = rating.calculate(values);
 
     PrettyPrinter printer = new PrettyPrinter();
