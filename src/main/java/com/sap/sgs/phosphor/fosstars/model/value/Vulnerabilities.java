@@ -26,9 +26,7 @@ public class Vulnerabilities {
    * @param entries A number of vulnerabilities.
    */
   public Vulnerabilities(Vulnerability... entries) {
-    this(entries != null
-            ? setOf("You've provided duplicate vulnerabilities", entries)
-            : new HashSet<>());
+    this(entries != null ? setOf(entries) : new HashSet<>());
   }
 
   /**

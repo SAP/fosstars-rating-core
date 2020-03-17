@@ -24,36 +24,18 @@ public class Utils {
   /**
    * Converts a number of objects to a set. An exception is thrown if there is any duplicate.
    *
-   * @throws IllegalArgumentException if specified objects contain a duplicate.
+   * @param objects to be added to a set.
+   * @return A set of objects.
+   * @throws IllegalArgumentException if specified objects contain duplicates.
    */
-  public static <T> Set<T> setOf(String errorMessage, T... objects) {
-    Objects.requireNonNull(errorMessage, "Give me a error message but not a null please!");
-    Objects.requireNonNull(objects, "Give me objects but not a null please!");
+  public static <T> Set<T> setOf(T... objects) {
+    Objects.requireNonNull(objects, "Give me objects but not a null, please!");
     Set<T> set = new HashSet<>();
     for (T object : objects) {
       boolean added = set.add(object);
       if (!added) {
-        throw new IllegalArgumentException(String.format("%s %s", errorMessage, object.toString()));
-      }
-    }
-    return set;
-  }
-
-  /**
-   * Converts a number of values to a set of values.
-   * An exception is thrown if the values contains duplicates.
-   *
-   * @param values Values to be added to a set.
-   * @return A set of values.
-   * @throws IllegalArgumentException in case of duplicates.
-   */
-  public static Set<Value> setOf(Value... values) {
-    Objects.requireNonNull(values, "Give me values but not a null please!");
-    Set<Value> set = new HashSet<>();
-    for (Value value : values) {
-      boolean added = set.add(value);
-      if (!added) {
-        throw new IllegalArgumentException("You are supposed to give me unique values!");
+        throw new IllegalArgumentException(String.format(
+            "You're supposed to give me unique objects! Found a dup: %s", object));
       }
     }
     return set;

@@ -19,7 +19,7 @@ public final class FuzzingAttempts {
    * @param attempts A number of fuzzing attempts.
    */
   FuzzingAttempts(FuzzingAttempt... attempts) {
-    this(setOf("You've provided a duplicate fuzzing attempt!", attempts));
+    this(setOf(attempts));
   }
 
   /**

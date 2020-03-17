@@ -30,7 +30,7 @@ public final class SecurityReviews {
    * @param reviews An array of security reviews.
    */
   public SecurityReviews(SecurityReview... reviews) {
-    this(setOf("You gave me a duplicate security review!", reviews));
+    this(setOf(reviews));
   }
 
   /**
