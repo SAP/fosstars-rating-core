@@ -76,28 +76,30 @@ The output is going to look like the following:
 [+] Looking for vulnerabilities in NVD ...
 [+] Figuring out if the project belongs to the Apache Software Foundation ...
 [+] Figuring out if the project belongs to the Eclipse Software Foundation ...
+[+] Figuring out if the project uses any signed commits ...
 [+] Figuring out if the project uses OWASP Dependency Check ...
 [+] Here is what we know about the project:
 [+]    If an open-source project belongs to Eclipse Foundation: false
+[+]    If a project uses verified signed commits: false
 [+]    If an open-source project is regularly scanned for vulnerable dependencies: false
 [+]    If an open-source project has a security team: true
-[+]    Number of watchers for a GitHub repository: 78
+[+]    Number of watchers for a GitHub repository: 77
 [+]    If an open-source project has a security policy: false
 [+]    Info about vulnerabilities in open-source project: 8 vulnerabilities
-[+]    Number of stars for a GitHub repository: 924
+[+]    Number of stars for a GitHub repository: 926
 [+]    When first commit was done: Thu Jan 31 03:22:28 CET 2002
 [+]    Number of contributors in the last three months: 5
 [+]    When a project started: Thu Jan 31 03:22:28 CET 2002
 [+]    Security reviews for an open-source project: 0 security reviews
-[+]    Number of commits in the last three months: 139
+[+]    Number of commits in the last three months: 133
 [+]    If an open-source project belongs to Apache Foundation: true
 [+]    If an open-source project is supported by a company: false
-[+] Rating: 5.42 out of 10.00 -> MODERATE
+[+] Rating: 5.08 out of 10.00 -> MODERATE
 [+] Confidence: 10.00 out of 10.00
 [+]
 [+] Here is how the rating was calculated:
 [+]   Score:........Security of project
-[+]   Value:........5.42  out of 10.00
+[+]   Value:........5.08  out of 10.00
 [+]   Confidence:...10.00 out of 10.00
 [+]   Based on:.....7 sub-scores:
 [+]       Sub-score:....Security testing
@@ -117,10 +119,10 @@ The output is going to look like the following:
 [+]                     Here is how a number of contributors contributes to the score:
 [+]                     0 -> 1.40 (min), 1 -> 1.50, 8 -> 2.50, 500 -> 3.10 (max)
 [+]       Importance:...High (weight 0.91 out of 1.00)
-[+]       Value:........9.04  out of 10.00
+[+]       Value:........8.99  out of 10.00
 [+]       Confidence:...10.00 out of 10.00
 [+]       Based on:...2 features:
-[+]           Number of commits in the last three months:........139
+[+]           Number of commits in the last three months:........133
 [+]           Number of contributors in the last three months:...5
 [+]
 [+]       Sub-score:....Project popularity
@@ -133,8 +135,8 @@ The output is going to look like the following:
 [+]       Value:........1.18  out of 10.00
 [+]       Confidence:...10.00 out of 10.00
 [+]       Based on:...2 features:
-[+]           Number of stars for a GitHub repository:......924
-[+]           Number of watchers for a GitHub repository:...78
+[+]           Number of stars for a GitHub repository:......926
+[+]           Number of watchers for a GitHub repository:...77
 [+]
 [+]       Sub-score:....Community commitment
 [+]       Importance:...High (weight 0.73 out of 1.00)
@@ -156,14 +158,16 @@ The output is going to look like the following:
 [+]
 [+]       Sub-score:....Security awareness
 [+]       Description:..The score checks if a project has a security policy and a security team.
-[+]                     If the project has a security policy, then the score adds 5.00.
-[+]                     If the project has a security team, then the score adds 8.00.
+[+]                     If the project has a security policy, then the score adds 3.00.
+[+]                     If the project has a security team, then the score adds 5.00.
+[+]                     If the project uses verified signed commits, then the score adds 2.00.
 [+]       Importance:...Medium (weight 0.54 out of 1.00)
-[+]       Value:........8.00  out of 10.00
+[+]       Value:........5.00  out of 10.00
 [+]       Confidence:...10.00 out of 10.00
-[+]       Based on:...2 features:
-[+]           Does it have a security policy?....false
-[+]           Does it have a security team?......true
+[+]       Based on:...3 features:
+[+]           Does it have a security policy?.........false
+[+]           Does it have a security team?...........true
+[+]           Does it use verified signed commits?....false
 [+]
 [+]       Sub-score:....Unpatched vulnerabilities
 [+]       Importance:...Medium (weight 0.40 out of 1.00)
