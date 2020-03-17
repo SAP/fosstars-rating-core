@@ -13,6 +13,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.PROJEC
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SECURITY_REVIEWS_DONE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_VERIFIED_SIGNED_COMMITS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
 import static com.sap.sgs.phosphor.fosstars.model.qa.RatingVerification.loadTestVectorsFromCsvResource;
 import static com.sap.sgs.phosphor.fosstars.model.qa.TestVectorBuilder.newTestVector;
@@ -76,6 +77,7 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(UnknownValue.of(VULNERABILITIES))
           .set(UnknownValue.of(PROJECT_START_DATE))
           .set(UnknownValue.of(FIRST_COMMIT_DATE))
+          .set(UnknownValue.of(USES_VERIFIED_SIGNED_COMMITS))
           .expectedScore(DoubleInterval.closed(Score.MIN, 0.1))
           .make(),
 
@@ -95,6 +97,7 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(VULNERABILITIES.value(NO_VULNERABILITIES))
           .set(PROJECT_START_DATE.value(FIVE_YEARS_AGO))
           .set(FIRST_COMMIT_DATE.value(FIVE_YEARS_AGO))
+          .set(USES_VERIFIED_SIGNED_COMMITS.value(false))
           .expectedScore(DoubleInterval.closed(1.0, 4.0))
           .make(),
 
@@ -114,6 +117,7 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(VULNERABILITIES.value(NO_VULNERABILITIES))
           .set(PROJECT_START_DATE.value(FIVE_YEARS_AGO))
           .set(FIRST_COMMIT_DATE.value(FIVE_YEARS_AGO))
+          .set(USES_VERIFIED_SIGNED_COMMITS.value(true))
           .expectedScore(DoubleInterval.init().from(9.0).to(Score.MAX).make())
           .make()
   ));
