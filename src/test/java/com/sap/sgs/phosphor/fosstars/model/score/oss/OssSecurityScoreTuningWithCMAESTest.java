@@ -11,7 +11,6 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_WATCHERS_ON_GITHUB;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.PROJECT_START_DATE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES;
-import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SECURITY_REVIEWS_DONE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_VERIFIED_SIGNED_COMMITS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
@@ -24,14 +23,10 @@ import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.math.DoubleInterval;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
 import com.sap.sgs.phosphor.fosstars.model.qa.VerificationFailedException;
-import com.sap.sgs.phosphor.fosstars.model.value.SecurityReview;
-import com.sap.sgs.phosphor.fosstars.model.value.SecurityReviews;
 import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -41,18 +36,6 @@ import java.util.List;
 import org.junit.Test;
 
 public class OssSecurityScoreTuningWithCMAESTest {
-
-  private static final SecurityReviews NO_SECURITY_REVIEWS = new SecurityReviews();
-  private static final SecurityReviews ONE_SECURITY_REVIEW;
-
-  static {
-    try {
-      ONE_SECURITY_REVIEW = new SecurityReviews(
-          new SecurityReview(new URL("https://site/proof"), new Date(), "Wolfgang Amadeus Mozart"));
-    } catch (MalformedURLException e) {
-      throw new IllegalArgumentException("Looks like something is wrong with the URL", e);
-    }
-  }
 
   private static final Vulnerabilities NO_VULNERABILITIES = new Vulnerabilities();
   private static final Date FIVE_YEARS_AGO
@@ -73,7 +56,6 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(UnknownValue.of(HAS_SECURITY_POLICY))
           .set(UnknownValue.of(HAS_SECURITY_TEAM))
           .set(UnknownValue.of(SCANS_FOR_VULNERABLE_DEPENDENCIES))
-          .set(UnknownValue.of(SECURITY_REVIEWS_DONE))
           .set(UnknownValue.of(VULNERABILITIES))
           .set(UnknownValue.of(PROJECT_START_DATE))
           .set(UnknownValue.of(FIRST_COMMIT_DATE))
@@ -93,7 +75,6 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(HAS_SECURITY_POLICY.value(false))
           .set(HAS_SECURITY_TEAM.value(false))
           .set(SCANS_FOR_VULNERABLE_DEPENDENCIES.value(false))
-          .set(SECURITY_REVIEWS_DONE.value(NO_SECURITY_REVIEWS))
           .set(VULNERABILITIES.value(NO_VULNERABILITIES))
           .set(PROJECT_START_DATE.value(FIVE_YEARS_AGO))
           .set(FIRST_COMMIT_DATE.value(FIVE_YEARS_AGO))
@@ -113,7 +94,6 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(HAS_SECURITY_POLICY.value(true))
           .set(HAS_SECURITY_TEAM.value(true))
           .set(SCANS_FOR_VULNERABLE_DEPENDENCIES.value(true))
-          .set(SECURITY_REVIEWS_DONE.value(ONE_SECURITY_REVIEW))
           .set(VULNERABILITIES.value(NO_VULNERABILITIES))
           .set(PROJECT_START_DATE.value(FIVE_YEARS_AGO))
           .set(FIRST_COMMIT_DATE.value(FIVE_YEARS_AGO))

@@ -11,7 +11,6 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_WATCHERS_ON_GITHUB;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.PROJECT_START_DATE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES;
-import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SECURITY_REVIEWS_DONE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_VERIFIED_SIGNED_COMMITS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
@@ -26,7 +25,6 @@ import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
-import com.sap.sgs.phosphor.fosstars.model.value.SecurityReviews;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
 import java.util.Date;
 import java.util.Set;
@@ -47,7 +45,6 @@ public class PrettyPrinterTest {
         NUMBER_OF_WATCHERS_ON_GITHUB.value(5),
         HAS_SECURITY_TEAM.value(false),
         HAS_SECURITY_POLICY.value(false),
-        SECURITY_REVIEWS_DONE.value(SecurityReviews.NO_REVIEWS),
         SCANS_FOR_VULNERABLE_DEPENDENCIES.value(false),
         VULNERABILITIES.value(new Vulnerabilities()),
         PROJECT_START_DATE.value(new Date()),
@@ -88,7 +85,6 @@ public class PrettyPrinterTest {
         NUMBER_OF_WATCHERS_ON_GITHUB.value(5),
         HAS_SECURITY_TEAM.value(false),
         HAS_SECURITY_POLICY.value(false),
-        SECURITY_REVIEWS_DONE.value(SecurityReviews.NO_REVIEWS),
         SCANS_FOR_VULNERABLE_DEPENDENCIES.value(false),
         VULNERABILITIES.value(new Vulnerabilities()),
         PROJECT_START_DATE.value(new Date()),
