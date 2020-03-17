@@ -11,10 +11,12 @@ import com.sap.sgs.phosphor.fosstars.model.Visitor;
 import com.sap.sgs.phosphor.fosstars.model.Weight;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
+import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -106,9 +108,7 @@ public abstract class AbstractScore implements Score {
 
   @Override
   public Set<Feature> allFeatures() {
-    Set<Feature> allFeatures = new HashSet<>();
-    fillOutFeatures(this, allFeatures);
-    return Collections.unmodifiableSet(allFeatures);
+    return fillOutFeatures(this, new HashSet<>());
   }
 
   @Override
@@ -128,11 +128,21 @@ public abstract class AbstractScore implements Score {
     return Objects.hash(name, description);
   }
 
-  private static void fillOutFeatures(Score score, Set<Feature> allFeatures) {
+  /**
+   * Collect all features which are used by a specified score and its sub-scores.
+   * The method browses the underlying sub-scores recursively and adds features
+   * to a specified set.
+   *
+   * @param score The score.
+   * @param allFeatures A set of features to be filled out.
+   * @return The specified set of features.
+   */
+  private static Set<Feature> fillOutFeatures(Score score, Set<Feature> allFeatures) {
     allFeatures.addAll(score.features());
     for (Score subScore : score.subScores()) {
       fillOutFeatures(subScore, allFeatures);
     }
+    return allFeatures;
   }
 
   /**
@@ -150,5 +160,34 @@ public abstract class AbstractScore implements Score {
         Weight.MAX,
         Confidence.make(usedValues),
         Arrays.asList(usedValues));
+  }
+
+  /**
+   * The method tries to get a value for a specified score. First, the method checks
+   * if the set of values already contains a value for the specified score. If yes, the method
+   * just returns the existing value. Otherwise, the method tries to calculate a value
+   * of the specified score.
+   *
+   * @param score The score.
+   * @param values The set of values.
+   * @return A value of the specified score.
+   * @throws IllegalArgumentException If a value for the score is not a {@link ScoreValue}.
+   */
+  static ScoreValue calculateIfNecessary(Score score, ValueHashSet values) {
+    Optional<Value> something = values.of(score);
+
+    // if the set of values doesn't contains a value for the specified score, then calculate it
+    Value value = something.orElseGet(() -> UnknownValue.of(score));
+    if (value.isUnknown()) {
+      return score.calculate(values);
+    }
+
+    // if the set of values contains a value for the specified score, then return it
+    if (value instanceof ScoreValue) {
+      return (ScoreValue) value;
+    }
+
+    throw new IllegalArgumentException(String.format(
+        "Hey! I expected a ScoreValue for a score but got %s!", value.getClass()));
   }
 }

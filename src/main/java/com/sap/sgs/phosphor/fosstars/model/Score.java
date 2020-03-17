@@ -3,6 +3,7 @@ package com.sap.sgs.phosphor.fosstars.model;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.sap.sgs.phosphor.fosstars.model.math.DoubleInterval;
+import com.sap.sgs.phosphor.fosstars.model.score.AverageCompositeScore;
 import com.sap.sgs.phosphor.fosstars.model.score.WeightedCompositeScore;
 import com.sap.sgs.phosphor.fosstars.model.score.example.ProjectActivityScoreExample;
 import com.sap.sgs.phosphor.fosstars.model.score.example.SecurityScoreExample;
@@ -33,6 +34,7 @@ import java.util.Set;
     @JsonSubTypes.Type(value = ProjectActivityScoreExample.class),
     @JsonSubTypes.Type(value = SecurityTestingScoreExample.class),
     @JsonSubTypes.Type(value = WeightedCompositeScore.class),
+    @JsonSubTypes.Type(value = AverageCompositeScore.class),
     @JsonSubTypes.Type(value = ProjectActivityScore.class),
     @JsonSubTypes.Type(value = ProjectPopularityScore.class),
     @JsonSubTypes.Type(value = CommunityCommitmentScore.class),

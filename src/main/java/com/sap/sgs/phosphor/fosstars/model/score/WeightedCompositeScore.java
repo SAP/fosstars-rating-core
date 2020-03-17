@@ -11,7 +11,6 @@ import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.Visitor;
 import com.sap.sgs.phosphor.fosstars.model.Weight;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
-import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.model.weight.ImmutableWeight;
 import com.sap.sgs.phosphor.fosstars.model.weight.MutableWeight;
@@ -107,7 +106,10 @@ public class WeightedCompositeScore extends AbstractScore implements Tunable {
   }
 
   /**
-   * Calculate an overall score value as a weighted average of sub-scores.
+   * Calculate an overall score value as a weighted average of the underlying sub-scores.
+   *
+   * @param values A number of values.
+   * @return An overall score.
    */
   @Override
   public final ScoreValue calculate(Value... values) {
@@ -137,6 +139,12 @@ public class WeightedCompositeScore extends AbstractScore implements Tunable {
     return scoreValue;
   }
 
+  /**
+   * The score doesn't use any feature directory
+   * so that this method returns an empty set.
+   *
+   * @return An empty set of features.
+   */
   @Override
   public final Set<Feature> features() {
     return Collections.emptySet();
@@ -199,35 +207,6 @@ public class WeightedCompositeScore extends AbstractScore implements Tunable {
   @Override
   public int hashCode() {
     return Objects.hash(super.hashCode(), weightedScores);
-  }
-
-  /**
-   * The method tries to get a value for a specified score. First, the method checks
-   * if the set of values already contains a value for the specified score. If yes, the method
-   * just returns the existing value. Otherwise, the method tries to calculate a value
-   * of the specified score.
-   *
-   * @param score The score.
-   * @param values The set of values.
-   * @return A value of the specified score.
-   * @throws IllegalArgumentException If a value for the score is not a {@link ScoreValue}.
-   */
-  private static ScoreValue calculateIfNecessary(Score score, ValueHashSet values) {
-    Optional<Value> something = values.of(score);
-
-    // if the set of values doesn't contains a value for the specified score, then calculate it
-    Value value = something.orElseGet(() -> UnknownValue.of(score));
-    if (value.isUnknown()) {
-      return score.calculate(values);
-    }
-
-    // if the set of values contains a value for the specified score, then return it
-    if (value instanceof ScoreValue) {
-      return (ScoreValue) value;
-    }
-
-    throw new IllegalArgumentException(String.format(
-        "Hey! I expected a ScoreValue for a score but got %s!", value.getClass()));
   }
 
   /**
