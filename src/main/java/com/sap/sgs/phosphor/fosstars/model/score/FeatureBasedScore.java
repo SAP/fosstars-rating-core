@@ -27,7 +27,7 @@ public abstract class FeatureBasedScore extends AbstractScore {
    * @param features A number of features which are used in the score.
    */
   public FeatureBasedScore(String name, Feature... features) {
-    this(name, EMPTY_DESCRIPTION, setOf("You gave me a duplicate feature!", features));
+    this(name, EMPTY_DESCRIPTION, setOf(features));
   }
 
   /**
@@ -38,7 +38,7 @@ public abstract class FeatureBasedScore extends AbstractScore {
    * @param features A number of features which are used in the score.
    */
   public FeatureBasedScore(String name, String description, Feature... features) {
-    this(name, description, setOf("You gave me a duplicate feature!", features));
+    this(name, description, setOf(features));
   }
 
   /**
