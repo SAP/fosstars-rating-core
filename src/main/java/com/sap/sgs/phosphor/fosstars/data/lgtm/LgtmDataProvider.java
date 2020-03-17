@@ -1,7 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.data.lgtm;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM;
-import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.WORSE_LGTM_GRADE;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -67,7 +67,7 @@ public class LgtmDataProvider implements DataProvider {
   public DataProvider update(ValueSet values) {
     JsonNode json = lgtmProjectInfo();
     values.update(usesLgtm(json));
-    values.update(worseLgtmGrade(json));
+    values.update(worstLgtmGrade(json));
     return this;
   }
 
@@ -116,13 +116,13 @@ public class LgtmDataProvider implements DataProvider {
 
   /**
    * Parses a JSON response from the LGTM API
-   * and tries to figure out the worse grade for the project.
+   * and tries to figure out the worst grade for the project.
    *
    * @param json The JSON response from LGTM to be parsed.
-   * @return A value of the {@link OssFeatures#WORSE_LGTM_GRADE} feature.
+   * @return A value of the {@link OssFeatures#WORST_LGTM_GRADE} feature.
    */
-  private static Value<LgtmGrade> worseLgtmGrade(JsonNode json) {
-    LgtmGrade worseGrade = null;
+  private static Value<LgtmGrade> worstLgtmGrade(JsonNode json) {
+    LgtmGrade worstGrade = null;
     if (json.has("languages") && json.get("languages").isArray()) {
       for (JsonNode item : json.get("languages")) {
         if (!item.has("grade")) {
@@ -130,17 +130,17 @@ public class LgtmDataProvider implements DataProvider {
         }
 
         LgtmGrade grade = LgtmGrade.parse(item.get("grade").asText());
-        if (worseGrade == null || grade.compareTo(worseGrade) > 0) {
-          worseGrade = grade;
+        if (worstGrade == null || grade.compareTo(worstGrade) > 0) {
+          worstGrade = grade;
         }
       }
     }
 
-    if (worseGrade != null) {
-      return WORSE_LGTM_GRADE.value(worseGrade);
+    if (worstGrade != null) {
+      return WORST_LGTM_GRADE.value(worstGrade);
     }
 
-    return UnknownValue.of(WORSE_LGTM_GRADE);
+    return UnknownValue.of(WORST_LGTM_GRADE);
   }
 
   /**
@@ -156,7 +156,7 @@ public class LgtmDataProvider implements DataProvider {
 
     System.out.printf("[+] Uses LGTM:   %s%n",
         values.of(USES_LGTM).orElse(UnknownValue.of(USES_LGTM)));
-    System.out.printf("[+] Worse grade: %s%n",
-        values.of(WORSE_LGTM_GRADE).orElse(UnknownValue.of(WORSE_LGTM_GRADE)));
+    System.out.printf("[+] Worst grade: %s%n",
+        values.of(WORST_LGTM_GRADE).orElse(UnknownValue.of(WORST_LGTM_GRADE)));
   }
 }

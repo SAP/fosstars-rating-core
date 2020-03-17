@@ -1,7 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.data.lgtm;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM;
-import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.WORSE_LGTM_GRADE;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -51,10 +51,10 @@ public class LgtmDataProviderTest {
       assertFalse(values.of(USES_LGTM).get().isUnknown());
       assertEquals(USES_LGTM.value(true), values.of(USES_LGTM).get());
 
-      assertTrue(values.has(WORSE_LGTM_GRADE));
-      assertTrue(values.of(WORSE_LGTM_GRADE).isPresent());
-      assertFalse(values.of(WORSE_LGTM_GRADE).get().isUnknown());
-      assertEquals(WORSE_LGTM_GRADE.value(LgtmGrade.C), values.of(WORSE_LGTM_GRADE).get());
+      assertTrue(values.has(WORST_LGTM_GRADE));
+      assertTrue(values.of(WORST_LGTM_GRADE).isPresent());
+      assertFalse(values.of(WORST_LGTM_GRADE).get().isUnknown());
+      assertEquals(WORST_LGTM_GRADE.value(LgtmGrade.C), values.of(WORST_LGTM_GRADE).get());
     }
   }
 
@@ -89,9 +89,9 @@ public class LgtmDataProviderTest {
       assertFalse(values.of(USES_LGTM).get().isUnknown());
       assertEquals(USES_LGTM.value(false), values.of(USES_LGTM).get());
 
-      assertTrue(values.has(WORSE_LGTM_GRADE));
-      assertTrue(values.of(WORSE_LGTM_GRADE).isPresent());
-      assertTrue(values.of(WORSE_LGTM_GRADE).get().isUnknown());
+      assertTrue(values.has(WORST_LGTM_GRADE));
+      assertTrue(values.of(WORST_LGTM_GRADE).isPresent());
+      assertTrue(values.of(WORST_LGTM_GRADE).get().isUnknown());
     }
   }
 

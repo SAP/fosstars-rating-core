@@ -1,4 +1,4 @@
-,alias,score_from,score_to,label,If a project uses LGTM,The worse LGTM grade of a project
+,alias,score_from,score_to,label,If a project uses LGTM,The worst LGTM grade of a project
 0,test_vector_0,0.0,1.0,,unknown,unknown
 1,test_vector_1,0.0,1.0,,False,unknown
 2,test_vector_2,1.0,3.0,,True,E
