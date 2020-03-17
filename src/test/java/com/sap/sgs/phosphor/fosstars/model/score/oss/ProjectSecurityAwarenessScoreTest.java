@@ -15,20 +15,23 @@ public class ProjectSecurityAwarenessScoreTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void noInfoAboutSecurityAdvisories() {
-    PROJECT_SECURITY_AWARENESS.calculate(HAS_SECURITY_TEAM.value(false));
-    PROJECT_SECURITY_AWARENESS.calculate(USES_VERIFIED_SIGNED_COMMITS.value(false));
+    PROJECT_SECURITY_AWARENESS.calculate(
+        HAS_SECURITY_TEAM.value(false),
+        USES_VERIFIED_SIGNED_COMMITS.value(false));
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void noInfoAboutSecurityTeam() {
-    PROJECT_SECURITY_AWARENESS.calculate(HAS_SECURITY_POLICY.value(false));
-    PROJECT_SECURITY_AWARENESS.calculate(USES_VERIFIED_SIGNED_COMMITS.value(false));
+    PROJECT_SECURITY_AWARENESS.calculate(
+        HAS_SECURITY_POLICY.value(false),
+        USES_VERIFIED_SIGNED_COMMITS.value(false));
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void noInfoAboutSignedCommits() {
-    PROJECT_SECURITY_AWARENESS.calculate(HAS_SECURITY_POLICY.value(false));
-    PROJECT_SECURITY_AWARENESS.calculate(HAS_SECURITY_TEAM.value(false));
+    PROJECT_SECURITY_AWARENESS.calculate(
+        HAS_SECURITY_POLICY.value(false),
+        HAS_SECURITY_TEAM.value(false));
   }
 
   @Test
