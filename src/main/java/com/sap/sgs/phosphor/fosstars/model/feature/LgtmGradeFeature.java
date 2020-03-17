@@ -7,7 +7,7 @@ import com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGradeValue;
 
 /**
- * This feature contains the worse grade assigned by LGTM.
+ * This feature contains a grade assigned by LGTM.
  */
 public class LgtmGradeFeature extends AbstractFeature<LgtmGrade> {
 

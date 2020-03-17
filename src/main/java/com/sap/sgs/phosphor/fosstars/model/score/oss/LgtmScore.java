@@ -1,7 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.model.score.oss;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM;
-import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.WORSE_LGTM_GRADE;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.findValue;
 
 import com.sap.sgs.phosphor.fosstars.model.Confidence;
@@ -21,7 +21,7 @@ import java.util.List;
  * The score is based on the following features
  * <ul>
  *   <li>{@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#USES_LGTM}</li>
- *   <li>{@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#WORSE_LGTM_GRADE}</li>
+ *   <li>{@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#WORST_LGTM_GRADE}</li>
  * </ul>
  */
 public class LgtmScore extends FeatureBasedScore {
@@ -44,19 +44,19 @@ public class LgtmScore extends FeatureBasedScore {
    */
   LgtmScore() {
     super("How a project addresses issues reported by LGTM",
-        USES_LGTM, WORSE_LGTM_GRADE);
+        USES_LGTM, WORST_LGTM_GRADE);
   }
 
   @Override
   public ScoreValue calculate(Value... values) {
     Value<Boolean> usesLgtm = findValue(values, USES_LGTM,
         "Hey! You have to tell me if the project uses LGTM!");
-    Value<LgtmGrade> worseLgtmGrade = findValue(values, WORSE_LGTM_GRADE,
-        "Hey! You have to tell me the worse LGTM grade for the project!");
+    Value<LgtmGrade> worstLgtmGrade = findValue(values, WORST_LGTM_GRADE,
+        "Hey! You have to tell me the worst LGTM grade for the project!");
 
-    if (usesLgtm.isUnknown() && !worseLgtmGrade.isUnknown()) {
+    if (usesLgtm.isUnknown() && !worstLgtmGrade.isUnknown()) {
       throw new IllegalArgumentException(
-          "Hey! It's unknown if the project uses LGTM but then you gave me the worse grade!");
+          "Hey! It's unknown if the project uses LGTM but then you gave me the worst grade!");
     }
 
     ScoreValue scoreValue = new ScoreValue(this);
@@ -64,16 +64,16 @@ public class LgtmScore extends FeatureBasedScore {
     usesLgtm.processIfKnown(uses -> {
       if (uses) {
         scoreValue.increase(LGTM_USAGE_POINTS);
-      } else if (!worseLgtmGrade.isUnknown()) {
+      } else if (!worstLgtmGrade.isUnknown()) {
         throw new IllegalArgumentException(
-            "Hey! You told me that LGTM is not used but then provided the worse grade!");
+            "Hey! You told me that LGTM is not used but then provided the worst grade!");
       }
     });
 
-    worseLgtmGrade.processIfKnown(grade -> scoreValue.increase(GRADE_TO_POINTS.get(grade)));
+    worstLgtmGrade.processIfKnown(grade -> scoreValue.increase(GRADE_TO_POINTS.get(grade)));
 
-    scoreValue.confidence(Confidence.make(usesLgtm, worseLgtmGrade));
-    scoreValue.usedValues(usesLgtm, worseLgtmGrade);
+    scoreValue.confidence(Confidence.make(usesLgtm, worstLgtmGrade));
+    scoreValue.usedValues(usesLgtm, worstLgtmGrade);
 
     return scoreValue;
   }

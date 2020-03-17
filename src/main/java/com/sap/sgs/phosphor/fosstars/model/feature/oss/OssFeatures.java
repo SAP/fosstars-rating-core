@@ -195,10 +195,10 @@ public class OssFeatures {
   public static final Feature<Boolean> USES_LGTM = new BooleanFeature("If a project uses LGTM");
 
   /**
-   * Holds the worse grade assigned by <a href="https://lgtm.com">LGTM</a>.
+   * Holds the worst grade assigned by <a href="https://lgtm.com">LGTM</a>.
    */
-  public static final Feature<LgtmGrade> WORSE_LGTM_GRADE = new LgtmGradeFeature(
-      "The worse LGTM grade of a project");
+  public static final Feature<LgtmGrade> WORST_LGTM_GRADE = new LgtmGradeFeature(
+      "The worst LGTM grade of a project");
 
   /**
    * Shows if an open-source project uses verified signed commits.

@@ -2,7 +2,7 @@ package com.sap.sgs.phosphor.fosstars.model.score.oss;
 
 import static com.sap.sgs.phosphor.fosstars.TestUtils.assertScore;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM;
-import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.WORSE_LGTM_GRADE;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -20,21 +20,21 @@ public class LgtmScoreTest {
     assertFalse(score.name().isEmpty());
     assertEquals(2, score.features().size());
     assertTrue(score.features().contains(USES_LGTM));
-    assertTrue(score.features().contains(WORSE_LGTM_GRADE));
+    assertTrue(score.features().contains(WORST_LGTM_GRADE));
     assertTrue(score.subScores().isEmpty());
   }
 
   @Test
   public void calculate() {
     LgtmScore score = new LgtmScore();
-    assertScore(Score.INTERVAL, score, setOf(USES_LGTM.unknown(), WORSE_LGTM_GRADE.unknown()));
+    assertScore(Score.INTERVAL, score, setOf(USES_LGTM.unknown(), WORST_LGTM_GRADE.unknown()));
     assertScore(Score.INTERVAL, score,
-        setOf(USES_LGTM.value(true), WORSE_LGTM_GRADE.value(LgtmGrade.A_PLUS)));
+        setOf(USES_LGTM.value(true), WORST_LGTM_GRADE.value(LgtmGrade.A_PLUS)));
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void calculateWithoutUsesLgtmValue() {
-    new LgtmScore().calculate(WORSE_LGTM_GRADE.unknown());
+    new LgtmScore().calculate(WORST_LGTM_GRADE.unknown());
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -45,12 +45,12 @@ public class LgtmScoreTest {
   @Test(expected = IllegalArgumentException.class)
   public void doesNotUseLgtmButHasWorseGrade() {
     new LgtmScore().calculate(
-        USES_LGTM.value(false), WORSE_LGTM_GRADE.value(LgtmGrade.A_PLUS));
+        USES_LGTM.value(false), WORST_LGTM_GRADE.value(LgtmGrade.A_PLUS));
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void unknownUseLgtmButHasWorseGrade() {
     new LgtmScore().calculate(
-        USES_LGTM.unknown(), WORSE_LGTM_GRADE.value(LgtmGrade.A_PLUS));
+        USES_LGTM.unknown(), WORST_LGTM_GRADE.value(LgtmGrade.A_PLUS));
   }
 }
