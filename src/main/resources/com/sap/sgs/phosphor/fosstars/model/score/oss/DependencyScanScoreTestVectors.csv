@@ -1,0 +1,4 @@
+,alias,score_from,score_to,label,If an open-source project is regularly scanned for vulnerable dependencies
+0,test_vector_0,0.0,1.0,,unknown
+1,test_vector_1,0.0,1.0,,False
+2,test_vector_2,9.0,10.0,,True
