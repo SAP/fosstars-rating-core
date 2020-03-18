@@ -129,6 +129,25 @@ public abstract class AbstractScore implements Score {
   }
 
   /**
+   * Looks for a sub-score of a specified type.
+   *
+   * @param clazz The class which represents the type.
+   * @param <T> The type.
+   * @return A sub-score if found.
+   * @throws IllegalArgumentException If a sub-score was not found.
+   */
+  public <T extends Score> Score score(Class<T> clazz) {
+    Objects.requireNonNull(clazz, "Class can't be null!");
+    for (Score subScore : subScores()) {
+      if (clazz.equals(subScore.getClass())) {
+        return subScore;
+      }
+    }
+    throw new IllegalArgumentException(String.format(
+        "Sub-score %s not found", clazz.getCanonicalName()));
+  }
+
+  /**
    * Collect all features which are used by a specified score and its sub-scores.
    * The method browses the underlying sub-scores recursively and adds features
    * to a specified set.

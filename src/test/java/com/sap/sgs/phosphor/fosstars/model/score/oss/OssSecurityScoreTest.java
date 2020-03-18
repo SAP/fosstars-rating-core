@@ -12,8 +12,10 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.PROJECT_START_DATE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_VERIFIED_SIGNED_COMMITS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -25,6 +27,7 @@ import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.other.Utils;
+import com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
 import java.io.IOException;
@@ -73,7 +76,9 @@ public class OssSecurityScoreTest {
         VULNERABILITIES.value(new Vulnerabilities()),
         PROJECT_START_DATE.value(new Date()),
         FIRST_COMMIT_DATE.value(new Date()),
-        USES_VERIFIED_SIGNED_COMMITS.value(false));
+        USES_VERIFIED_SIGNED_COMMITS.value(false),
+        USES_LGTM.value(true),
+        WORST_LGTM_GRADE.value(LgtmGrade.B));
     ScoreValue scoreValue = score.calculate(values);
     assertTrue(Score.INTERVAL.contains(scoreValue.get()));
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
