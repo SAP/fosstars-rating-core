@@ -31,7 +31,7 @@ public class AverageCompositeScore extends AbstractScore {
    * @param name A name of the score.
    * @param subScores A number of sub-scores.
    */
-  AverageCompositeScore(String name, Score... subScores) {
+  public AverageCompositeScore(String name, Score... subScores) {
     this(name, setOf(subScores));
   }
 

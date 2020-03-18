@@ -12,8 +12,10 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.PROJECT_START_DATE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_VERIFIED_SIGNED_COMMITS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -24,6 +26,7 @@ import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating;
+import com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
 import java.util.Date;
@@ -49,7 +52,9 @@ public class PrettyPrinterTest {
         VULNERABILITIES.value(new Vulnerabilities()),
         PROJECT_START_DATE.value(new Date()),
         FIRST_COMMIT_DATE.value(new Date()),
-        USES_VERIFIED_SIGNED_COMMITS.value(false));
+        USES_VERIFIED_SIGNED_COMMITS.value(false),
+        USES_LGTM.value(true),
+        WORST_LGTM_GRADE.value(LgtmGrade.A));
     RatingValue ratingValue = rating.calculate(values);
 
     PrettyPrinter printer = new PrettyPrinter();
@@ -89,7 +94,9 @@ public class PrettyPrinterTest {
         VULNERABILITIES.value(new Vulnerabilities()),
         PROJECT_START_DATE.value(new Date()),
         FIRST_COMMIT_DATE.value(new Date()),
-        USES_VERIFIED_SIGNED_COMMITS.value(false));
+        USES_VERIFIED_SIGNED_COMMITS.value(false),
+        USES_LGTM.value(true),
+        WORST_LGTM_GRADE.value(LgtmGrade.A));
     RatingValue ratingValue = rating.calculate(values);
 
     PrettyPrinter printer = new PrettyPrinter();

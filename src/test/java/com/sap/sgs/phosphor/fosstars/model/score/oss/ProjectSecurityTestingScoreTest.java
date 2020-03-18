@@ -1,9 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.model.score.oss;
 
 import static com.sap.sgs.phosphor.fosstars.TestUtils.assertScore;
-import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import com.sap.sgs.phosphor.fosstars.model.Score;
@@ -25,21 +23,26 @@ public class ProjectSecurityTestingScoreTest {
     assertScore(
         Score.INTERVAL,
         PROJECT_SECURITY_TESTING,
-        setOf(SCANS_FOR_VULNERABLE_DEPENDENCIES.unknown()));
+        setOf(
+            PROJECT_SECURITY_TESTING.score(LgtmScore.class).value(Score.MIN),
+            PROJECT_SECURITY_TESTING.score(DependencyScanScore.class).value(Score.MIN)));
 
     assertScore(
         Score.INTERVAL,
         PROJECT_SECURITY_TESTING,
-        setOf(SCANS_FOR_VULNERABLE_DEPENDENCIES.value(true)));
+        setOf(
+            PROJECT_SECURITY_TESTING.score(LgtmScore.class).value(Score.MAX),
+            PROJECT_SECURITY_TESTING.score(DependencyScanScore.class).value(Score.MAX)));
   }
 
   @Test
   public void explanation() {
     ScoreValue value = PROJECT_SECURITY_TESTING.calculate(
-        SCANS_FOR_VULNERABLE_DEPENDENCIES.value(true));
+        PROJECT_SECURITY_TESTING.score(LgtmScore.class).value(Score.MAX / 3),
+        PROJECT_SECURITY_TESTING.score(DependencyScanScore.class).value(Score.MAX / 5));
 
     assertTrue(value.score().description().isEmpty());
-    assertEquals(1, value.explanation().size());
+    assertTrue(value.explanation().isEmpty());
   }
 
 }

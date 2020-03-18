@@ -105,7 +105,7 @@ class TestVectorList:
                 raise Exception('Wrong score_from!')
             if vector['score_to'] < 0 or vector['score_to'] > 10:
                 raise Exception('Wrong score_to!')
-            if vector['score_from'] >= vector['score_to']:
+            if vector['score_from'] > vector['score_to']:
                 raise Exception('score_from is greater than score_to!')
             if 'score_to' not in vector:
                 raise Exception('Missing score_to!')
