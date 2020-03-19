@@ -24,6 +24,7 @@ import com.sap.sgs.phosphor.fosstars.data.github.UnpatchedVulnerabilities;
 import com.sap.sgs.phosphor.fosstars.data.github.UsesOwaspDependencyCheck;
 import com.sap.sgs.phosphor.fosstars.data.github.UsesSnykDependencyCheck;
 import com.sap.sgs.phosphor.fosstars.data.github.VulnerabilitiesFromNvd;
+import com.sap.sgs.phosphor.fosstars.data.lgtm.LgtmDataProvider;
 import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
@@ -127,7 +128,8 @@ public class SecurityRatingCalculator {
         new CompositeDataProvider(
             new UsesOwaspDependencyCheck(where, name, github),
             new UsesSnykDependencyCheck(where, name, github)
-        ).stopWhenFilledOut(SCANS_FOR_VULNERABLE_DEPENDENCIES)
+        ).stopWhenFilledOut(SCANS_FOR_VULNERABLE_DEPENDENCIES),
+        new LgtmDataProvider(where, name)
     };
 
     OssSecurityRating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
@@ -145,6 +147,7 @@ public class SecurityRatingCalculator {
           value.feature(), value.isUnknown() ? "unknown" : value.get());
     }
 
+    System.out.println("[+]");
     RatingValue ratingValue = rating.calculate(values);
     System.out.print(new PrettyPrinter().print(ratingValue));
     System.out.printf("[+] Bye!%n");
