@@ -75,13 +75,12 @@ public class PrettyPrinter {
    */
   public String print(RatingValue ratingValue) {
     StringBuilder sb = new StringBuilder();
+    sb.append(String.format("[+] Here is how the rating was calculated:%n"));
+    sb.append(print(ratingValue.scoreValue(), INDENT_STEP, true));
     sb.append(String.format("[+] Rating: %2.2f out of %2.2f -> %s%n",
         ratingValue.score(), Score.MAX, ratingValue.label()));
     sb.append(String.format("[+] Confidence: %2.2f out of %2.2f%n",
         ratingValue.confidence(), Confidence.MAX));
-    sb.append("[+]\n");
-    sb.append(String.format("[+] Here is how the rating was calculated:%n"));
-    sb.append(print(ratingValue.scoreValue(), INDENT_STEP, true));
     return sb.toString();
   }
 
@@ -152,7 +151,7 @@ public class PrettyPrinter {
       int maxLength = 0;
       for (Value usedValue : featureValues) {
         String name = nameOf(usedValue.feature());
-        nameToValue.put(name, usedValue.get());
+        nameToValue.put(name, usedValue.isUnknown() ? "unknown" : usedValue.get());
         if (maxLength < name.length()) {
           maxLength = name.length();
         }

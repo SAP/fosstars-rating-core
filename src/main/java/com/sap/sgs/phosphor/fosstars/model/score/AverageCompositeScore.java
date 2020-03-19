@@ -80,7 +80,6 @@ public class AverageCompositeScore extends AbstractScore {
   @Override
   public ScoreValue calculate(Value... values) {
     ValueHashSet valueSet = new ValueHashSet(values);
-
     ScoreValue scoreValue = new ScoreValue(this);
 
     double subScoreSum = 0.0;

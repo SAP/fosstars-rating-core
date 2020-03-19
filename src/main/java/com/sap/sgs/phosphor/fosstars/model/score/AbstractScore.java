@@ -195,13 +195,13 @@ public abstract class AbstractScore implements Score {
   static ScoreValue calculateIfNecessary(Score score, ValueHashSet values) {
     Optional<Value> something = values.of(score);
 
-    // if the set of values doesn't contains a value for the specified score, then calculate it
+    // if the set of values doesn't contain a value for the specified score, then calculate it
     Value value = something.orElseGet(() -> UnknownValue.of(score));
     if (value.isUnknown()) {
       return score.calculate(values);
     }
 
-    // if the set of values contains a value for the specified score, then return it
+    // if the set of values contain a value for the specified score, then return it
     if (value instanceof ScoreValue) {
       return (ScoreValue) value;
     }
