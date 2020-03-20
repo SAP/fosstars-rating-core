@@ -3,21 +3,19 @@
   "name" : "Security score for open-source projects",
   "weightedScores" : [ {
     "score" : {
-      "type" : "CommunityCommitmentScore",
-      "name" : "How well open-source community commits to support an open-source project"
+      "type" : "ProjectSecurityTestingScore",
+      "name" : "How well security testing is done for an open-source project",
+      "subScores" : [ {
+        "type" : "DependencyScanScore",
+        "name" : "How a project scans its dependencies for vulnerabilities"
+      }, {
+        "type" : "LgtmScore",
+        "name" : "How a project addresses issues reported by LGTM"
+      } ]
     },
     "weight" : {
       "type" : "MutableWeight",
-      "value" : 0.730187683286869
-    }
-  }, {
-    "score" : {
-      "type" : "ProjectActivityScore",
-      "name" : "Open-source project activity score"
-    },
-    "weight" : {
-      "type" : "MutableWeight",
-      "value" : 0.9055537161983725
+      "value" : 0.6283118906878548
     }
   }, {
     "score" : {
@@ -26,25 +24,16 @@
     },
     "weight" : {
       "type" : "MutableWeight",
-      "value" : 0.39919170319550507
+      "value" : 0.8362090433439393
     }
   }, {
     "score" : {
-      "type" : "ProjectSecurityTestingScore",
-      "name" : "How well security testing is done for an open-source project"
+      "type" : "CommunityCommitmentScore",
+      "name" : "How well open-source community commits to support an open-source project"
     },
     "weight" : {
       "type" : "MutableWeight",
-      "value" : 0.9462060029594794
-    }
-  }, {
-    "score" : {
-      "type" : "VulnerabilityLifetimeScore",
-      "name" : "How fast vulnerabilities are patched"
-    },
-    "weight" : {
-      "type" : "MutableWeight",
-      "value" : 0.5910384868885997
+      "value" : 0.5529742430404292
     }
   }, {
     "score" : {
@@ -53,7 +42,25 @@
     },
     "weight" : {
       "type" : "MutableWeight",
-      "value" : 0.5390737714895961
+      "value" : 0.5383270608555468
+    }
+  }, {
+    "score" : {
+      "type" : "VulnerabilityLifetimeScore",
+      "name" : "How fast vulnerabilities are patched"
+    },
+    "weight" : {
+      "type" : "MutableWeight",
+      "value" : 0.22939855566110368
+    }
+  }, {
+    "score" : {
+      "type" : "ProjectActivityScore",
+      "name" : "Open-source project activity score"
+    },
+    "weight" : {
+      "type" : "MutableWeight",
+      "value" : 0.6300785405632551
     }
   }, {
     "score" : {
@@ -62,7 +69,7 @@
     },
     "weight" : {
       "type" : "MutableWeight",
-      "value" : 0.8397391072072166
+      "value" : 0.30515788031015273
     }
   } ]
 }

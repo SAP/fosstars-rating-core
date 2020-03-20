@@ -18,10 +18,11 @@ public class OssSecurityScoreVerification {
 
   @Test
   public void manyVerifications() throws IOException {
+    OssSecurityRating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
     boolean failed = false;
     for (int i = 0; i < 100; i++) {
       try {
-        OssSecurityScore.Verification.createFor(new OssSecurityScore()).run();
+        OssSecurityScore.Verification.createFor(rating.score()).run();
       } catch (VerificationFailedException e) {
         failed = true;
       }
