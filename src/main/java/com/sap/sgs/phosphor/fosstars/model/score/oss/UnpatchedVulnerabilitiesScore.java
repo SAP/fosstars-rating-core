@@ -32,12 +32,12 @@ public class UnpatchedVulnerabilitiesScore extends FeatureBasedScore {
   /**
    * The penalty for vulnerabilities with high severity.
    */
-  private static final double HIGH_SEVERITY_PENALTY = 10.0;
+  private static final double HIGH_SEVERITY_PENALTY = 8.0;
 
   /**
    * The penalty for vulnerabilities with medium severity.
    */
-  private static final double MEDIUM_SEVERITY_PENALTY = 2.0;
+  private static final double MEDIUM_SEVERITY_PENALTY = 4.0;
 
   /**
    * The penalty for vulnerabilities with low severity.
