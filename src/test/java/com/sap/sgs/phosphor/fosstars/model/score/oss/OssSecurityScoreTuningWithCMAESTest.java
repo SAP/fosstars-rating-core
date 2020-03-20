@@ -1,6 +1,5 @@
 package com.sap.sgs.phosphor.fosstars.model.score.oss;
 
-import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.FIRST_COMMIT_DATE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_TEAM;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.IS_APACHE;
@@ -62,7 +61,6 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(UnknownValue.of(SCANS_FOR_VULNERABLE_DEPENDENCIES))
           .set(UnknownValue.of(VULNERABILITIES))
           .set(UnknownValue.of(PROJECT_START_DATE))
-          .set(UnknownValue.of(FIRST_COMMIT_DATE))
           .set(UnknownValue.of(USES_VERIFIED_SIGNED_COMMITS))
           .set(UnknownValue.of(USES_LGTM))
           .set(UnknownValue.of(WORST_LGTM_GRADE))
@@ -83,7 +81,6 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(SCANS_FOR_VULNERABLE_DEPENDENCIES.value(false))
           .set(VULNERABILITIES.value(NO_VULNERABILITIES))
           .set(PROJECT_START_DATE.value(FIVE_YEARS_AGO))
-          .set(FIRST_COMMIT_DATE.value(FIVE_YEARS_AGO))
           .set(USES_VERIFIED_SIGNED_COMMITS.value(false))
           .set(USES_LGTM.value(false))
           .set(WORST_LGTM_GRADE.unknown())
@@ -104,7 +101,6 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(SCANS_FOR_VULNERABLE_DEPENDENCIES.value(true))
           .set(VULNERABILITIES.value(NO_VULNERABILITIES))
           .set(PROJECT_START_DATE.value(FIVE_YEARS_AGO))
-          .set(FIRST_COMMIT_DATE.value(FIVE_YEARS_AGO))
           .set(USES_VERIFIED_SIGNED_COMMITS.value(true))
           .set(USES_LGTM.value(true))
           .set(WORST_LGTM_GRADE.value(LgtmGrade.A_PLUS))

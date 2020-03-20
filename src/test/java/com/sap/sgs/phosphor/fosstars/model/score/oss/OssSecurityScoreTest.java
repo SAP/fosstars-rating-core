@@ -1,6 +1,5 @@
 package com.sap.sgs.phosphor.fosstars.model.score.oss;
 
-import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.FIRST_COMMIT_DATE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_TEAM;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.IS_APACHE;
@@ -75,7 +74,6 @@ public class OssSecurityScoreTest {
         SCANS_FOR_VULNERABLE_DEPENDENCIES.value(false),
         VULNERABILITIES.value(new Vulnerabilities()),
         PROJECT_START_DATE.value(new Date()),
-        FIRST_COMMIT_DATE.value(new Date()),
         USES_VERIFIED_SIGNED_COMMITS.value(false),
         USES_LGTM.value(true),
         WORST_LGTM_GRADE.value(LgtmGrade.B));
