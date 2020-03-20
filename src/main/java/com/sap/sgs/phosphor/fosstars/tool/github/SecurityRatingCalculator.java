@@ -10,7 +10,6 @@ import com.sap.sgs.phosphor.fosstars.data.NoUserCallback;
 import com.sap.sgs.phosphor.fosstars.data.Terminal;
 import com.sap.sgs.phosphor.fosstars.data.UserCallback;
 import com.sap.sgs.phosphor.fosstars.data.ValueCache;
-import com.sap.sgs.phosphor.fosstars.data.github.FirstCommit;
 import com.sap.sgs.phosphor.fosstars.data.github.HasCompanySupport;
 import com.sap.sgs.phosphor.fosstars.data.github.HasSecurityPolicy;
 import com.sap.sgs.phosphor.fosstars.data.github.HasSecurityTeam;
@@ -116,7 +115,6 @@ public class SecurityRatingCalculator {
         new NumberOfContributors(where, name, github),
         new NumberOfStars(where, name, github),
         new NumberOfWatchers(where, name, github),
-        new FirstCommit(where, name, github),
         new ProjectStarted(where, name, github),
         new HasSecurityTeam(where, name, github),
         new HasCompanySupport(where, name, github),

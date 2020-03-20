@@ -11,6 +11,16 @@ import java.util.Objects;
 public class CVSS {
 
   /**
+   * The minimum CVSS score.
+   */
+  public static final double MIN = 0.0;
+
+  /**
+   * The maximum CVSS score.
+   */
+  public static final double MAX = 10.0;
+
+  /**
    * An unknown CVSS score.
    */
   public static final CVSS UNKNOWN = new CVSS(Version.UNKNOWN, null);
@@ -118,7 +128,7 @@ public class CVSS {
     if (value == null) {
       return null;
     }
-    if (value < 0 || value > 10) {
+    if (value < MIN || value > MAX) {
       throw new IllegalArgumentException(String.format(
           "What the heck? %s doesn't look like a CVSS score!", value));
     }
