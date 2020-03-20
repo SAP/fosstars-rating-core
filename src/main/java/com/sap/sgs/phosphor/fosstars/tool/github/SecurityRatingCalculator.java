@@ -22,6 +22,7 @@ import com.sap.sgs.phosphor.fosstars.data.github.ProjectStarted;
 import com.sap.sgs.phosphor.fosstars.data.github.SecurityReviewForProject;
 import com.sap.sgs.phosphor.fosstars.data.github.UnpatchedVulnerabilities;
 import com.sap.sgs.phosphor.fosstars.data.github.UsesOwaspDependencyCheck;
+import com.sap.sgs.phosphor.fosstars.data.github.UsesSignedCommits;
 import com.sap.sgs.phosphor.fosstars.data.github.UsesSnykDependencyCheck;
 import com.sap.sgs.phosphor.fosstars.data.github.VulnerabilitiesFromNvd;
 import com.sap.sgs.phosphor.fosstars.data.lgtm.LgtmDataProvider;
@@ -129,7 +130,8 @@ public class SecurityRatingCalculator {
             new UsesOwaspDependencyCheck(where, name, github),
             new UsesSnykDependencyCheck(where, name, github)
         ).stopWhenFilledOut(SCANS_FOR_VULNERABLE_DEPENDENCIES),
-        new LgtmDataProvider(where, name)
+        new LgtmDataProvider(where, name),
+        new UsesSignedCommits(where, name, github, commandLine.getOptionValue("token"))
     };
 
     OssSecurityRating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);

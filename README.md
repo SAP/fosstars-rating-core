@@ -77,9 +77,10 @@ The output is going to look like the following:
 [+] Figuring out if the project belongs to the Apache Software Foundation ...
 [+] Figuring out if the project belongs to the Eclipse Software Foundation ...
 [+] Figuring out if the project uses OWASP Dependency Check ...
+[+] Figuring out if the project uses verified signed commits ...
 [+] Here is what we know about the project:
 [+]    If an open-source project belongs to Eclipse Foundation: false
-[+]    If a project uses verified signed commits: unknown
+[+]    If a project uses verified signed commits: false
 [+]    If an open-source project is regularly scanned for vulnerable dependencies: false
 [+]    If an open-source project has a security team: true
 [+]    If a project uses LGTM: true
@@ -99,7 +100,7 @@ The output is going to look like the following:
 [+] Here is how the rating was calculated:
 [+]   Score:........Security of project
 [+]   Value:........6.05  out of 10.00
-[+]   Confidence:...9.64  out of 10.00
+[+]   Confidence:...10.00 out of 10.00
 [+]   Based on:.....7 sub-scores:
 [+]       Sub-score:....Security testing
 [+]       Importance:...High (weight 0.95 out of 1.00)
@@ -173,11 +174,11 @@ The output is going to look like the following:
 [+]                     If the project uses verified signed commits, then the score adds 2.00.
 [+]       Importance:...Medium (weight 0.54 out of 1.00)
 [+]       Value:........5.00  out of 10.00
-[+]       Confidence:...6.67  out of 10.00
+[+]       Confidence:...10.00 out of 10.00
 [+]       Based on:...3 features:
 [+]           Does it have a security policy?.........false
 [+]           Does it have a security team?...........true
-[+]           Does it use verified signed commits?....unknown
+[+]           Does it use verified signed commits?....false
 [+]
 [+]       Sub-score:....Unpatched vulnerabilities
 [+]       Importance:...Medium (weight 0.40 out of 1.00)
@@ -188,7 +189,7 @@ The output is going to look like the following:
 [+]       Explanation:..No unpatched vulnerabilities found which is good
 [+]
 [+] Rating: 6.05 out of 10.00 -> MODERATE
-[+] Confidence: 9.64 out of 10.00
+[+] Confidence: 10.00 out of 10.00
 [+] Bye!
 ```
 
