@@ -1,0 +1,239 @@
+[
+    {
+        "sha": "eea29e729a07797c690ce9d5c076048a9b9dc322",
+        "node_id": "MDY6Q29tbWl0MjA5MDk3OTplZWEyOWU3MjlhMDc3OTdjNjkwY2U5ZDVjMDc2MDQ4YTliOWRjMzIy",
+        "commit": {
+            "author": {
+                "name": "Gary Russell",
+                "email": "grussell@pivotal.io",
+                "date": "2020-03-17T19:09:22Z"
+            },
+            "committer": {
+                "name": "GitHub",
+                "email": "noreply@github.com",
+                "date": "2020-03-17T19:09:22Z"
+            },
+            "message": "GH-3215: MQTT Event for failed connection outbound\n\nResolves https://github.com/spring-projects/spring-integration/issues/3215\r\n\r\n* Add docs; publish an event for an initial connection failure too.\r\n\r\n**Cherry-pick to 5.2.x**",
+            "tree": {
+                "sha": "0c2deebcd31ee99d18fa2547eef02412814c103f",
+                "url": "https://api.github.com/repos/spring-projects/spring-integration/git/trees/0c2deebcd31ee99d18fa2547eef02412814c103f"
+            },
+            "url": "https://api.github.com/repos/spring-projects/spring-integration/git/commits/eea29e729a07797c690ce9d5c076048a9b9dc322",
+            "comment_count": 0,
+            "verification": {
+                "verified": true,
+                "reason": "valid",
+                "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsBcBAABCAAQBQJecSBiCRBK7hj4Ov3rIwAAdHIIAGSUGREinb7f9JniYA6cYyZ/\nhI7CfA6zpIt4gHtpvzKz+amrd+1PdBnqQIm9yQUipHTa1MrQ+/C1ceLydfEVIqri\n0lDyGdNx8CTavhZGbr/xlpXqgp8Dk8NFdh3VSwAeMW+TxOrXGFZxR02VCVjSM9KK\neaScMZUEarnebuj6HlTeJqvVaGm81E71mmFCz2YUm6V+LYUaOmoFXT7afwvcSKn2\ngPjy3ysXGm/fA6fBBo+ecVhN6ILjgkhQdaS0d8iPpA7uBonOdKW1gqYqLItr0Bk/\nk1UkeOkQvE07Mw7wg8S1X7WkN9qsln2vxFkHXW1NX6GXEqMQEQ5lNCfqfRLMcbE=\n=2iwP\n-----END PGP SIGNATURE-----\n",
+                "payload": "tree 0c2deebcd31ee99d18fa2547eef02412814c103f\nparent 92421f75755991c7bf2b1773f53ed168731153df\nauthor Gary Russell <grussell@pivotal.io> 1584472162 -0400\ncommitter GitHub <noreply@github.com> 1584472162 -0400\n\nGH-3215: MQTT Event for failed connection outbound\n\nResolves https://github.com/spring-projects/spring-integration/issues/3215\r\n\r\n* Add docs; publish an event for an initial connection failure too.\r\n\r\n**Cherry-pick to 5.2.x**"
+            }
+        },
+        "url": "https://api.github.com/repos/spring-projects/spring-integration/commits/eea29e729a07797c690ce9d5c076048a9b9dc322",
+        "html_url": "https://github.com/spring-projects/spring-integration/commit/eea29e729a07797c690ce9d5c076048a9b9dc322",
+        "comments_url": "https://api.github.com/repos/spring-projects/spring-integration/commits/eea29e729a07797c690ce9d5c076048a9b9dc322/comments",
+        "author": {
+            "login": "garyrussell",
+            "id": 483832,
+            "node_id": "MDQ6VXNlcjQ4MzgzMg==",
+            "avatar_url": "https://avatars3.githubusercontent.com/u/483832?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/garyrussell",
+            "html_url": "https://github.com/garyrussell",
+            "followers_url": "https://api.github.com/users/garyrussell/followers",
+            "following_url": "https://api.github.com/users/garyrussell/following{/other_user}",
+            "gists_url": "https://api.github.com/users/garyrussell/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/garyrussell/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/garyrussell/subscriptions",
+            "organizations_url": "https://api.github.com/users/garyrussell/orgs",
+            "repos_url": "https://api.github.com/users/garyrussell/repos",
+            "events_url": "https://api.github.com/users/garyrussell/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/garyrussell/received_events",
+            "type": "User",
+            "site_admin": false
+        },
+        "committer": {
+            "login": "web-flow",
+            "id": 19864447,
+            "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+            "avatar_url": "https://avatars3.githubusercontent.com/u/19864447?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/web-flow",
+            "html_url": "https://github.com/web-flow",
+            "followers_url": "https://api.github.com/users/web-flow/followers",
+            "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+            "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+            "organizations_url": "https://api.github.com/users/web-flow/orgs",
+            "repos_url": "https://api.github.com/users/web-flow/repos",
+            "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/web-flow/received_events",
+            "type": "User",
+            "site_admin": false
+        },
+        "parents": [
+            {
+                "sha": "92421f75755991c7bf2b1773f53ed168731153df",
+                "url": "https://api.github.com/repos/spring-projects/spring-integration/commits/92421f75755991c7bf2b1773f53ed168731153df",
+                "html_url": "https://github.com/spring-projects/spring-integration/commit/92421f75755991c7bf2b1773f53ed168731153df"
+            }
+        ]
+    },
+    {
+        "sha": "92421f75755991c7bf2b1773f53ed168731153df",
+        "node_id": "MDY6Q29tbWl0MjA5MDk3OTo5MjQyMWY3NTc1NTk5MWM3YmYyYjE3NzNmNTNlZDE2ODczMTE1M2Rm",
+        "commit": {
+            "author": {
+                "name": "Artem Bilan",
+                "email": "abilan@pivotal.io",
+                "date": "2020-03-17T16:56:45Z"
+            },
+            "committer": {
+                "name": "GitHub",
+                "email": "noreply@github.com",
+                "date": "2020-03-17T16:56:45Z"
+            },
+            "message": "Add Kotlin wrappers for router specs (#3218)\n\n* Add Kotlin wrappers for router specs\r\n\r\nTo avoid casting and extra logic logic in the end-user code,\r\nit is better to provide Kotlin-specific API to let end-users to\r\ndo whatever is really dictated by API and don't think about specific types to cast\r\n\r\n* * Fix typos; code clean up",
+            "tree": {
+                "sha": "c08883063a18890a6fec5eaf57169c43e4e913eb",
+                "url": "https://api.github.com/repos/spring-projects/spring-integration/git/trees/c08883063a18890a6fec5eaf57169c43e4e913eb"
+            },
+            "url": "https://api.github.com/repos/spring-projects/spring-integration/git/commits/92421f75755991c7bf2b1773f53ed168731153df",
+            "comment_count": 0,
+            "verification": {
+                "verified": true,
+                "reason": "valid",
+                "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsBcBAABCAAQBQJecQFNCRBK7hj4Ov3rIwAAdHIIAAicmXor5GgOUQ9uKqgbJqPg\nXZTUYGfFp0YRpyOd9QH6H5rOAjfsHFxXxMuEvvJBBIA8MPAKWP+YRrCvdpKiZ1h+\nPKt78XFns8ly7iLGWsUvJCk6uqNcQAM0z9BCua3t9oh5J0Zz5GrlPx07Mi8xEMMt\ndtBPaPbtNF49bmj67IHFUddogbDIzSopqjYlz64t9VI65+9kg0T+lPWphqnO/yUZ\nbE6SJZm7E0m34d/x+magquJcSOks2MocVa2/PifopLWt89S2yPVZwT1DpSfzF4Mw\nRxLzZd4fOuLFatnGMvazXwvAHIDIznW17nZVAraNJ51Rb1UKBgO/br6eZJ02IAA=\n=GQ4I\n-----END PGP SIGNATURE-----\n",
+                "payload": "tree c08883063a18890a6fec5eaf57169c43e4e913eb\nparent 71e6b27b41d20166593b37dc90b3049b487692fa\nauthor Artem Bilan <abilan@pivotal.io> 1584464205 -0400\ncommitter GitHub <noreply@github.com> 1584464205 -0400\n\nAdd Kotlin wrappers for router specs (#3218)\n\n* Add Kotlin wrappers for router specs\r\n\r\nTo avoid casting and extra logic logic in the end-user code,\r\nit is better to provide Kotlin-specific API to let end-users to\r\ndo whatever is really dictated by API and don't think about specific types to cast\r\n\r\n* * Fix typos; code clean up"
+            }
+        },
+        "url": "https://api.github.com/repos/spring-projects/spring-integration/commits/92421f75755991c7bf2b1773f53ed168731153df",
+        "html_url": "https://github.com/spring-projects/spring-integration/commit/92421f75755991c7bf2b1773f53ed168731153df",
+        "comments_url": "https://api.github.com/repos/spring-projects/spring-integration/commits/92421f75755991c7bf2b1773f53ed168731153df/comments",
+        "author": {
+            "login": "artembilan",
+            "id": 1071590,
+            "node_id": "MDQ6VXNlcjEwNzE1OTA=",
+            "avatar_url": "https://avatars3.githubusercontent.com/u/1071590?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/artembilan",
+            "html_url": "https://github.com/artembilan",
+            "followers_url": "https://api.github.com/users/artembilan/followers",
+            "following_url": "https://api.github.com/users/artembilan/following{/other_user}",
+            "gists_url": "https://api.github.com/users/artembilan/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/artembilan/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/artembilan/subscriptions",
+            "organizations_url": "https://api.github.com/users/artembilan/orgs",
+            "repos_url": "https://api.github.com/users/artembilan/repos",
+            "events_url": "https://api.github.com/users/artembilan/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/artembilan/received_events",
+            "type": "User",
+            "site_admin": false
+        },
+        "committer": {
+            "login": "web-flow",
+            "id": 19864447,
+            "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+            "avatar_url": "https://avatars3.githubusercontent.com/u/19864447?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/web-flow",
+            "html_url": "https://github.com/web-flow",
+            "followers_url": "https://api.github.com/users/web-flow/followers",
+            "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+            "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+            "organizations_url": "https://api.github.com/users/web-flow/orgs",
+            "repos_url": "https://api.github.com/users/web-flow/repos",
+            "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/web-flow/received_events",
+            "type": "User",
+            "site_admin": false
+        },
+        "parents": [
+            {
+                "sha": "71e6b27b41d20166593b37dc90b3049b487692fa",
+                "url": "https://api.github.com/repos/spring-projects/spring-integration/commits/71e6b27b41d20166593b37dc90b3049b487692fa",
+                "html_url": "https://github.com/spring-projects/spring-integration/commit/71e6b27b41d20166593b37dc90b3049b487692fa"
+            }
+        ]
+    },
+    {
+        "sha": "71e6b27b41d20166593b37dc90b3049b487692fa",
+        "node_id": "MDY6Q29tbWl0MjA5MDk3OTo3MWU2YjI3YjQxZDIwMTY2NTkzYjM3ZGM5MGIzMDQ5YjQ4NzY5MmZh",
+        "commit": {
+            "author": {
+                "name": "Zach Shutters",
+                "email": "zachshutters@gmail.com",
+                "date": "2020-03-16T17:28:23Z"
+            },
+            "committer": {
+                "name": "GitHub",
+                "email": "noreply@github.com",
+                "date": "2020-03-16T17:28:23Z"
+            },
+            "message": "GH-3216: Fix doc for outbound file adapter\n\nFixes https://github.com/spring-projects/spring-integration/issues/3216",
+            "tree": {
+                "sha": "1ce5488c291adf8cb0df528e46424b0b05a9ca02",
+                "url": "https://api.github.com/repos/spring-projects/spring-integration/git/trees/1ce5488c291adf8cb0df528e46424b0b05a9ca02"
+            },
+            "url": "https://api.github.com/repos/spring-projects/spring-integration/git/commits/71e6b27b41d20166593b37dc90b3049b487692fa",
+            "comment_count": 0,
+            "verification": {
+                "verified": true,
+                "reason": "valid",
+                "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsBcBAABCAAQBQJeb7c3CRBK7hj4Ov3rIwAAdHIIACMl2XxawXiYTJY1hQTn37oy\nMrXkvxepdCBJewARLy6Nf4YHVM2+Sez8vwnf27IDodthHRgjHb8VSGWYxdTLpwdg\n6EQ5uEz4VG2rRlXPwok38+ia42qQInlmiEti90oShKP/7dk9pSsx+aFA/zbGx6rk\nZRknXfw2BhgcRBZYyfKOS2BL7VowIoj9sexpMPkbZ1CtHVePU3KceqSKadxFB50W\nqHh1b3UQyMYxlqA7sbjxonypksHrvzVlWogzC5PQv1qWqjBEYvR8aKWX3U1ynlZF\nJcboNGn2zNX42KeQnhWoU5IH9n1ViMAGdcmtdO6LWINfofWm9exA9rgE+OM7hcw=\n=E4Ow\n-----END PGP SIGNATURE-----\n",
+                "payload": "tree 1ce5488c291adf8cb0df528e46424b0b05a9ca02\nparent 3058345648daff2e3be76a0afc8a790ede997941\nauthor Zach Shutters <zachshutters@gmail.com> 1584379703 -0400\ncommitter GitHub <noreply@github.com> 1584379703 -0400\n\nGH-3216: Fix doc for outbound file adapter\n\nFixes https://github.com/spring-projects/spring-integration/issues/3216"
+            }
+        },
+        "url": "https://api.github.com/repos/spring-projects/spring-integration/commits/71e6b27b41d20166593b37dc90b3049b487692fa",
+        "html_url": "https://github.com/spring-projects/spring-integration/commit/71e6b27b41d20166593b37dc90b3049b487692fa",
+        "comments_url": "https://api.github.com/repos/spring-projects/spring-integration/commits/71e6b27b41d20166593b37dc90b3049b487692fa/comments",
+        "author": {
+            "login": "zachshutters",
+            "id": 11064904,
+            "node_id": "MDQ6VXNlcjExMDY0OTA0",
+            "avatar_url": "https://avatars0.githubusercontent.com/u/11064904?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/zachshutters",
+            "html_url": "https://github.com/zachshutters",
+            "followers_url": "https://api.github.com/users/zachshutters/followers",
+            "following_url": "https://api.github.com/users/zachshutters/following{/other_user}",
+            "gists_url": "https://api.github.com/users/zachshutters/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/zachshutters/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/zachshutters/subscriptions",
+            "organizations_url": "https://api.github.com/users/zachshutters/orgs",
+            "repos_url": "https://api.github.com/users/zachshutters/repos",
+            "events_url": "https://api.github.com/users/zachshutters/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/zachshutters/received_events",
+            "type": "User",
+            "site_admin": false
+        },
+        "committer": {
+            "login": "web-flow",
+            "id": 19864447,
+            "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+            "avatar_url": "https://avatars3.githubusercontent.com/u/19864447?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/web-flow",
+            "html_url": "https://github.com/web-flow",
+            "followers_url": "https://api.github.com/users/web-flow/followers",
+            "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+            "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+            "organizations_url": "https://api.github.com/users/web-flow/orgs",
+            "repos_url": "https://api.github.com/users/web-flow/repos",
+            "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/web-flow/received_events",
+            "type": "User",
+            "site_admin": false
+        },
+        "parents": [
+            {
+                "sha": "3058345648daff2e3be76a0afc8a790ede997941",
+                "url": "https://api.github.com/repos/spring-projects/spring-integration/commits/3058345648daff2e3be76a0afc8a790ede997941",
+                "html_url": "https://github.com/spring-projects/spring-integration/commit/3058345648daff2e3be76a0afc8a790ede997941"
+            }
+        ]
+    }
+]
