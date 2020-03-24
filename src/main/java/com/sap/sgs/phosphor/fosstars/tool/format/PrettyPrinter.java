@@ -1,4 +1,4 @@
-package com.sap.sgs.phosphor.fosstars.tool;
+package com.sap.sgs.phosphor.fosstars.tool.format;
 
 import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
@@ -28,7 +28,7 @@ import java.util.TreeMap;
 /**
  * The class print a pretty rating value.
  */
-public class PrettyPrinter {
+public class PrettyPrinter implements Formatter {
 
   private static final String INDENT_STEP = "  ";
 

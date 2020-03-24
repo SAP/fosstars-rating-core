@@ -1,4 +1,4 @@
-package com.sap.sgs.phosphor.fosstars.tool;
+package com.sap.sgs.phosphor.fosstars.tool.format;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.FIRST_COMMIT_DATE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
