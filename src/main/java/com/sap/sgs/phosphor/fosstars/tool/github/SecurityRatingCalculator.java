@@ -3,6 +3,7 @@ package com.sap.sgs.phosphor.fosstars.tool.github;
 import com.sap.sgs.phosphor.fosstars.data.NoUserCallback;
 import com.sap.sgs.phosphor.fosstars.data.Terminal;
 import com.sap.sgs.phosphor.fosstars.data.UserCallback;
+import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import com.sap.sgs.phosphor.fosstars.tool.InputString;
 import com.sap.sgs.phosphor.fosstars.tool.YesNoQuestion;
 import com.sap.sgs.phosphor.fosstars.tool.YesNoQuestion.Answer;
@@ -18,6 +19,9 @@ import org.kohsuke.github.GitHub;
 
 public class SecurityRatingCalculator {
 
+  /**
+   * A usage message.
+   */
   private static final String USAGE =
       "java -jar fosstars-github-rating-calc.jar [options]";
 
@@ -74,8 +78,11 @@ public class SecurityRatingCalculator {
         .set(callback)
         .process(project);
 
+    RatingValue ratingValue = project.ratingValue()
+        .orElseThrow(() -> new IOException("Could not calculate a rating!"));
+
     System.out.println("[+]");
-    System.out.print(new PrettyPrinter().print(project.ratingValue()));
+    System.out.print(new PrettyPrinter().print(ratingValue));
     System.out.printf("[+] Bye!%n");
   }
 
