@@ -1,7 +1,7 @@
 # Open-source security rating
 
 This section describes a security rating for open-source projects.
-The rating is implemented in the [OssSecurityRating](../src/main/java/com/sap/sgs/phosphor/fosstars/model/rating/oss/OssSecurityRating.java) class.
+The rating is implemented in the [OssSecurityRating](https://github.com/SAP/fosstars-rating-core/blob/master/src/main/java/com/sap/sgs/phosphor/fosstars/model/rating/oss/OssSecurityRating.java) class.
 
 ![open-source security rating structure](oss_security_rating.png)
 
@@ -9,7 +9,7 @@ The rating is implemented in the [OssSecurityRating](../src/main/java/com/sap/sg
 
 Here is a list of features which are currently used in the open-source security rating.
 Implementations of the features can be found in
-[com.sap.sgs.phosphor.fosstars.model.feature.oss](../src/main/java/com/sap/sgs/phosphor/fosstars/model/feature/oss) package.
+[com.sap.sgs.phosphor.fosstars.model.feature.oss](https://github.com/SAP/fosstars-rating-core/blob/master/src/main/java/com/sap/sgs/phosphor/fosstars/model/feature/oss) package.
 
 1.  Info about vulnerabilities in open-source project.
 1.  If an open-source project is regularly scanned for vulnerable dependencies.
@@ -29,10 +29,10 @@ Implementations of the features can be found in
 ## Scores
 
 The open-source security rating is based on open-source security score
-which is implemented in the [OssSecurityScore](../src/main/java/com/sap/sgs/phosphor/fosstars/model/score/oss/OssSecurityScore.java) class.
+which is implemented in the [OssSecurityScore](https://github.com/SAP/fosstars-rating-core/blob/master/src/main/java/com/sap/sgs/phosphor/fosstars/model/score/oss/OssSecurityScore.java) class.
 
 Here is a list of sub-scores which are currently used in the open-source security score.
-Implementations for all the scores can be found in the [com.sap.sgs.phosphor.fosstars.model.score.oss](../src/main/java/com/sap/sgs/phosphor/fosstars/model/score/oss) package.
+Implementations for all the scores can be found in the [com.sap.sgs.phosphor.fosstars.model.score.oss](https://github.com/SAP/fosstars-rating-core/blob/master/src/main/java/com/sap/sgs/phosphor/fosstars/model/score/oss) package.
 
 1.  Security testing score based on the following features:
     1.  If an open-source project is regularly scanned for vulnerable dependencies.
