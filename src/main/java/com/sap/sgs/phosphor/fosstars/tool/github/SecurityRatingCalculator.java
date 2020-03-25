@@ -17,6 +17,10 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.kohsuke.github.GitHub;
 
+/**
+ * This is a command line tool for calculating security ratings for one
+ * of multiple open-source projects.
+ */
 public class SecurityRatingCalculator {
 
   /**
@@ -76,7 +80,7 @@ public class SecurityRatingCalculator {
     new SingleSecurityRatingCalculator(github)
         .token(commandLine.getOptionValue("token"))
         .set(callback)
-        .process(project);
+        .calculateFor(project);
 
     RatingValue ratingValue = project.ratingValue()
         .orElseThrow(() -> new IOException("Could not calculate a rating!"));
@@ -103,6 +107,7 @@ public class SecurityRatingCalculator {
       System.out.println("    5. Click the 'Generate token' button");
       System.out.println("    6. Copy your new token");
       System.out.println("    7. Paste the token here");
+
       Answer answer = new YesNoQuestion(callback, "Would you like to create a token now?").ask();
       switch (answer) {
         case YES:
@@ -123,6 +128,7 @@ public class SecurityRatingCalculator {
               String.format("Not sure what I can do with '%s'", answer));
       }
     }
+
     if (token != null) {
       try {
         return GitHub.connectUsingOAuth(token);
@@ -132,11 +138,13 @@ public class SecurityRatingCalculator {
     } else {
       System.out.printf("[!] No token provided%n");
     }
+
     try {
       return GitHub.connect();
     } catch (IOException e) {
       System.out.printf("[x] Something went wrong: %s%n", e);
     }
+
     try {
       GitHub github = GitHub.connectAnonymously();
       System.out.println("[!] We have established only an anonymous connection to GitHub ...");
@@ -144,6 +152,7 @@ public class SecurityRatingCalculator {
     } catch (IOException e) {
       System.out.printf("[x] Something went wrong: %s%n", e);
     }
+
     return null;
   }
 }

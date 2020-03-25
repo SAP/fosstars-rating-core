@@ -1,10 +1,49 @@
 package com.sap.sgs.phosphor.fosstars.tool.github;
 
+import java.io.IOException;
 import java.util.List;
+import org.kohsuke.github.GitHub;
 
-public class MultipleSecurityRatingsCalculator {
+/**
+ * The class calculates security ratings for multiple open-source projects.
+ */
+class MultipleSecurityRatingsCalculator extends AbstractRatingCalculator {
 
-  void process(List<GitHubProject> repositories) {
-    throw new UnsupportedOperationException("No ratings for you!");
+  /**
+   * Initializes a new calculator.
+   *
+   * @param github An interface to GitHub.
+   */
+  MultipleSecurityRatingsCalculator(GitHub github) {
+    super(github);
   }
+
+  @Override
+  MultipleSecurityRatingsCalculator calculateFor(GitHubProject project) throws IOException {
+    singleSecurityRatingCalculator().calculateFor(project);
+    return this;
+  }
+
+  /**
+   * Calculates ratings for specified projects.
+   *
+   * @param projects The projects.
+   * @throws IOException If something went wrong.
+   */
+  MultipleSecurityRatingsCalculator calculateFor(List<GitHubProject> projects) throws IOException {
+    for (GitHubProject project : projects) {
+      calculateFor(project);
+    }
+    return this;
+  }
+
+  /**
+   * Creates a {@link SingleSecurityRatingCalculator} for calculating a rating for a single project.
+   *
+   * @return An instance of {@link SingleSecurityRatingCalculator}.
+   */
+  AbstractRatingCalculator singleSecurityRatingCalculator() {
+    return new SingleSecurityRatingCalculator(github).token(token).set(callback);
+  }
+
 }

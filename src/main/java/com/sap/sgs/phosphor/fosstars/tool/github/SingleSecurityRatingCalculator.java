@@ -6,8 +6,6 @@ import com.sap.sgs.phosphor.fosstars.data.CompositeDataProvider;
 import com.sap.sgs.phosphor.fosstars.data.DataProvider;
 import com.sap.sgs.phosphor.fosstars.data.IsApache;
 import com.sap.sgs.phosphor.fosstars.data.IsEclipse;
-import com.sap.sgs.phosphor.fosstars.data.NoUserCallback;
-import com.sap.sgs.phosphor.fosstars.data.UserCallback;
 import com.sap.sgs.phosphor.fosstars.data.ValueCache;
 import com.sap.sgs.phosphor.fosstars.data.github.HasCompanySupport;
 import com.sap.sgs.phosphor.fosstars.data.github.HasSecurityPolicy;
@@ -32,62 +30,37 @@ import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.sgs.phosphor.fosstars.model.value.VulnerabilitiesValue;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 import org.kohsuke.github.GitHub;
 
-public class SingleSecurityRatingCalculator {
+/**
+ * The class calculates a security rating for a single open-source project.
+ */
+class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
 
-  private final GitHub github;
-  private String token;
-  private UserCallback callback = NoUserCallback.INSTANCE;
-
-  public SingleSecurityRatingCalculator(GitHub github) {
-    this.github = github;
+  /**
+   * Initializes a new calculator.
+   *
+   * @param github An interface to GitHub.
+   */
+  SingleSecurityRatingCalculator(GitHub github) {
+    super(github);
   }
 
-  public SingleSecurityRatingCalculator token(String token) {
-    this.token = token;
-    return this;
-  }
-
-  public SingleSecurityRatingCalculator set(UserCallback callback) {
-    this.callback = callback;
-    return this;
-  }
-
-  void process(GitHubProject gitHubProject) throws IOException {
-    String where = gitHubProject.organization().name();
-    String name = gitHubProject.name();
-
-    Value<Vulnerabilities> vulnerabilities = new VulnerabilitiesValue();
-
-    DataProvider[] providers = {
-        new NumberOfCommits(where, name, github),
-        new NumberOfContributors(where, name, github),
-        new NumberOfStars(where, name, github),
-        new NumberOfWatchers(where, name, github),
-        new ProjectStarted(where, name, github),
-        new HasSecurityTeam(where, name, github),
-        new HasCompanySupport(where, name, github),
-        new HasSecurityPolicy(where, name, github),
-        new SecurityReviewForProject(where, name, github),
-        new UnpatchedVulnerabilities(where, name, github, vulnerabilities),
-        new VulnerabilitiesFromNvd(where, name, github, vulnerabilities),
-        new IsApache(where),
-        new IsEclipse(where),
-        new CompositeDataProvider(
-            new UsesOwaspDependencyCheck(where, name, github),
-            new UsesSnykDependencyCheck(where, name, github)
-        ).stopWhenFilledOut(SCANS_FOR_VULNERABLE_DEPENDENCIES),
-        new LgtmDataProvider(where, name),
-        new UsesSignedCommits(where, name, github, token)
-    };
+  @Override
+  SingleSecurityRatingCalculator calculateFor(GitHubProject project) throws IOException {
+    Objects.requireNonNull(project, "Oh no! Project can't be null!");
+    String where = project.organization().name();
+    String name = project.name();
 
     OssSecurityRating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
 
-    System.out.printf("[+] Project: %s%n", gitHubProject.url());
+    System.out.printf("[+] Project: %s%n", project.url());
     System.out.printf("[+] Let's get info about the project and calculate a security rating%n");
     ValueSet values = ValueHashSet.unknown(rating.allFeatures());
-    for (DataProvider provider : providers) {
+    for (DataProvider provider : dataProviders(where, name)) {
       provider.set(callback).update(values);
     }
 
@@ -100,7 +73,44 @@ public class SingleSecurityRatingCalculator {
     // store the default value cache
     ValueCache.shared().store();
 
-    gitHubProject.set(rating.calculate(values));
+    project.set(rating.calculate(values));
+
+    return this;
+  }
+
+  /**
+   * Returns a list of data providers which the calculator supports.
+   * The data providers are initialized to gather information about
+   * a specified project.
+   *
+   * @param organization Organization's name.
+   * @param project Project's name.
+   * @return A list of data providers.
+   * @throws IOException If something went wrong.
+   */
+  List<DataProvider> dataProviders(String organization, String project) throws IOException {
+    Value<Vulnerabilities> vulnerabilities = new VulnerabilitiesValue();
+    return Arrays.asList(
+        new NumberOfCommits(organization, project, github),
+        new NumberOfContributors(organization, project, github),
+        new NumberOfStars(organization, project, github),
+        new NumberOfWatchers(organization, project, github),
+        new ProjectStarted(organization, project, github),
+        new HasSecurityTeam(organization, project, github),
+        new HasCompanySupport(organization, project, github),
+        new HasSecurityPolicy(organization, project, github),
+        new SecurityReviewForProject(organization, project, github),
+        new UnpatchedVulnerabilities(organization, project, github, vulnerabilities),
+        new VulnerabilitiesFromNvd(organization, project, github, vulnerabilities),
+        new IsApache(organization),
+        new IsEclipse(organization),
+        new CompositeDataProvider(
+            new UsesOwaspDependencyCheck(organization, project, github),
+            new UsesSnykDependencyCheck(organization, project, github)
+        ).stopWhenFilledOut(SCANS_FOR_VULNERABLE_DEPENDENCIES),
+        new LgtmDataProvider(organization, project),
+        new UsesSignedCommits(organization, project, github, token)
+    );
   }
 
 }
