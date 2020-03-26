@@ -3,6 +3,7 @@ package com.sap.sgs.phosphor.fosstars.tool.github;
 import com.sap.sgs.phosphor.fosstars.data.NoUserCallback;
 import com.sap.sgs.phosphor.fosstars.data.UserCallback;
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 import org.kohsuke.github.GitHub;
 
@@ -58,11 +59,19 @@ abstract class AbstractRatingCalculator {
   }
 
   /**
-   * Calculates a rating for a specified project.
+   * Calculates a rating for a single project.
    *
    * @param project The project.
    * @return The same calculator.
    * @throws IOException If something went wrong.
    */
   abstract AbstractRatingCalculator calculateFor(GitHubProject project) throws IOException;
+
+  /**
+   * Calculates ratings for multiple projects.
+   *
+   * @param projects The projects.
+   * @throws IOException If something went wrong.
+   */
+  abstract AbstractRatingCalculator calculateFor(List<GitHubProject> projects) throws IOException;
 }

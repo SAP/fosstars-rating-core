@@ -1,5 +1,8 @@
 package com.sap.sgs.phosphor.fosstars.tool.github;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.sap.sgs.phosphor.fosstars.data.NoUserCallback;
 import com.sap.sgs.phosphor.fosstars.data.Terminal;
 import com.sap.sgs.phosphor.fosstars.data.UserCallback;
@@ -9,10 +12,16 @@ import com.sap.sgs.phosphor.fosstars.tool.YesNoQuestion;
 import com.sap.sgs.phosphor.fosstars.tool.YesNoQuestion.Answer;
 import com.sap.sgs.phosphor.fosstars.tool.format.PrettyPrinter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.kohsuke.github.GitHub;
@@ -31,33 +40,59 @@ public class SecurityRatingCalculator {
 
   /**
    * Entry point.
+   *
+   * @param args Command-line parameters.
    */
-  public static void main(String... args) throws IOException {
+  public static void main(String... args) {
+    try {
+      run(args);
+    } catch (Exception e) {
+      System.out.printf("[x] Something went wrong!%n");
+      e.printStackTrace(System.out);
+      System.out.printf("[+] Bye!%n");
+      System.exit(1);
+    }
+    System.out.printf("[+] Bye!%n");
+  }
+
+  /**
+   * Run the tool with a list of command-line parameters.
+   *
+   * @param args The command-line parameters.
+   * @throws IOException If something went wrong.
+   */
+  static void run(String... args) throws IOException {
     Options options = new Options();
     options.addOption("h", "help", false,
         "print this message");
     options.addOption("n", "no-questions", false,
         "don't ask a user if a feature can't be automatically gathered");
-    options.addOption(Option.builder("u")
-        .required()
-        .hasArg()
-        .longOpt("url")
-        .desc("repository URL")
-        .build());
     options.addOption(Option.builder("t")
         .longOpt("token")
         .hasArg()
         .desc("access token")
         .build());
+    OptionGroup group = new OptionGroup();
+    group.addOption(Option.builder("u")
+        .required()
+        .hasArg()
+        .longOpt("url")
+        .desc("repository URL")
+        .build());
+    group.addOption(Option.builder("c")
+        .longOpt("config")
+        .hasArg()
+        .desc("path to a config")
+        .build());
+    options.addOptionGroup(group);
 
     CommandLine commandLine;
     try {
       commandLine = new DefaultParser().parse(options, args);
     } catch (ParseException e) {
-      System.out.printf("[x] Something went wrong: %s%n", e.getMessage());
       HelpFormatter formatter = new HelpFormatter();
       formatter.printHelp(USAGE, options);
-      return;
+      throw new IOException("Could not parse command-line parameters", e);
     }
 
     if (commandLine.hasOption("h")) {
@@ -66,20 +101,44 @@ public class SecurityRatingCalculator {
       return;
     }
 
+    if (!commandLine.hasOption("url") && !commandLine.hasOption("config")) {
+      throw new IllegalArgumentException(
+          "You have to give me either --url or --config option but not both!");
+    }
+
     boolean mayTalk = !commandLine.hasOption("no-questions");
     UserCallback callback = mayTalk ? new Terminal() : NoUserCallback.INSTANCE;
 
     GitHub github = connectToGithub(commandLine.getOptionValue("token"), callback);
-    if (github == null) {
-      System.out.println("[x] Couldn't connect to GitHub!");
-      return;
+
+    String token = commandLine.getOptionValue("token");
+
+    if (commandLine.hasOption("url")) {
+      processUrl(commandLine.getOptionValue("url"), github, token, callback);
     }
 
-    GitHubProject project = GitHubProject.parse(commandLine.getOptionValue("url"));
+    if (commandLine.hasOption("config")) {
+      processConfig(commandLine.getOptionValue("config"), github, token, callback);
+    }
+  }
+
+  /**
+   * Calculate a rating for a single project.
+   *
+   * @param url A URL of the project repository.
+   * @param github An interface for accessing the GitHub APIs.
+   * @param githubToken A token for accessing the GitHub APIs.
+   * @param callback An interface for interacting with a user.
+   * @throws IOException If something went wrong.
+   */
+  private static void processUrl(String url, GitHub github, String githubToken,
+      UserCallback callback) throws IOException {
+
+    GitHubProject project = GitHubProject.parse(url);
 
     new SingleSecurityRatingCalculator(github)
-        .token(commandLine.getOptionValue("token"))
         .set(callback)
+        .token(githubToken)
         .calculateFor(project);
 
     RatingValue ratingValue = project.ratingValue()
@@ -87,16 +146,107 @@ public class SecurityRatingCalculator {
 
     System.out.println("[+]");
     System.out.print(new PrettyPrinter().print(ratingValue));
-    System.out.printf("[+] Bye!%n");
+  }
+
+  /**
+   * Calculate a rating for projects specified in a config.
+   *
+   * @param filename A path to the config.
+   * @param github An interface for accessing the GitHub APIs.
+   * @param githubToken A token for accessing the GitHub APIs.
+   * @param callback An interface for interacting with a user.
+   * @throws IOException If something went wrong.
+   */
+  private static void processConfig(String filename, GitHub github, String githubToken,
+      UserCallback callback) throws IOException {
+
+    System.out.printf("[+] Loading config from %s%n", filename);
+    Config config = config(filename);
+
+    System.out.printf("[+] Look for projects ...%n");
+    List<GitHubProject> projects = new GitHubProjectFinder(github).set(config.finderConfig).run();
+    System.out.printf("[+] Found %d project%s%n", projects.size(), projects.size() > 1 ? "s" : "");
+    for (GitHubProject project : projects) {
+      System.out.printf("[+]   %s%n", project.url());
+    }
+
+    System.out.printf("[+] Starting calculating ratings ...%n");
+    new MultipleSecurityRatingsCalculator(github)
+        .set(callback)
+        .token(githubToken)
+        .calculateFor(projects);
+
+    System.out.println("[+] Okay, we've done with calculating the ratings");
+    System.out.println("[+]");
+
+    for (GitHubProject project : projects) {
+      System.out.printf("[+] Let's take a look at %s%n", project.url());
+      if (!project.ratingValue().isPresent()) {
+        System.out.println("[+] Hmm ... looks like something went wrong "
+            + "and the rating is not available ...");
+        System.out.println("[+]");
+        continue;
+      }
+
+      RatingValue ratingValue = project.ratingValue().get();
+      System.out.print(new PrettyPrinter().print(ratingValue));
+      System.out.println("[+]");
+    }
+  }
+
+  /**
+   * Loads a config from a file.
+   *
+   * @param filename A path to the config.
+   * @return A loaded config.
+   * @throws IOException If something went wrong.
+   */
+  static Config config(String filename) throws IOException {
+    return config(Files.newInputStream(Paths.get(filename)));
+  }
+
+  /**
+   * Loads a config from an input stream.
+   *
+   * @param is The input stream.
+   * @return A loaded config.
+   * @throws IOException If something went wrong.
+   */
+  static Config config(InputStream is) throws IOException {
+    YAMLFactory factory = new YAMLFactory();
+    ObjectMapper mapper = new ObjectMapper(factory);
+    return mapper.readValue(is, Config.class);
+  }
+
+  /**
+   * The class holds a configuration for {@link SecurityRatingCalculator}.
+   */
+  static class Config {
+
+    /**
+     * A configuration from {@link GitHubProjectFinder}.
+     */
+    final GitHubProjectFinder.Config finderConfig;
+
+    /**
+     * Creates a new config.
+     *
+     * @param finderConfig A configuration from {@link GitHubProjectFinder}.
+     */
+    Config(@JsonProperty("finder") GitHubProjectFinder.Config finderConfig) {
+      this.finderConfig = finderConfig;
+    }
+
   }
 
   /**
    * Tries to establish a connection to GitHub.
    *
    * @param token A GitHub token (may be null).
-   * @return An interface for the GitHub API, or null if it couldn't establish a connection.
+   * @return An interface for the GitHub API.
+   * @throws IOException If a connection to GitHub couldn't be established.
    */
-  private static GitHub connectToGithub(String token, UserCallback callback) {
+  private static GitHub connectToGithub(String token, UserCallback callback) throws IOException {
     if (token == null && callback.canTalk()) {
       System.out.println("[!] You didn't provide an access token for GitHub ...");
       System.out.println("[!] But you can create it now. Do the following:");
@@ -129,11 +279,13 @@ public class SecurityRatingCalculator {
       }
     }
 
+    List<Exception> suppressed = new ArrayList<>();
     if (token != null) {
       try {
         return GitHub.connectUsingOAuth(token);
       } catch (IOException e) {
         System.out.printf("[x] Something went wrong: %s%n", e);
+        suppressed.add(e);
       }
     } else {
       System.out.printf("[!] No token provided%n");
@@ -142,7 +294,9 @@ public class SecurityRatingCalculator {
     try {
       return GitHub.connect();
     } catch (IOException e) {
-      System.out.printf("[x] Something went wrong: %s%n", e);
+      System.out.printf("[x] Could not connect to GitHub: %s%n", e);
+      System.out.printf("[x] Let's try to establish an anonymous connection%n");
+      suppressed.add(e);
     }
 
     try {
@@ -151,8 +305,14 @@ public class SecurityRatingCalculator {
       return github;
     } catch (IOException e) {
       System.out.printf("[x] Something went wrong: %s%n", e);
+      suppressed.add(e);
     }
 
-    return null;
+    IOException error = new IOException("Could not connect to GitHub!");
+    for (Exception e : suppressed) {
+      error.addSuppressed(e);
+    }
+    throw error;
   }
+
 }

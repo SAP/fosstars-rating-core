@@ -61,7 +61,13 @@ class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
     System.out.printf("[+] Let's get info about the project and calculate a security rating%n");
     ValueSet values = ValueHashSet.unknown(rating.allFeatures());
     for (DataProvider provider : dataProviders(where, name)) {
-      provider.set(callback).update(values);
+      try {
+        provider.set(callback).update(values);
+      } catch (Exception e) {
+        System.out.printf("[!] Holy Moly, one of the data providers failed!%n");
+        System.out.printf("[!] The last thing that it said was: %s%n", e.getMessage());
+        System.out.printf("[!] But we don't give up!%n");
+      }
     }
 
     System.out.println("[+] Here is what we know about the project:");
@@ -76,6 +82,11 @@ class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
     project.set(rating.calculate(values));
 
     return this;
+  }
+
+  @Override
+  AbstractRatingCalculator calculateFor(List<GitHubProject> projects) throws IOException {
+    throw new UnsupportedOperationException("I can't handle multiple projects!");
   }
 
   /**

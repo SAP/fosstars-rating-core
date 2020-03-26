@@ -1,60 +1,61 @@
 package com.sap.sgs.phosphor.fosstars.tool.github;
 
-import static org.junit.Assume.assumeTrue;
+import static com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectFinder.EMPTY_EXCLUDE_LIST;
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectFinder.OrganizationConfig;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectFinder.ProjectConfig;
 import java.io.IOException;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.Collections;
 import org.junit.Test;
-import org.kohsuke.github.GitHub;
 
-/**
- * TODO: This test fails when GitHub API rate limit exceeded or some networking issues occur.
- *       The test needs to be re-written to use mocks.
- *       Meanwhile, the test is ignored.
- */
-@Ignore
 public class SecurityRatingCalculatorTest {
 
-  private static boolean githubAvailable = false;
+  @Test(expected = IllegalArgumentException.class)
+  public void noParameters() throws IOException {
+    SecurityRatingCalculator.run();
+  }
 
-  @BeforeClass
-  public static void initGithubConnection() {
-    try {
-      GitHub github = GitHub.connectAnonymously();
-      github.checkApiUrlValidity();
-      githubAvailable = true;
-    } catch (Exception e) {
-      System.out.println("Couldn't connect to GitHub!");
-      e.printStackTrace();
+  @Test
+  public void help() throws IOException {
+    SecurityRatingCalculator.run("-help");
+    SecurityRatingCalculator.run("-h");
+  }
+
+  @Test
+  public void loadConfig() throws IOException {
+    final String filename = "ValidSecurityRatingCalculatorConfig.yml";
+    try (InputStream is = getClass().getResourceAsStream(filename)) {
+      SecurityRatingCalculator.Config mainConfig = SecurityRatingCalculator.config(is);
+      GitHubProjectFinder.Config finderConfig = mainConfig.finderConfig;
+      assertNotNull(finderConfig);
+      assertNotNull(finderConfig);
+      assertNotNull(finderConfig.organizationConfigs);
+      assertEquals(3, finderConfig.organizationConfigs.size());
+      assertThat(
+          finderConfig.organizationConfigs,
+          hasItem(
+              new OrganizationConfig("apache", Arrays.asList("incubator", "incubating"))));
+      assertThat(finderConfig.organizationConfigs,
+          hasItem(
+              new OrganizationConfig("eclipse", Collections.singletonList("incubator"))));
+      assertThat(finderConfig.organizationConfigs,
+          hasItem(
+              new OrganizationConfig("spring-projects", EMPTY_EXCLUDE_LIST)));
+      assertNotNull(finderConfig.projectConfigs);
+      assertEquals(2, finderConfig.projectConfigs.size());
+      assertThat(
+          finderConfig.projectConfigs,
+          hasItem(new ProjectConfig("FasterXML", "jackson-databind")));
+      assertThat(
+          finderConfig.projectConfigs,
+          hasItem(new ProjectConfig("FasterXML", "jackson-dataformat-xml")));
     }
   }
 
-  @Test
-  public void smoke() throws IOException {
-    SecurityRatingCalculator.main();
-  }
-
-  @Test
-  public void help() throws Exception {
-    SecurityRatingCalculator.main("-help");
-    SecurityRatingCalculator.main("-h");
-  }
-
-  @Test
-  public void apacheCommonsHttpClient() throws IOException {
-    assumeTrue(githubAvailable);
-    SecurityRatingCalculator.main(
-        "--no-questions",
-        "--url", "https://github.com/apache/httpcomponents-client");
-  }
-
-  @Test
-  public void badToken() throws IOException {
-    assumeTrue(githubAvailable);
-    SecurityRatingCalculator.main(
-        "--no-questions",
-        "--url", "https://github.com/apache/httpcomponents-client",
-        "--token", "xxx");
-  }
 }
