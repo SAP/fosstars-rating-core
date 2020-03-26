@@ -4,8 +4,12 @@ import static com.sap.sgs.phosphor.fosstars.model.score.example.ExampleScores.PR
 import static com.sap.sgs.phosphor.fosstars.model.score.example.ExampleScores.SECURITY_TESTING_SCORE_EXAMPLE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.sgs.phosphor.fosstars.model.rating.example.SecurityRatingExample.SecurityLabelExample;
+import java.io.IOException;
 import java.util.Collections;
 import org.junit.Test;
 
@@ -50,6 +54,21 @@ public class RatingValueTest {
     RatingValue ratingValueAnotherLabel = new RatingValue(scoreValue, SecurityLabelExample.AWFUL);
     assertNotEquals(ratingValue, ratingValueAnotherLabel);
     assertNotEquals(ratingValue.hashCode(), ratingValueAnotherLabel.hashCode());
+  }
+
+  @Test
+  public void serializeAndDeserialize() throws IOException {
+    ScoreValue scoreValue = new ScoreValue(
+        PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.1, 0.8, 9.0, Collections.emptyList());
+    RatingValue ratingValue = new RatingValue(scoreValue, SecurityLabelExample.OKAY);
+    ObjectMapper mapper = new ObjectMapper();
+    byte[] bytes = mapper.writeValueAsBytes(ratingValue);
+    assertNotNull(bytes);
+    assertTrue(bytes.length > 0);
+    RatingValue clone = mapper.readValue(bytes, RatingValue.class);
+    assertNotNull(clone);
+    assertEquals(ratingValue, clone);
+    assertEquals(ratingValue.hashCode(), clone.hashCode());
   }
 
 }
