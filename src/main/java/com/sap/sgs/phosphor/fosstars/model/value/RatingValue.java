@@ -1,5 +1,8 @@
 package com.sap.sgs.phosphor.fosstars.model.value;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Label;
 import com.sap.sgs.phosphor.fosstars.model.Rating;
@@ -27,11 +30,13 @@ public class RatingValue implements Confidence {
    * @param scoreValue The score value.
    * @param label The label.
    */
-  public RatingValue(ScoreValue scoreValue, Label label) {
-    Objects.requireNonNull(scoreValue, "Hey! Score value can't be null");
-    Objects.requireNonNull(label, "Hey! Label can't be null!");
-    this.scoreValue = scoreValue;
-    this.label = label;
+  @JsonCreator
+  public RatingValue(
+      @JsonProperty("scoreValue") ScoreValue scoreValue,
+      @JsonProperty("label") Label label) {
+
+    this.scoreValue = Objects.requireNonNull(scoreValue, "Hey! Score value can't be null");
+    this.label = Objects.requireNonNull(label, "Hey! Label can't be null!");
   }
 
   /**
@@ -52,6 +57,7 @@ public class RatingValue implements Confidence {
   /**
    * Returns the label.
    */
+  @JsonGetter("label")
   public Label label() {
     return label;
   }
@@ -59,6 +65,7 @@ public class RatingValue implements Confidence {
   /**
    * Returns the score value.
    */
+  @JsonGetter("scoreValue")
   public ScoreValue scoreValue() {
     return scoreValue;
   }
