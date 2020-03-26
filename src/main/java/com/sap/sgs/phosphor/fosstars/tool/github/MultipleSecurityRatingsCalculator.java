@@ -24,12 +24,7 @@ class MultipleSecurityRatingsCalculator extends AbstractRatingCalculator {
     return this;
   }
 
-  /**
-   * Calculates ratings for specified projects.
-   *
-   * @param projects The projects.
-   * @throws IOException If something went wrong.
-   */
+  @Override
   MultipleSecurityRatingsCalculator calculateFor(List<GitHubProject> projects) throws IOException {
     for (GitHubProject project : projects) {
       calculateFor(project);

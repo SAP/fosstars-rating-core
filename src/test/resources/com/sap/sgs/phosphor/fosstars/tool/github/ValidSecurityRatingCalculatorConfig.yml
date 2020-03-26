@@ -1,0 +1,16 @@
+# this is a test configuration for the SecurityRatingCalculator class
+finder:
+  organizations:
+    - name: apache
+      exclude:
+        - incubator
+        - incubating
+    - name: eclipse
+      exclude:
+        - incubator
+    - name: spring-projects
+  repositories:
+    - organization: FasterXML
+      name: jackson-databind
+    - organization: FasterXML
+      name: jackson-dataformat-xml

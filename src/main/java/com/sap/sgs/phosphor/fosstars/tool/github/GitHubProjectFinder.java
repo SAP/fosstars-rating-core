@@ -127,6 +127,17 @@ public class GitHubProjectFinder {
   }
 
   /**
+   * Sets a config.
+   *
+   * @param config The config to be used.
+   * @return The same {@link GitHubProjectFinder}.
+   */
+  public GitHubProjectFinder set(Config config) {
+    this.config = Objects.requireNonNull(config, "Oh no! Config can't be null!");
+    return this;
+  }
+
+  /**
    * Loads a configuration form a file.
    *
    * @param filename The file name.
