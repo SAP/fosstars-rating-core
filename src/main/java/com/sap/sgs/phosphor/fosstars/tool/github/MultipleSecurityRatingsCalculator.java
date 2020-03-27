@@ -57,7 +57,7 @@ class MultipleSecurityRatingsCalculator extends AbstractRatingCalculator {
       Optional<RatingValue> cachedRatingValue = projectCache.cachedRatingValueFor(project);
       if (cachedRatingValue.isPresent()) {
         project.set(cachedRatingValue.get());
-        System.out.printf("Found a cached rating value!%n");
+        System.out.printf("[+] Found a cached rating value!%n");
         continue;
       }
 

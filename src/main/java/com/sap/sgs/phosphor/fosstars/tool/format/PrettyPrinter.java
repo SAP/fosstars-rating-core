@@ -30,6 +30,9 @@ import java.util.TreeMap;
  */
 public class PrettyPrinter implements Formatter {
 
+  /**
+   * An indent step.
+   */
   private static final String INDENT_STEP = "  ";
 
   /**
@@ -67,12 +70,7 @@ public class PrettyPrinter implements Formatter {
         OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES, "Does it scan for vulnerable dependencies?");
   }
 
-  /**
-   * Print out a formatted rating value.
-   *
-   * @param ratingValue The rating value to be printed.
-   * @return A string to be displayed.
-   */
+  @Override
   public String print(RatingValue ratingValue) {
     StringBuilder sb = new StringBuilder();
     sb.append(String.format("[+] Here is how the rating was calculated:%n"));
@@ -156,6 +154,7 @@ public class PrettyPrinter implements Formatter {
           maxLength = name.length();
         }
       }
+
       for (Map.Entry<String, Object> entry : nameToValue.entrySet()) {
         String name = entry.getKey();
         name += name.endsWith("?") ? "." : ":";

@@ -438,10 +438,10 @@ public class GitHubProjectFinder {
         @JsonProperty("organizations") List<OrganizationConfig> organizationConfigs,
         @JsonProperty("repositories") List<ProjectConfig> projectConfigs) {
 
-      this.organizationConfigs = Objects.requireNonNull(
-          organizationConfigs, "Hey configs for organizations can't be null!");
-      this.projectConfigs = Objects.requireNonNull(
-          projectConfigs, "Hey! Configs for projects can't be null!");
+      this.organizationConfigs
+          = organizationConfigs != null ? organizationConfigs : new ArrayList<>();
+      this.projectConfigs
+          = projectConfigs != null ? projectConfigs : new ArrayList<>();
     }
   }
 

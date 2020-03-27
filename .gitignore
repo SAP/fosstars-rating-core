@@ -5,3 +5,4 @@ target
 .fosstars_model
 src/main/jupyter/oss/security/.ipynb_checkpoints
 src/main/jupyter/oss/security/__pycache__/
+src/test/shell/tool/github/*.log
