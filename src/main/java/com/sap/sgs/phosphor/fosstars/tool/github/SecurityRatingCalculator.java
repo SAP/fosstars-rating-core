@@ -170,8 +170,17 @@ public class SecurityRatingCalculator {
       System.out.printf("[+]   %s%n", project.url());
     }
 
+    GitHubProjectCache projectCache = GitHubProjectCache.empty();
+    if (config.hasCacheFile()) {
+      if (Files.exists(Paths.get(config.cacheFilename))) {
+        System.out.printf("[+] Loading a project cache from %s%n", config.cacheFilename);
+        projectCache = GitHubProjectCache.load(config.cacheFilename);
+      }
+    }
+
     System.out.printf("[+] Starting calculating ratings ...%n");
     new MultipleSecurityRatingsCalculator(github)
+        .set(projectCache)
         .set(callback)
         .token(githubToken)
         .calculateFor(projects);
@@ -191,6 +200,14 @@ public class SecurityRatingCalculator {
       RatingValue ratingValue = project.ratingValue().get();
       System.out.print(new PrettyPrinter().print(ratingValue));
       System.out.println("[+]");
+    }
+
+    if (config.hasCacheFile()) {
+      System.out.printf("[+] Storing the project cache to %s%n", config.cacheFilename);
+      ObjectMapper mapper = new ObjectMapper();
+      Files.write(
+          Paths.get(config.cacheFilename),
+          mapper.writerWithDefaultPrettyPrinter().writeValueAsBytes(projectCache));
     }
   }
 
@@ -224,19 +241,76 @@ public class SecurityRatingCalculator {
   static class Config {
 
     /**
-     * A configuration from {@link GitHubProjectFinder}.
+     * Where a cache file is located.
+     */
+    final String cacheFilename;
+
+    /**
+     * A config for reporting.
+     */
+    final ReportConfig reportConfig;
+
+    /**
+     * A config for {@link GitHubProjectFinder}.
      */
     final GitHubProjectFinder.Config finderConfig;
 
     /**
      * Creates a new config.
      *
+     * @param cacheFilename Where a cache file is located.
+     * @param reportConfig A config for reporting.
      * @param finderConfig A configuration from {@link GitHubProjectFinder}.
      */
-    Config(@JsonProperty("finder") GitHubProjectFinder.Config finderConfig) {
+    Config(
+        @JsonProperty("cache") String cacheFilename,
+        @JsonProperty("report") ReportConfig reportConfig,
+        @JsonProperty("finder") GitHubProjectFinder.Config finderConfig) {
+
+      this.cacheFilename = cacheFilename;
+      this.reportConfig = reportConfig;
       this.finderConfig = finderConfig;
     }
 
+    /**
+     * Checks the config has a filename of a cache.
+     *
+     * @return True if the config has a filename of a cache, false otherwise.
+     */
+    boolean hasCacheFile() {
+      return cacheFilename != null && !cacheFilename.trim().isEmpty();
+    }
+
+  }
+
+  /**
+   * A config for reporting.
+   */
+  static class ReportConfig {
+
+    /**
+     * A type of a report.
+     */
+    final String type;
+
+    /**
+     * Where a report should be stored.
+     */
+    final String where;
+
+    /**
+     * Creates a new config.
+     *
+     * @param type A type of a report.
+     * @param where Where a report should be stored.
+     */
+    ReportConfig(
+        @JsonProperty("type") String type,
+        @JsonProperty("where") String where) {
+
+      this.type = type;
+      this.where = where;
+    }
   }
 
   /**

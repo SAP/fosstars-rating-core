@@ -32,29 +32,38 @@ public class SecurityRatingCalculatorTest {
     final String filename = "ValidSecurityRatingCalculatorConfig.yml";
     try (InputStream is = getClass().getResourceAsStream(filename)) {
       SecurityRatingCalculator.Config mainConfig = SecurityRatingCalculator.config(is);
-      GitHubProjectFinder.Config finderConfig = mainConfig.finderConfig;
-      assertNotNull(finderConfig);
-      assertNotNull(finderConfig);
-      assertNotNull(finderConfig.organizationConfigs);
-      assertEquals(3, finderConfig.organizationConfigs.size());
+
+      assertEquals(".fosstars_model/project_rating_cache.json", mainConfig.cacheFilename);
+
+      assertNotNull(mainConfig.reportConfig);
+      assertEquals("markdown", mainConfig.reportConfig.type);
+      assertEquals(".fosstars_model/report", mainConfig.reportConfig.where);
+
+      assertNotNull(mainConfig.finderConfig);
+      assertNotNull(mainConfig.finderConfig.organizationConfigs);
+      assertEquals(3, mainConfig.finderConfig.organizationConfigs.size());
       assertThat(
-          finderConfig.organizationConfigs,
+          mainConfig.finderConfig.organizationConfigs,
           hasItem(
               new OrganizationConfig("apache", Arrays.asList("incubator", "incubating"))));
-      assertThat(finderConfig.organizationConfigs,
+      assertThat(
+          mainConfig.finderConfig.organizationConfigs,
           hasItem(
               new OrganizationConfig("eclipse", Collections.singletonList("incubator"))));
-      assertThat(finderConfig.organizationConfigs,
+      assertThat(
+          mainConfig.finderConfig.organizationConfigs,
           hasItem(
               new OrganizationConfig("spring-projects", EMPTY_EXCLUDE_LIST)));
-      assertNotNull(finderConfig.projectConfigs);
-      assertEquals(2, finderConfig.projectConfigs.size());
+      assertNotNull(mainConfig.finderConfig.projectConfigs);
+      assertEquals(2, mainConfig.finderConfig.projectConfigs.size());
       assertThat(
-          finderConfig.projectConfigs,
-          hasItem(new ProjectConfig("FasterXML", "jackson-databind")));
+          mainConfig.finderConfig.projectConfigs,
+          hasItem(
+              new ProjectConfig("FasterXML", "jackson-databind")));
       assertThat(
-          finderConfig.projectConfigs,
-          hasItem(new ProjectConfig("FasterXML", "jackson-dataformat-xml")));
+          mainConfig.finderConfig.projectConfigs,
+          hasItem(
+              new ProjectConfig("FasterXML", "jackson-dataformat-xml")));
     }
   }
 

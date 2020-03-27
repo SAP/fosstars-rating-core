@@ -1,4 +1,8 @@
 # this is a test configuration for the SecurityRatingCalculator class
+cache: .fosstars_model/project_rating_cache.json
+report:
+  type: markdown
+  where: .fosstars_model/report
 finder:
   organizations:
     - name: apache
