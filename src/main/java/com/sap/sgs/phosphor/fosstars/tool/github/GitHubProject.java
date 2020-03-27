@@ -1,9 +1,14 @@
 package com.sap.sgs.phosphor.fosstars.tool.github;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import com.sap.sgs.phosphor.fosstars.tool.Project;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -11,6 +16,16 @@ import java.util.Optional;
  * A project on GitHub.
  */
 public class GitHubProject implements Project {
+
+  /**
+   * Shows that there is no rating value assigned to a project.
+   */
+  private static final RatingValue NO_RATING_VALUE = null;
+
+  /**
+   * Shows that the date is unknown.
+   */
+  private static final Date NO_DATE = null;
 
   /**
    * An organization (or user) that owns the project.
@@ -23,9 +38,19 @@ public class GitHubProject implements Project {
   private final String name;
 
   /**
+   * A URL to the project's SCM.
+   */
+  private final URL url;
+
+  /**
    * A rating value for the project.
    */
   private RatingValue ratingValue;
+
+  /**
+   * When the rating value was calculated.
+   */
+  private Date ratingValueDate;
 
   /**
    * Initializes a new project.
@@ -34,20 +59,43 @@ public class GitHubProject implements Project {
    * @param name Project's name.
    */
   public GitHubProject(GitHubOrganization organization, String name) {
-    this.organization = Objects.requireNonNull(organization, "Hey! Organization can't be null!");
-    this.name = Objects.requireNonNull(name, "Hey! Project's name can't be null!");
+    this(organization, name, makeUrl(organization, name), NO_RATING_VALUE, NO_DATE);
   }
 
   /**
-   * Returns a URL of the project.
+   * Initializes a new project.
+   *
+   * @param organization An organization (or user) that owns the project.
+   * @param name Project's name.
+   * @param url A URL to the project's SCM.
+   * @param ratingValue A rating value for the project.
+   * @param ratingValueDate When the rating value was calculated.
    */
-  String url() {
-    return String.format("https://github.com/%s/%s", organization.name(), name);
+  @JsonCreator
+  public GitHubProject(
+      @JsonProperty("organization") GitHubOrganization organization,
+      @JsonProperty("name") String name,
+      @JsonProperty("url") URL url,
+      @JsonProperty("ratingValue") RatingValue ratingValue,
+      @JsonProperty("ratingValueDate") Date ratingValueDate) {
+
+    this.organization = Objects.requireNonNull(organization, "Hey! Organization can't be null!");
+    this.name = Objects.requireNonNull(name, "Hey! Project's name can't be null!");
+    this.url = Objects.requireNonNull(url, "Hey! URL can't be null!");
+    this.ratingValue = ratingValue;
+    this.ratingValueDate = ratingValueDate;
+  }
+
+  @Override
+  @JsonGetter("url")
+  public URL url() {
+    return url;
   }
 
   /**
    * Returns the organization.
    */
+  @JsonGetter("organization")
   GitHubOrganization organization() {
     return organization;
   }
@@ -55,8 +103,17 @@ public class GitHubProject implements Project {
   /**
    * Returns project's name.
    */
+  @JsonGetter("name")
   String name() {
     return name;
+  }
+
+  /**
+   * Returns the rating value. The method is used for serialization.
+   */
+  @JsonGetter("ratingValue")
+  private RatingValue getRatingValue() {
+    return ratingValue;
   }
 
   /**
@@ -75,6 +132,15 @@ public class GitHubProject implements Project {
    */
   void set(RatingValue value) {
     ratingValue = value;
+    ratingValueDate = new Date();
+  }
+
+  /**
+   * Returns a date when the rating value was calculated.
+   */
+  @JsonGetter("ratingValueDate")
+  public Date ratingValueDate() {
+    return ratingValueDate;
   }
 
   @Override
@@ -87,13 +153,12 @@ public class GitHubProject implements Project {
     }
     GitHubProject project = (GitHubProject) o;
     return Objects.equals(organization, project.organization)
-        && Objects.equals(name, project.name)
-        && Objects.equals(ratingValue, project.ratingValue);
+        && Objects.equals(name, project.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(organization, name, ratingValue);
+    return Objects.hash(organization, name);
   }
 
   /**
@@ -111,6 +176,21 @@ public class GitHubProject implements Project {
           String.format("The URL doesn't seem to be correct: %s", urlString));
     }
     return new GitHubProject(new GitHubOrganization(parts[1]), parts[2]);
+  }
+
+  /**
+   * Constructs a URL of a project.
+   *
+   * @param organization An organization which owns the project.
+   * @param name The project's name.
+   * @return A URL of the project.
+   */
+  private static URL makeUrl(GitHubOrganization organization, String name) {
+    try {
+      return new URL(String.format("https://github.com/%s/%s", organization.name(), name));
+    } catch (MalformedURLException e) {
+      throw new IllegalArgumentException("Could not create a URL!", e);
+    }
   }
 
 }

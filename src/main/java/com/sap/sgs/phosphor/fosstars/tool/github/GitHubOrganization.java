@@ -1,5 +1,8 @@
 package com.sap.sgs.phosphor.fosstars.tool.github;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Objects;
 
 /**
@@ -17,13 +20,15 @@ class GitHubOrganization {
    *
    * @param name A name of the organization.
    */
-  GitHubOrganization(String name) {
+  @JsonCreator
+  GitHubOrganization(@JsonProperty("name") String name) {
     this.name = Objects.requireNonNull(name, "Hey! Organization's name can't be null!");
   }
 
   /**
    * Returns organization's name.
    */
+  @JsonGetter("name")
   public String name() {
     return name;
   }
