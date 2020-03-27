@@ -1,0 +1,5 @@
+# %PROJECT_NAME%
+
+```
+%DETAILS%
+```

@@ -98,6 +98,26 @@ public class GitHubProjectFinderTest {
         hasItem(new GitHubProject(new GitHubOrganization(eclipse), "extra")));
   }
 
+  @Test
+  public void noOrganizations() throws IOException {
+    ConfigParser parser = new ConfigParser();
+    final String resource = "NoOrganizationsProjectFinderConfig.yml";
+    try (InputStream is = getClass().getResourceAsStream(resource)) {
+      Config config = parser.parse(is);
+      assertNotNull(config);
+      assertNotNull(config.organizationConfigs);
+      assertEquals(0, config.organizationConfigs.size());
+      assertNotNull(config.projectConfigs);
+      assertEquals(2, config.projectConfigs.size());
+      assertThat(
+          config.projectConfigs,
+          hasItem(new ProjectConfig("FasterXML", "jackson-databind")));
+      assertThat(
+          config.projectConfigs,
+          hasItem(new ProjectConfig("FasterXML", "jackson-dataformat-xml")));
+    }
+  }
+
   private static GHRepository mockRepository(String name) {
     GHRepository repository = mock(GHRepository.class);
     when(repository.getName()).thenReturn(name);

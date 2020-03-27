@@ -1,0 +1,16 @@
+# this is a configuration for generating a report for other projects
+cache: .fosstars_model/project_rating_cache.json
+reports:
+  - type: markdown
+    where: docs/oss/security
+    source: docs/oss/security/github_projects.json
+  - type: json
+    where: docs/oss/security/github_projects.json
+finder:
+  repositories:
+    - organization: FasterXML
+      name: jackson-databind
+    - organization: FasterXML
+      name: jackson-dataformat-xml
+    - organization: FasterXML
+      name: jackson-dataformats-text

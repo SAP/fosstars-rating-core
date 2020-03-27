@@ -5,9 +5,11 @@ import static org.hamcrest.CoreMatchers.hasItem;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectFinder.OrganizationConfig;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectFinder.ProjectConfig;
+import com.sap.sgs.phosphor.fosstars.tool.github.SecurityRatingCalculator.ReportConfig;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
@@ -35,9 +37,23 @@ public class SecurityRatingCalculatorTest {
 
       assertEquals(".fosstars_model/project_rating_cache.json", mainConfig.cacheFilename);
 
-      assertNotNull(mainConfig.reportConfig);
-      assertEquals("markdown", mainConfig.reportConfig.type);
-      assertEquals(".fosstars_model/report", mainConfig.reportConfig.where);
+      assertNotNull(mainConfig.reportConfigs);
+      assertEquals(2, mainConfig.reportConfigs.size());
+
+      for (ReportConfig reportConfig : mainConfig.reportConfigs) {
+        assertNotNull(reportConfig.type);
+        switch (reportConfig.type) {
+          case MARKDOWN:
+            assertEquals(".fosstars_model/report", reportConfig.where);
+            assertEquals(".fosstars_model/report/github_projects.json", reportConfig.source);
+            break;
+          case JSON:
+            assertEquals(".fosstars_model/report/github_projects.json", reportConfig.where);
+            break;
+          default:
+            fail("Unexpected report type: " + reportConfig.type);
+        }
+      }
 
       assertNotNull(mainConfig.finderConfig);
       assertNotNull(mainConfig.finderConfig.organizationConfigs);

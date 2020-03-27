@@ -1,8 +1,11 @@
 # this is a test configuration for the SecurityRatingCalculator class
 cache: .fosstars_model/project_rating_cache.json
-report:
-  type: markdown
-  where: .fosstars_model/report
+reports:
+  - type: markdown
+    where: .fosstars_model/report
+    source: .fosstars_model/report/github_projects.json
+  - type: json
+    where: .fosstars_model/report/github_projects.json
 finder:
   organizations:
     - name: apache

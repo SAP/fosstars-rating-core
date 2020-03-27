@@ -1,0 +1,6 @@
+# this is a test configuration for the ConfigParser class
+repositories:
+  - organization: FasterXML
+    name: jackson-databind
+  - organization: FasterXML
+    name: jackson-dataformat-xml
