@@ -1,5 +1,5 @@
 # Projects
 
-| Project | Score | Rating | Confidence | Last updated |
-| ------- | ----- | ------ | ---------- | ------------ |
+| Project | Stars | Score | Rating | Confidence | Last updated |
+| ------- | ----- | ----- | ------ | ---------- | ------------ |
 %PROJECT_TABLE%

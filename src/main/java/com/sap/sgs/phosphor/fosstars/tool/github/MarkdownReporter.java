@@ -1,6 +1,10 @@
 package com.sap.sgs.phosphor.fosstars.tool.github;
 
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_GITHUB_STARS;
+
+import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
+import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.sgs.phosphor.fosstars.tool.format.PrettyPrinter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,8 +14,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import org.apache.commons.io.IOUtils;
@@ -20,6 +26,11 @@ import org.apache.commons.io.IOUtils;
  * This reporter takes a number of projects and generates a markdown report.
  */
 public class MarkdownReporter extends AbstractReporter<GitHubProject> {
+
+  /**
+   * This value shows that a number of stars is unknown.
+   */
+  private static final int UNKNOWN_NUMBER_OF_STARS = -1;
 
   /**
    * A formatter for rating values.
@@ -35,7 +46,7 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
    * A template for a table row in the report.
    */
   private static final String PROJECT_LINE_TEMPLATE
-      = "| %URL% | %SCORE% | %LABEL% | %CONFIDENCE% | %DATE% |";
+      = "| %URL% | %STARS% | %SCORE% | %LABEL% | %CONFIDENCE% | %DATE% |";
 
   /**
    * A date formatter.
@@ -82,7 +93,12 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
   @Override
   public void runFor(List<GitHubProject> projects) throws IOException {
     List<GitHubProject> allProjects = merge(projects, extraProjects);
-    allProjects.sort(Comparator.comparing(project -> project.url().toString()));
+
+    Map<GitHubProject, Integer> stars = new HashMap<>();
+    for (GitHubProject project : allProjects) {
+      stars.put(project, starsOf(project));
+    }
+    allProjects.sort(Comparator.comparingInt(stars::get));
 
     String projectDetailsTemplate;
     try (InputStream is = getClass().getResourceAsStream("MarkdownProjectDetailsTemplate.md")) {
@@ -112,8 +128,12 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
           project.organization().name(), projectReportFilename);
       String url = String.format("[%s](%s)", projectPath, project.url());
       String label = String.format("[%s](%s)", labelOf(project), relativePathToDetails);
+      Integer numberOfStars = stars.get(project);
+      String numberOfStarsString = numberOfStars != null && numberOfStars >= 0
+          ? numberOfStars.toString() : UNKNOWN;
       String line = PROJECT_LINE_TEMPLATE
           .replace("%URL%", url)
+          .replace("%STARS%", numberOfStarsString)
           .replace("%SCORE%", scoreOf(project))
           .replace("%LABEL%", label)
           .replace("%CONFIDENCE%", confidenceOf(project))
@@ -187,5 +207,52 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
     return String.format("%2.2f", something.get().scoreValue().get());
   }
 
+  /**
+   * Figures out how many stars a project has.
+   *
+   * @param project The project.
+   * @return A number of stars or {@link #UNKNOWN_NUMBER_OF_STARS}
+   *         if the number of stars is unknown.
+   */
+  private static int starsOf(GitHubProject project) {
+    if (!project.ratingValue().isPresent()) {
+      return UNKNOWN_NUMBER_OF_STARS;
+    }
+    return stars(project.ratingValue().get().scoreValue());
+  }
+
+  /**
+   * Looks for a value of the
+   * {@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#NUMBER_OF_GITHUB_STARS}
+   * feature in a score value.
+   *
+   * @param scoreValue The score value.
+   * @return The features value or {@link #UNKNOWN_NUMBER_OF_STARS}
+   *         if the value is unknown.
+   */
+  private static int stars(ScoreValue scoreValue) {
+    if (scoreValue.isUnknown()) {
+      return UNKNOWN_NUMBER_OF_STARS;
+    }
+
+    for (Value value : scoreValue.usedValues()) {
+      if (value.isUnknown()) {
+        continue;
+      }
+
+      if (value.feature().equals(NUMBER_OF_GITHUB_STARS)) {
+        return (int) value.get();
+      }
+
+      if (value instanceof ScoreValue) {
+        int n = stars((ScoreValue) value);
+        if (n >= 0) {
+          return n;
+        }
+      }
+    }
+
+    return UNKNOWN_NUMBER_OF_STARS;
+  }
 
 }
