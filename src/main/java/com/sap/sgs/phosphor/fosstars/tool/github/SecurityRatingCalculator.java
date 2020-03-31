@@ -29,6 +29,9 @@ import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.kohsuke.github.GitHub;
+import org.kohsuke.github.GitHubBuilder;
+import org.kohsuke.github.HttpConnector;
+import org.kohsuke.github.extras.ImpatientHttpConnector;
 
 /**
  * This is a command line tool for calculating security ratings for one
@@ -447,28 +450,40 @@ public class SecurityRatingCalculator {
       }
     }
 
+    ImpatientHttpConnector connector = new ImpatientHttpConnector(HttpConnector.DEFAULT);
+
     List<Exception> suppressed = new ArrayList<>();
     if (token != null) {
+      System.out.println("[+] Okay, we have a GitHub token, let's try to use it");
       try {
-        return GitHub.connectUsingOAuth(token);
+        GitHub github = new GitHubBuilder()
+            .withConnector(connector)
+            .withOAuthToken(token)
+            .build();
+        return github;
       } catch (IOException e) {
         System.out.printf("[x] Something went wrong: %s%n", e);
         suppressed.add(e);
       }
     } else {
-      System.out.printf("[!] No token provided%n");
+      System.out.printf("[!] No GitHub token provided%n");
     }
 
     try {
-      return GitHub.connect();
+      System.out.println("[+] Now, let's try to use GitHub settings from environment variables");
+      GitHub github = GitHubBuilder.fromEnvironment()
+          .withConnector(connector)
+          .build();
+      return github;
     } catch (IOException e) {
       System.out.printf("[x] Could not connect to GitHub: %s%n", e);
-      System.out.printf("[x] Let's try to establish an anonymous connection%n");
+
       suppressed.add(e);
     }
 
     try {
-      GitHub github = GitHub.connectAnonymously();
+      System.out.println("[x] Then, let's try to establish an anonymous connection");
+      GitHub github = new GitHubBuilder().withConnector(connector).build();
       System.out.println("[!] We have established only an anonymous connection to GitHub ...");
       return github;
     } catch (IOException e) {
