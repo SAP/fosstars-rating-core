@@ -49,6 +49,12 @@ public class FirstCommit extends AbstractGitHubDataProvider {
     return this;
   }
 
+  /**
+   * Looks for the first commit and returns a value with its date.
+   *
+   * @return An instance of {@link Value} which contains a date of the first commit.
+   * @throws IOException If something went wrong.
+   */
   Value<Date> firstCommitDate() throws IOException {
     Optional<Value> something = cache().get(url, FIRST_COMMIT_DATE);
     if (something.isPresent()) {
@@ -58,22 +64,21 @@ public class FirstCommit extends AbstractGitHubDataProvider {
     GHRepository repository = github.getRepository(path);
     long millis = repository.getCreatedAt().getTime() + DELTA;
 
-    PagedIterator<GHCommit> iterator = repository.queryCommits().until(millis)
-        .list().withPageSize(10000).iterator();
-    List<GHCommit> lastPage = iterator.nextPage();
+    PagedIterator<GHCommit> iterator = repository.queryCommits()
+        .until(millis)
+        .list()
+        .withPageSize(10000)
+        .iterator();
+
+    List<GHCommit> lastPage = null;
     while (iterator.hasNext()) {
       lastPage = iterator.nextPage();
     }
 
-    Value<Date> firstCommit;
     if (lastPage == null) {
-      firstCommit = UnknownValue.of(FIRST_COMMIT_DATE);
-    } else {
-      firstCommit = new DateValue(
-          FIRST_COMMIT_DATE,
-          lastPage.get(lastPage.size() - 1).getCommitDate());
+      return UnknownValue.of(FIRST_COMMIT_DATE);
     }
 
-    return firstCommit;
+    return new DateValue(FIRST_COMMIT_DATE, lastPage.get(lastPage.size() - 1).getCommitDate());
   }
 }
