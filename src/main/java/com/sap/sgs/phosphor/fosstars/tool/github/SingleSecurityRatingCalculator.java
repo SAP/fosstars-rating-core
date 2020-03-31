@@ -64,7 +64,8 @@ class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
       try {
         provider.set(callback).update(values);
       } catch (Exception e) {
-        System.out.printf("[!] Holy Moly, one of the data providers failed!%n");
+        System.out.printf("[!] Holy Moly, %s data provider failed!%n",
+            provider.getClass().getSimpleName());
         System.out.printf("[!] The last thing that it said was: %s%n", e.getMessage());
         System.out.printf("[!] But we don't give up!%n");
       }
