@@ -63,23 +63,29 @@ public class UsesOwaspDependencyCheck extends AbstractGitHubDataProvider {
     } catch (GHFileNotFoundException e) {
       return false;
     }
-    if (content == null) {
+
+    if (content == null || !content.isFile()) {
       return false;
     }
-    if (!content.isFile()) {
-      return false;
-    }
+
     Model model = readModel(content);
-    for (Plugin plugin : model.getBuild().getPlugins()) {
-      if (isDependencyCheck(plugin)) {
-        return true;
+
+    if (model.getBuild() != null) {
+      for (Plugin plugin : model.getBuild().getPlugins()) {
+        if (isDependencyCheck(plugin)) {
+          return true;
+        }
       }
     }
-    for (ReportPlugin plugin : model.getReporting().getPlugins()) {
-      if (isDependencyCheck(plugin)) {
-        return true;
+
+    if (model.getReporting() != null) {
+      for (ReportPlugin plugin : model.getReporting().getPlugins()) {
+        if (isDependencyCheck(plugin)) {
+          return true;
+        }
       }
     }
+
     return false;
   }
 
