@@ -33,15 +33,15 @@ public class ProjectStarted extends FirstCommit {
     Objects.requireNonNull(values, "Hey! Values can't be null!");
     System.out.println("[+] Figuring out when the project started ...");
 
-    Date firstCommitDate = firstCommitDate().get();
+    Value<Date> firstCommitDate = firstCommitDate();
 
     GHRepository repository = github.getRepository(path);
     Date repositoryCreated = repository.getCreatedAt();
 
-    Value<Date> projectStarted;
-    if (firstCommitDate.before(repositoryCreated)) {
-      projectStarted = new DateValue(PROJECT_START_DATE, firstCommitDate);
-    } else {
+    Value<Date> projectStarted = PROJECT_START_DATE.unknown();
+    if (!firstCommitDate.isUnknown() && firstCommitDate.get().before(repositoryCreated)) {
+      projectStarted = new DateValue(PROJECT_START_DATE, firstCommitDate.get());
+    } else if (repositoryCreated != null) {
       projectStarted = new DateValue(PROJECT_START_DATE, repositoryCreated);
     }
 
