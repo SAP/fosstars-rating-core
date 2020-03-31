@@ -2,6 +2,7 @@ package com.sap.sgs.phosphor.fosstars.tool.github;
 
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -16,6 +17,11 @@ class MultipleSecurityRatingsCalculator extends AbstractRatingCalculator {
    * A cache of processed projects.
    */
   private GitHubProjectCache projectCache = GitHubProjectCache.empty();
+
+  /**
+   * A list of projects for which a rating couldn't be calculated.
+   */
+  private final List<GitHubProject> failedProjects = new ArrayList<>();
 
   /**
    * Initializes a new calculator.
@@ -49,10 +55,9 @@ class MultipleSecurityRatingsCalculator extends AbstractRatingCalculator {
    *
    * @param projects The projects.
    * @return The same calculator.
-   * @throws IOException If something went wrong.
    */
   @Override
-  MultipleSecurityRatingsCalculator calculateFor(List<GitHubProject> projects) throws IOException {
+  MultipleSecurityRatingsCalculator calculateFor(List<GitHubProject> projects) {
     for (GitHubProject project : projects) {
       Optional<RatingValue> cachedRatingValue = projectCache.cachedRatingValueFor(project);
       if (cachedRatingValue.isPresent()) {
@@ -61,10 +66,24 @@ class MultipleSecurityRatingsCalculator extends AbstractRatingCalculator {
         continue;
       }
 
-      calculateFor(project);
+      failedProjects.clear();
+      try {
+        calculateFor(project);
+      } catch (Exception e) {
+        System.out.printf("[!] Oh no! Could not calculate a rating for %s%n", project.url());
+        System.out.printf("[!]        %s%n", e.getMessage());
+        failedProjects.add(project);
+      }
       projectCache.add(project);
     }
     return this;
+  }
+
+  /**
+   * Returns a list of projects for which ratings couldn't be calculated.
+   */
+  List<GitHubProject> failedProjects() {
+    return new ArrayList<>(failedProjects);
   }
 
   /**

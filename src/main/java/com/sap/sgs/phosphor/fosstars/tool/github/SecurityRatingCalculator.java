@@ -187,33 +187,31 @@ public class SecurityRatingCalculator {
     GitHubProjectCache projectCache = loadProjectCache(projectCacheFile);
 
     System.out.printf("[+] Starting calculating ratings ...%n");
-    new MultipleSecurityRatingsCalculator(github)
-        .set(projectCache)
-        .set(callback)
-        .token(githubToken)
-        .calculateFor(projects);
+    MultipleSecurityRatingsCalculator calculator = new MultipleSecurityRatingsCalculator(github);
+    calculator.set(projectCache);
+    calculator.set(callback);
+    calculator.token(githubToken);
+    calculator.calculateFor(projects);
+
+    storeProjectCache(projectCache, projectCacheFile);
 
     System.out.println("[+] Okay, we've done calculating the ratings");
     System.out.println("[+]");
 
-    for (GitHubProject project : projects) {
-      System.out.printf("[+] Let's take a look at %s%n", project.url());
-      if (!project.ratingValue().isPresent()) {
-        System.out.println("[+] Hmm ... looks like something went wrong "
-            + "and the rating is not available ...");
-        System.out.println("[+]");
-        continue;
+    List<GitHubProject> failedProjects = calculator.failedProjects();
+    if (!failedProjects.isEmpty()) {
+      System.out.printf("[!] Ratings couldn't be calculated for %d project%s%n",
+          failedProjects.size(), failedProjects.size() == 1 ? "" : "s");
+      for (GitHubProject project : projects) {
+        System.out.printf("[+]     %s%n", project.url());
       }
-
-      RatingValue ratingValue = project.ratingValue().get();
-      System.out.print(new PrettyPrinter().print(ratingValue));
-      System.out.println("[+]");
     }
 
-    storeProjectCache(projectCache, projectCacheFile);
-
-    for (Reporter<GitHubProject> reporter : reporters) {
-      reporter.runFor(projects);
+    if (!reporters.isEmpty()) {
+      System.out.println("[+] Now let's generate reports");
+      for (Reporter<GitHubProject> reporter : reporters) {
+        reporter.runFor(projects);
+      }
     }
   }
 
