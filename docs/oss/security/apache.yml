@@ -1,0 +1,25 @@
+# this is a configuration for generating a report for Apache projects
+cache: .fosstars_model/project_rating_cache.json
+reports:
+  - type: markdown
+    where: docs/oss/security
+    source: docs/oss/security/github_projects.json
+  - type: json
+    where: docs/oss/security/github_projects.json
+finder:
+  organizations:
+    - name: apache
+      exclude:
+        - incubator
+        - website
+        - docs
+        - site
+        - example
+        - test
+        - vscode
+        - staging
+        - tutorial
+        - integration
+        - wiki
+        - infra
+        - github.io
