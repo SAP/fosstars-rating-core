@@ -13,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -98,7 +99,7 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
     for (GitHubProject project : allProjects) {
       stars.put(project, starsOf(project));
     }
-    allProjects.sort(Comparator.comparingInt(stars::get));
+    allProjects.sort(Collections.reverseOrder(Comparator.comparingInt(stars::get)));
 
     String projectDetailsTemplate;
     try (InputStream is = getClass().getResourceAsStream("MarkdownProjectDetailsTemplate.md")) {
