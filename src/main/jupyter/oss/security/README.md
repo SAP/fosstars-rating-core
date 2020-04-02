@@ -10,5 +10,3 @@ jupyter notebook
 ```
 
 Next, open one of the notebooks for specific scores or the entire open-source security rating.
-
-The notebooks allow updating the test vectors and saving them to the corresponding CSV files.

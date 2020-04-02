@@ -10,6 +10,9 @@ import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
 import com.sap.sgs.phosphor.fosstars.model.Interval;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.feature.example.ExampleFeatures;
@@ -160,6 +163,24 @@ public class TestVectorTest {
     } finally {
       Files.deleteIfExists(path);
     }
+  }
+
+  @Test
+  public void yamlSerializeAndDeserialize() throws IOException {
+    Set<Value> values = new HashSet<>();
+    values.add(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1));
+    Interval expectedScore = DoubleInterval.init().from(4.0).to(6.4).closed().make();
+    TestVector vector = new TestVector(values, expectedScore, SecurityLabelExample.OKAY, "test");
+
+    YAMLFactory factory = new YAMLFactory();
+    factory.disable(YAMLGenerator.Feature.USE_NATIVE_TYPE_ID);
+    ObjectMapper mapper = new ObjectMapper(factory);
+    byte[] bytes = mapper.writeValueAsBytes(vector);
+    assertNotNull(bytes);
+    assertTrue(bytes.length > 0);
+    TestVector clone = mapper.readValue(bytes, TestVector.class);
+    assertEquals(vector, clone);
+    assertEquals(vector.hashCode(), clone.hashCode());
   }
 
 }

@@ -149,7 +149,7 @@ public class ProjectPopularityScore extends FeatureBasedScore {
     /**
      * A name of a resource which contains the test vectors.
      */
-    private static final String DEFAULT_TEST_VECTORS_CSV = "ProjectPopularityScoreTestVectors.csv";
+    private static final String TEST_VECTORS_YAML = "ProjectPopularityScoreTestVectors.yml";
 
     /**
      * Initializes a {@link Verification} for a {@link ProjectPopularityScore}.
@@ -169,10 +169,8 @@ public class ProjectPopularityScore extends FeatureBasedScore {
      * @return An instance of {@link Verification}.
      */
     static Verification createFor(ProjectPopularityScore score) throws IOException {
-      try (InputStream is = Verification.class.getResourceAsStream(DEFAULT_TEST_VECTORS_CSV)) {
-
-        return new Verification(
-            score, loadTestVectorsFromCsvResource(score.features(), is));
+      try (InputStream is = Verification.class.getResourceAsStream(TEST_VECTORS_YAML)) {
+        return new Verification(score, loadTestVectorsFromYamlResource(is));
       }
     }
   }

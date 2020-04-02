@@ -101,7 +101,7 @@ public class ProjectSecurityAwarenessScore extends FeatureBasedScore {
     /**
      * A name of a resource which contains the test vectors.
      */
-    private static final String TEST_VECTORS_CSV = "ProjectSecurityAwarenessScoreTestVectors.csv";
+    private static final String TEST_VECTORS_YAML = "ProjectSecurityAwarenessScoreTestVectors.yml";
 
     /**
      * Initializes a {@link Verification}
@@ -122,10 +122,8 @@ public class ProjectSecurityAwarenessScore extends FeatureBasedScore {
      * @return An instance of {@link ProjectSecurityAwarenessScore}.
      */
     static Verification createFor(ProjectSecurityAwarenessScore score) throws IOException {
-      try (InputStream is = ProjectSecurityAwarenessScore.Verification.class
-          .getResourceAsStream(TEST_VECTORS_CSV)) {
-
-        return new Verification(score, loadTestVectorsFromCsvResource(score.features(), is));
+      try (InputStream is = Verification.class.getResourceAsStream(TEST_VECTORS_YAML)) {
+        return new Verification(score, loadTestVectorsFromYamlResource(is));
       }
     }
   }

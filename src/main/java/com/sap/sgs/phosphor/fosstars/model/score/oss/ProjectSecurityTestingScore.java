@@ -38,7 +38,7 @@ public class ProjectSecurityTestingScore extends AverageCompositeScore {
     /**
      * A name of a resource which contains the test vectors.
      */
-    private static final String TEST_VECTORS_CSV = "ProjectSecurityTestingScoreTestVectors.csv";
+    private static final String TEST_VECTORS_YAML = "ProjectSecurityTestingScoreTestVectors.yml";
 
     /**
      * Initializes a {@link Verification}
@@ -59,10 +59,8 @@ public class ProjectSecurityTestingScore extends AverageCompositeScore {
      * @return An instance of {@link ProjectSecurityTestingScore}.
      */
     static Verification createFor(ProjectSecurityTestingScore score) throws IOException {
-      try (InputStream is = ProjectSecurityTestingScore.Verification.class
-          .getResourceAsStream(TEST_VECTORS_CSV)) {
-
-        return new Verification(score, loadTestVectorsFromCsvResource(score.subScores(), is));
+      try (InputStream is = Verification.class.getResourceAsStream(TEST_VECTORS_YAML)) {
+        return new Verification(score, loadTestVectorsFromYamlResource(is));
       }
     }
   }

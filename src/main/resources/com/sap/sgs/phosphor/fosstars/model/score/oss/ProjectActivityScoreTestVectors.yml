@@ -1,0 +1,209 @@
+---
+- values:
+  - type: "UnknownValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of contributors in the last three months"
+  - type: "UnknownValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of commits in the last three months"
+  expectedScore:
+    type: "DoubleInterval"
+    from: 0.0
+    openLeft: false
+    negativeInfinity: false
+    to: 0.1
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_0"
+- values:
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of commits in the last three months"
+    number: 0
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of contributors in the last three months"
+    number: 0
+  expectedScore:
+    type: "DoubleInterval"
+    from: 0.0
+    openLeft: false
+    negativeInfinity: false
+    to: 0.5
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_1"
+- values:
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of contributors in the last three months"
+    number: 1
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of commits in the last three months"
+    number: 5
+  expectedScore:
+    type: "DoubleInterval"
+    from: 0.0
+    openLeft: false
+    negativeInfinity: false
+    to: 2.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_2"
+- values:
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of contributors in the last three months"
+    number: 3
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of commits in the last three months"
+    number: 50
+  expectedScore:
+    type: "DoubleInterval"
+    from: 1.5
+    openLeft: false
+    negativeInfinity: false
+    to: 3.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_3"
+- values:
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of contributors in the last three months"
+    number: 1
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of commits in the last three months"
+    number: 20
+  expectedScore:
+    type: "DoubleInterval"
+    from: 0.0
+    openLeft: false
+    negativeInfinity: false
+    to: 2.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_4"
+- values:
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of contributors in the last three months"
+    number: 1
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of commits in the last three months"
+    number: 200
+  expectedScore:
+    type: "DoubleInterval"
+    from: 3.0
+    openLeft: false
+    negativeInfinity: false
+    to: 5.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_5"
+- values:
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of contributors in the last three months"
+    number: 1
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of commits in the last three months"
+    number: 500
+  expectedScore:
+    type: "DoubleInterval"
+    from: 5.0
+    openLeft: false
+    negativeInfinity: false
+    to: 6.5
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_6"
+- values:
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of contributors in the last three months"
+    number: 20
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of commits in the last three months"
+    number: 50
+  expectedScore:
+    type: "DoubleInterval"
+    from: 5.0
+    openLeft: false
+    negativeInfinity: false
+    to: 6.5
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_7"
+- values:
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of contributors in the last three months"
+    number: 20
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of commits in the last three months"
+    number: 200
+  expectedScore:
+    type: "DoubleInterval"
+    from: 7.0
+    openLeft: false
+    negativeInfinity: false
+    to: 9.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_8"
+- values:
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of commits in the last three months"
+    number: 400
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of contributors in the last three months"
+    number: 30
+  expectedScore:
+    type: "DoubleInterval"
+    from: 8.0
+    openLeft: false
+    negativeInfinity: false
+    to: 10.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_9"
