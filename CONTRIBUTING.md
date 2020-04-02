@@ -58,7 +58,7 @@ that represent multiple edits or corrections of the same logical change.
 See the [Commit Guidelines section of Pro Git](https://git-scm.com/book/en/Distributed-Git-Contributing-to-a-Project#Commit-Guidelines)
 for best practices around commit messages, and use `git log` to see some examples.
 
-*  Keep the subject line to 50 characters or less if possible.
+*  Keep the subject line short if possible.
 *  Please refer to the GitHub issue number in the description of the commit.
 *  Please do not end the subject line with a period.
 
@@ -66,6 +66,11 @@ for best practices around commit messages, and use `git log` to see some example
 
 Please make sure that the `mvn clean package` command passes.
 It's also going to run `checkstyle`, please fix all reported issues.
+
+Please also run the test suite for the demo tool.
+The test suite is available in `src/test/shell/tool/github`.
+It's not yet included in the build process.
+The instructions are available in [the README file](src/test/shell/tool/github/README.md).
 
 # Submit your pull request
 
