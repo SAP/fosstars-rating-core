@@ -1,0 +1,230 @@
+---
+- values:
+  - type: "UnknownValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of stars for a GitHub repository"
+  - type: "UnknownValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of watchers for a GitHub repository"
+  expectedScore:
+    type: "DoubleInterval"
+    from: 0.0
+    openLeft: false
+    negativeInfinity: false
+    to: 0.1
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_0"
+- values:
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of stars for a GitHub repository"
+    number: 0
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of watchers for a GitHub repository"
+    number: 0
+  expectedScore:
+    type: "DoubleInterval"
+    from: 0.0
+    openLeft: false
+    negativeInfinity: false
+    to: 0.5
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_1"
+- values:
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of stars for a GitHub repository"
+    number: 10
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of watchers for a GitHub repository"
+    number: 0
+  expectedScore:
+    type: "DoubleInterval"
+    from: 0.0
+    openLeft: false
+    negativeInfinity: false
+    to: 1.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_2"
+- values:
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of stars for a GitHub repository"
+    number: 100
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of watchers for a GitHub repository"
+    number: 0
+  expectedScore:
+    type: "DoubleInterval"
+    from: 0.0
+    openLeft: false
+    negativeInfinity: false
+    to: 2.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_3"
+- values:
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of stars for a GitHub repository"
+    number: 1000
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of watchers for a GitHub repository"
+    number: 0
+  expectedScore:
+    type: "DoubleInterval"
+    from: 1.0
+    openLeft: false
+    negativeInfinity: false
+    to: 2.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_4"
+- values:
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of watchers for a GitHub repository"
+    number: 2
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of stars for a GitHub repository"
+    number: 10
+  expectedScore:
+    type: "DoubleInterval"
+    from: 0.0
+    openLeft: false
+    negativeInfinity: false
+    to: 1.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_5"
+- values:
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of stars for a GitHub repository"
+    number: 100
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of watchers for a GitHub repository"
+    number: 10
+  expectedScore:
+    type: "DoubleInterval"
+    from: 0.0
+    openLeft: false
+    negativeInfinity: false
+    to: 2.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_6"
+- values:
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of watchers for a GitHub repository"
+    number: 20
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of stars for a GitHub repository"
+    number: 1000
+  expectedScore:
+    type: "DoubleInterval"
+    from: 1.0
+    openLeft: false
+    negativeInfinity: false
+    to: 2.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_7"
+- values:
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of watchers for a GitHub repository"
+    number: 20
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of stars for a GitHub repository"
+    number: 5000
+  expectedScore:
+    type: "DoubleInterval"
+    from: 4.0
+    openLeft: false
+    negativeInfinity: false
+    to: 6.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_8"
+- values:
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of watchers for a GitHub repository"
+    number: 100
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of stars for a GitHub repository"
+    number: 10000
+  expectedScore:
+    type: "DoubleInterval"
+    from: 8.0
+    openLeft: false
+    negativeInfinity: false
+    to: 10.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_9"
+- values:
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of watchers for a GitHub repository"
+    number: 300
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of stars for a GitHub repository"
+    number: 20000
+  expectedScore:
+    type: "DoubleInterval"
+    from: 9.0
+    openLeft: false
+    negativeInfinity: false
+    to: 10.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_10"

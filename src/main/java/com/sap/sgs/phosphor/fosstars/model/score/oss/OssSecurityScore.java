@@ -44,7 +44,7 @@ public class OssSecurityScore extends WeightedCompositeScore {
     /**
      * A name of a resource which contains the test vectors.
      */
-    private static final String TEST_VECTORS_CSV = "OssSecurityScoreTestVectors.csv";
+    private static final String TEST_VECTORS_YAML = "OssSecurityScoreTestVectors.yml";
 
     /**
      * Initializes a {@link Verification} for a {@link OssSecurityScore}.
@@ -64,10 +64,8 @@ public class OssSecurityScore extends WeightedCompositeScore {
      * @return An instance of {@link OssSecurityScore}.
      */
     static Verification createFor(OssSecurityScore score) throws IOException {
-      try (InputStream is = OssSecurityScore.Verification.class
-          .getResourceAsStream(TEST_VECTORS_CSV)) {
-
-        return new Verification(score, loadTestVectorsFromCsvResource(score.subScores(), is));
+      try (InputStream is = Verification.class.getResourceAsStream(TEST_VECTORS_YAML)) {
+        return new Verification(score, loadTestVectorsFromYamlResource(is));
       }
     }
   }

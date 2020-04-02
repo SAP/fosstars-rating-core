@@ -1,0 +1,166 @@
+---
+- values:
+  - type: "UnknownValue"
+    feature:
+      type: "LgtmGradeFeature"
+      name: "The worst LGTM grade of a project"
+  - type: "UnknownValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses LGTM"
+  expectedScore:
+    type: "DoubleInterval"
+    from: 0.0
+    openLeft: false
+    negativeInfinity: false
+    to: 1.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_0"
+- values:
+  - type: "UnknownValue"
+    feature:
+      type: "LgtmGradeFeature"
+      name: "The worst LGTM grade of a project"
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses LGTM"
+    flag: false
+  expectedScore:
+    type: "DoubleInterval"
+    from: 0.0
+    openLeft: false
+    negativeInfinity: false
+    to: 1.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_1"
+- values:
+  - type: "LgtmGradeValue"
+    feature:
+      type: "LgtmGradeFeature"
+      name: "The worst LGTM grade of a project"
+    value: "E"
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses LGTM"
+    flag: true
+  expectedScore:
+    type: "DoubleInterval"
+    from: 1.0
+    openLeft: false
+    negativeInfinity: false
+    to: 3.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_2"
+- values:
+  - type: "LgtmGradeValue"
+    feature:
+      type: "LgtmGradeFeature"
+      name: "The worst LGTM grade of a project"
+    value: "D"
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses LGTM"
+    flag: true
+  expectedScore:
+    type: "DoubleInterval"
+    from: 3.0
+    openLeft: false
+    negativeInfinity: false
+    to: 5.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_3"
+- values:
+  - type: "LgtmGradeValue"
+    feature:
+      type: "LgtmGradeFeature"
+      name: "The worst LGTM grade of a project"
+    value: "C"
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses LGTM"
+    flag: true
+  expectedScore:
+    type: "DoubleInterval"
+    from: 5.0
+    openLeft: false
+    negativeInfinity: false
+    to: 7.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_4"
+- values:
+  - type: "LgtmGradeValue"
+    feature:
+      type: "LgtmGradeFeature"
+      name: "The worst LGTM grade of a project"
+    value: "B"
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses LGTM"
+    flag: true
+  expectedScore:
+    type: "DoubleInterval"
+    from: 7.0
+    openLeft: false
+    negativeInfinity: false
+    to: 9.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_5"
+- values:
+  - type: "LgtmGradeValue"
+    feature:
+      type: "LgtmGradeFeature"
+      name: "The worst LGTM grade of a project"
+    value: "A"
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses LGTM"
+    flag: true
+  expectedScore:
+    type: "DoubleInterval"
+    from: 9.0
+    openLeft: false
+    negativeInfinity: false
+    to: 10.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_6"
+- values:
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses LGTM"
+    flag: true
+  - type: "LgtmGradeValue"
+    feature:
+      type: "LgtmGradeFeature"
+      name: "The worst LGTM grade of a project"
+    value: "A+"
+  expectedScore:
+    type: "DoubleInterval"
+    from: 9.0
+    openLeft: false
+    negativeInfinity: false
+    to: 10.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_7"

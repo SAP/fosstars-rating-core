@@ -2,7 +2,6 @@ package com.sap.sgs.phosphor.fosstars.model.rating.oss;
 
 import com.sap.sgs.phosphor.fosstars.model.qa.RatingVerification;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
-import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.List;
  */
 class OssSecurityRatingVerification extends RatingVerification {
 
-  private static final String DEFAULT_TEST_VECTORS_CSV = "OssSecurityRatingTestVectors.csv";
+  private static final String TEST_VECTORS_YAML = "OssSecurityRatingTestVectors.yml";
 
   /**
    * Initializes a {@link OssSecurityRatingVerification} for an {@link OssSecurityRating}.
@@ -35,10 +34,9 @@ class OssSecurityRatingVerification extends RatingVerification {
    */
   static OssSecurityRatingVerification createFor(OssSecurityRating rating) throws IOException {
     try (InputStream is = OssSecurityRatingVerification.class
-        .getResourceAsStream(DEFAULT_TEST_VECTORS_CSV)) {
+        .getResourceAsStream(TEST_VECTORS_YAML)) {
 
-      return new OssSecurityRatingVerification(
-          rating, loadTestVectorsFromCsvResource(rating.allFeatures(), is, SecurityLabel::valueOf));
+      return new OssSecurityRatingVerification(rating, loadTestVectorsFromYamlResource(is));
     }
   }
 }

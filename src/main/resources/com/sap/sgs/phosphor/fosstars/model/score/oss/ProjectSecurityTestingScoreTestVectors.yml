@@ -1,0 +1,146 @@
+---
+- values:
+  - type: "ScoreValue"
+    score:
+      type: "LgtmScore"
+      name: "How a project addresses issues reported by LGTM"
+    value: 0.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "DependencyScanScore"
+      name: "How a project scans its dependencies for vulnerabilities"
+    value: 0.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  expectedScore:
+    type: "DoubleInterval"
+    from: 0.0
+    openLeft: false
+    negativeInfinity: false
+    to: 0.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_0"
+- values:
+  - type: "ScoreValue"
+    score:
+      type: "LgtmScore"
+      name: "How a project addresses issues reported by LGTM"
+    value: 7.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "DependencyScanScore"
+      name: "How a project scans its dependencies for vulnerabilities"
+    value: 3.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  expectedScore:
+    type: "DoubleInterval"
+    from: 5.0
+    openLeft: false
+    negativeInfinity: false
+    to: 5.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_1"
+- values:
+  - type: "ScoreValue"
+    score:
+      type: "DependencyScanScore"
+      name: "How a project scans its dependencies for vulnerabilities"
+    value: 5.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "LgtmScore"
+      name: "How a project addresses issues reported by LGTM"
+    value: 5.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  expectedScore:
+    type: "DoubleInterval"
+    from: 5.0
+    openLeft: false
+    negativeInfinity: false
+    to: 5.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_2"
+- values:
+  - type: "ScoreValue"
+    score:
+      type: "DependencyScanScore"
+      name: "How a project scans its dependencies for vulnerabilities"
+    value: 7.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "LgtmScore"
+      name: "How a project addresses issues reported by LGTM"
+    value: 3.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  expectedScore:
+    type: "DoubleInterval"
+    from: 5.0
+    openLeft: false
+    negativeInfinity: false
+    to: 5.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_3"
+- values:
+  - type: "ScoreValue"
+    score:
+      type: "DependencyScanScore"
+      name: "How a project scans its dependencies for vulnerabilities"
+    value: 10.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "LgtmScore"
+      name: "How a project addresses issues reported by LGTM"
+    value: 10.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  expectedScore:
+    type: "DoubleInterval"
+    from: 10.0
+    openLeft: false
+    negativeInfinity: false
+    to: 10.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_4"

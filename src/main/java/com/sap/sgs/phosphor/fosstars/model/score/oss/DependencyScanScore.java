@@ -53,7 +53,7 @@ public class DependencyScanScore extends FeatureBasedScore {
     /**
      * A name of a resource which contains the test vectors.
      */
-    private static final String DEFAULT_TEST_VECTORS_CSV = "DependencyScanScoreTestVectors.csv";
+    private static final String TEST_VECTORS_YAML = "DependencyScanScoreTestVectors.yml";
 
     /**
      * Initializes a {@link Verification} for a {@link DependencyScanScore}.
@@ -73,10 +73,8 @@ public class DependencyScanScore extends FeatureBasedScore {
      * @return An instance of {@link Verification}.
      */
     static Verification createFor(DependencyScanScore score) throws IOException {
-      try (InputStream is = Verification.class.getResourceAsStream(DEFAULT_TEST_VECTORS_CSV)) {
-
-        return new Verification(
-            score, loadTestVectorsFromCsvResource(score.features(), is));
+      try (InputStream is = Verification.class.getResourceAsStream(TEST_VECTORS_YAML)) {
+        return new Verification(score, loadTestVectorsFromYamlResource(is));
       }
     }
   }

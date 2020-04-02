@@ -1,0 +1,791 @@
+---
+- values:
+  - type: "ScoreValue"
+    score:
+      type: "ProjectSecurityTestingScore"
+      name: "How well security testing is done for an open-source project"
+      subScores:
+      - type: "DependencyScanScore"
+        name: "How a project scans its dependencies for vulnerabilities"
+      - type: "LgtmScore"
+        name: "How a project addresses issues reported by LGTM"
+    value: 0.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectPopularityScore"
+      name: "Open-source project popularity score"
+    value: 0.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "CommunityCommitmentScore"
+      name: "How well open-source community commits to support an open-source project"
+    value: 0.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "UnpatchedVulnerabilitiesScore"
+      name: "How well vulnerabilities are patched"
+    value: 0.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectSecurityAwarenessScore"
+      name: "How well open-source community is aware about security"
+    value: 0.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectActivityScore"
+      name: "Open-source project activity score"
+    value: 0.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "VulnerabilityLifetimeScore"
+      name: "How fast vulnerabilities are patched"
+    value: 0.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  expectedScore:
+    type: "DoubleInterval"
+    from: 0.0
+    openLeft: false
+    negativeInfinity: false
+    to: 0.5
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_0"
+- values:
+  - type: "ScoreValue"
+    score:
+      type: "ProjectSecurityTestingScore"
+      name: "How well security testing is done for an open-source project"
+      subScores:
+      - type: "DependencyScanScore"
+        name: "How a project scans its dependencies for vulnerabilities"
+      - type: "LgtmScore"
+        name: "How a project addresses issues reported by LGTM"
+    value: 0.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "UnpatchedVulnerabilitiesScore"
+      name: "How well vulnerabilities are patched"
+    value: 0.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectActivityScore"
+      name: "Open-source project activity score"
+    value: 5.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "CommunityCommitmentScore"
+      name: "How well open-source community commits to support an open-source project"
+    value: 5.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectSecurityAwarenessScore"
+      name: "How well open-source community is aware about security"
+    value: 0.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "VulnerabilityLifetimeScore"
+      name: "How fast vulnerabilities are patched"
+    value: 0.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectPopularityScore"
+      name: "Open-source project popularity score"
+    value: 5.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  expectedScore:
+    type: "DoubleInterval"
+    from: 1.0
+    openLeft: false
+    negativeInfinity: false
+    to: 2.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_1"
+- values:
+  - type: "ScoreValue"
+    score:
+      type: "UnpatchedVulnerabilitiesScore"
+      name: "How well vulnerabilities are patched"
+    value: 5.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectSecurityTestingScore"
+      name: "How well security testing is done for an open-source project"
+      subScores:
+      - type: "DependencyScanScore"
+        name: "How a project scans its dependencies for vulnerabilities"
+      - type: "LgtmScore"
+        name: "How a project addresses issues reported by LGTM"
+    value: 5.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectSecurityAwarenessScore"
+      name: "How well open-source community is aware about security"
+    value: 5.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectActivityScore"
+      name: "Open-source project activity score"
+    value: 5.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "VulnerabilityLifetimeScore"
+      name: "How fast vulnerabilities are patched"
+    value: 5.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "CommunityCommitmentScore"
+      name: "How well open-source community commits to support an open-source project"
+    value: 5.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectPopularityScore"
+      name: "Open-source project popularity score"
+    value: 5.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  expectedScore:
+    type: "DoubleInterval"
+    from: 3.0
+    openLeft: false
+    negativeInfinity: false
+    to: 5.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_2"
+- values:
+  - type: "ScoreValue"
+    score:
+      type: "ProjectSecurityTestingScore"
+      name: "How well security testing is done for an open-source project"
+      subScores:
+      - type: "DependencyScanScore"
+        name: "How a project scans its dependencies for vulnerabilities"
+      - type: "LgtmScore"
+        name: "How a project addresses issues reported by LGTM"
+    value: 0.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "UnpatchedVulnerabilitiesScore"
+      name: "How well vulnerabilities are patched"
+    value: 0.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectActivityScore"
+      name: "Open-source project activity score"
+    value: 10.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "CommunityCommitmentScore"
+      name: "How well open-source community commits to support an open-source project"
+    value: 10.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectSecurityAwarenessScore"
+      name: "How well open-source community is aware about security"
+    value: 0.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "VulnerabilityLifetimeScore"
+      name: "How fast vulnerabilities are patched"
+    value: 0.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectPopularityScore"
+      name: "Open-source project popularity score"
+    value: 10.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  expectedScore:
+    type: "DoubleInterval"
+    from: 2.0
+    openLeft: false
+    negativeInfinity: false
+    to: 4.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_3"
+- values:
+  - type: "ScoreValue"
+    score:
+      type: "ProjectSecurityTestingScore"
+      name: "How well security testing is done for an open-source project"
+      subScores:
+      - type: "DependencyScanScore"
+        name: "How a project scans its dependencies for vulnerabilities"
+      - type: "LgtmScore"
+        name: "How a project addresses issues reported by LGTM"
+    value: 0.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "UnpatchedVulnerabilitiesScore"
+      name: "How well vulnerabilities are patched"
+    value: 10.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectActivityScore"
+      name: "Open-source project activity score"
+    value: 5.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "VulnerabilityLifetimeScore"
+      name: "How fast vulnerabilities are patched"
+    value: 5.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "CommunityCommitmentScore"
+      name: "How well open-source community commits to support an open-source project"
+    value: 5.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectSecurityAwarenessScore"
+      name: "How well open-source community is aware about security"
+    value: 0.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectPopularityScore"
+      name: "Open-source project popularity score"
+    value: 5.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  expectedScore:
+    type: "DoubleInterval"
+    from: 4.0
+    openLeft: false
+    negativeInfinity: false
+    to: 5.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_4"
+- values:
+  - type: "ScoreValue"
+    score:
+      type: "ProjectSecurityTestingScore"
+      name: "How well security testing is done for an open-source project"
+      subScores:
+      - type: "DependencyScanScore"
+        name: "How a project scans its dependencies for vulnerabilities"
+      - type: "LgtmScore"
+        name: "How a project addresses issues reported by LGTM"
+    value: 8.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "UnpatchedVulnerabilitiesScore"
+      name: "How well vulnerabilities are patched"
+    value: 8.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectActivityScore"
+      name: "Open-source project activity score"
+    value: 5.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "CommunityCommitmentScore"
+      name: "How well open-source community commits to support an open-source project"
+    value: 5.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectSecurityAwarenessScore"
+      name: "How well open-source community is aware about security"
+    value: 8.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "VulnerabilityLifetimeScore"
+      name: "How fast vulnerabilities are patched"
+    value: 8.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectPopularityScore"
+      name: "Open-source project popularity score"
+    value: 5.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  expectedScore:
+    type: "DoubleInterval"
+    from: 6.0
+    openLeft: false
+    negativeInfinity: false
+    to: 8.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_5"
+- values:
+  - type: "ScoreValue"
+    score:
+      type: "UnpatchedVulnerabilitiesScore"
+      name: "How well vulnerabilities are patched"
+    value: 10.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectSecurityTestingScore"
+      name: "How well security testing is done for an open-source project"
+      subScores:
+      - type: "DependencyScanScore"
+        name: "How a project scans its dependencies for vulnerabilities"
+      - type: "LgtmScore"
+        name: "How a project addresses issues reported by LGTM"
+    value: 10.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectSecurityAwarenessScore"
+      name: "How well open-source community is aware about security"
+    value: 10.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectActivityScore"
+      name: "Open-source project activity score"
+    value: 5.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "VulnerabilityLifetimeScore"
+      name: "How fast vulnerabilities are patched"
+    value: 10.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "CommunityCommitmentScore"
+      name: "How well open-source community commits to support an open-source project"
+    value: 5.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectPopularityScore"
+      name: "Open-source project popularity score"
+    value: 5.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  expectedScore:
+    type: "DoubleInterval"
+    from: 7.0
+    openLeft: false
+    negativeInfinity: false
+    to: 8.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_6"
+- values:
+  - type: "ScoreValue"
+    score:
+      type: "ProjectSecurityTestingScore"
+      name: "How well security testing is done for an open-source project"
+      subScores:
+      - type: "DependencyScanScore"
+        name: "How a project scans its dependencies for vulnerabilities"
+      - type: "LgtmScore"
+        name: "How a project addresses issues reported by LGTM"
+    value: 0.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "UnpatchedVulnerabilitiesScore"
+      name: "How well vulnerabilities are patched"
+    value: 10.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectPopularityScore"
+      name: "Open-source project popularity score"
+    value: 7.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "VulnerabilityLifetimeScore"
+      name: "How fast vulnerabilities are patched"
+    value: 10.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectSecurityAwarenessScore"
+      name: "How well open-source community is aware about security"
+    value: 0.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectActivityScore"
+      name: "Open-source project activity score"
+    value: 7.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "CommunityCommitmentScore"
+      name: "How well open-source community commits to support an open-source project"
+    value: 7.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  expectedScore:
+    type: "DoubleInterval"
+    from: 5.0
+    openLeft: false
+    negativeInfinity: false
+    to: 6.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_7"
+- values:
+  - type: "ScoreValue"
+    score:
+      type: "UnpatchedVulnerabilitiesScore"
+      name: "How well vulnerabilities are patched"
+    value: 10.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectSecurityTestingScore"
+      name: "How well security testing is done for an open-source project"
+      subScores:
+      - type: "DependencyScanScore"
+        name: "How a project scans its dependencies for vulnerabilities"
+      - type: "LgtmScore"
+        name: "How a project addresses issues reported by LGTM"
+    value: 10.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectSecurityAwarenessScore"
+      name: "How well open-source community is aware about security"
+    value: 10.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectPopularityScore"
+      name: "Open-source project popularity score"
+    value: 7.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "VulnerabilityLifetimeScore"
+      name: "How fast vulnerabilities are patched"
+    value: 10.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectActivityScore"
+      name: "Open-source project activity score"
+    value: 7.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "CommunityCommitmentScore"
+      name: "How well open-source community commits to support an open-source project"
+    value: 7.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  expectedScore:
+    type: "DoubleInterval"
+    from: 8.0
+    openLeft: false
+    negativeInfinity: false
+    to: 9.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_8"
+- values:
+  - type: "ScoreValue"
+    score:
+      type: "UnpatchedVulnerabilitiesScore"
+      name: "How well vulnerabilities are patched"
+    value: 10.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectSecurityTestingScore"
+      name: "How well security testing is done for an open-source project"
+      subScores:
+      - type: "DependencyScanScore"
+        name: "How a project scans its dependencies for vulnerabilities"
+      - type: "LgtmScore"
+        name: "How a project addresses issues reported by LGTM"
+    value: 10.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectSecurityAwarenessScore"
+      name: "How well open-source community is aware about security"
+    value: 10.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectActivityScore"
+      name: "Open-source project activity score"
+    value: 10.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "VulnerabilityLifetimeScore"
+      name: "How fast vulnerabilities are patched"
+    value: 10.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "CommunityCommitmentScore"
+      name: "How well open-source community commits to support an open-source project"
+    value: 10.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "ProjectPopularityScore"
+      name: "Open-source project popularity score"
+    value: 10.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  expectedScore:
+    type: "DoubleInterval"
+    from: 9.9
+    openLeft: false
+    negativeInfinity: false
+    to: 10.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_9"

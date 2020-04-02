@@ -76,7 +76,7 @@ public class CommunityCommitmentScore extends FeatureBasedScore {
     /**
      * A name of a resource which contains the test vectors.
      */
-    private static final String TEST_VECTORS_CSV = "CommunityCommitmentScoreTestVectors.csv";
+    private static final String TEST_VECTORS_YAML = "CommunityCommitmentScoreTestVectors.yml";
 
     /**
      * Initializes a {@link Verification}
@@ -97,10 +97,8 @@ public class CommunityCommitmentScore extends FeatureBasedScore {
      * @return An instance of {@link CommunityCommitmentScore}.
      */
     static Verification createFor(CommunityCommitmentScore score) throws IOException {
-      try (InputStream is = CommunityCommitmentScore.Verification.class
-          .getResourceAsStream(TEST_VECTORS_CSV)) {
-
-        return new Verification(score, loadTestVectorsFromCsvResource(score.features(), is));
+      try (InputStream is = Verification.class.getResourceAsStream(TEST_VECTORS_YAML)) {
+        return new Verification(score, loadTestVectorsFromYamlResource(is));
       }
     }
   }

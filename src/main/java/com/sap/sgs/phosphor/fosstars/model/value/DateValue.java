@@ -1,6 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.model.value;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
@@ -15,6 +16,10 @@ public class DateValue extends AbstractValue<Date> {
   /**
    * The date.
    */
+  @JsonFormat(
+      shape = JsonFormat.Shape.STRING,
+      pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ",
+      locale = "us_US")
   private final Date date;
 
   /**

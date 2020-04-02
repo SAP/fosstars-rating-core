@@ -44,6 +44,9 @@ public class UnpatchedVulnerabilitiesScore extends FeatureBasedScore {
    */
   private static final double LOW_SEVERITY_PENALTY = 1.0;
 
+  /**
+   * This is a template for explanation messages.
+   */
   private static final String EXPLANATION_TEMPLATE =
       "Found %d unpatched vulnerabilities with %s severity "
           + "which decreased the score on %2.2f (%d * %2.2f)";
@@ -129,7 +132,7 @@ public class UnpatchedVulnerabilitiesScore extends FeatureBasedScore {
     /**
      * A name of a resource which contains the test vectors.
      */
-    private static final String TEST_VECTORS_CSV = "UnpatchedVulnerabilitiesScoreTestVectors.csv";
+    private static final String TEST_VECTORS_YAML = "UnpatchedVulnerabilitiesScoreTestVectors.yml";
 
     /**
      * Initializes a {@link Verification} for a {@link UnpatchedVulnerabilitiesScore}.
@@ -149,10 +152,8 @@ public class UnpatchedVulnerabilitiesScore extends FeatureBasedScore {
      * @return An instance of {@link UnpatchedVulnerabilitiesScore}.
      */
     static Verification createFor(UnpatchedVulnerabilitiesScore score) throws IOException {
-      try (InputStream is = UnpatchedVulnerabilitiesScore.Verification.class
-          .getResourceAsStream(TEST_VECTORS_CSV)) {
-
-        return new Verification(score, loadTestVectorsFromCsvResource(score.features(), is));
+      try (InputStream is = Verification.class.getResourceAsStream(TEST_VECTORS_YAML)) {
+        return new Verification(score, loadTestVectorsFromYamlResource(is));
       }
     }
   }

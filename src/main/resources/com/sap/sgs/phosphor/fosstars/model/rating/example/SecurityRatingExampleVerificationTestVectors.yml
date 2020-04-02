@@ -1,0 +1,199 @@
+---
+- values:
+  - type: "BooleanValue"
+    feature:
+      type: "SecurityReviewDoneExample"
+      name: "Security review status (example)"
+    flag: false
+  - type: "IntegerValue"
+    feature:
+      type: "NumberOfContributorsLastMonthExample"
+      name: "Number of contributors last month (example)"
+    number: 0
+  - type: "BooleanValue"
+    feature:
+      type: "StaticCodeAnalysisDoneExample"
+      name: "Static code analysis status (example)"
+    flag: false
+  - type: "IntegerValue"
+    feature:
+      type: "NumberOfCommitsLastMonthExample"
+      name: "Number of commits last month (example)"
+    number: 0
+  expectedScore:
+    type: "DoubleInterval"
+    from: 0.0
+    openLeft: false
+    negativeInfinity: false
+    to: 1.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel:
+  - "SecurityRatingExample$SecurityLabelExample"
+  - "AWFUL"
+  alias: "unknown"
+- values:
+  - type: "IntegerValue"
+    feature:
+      type: "NumberOfCommitsLastMonthExample"
+      name: "Number of commits last month (example)"
+    number: 7
+  - type: "BooleanValue"
+    feature:
+      type: "SecurityReviewDoneExample"
+      name: "Security review status (example)"
+    flag: false
+  - type: "IntegerValue"
+    feature:
+      type: "NumberOfContributorsLastMonthExample"
+      name: "Number of contributors last month (example)"
+    number: 1
+  - type: "BooleanValue"
+    feature:
+      type: "StaticCodeAnalysisDoneExample"
+      name: "Static code analysis status (example)"
+    flag: true
+  expectedScore:
+    type: "DoubleInterval"
+    from: 1.0
+    openLeft: false
+    negativeInfinity: false
+    to: 5.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel:
+  - "SecurityRatingExample$SecurityLabelExample"
+  - "OKAY"
+  alias: "unknown"
+- values:
+  - type: "BooleanValue"
+    feature:
+      type: "SecurityReviewDoneExample"
+      name: "Security review status (example)"
+    flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "StaticCodeAnalysisDoneExample"
+      name: "Static code analysis status (example)"
+    flag: false
+  - type: "IntegerValue"
+    feature:
+      type: "NumberOfCommitsLastMonthExample"
+      name: "Number of commits last month (example)"
+    number: 100
+  - type: "IntegerValue"
+    feature:
+      type: "NumberOfContributorsLastMonthExample"
+      name: "Number of contributors last month (example)"
+    number: 20
+  expectedScore:
+    type: "DoubleInterval"
+    from: 1.0
+    openLeft: false
+    negativeInfinity: false
+    to: 5.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel:
+  - "SecurityRatingExample$SecurityLabelExample"
+  - "OKAY"
+  alias: "unknown"
+- values:
+  - type: "BooleanValue"
+    feature:
+      type: "StaticCodeAnalysisDoneExample"
+      name: "Static code analysis status (example)"
+    flag: false
+  - type: "IntegerValue"
+    feature:
+      type: "NumberOfCommitsLastMonthExample"
+      name: "Number of commits last month (example)"
+    number: 100
+  - type: "BooleanValue"
+    feature:
+      type: "SecurityReviewDoneExample"
+      name: "Security review status (example)"
+    flag: true
+  - type: "IntegerValue"
+    feature:
+      type: "NumberOfContributorsLastMonthExample"
+      name: "Number of contributors last month (example)"
+    number: 20
+  expectedScore:
+    type: "DoubleInterval"
+    from: 5.0
+    openLeft: false
+    negativeInfinity: false
+    to: 7.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel:
+  - "SecurityRatingExample$SecurityLabelExample"
+  - "OKAY"
+  alias: "unknown"
+- values:
+  - type: "BooleanValue"
+    feature:
+      type: "SecurityReviewDoneExample"
+      name: "Security review status (example)"
+    flag: false
+  - type: "IntegerValue"
+    feature:
+      type: "NumberOfCommitsLastMonthExample"
+      name: "Number of commits last month (example)"
+    number: 100
+  - type: "BooleanValue"
+    feature:
+      type: "StaticCodeAnalysisDoneExample"
+      name: "Static code analysis status (example)"
+    flag: true
+  - type: "IntegerValue"
+    feature:
+      type: "NumberOfContributorsLastMonthExample"
+      name: "Number of contributors last month (example)"
+    number: 20
+  expectedScore:
+    type: "DoubleInterval"
+    from: 5.0
+    openLeft: false
+    negativeInfinity: false
+    to: 7.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel:
+  - "SecurityRatingExample$SecurityLabelExample"
+  - "OKAY"
+  alias: "unknown"
+- values:
+  - type: "IntegerValue"
+    feature:
+      type: "NumberOfCommitsLastMonthExample"
+      name: "Number of commits last month (example)"
+    number: 100
+  - type: "BooleanValue"
+    feature:
+      type: "SecurityReviewDoneExample"
+      name: "Security review status (example)"
+    flag: true
+  - type: "BooleanValue"
+    feature:
+      type: "StaticCodeAnalysisDoneExample"
+      name: "Static code analysis status (example)"
+    flag: true
+  - type: "IntegerValue"
+    feature:
+      type: "NumberOfContributorsLastMonthExample"
+      name: "Number of contributors last month (example)"
+    number: 20
+  expectedScore:
+    type: "DoubleInterval"
+    from: 9.0
+    openLeft: false
+    negativeInfinity: false
+    to: 10.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel:
+  - "SecurityRatingExample$SecurityLabelExample"
+  - "AWESOME"
+  alias: "unknown"

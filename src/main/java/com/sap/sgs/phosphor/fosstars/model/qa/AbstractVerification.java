@@ -1,5 +1,9 @@
 package com.sap.sgs.phosphor.fosstars.model.qa;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Label;
 import com.sap.sgs.phosphor.fosstars.model.Value;
@@ -24,14 +28,44 @@ import org.apache.commons.csv.CSVRecord;
 public abstract class AbstractVerification {
 
   /**
+   * A factory for parsing YAML.
+   */
+  private static final YAMLFactory YAML_FACTORY;
+
+  /**
+   * For serialization and deserialization in YAML.
+   */
+  private static final ObjectMapper YAML_OBJECT_MAPPER;
+
+  /**
+   * For serialization and deserialization of test vectors.
+   */
+  private static final TypeReference<List<TestVector>> TEST_VECTOR_LIST_TYPE_REFERENCE
+      = new TypeReference<List<TestVector>>() {};
+
+  static {
+    YAML_FACTORY = new YAMLFactory();
+    YAML_FACTORY.disable(YAMLGenerator.Feature.USE_NATIVE_TYPE_ID);
+    YAML_OBJECT_MAPPER = new ObjectMapper(YAML_FACTORY);
+    YAML_OBJECT_MAPPER.findAndRegisterModules();
+  }
+
+  /**
    * An interface of a parser which can convert a string to a label.
    */
   public interface LabelParser {
     Label parse(String string);
   }
 
+  /**
+   * No label in a test vector.
+   */
   private static final Label NO_LABEL = null;
 
+  /**
+   * This label parser just returns no label.
+   * It's used for parsing test vectors for scores.
+   */
   private static final LabelParser DUMMY_LABEL_PARSER = string -> NO_LABEL;
 
   /**
@@ -59,8 +93,6 @@ public abstract class AbstractVerification {
    * First, the method loads test vectors from an input stream.
    * The method expects the test vectors to be in CSV format.
    * The method expects only specified features.
-   * Then, it uses the loaded test vectors to create an instance of
-   * {@link RatingVerification} for a specified rating.
    * The method ignores labels in the test vectors.
    *
    * @param features A list of expected features.
@@ -78,8 +110,6 @@ public abstract class AbstractVerification {
    * First, the method loads test vectors from an input stream.
    * The method expects the test vectors to be in CSV format.
    * The method expects only specified features.
-   * Then, it uses the loaded test vectors to create an instance of
-   * {@link RatingVerification} for a specified rating.
    *
    * @param features A list of expected features.
    * @param is An input stream with test vectors in CSV format.
@@ -130,6 +160,20 @@ public abstract class AbstractVerification {
       }
     }
     return vectors;
+  }
+
+  /**
+   * Loads a list of test vectors from YAML.
+   *
+   * @param is An input stream with YAML.
+   * @return A list of test vectors.
+   * @throws IOException If something went wrong.
+   */
+  public static List<TestVector> loadTestVectorsFromYamlResource(InputStream is)
+      throws IOException {
+
+    Objects.requireNonNull(is, "Input stream can't be null!");
+    return YAML_OBJECT_MAPPER.readValue(is, TEST_VECTOR_LIST_TYPE_REFERENCE);
   }
 
   /**
