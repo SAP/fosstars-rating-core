@@ -33,7 +33,7 @@ public class HasCompanySupport extends AbstractGitHubDataProvider {
 
   @Override
   public HasCompanySupport update(ValueSet values) {
-    System.out.println("[+] Figuring out if the project is supported by a company ...");
+    logger.info("Figuring out if the project is supported by a company ...");
     values.update(new BooleanValue(SUPPORTED_BY_COMPANY, storage.supported(url)));
     return this;
   }

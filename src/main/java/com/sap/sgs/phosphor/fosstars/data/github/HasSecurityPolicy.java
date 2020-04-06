@@ -47,7 +47,7 @@ public class HasSecurityPolicy extends AbstractGitHubDataProvider {
   @Override
   public HasSecurityPolicy update(ValueSet values) throws IOException {
     Objects.requireNonNull(values, "Hey! Values can't be null!");
-    System.out.println("[+] Figuring out if the project has a security policy ...");
+    logger.info("Figuring out if the project has a security policy ...");
 
     GHRepository repository = github.getRepository(path);
 

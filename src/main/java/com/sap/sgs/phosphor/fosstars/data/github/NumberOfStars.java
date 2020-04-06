@@ -28,7 +28,7 @@ public class NumberOfStars extends AbstractGitHubDataProvider {
   @Override
   public NumberOfStars update(ValueSet values) throws IOException {
     Objects.requireNonNull(values, "Hey! Values can't be null!");
-    System.out.println("[+] Counting how many stars the project has ...");
+    logger.info("Counting how many stars the project has ...");
 
     GHRepository repository = github.getRepository(path);
     int stars = repository.getStargazersCount();

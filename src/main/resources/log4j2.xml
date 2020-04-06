@@ -2,7 +2,13 @@
 <Configuration status="WARN">
   <Appenders>
     <Console name="Console" target="SYSTEM_OUT">
-      <PatternLayout pattern="%-5level: %msg%n"/>
+      <PatternLayout>
+        <LevelPatternSelector defaultPattern="[+] %msg%n%throwable">
+          <PatternMatch key="info" pattern="[+] %msg%n%throwable"/>
+          <PatternMatch key="warn" pattern="[!] %msg%n%throwable"/>
+          <PatternMatch key="error" pattern="[x] %msg%n%throwable"/>
+        </LevelPatternSelector>
+      </PatternLayout>
     </Console>
   </Appenders>
   <Loggers>

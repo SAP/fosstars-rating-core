@@ -61,7 +61,7 @@ public class VulnerabilitiesFromNvd extends AbstractGitHubDataProvider {
   @Override
   public VulnerabilitiesFromNvd update(ValueSet values) throws IOException {
     Objects.requireNonNull(values, "Hey! Values can't be null!");
-    System.out.println("[+] Looking for vulnerabilities in NVD ...");
+    logger.info("Looking for vulnerabilities in NVD ...");
 
     nvd.download();
     for (NvdEntry entry : nvd.find(where, name)) {
@@ -78,7 +78,7 @@ public class VulnerabilitiesFromNvd extends AbstractGitHubDataProvider {
    * @param entry The {@link NvdEntry} to be converted.
    * @return An instance of {@link Vulnerability}.
    */
-  private static Vulnerability vulnerabilityFrom(NvdEntry entry) {
+  private Vulnerability vulnerabilityFrom(NvdEntry entry) {
     String id = entry.getCve().getCveDataMeta().getID();
 
     String description = entry.getCve().getDescription().getDescriptionData().stream()
@@ -92,7 +92,7 @@ public class VulnerabilitiesFromNvd extends AbstractGitHubDataProvider {
       try {
         references.add(new Reference(r.getName(), new URL(r.getUrl())));
       } catch (MalformedURLException e) {
-        System.out.printf("[!] Could not parse a URL from a reference in NVD: %s%n", e);
+        logger.warn("Could not parse a URL from a reference in NVD", e);
       }
     }
 

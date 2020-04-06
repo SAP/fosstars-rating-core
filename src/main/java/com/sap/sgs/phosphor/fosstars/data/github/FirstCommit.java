@@ -40,7 +40,7 @@ public class FirstCommit extends AbstractGitHubDataProvider {
   @Override
   public FirstCommit update(ValueSet values) throws IOException {
     Objects.requireNonNull(values, "Hey! Values can't be null!");
-    System.out.println("[+] Figuring out when the first commit was done ...");
+    logger.info("Figuring out when the first commit was done ...");
 
     Value<Date> firstCommit = firstCommitDate();
     cache().put(url, firstCommit);

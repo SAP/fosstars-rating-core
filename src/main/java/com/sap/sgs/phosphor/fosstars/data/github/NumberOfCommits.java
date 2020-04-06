@@ -37,7 +37,7 @@ public class NumberOfCommits extends AbstractGitHubDataProvider {
   @Override
   public NumberOfCommits update(ValueSet values) throws IOException {
     Objects.requireNonNull(values, "Hey! Values can't be null!");
-    System.out.println("[+] Counting how many commits have been done in the last three months ...");
+    logger.info("Counting how many commits have been done in the last three months ...");
 
     Optional<Value> something = cache().get(url, NUMBER_OF_COMMITS_LAST_THREE_MONTHS);
     if (something.isPresent()) {

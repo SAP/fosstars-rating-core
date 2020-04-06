@@ -4,12 +4,19 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.IS_APA
 
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * The data provider tries to figure out if an open-source project belongs to the Apache Software
  * Foundation.
  */
 public class IsApache implements DataProvider {
+
+  /**
+   * A logger.
+   */
+  private static final Logger LOGGER = LogManager.getLogger(IsApache.class);
 
   /**
    * An organization or username on GitHub.
@@ -27,8 +34,7 @@ public class IsApache implements DataProvider {
 
   @Override
   public IsApache update(ValueSet values) {
-    System.out.println(
-        "[+] Figuring out if the project belongs to the Apache Software Foundation ...");
+    LOGGER.info("Figuring out if the project belongs to the Apache Software Foundation ...");
     values.update(new BooleanValue(IS_APACHE, "apache".equalsIgnoreCase(where)));
     return this;
   }

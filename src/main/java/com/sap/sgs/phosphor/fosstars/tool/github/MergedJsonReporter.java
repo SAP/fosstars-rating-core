@@ -41,7 +41,7 @@ public class MergedJsonReporter extends AbstractReporter<GitHubProject> {
     List<GitHubProject> existingProjects = loadProjects(filename);
     List<GitHubProject> allProjects = merge(projects, existingProjects);
 
-    System.out.printf("[+] Storing info about projects to %s%n", filename);
+    logger.info("Storing info about projects to {}", filename);
     allProjects.sort(Comparator.comparing(project -> project.url().toString()));
     Files.write(
         Paths.get(filename),

@@ -62,7 +62,7 @@ class MultipleSecurityRatingsCalculator extends AbstractRatingCalculator {
       Optional<RatingValue> cachedRatingValue = projectCache.cachedRatingValueFor(project);
       if (cachedRatingValue.isPresent()) {
         project.set(cachedRatingValue.get());
-        System.out.printf("[+] Found a cached rating value!%n");
+        logger.info("Found a cached rating value!");
         continue;
       }
 
@@ -70,8 +70,8 @@ class MultipleSecurityRatingsCalculator extends AbstractRatingCalculator {
       try {
         calculateFor(project);
       } catch (Exception e) {
-        System.out.printf("[!] Oh no! Could not calculate a rating for %s%n", project.url());
-        System.out.printf("[!]        %s%n", e.getMessage());
+        logger.warn("Oh no! Could not calculate a rating for {}", project.url());
+        logger.warn(e);
         failedProjects.add(project);
       }
       projectCache.add(project);

@@ -147,7 +147,7 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
       String content = template.replace("%PROJECT_TABLE%", sb.toString());
 
       Path path = Paths.get(outputDirectory).resolve(REPORT_FILENAME);
-      System.out.printf("[+] Storing a report to %s%n", path);
+      logger.info("Storing a report to {}", path);
       Files.write(path, content.getBytes());
     }
   }

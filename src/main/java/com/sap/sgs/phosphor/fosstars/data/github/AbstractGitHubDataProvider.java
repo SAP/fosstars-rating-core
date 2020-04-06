@@ -6,12 +6,19 @@ import com.sap.sgs.phosphor.fosstars.data.UserCallback;
 import com.sap.sgs.phosphor.fosstars.data.ValueCache;
 import java.util.Date;
 import java.util.Objects;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.kohsuke.github.GitHub;
 
 /**
  * Base class for data providers which get data from GitHub.
  */
 public abstract class AbstractGitHubDataProvider implements DataProvider {
+
+  /**
+   * A logger.
+   */
+  protected final Logger logger = LogManager.getLogger(getClass());
 
   /**
    * A GitHub organization of user name.

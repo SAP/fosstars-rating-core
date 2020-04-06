@@ -22,6 +22,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.entity.ContentType;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * The data provider gathers info about how a project uses static analysis with LGTM.
@@ -31,6 +33,11 @@ import org.apache.http.impl.client.HttpClients;
  * </ul>
  */
 public class LgtmDataProvider implements DataProvider {
+
+  /**
+   * A logger.
+   */
+  private static final Logger LOGGER = LogManager.getLogger(LgtmDataProvider.class);
 
   /**
    * For parsing JSON.
@@ -90,8 +97,7 @@ public class LgtmDataProvider implements DataProvider {
         return MAPPER.readTree(httpResponse.getEntity().getContent());
       }
     } catch (IOException e) {
-      System.out.printf("[x] Couldn't fetch data from lgtm.com!%n");
-      System.out.printf("[x]     %s%n", e);
+      LOGGER.warn("Couldn't fetch data from lgtm.com!", e);
       return MAPPER.createObjectNode();
     }
   }
@@ -151,12 +157,13 @@ public class LgtmDataProvider implements DataProvider {
     String name = args.length > 1 ? args[1] : "nifi";
     ValueHashSet values = new ValueHashSet();
 
-    System.out.printf("[+] check project: https://github.com/%s/%s%n", where, name);
+    LOGGER.info("check project: {}",
+        String.format("https://github.com/%s/%s", where, name));
     new LgtmDataProvider("apache", "nifi").update(values);
 
-    System.out.printf("[+] Uses LGTM:   %s%n",
+    LOGGER.info("Uses LGTM:   {}",
         values.of(USES_LGTM).orElse(UnknownValue.of(USES_LGTM)));
-    System.out.printf("[+] Worst grade: %s%n",
+    LOGGER.info("Worst grade: {}",
         values.of(WORST_LGTM_GRADE).orElse(UnknownValue.of(WORST_LGTM_GRADE)));
   }
 }

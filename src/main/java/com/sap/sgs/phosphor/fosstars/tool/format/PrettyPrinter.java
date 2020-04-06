@@ -73,11 +73,11 @@ public class PrettyPrinter implements Formatter {
   @Override
   public String print(RatingValue ratingValue) {
     StringBuilder sb = new StringBuilder();
-    sb.append(String.format("[+] Here is how the rating was calculated:%n"));
+    sb.append(String.format("Here is how the rating was calculated:%n"));
     sb.append(print(ratingValue.scoreValue(), INDENT_STEP, true));
-    sb.append(String.format("[+] Rating: %2.2f out of %2.2f -> %s%n",
+    sb.append(String.format("Rating: %2.2f out of %2.2f -> %s%n",
         ratingValue.score(), Score.MAX, ratingValue.label()));
-    sb.append(String.format("[+] Confidence: %2.2f out of %2.2f%n",
+    sb.append(String.format("Confidence: %2.2f out of %2.2f%n",
         ratingValue.confidence(), Confidence.MAX));
     return sb.toString();
   }
@@ -93,29 +93,29 @@ public class PrettyPrinter implements Formatter {
     StringBuilder sb = new StringBuilder();
 
     if (!isMainScore) {
-      sb.append(String.format("[+] %sSub-score:....%s%n", indent, nameOf(scoreValue.score())));
+      sb.append(String.format("%sSub-score:....%s%n", indent, nameOf(scoreValue.score())));
     } else {
-      sb.append(String.format("[+] %sScore:........%s%n", indent, nameOf(scoreValue.score())));
+      sb.append(String.format("%sScore:........%s%n", indent, nameOf(scoreValue.score())));
     }
 
     if (!scoreValue.score().description().isEmpty()) {
       String[] lines = scoreValue.score().description().split("\n");
-      sb.append(String.format("[+] %sDescription:..%s%n", indent, lines[0]));
+      sb.append(String.format("%sDescription:..%s%n", indent, lines[0]));
       for (int i = 1; i < lines.length; i++) {
-        sb.append(String.format("[+] %s              %s%n", indent, lines[i]));
+        sb.append(String.format("%s              %s%n", indent, lines[i]));
       }
     }
 
     if (!isMainScore) {
-      sb.append(String.format("[+] %sImportance:...%s (weight %2.2f out of %2.2f)%n",
+      sb.append(String.format("%sImportance:...%s (weight %2.2f out of %2.2f)%n",
           indent, importance(scoreValue.weight()), scoreValue.weight(), Weight.MAX));
     }
 
-    sb.append(String.format("[+] %sValue:........%s out of %2.2f%n",
+    sb.append(String.format("%sValue:........%s out of %2.2f%n",
         indent,
         append(String.format("%.2f", scoreValue.get()), ' ', 4),
         Score.MAX));
-    sb.append(String.format("[+] %sConfidence:...%s out of %2.2f%n",
+    sb.append(String.format("%sConfidence:...%s out of %2.2f%n",
         indent,
         append(String.format("%.2f", scoreValue.confidence()), ' ', 4),
         Confidence.MAX));
@@ -136,15 +136,15 @@ public class PrettyPrinter implements Formatter {
       subScoreValues.sort(Collections.reverseOrder(Comparator.comparingDouble(ScoreValue::weight)));
 
       sb.append(String.format(
-          "[+] %sBased on:.....%d sub-scores:%n", indent, subScoreValues.size()));
+          "%sBased on:.....%d sub-scores:%n", indent, subScoreValues.size()));
       for (ScoreValue usedValue : subScoreValues) {
         sb.append(print(usedValue, indent + INDENT_STEP + INDENT_STEP, false));
-        sb.append("[+]\n");
+        sb.append("\n");
       }
     }
 
     if (!featureValues.isEmpty()) {
-      sb.append(String.format("[+] %sBased on:...%d features:%n", indent, featureValues.size()));
+      sb.append(String.format("%sBased on:...%d features:%n", indent, featureValues.size()));
       Map<String, Object> nameToValue = new TreeMap<>(String::compareTo);
       int maxLength = 0;
       for (Value usedValue : featureValues) {
@@ -158,7 +158,7 @@ public class PrettyPrinter implements Formatter {
       for (Map.Entry<String, Object> entry : nameToValue.entrySet()) {
         String name = entry.getKey();
         name += name.endsWith("?") ? "." : ":";
-        sb.append(String.format("[+] %s  %s%s%n",
+        sb.append(String.format("%s  %s%s%n",
             indent + INDENT_STEP,
             append(name, '.', maxLength + 3),
             entry.getValue()));
@@ -167,9 +167,9 @@ public class PrettyPrinter implements Formatter {
 
     if (!scoreValue.explanation().isEmpty()) {
       Iterator<String> iterator = scoreValue.explanation().iterator();
-      sb.append(String.format("[+] %sExplanation:..%s%n", indent, iterator.next()));
+      sb.append(String.format("%sExplanation:..%s%n", indent, iterator.next()));
       while (iterator.hasNext()) {
-        sb.append(String.format("[+] %s              %s%n", indent, iterator.next()));
+        sb.append(String.format("%s              %s%n", indent, iterator.next()));
       }
     }
 

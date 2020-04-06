@@ -84,7 +84,7 @@ public class UsesSignedCommits extends AbstractGitHubDataProvider {
   @Override
   public UsesSignedCommits update(ValueSet values) throws IOException {
     Objects.requireNonNull(values, "Hey! Values can't be null!");
-    System.out.println("[+] Figuring out if the project uses verified signed commits ...");
+    logger.info("Figuring out if the project uses verified signed commits ...");
 
     Optional<Value> something = cache().get(url, USES_VERIFIED_SIGNED_COMMITS);
     if (something.isPresent()) {
@@ -113,8 +113,7 @@ public class UsesSignedCommits extends AbstractGitHubDataProvider {
     try {
       return new BooleanValue(USES_VERIFIED_SIGNED_COMMITS, askGithub());
     } catch (IOException e) {
-      System.out.printf("[x] Couldn't fetch data from api.github.com!%n");
-      System.out.printf("[x]     %s%n", e);
+      logger.warn("Couldn't fetch data from api.github.com!", e);
       return UnknownValue.of(USES_VERIFIED_SIGNED_COMMITS);
     }
   }
