@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * This is a cache of feature values for an open-source project.
@@ -27,6 +29,11 @@ import java.util.Optional;
  * The cache is stored to a JSON file.
  */
 public class ValueCache {
+
+  /**
+   * A logger.
+   */
+  private static final Logger LOGGER = LogManager.getLogger(ValueCache.class);
 
   /**
    * An ObjectMapper for serialization and deserialization.
@@ -213,10 +220,9 @@ public class ValueCache {
     try {
       return load();
     } catch (FileNotFoundException e) {
-      System.out.println("[+] The default value cache doesn't exist yet.");
+      LOGGER.info("The default value cache doesn't exist yet.");
     } catch (IOException e) {
-      System.out.println("[!] Could not load the default value cache!");
-      e.printStackTrace(System.out);
+      LOGGER.warn("Could not load the default value cache!", e);
     }
     return new ValueCache();
   }

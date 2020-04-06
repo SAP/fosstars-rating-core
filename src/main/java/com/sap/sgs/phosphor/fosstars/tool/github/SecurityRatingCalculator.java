@@ -28,6 +28,8 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.kohsuke.github.GitHub;
 import org.kohsuke.github.GitHubBuilder;
 import org.kohsuke.github.HttpConnector;
@@ -38,6 +40,11 @@ import org.kohsuke.github.extras.ImpatientHttpConnector;
  * of multiple open-source projects.
  */
 public class SecurityRatingCalculator {
+
+  /**
+   * A logger.
+   */
+  private static final Logger LOGGER = LogManager.getLogger(SecurityRatingCalculator.class);
 
   /**
    * A file name of the default cache of projects.
@@ -59,12 +66,11 @@ public class SecurityRatingCalculator {
     try {
       run(args);
     } catch (Exception e) {
-      System.out.printf("[x] Something went wrong!%n");
-      e.printStackTrace(System.out);
-      System.out.printf("[+] Bye!%n");
+      LOGGER.error("Something went wrong!", e);
+      LOGGER.error("Bye!");
       System.exit(1);
     }
-    System.out.printf("[+] Bye!%n");
+    LOGGER.info("Bye!");
   }
 
   /**
@@ -156,8 +162,10 @@ public class SecurityRatingCalculator {
     RatingValue ratingValue = project.ratingValue()
         .orElseThrow(() -> new IOException("Could not calculate a rating!"));
 
-    System.out.println("[+]");
-    System.out.print(new PrettyPrinter().print(ratingValue));
+    String content = new PrettyPrinter().print(ratingValue);
+    for (String line : content.split("\n")) {
+      LOGGER.info(line);
+    }
   }
 
   /**
@@ -172,24 +180,24 @@ public class SecurityRatingCalculator {
   private static void processConfig(String filename, GitHub github, String githubToken,
       UserCallback callback) throws IOException {
 
-    System.out.printf("[+] Loading config from %s%n", filename);
+    LOGGER.info("Loading config from {}", filename);
     Config config = config(filename);
 
     // try to create reporters earlier to catch a possible misconfiguration
     // before calculating ratings
     final List<Reporter<GitHubProject>> reporters = makeReporters(config);
 
-    System.out.printf("[+] Look for projects ...%n");
+    LOGGER.info("Look for projects ...");
     List<GitHubProject> projects = new GitHubProjectFinder(github).set(config.finderConfig).run();
-    System.out.printf("[+] Found %d project%s%n", projects.size(), projects.size() > 1 ? "s" : "");
+    LOGGER.info("Found {} project{}", projects.size(), projects.size() > 1 ? "s" : "");
     for (GitHubProject project : projects) {
-      System.out.printf("[+]   %s%n", project.url());
+      LOGGER.info("  {}", project.url());
     }
 
     String projectCacheFile = projectCacheFile(config);
     GitHubProjectCache projectCache = loadProjectCache(projectCacheFile);
 
-    System.out.printf("[+] Starting calculating ratings ...%n");
+    LOGGER.info("Starting calculating ratings ...");
     MultipleSecurityRatingsCalculator calculator = new MultipleSecurityRatingsCalculator(github);
     calculator.set(projectCache);
     calculator.set(callback);
@@ -198,20 +206,19 @@ public class SecurityRatingCalculator {
 
     storeProjectCache(projectCache, projectCacheFile);
 
-    System.out.println("[+] Okay, we've done calculating the ratings");
-    System.out.println("[+]");
+    LOGGER.info("Okay, we've done calculating the ratings");
 
     List<GitHubProject> failedProjects = calculator.failedProjects();
     if (!failedProjects.isEmpty()) {
-      System.out.printf("[!] Ratings couldn't be calculated for %d project%s%n",
+      LOGGER.warn("Ratings couldn't be calculated for {} project{}",
           failedProjects.size(), failedProjects.size() == 1 ? "" : "s");
       for (GitHubProject project : projects) {
-        System.out.printf("[+]     %s%n", project.url());
+        LOGGER.info("    {}", project.url());
       }
     }
 
     if (!reporters.isEmpty()) {
-      System.out.println("[+] Now let's generate reports");
+      LOGGER.info("Now let's generate reports");
       for (Reporter<GitHubProject> reporter : reporters) {
         reporter.runFor(projects);
       }
@@ -228,7 +235,7 @@ public class SecurityRatingCalculator {
   private static void storeProjectCache(GitHubProjectCache projectCache, String projectCacheFile)
       throws IOException {
 
-    System.out.printf("[+] Storing the project cache to %s%n", projectCacheFile);
+    LOGGER.info("Storing the project cache to {}", projectCacheFile);
     ObjectMapper mapper = new ObjectMapper();
     Files.write(
         Paths.get(projectCacheFile),
@@ -245,7 +252,7 @@ public class SecurityRatingCalculator {
    */
   private static GitHubProjectCache loadProjectCache(String filename) throws IOException {
     if (Files.exists(Paths.get(filename))) {
-      System.out.printf("[+] Loading a project cache from %s%n", filename);
+      LOGGER.info("Loading a project cache from {}", filename);
       return GitHubProjectCache.load(filename);
     }
 
@@ -419,30 +426,30 @@ public class SecurityRatingCalculator {
    */
   private static GitHub connectToGithub(String token, UserCallback callback) throws IOException {
     if (token == null && callback.canTalk()) {
-      System.out.println("[!] You didn't provide an access token for GitHub ...");
-      System.out.println("[!] But you can create it now. Do the following:");
-      System.out.println("    1. Go to https://github.com/settings/tokens");
-      System.out.println("    2. Click the 'Generate new token' button");
-      System.out.println("    3. Write a short note for a token");
-      System.out.println("    4. Select scopes");
-      System.out.println("    5. Click the 'Generate token' button");
-      System.out.println("    6. Copy your new token");
-      System.out.println("    7. Paste the token here");
+      LOGGER.warn("You didn't provide an access token for GitHub ...");
+      LOGGER.warn("But you can create it now. Do the following:");
+      LOGGER.info("    1. Go to https://github.com/settings/tokens");
+      LOGGER.info("    2. Click the 'Generate new token' button");
+      LOGGER.info("    3. Write a short note for a token");
+      LOGGER.info("    4. Select scopes");
+      LOGGER.info("    5. Click the 'Generate token' button");
+      LOGGER.info("    6. Copy your new token");
+      LOGGER.info("    7. Paste the token here");
 
       Answer answer = new YesNoQuestion(callback, "Would you like to create a token now?").ask();
       switch (answer) {
         case YES:
-          System.out.println("[+] Paste the token here ------+");
-          System.out.println("                               |");
-          System.out.println("                               |");
-          System.out.println("     +-------------------------+");
-          System.out.println("     |");
-          System.out.println("     |");
-          System.out.println("     V");
+          LOGGER.info("Paste the token here ------+");
+          LOGGER.info("                               |");
+          LOGGER.info("                               |");
+          LOGGER.info("     +-------------------------+");
+          LOGGER.info("     |");
+          LOGGER.info("     |");
+          LOGGER.info("     V");
           token = new InputString(callback).get();
           break;
         case NO:
-          System.out.println("Okay ...");
+          LOGGER.info("Okay ...");
           break;
         default:
           throw new IllegalArgumentException(
@@ -454,7 +461,7 @@ public class SecurityRatingCalculator {
 
     List<Exception> suppressed = new ArrayList<>();
     if (token != null) {
-      System.out.println("[+] Okay, we have a GitHub token, let's try to use it");
+      LOGGER.info("Okay, we have a GitHub token, let's try to use it");
       try {
         GitHub github = new GitHubBuilder()
             .withConnector(connector)
@@ -462,32 +469,31 @@ public class SecurityRatingCalculator {
             .build();
         return github;
       } catch (IOException e) {
-        System.out.printf("[x] Something went wrong: %s%n", e);
+        LOGGER.warn("Something went wrong: {}", e);
         suppressed.add(e);
       }
     } else {
-      System.out.printf("[!] No GitHub token provided%n");
+      LOGGER.warn("No GitHub token provided");
     }
 
     try {
-      System.out.println("[+] Now, let's try to use GitHub settings from environment variables");
-      GitHub github = GitHubBuilder.fromEnvironment()
+      LOGGER.info("Now, let's try to use GitHub settings from environment variables");
+      return GitHubBuilder.fromEnvironment()
           .withConnector(connector)
           .build();
-      return github;
     } catch (IOException e) {
-      System.out.printf("[x] Could not connect to GitHub: %s%n", e);
+      LOGGER.warn("Could not connect to GitHub", e);
 
       suppressed.add(e);
     }
 
     try {
-      System.out.println("[x] Then, let's try to establish an anonymous connection");
+      LOGGER.info("Then, let's try to establish an anonymous connection");
       GitHub github = new GitHubBuilder().withConnector(connector).build();
-      System.out.println("[!] We have established only an anonymous connection to GitHub ...");
+      LOGGER.warn("We have established only an anonymous connection to GitHub ...");
       return github;
     } catch (IOException e) {
-      System.out.printf("[x] Something went wrong: %s%n", e);
+      LOGGER.warn("Something went wrong", e);
       suppressed.add(e);
     }
 

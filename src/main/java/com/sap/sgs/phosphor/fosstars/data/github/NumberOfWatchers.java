@@ -29,7 +29,7 @@ public class NumberOfWatchers extends AbstractGitHubDataProvider {
   @Override
   public DataProvider update(ValueSet values) throws IOException {
     Objects.requireNonNull(values, "Hey! Values can't be null!");
-    System.out.println("[+] Counting how many watchers the project has ...");
+    logger.info("Counting how many watchers the project has ...");
     GHRepository repository = github.getRepository(path);
     int watchers = repository.getSubscribersCount();
     values.update(new IntegerValue(NUMBER_OF_WATCHERS_ON_GITHUB, watchers));

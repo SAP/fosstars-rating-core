@@ -62,7 +62,7 @@ public class UnpatchedVulnerabilities extends AbstractGitHubDataProvider {
   @Override
   public UnpatchedVulnerabilities update(ValueSet values) throws MalformedURLException {
     Objects.requireNonNull(values, "Hey! Values can't be null!");
-    System.out.println("[+] Figuring out if the project has any unpatched vulnerability ...");
+    logger.info("Figuring out if the project has any unpatched vulnerability ...");
 
     Vulnerabilities unpatchedVulnerabilities = storage.get(url);
 
@@ -86,7 +86,7 @@ public class UnpatchedVulnerabilities extends AbstractGitHubDataProvider {
         try {
           storage.store(PATH);
         } catch (IOException e) {
-          System.out.printf("[!] Could not store vulnerabilities to a file: %s%n", e);
+          logger.warn("Could not store vulnerabilities to a file", e);
         }
       }
     }

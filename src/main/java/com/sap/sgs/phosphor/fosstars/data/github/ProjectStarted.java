@@ -31,7 +31,7 @@ public class ProjectStarted extends FirstCommit {
   @Override
   public ProjectStarted update(ValueSet values) throws IOException {
     Objects.requireNonNull(values, "Hey! Values can't be null!");
-    System.out.println("[+] Figuring out when the project started ...");
+    logger.info("Figuring out when the project started ...");
 
     Value<Date> firstCommitDate = firstCommitDate();
 

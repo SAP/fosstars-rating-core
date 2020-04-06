@@ -11,6 +11,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GHUser;
@@ -23,6 +25,11 @@ import org.kohsuke.github.GitUser;
  * commits which have been made for lat 3 months, and collect unique login names of contributors.
  */
 public class NumberOfContributors extends AbstractGitHubDataProvider {
+
+  /**
+   * A logger.
+   */
+  private static final Logger LOGGER = LogManager.getLogger(NumberOfContributors.class);
 
   /**
    * This constant means that no user found.
@@ -48,8 +55,7 @@ public class NumberOfContributors extends AbstractGitHubDataProvider {
   @Override
   public NumberOfContributors update(ValueSet values) throws IOException {
     Objects.requireNonNull(values, "Hey! Values can't be null!");
-    System.out.println(
-        "[+] Counting how many people contributed to the project in the last three months ...");
+    LOGGER.info("Counting how many people contributed to the project in the last three months ...");
 
     Optional<Value> something = cache().get(url, NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS);
     if (something.isPresent()) {

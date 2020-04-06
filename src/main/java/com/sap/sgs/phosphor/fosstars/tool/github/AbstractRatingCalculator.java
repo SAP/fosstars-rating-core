@@ -5,12 +5,19 @@ import com.sap.sgs.phosphor.fosstars.data.UserCallback;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.kohsuke.github.GitHub;
 
 /**
  * A base class for rating calculators.
  */
 abstract class AbstractRatingCalculator {
+
+  /**
+   * A logger.
+   */
+  protected final Logger logger = LogManager.getLogger(getClass());
 
   /**
    * An interface to GitHub.

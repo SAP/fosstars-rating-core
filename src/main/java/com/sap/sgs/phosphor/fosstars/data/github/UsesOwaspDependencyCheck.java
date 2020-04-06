@@ -40,7 +40,7 @@ public class UsesOwaspDependencyCheck extends AbstractGitHubDataProvider {
   @Override
   public UsesOwaspDependencyCheck update(ValueSet values) throws IOException {
     Objects.requireNonNull(values, "Hey! Values can't be null!");
-    System.out.println("[+] Figuring out if the project uses OWASP Dependency Check ...");
+    logger.info("Figuring out if the project uses OWASP Dependency Check ...");
 
     GHRepository repository = github.getRepository(path);
     boolean answer = checkMaven(repository) || checkGradle(repository);

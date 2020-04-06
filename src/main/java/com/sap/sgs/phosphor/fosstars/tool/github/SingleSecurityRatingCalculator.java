@@ -57,23 +57,23 @@ class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
 
     OssSecurityRating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
 
-    System.out.printf("[+] Project: %s%n", project.url());
-    System.out.printf("[+] Let's get info about the project and calculate a security rating%n");
+    logger.info("Project: {}", project.url());
+    logger.info("Let's get info about the project and calculate a security rating");
     ValueSet values = ValueHashSet.unknown(rating.allFeatures());
     for (DataProvider provider : dataProviders(where, name)) {
       try {
         provider.set(callback).update(values);
       } catch (Exception e) {
-        System.out.printf("[!] Holy Moly, %s data provider failed!%n",
+        logger.warn("Holy Moly, {} data provider failed!",
             provider.getClass().getSimpleName());
-        System.out.printf("[!] The last thing that it said was: %s%n", e.getMessage());
-        System.out.printf("[!] But we don't give up!%n");
+        logger.warn("The last thing that it said was", e);
+        logger.warn("But we don't give up!");
       }
     }
 
-    System.out.println("[+] Here is what we know about the project:");
+    logger.info("Here is what we know about the project:");
     for (Value value : values.toArray()) {
-      System.out.printf("[+]    %s: %s%n",
+      logger.info("   {}: {}",
           value.feature(), value.isUnknown() ? "unknown" : value.get());
     }
 

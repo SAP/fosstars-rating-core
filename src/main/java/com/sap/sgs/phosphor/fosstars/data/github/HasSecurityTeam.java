@@ -43,7 +43,7 @@ public class HasSecurityTeam extends AbstractGitHubDataProvider {
   @Override
   public HasSecurityTeam update(ValueSet values) {
     Objects.requireNonNull(values, "Hey! Values can't be null!");
-    System.out.println("[+] Figuring out if the project has a security team ...");
+    logger.info("Figuring out if the project has a security team ...");
 
     values.update(UnknownValue.of(HAS_SECURITY_TEAM));
 

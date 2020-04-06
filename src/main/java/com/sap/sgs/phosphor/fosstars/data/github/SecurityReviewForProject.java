@@ -38,7 +38,7 @@ public class SecurityReviewForProject extends AbstractGitHubDataProvider {
   @Override
   public SecurityReviewForProject update(ValueSet values) {
     Objects.requireNonNull(values, "Hey! Values can't be null!");
-    System.out.println("[+] Figuring out if any security review has been done for the project ...");
+    logger.info("Figuring out if any security review has been done for the project ...");
     values.update(new SecurityReviewsDoneValue(storage.get(url)));
     return this;
   }

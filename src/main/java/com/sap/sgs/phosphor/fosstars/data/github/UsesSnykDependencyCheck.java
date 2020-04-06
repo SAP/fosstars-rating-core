@@ -30,7 +30,7 @@ public class UsesSnykDependencyCheck extends AbstractGitHubDataProvider {
   @Override
   public UsesSnykDependencyCheck update(ValueSet values) {
     Objects.requireNonNull(values, "Hey! Values can't be null!");
-    System.out.println("[+] Figuring out if the project uses Snyk ...");
+    logger.info("Figuring out if the project uses Snyk ...");
 
     values.update(UnknownValue.of(SCANS_FOR_VULNERABLE_DEPENDENCIES));
 

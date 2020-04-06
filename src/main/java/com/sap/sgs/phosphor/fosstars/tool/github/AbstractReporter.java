@@ -14,8 +14,15 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 abstract class AbstractReporter<T extends Project> implements Reporter<T> {
+
+  /**
+   * A logger.
+   */
+  protected final Logger logger = LogManager.getLogger(getClass());
 
   /**
    * For serialization.
@@ -64,14 +71,13 @@ abstract class AbstractReporter<T extends Project> implements Reporter<T> {
    * @return A list of loaded extra projects.
    * @throws IOException If the projects couldn't be loaded.
    */
-  static List<GitHubProject> loadProjects(String extraSourceFileName) throws IOException {
+  List<GitHubProject> loadProjects(String extraSourceFileName) throws IOException {
     if (extraSourceFileName == null) {
       return Collections.emptyList();
     }
     Path path = Paths.get(extraSourceFileName);
     if (!Files.exists(path)) {
-      System.out.printf(
-          "[!] Oh no! I could not load extra projects from %s%n", extraSourceFileName);
+      logger.warn("Oh no! I could not load extra projects from {}", extraSourceFileName);
       return Collections.emptyList();
     }
     return MAPPER.readValue(Files.newInputStream(path), LIST_OF_GITHUB_PROJECTS_TYPE);
