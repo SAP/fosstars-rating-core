@@ -27,15 +27,25 @@ public class CompositeDataProviderTest {
     }
 
     @Override
-    public DataProvider update(ValueSet values) {
+    public DataProvider update(Object object, ValueSet values) {
       values.update(new BooleanValue(new BooleanFeature(featureName), true));
       return this;
+    }
+
+    @Override
+    public ValueCache cache() {
+      return null;
     }
 
     @Override
     public DataProvider set(UserCallback callback) {
       this.callback = callback;
       return this;
+    }
+
+    @Override
+    public DataProvider set(ValueCache cache) {
+      return null;
     }
   }
 
@@ -48,21 +58,21 @@ public class CompositeDataProviderTest {
     );
     assertEquals(3, compositeDataProvider.providers().size());
 
-    for (DataProvider provider : compositeDataProvider.providers()) {
+    for (Object provider : compositeDataProvider.providers()) {
       DataProviderImpl providerImpl = (DataProviderImpl) provider;
       assertNull(providerImpl.callback);
     }
     compositeDataProvider.set(new Terminal());
-    for (DataProvider provider : compositeDataProvider.providers()) {
-      DataProviderImpl provderImpl = (DataProviderImpl) provider;
-      assertNotNull(provderImpl.callback);
+    for (Object provider : compositeDataProvider.providers()) {
+      DataProviderImpl providerImpl = (DataProviderImpl) provider;
+      assertNotNull(providerImpl.callback);
     }
 
     ValueHashSet values = new ValueHashSet();
     assertEquals(0, values.size());
 
 
-    compositeDataProvider.update(values);
+    compositeDataProvider.update(new Object(), values);
 
     assertEquals(3, values.size());
     for (Value value : values.toArray()) {

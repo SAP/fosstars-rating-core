@@ -8,11 +8,11 @@ import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Optional;
 import org.apache.http.Header;
 import org.apache.http.HttpHeaders;
@@ -71,30 +71,27 @@ public class UsesSignedCommits extends AbstractGitHubDataProvider {
   /**
    * Initializes a data provider.
    *
-   * @param where A GitHub organization or user name.
-   * @param name A name of a repository.
    * @param github An interface to the GitHub API.
    * @param githubToken provided by user to access GitHub API.
    */
-  public UsesSignedCommits(String where, String name, GitHub github, String githubToken) {
-    super(where, name, github);
+  public UsesSignedCommits(GitHub github, String githubToken) {
+    super(github);
     this.githubToken = githubToken;
   }
 
   @Override
-  public UsesSignedCommits update(ValueSet values) throws IOException {
-    Objects.requireNonNull(values, "Hey! Values can't be null!");
+  protected UsesSignedCommits doUpdate(GitHubProject project, ValueSet values) {
     logger.info("Figuring out if the project uses verified signed commits ...");
 
-    Optional<Value> something = cache().get(url, USES_VERIFIED_SIGNED_COMMITS);
+    Optional<Value> something = cache.get(project, USES_VERIFIED_SIGNED_COMMITS);
     if (something.isPresent()) {
       values.update(something.get());
       return this;
     }
 
-    Value<Boolean> signedCommits = usesSignedCommits();
+    Value<Boolean> signedCommits = usesSignedCommits(project);
     values.update(signedCommits);
-    cache().put(url, signedCommits, tomorrow());
+    cache.put(project, signedCommits, tomorrow());
 
     return this;
   }
@@ -106,12 +103,13 @@ public class UsesSignedCommits extends AbstractGitHubDataProvider {
    * certain percentage threshold ({@link #SIGNED_COMMIT_PERCENTAGE_THRESHOLD}), then it says that
    * the project uses verified signed commits. Otherwise, it says that the project does not use
    * verified signed commits.
-   * 
-   * @return {@link BooleanValue} value of the feature {@link #USES_VERIFIED_SIGNED_COMMITS}.
+   *
+   * @param project The project.
+   * @return {@link BooleanValue} value of the feature.
    */
-  private Value<Boolean> usesSignedCommits() {
+  private Value<Boolean> usesSignedCommits(GitHubProject project) {
     try {
-      return new BooleanValue(USES_VERIFIED_SIGNED_COMMITS, askGithub());
+      return new BooleanValue(USES_VERIFIED_SIGNED_COMMITS, askGithub(project));
     } catch (IOException e) {
       logger.warn("Couldn't fetch data from api.github.com!", e);
       return UnknownValue.of(USES_VERIFIED_SIGNED_COMMITS);
@@ -119,15 +117,16 @@ public class UsesSignedCommits extends AbstractGitHubDataProvider {
   }
 
   /**
-   * Check if the project uses signed verified commits.
-   * 
+   * Check if a project uses signed verified commits.
+   *
+   * @param project The project.
    * @return boolean True if the project uses verified signed commits. Otherwise, False
    * @throws IOException #{@link HttpClient} may throw an exception during REST call.
    * @see: GitHub Issue: <a link="https://github.com/github-api/github-api/issues/737">Get commit or
    *       tag signature verified flag</a> and the associated
    *       <a link= "https://github.com/github-api/github-api/pull/738">Pull Request</a>.
    */  
-  private boolean askGithub() throws IOException {
+  private boolean askGithub(GitHubProject project) throws IOException {
     // TODO: The data gathering process here from GitHub API will have to be merged with other
     // related data providers. More information can be found in
     // https://github.com/SAP/fosstars-rating-core/issues/69
@@ -139,7 +138,7 @@ public class UsesSignedCommits extends AbstractGitHubDataProvider {
     Page page;
     
     do {
-      page = nextPage(commitDate, pageNumber++);
+      page = nextPage(project.path(), commitDate, pageNumber++);
       
       for (JsonNode commitNode : page.commitNodes) {
         counter++;
@@ -157,16 +156,17 @@ public class UsesSignedCommits extends AbstractGitHubDataProvider {
   /**
    * Does a REST API call to public URL <a link="https://api.github.com">GitHub API</a> to list all
    * the commits after a specific date.
-   * 
+   *
+   * @param path The path to the project.
    * @param commitDate Only commits after this date will be returned. 
    *                   This is a timestamp in ISO 8601, format: YYYY-MM-DDTHH:MM:SSZ
    * @param pageNumber Index of the page.
    * @return The {@link Page} object.
    * @throws IOException #{@link HttpClient} may throw an exception during REST call.
    */
-  private Page nextPage(String commitDate, int pageNumber) throws IOException {
+  private Page nextPage(String path, String commitDate, int pageNumber) throws IOException {
     try (CloseableHttpClient client = httpClient()) {
-      HttpGet httpGetRequest = buildRequest(commitDate, pageNumber);
+      HttpGet httpGetRequest = buildRequest(path, commitDate, pageNumber);
       try (CloseableHttpResponse response = client.execute(httpGetRequest)) {
         return new Page(hasNextPage(response), MAPPER.readTree(response.getEntity().getContent()));
       }
@@ -175,15 +175,16 @@ public class UsesSignedCommits extends AbstractGitHubDataProvider {
 
   /**
    * Builds a {@link HttpGet} request.
-   * 
+   *
+   * @param path The path to the project.
    * @param commitDate This is a timestamp in ISO 8601, format: YYYY-MM-DDTHH:MM:SSZ
    * @param pageNumber Index of the page.
    * @return The {@link HttpGet} object.
    */
-  private HttpGet buildRequest(String commitDate, int pageNumber) {
+  private HttpGet buildRequest(String path, String commitDate, int pageNumber) {
     String url =
-        String.format("https://api.github.com/repos/%s/%s/commits?since=%s&page=%s&per_page=%s",
-            where, name, commitDate, pageNumber, MAX_ITEMS_PER_PAGE);
+        String.format("https://api.github.com/repos/%s/commits?since=%s&page=%s&per_page=%s",
+            path, commitDate, pageNumber, MAX_ITEMS_PER_PAGE);
 
     HttpGet httpGetRequest = new HttpGet(url);
     httpGetRequest.addHeader(HttpHeaders.ACCEPT, ContentType.APPLICATION_JSON.getMimeType());

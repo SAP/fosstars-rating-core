@@ -8,10 +8,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
-import com.sap.sgs.phosphor.fosstars.data.ValueCache;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectValueCache;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
@@ -64,14 +65,15 @@ public class NumberOfContributorsTest {
     GitHub github = mock(GitHub.class);
     when(github.getRepository(anyString())).thenReturn(repository);
 
-    NumberOfContributors provider = new NumberOfContributors("test", "test", github);
+    final GitHubProject project = new GitHubProject("test", "test");
+    NumberOfContributors provider = new NumberOfContributors(github);
     provider = spy(provider);
-    when(provider.cache()).thenReturn(new ValueCache());
+    when(provider.cache()).thenReturn(new GitHubProjectValueCache());
 
     ValueSet values = new ValueHashSet();
     assertEquals(0, values.size());
 
-    provider.update(values);
+    provider.update(project, values);
     assertEquals(1, values.size());
     assertTrue(values.has(NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS));
     Optional<Value> something = values.of(NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS);

@@ -13,6 +13,7 @@ import com.sap.sgs.phosphor.fosstars.tool.Reporter;
 import com.sap.sgs.phosphor.fosstars.tool.YesNoQuestion;
 import com.sap.sgs.phosphor.fosstars.tool.YesNoQuestion.Answer;
 import com.sap.sgs.phosphor.fosstars.tool.format.PrettyPrinter;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -45,6 +46,16 @@ public class SecurityRatingCalculator {
    * A logger.
    */
   private static final Logger LOGGER = LogManager.getLogger(SecurityRatingCalculator.class);
+
+  /**
+   * A path to the cache.
+   */
+  private static final String PATH_TO_VALUE_CACHE = ".fosstars/github_project_value_cache.json";
+
+  /**
+   * A shared cache.
+   */
+  private static final GitHubProjectValueCache VALUE_CACHE = loadValueCache();
 
   /**
    * A file name of the default cache of projects.
@@ -131,12 +142,16 @@ public class SecurityRatingCalculator {
 
     String token = commandLine.getOptionValue("token");
 
-    if (commandLine.hasOption("url")) {
-      processUrl(commandLine.getOptionValue("url"), github, token, callback);
-    }
+    try {
+      if (commandLine.hasOption("url")) {
+        processUrl(commandLine.getOptionValue("url"), github, token, callback);
+      }
 
-    if (commandLine.hasOption("config")) {
-      processConfig(commandLine.getOptionValue("config"), github, token, callback);
+      if (commandLine.hasOption("config")) {
+        processConfig(commandLine.getOptionValue("config"), github, token, callback);
+      }
+    } finally {
+      VALUE_CACHE.store(PATH_TO_VALUE_CACHE);
     }
   }
 
@@ -156,6 +171,7 @@ public class SecurityRatingCalculator {
 
     new SingleSecurityRatingCalculator(github)
         .set(callback)
+        .set(VALUE_CACHE)
         .token(githubToken)
         .calculateFor(project);
 
@@ -200,6 +216,7 @@ public class SecurityRatingCalculator {
     LOGGER.info("Starting calculating ratings ...");
     MultipleSecurityRatingsCalculator calculator = new MultipleSecurityRatingsCalculator(github);
     calculator.set(projectCache);
+    calculator.set(VALUE_CACHE);
     calculator.set(callback);
     calculator.token(githubToken);
     calculator.calculateFor(projects);
@@ -502,6 +519,22 @@ public class SecurityRatingCalculator {
       error.addSuppressed(e);
     }
     throw error;
+  }
+
+  /**
+   * Initializes a value cache.
+   *
+   * @return The value cache.
+   */
+  private static GitHubProjectValueCache loadValueCache() {
+    try {
+      return GitHubProjectValueCache.load(PATH_TO_VALUE_CACHE);
+    } catch (FileNotFoundException e) {
+      LOGGER.info("The default value cache doesn't exist yet.");
+    } catch (IOException e) {
+      LOGGER.warn("Could not load the default value cache!", e);
+    }
+    return new GitHubProjectValueCache();
   }
 
 }

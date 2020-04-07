@@ -4,7 +4,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_
 
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
-import java.util.Objects;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import org.kohsuke.github.GitHub;
 
 /**
@@ -18,22 +18,18 @@ public class UsesSnykDependencyCheck extends AbstractGitHubDataProvider {
   /**
    * Initializes a data provider.
    *
-   * @param where A GitHub organization of user name.
-   * @param name A name of a repository.
    * @param github An interface to the GitHub API.
    */
-  public UsesSnykDependencyCheck(String where, String name, GitHub github) {
-    super(where, name, github);
+  public UsesSnykDependencyCheck(GitHub github) {
+    super(github);
   }
 
   // TODO: implement UsesSnykDependencyCheck.update() method
   @Override
-  public UsesSnykDependencyCheck update(ValueSet values) {
-    Objects.requireNonNull(values, "Hey! Values can't be null!");
+  protected UsesSnykDependencyCheck doUpdate(GitHubProject project, ValueSet values) {
     logger.info("Figuring out if the project uses Snyk ...");
-
+    // TODO: check the cache
     values.update(UnknownValue.of(SCANS_FOR_VULNERABLE_DEPENDENCIES));
-
     return this;
   }
 }

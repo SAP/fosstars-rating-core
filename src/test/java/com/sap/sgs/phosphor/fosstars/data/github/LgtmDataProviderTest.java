@@ -1,4 +1,4 @@
-package com.sap.sgs.phosphor.fosstars.data.lgtm;
+package com.sap.sgs.phosphor.fosstars.data.github;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
@@ -13,18 +13,22 @@ import static org.mockito.Mockito.when;
 import com.sap.sgs.phosphor.fosstars.data.NoUserCallback;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.io.InputStream;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.junit.Test;
+import org.kohsuke.github.GitHub;
 
 public class LgtmDataProviderTest {
 
   @Test
   public void testIfProjectExist() throws IOException {
-    LgtmDataProvider provider = new LgtmDataProvider("org", "project");
+    GitHub github = mock(GitHub.class);
+
+    LgtmDataProvider provider = new LgtmDataProvider(github);
     provider = spy(provider);
 
     CloseableHttpClient httpClient = mock(CloseableHttpClient.class);
@@ -36,6 +40,8 @@ public class LgtmDataProviderTest {
     HttpEntity entity = mock(HttpEntity.class);
     when(response.getEntity()).thenReturn(entity);
 
+    GitHubProject project = new GitHubProject("org", "project");
+
     try (InputStream content = getClass().getResourceAsStream("LgtmProjectInfoReply.json")) {
       when(entity.getContent()).thenReturn(content);
 
@@ -43,7 +49,7 @@ public class LgtmDataProviderTest {
       assertEquals(0, values.size());
 
       provider.set(NoUserCallback.INSTANCE);
-      provider.update(values);
+      provider.update(project, values);
 
       assertEquals(2, values.size());
       assertTrue(values.has(USES_LGTM));
@@ -60,7 +66,9 @@ public class LgtmDataProviderTest {
 
   @Test
   public void testIfProjectDoesNotExist() throws IOException {
-    LgtmDataProvider provider = new LgtmDataProvider("org", "project");
+    GitHub github = mock(GitHub.class);
+
+    LgtmDataProvider provider = new LgtmDataProvider(github);
     provider = spy(provider);
 
     CloseableHttpClient httpClient = mock(CloseableHttpClient.class);
@@ -72,6 +80,8 @@ public class LgtmDataProviderTest {
     HttpEntity entity = mock(HttpEntity.class);
     when(response.getEntity()).thenReturn(entity);
 
+    GitHubProject project = new GitHubProject("org", "project");
+
     try (InputStream content =
         getClass().getResourceAsStream("LgtmProjectDoesNotExistReply.json")) {
 
@@ -81,7 +91,7 @@ public class LgtmDataProviderTest {
       assertEquals(0, values.size());
 
       provider.set(NoUserCallback.INSTANCE);
-      provider.update(values);
+      provider.update(project, values);
 
       assertEquals(2, values.size());
       assertTrue(values.has(USES_LGTM));

@@ -17,14 +17,22 @@ import java.util.Optional;
  * While running the underlying data providers, if the stop condition is satisfied,
  * then the execution of the data providers stops.
  */
-public class CompositeDataProvider implements DataProvider {
+public class CompositeDataProvider<T> implements DataProvider<T> {
 
+  /**
+   * This stop condition is always false.
+   */
   public static final StopCondition NO_STOP_CONDITION = values -> false;
+
+  /**
+   * A cache of values.
+   */
+  protected ValueCache<T> cache = NoCache.create();
 
   /**
    * A list of underlying data providers.
    */
-  private final List<DataProvider> providers = new ArrayList<>();
+  private final List<DataProvider<T>> providers = new ArrayList<>();
 
   /**
    * A stop condition for the composite data provider.
@@ -36,7 +44,7 @@ public class CompositeDataProvider implements DataProvider {
    *
    * @param providers A number of underlying data providers. It can't be null or empty.
    */
-  public CompositeDataProvider(DataProvider... providers) {
+  public CompositeDataProvider(DataProvider<T>... providers) {
     Objects.requireNonNull(providers, "Providers can't be null!");
     if (providers.length == 0) {
       throw new IllegalArgumentException("No providers specified!");
@@ -50,7 +58,7 @@ public class CompositeDataProvider implements DataProvider {
    * @param providers The data provider to be added.
    * @return This provider.
    */
-  public CompositeDataProvider add(DataProvider... providers) {
+  public CompositeDataProvider<T> add(DataProvider<T>... providers) {
     Objects.requireNonNull(providers, "Providers can't be null!");
     if (providers.length == 0) {
       throw new IllegalArgumentException("No providers specified!");
@@ -60,22 +68,36 @@ public class CompositeDataProvider implements DataProvider {
   }
 
   @Override
-  public CompositeDataProvider update(ValueSet values) throws IOException {
+  public CompositeDataProvider<T> update(T object, ValueSet values) throws IOException {
     Objects.requireNonNull(values, "Values can't be null!");
-    for (DataProvider provider : providers) {
+    for (DataProvider<T> provider : providers) {
       if (stopCondition.satisfied(values)) {
         break;
       }
-      provider.update(values);
+      provider.update(object, values);
     }
     return this;
   }
 
   @Override
-  public CompositeDataProvider set(UserCallback callback) {
+  public ValueCache<T> cache() {
+    return cache;
+  }
+
+  @Override
+  public CompositeDataProvider<T> set(UserCallback callback) {
     Objects.requireNonNull(callback, "Callback can't be null!");
     for (DataProvider provider : providers) {
       provider.set(callback);
+    }
+    return this;
+  }
+
+  @Override
+  public CompositeDataProvider<T> set(ValueCache<T> cache) {
+    Objects.requireNonNull(cache, "Hey! Cache can't be null!");
+    for (DataProvider<T> provider : providers) {
+      provider.set(cache);
     }
     return this;
   }
@@ -86,7 +108,7 @@ public class CompositeDataProvider implements DataProvider {
    * @param features The features.
    * @return This data provider.
    */
-  public CompositeDataProvider stopWhenFilledOut(Feature... features) {
+  public CompositeDataProvider<T> stopWhenFilledOut(Feature... features) {
     stopCondition(new AllFeaturesFilledOut(features));
     return this;
   }
@@ -97,7 +119,7 @@ public class CompositeDataProvider implements DataProvider {
    * @param condition The stop condition.
    * @return This provider.
    */
-  public DataProvider stopCondition(StopCondition condition) {
+  public CompositeDataProvider<T> stopCondition(StopCondition condition) {
     this.stopCondition = condition;
     return this;
   }
@@ -111,7 +133,7 @@ public class CompositeDataProvider implements DataProvider {
    *
    * @return A list of underlying data providers.
    */
-  List<DataProvider> providers() {
+  List<DataProvider<T>> providers() {
     return Collections.unmodifiableList(providers);
   }
 

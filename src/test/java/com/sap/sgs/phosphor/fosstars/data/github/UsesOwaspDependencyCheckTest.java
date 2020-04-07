@@ -9,6 +9,7 @@ import static org.junit.Assume.assumeNotNull;
 import com.sap.sgs.phosphor.fosstars.data.Terminal;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.util.Optional;
 import org.junit.BeforeClass;
@@ -41,10 +42,10 @@ public class UsesOwaspDependencyCheckTest {
   @Test
   public void testApacheCxf() throws IOException {
     assumeNotNull(github);
-    UsesOwaspDependencyCheck provider = new UsesOwaspDependencyCheck(
-        "apache", "cxf", github);
+    GitHubProject project = new GitHubProject("apache", "cxf");
+    UsesOwaspDependencyCheck provider = new UsesOwaspDependencyCheck(github);
     ValueHashSet values = new ValueHashSet();
-    provider.set(new Terminal()).update(values);
+    provider.set(new Terminal()).update(project, values);
     assertTrue(values.has(SCANS_FOR_VULNERABLE_DEPENDENCIES));
     Optional<Value> something = values.of(SCANS_FOR_VULNERABLE_DEPENDENCIES);
     assertNotNull(something);
@@ -57,10 +58,10 @@ public class UsesOwaspDependencyCheckTest {
   @Test
   public void testApachePoi() throws IOException {
     assumeNotNull(github);
-    UsesOwaspDependencyCheck provider = new UsesOwaspDependencyCheck(
-        "apache", "poi", github);
+    GitHubProject project = new GitHubProject("apache", "poi");
+    UsesOwaspDependencyCheck provider = new UsesOwaspDependencyCheck(github);
     ValueHashSet values = new ValueHashSet();
-    provider.set(new Terminal()).update(values);
+    provider.set(new Terminal()).update(project, values);
     assertTrue(values.has(SCANS_FOR_VULNERABLE_DEPENDENCIES));
     Optional<Value> something = values.of(SCANS_FOR_VULNERABLE_DEPENDENCIES);
     assertNotNull(something);
@@ -73,10 +74,10 @@ public class UsesOwaspDependencyCheckTest {
   @Test
   public void testSpringSecurityOAuth() throws IOException {
     assumeNotNull(github);
-    UsesOwaspDependencyCheck provider = new UsesOwaspDependencyCheck(
-        "spring-projects", "spring-security-oauth", github);
+    GitHubProject project = new GitHubProject("spring-projects", "spring-security-oauth");
+    UsesOwaspDependencyCheck provider = new UsesOwaspDependencyCheck(github);
     ValueHashSet values = new ValueHashSet();
-    provider.set(new Terminal()).update(values);
+    provider.set(new Terminal()).update(project, values);
     assertTrue(values.has(SCANS_FOR_VULNERABLE_DEPENDENCIES));
     Optional<Value> something = values.of(SCANS_FOR_VULNERABLE_DEPENDENCIES);
     assertNotNull(something);

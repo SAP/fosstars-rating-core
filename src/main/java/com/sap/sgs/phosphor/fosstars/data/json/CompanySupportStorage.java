@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -42,8 +43,18 @@ public class CompanySupportStorage extends AbstractJsonStorage {
    * @param url The project's code repository URL.
    * @return True if the project is supported at least by one company, false otherwise.
    */
-  public boolean supported(String url) {
+  public boolean supports(String url) {
     return !companies(url).isEmpty();
+  }
+
+  /**
+   * Checks if a project is supported by at least one company.
+   *
+   * @param url The project's code repository URL.
+   * @return True if the project is supported at least by one company, false otherwise.
+   */
+  public boolean supports(URL url) {
+    return supports(url.toString());
   }
 
   /**

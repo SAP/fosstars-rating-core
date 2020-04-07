@@ -5,9 +5,9 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Objects;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Plugin;
 import org.apache.maven.model.ReportPlugin;
@@ -29,20 +29,19 @@ public class UsesOwaspDependencyCheck extends AbstractGitHubDataProvider {
   /**
    * Initializes a data provider.
    *
-   * @param where A GitHub organization of user name.
-   * @param name A name of a repository.
    * @param github An interface to the GitHub API.
    */
-  public UsesOwaspDependencyCheck(String where, String name, GitHub github) {
-    super(where, name, github);
+  public UsesOwaspDependencyCheck(GitHub github) {
+    super(github);
   }
 
   @Override
-  public UsesOwaspDependencyCheck update(ValueSet values) throws IOException {
-    Objects.requireNonNull(values, "Hey! Values can't be null!");
+  protected UsesOwaspDependencyCheck doUpdate(GitHubProject project, ValueSet values)
+      throws IOException {
+
     logger.info("Figuring out if the project uses OWASP Dependency Check ...");
 
-    GHRepository repository = github.getRepository(path);
+    GHRepository repository = github.getRepository(project.path());
     boolean answer = checkMaven(repository) || checkGradle(repository);
     Value<Boolean> value = new BooleanValue(SCANS_FOR_VULNERABLE_DEPENDENCIES, answer);
     values.update(value);
@@ -138,4 +137,5 @@ public class UsesOwaspDependencyCheck extends AbstractGitHubDataProvider {
     return "org.owasp".equals(plugin.getGroupId())
         && "dependency-check-maven".equals(plugin.getArtifactId());
   }
+
 }

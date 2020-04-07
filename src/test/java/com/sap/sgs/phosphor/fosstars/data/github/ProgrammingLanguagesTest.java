@@ -12,6 +12,7 @@ import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.Language;
 import com.sap.sgs.phosphor.fosstars.model.value.Languages;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,11 +35,13 @@ public class ProgrammingLanguagesTest {
     GitHub github = mock(GitHub.class);
     when(github.getRepository(any())).thenReturn(repository);
 
-    ProgrammingLanguages provider = new ProgrammingLanguages("org", "test", github);
+    ProgrammingLanguages provider = new ProgrammingLanguages(github);
     ValueSet values = new ValueHashSet();
     assertEquals(0, values.size());
 
-    provider.update(values);
+    GitHubProject project = new GitHubProject("org", "test");
+
+    provider.update(project, values);
     assertEquals(1, values.size());
     assertTrue(values.has(LANGUAGES));
     assertTrue(values.of(LANGUAGES).isPresent());

@@ -2,10 +2,11 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
 
+import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
-import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
-import java.util.Objects;
+import java.util.Optional;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
@@ -36,20 +37,26 @@ public class HasSecurityPolicy extends AbstractGitHubDataProvider {
   /**
    * Initializes a data provider.
    *
-   * @param where A GitHub organization of user name.
-   * @param name A name of a repository.
    * @param github An interface to the GitHub API.
    */
-  public HasSecurityPolicy(String where, String name, GitHub github) {
-    super(where, name, github);
+  public HasSecurityPolicy(GitHub github) {
+    super(github);
   }
 
   @Override
-  public HasSecurityPolicy update(ValueSet values) throws IOException {
-    Objects.requireNonNull(values, "Hey! Values can't be null!");
+  protected HasSecurityPolicy doUpdate(GitHubProject project, ValueSet values) throws IOException {
     logger.info("Figuring out if the project has a security policy ...");
+    values.update(hasSecurityPolicy(project));
+    return this;
+  }
 
-    GHRepository repository = github.getRepository(path);
+  private Value<Boolean> hasSecurityPolicy(GitHubProject project) throws IOException {
+    Optional<Value> something = cache.get(project, HAS_SECURITY_POLICY);
+    if (something.isPresent()) {
+      return something.get();
+    }
+
+    GHRepository repository = github.getRepository(project.path());
 
     boolean found = false;
     for (String path : POLICY_LOCATIONS) {
@@ -59,13 +66,15 @@ public class HasSecurityPolicy extends AbstractGitHubDataProvider {
       }
     }
 
-    values.update(new BooleanValue(HAS_SECURITY_POLICY, found));
-    return this;
+    Value<Boolean> value = HAS_SECURITY_POLICY.value(found);
+    cache.put(project, value);
+
+    return value;
   }
 
   /**
-   * Check if a file exists in a repository and its content more than {@link
-   * #ACCEPTABLE_POLICY_SIZE}.
+   * Check if a file exists in a repository and its content more than
+   * {@link #ACCEPTABLE_POLICY_SIZE}.
    *
    * @param repository The repository.
    * @param path A path to the file

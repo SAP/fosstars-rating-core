@@ -7,6 +7,7 @@ import com.sap.sgs.phosphor.fosstars.model.value.SecurityReviews;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
@@ -57,6 +58,16 @@ public class SecurityReviewStorage extends AbstractJsonStorage {
     }
 
     return new SecurityReviews(entries);
+  }
+
+  /**
+   * Looks for security reviews which have been done for a project.
+   *
+   * @param url The project's code repository URL.
+   * @return Security reviews.
+   */
+  public SecurityReviews get(URL url) {
+    return get(url.toString());
   }
 
   /*

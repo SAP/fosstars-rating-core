@@ -53,6 +53,16 @@ public class GitHubProject implements Project {
   private Date ratingValueDate;
 
   /**
+   * Initializes a project.
+   *
+   * @param owner An owner of the project.
+   * @param name A name of the project.
+   */
+  public GitHubProject(String owner, String name) {
+    this(new GitHubOrganization(owner), name);
+  }
+
+  /**
    * Initializes a new project.
    *
    * @param organization An organization that owns the project.
@@ -92,11 +102,15 @@ public class GitHubProject implements Project {
     return url;
   }
 
+  public String path() {
+    return String.format("%s/%s", organization.name(), name);
+  }
+
   /**
    * Returns the organization.
    */
   @JsonGetter("organization")
-  GitHubOrganization organization() {
+  public GitHubOrganization organization() {
     return organization;
   }
 
@@ -104,7 +118,7 @@ public class GitHubProject implements Project {
    * Returns project's name.
    */
   @JsonGetter("name")
-  String name() {
+  public String name() {
     return name;
   }
 

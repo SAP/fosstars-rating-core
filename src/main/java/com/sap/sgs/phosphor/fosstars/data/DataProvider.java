@@ -4,22 +4,31 @@ import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import java.io.IOException;
 
 /**
- * An interface of a data provider which knows how to gather values for specific features.
+ * An interface of a data provider which knows
+ * how to gather feature value for specific objects such as open-source projects.
  * A data provider may be configured with a {@link UserCallback}
  * which allows asking a user for data.
  * A data provider may ignore the specified {@link UserCallback}
  * if it's able to gather data without a user.
+ *
+ * @param <T> A type of the objects.
  */
-public interface DataProvider {
+public interface DataProvider<T> {
 
   /**
-   * Gathers data and updates the specified {@link ValueSet}.
+   * Gathers data about an object and updates a specified {@link ValueSet}.
    *
+   * @param object The object.
    * @param values The set of values to be updated.
    * @return This data provider.
    * @throws IOException If something went wrong.
    */
-  DataProvider update(ValueSet values) throws IOException;
+  DataProvider<T> update(T object, ValueSet values) throws IOException;
+
+  /**
+   * Returns a cache of values that is used by the data provider.
+   */
+  ValueCache<T> cache();
 
   /**
    * Sets an interface for interacting with a user.
@@ -27,5 +36,13 @@ public interface DataProvider {
    * @param callback An interface for interacting with a user.
    * @return This data provider.
    */
-  DataProvider set(UserCallback callback);
+  DataProvider<T> set(UserCallback callback);
+
+  /**
+   * Sets a cache of values that should be used by the data provider.
+   *
+   * @param cache The cache of values.
+   * @return This data provider.
+   */
+  DataProvider<T> set(ValueCache<T> cache);
 }

@@ -1,5 +1,6 @@
 package com.sap.sgs.phosphor.fosstars.data.github;
 
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
 import static com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.NO_DESCRIPTION;
 import static com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.NO_REFERENCES;
 import static com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.UNKNOWN_FIXED_DATE;
@@ -16,9 +17,8 @@ import com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.Resolution;
 import com.sap.sgs.phosphor.fosstars.tool.InputURL;
 import com.sap.sgs.phosphor.fosstars.tool.YesNoQuestion;
 import com.sap.sgs.phosphor.fosstars.tool.YesNoQuestion.Answer;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.util.Objects;
 import org.kohsuke.github.GitHub;
 
 /**
@@ -27,6 +27,7 @@ import org.kohsuke.github.GitHub;
  * TODO: This class doesn't talk to GitHub. Instead, it uses a local storage
  *       which contains info about known security teams.
  *       UnpatchedVulnerabilities may be converted to a data provider.
+ * TODO: The data provider should use the cache.
  */
 public class UnpatchedVulnerabilities extends AbstractGitHubDataProvider {
 
@@ -39,32 +40,23 @@ public class UnpatchedVulnerabilities extends AbstractGitHubDataProvider {
   private final UnpatchedVulnerabilitiesStorage storage;
 
   /**
-   * A list of vulnerabilities to be updated by this data provider.
-   */
-  private final Value<Vulnerabilities> vulnerabilities;
-
-  /**
    * Initializes a data provider.
    *
-   * @param where A GitHub organization of user name.
-   * @param name A name of a repository.
    * @param github An interface to the GitHub API.
-   * @param vulnerabilities A list of vulnerabilities to be updated by this data provider.
    * @throws IOException If the info about unpatched vulnerabilities can't be loaded.
    */
-  public UnpatchedVulnerabilities(String where, String name, GitHub github,
-      Value<Vulnerabilities> vulnerabilities) throws IOException {
-    super(where, name, github);
+  public UnpatchedVulnerabilities(GitHub github) throws IOException {
+    super(github);
     storage = UnpatchedVulnerabilitiesStorage.load();
-    this.vulnerabilities = vulnerabilities;
   }
 
   @Override
-  public UnpatchedVulnerabilities update(ValueSet values) throws MalformedURLException {
-    Objects.requireNonNull(values, "Hey! Values can't be null!");
+  protected UnpatchedVulnerabilities doUpdate(GitHubProject project, ValueSet values)
+      throws IOException {
+
     logger.info("Figuring out if the project has any unpatched vulnerability ...");
 
-    Vulnerabilities unpatchedVulnerabilities = storage.get(url);
+    Vulnerabilities unpatchedVulnerabilities = storage.get(project.url());
 
     if (callback.canTalk()) {
       Answer answer = new YesNoQuestion(
@@ -79,7 +71,7 @@ public class UnpatchedVulnerabilities extends AbstractGitHubDataProvider {
               id, NO_DESCRIPTION, CVSS.UNKNOWN, NO_REFERENCES, Resolution.UNPATCHED,
               UNKNOWN_INTRODUCED_DATE, UNKNOWN_FIXED_DATE);
           unpatchedVulnerabilities.add(vulnerability);
-          storage.add(url, vulnerability);
+          storage.add(project.url().toString(), vulnerability);
           answer = new YesNoQuestion(callback, "One more?").ask();
         } while (answer == YES);
 
@@ -91,9 +83,22 @@ public class UnpatchedVulnerabilities extends AbstractGitHubDataProvider {
       }
     }
 
+    Value<Vulnerabilities> vulnerabilities = knownVulnerabilities(values);
     vulnerabilities.get().add(unpatchedVulnerabilities);
     values.update(vulnerabilities);
 
     return this;
+  }
+
+  /**
+   * Searches for
+   * {@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#VULNERABILITIES}
+   * feature a set of values.
+   *
+   * @param values The set of value.
+   * @return An existing value for the feature, or an empty value otherwise.
+   */
+  private static Value<Vulnerabilities> knownVulnerabilities(ValueSet values) {
+    return values.of(VULNERABILITIES).orElseGet(() -> VULNERABILITIES.value(new Vulnerabilities()));
   }
 }

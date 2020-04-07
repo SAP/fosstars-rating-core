@@ -4,12 +4,11 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.FIRST_
 
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
-import com.sap.sgs.phosphor.fosstars.model.value.DateValue;
 import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHRepository;
@@ -22,6 +21,11 @@ import org.kohsuke.github.PagedIterator;
 public class FirstCommit extends AbstractGitHubDataProvider {
 
   /**
+   * A size of a page for GitHub API.
+   */
+  private static final int PAGE_SIZE = 10000;
+
+  /**
    * 7 days in millis.
    */
   private static final long DELTA = 7 * 24 * 60 * 60 * 1000L;
@@ -29,21 +33,17 @@ public class FirstCommit extends AbstractGitHubDataProvider {
   /**
    * Initializes a data provider.
    *
-   * @param where A GitHub organization of user name.
-   * @param name A name of a repository.
    * @param github An interface to the GitHub API.
    */
-  public FirstCommit(String where, String name, GitHub github) {
-    super(where, name, github);
+  public FirstCommit(GitHub github) {
+    super(github);
   }
 
   @Override
-  public FirstCommit update(ValueSet values) throws IOException {
-    Objects.requireNonNull(values, "Hey! Values can't be null!");
+  protected FirstCommit doUpdate(GitHubProject project, ValueSet values) throws IOException {
     logger.info("Figuring out when the first commit was done ...");
 
-    Value<Date> firstCommit = firstCommitDate();
-    cache().put(url, firstCommit);
+    Value<Date> firstCommit = firstCommitDate(project);
     values.update(firstCommit);
 
     return this;
@@ -55,19 +55,19 @@ public class FirstCommit extends AbstractGitHubDataProvider {
    * @return An instance of {@link Value} which contains a date of the first commit.
    * @throws IOException If something went wrong.
    */
-  Value<Date> firstCommitDate() throws IOException {
-    Optional<Value> something = cache().get(url, FIRST_COMMIT_DATE);
+  Value<Date> firstCommitDate(GitHubProject project) throws IOException {
+    Optional<Value> something = cache.get(project, FIRST_COMMIT_DATE);
     if (something.isPresent()) {
       return something.get();
     }
 
-    GHRepository repository = github.getRepository(path);
+    GHRepository repository = github.getRepository(project.path());
     long millis = repository.getCreatedAt().getTime() + DELTA;
 
     PagedIterator<GHCommit> iterator = repository.queryCommits()
         .until(millis)
         .list()
-        .withPageSize(10000)
+        .withPageSize(PAGE_SIZE)
         .iterator();
 
     List<GHCommit> lastPage = null;
@@ -79,6 +79,9 @@ public class FirstCommit extends AbstractGitHubDataProvider {
       return UnknownValue.of(FIRST_COMMIT_DATE);
     }
 
-    return new DateValue(FIRST_COMMIT_DATE, lastPage.get(lastPage.size() - 1).getCommitDate());
+    Value<Date> value = FIRST_COMMIT_DATE.value(lastPage.get(lastPage.size() - 1).getCommitDate());
+    cache.put(project, value);
+
+    return value;
   }
 }

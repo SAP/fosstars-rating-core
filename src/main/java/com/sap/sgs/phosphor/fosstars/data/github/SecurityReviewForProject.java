@@ -3,8 +3,8 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 import com.sap.sgs.phosphor.fosstars.data.json.SecurityReviewStorage;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.SecurityReviewsDoneValue;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
-import java.util.Objects;
 import org.kohsuke.github.GitHub;
 
 /**
@@ -23,23 +23,18 @@ public class SecurityReviewForProject extends AbstractGitHubDataProvider {
   /**
    * Initializes a data provider.
    *
-   * @param where A GitHub organization of user name.
-   * @param name A name of a repository.
    * @param github An interface to the GitHub API.
    * @throws IOException If the information about security reviews can't be loaded.
    */
-  public SecurityReviewForProject(String where, String name, GitHub github)
-      throws IOException {
-
-    super(where, name, github);
+  public SecurityReviewForProject(GitHub github) throws IOException {
+    super(github);
     storage = SecurityReviewStorage.load();
   }
 
   @Override
-  public SecurityReviewForProject update(ValueSet values) {
-    Objects.requireNonNull(values, "Hey! Values can't be null!");
+  protected SecurityReviewForProject doUpdate(GitHubProject project, ValueSet values) {
     logger.info("Figuring out if any security review has been done for the project ...");
-    values.update(new SecurityReviewsDoneValue(storage.get(url)));
+    values.update(new SecurityReviewsDoneValue(storage.get(project.url())));
     return this;
   }
 }

@@ -4,6 +4,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_D
 
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
@@ -50,31 +51,28 @@ public class UsesDependabot extends AbstractGitHubDataProvider {
   /**
    * Initializes a data provider.
    *
-   * @param where A GitHub organization of user name.
-   * @param name A name of a repository.
    * @param github An interface to the GitHub API.
    */
-  public UsesDependabot(String where, String name, GitHub github) {
-    super(where, name, github);
+  public UsesDependabot(GitHub github) {
+    super(github);
   }
 
   @Override
-  public UsesDependabot update(ValueSet values) {
+  public UsesDependabot doUpdate(GitHubProject project, ValueSet values) throws IOException {
     Objects.requireNonNull(values, "Hey! Values can't be null!");
     logger.info("Checking if the project uses Dependabot ...");
-    values.update(usesDependabot());
+    values.update(usesDependabot(project));
     return this;
   }
 
   /**
-   * Checks if a project has commits from Dependabot in its commit history.
+   * Checks if a repository contains commits from Dependabot in its commit history.
    *
+   * @param repository The repository.
    * @return True if a commit from Dependabot was found, false otherwise.
    */
-  private boolean hasDependabotCommits() {
+  private boolean hasDependabotCommits(GHRepository repository) {
     try {
-      GHRepository repository = github.getRepository(path);
-
       Date date = Date.from(Instant.now().minus(LATEST_MONTHS));
       for (GHCommit commit : repository.queryCommits().since(date).list()) {
         if (isDependabot(commit)) {
@@ -89,13 +87,13 @@ public class UsesDependabot extends AbstractGitHubDataProvider {
   }
 
   /**
-   * Checks if a project has a configuration file for Dependabot.
+   * Checks if a repository has a configuration file for Dependabot.
    *
+   * @param repository The repository
    * @return True if a config was found, false otherwise.
    */
-  private boolean hasDependabotConfig() {
+  private boolean hasDependabotConfig(GHRepository repository) {
     try {
-      GHRepository repository = github.getRepository(path);
       GHContent content = repository.getFileContent(DEPENDABOT_CONFIG);
 
       if (content == null) {
@@ -121,15 +119,16 @@ public class UsesDependabot extends AbstractGitHubDataProvider {
    *         {@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#USES_DEPENDABOT}
    *         feature.
    */
-  private Value<Boolean> usesDependabot() {
-    Optional<Value> something = cache().get(url, USES_DEPENDABOT);
+  private Value<Boolean> usesDependabot(GitHubProject project) throws IOException {
+    Optional<Value> something = cache.get(project, USES_DEPENDABOT);
     if (something.isPresent()) {
       something.get();
     }
 
+    GHRepository repository = github.getRepository(project.path());
     Value<Boolean> value = USES_DEPENDABOT.value(
-        hasDependabotConfig() || hasDependabotCommits());
-    cache().put(url, value);
+        hasDependabotConfig(repository) || hasDependabotCommits(repository));
+    cache.put(project, value);
 
     return value;
   }

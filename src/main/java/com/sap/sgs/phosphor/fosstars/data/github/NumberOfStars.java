@@ -2,10 +2,11 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_GITHUB_STARS;
 
+import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
-import com.sap.sgs.phosphor.fosstars.model.value.IntegerValue;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
-import java.util.Objects;
+import java.util.Optional;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
 
@@ -17,22 +18,36 @@ public class NumberOfStars extends AbstractGitHubDataProvider {
   /**
    * Initializes a data provider.
    *
-   * @param where A GitHub organization of user name.
-   * @param name A name of a repository.
    * @param github An interface to the GitHub API.
    */
-  public NumberOfStars(String where, String name, GitHub github) {
-    super(where, name, github);
+  public NumberOfStars(GitHub github) {
+    super(github);
   }
 
   @Override
-  public NumberOfStars update(ValueSet values) throws IOException {
-    Objects.requireNonNull(values, "Hey! Values can't be null!");
+  protected NumberOfStars doUpdate(GitHubProject project, ValueSet values) throws IOException {
     logger.info("Counting how many stars the project has ...");
-
-    GHRepository repository = github.getRepository(path);
-    int stars = repository.getStargazersCount();
-    values.update(new IntegerValue(NUMBER_OF_GITHUB_STARS, stars));
+    values.update(starsOf(project));
     return this;
+  }
+
+  /**
+   * Looks for a number of stars for a project on GitHub.
+   *
+   * @param project The project.
+   * @return The number of stars.
+   * @throws IOException If something went wrong.
+   */
+  private Value<Integer> starsOf(GitHubProject project) throws IOException {
+    Optional<Value> something = cache.get(project, NUMBER_OF_GITHUB_STARS);
+    if (something.isPresent()) {
+      return something.get();
+    }
+
+    GHRepository repository = github.getRepository(project.path());
+    Value<Integer> value = NUMBER_OF_GITHUB_STARS.value(repository.getStargazersCount());
+    cache.put(project, value);
+
+    return value;
   }
 }

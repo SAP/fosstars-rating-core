@@ -9,8 +9,8 @@ import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
 import com.sap.sgs.phosphor.fosstars.tool.YesNoSkipQuestion;
 import com.sap.sgs.phosphor.fosstars.tool.YesNoSkipQuestion.Answer;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
-import java.util.Objects;
 import org.kohsuke.github.GitHub;
 
 /**
@@ -26,34 +26,29 @@ public class HasSecurityTeam extends AbstractGitHubDataProvider {
   /**
    * Where info about security teams are stored.
    */
-  private final SecurityTeamStorage storage;
+  private final SecurityTeamStorage securityTeam;
 
   /**
    * Initializes a data provider.
    *
-   * @param where A GitHub organization of user name.
-   * @param name A name of a repository.
    * @param github An interface to the GitHub API.
    */
-  public HasSecurityTeam(String where, String name, GitHub github) throws IOException {
-    super(where, name, github);
-    storage = SecurityTeamStorage.load();
+  public HasSecurityTeam(GitHub github) throws IOException {
+    super(github);
+    securityTeam = SecurityTeamStorage.load();
   }
 
   @Override
-  public HasSecurityTeam update(ValueSet values) {
-    Objects.requireNonNull(values, "Hey! Values can't be null!");
+  protected HasSecurityTeam doUpdate(GitHubProject project, ValueSet values) {
     logger.info("Figuring out if the project has a security team ...");
 
     values.update(UnknownValue.of(HAS_SECURITY_TEAM));
 
-
-    if (storage.supported(url)) {
+    if (securityTeam.existsFor(project.url())) {
       values.update(new BooleanValue(HAS_SECURITY_TEAM, true));
     } else if (callback.canTalk()) {
       String question = String.format(
-          "Does project %s/%s have a security team? Say yes, no, or skip, please.",
-          where, name);
+          "Does project %s have a security team? Say yes, no, or skip, please.", project.path());
 
       Answer answer = new YesNoSkipQuestion(callback, question).ask();
       switch (answer) {

@@ -63,11 +63,7 @@ public class UnpatchedVulnerabilitiesStorage extends AbstractJsonStorage {
    * @throws MalformedURLException If the URL is not valid.
    */
   public Vulnerabilities get(String url) throws MalformedURLException {
-    Vulnerabilities vulnerabilities = projectVulnerabilities.get(new URL(url));
-    if (vulnerabilities == null) {
-      return new Vulnerabilities();
-    }
-    return vulnerabilities;
+    return get(new URL(url));
   }
 
   /**
