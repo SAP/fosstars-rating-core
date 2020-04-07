@@ -44,7 +44,7 @@ public class SecurityTeamStorage extends AbstractJsonStorage {
    * @param url The project's code repository URL.
    * @return True if the project has a security team, false otherwise.
    */
-  public boolean supported(String url) {
+  public boolean existsFor(String url) {
     for (Map.Entry<String, Info> entry : securityTeams.entrySet()) {
       Info info = entry.getValue();
       for (URL definedUrl : info.urls) {
@@ -55,6 +55,16 @@ public class SecurityTeamStorage extends AbstractJsonStorage {
     }
 
     return false;
+  }
+
+  /**
+   * Checks if a project has a security team.
+   *
+   * @param url The project's code repository URL.
+   * @return True if the project has a security team, false otherwise.
+   */
+  public boolean existsFor(URL url) {
+    return existsFor(url.toString());
   }
 
   /*

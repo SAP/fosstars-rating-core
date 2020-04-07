@@ -1,7 +1,9 @@
 package com.sap.sgs.phosphor.fosstars.tool.github;
 
+import com.sap.sgs.phosphor.fosstars.data.NoCache;
 import com.sap.sgs.phosphor.fosstars.data.NoUserCallback;
 import com.sap.sgs.phosphor.fosstars.data.UserCallback;
+import com.sap.sgs.phosphor.fosstars.data.ValueCache;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
@@ -23,6 +25,11 @@ abstract class AbstractRatingCalculator {
    * An interface to GitHub.
    */
   final GitHub github;
+
+  /**
+   * A cache of feature values for GitHub projects.
+   */
+  ValueCache<GitHubProject> cache = NoCache.create();
 
   /**
    * A token for accessing the GitHub APIs.
@@ -62,6 +69,17 @@ abstract class AbstractRatingCalculator {
    */
   AbstractRatingCalculator set(UserCallback callback) {
     this.callback = callback;
+    return this;
+  }
+
+  /**
+   * Set a cache for the calculator.
+   *
+   * @param cache The cache.
+   * @return The same calculator.
+   */
+  AbstractRatingCalculator set(ValueCache<GitHubProject> cache) {
+    this.cache = Objects.requireNonNull(cache, "Oh no! Cache can't be null!");
     return this;
   }
 

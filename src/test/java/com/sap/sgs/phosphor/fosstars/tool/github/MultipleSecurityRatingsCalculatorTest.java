@@ -3,7 +3,6 @@ package com.sap.sgs.phosphor.fosstars.tool.github;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
@@ -28,8 +27,7 @@ public class MultipleSecurityRatingsCalculatorTest {
     SingleSecurityRatingCalculator singleRatingCalculator
         = new SingleSecurityRatingCalculator(github);
     singleRatingCalculator = spy(singleRatingCalculator);
-    when(singleRatingCalculator.dataProviders(anyString(), anyString()))
-        .thenReturn(Collections.emptyList());
+    when(singleRatingCalculator.dataProviders()).thenReturn(Collections.emptyList());
 
     MultipleSecurityRatingsCalculator multipleRatingsCalculator
         = new MultipleSecurityRatingsCalculator(github);
@@ -39,11 +37,8 @@ public class MultipleSecurityRatingsCalculatorTest {
     when(multipleRatingsCalculator.singleSecurityRatingCalculator())
         .thenReturn(singleRatingCalculator);
 
-    final String apache = "apache";
-    final String eclipse = "eclipse";
-
-    GitHubProject apacheNiFi = new GitHubProject(new GitHubOrganization(apache), "nifi");
-    GitHubProject eclipseSteady = new GitHubProject(new GitHubOrganization(eclipse), "steady");
+    GitHubProject apacheNiFi = new GitHubProject("apache", "nifi");
+    GitHubProject eclipseSteady = new GitHubProject("eclipse", "steady");
 
     assertFalse(apacheNiFi.ratingValue().isPresent());
     assertFalse(eclipseSteady.ratingValue().isPresent());
@@ -56,6 +51,8 @@ public class MultipleSecurityRatingsCalculatorTest {
 
     assertTrue(eclipseSteady.ratingValue().isPresent());
     check(eclipseSteady.ratingValue().get());
+
+    assertTrue(multipleRatingsCalculator.failedProjects().isEmpty());
   }
 
   private static void check(RatingValue ratingValue) {

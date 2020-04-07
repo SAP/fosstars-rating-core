@@ -1,43 +1,35 @@
-package com.sap.sgs.phosphor.fosstars.data.lgtm;
+package com.sap.sgs.phosphor.fosstars.data.github;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sap.sgs.phosphor.fosstars.data.DataProvider;
-import com.sap.sgs.phosphor.fosstars.data.UserCallback;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
-import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
-import java.util.Objects;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.entity.ContentType;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.kohsuke.github.GitHub;
 
 /**
  * The data provider gathers info about how a project uses static analysis with LGTM.
  * In particular, it tires to fill out the following features:
  * <ul>
  *   <li>{@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#USES_LGTM}</li>
+ *   <li>{@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#WORST_LGTM_GRADE}</li>
  * </ul>
  */
-public class LgtmDataProvider implements DataProvider {
-
-  /**
-   * A logger.
-   */
-  private static final Logger LOGGER = LogManager.getLogger(LgtmDataProvider.class);
+public class LgtmDataProvider extends AbstractGitHubDataProvider {
 
   /**
    * For parsing JSON.
@@ -45,41 +37,19 @@ public class LgtmDataProvider implements DataProvider {
   private static final ObjectMapper MAPPER = new ObjectMapper();
 
   /**
-   * A GitHub organization of user name.
-   */
-  protected final String where;
-
-  /**
-   * A name of a repository.
-   */
-  protected final String name;
-
-  /**
    * Initializes a data provider.
    *
-   * @param where A GitHub organization or a user name (can't be null).
-   * @param name A name of a repository (can"t be null).
+   * @param github An interface to the GitHub API.
    */
-  public LgtmDataProvider(String where, String name) {
-    Objects.requireNonNull(where,
-        "Oh no! You gave me a null instead of an organization or user name!");
-    Objects.requireNonNull(name,
-        "Oh no! You gave me a null instead of a project name!");
-
-    this.where = where;
-    this.name = name;
+  public LgtmDataProvider(GitHub github) {
+    super(github);
   }
 
   @Override
-  public DataProvider update(ValueSet values) {
-    JsonNode json = lgtmProjectInfo();
+  protected LgtmDataProvider doUpdate(GitHubProject project, ValueSet values) {
+    JsonNode json = lgtmProjectInfo(project);
     values.update(usesLgtm(json));
     values.update(worstLgtmGrade(json));
-    return this;
-  }
-
-  @Override
-  public DataProvider set(UserCallback callback) {
     return this;
   }
 
@@ -88,16 +58,16 @@ public class LgtmDataProvider implements DataProvider {
    *
    * @return The info about the project.
    */
-  private JsonNode lgtmProjectInfo() {
+  private JsonNode lgtmProjectInfo(GitHubProject project) {
     try (CloseableHttpClient client = httpClient()) {
-      String url = String.format("https://lgtm.com/api/v1.0/projects/g/%s/%s", where, name);
+      String url = String.format("https://lgtm.com/api/v1.0/projects/g/%s", project.path());
       HttpGet httpGetRequest = new HttpGet(url);
       httpGetRequest.addHeader(HttpHeaders.ACCEPT, ContentType.APPLICATION_JSON.getMimeType());
       try (CloseableHttpResponse httpResponse = client.execute(httpGetRequest)) {
         return MAPPER.readTree(httpResponse.getEntity().getContent());
       }
     } catch (IOException e) {
-      LOGGER.warn("Couldn't fetch data from lgtm.com!", e);
+      logger.warn("Couldn't fetch data from lgtm.com!", e);
       return MAPPER.createObjectNode();
     }
   }
@@ -149,21 +119,4 @@ public class LgtmDataProvider implements DataProvider {
     return UnknownValue.of(WORST_LGTM_GRADE);
   }
 
-  /**
-   * The main() method exists for demo and testing purposes.
-   */
-  public static void main(String... args) {
-    String where = args.length > 0 ? args[0] : "apache";
-    String name = args.length > 1 ? args[1] : "nifi";
-    ValueHashSet values = new ValueHashSet();
-
-    LOGGER.info("check project: {}",
-        String.format("https://github.com/%s/%s", where, name));
-    new LgtmDataProvider("apache", "nifi").update(values);
-
-    LOGGER.info("Uses LGTM:   {}",
-        values.of(USES_LGTM).orElse(UnknownValue.of(USES_LGTM)));
-    LOGGER.info("Worst grade: {}",
-        values.of(WORST_LGTM_GRADE).orElse(UnknownValue.of(WORST_LGTM_GRADE)));
-  }
 }

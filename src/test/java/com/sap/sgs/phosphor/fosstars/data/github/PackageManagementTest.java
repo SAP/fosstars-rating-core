@@ -22,6 +22,7 @@ import com.sap.sgs.phosphor.fosstars.model.value.Languages;
 import com.sap.sgs.phosphor.fosstars.model.value.PackageManager;
 import com.sap.sgs.phosphor.fosstars.model.value.PackageManagers;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,14 +37,14 @@ public class PackageManagementTest {
   @Test
   public void update() throws IOException {
     ProgrammingLanguages programmingLanguagesProvider = mock(ProgrammingLanguages.class);
-    when(programmingLanguagesProvider.update(any())).thenAnswer(invocation -> {
-      ValueSet values = (ValueSet) invocation.getArguments()[0];
+    when(programmingLanguagesProvider.update(any(), any())).thenAnswer(invocation -> {
+      ValueSet values = (ValueSet) invocation.getArguments()[1];
       values.update(LANGUAGES.value(new Languages(JAVASCRIPT, CPP)));
       return null;
     });
 
     GitHub github = mock(GitHub.class);
-    PackageManagement provider = new PackageManagement("org", "test", github);
+    PackageManagement provider = new PackageManagement(github);
     provider = spy(provider);
     when(provider.languagesProvider()).thenReturn(programmingLanguagesProvider);
 
@@ -68,7 +69,8 @@ public class PackageManagementTest {
     when(github.getRepository(any())).thenReturn(repository);
 
     ValueSet values = new ValueHashSet();
-    provider.update(values);
+    GitHubProject project = new GitHubProject("org", "test");
+    provider.update(project, values);
 
     assertTrue(values.has(PACKAGE_MANAGERS));
     assertFalse(values.has(LANGUAGES));
@@ -104,18 +106,20 @@ public class PackageManagementTest {
   @Test
   public void languages() throws IOException {
     ProgrammingLanguages programmingLanguagesProvider = mock(ProgrammingLanguages.class);
-    when(programmingLanguagesProvider.update(any())).thenAnswer(invocation -> {
-      ValueSet values = (ValueSet) invocation.getArguments()[0];
+    when(programmingLanguagesProvider.update(any(), any())).thenAnswer(invocation -> {
+      ValueSet values = (ValueSet) invocation.getArguments()[1];
       values.update(LANGUAGES.value(new Languages(JAVA, OTHER)));
       return null;
     });
 
     GitHub github = mock(GitHub.class);
-    PackageManagement provider = new PackageManagement("org", "test", github);
+    PackageManagement provider = new PackageManagement(github);
     provider = spy(provider);
     when(provider.languagesProvider()).thenReturn(programmingLanguagesProvider);
 
-    Languages languages = provider.languages();
+    GitHubProject project = new GitHubProject("org", "test");
+
+    Languages languages = provider.languages(project);
     assertNotNull(languages);
     assertEquals(2, languages.size());
     assertTrue(languages.get().contains(JAVA));

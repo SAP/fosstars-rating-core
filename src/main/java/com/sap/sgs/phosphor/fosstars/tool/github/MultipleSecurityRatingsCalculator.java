@@ -91,8 +91,9 @@ class MultipleSecurityRatingsCalculator extends AbstractRatingCalculator {
    *
    * @return An instance of {@link SingleSecurityRatingCalculator}.
    */
-  AbstractRatingCalculator singleSecurityRatingCalculator() {
-    return new SingleSecurityRatingCalculator(github).token(token).set(callback);
+  AbstractRatingCalculator singleSecurityRatingCalculator() throws IOException {
+    return new SingleSecurityRatingCalculator(github)
+        .token(token).set(callback).set(cache);
   }
 
 }

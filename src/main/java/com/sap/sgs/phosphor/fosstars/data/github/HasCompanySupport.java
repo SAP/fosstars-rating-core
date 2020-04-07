@@ -4,7 +4,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPOR
 
 import com.sap.sgs.phosphor.fosstars.data.json.CompanySupportStorage;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
-import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import org.kohsuke.github.GitHub;
 
@@ -16,25 +16,23 @@ public class HasCompanySupport extends AbstractGitHubDataProvider {
   /**
    * Where the info about open-source projects is stored.
    */
-  private final CompanySupportStorage storage;
+  private final CompanySupportStorage company;
 
   /**
    * Initializes a data provider.
    *
-   * @param where A GitHub organization of user name.
-   * @param name A name of a repository.
    * @param github An interface to the GitHub API.
    * @throws IOException If the info about open-source projects can't be loaded.
    */
-  public HasCompanySupport(String where, String name, GitHub github) throws IOException {
-    super(where, name, github);
-    storage = CompanySupportStorage.load();
+  public HasCompanySupport(GitHub github) throws IOException {
+    super(github);
+    company = CompanySupportStorage.load();
   }
 
   @Override
-  public HasCompanySupport update(ValueSet values) {
+  protected HasCompanySupport doUpdate(GitHubProject project, ValueSet values) {
     logger.info("Figuring out if the project is supported by a company ...");
-    values.update(new BooleanValue(SUPPORTED_BY_COMPANY, storage.supported(url)));
+    values.update(SUPPORTED_BY_COMPANY.value(company.supports(project.url())));
     return this;
   }
 }

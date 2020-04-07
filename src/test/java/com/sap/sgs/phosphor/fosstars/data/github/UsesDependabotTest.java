@@ -9,10 +9,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
-import com.sap.sgs.phosphor.fosstars.data.ValueCache;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectValueCache;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
@@ -115,15 +116,17 @@ public class UsesDependabotTest {
     testProvider(false, github);
   }
 
-  private static void testProvider(boolean expected, GitHub github) {
-    UsesDependabot provider = new UsesDependabot("test", "test", github);
+  private static void testProvider(boolean expected, GitHub github) throws IOException {
+    UsesDependabot provider = new UsesDependabot(github);
     provider = spy(provider);
-    when(provider.cache()).thenReturn(new ValueCache());
+    when(provider.cache()).thenReturn(new GitHubProjectValueCache());
 
     ValueSet values = new ValueHashSet();
     assertEquals(0, values.size());
 
-    provider.update(values);
+    GitHubProject project = new GitHubProject("test", "test");
+
+    provider.update(project, values);
     assertEquals(1, values.size());
     assertTrue(values.has(USES_DEPENDABOT));
     Optional<Value> something = values.of(USES_DEPENDABOT);

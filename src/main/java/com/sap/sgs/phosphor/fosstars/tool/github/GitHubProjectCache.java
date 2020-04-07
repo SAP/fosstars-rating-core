@@ -126,7 +126,7 @@ class GitHubProjectCache {
   }
 
   /**
-   * Load a chache from an input stream.
+   * Load a cache from an input stream.
    *
    * @param is The input stream.
    * @return A loaded cache.

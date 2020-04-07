@@ -1,5 +1,6 @@
 package com.sap.sgs.phosphor.fosstars.data.github;
 
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.date;
 import static com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.UNKNOWN_INTRODUCED_DATE;
 
@@ -14,13 +15,13 @@ import com.sap.sgs.phosphor.fosstars.nvd.NVD;
 import com.sap.sgs.phosphor.fosstars.nvd.data.DescriptionData;
 import com.sap.sgs.phosphor.fosstars.nvd.data.NvdEntry;
 import com.sap.sgs.phosphor.fosstars.nvd.data.ReferenceData;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import org.kohsuke.github.GitHub;
 
@@ -33,11 +34,6 @@ import org.kohsuke.github.GitHub;
 public class VulnerabilitiesFromNvd extends AbstractGitHubDataProvider {
 
   /**
-   * A list of vulnerabilities to be updated by this data provider.
-   */
-  private final Value<Vulnerabilities> vulnerabilities;
-
-  /**
    * An interface to the NVD database.
    */
   private final NVD nvd;
@@ -45,26 +41,23 @@ public class VulnerabilitiesFromNvd extends AbstractGitHubDataProvider {
   /**
    * Initializes a data provider.
    *
-   * @param where A GitHub organization of user name.
-   * @param name A name of a repository.
    * @param github An interface to the GitHub API.
-   * @param vulnerabilities A list of vulnerabilities to be updated by this data provider.
    */
-  public VulnerabilitiesFromNvd(String where, String name, GitHub github,
-      Value<Vulnerabilities> vulnerabilities) {
-
-    super(where, name, github);
-    this.vulnerabilities = vulnerabilities;
+  public VulnerabilitiesFromNvd(GitHub github) {
+    super(github);
     this.nvd = new NVD();
   }
 
   @Override
-  public VulnerabilitiesFromNvd update(ValueSet values) throws IOException {
-    Objects.requireNonNull(values, "Hey! Values can't be null!");
+  protected VulnerabilitiesFromNvd doUpdate(GitHubProject project, ValueSet values)
+      throws IOException {
+
     logger.info("Looking for vulnerabilities in NVD ...");
 
+    Value<Vulnerabilities> vulnerabilities = knownVulnerabilities(values);
+
     nvd.download();
-    for (NvdEntry entry : nvd.find(where, name)) {
+    for (NvdEntry entry : nvd.find(project.organization().name(), project.name())) {
       vulnerabilities.get().add(vulnerabilityFrom(entry));
     }
     values.update(vulnerabilities);
@@ -105,4 +98,15 @@ public class VulnerabilitiesFromNvd extends AbstractGitHubDataProvider {
         id, description, cvss, references, resolution, UNKNOWN_INTRODUCED_DATE, fixed);
   }
 
+  /**
+   * Searches for
+   * {@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#VULNERABILITIES}
+   * feature a set of values.
+   *
+   * @param values The set of value.
+   * @return An existing value for the feature, or an empty value otherwise.
+   */
+  private static Value<Vulnerabilities> knownVulnerabilities(ValueSet values) {
+    return values.of(VULNERABILITIES).orElseGet(() -> VULNERABILITIES.value(new Vulnerabilities()));
+  }
 }

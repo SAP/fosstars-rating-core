@@ -9,6 +9,7 @@ import static org.junit.Assume.assumeNotNull;
 import com.sap.sgs.phosphor.fosstars.data.Terminal;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.util.Optional;
 import org.junit.BeforeClass;
@@ -41,10 +42,10 @@ public class HasSecurityPolicyTest {
   @Test
   public void testApacheNifi() throws IOException {
     assumeNotNull(github);
-    HasSecurityPolicy provider = new HasSecurityPolicy(
-        "apache", "nifi", github);
+    HasSecurityPolicy provider = new HasSecurityPolicy(github);
     ValueHashSet values = new ValueHashSet();
-    provider.set(new Terminal()).update(values);
+    GitHubProject project = new GitHubProject("apache", "nifi");
+    provider.set(new Terminal()).update(project, values);
     assertTrue(values.has(SCANS_FOR_VULNERABLE_DEPENDENCIES));
     Optional<Value> something = values.of(SCANS_FOR_VULNERABLE_DEPENDENCIES);
     assertNotNull(something);
@@ -57,10 +58,10 @@ public class HasSecurityPolicyTest {
   @Test
   public void testApacheCxf() throws IOException {
     assumeNotNull(github);
-    HasSecurityPolicy provider = new HasSecurityPolicy(
-        "apache", "cxf", github);
+    GitHubProject project = new GitHubProject("apache", "cxf");
+    HasSecurityPolicy provider = new HasSecurityPolicy(github);
     ValueHashSet values = new ValueHashSet();
-    provider.set(new Terminal()).update(values);
+    provider.set(new Terminal()).update(project, values);
     assertTrue(values.has(SCANS_FOR_VULNERABLE_DEPENDENCIES));
     Optional<Value> something = values.of(SCANS_FOR_VULNERABLE_DEPENDENCIES);
     assertNotNull(something);

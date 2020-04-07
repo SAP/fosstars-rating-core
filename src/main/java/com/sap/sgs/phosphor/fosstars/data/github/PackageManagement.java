@@ -27,6 +27,7 @@ import com.sap.sgs.phosphor.fosstars.model.value.Languages;
 import com.sap.sgs.phosphor.fosstars.model.value.PackageManager;
 import com.sap.sgs.phosphor.fosstars.model.value.PackageManagers;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.util.EnumMap;
 import java.util.Map;
@@ -114,43 +115,42 @@ public class PackageManagement extends AbstractGitHubDataProvider {
   /**
    * Initializes a data provider.
    *
-   * @param where A GitHub organization of user name.
-   * @param name A name of a repository.
    * @param github An interface to the GitHub API.
    */
-  public PackageManagement(String where, String name, GitHub github) {
-    super(where, name, github);
+  public PackageManagement(GitHub github) {
+    super(github);
   }
 
   @Override
-  public PackageManagement update(ValueSet values) throws IOException {
+  protected PackageManagement doUpdate(GitHubProject project, ValueSet values) throws IOException {
     Objects.requireNonNull(values, "Hey! Values can't be null!");
     logger.info("Looking for package managers ...");
-    values.update(packageManagers());
+    values.update(packageManagers(project));
     return this;
   }
 
   /**
    * Gets a list of package managers that are used in a project.
    *
+   * @param project The project.
    * @return A value of the feature
    *         {@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#PACKAGE_MANAGERS}.
    * @throws IOException If something went wrong.
    */
-  private Value<PackageManagers> packageManagers() throws IOException {
-    Optional<Value> something = cache().get(url, PACKAGE_MANAGERS);
+  private Value<PackageManagers> packageManagers(GitHubProject project) throws IOException {
+    Optional<Value> something = cache.get(project, PACKAGE_MANAGERS);
     if (something.isPresent()) {
       return something.get();
     }
 
     PackageManagers possiblePackageManagers = new PackageManagers();
-    for (Language language : languages().get()) {
+    for (Language language : languages(project).get()) {
       if (KNOWN_PACKAGE_MANAGERS.containsKey(language)) {
         possiblePackageManagers.add(KNOWN_PACKAGE_MANAGERS.get(language));
       }
     }
 
-    GHRepository repository = github.getRepository(path);
+    GHRepository repository = github.getRepository(project.path());
     PackageManagers packageManagers = new PackageManagers();
     for (GHContent content : repository.getDirectoryContent("/")) {
       if (!content.isFile()) {
@@ -165,7 +165,7 @@ public class PackageManagement extends AbstractGitHubDataProvider {
     }
 
     Value<PackageManagers> value = PACKAGE_MANAGERS.value(packageManagers);
-    cache().put(url, value);
+    cache.put(project, value);
 
     return value;
   }
@@ -194,12 +194,13 @@ public class PackageManagement extends AbstractGitHubDataProvider {
   /**
    * Returns a programming languages that are used in a project.
    *
+   * @param project  The project.
    * @return The languages.
    * @throws IOException If something went wrong.
    */
-  Languages languages() throws IOException {
+  Languages languages(GitHubProject project) throws IOException {
     ValueSet values = new ValueHashSet();
-    languagesProvider().update(values);
+    languagesProvider().update(project, values);
 
     Optional<Value> something = values.of(LANGUAGES);
     if (!something.isPresent()) {
@@ -214,7 +215,7 @@ public class PackageManagement extends AbstractGitHubDataProvider {
    * Creates an instance of {@link ProgrammingLanguages}.
    */
   ProgrammingLanguages languagesProvider() {
-    return new ProgrammingLanguages(where, name, github);
+    return new ProgrammingLanguages(github);
   }
 
   /**
@@ -222,10 +223,10 @@ public class PackageManagement extends AbstractGitHubDataProvider {
    */
   public static void main(String... args) throws IOException {
     GitHub github = GitHub.connectUsingOAuth(System.getenv("TOKEN"));
-    PackageManagement provider = new PackageManagement(
-        "spring-projects", "spring-security", github);
+    GitHubProject project = new GitHubProject("spring-projects", "spring-security");
+    PackageManagement provider = new PackageManagement(github);
     ValueSet values = new ValueHashSet();
-    provider.update(values);
+    provider.update(project, values);
     System.out.println("package managers: " + values.of(PACKAGE_MANAGERS).get());
   }
 

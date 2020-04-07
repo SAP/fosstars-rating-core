@@ -11,19 +11,19 @@ public class SecurityTeamStorageTest {
   @Test
   public void testSpringSecurityOAuth() throws IOException {
     SecurityTeamStorage storage = SecurityTeamStorage.load();
-    assertTrue(storage.supported("https://github.com/spring-projects/spring-security-oauth"));
+    assertTrue(storage.existsFor("https://github.com/spring-projects/spring-security-oauth"));
   }
 
   @Test
   public void testApachePoi() throws IOException {
     SecurityTeamStorage storage = SecurityTeamStorage.load();
-    assertTrue(storage.supported("https://github.com/apache/poi"));
+    assertTrue(storage.existsFor("https://github.com/apache/poi"));
   }
 
   @Test
   public void testUnknown() throws IOException {
     SecurityTeamStorage storage = SecurityTeamStorage.load();
-    assertFalse(storage.supported("https://github.com/unknown/project"));
+    assertFalse(storage.existsFor("https://github.com/unknown/project"));
   }
 
 }

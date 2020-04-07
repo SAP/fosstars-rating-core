@@ -9,8 +9,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
-import com.sap.sgs.phosphor.fosstars.data.ValueCache;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectValueCache;
 import java.io.IOException;
 import java.io.InputStream;
 import org.apache.http.HttpEntity;
@@ -24,11 +25,10 @@ public class UsesSignedCommitTest {
   @Test
   public void testUsesSignedCommitsTrue() throws IOException {
     GitHub github = mock(GitHub.class);
-    UsesSignedCommits provider =
-        new UsesSignedCommits("spring-projects", "spring-integration", github,
-            null);
+    GitHubProject project = new GitHubProject("spring-projects", "spring-integration");
+    UsesSignedCommits provider = new UsesSignedCommits(github, null);
     provider = spy(provider);
-    when(provider.cache()).thenReturn(new ValueCache());
+    when(provider.cache()).thenReturn(new GitHubProjectValueCache());
 
     CloseableHttpClient httpClient = mock(CloseableHttpClient.class);
     when(provider.httpClient()).thenReturn(httpClient);
@@ -45,7 +45,7 @@ public class UsesSignedCommitTest {
       ValueHashSet values = new ValueHashSet();
       assertEquals(0, values.size());
 
-      provider.update(values);
+      provider.update(project, values);
 
       assertEquals(1, values.size());
       assertTrue(values.has(USES_VERIFIED_SIGNED_COMMITS));
@@ -59,10 +59,10 @@ public class UsesSignedCommitTest {
   @Test
   public void testUsesSignedCommitsFalse() throws IOException {
     GitHub github = mock(GitHub.class);
-    UsesSignedCommits provider =
-        new UsesSignedCommits("spring-projects", "spring-integration", github, null);
+    GitHubProject project = new GitHubProject("spring-projects", "spring-integration");
+    UsesSignedCommits provider = new UsesSignedCommits(github, null);
     provider = spy(provider);
-    when(provider.cache()).thenReturn(new ValueCache());
+    when(provider.cache()).thenReturn(new GitHubProjectValueCache());
 
     CloseableHttpClient httpClient = mock(CloseableHttpClient.class);
     when(provider.httpClient()).thenReturn(httpClient);
@@ -79,7 +79,7 @@ public class UsesSignedCommitTest {
       ValueHashSet values = new ValueHashSet();
       assertEquals(0, values.size());
 
-      provider.update(values);
+      provider.update(project, values);
 
       assertEquals(1, values.size());
       assertTrue(values.has(USES_VERIFIED_SIGNED_COMMITS));
@@ -93,10 +93,10 @@ public class UsesSignedCommitTest {
   @Test
   public void testUsesSignedUnknown() throws IOException {
     GitHub github = mock(GitHub.class);
-    UsesSignedCommits provider =
-        new UsesSignedCommits("spring-projects", "spring-integration", github, null);
+    final GitHubProject project = new GitHubProject("spring-projects", "spring-integration");
+    UsesSignedCommits provider = new UsesSignedCommits(github, null);
     provider = spy(provider);
-    when(provider.cache()).thenReturn(new ValueCache());
+    when(provider.cache()).thenReturn(new GitHubProjectValueCache());
 
     CloseableHttpClient httpClient = mock(CloseableHttpClient.class);
     when(provider.httpClient()).thenReturn(httpClient);
@@ -106,7 +106,7 @@ public class UsesSignedCommitTest {
     ValueHashSet values = new ValueHashSet();
     assertEquals(0, values.size());
 
-    provider.update(values);
+    provider.update(project, values);
 
     assertEquals(1, values.size());
     assertTrue(values.has(USES_VERIFIED_SIGNED_COMMITS));

@@ -5,14 +5,12 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.IntegerValue;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GHUser;
@@ -27,11 +25,6 @@ import org.kohsuke.github.GitUser;
 public class NumberOfContributors extends AbstractGitHubDataProvider {
 
   /**
-   * A logger.
-   */
-  private static final Logger LOGGER = LogManager.getLogger(NumberOfContributors.class);
-
-  /**
    * This constant means that no user found.
    */
   private static final String UNKNOWN_USER = "";
@@ -44,26 +37,25 @@ public class NumberOfContributors extends AbstractGitHubDataProvider {
   /**
    * Initializes a data provider.
    *
-   * @param where A GitHub organization of user name.
-   * @param name A name of a repository.
    * @param github An interface to the GitHub API.
    */
-  public NumberOfContributors(String where, String name, GitHub github) {
-    super(where, name, github);
+  public NumberOfContributors(GitHub github) {
+    super(github);
   }
 
   @Override
-  public NumberOfContributors update(ValueSet values) throws IOException {
-    Objects.requireNonNull(values, "Hey! Values can't be null!");
-    LOGGER.info("Counting how many people contributed to the project in the last three months ...");
+  protected NumberOfContributors doUpdate(GitHubProject project, ValueSet values)
+      throws IOException {
 
-    Optional<Value> something = cache().get(url, NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS);
+    logger.info("Counting how many people contributed to the project in the last three months ...");
+
+    Optional<Value> something = cache.get(project, NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS);
     if (something.isPresent()) {
       values.update(something.get());
       return this;
     }
 
-    GHRepository repository = github.getRepository(path);
+    GHRepository repository = github.getRepository(project.path());
     Date date = new Date(System.currentTimeMillis() - DELTA);
     Set<String> contributors = new HashSet<>();
     for (GHCommit commit : repository.listCommits().asList()) {
@@ -79,7 +71,7 @@ public class NumberOfContributors extends AbstractGitHubDataProvider {
     Value<Integer> numberOfContributors = new IntegerValue(
         NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS, contributors.size());
     values.update(numberOfContributors);
-    cache().put(url, numberOfContributors, tomorrow());
+    cache.put(project, numberOfContributors, tomorrow());
 
     return this;
   }

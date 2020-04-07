@@ -8,7 +8,7 @@ import java.util.Objects;
 /**
  * An organization (or a user) on GitHub.
  */
-class GitHubOrganization {
+public class GitHubOrganization {
 
   /**
    * A name.

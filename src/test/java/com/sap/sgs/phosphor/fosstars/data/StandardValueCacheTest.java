@@ -13,13 +13,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.junit.Test;
 
-public class ValueCacheTest {
+public class StandardValueCacheTest {
 
   @Test
   public void store() throws IOException {
-    Path tmp = Files.createTempFile(ValueCacheTest.class.getCanonicalName(), "test");
+    Path tmp = Files.createTempFile(StandardValueCacheTest.class.getCanonicalName(), "test");
     String filename = tmp.toString();
-    ValueCache cache = new ValueCache();
+    StandardValueCache cache = new StandardValueCache();
     try {
       String url = "https://github.com/unknown/project";
       cache.put(url, new BooleanValue(OssFeatures.HAS_SECURITY_TEAM, true));
@@ -35,7 +35,7 @@ public class ValueCacheTest {
       assertNotNull(content);
       assertTrue(content.length > 0);
 
-      ValueCache anotherCache = ValueCache.load(filename);
+      StandardValueCache anotherCache = StandardValueCache.load(filename);
       assertEquals(cache, anotherCache);
     } finally {
       Files.delete(tmp);
