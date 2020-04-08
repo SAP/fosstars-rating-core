@@ -64,4 +64,12 @@ public class UnpatchedVulnerabilitiesStorageTest {
     assertNotNull(vulnerabilities);
     assertEquals(1, vulnerabilities.entries().size());
   }
+
+  @Test
+  public void testOdata4j() throws IOException {
+    UnpatchedVulnerabilitiesStorage storage = UnpatchedVulnerabilitiesStorage.load();
+    Vulnerabilities vulnerabilities = storage.get("https://github.com/odata4j/odata4j");
+    assertNotNull(vulnerabilities);
+    assertEquals(3, vulnerabilities.entries().size());
+  }
 }
