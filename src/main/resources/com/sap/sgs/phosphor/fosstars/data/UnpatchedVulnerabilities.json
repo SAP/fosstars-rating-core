@@ -3,81 +3,116 @@
     "https://github.com/apache/httpcomponents-client" : {
       "entries" : [ {
         "id" : "https://issues.apache.org/jira/browse/HTTPCLIENT-1973",
-        "description" : null,
         "cvss" : {
           "version" : "UNKNOWN",
           "value" : null
         },
         "references" : [ ],
-        "resolution" : "UNPATCHED"
+        "resolution" : "UNPATCHED",
+        "introduced" : null,
+        "fixed" : null
       } ]
     },
     "https://github.com/apache/commons-fileupload" : {
-      "entries" : [
-        {
-          "id" : "https://issues.apache.org/jira/browse/FILEUPLOAD-297",
-          "description" : null,
-          "cvss" : {
-            "version" : "UNKNOWN",
-            "value" : null
-          },
-          "references" : [ ],
-          "resolution" : "UNPATCHED"
+      "entries" : [ {
+        "id" : "https://issues.apache.org/jira/browse/FILEUPLOAD-297",
+        "cvss" : {
+          "version" : "UNKNOWN",
+          "value" : null
         },
-        {
-          "id" : "https://nvd.nist.gov/vuln/detail/CVE-2013-0248",
-          "description" : null,
-          "cvss" : {
-            "version" : "UNKNOWN",
-            "value" : null
-          },
-          "references" : [
-            {
-              "url": "https://issues.apache.org/jira/browse/FILEUPLOAD-298",
-              "description": ""
-            }
-          ],
-          "resolution" : "UNPATCHED"
-        }
-      ]
+        "references" : [ ],
+        "resolution" : "UNPATCHED",
+        "introduced" : null,
+        "fixed" : null
+      }, {
+        "id" : "https://nvd.nist.gov/vuln/detail/CVE-2013-0248",
+        "cvss" : {
+          "version" : "UNKNOWN",
+          "value" : null
+        },
+        "references" : [ {
+          "description" : "",
+          "url" : "https://issues.apache.org/jira/browse/FILEUPLOAD-298"
+        } ],
+        "resolution" : "UNPATCHED",
+        "introduced" : null,
+        "fixed" : null
+      } ]
     },
     "https://github.com/spring-projects/spring-security-oauth" : {
-      "entries" : [
-        {
-          "id" : "https://github.com/spring-projects/spring-security-oauth/issues/1682",
-          "description" : null,
-          "cvss" : {
-            "version" : "UNKNOWN",
-            "value" : null
-          },
-          "references" : [ ],
-          "resolution" : "UNPATCHED"
+      "entries" : [ {
+        "id" : "https://github.com/spring-projects/spring-security-oauth/issues/1472",
+        "cvss" : {
+          "version" : "UNKNOWN",
+          "value" : null
         },
-        {
-          "id": "https://github.com/spring-projects/spring-security-oauth/issues/1472",
-          "description": null,
-          "cvss": {
-            "version": "UNKNOWN",
-            "value": null
-          },
-          "references": [ ],
-          "resolution" : "UNPATCHED"
-        }
-      ]
+        "references" : [ ],
+        "resolution" : "UNPATCHED",
+        "introduced" : null,
+        "fixed" : null
+      }, {
+        "id" : "https://github.com/spring-projects/spring-security-oauth/issues/1682",
+        "cvss" : {
+          "version" : "UNKNOWN",
+          "value" : null
+        },
+        "references" : [ ],
+        "resolution" : "UNPATCHED",
+        "introduced" : null,
+        "fixed" : null
+      } ]
     },
     "https://github.com/apache/batik" : {
-      "entries" : [
-        {
-          "id" : "https://issues.apache.org/jira/browse/BATIK-1189",
-          "description" : null,
-          "cvss" : {
-            "version" : "UNKNOWN",
-            "value" : null
-          },
-          "references" : [ ],
-          "resolution" : "UNPATCHED"
-        }
-      ]
+      "entries" : [ {
+        "id" : "https://issues.apache.org/jira/browse/BATIK-1189",
+        "cvss" : {
+          "version" : "UNKNOWN",
+          "value" : null
+        },
+        "references" : [ ],
+        "resolution" : "UNPATCHED",
+        "introduced" : null,
+        "fixed" : null
+      } ]
+    },
+    "https://github.com/odata4j/odata4j" : {
+      "entries" : [ {
+        "id" : "https://nvd.nist.gov/vuln/detail/CVE-2014-0171",
+        "cvss" : {
+          "version" : "V2",
+          "value" : 5.0
+        },
+        "references" : [ ],
+        "resolution" : "UNPATCHED",
+        "introduced" : null,
+        "fixed" : null
+      }, {
+        "id" : "https://nvd.nist.gov/vuln/detail/CVE-2016-11023",
+        "cvss" : {
+          "version" : "V3",
+          "value" : 9.8
+        },
+        "references" : [ {
+          "description" : "Public disclosure",
+          "url" : "https://groups.google.com/d/msg/odata4j-discuss/_lBwwXP30g0/Av6zkZMdBwAJ"
+        } ],
+        "resolution" : "UNPATCHED",
+        "introduced" : null,
+        "fixed" : null
+      }, {
+        "id" : "https://nvd.nist.gov/vuln/detail/CVE-2016-11024",
+        "cvss" : {
+          "version" : "V3",
+          "value" : 9.8
+        },
+        "references" : [ {
+          "description" : "Public disclosure",
+          "url" : "https://groups.google.com/d/msg/odata4j-discuss/_lBwwXP30g0/Av6zkZMdBwAJ"
+        } ],
+        "resolution" : "UNPATCHED",
+        "introduced" : null,
+        "fixed" : null
+      } ]
     }
   }
 }
