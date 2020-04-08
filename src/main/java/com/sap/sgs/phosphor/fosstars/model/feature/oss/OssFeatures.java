@@ -146,6 +146,15 @@ public class OssFeatures {
           "If an open-source project is regularly scanned for vulnerable dependencies");
 
   /**
+   * <p>Shows if a project uses Dependabot.</p>
+   * <p><a href="https://dependabot.com/">Dependabot</a> offers automatic dependency updates.
+   * In particular, when Dependabot finds a vulnerability in dependencies,
+   * it opens a pull request to update the vulnerable dependency to the safe version.</p>
+   */
+  public static final Feature<Boolean> USES_DEPENDABOT
+      = new BooleanFeature("If a project uses Dependabot");
+
+  /**
    * Shows how many GitHub users starred an open-source project.
    */
   public static final Feature<Integer> NUMBER_OF_GITHUB_STARS
