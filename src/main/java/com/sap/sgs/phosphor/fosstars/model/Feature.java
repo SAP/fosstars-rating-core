@@ -12,6 +12,7 @@ import com.sap.sgs.phosphor.fosstars.model.feature.example.NumberOfCommitsLastMo
 import com.sap.sgs.phosphor.fosstars.model.feature.example.NumberOfContributorsLastMonthExample;
 import com.sap.sgs.phosphor.fosstars.model.feature.example.SecurityReviewDoneExample;
 import com.sap.sgs.phosphor.fosstars.model.feature.example.StaticCodeAnalysisDoneExample;
+import com.sap.sgs.phosphor.fosstars.model.feature.oss.LanguagesFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.oss.SecurityReviewsDone;
 import com.sap.sgs.phosphor.fosstars.model.feature.oss.VulnerabilitiesInProject;
 
@@ -39,7 +40,8 @@ import com.sap.sgs.phosphor.fosstars.model.feature.oss.VulnerabilitiesInProject;
     @JsonSubTypes.Type(value = StaticCodeAnalysisDoneExample.class),
     @JsonSubTypes.Type(value = NumberOfCommitsLastMonthExample.class),
     @JsonSubTypes.Type(value = NumberOfContributorsLastMonthExample.class),
-    @JsonSubTypes.Type(value = LgtmGradeFeature.class)
+    @JsonSubTypes.Type(value = LgtmGradeFeature.class),
+    @JsonSubTypes.Type(value = LanguagesFeature.class),
 })
 public interface Feature<T> {
 

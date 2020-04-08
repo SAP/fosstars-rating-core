@@ -7,6 +7,7 @@ import com.sap.sgs.phosphor.fosstars.model.feature.DateFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.LgtmGradeFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.PositiveIntegerFeature;
 import com.sap.sgs.phosphor.fosstars.model.value.FuzzingAttempts;
+import com.sap.sgs.phosphor.fosstars.model.value.Languages;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.sgs.phosphor.fosstars.model.value.SecurityReviews;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
@@ -87,10 +88,10 @@ public class OssFeatures {
       = new BooleanFeature("If an open-source project belongs to Eclipse Foundation");
 
   /**
-   * Shows if an open-source project uses one of the memory-unsafe languages such as C or C++.
+   * Contains a set of programming languages that are used in an open-source project.
    */
-  public static final Feature<Boolean> USES_MEMORY_UNSAFE_LANGUAGES
-      = new BooleanFeature("If an open-source project uses C or C++");
+  public static final Feature<Languages> LANGUAGES
+      = new LanguagesFeature("A set of programming languages");
 
   /**
    * Shows if an open-source project has been scanned in Coverity Scan project.
@@ -137,11 +138,12 @@ public class OssFeatures {
    */
   public static final Feature<FuzzingAttempts> FUZZING_ATTEMPTS_DONE = new FuzzingAttemptsDone();
 
+  /**
+   * Shows if an open-source project scans for known vulnerabilities in its dependencies.
+   */
   public static final Feature<Boolean> SCANS_FOR_VULNERABLE_DEPENDENCIES
       = new BooleanFeature(
           "If an open-source project is regularly scanned for vulnerable dependencies");
-
-  // Below are features specific to GitHub
 
   /**
    * Shows how many GitHub users starred an open-source project.
