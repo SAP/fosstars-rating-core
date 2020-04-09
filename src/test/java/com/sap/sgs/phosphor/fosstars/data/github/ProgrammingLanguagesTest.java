@@ -44,8 +44,8 @@ public class ProgrammingLanguagesTest {
     assertTrue(values.of(LANGUAGES).isPresent());
     Value<Languages> value = values.of(LANGUAGES).get();
     assertEquals(3, value.get().size());
-    assertTrue(value.get().languages().contains(Language.C));
-    assertTrue(value.get().languages().contains(Language.JAVA));
-    assertTrue(value.get().languages().contains(Language.OTHER));
+    assertTrue(value.get().get().contains(Language.C));
+    assertTrue(value.get().get().contains(Language.JAVA));
+    assertTrue(value.get().get().contains(Language.OTHER));
   }
 }
