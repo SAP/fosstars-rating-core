@@ -33,6 +33,11 @@ public class CompositeDataProviderTest {
     }
 
     @Override
+    public boolean interactive() {
+      return false;
+    }
+
+    @Override
     public ValueCache cache() {
       return null;
     }
@@ -81,6 +86,38 @@ public class CompositeDataProviderTest {
       assertTrue(booleanValue.feature().name().startsWith("feature "));
       assertTrue(booleanValue.get());
     }
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void noInteractiveProviders() {
+    new CompositeDataProvider(
+        new DataProvider() {
+          @Override
+          public DataProvider update(Object object, ValueSet values) {
+            throw new UnsupportedOperationException("This should not be called!");
+          }
+
+          @Override
+          public boolean interactive() {
+            return true;
+          }
+
+          @Override
+          public ValueCache cache() {
+            throw new UnsupportedOperationException("This should not be called!");
+          }
+
+          @Override
+          public DataProvider set(UserCallback callback) {
+            throw new UnsupportedOperationException("This should not be called!");
+          }
+
+          @Override
+          public DataProvider set(ValueCache cache) {
+            throw new UnsupportedOperationException("This should not be called!");
+          }
+        }
+    );
   }
 
 }

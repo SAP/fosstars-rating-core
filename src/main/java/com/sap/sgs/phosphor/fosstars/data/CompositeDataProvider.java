@@ -49,7 +49,7 @@ public class CompositeDataProvider<T> implements DataProvider<T> {
     if (providers.length == 0) {
       throw new IllegalArgumentException("No providers specified!");
     }
-    this.providers.addAll(Arrays.asList(providers));
+    add(providers);
   }
 
   /**
@@ -58,12 +58,17 @@ public class CompositeDataProvider<T> implements DataProvider<T> {
    * @param providers The data provider to be added.
    * @return This provider.
    */
-  public CompositeDataProvider<T> add(DataProvider<T>... providers) {
+  public final CompositeDataProvider<T> add(DataProvider<T>... providers) {
     Objects.requireNonNull(providers, "Providers can't be null!");
     if (providers.length == 0) {
       throw new IllegalArgumentException("No providers specified!");
     }
-    this.providers.addAll(Arrays.asList(providers));
+    for (DataProvider<T> provider : providers) {
+      if (provider.interactive()) {
+        throw new IllegalArgumentException("Unfortunately interactive providers are not supported");
+      }
+      this.providers.add(provider);
+    }
     return this;
   }
 
@@ -77,6 +82,11 @@ public class CompositeDataProvider<T> implements DataProvider<T> {
       provider.update(object, values);
     }
     return this;
+  }
+
+  @Override
+  public final boolean interactive() {
+    return false;
   }
 
   @Override

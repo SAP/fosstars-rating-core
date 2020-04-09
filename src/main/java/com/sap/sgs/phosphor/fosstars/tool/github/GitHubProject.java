@@ -175,6 +175,11 @@ public class GitHubProject implements Project {
     return Objects.hash(organization, name);
   }
 
+  @Override
+  public String toString() {
+    return url.toString();
+  }
+
   /**
    * Makes a project from its URL.
    *

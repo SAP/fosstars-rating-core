@@ -5,10 +5,6 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SE
 import com.sap.sgs.phosphor.fosstars.data.UserCallback;
 import com.sap.sgs.phosphor.fosstars.data.json.SecurityTeamStorage;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
-import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
-import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
-import com.sap.sgs.phosphor.fosstars.tool.YesNoSkipQuestion;
-import com.sap.sgs.phosphor.fosstars.tool.YesNoSkipQuestion.Answer;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import org.kohsuke.github.GitHub;
@@ -17,9 +13,6 @@ import org.kohsuke.github.GitHub;
  * This data provider tries to figure out if a project has a security team. First, it checks if a
  * project belongs to an organization which provides a security team such as Apache Software
  * Foundation. Next, it tries to ask a user if {@link UserCallback} is available.
- * TODO: This class doesn't talk to GitHub. Instead, it uses a local storage
- *       which contains info about known security teams.
- *       SecurityTeamStorage may be converted to a data provider.
  */
 public class HasSecurityTeam extends AbstractGitHubDataProvider {
 
@@ -42,28 +35,10 @@ public class HasSecurityTeam extends AbstractGitHubDataProvider {
   protected HasSecurityTeam doUpdate(GitHubProject project, ValueSet values) {
     logger.info("Figuring out if the project has a security team ...");
 
-    values.update(UnknownValue.of(HAS_SECURITY_TEAM));
-
     if (securityTeam.existsFor(project.url())) {
-      values.update(new BooleanValue(HAS_SECURITY_TEAM, true));
-    } else if (callback.canTalk()) {
-      String question = String.format(
-          "Does project %s have a security team? Say yes, no, or skip, please.", project.path());
-
-      Answer answer = new YesNoSkipQuestion(callback, question).ask();
-      switch (answer) {
-        case YES:
-          values.update(new BooleanValue(HAS_SECURITY_TEAM, true));
-          break;
-        case NO:
-          values.update(new BooleanValue(HAS_SECURITY_TEAM, false));
-          break;
-        default:
-          throw new IllegalArgumentException(
-              String.format("Hey! You gave me an unexpected answer: %s", answer));
-      }
-
-      // TODO: store the answer in the SecurityTeamStorage
+      values.update(HAS_SECURITY_TEAM.value(true));
+    } else {
+      values.update(HAS_SECURITY_TEAM.unknown());
     }
 
     return this;

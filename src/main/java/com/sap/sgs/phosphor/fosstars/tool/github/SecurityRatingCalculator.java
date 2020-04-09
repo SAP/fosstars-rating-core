@@ -135,12 +135,12 @@ public class SecurityRatingCalculator {
           "You have to give me either --url or --config option but not both!");
     }
 
-    boolean mayTalk = !commandLine.hasOption("no-questions");
-    UserCallback callback = mayTalk ? new Terminal() : NoUserCallback.INSTANCE;
-
-    GitHub github = connectToGithub(commandLine.getOptionValue("token"), callback);
+    UserCallback callback = commandLine.hasOption("no-questions")
+        ? NoUserCallback.INSTANCE : new Terminal();
 
     String token = commandLine.getOptionValue("token");
+
+    GitHub github = connectToGithub(token, callback);
 
     try {
       if (commandLine.hasOption("url")) {

@@ -26,6 +26,11 @@ public abstract class AbstractGitHubDataProvider extends AbstractDataProvider<Gi
         github, "Oh no! You gave me a null instead of a GitHub instance!");
   }
 
+  @Override
+  public final boolean interactive() {
+    return false;
+  }
+
   /**
    * Returns a date for tomorrow.
    */

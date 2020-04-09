@@ -44,8 +44,17 @@ class MultipleSecurityRatingsCalculator extends AbstractRatingCalculator {
   }
 
   @Override
-  MultipleSecurityRatingsCalculator calculateFor(GitHubProject project) throws IOException {
+  public MultipleSecurityRatingsCalculator calculateFor(GitHubProject project) throws IOException {
+    Optional<RatingValue> cachedRatingValue = projectCache.cachedRatingValueFor(project);
+    if (cachedRatingValue.isPresent()) {
+      project.set(cachedRatingValue.get());
+      logger.info("Found a cached rating for {}", project);
+      return this;
+    }
+
     singleSecurityRatingCalculator().calculateFor(project);
+    projectCache.add(project);
+
     return this;
   }
 
@@ -57,16 +66,9 @@ class MultipleSecurityRatingsCalculator extends AbstractRatingCalculator {
    * @return The same calculator.
    */
   @Override
-  MultipleSecurityRatingsCalculator calculateFor(List<GitHubProject> projects) {
+  public MultipleSecurityRatingsCalculator calculateFor(List<GitHubProject> projects) {
+    failedProjects.clear();
     for (GitHubProject project : projects) {
-      Optional<RatingValue> cachedRatingValue = projectCache.cachedRatingValueFor(project);
-      if (cachedRatingValue.isPresent()) {
-        project.set(cachedRatingValue.get());
-        logger.info("Found a cached rating value!");
-        continue;
-      }
-
-      failedProjects.clear();
       try {
         calculateFor(project);
       } catch (Exception e) {
@@ -74,7 +76,6 @@ class MultipleSecurityRatingsCalculator extends AbstractRatingCalculator {
         logger.warn(e);
         failedProjects.add(project);
       }
-      projectCache.add(project);
     }
     return this;
   }
@@ -91,9 +92,11 @@ class MultipleSecurityRatingsCalculator extends AbstractRatingCalculator {
    *
    * @return An instance of {@link SingleSecurityRatingCalculator}.
    */
-  AbstractRatingCalculator singleSecurityRatingCalculator() throws IOException {
+  RatingCalculator singleSecurityRatingCalculator() {
     return new SingleSecurityRatingCalculator(github)
-        .token(token).set(callback).set(cache);
+        .token(token)
+        .set(callback)
+        .set(cache);
   }
 
 }
