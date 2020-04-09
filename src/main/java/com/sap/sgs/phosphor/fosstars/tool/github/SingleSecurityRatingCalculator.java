@@ -21,6 +21,8 @@ import com.sap.sgs.phosphor.fosstars.data.github.UsesOwaspDependencyCheck;
 import com.sap.sgs.phosphor.fosstars.data.github.UsesSignedCommits;
 import com.sap.sgs.phosphor.fosstars.data.github.UsesSnykDependencyCheck;
 import com.sap.sgs.phosphor.fosstars.data.github.VulnerabilitiesFromNvd;
+import com.sap.sgs.phosphor.fosstars.data.interactive.AskAboutSecurityTeam;
+import com.sap.sgs.phosphor.fosstars.data.interactive.AskAboutUnpatchedVulnerabilities;
 import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
@@ -47,7 +49,7 @@ class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
   }
 
   @Override
-  SingleSecurityRatingCalculator calculateFor(GitHubProject project) throws IOException {
+  public SingleSecurityRatingCalculator calculateFor(GitHubProject project) throws IOException {
     Objects.requireNonNull(project, "Oh no! Project can't be null!");
 
     OssSecurityRating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
@@ -57,6 +59,12 @@ class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
 
     ValueSet values = ValueHashSet.unknown(rating.allFeatures());
     for (DataProvider<GitHubProject> provider : dataProviders()) {
+
+      // skip data providers that talk to users but the callback doesn't allow that
+      if (provider.interactive() && !callback.canTalk()) {
+        continue;
+      }
+
       try {
         provider.set(callback).set(cache).update(project, values);
       } catch (Exception e) {
@@ -79,7 +87,7 @@ class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
   }
 
   @Override
-  AbstractRatingCalculator calculateFor(List<GitHubProject> projects) {
+  public SingleSecurityRatingCalculator calculateFor(List<GitHubProject> projects) {
     throw new UnsupportedOperationException("I can't handle multiple projects!");
   }
 
@@ -109,7 +117,9 @@ class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
         new CompositeDataProvider<>(
             new UsesOwaspDependencyCheck(github),
             new UsesSnykDependencyCheck(github))
-            .stopWhenFilledOut(SCANS_FOR_VULNERABLE_DEPENDENCIES)
+            .stopWhenFilledOut(SCANS_FOR_VULNERABLE_DEPENDENCIES),
+        new AskAboutSecurityTeam<>(),
+        new AskAboutUnpatchedVulnerabilities<>()
     );
   }
 }
