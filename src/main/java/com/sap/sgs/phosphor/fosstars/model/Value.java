@@ -10,6 +10,7 @@ import com.sap.sgs.phosphor.fosstars.model.value.ExpiringValue;
 import com.sap.sgs.phosphor.fosstars.model.value.IntegerValue;
 import com.sap.sgs.phosphor.fosstars.model.value.LanguagesValue;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGradeValue;
+import com.sap.sgs.phosphor.fosstars.model.value.PackageManagersValue;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.sgs.phosphor.fosstars.model.value.SecurityReviewsDoneValue;
 import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
@@ -33,7 +34,8 @@ import com.sap.sgs.phosphor.fosstars.model.value.VulnerabilitiesValue;
     @JsonSubTypes.Type(value = SecurityReviewsDoneValue.class),
     @JsonSubTypes.Type(value = EnumValue.class),
     @JsonSubTypes.Type(value = LgtmGradeValue.class),
-    @JsonSubTypes.Type(value = LanguagesValue.class)
+    @JsonSubTypes.Type(value = LanguagesValue.class),
+    @JsonSubTypes.Type(value = PackageManagersValue.class)
 })
 public interface Value<T> {
 

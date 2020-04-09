@@ -13,7 +13,7 @@ public enum Language {
   JAVA, SCALA,
 
   // .NET languages
-  C_SHARP, F_SHARP, VISUAL_BASIC,
+  C_SHARP, F_SHARP, VISUALBASIC,
 
   PHP, RUBY, PYTHON, JAVASCRIPT,
 

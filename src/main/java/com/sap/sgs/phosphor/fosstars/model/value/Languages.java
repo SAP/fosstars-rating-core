@@ -20,6 +20,13 @@ public class Languages {
   private final Set<Language> languages;
 
   /**
+   * Returns an empty set of languages.
+   */
+  public static Languages empty() {
+    return new Languages();
+  }
+
+  /**
    * Initializes a set of languages.
    *
    * @param languages A set of languages.
@@ -50,7 +57,7 @@ public class Languages {
    * Returns the languages.
    */
   @JsonGetter("languages")
-  public Set<Language> languages() {
+  public Set<Language> get() {
     return EnumSet.copyOf(languages);
   }
 

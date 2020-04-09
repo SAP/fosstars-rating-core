@@ -9,6 +9,7 @@ import com.sap.sgs.phosphor.fosstars.model.feature.PositiveIntegerFeature;
 import com.sap.sgs.phosphor.fosstars.model.value.FuzzingAttempts;
 import com.sap.sgs.phosphor.fosstars.model.value.Languages;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade;
+import com.sap.sgs.phosphor.fosstars.model.value.PackageManagers;
 import com.sap.sgs.phosphor.fosstars.model.value.SecurityReviews;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
 import java.util.Date;
@@ -92,6 +93,12 @@ public class OssFeatures {
    */
   public static final Feature<Languages> LANGUAGES
       = new LanguagesFeature("A set of programming languages");
+
+  /**
+   * Contains a set of programming languages that are used in an open-source project.
+   */
+  public static final Feature<PackageManagers> PACKAGE_MANAGERS
+      = new PackageManagersFeature("A set of package managers");
 
   /**
    * Shows if an open-source project has been scanned in Coverity Scan project.
