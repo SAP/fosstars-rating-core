@@ -202,7 +202,7 @@ public class OssFeatures {
 
   /**
    * Holds a date of the first commit to the source repository.
-   * It mey be used to estimate a moment when the project started.
+   * It may be used to estimate a moment when the project started.
    */
   public static final Feature<Date> FIRST_COMMIT_DATE
       = new DateFeature("When first commit was done");
@@ -227,4 +227,11 @@ public class OssFeatures {
    */
   public static final Feature<Boolean> USES_VERIFIED_SIGNED_COMMITS =
       new BooleanFeature("If a project uses verified signed commits");
+  
+  /**
+   * Shows if an open-source project uses GitHub as a main development platform. More precisely, it
+   * means that a repository on GitHub is the main one (not a mirror).
+   */
+  public static final Feature<Boolean> USES_GITHUB_FOR_DEVELOPMENT =
+      new BooleanFeature("If a project uses GitHub as the main development platform");
 }
