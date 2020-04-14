@@ -4,16 +4,16 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.example.ExampleFeature
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import com.sap.sgs.phosphor.fosstars.model.Feature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.sgs.phosphor.fosstars.model.Value;
+import java.io.IOException;
 import org.junit.Test;
 
 public class UnknownValueTest {
 
   @Test
   public void getFeature() {
-    Feature feature = NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE;
-    Value value = new UnknownValue(feature);
+    Value value = new UnknownValue(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE);
     assertEquals(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, value.feature());
   }
 
@@ -25,5 +25,15 @@ public class UnknownValueTest {
   @Test(expected = UnsupportedOperationException.class)
   public void get() {
     new UnknownValue<>(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE).get();
+  }
+
+  @Test
+  public void serializationAndDeserialization() throws IOException {
+    ObjectMapper mapper = new ObjectMapper();
+    UnknownValue value = UnknownValue.of(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE);
+    UnknownValue clone = mapper.readValue(
+        mapper.writeValueAsBytes(value), UnknownValue.class);
+    assertEquals(value, clone);
+    assertEquals(value.hashCode(), clone.hashCode());
   }
 }

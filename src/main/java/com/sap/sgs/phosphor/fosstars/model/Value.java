@@ -10,6 +10,7 @@ import com.sap.sgs.phosphor.fosstars.model.value.ExpiringValue;
 import com.sap.sgs.phosphor.fosstars.model.value.IntegerValue;
 import com.sap.sgs.phosphor.fosstars.model.value.LanguagesValue;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGradeValue;
+import com.sap.sgs.phosphor.fosstars.model.value.NotApplicableValue;
 import com.sap.sgs.phosphor.fosstars.model.value.PackageManagersValue;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.sgs.phosphor.fosstars.model.value.SecurityReviewsDoneValue;
@@ -31,6 +32,7 @@ import com.sap.sgs.phosphor.fosstars.model.value.VulnerabilitiesValue;
     @JsonSubTypes.Type(value = ExpiringValue.class),
     @JsonSubTypes.Type(value = VulnerabilitiesValue.class),
     @JsonSubTypes.Type(value = UnknownValue.class),
+    @JsonSubTypes.Type(value = NotApplicableValue.class),
     @JsonSubTypes.Type(value = SecurityReviewsDoneValue.class),
     @JsonSubTypes.Type(value = EnumValue.class),
     @JsonSubTypes.Type(value = LgtmGradeValue.class),
@@ -48,6 +50,11 @@ public interface Value<T> {
    * Returns true if the value is unknown, false otherwise.
    */
   boolean isUnknown();
+
+  /**
+   * Returns true if the value is not applicable in the current context, false otherwise.
+   */
+  boolean isNotApplicable();
 
   /**
    * Returns the value.

@@ -20,7 +20,7 @@ public final class UnknownValue<T> implements Value<T> {
   /**
    * This factory method returns an unknown values of the specified feature.
    */
-  public static <T> Value<T> of(Feature<T> feature) {
+  public static <T> UnknownValue<T> of(Feature<T> feature) {
     return new UnknownValue<>(feature);
   }
 
@@ -30,6 +30,7 @@ public final class UnknownValue<T> implements Value<T> {
    * @param feature The feature.
    */
   public UnknownValue(@JsonProperty("feature") Feature feature) {
+    Objects.requireNonNull(feature, "Feature can't be null!");
     this.feature = feature;
   }
 
@@ -43,6 +44,12 @@ public final class UnknownValue<T> implements Value<T> {
   @JsonIgnore
   public final boolean isUnknown() {
     return true;
+  }
+
+  @Override
+  @JsonIgnore
+  public boolean isNotApplicable() {
+    return false;
   }
 
   @Override
