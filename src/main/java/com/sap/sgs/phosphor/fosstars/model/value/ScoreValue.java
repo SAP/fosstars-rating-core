@@ -121,6 +121,12 @@ public class ScoreValue implements Value<Double>, Confidence {
   }
 
   @Override
+  @JsonIgnore
+  public boolean isNotApplicable() {
+    return false;
+  }
+
+  @Override
   @JsonGetter("value")
   public Double get() {
     return value;

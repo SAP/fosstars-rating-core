@@ -40,6 +40,12 @@ public abstract class AbstractValue<T> implements Value<T> {
   }
 
   @Override
+  @JsonIgnore
+  public boolean isNotApplicable() {
+    return false;
+  }
+
+  @Override
   public Value<T> processIfKnown(Processor<T> processor) {
     Objects.requireNonNull(processor, "Processor can't be null!");
     if (!isUnknown()) {

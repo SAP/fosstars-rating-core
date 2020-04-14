@@ -56,6 +56,12 @@ public class ExpiringValue<T> implements Value<T> {
   }
 
   @Override
+  @JsonIgnore
+  public boolean isNotApplicable() {
+    return value.isNotApplicable();
+  }
+
+  @Override
   public T get() {
     return value.get();
   }
