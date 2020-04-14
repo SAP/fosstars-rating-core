@@ -12,6 +12,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.PROJECT_START_DATE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GITHUB_FOR_DEVELOPMENT;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_VERIFIED_SIGNED_COMMITS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
@@ -54,7 +55,9 @@ public class PrettyPrinterTest {
         FIRST_COMMIT_DATE.value(new Date()),
         USES_VERIFIED_SIGNED_COMMITS.value(false),
         USES_LGTM.value(true),
-        WORST_LGTM_GRADE.value(LgtmGrade.A));
+        WORST_LGTM_GRADE.value(LgtmGrade.A),
+        USES_GITHUB_FOR_DEVELOPMENT.value(false));
+    
     RatingValue ratingValue = rating.calculate(values);
 
     PrettyPrinter printer = new PrettyPrinter();
@@ -96,7 +99,8 @@ public class PrettyPrinterTest {
         FIRST_COMMIT_DATE.value(new Date()),
         USES_VERIFIED_SIGNED_COMMITS.value(false),
         USES_LGTM.value(true),
-        WORST_LGTM_GRADE.value(LgtmGrade.A));
+        WORST_LGTM_GRADE.value(LgtmGrade.A),
+        USES_GITHUB_FOR_DEVELOPMENT.value(false));
     RatingValue ratingValue = rating.calculate(values);
 
     PrettyPrinter printer = new PrettyPrinter();
