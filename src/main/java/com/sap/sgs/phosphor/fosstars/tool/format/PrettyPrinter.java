@@ -68,6 +68,8 @@ public class PrettyPrinter implements Formatter {
     FEATURE_TO_NAME.put(OssFeatures.SUPPORTED_BY_COMPANY, "Is it supported by a company?");
     FEATURE_TO_NAME.put(
         OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES, "Does it scan for vulnerable dependencies?");
+    FEATURE_TO_NAME.put(OssFeatures.USES_GITHUB_FOR_DEVELOPMENT,
+        "Does it use GitHub as the main development platform?");
   }
 
   @Override

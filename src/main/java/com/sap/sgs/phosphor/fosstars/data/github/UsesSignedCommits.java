@@ -122,9 +122,9 @@ public class UsesSignedCommits extends AbstractGitHubDataProvider {
    * @param project The project.
    * @return boolean True if the project uses verified signed commits. Otherwise, False
    * @throws IOException #{@link HttpClient} may throw an exception during REST call.
-   * @see: GitHub Issue: <a link="https://github.com/github-api/github-api/issues/737">Get commit or
-   *       tag signature verified flag</a> and the associated
-   *       <a link= "https://github.com/github-api/github-api/pull/738">Pull Request</a>.
+   * @see GitHub Issue: <a link="https://github.com/github-api/github-api/issues/737">Get commit or
+   *      tag signature verified flag</a> and the associated
+   *      <a link= "https://github.com/github-api/github-api/pull/738">Pull Request</a>.
    */  
   private boolean askGithub(GitHubProject project) throws IOException {
     // TODO: The data gathering process here from GitHub API will have to be merged with other
