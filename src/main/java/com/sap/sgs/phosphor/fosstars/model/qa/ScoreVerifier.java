@@ -1,7 +1,6 @@
 package com.sap.sgs.phosphor.fosstars.model.qa;
 
 import com.sap.sgs.phosphor.fosstars.model.Score;
-import com.sap.sgs.phosphor.fosstars.model.qa.TestVectorResult.Status;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,16 +35,7 @@ public class ScoreVerifier extends AbstractVerifier {
     int index = 0;
     for (TestVector vector : vectors) {
       ScoreValue scoreValue = score.calculate(vector.values());
-      double actualScore = scoreValue.get();
-
-      if (vector.expectedScore().contains(actualScore)) {
-        results.add(new TestVectorResult(vector, index++, actualScore, Status.PASSED, "Ok"));
-      } else {
-        String message = String.format(
-            "Expected a score in the interval %s but %s returned",
-            vector.expectedScore(), actualScore);
-        results.add(new TestVectorResult(vector, index++, actualScore, Status.FAILED, message));
-      }
+      results.add(testResultFor(vector, scoreValue, index++));
     }
 
     return results;

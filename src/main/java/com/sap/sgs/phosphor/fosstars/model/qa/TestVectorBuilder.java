@@ -16,10 +16,30 @@ import java.util.Set;
  */
 public class TestVectorBuilder {
 
+  /**
+   * A set of feature values.
+   */
   private final Set<Value> values = new HashSet<>();
+
+  /**
+   * An interval for an expected score.
+   */
   private Interval expectedScore;
-  private Label expectedLabel;
-  private String description = "unknown";
+
+  /**
+   * If it's set to true, then a not-applicable score value is expected.
+   */
+  private boolean expectNotApplicableScore = false;
+
+  /**
+   * An expected label.
+   */
+  private Label expectedLabel = TestVector.NO_LABEL;
+
+  /**
+   * An alias.
+   */
+  private String alias;
 
   /**
    * Creates a new test vector.
@@ -42,8 +62,17 @@ public class TestVectorBuilder {
    * @return This instance of TestVectorBuilder.
    */
   public TestVectorBuilder expectedScore(Interval interval) {
-    Objects.requireNonNull(interval, "Hey! You have to give me an internal but not null!");
     expectedScore = interval;
+    return this;
+  }
+
+  /**
+   * Makes a test vector to expect a not-applicable score value.
+   *
+   * @return This instance of TestVectorBuilder.
+   */
+  public TestVectorBuilder expectNotApplicableScore() {
+    expectNotApplicableScore = true;
     return this;
   }
 
@@ -54,7 +83,6 @@ public class TestVectorBuilder {
    * @return This instance of TestVectorBuilder.
    */
   public TestVectorBuilder expectedLabel(Label label) {
-    Objects.requireNonNull(label, "Hey! You have to give me a label but not null!");
     expectedLabel = label;
     return this;
   }
@@ -104,14 +132,14 @@ public class TestVectorBuilder {
   }
 
   /**
-   * Set a description.
+   * Set an alias.
    *
-   * @param text The description.
+   * @param alias The alias.
    * @return This instance of TestVectorBuilder.
    */
-  public TestVectorBuilder description(String text) {
-    Objects.requireNonNull(text, "Hey! You have to give me a description but not null!");
-    description = text;
+  public TestVectorBuilder alias(String alias) {
+    Objects.requireNonNull(alias, "Hey! You have to give me an alias but not null!");
+    this.alias = alias;
     return this;
   }
 
@@ -121,14 +149,18 @@ public class TestVectorBuilder {
    * @return An instance of TestVector.
    */
   public TestVector make() {
-    Objects.requireNonNull(expectedScore,
-        "Oh no! Looks like you forgot to tell me about an expected score!");
+    if (expectedScore == null && !expectNotApplicableScore) {
+      throw new IllegalArgumentException(
+          "Hey! Expected score can't be null unless a not-applicable value is expected!");
+    }
+
     if (values.isEmpty()) {
       throw new IllegalArgumentException(
           "Oh no! Looks like you forgot to give me features values!");
     }
-    return new TestVector(
-        Collections.unmodifiableSet(values), expectedScore, expectedLabel, description);
+
+    return new TestVector(Collections.unmodifiableSet(values), expectedScore, expectedLabel,
+        alias, expectNotApplicableScore);
   }
 
 }

@@ -1,6 +1,5 @@
 package com.sap.sgs.phosphor.fosstars.model.qa;
 
-import com.sap.sgs.phosphor.fosstars.model.Label;
 import com.sap.sgs.phosphor.fosstars.model.Rating;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVectorResult.Status;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
@@ -42,33 +41,54 @@ public class RatingVerifier extends AbstractVerifier {
     int index = 0;
     for (TestVector vector : vectors) {
       RatingValue ratingValue = rating.calculate(vector.values());
-      double score = ratingValue.score();
-      Label actualLabel = ratingValue.label();
-
-      if (!vector.containsExpected(score)) {
-        results.add(new TestVectorResult(
-            vector,
-            index,
-            score,
-            Status.FAILED,
-            String.format("Expected a score in the interval %s but %s returned",
-                vector.expectedScore(), score)));
-      } else if (vector.hasLabel() && vector.expectedLabel() != actualLabel) {
-        results.add(new TestVectorResult(
-            vector,
-            index,
-            score,
-            Status.FAILED,
-            String.format("Expected label '%s' but '%s' returned",
-                vector.expectedLabel(), actualLabel)));
-      } else {
-        results.add(new TestVectorResult(vector, index++, score, Status.PASSED, "Ok"));
-      }
-
-      index++;
+      results.add(testResultFor(vector, ratingValue, index++));
     }
 
     return results;
+  }
+
+  /**
+   * Verifies a rating value against a test vector.
+   *
+   * @param vector The test vector.
+   * @param ratingValue The rating value.
+   * @param index An index of the test vector.
+   * @return A result of the verification.
+   */
+  private static TestVectorResult testResultFor(
+      TestVector vector, RatingValue ratingValue, int index) {
+
+    TestVectorResult result = testResultFor(vector, ratingValue.scoreValue(), index);
+    if (result.status == Status.FAILED) {
+      return result;
+    }
+
+    if (unexpectedLabel(vector, ratingValue)) {
+      return new TestVectorResult(
+          vector,
+          index,
+          ratingValue.scoreValue(),
+          Status.FAILED,
+          String.format("Expected label '%s' but '%s' returned",
+              vector.expectedLabel(), ratingValue.label()));
+    }
+
+    return result;
+  }
+
+  /**
+   * Checks if a rating value has an unexpected label.
+   *
+   * @param vector A test vector that contains an expected label (if any).
+   * @param ratingValue The rating value to be verified.
+   * @return True if the rating value has an unexpected label, false otherwise.
+   */
+  private static boolean unexpectedLabel(TestVector vector, RatingValue ratingValue) {
+    if (!vector.hasLabel()) {
+      return false;
+    }
+
+    return !vector.expectedLabel().equals(ratingValue.label());
   }
 
 }

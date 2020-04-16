@@ -1,5 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.model.qa;
 
+import com.sap.sgs.phosphor.fosstars.model.qa.TestVectorResult.Status;
+import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -61,5 +63,47 @@ public abstract class AbstractVerifier implements Verifier {
         throw new VerificationFailedException();
       }
     }
+  }
+
+  /**
+   * Verify a score value against a test vector.
+   *
+   * @param vector The test vector.
+   * @param scoreValue The score value to be verified.
+   * @param index An index of the test vector.
+   * @return A result of the verification.
+   */
+  static TestVectorResult testResultFor(TestVector vector, ScoreValue scoreValue, int index) {
+
+    // first, check if the test vector expects a not-applicable score value
+    if (vector.expectsNotApplicableScore() && scoreValue.isNotApplicable()) {
+      return new TestVectorResult(vector, index, scoreValue,
+          Status.PASSED, "Ok, score is N/A as expected");
+    }
+    if (vector.expectsNotApplicableScore() && !scoreValue.isNotApplicable()) {
+      return new TestVectorResult(vector, index, scoreValue,
+          Status.FAILED, "Expected N/A score, but got a real score value");
+    }
+
+    // now we know that the test vector expects a real score value
+    // it means that the vector contains an expected interval
+
+    // then, check if the score value is N/A
+    if (scoreValue.isNotApplicable()) {
+      String message = String.format(
+          "Expected a score in interval %s got N/A", vector.expectedScore());
+      return new TestVectorResult(vector, index, scoreValue, Status.FAILED, message);
+    }
+
+    // finally, check if the score value belongs to the expected interval
+    if (!vector.expectedScore().contains(scoreValue.get())) {
+      String message = String.format(
+          "Expected a score in the interval %s but %s returned",
+          vector.expectedScore(), scoreValue.get());
+      return new TestVectorResult(vector, index, scoreValue, Status.FAILED, message);
+    }
+
+    return new TestVectorResult(vector, index, scoreValue,
+        Status.PASSED, "Ok, got an expected score value");
   }
 }

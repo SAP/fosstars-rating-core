@@ -32,6 +32,10 @@ import org.junit.Test;
 
 public class TestVectorTest {
 
+  private static final DoubleInterval NO_EXPECTED_SCORE = null;
+
+  private static final boolean NOT_APPLICABLE = true;
+
   @Test
   public void smoke() {
     Set<Value> values = new HashSet<>();
@@ -39,6 +43,7 @@ public class TestVectorTest {
     Interval expectedScore = DoubleInterval.init().from(4.0).to(6.4).closed().make();
     TestVector vector = new TestVector(values, expectedScore, SecurityLabelExample.OKAY, "test");
 
+    assertFalse(vector.expectsNotApplicableScore());
     assertFalse(vector.values().isEmpty());
     assertTrue(vector.values().contains(
         new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1)));
@@ -64,11 +69,18 @@ public class TestVectorTest {
     new TestVector(values, expectedScore, SecurityLabelExample.OKAY, "test");
   }
 
-  @Test(expected = NullPointerException.class)
-  public void noScore() {
+  @Test(expected = IllegalArgumentException.class)
+  public void noExpectedScore() {
     Set<Value> values = new HashSet<>();
     values.add(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1));
-    new TestVector(values, null, SecurityLabelExample.OKAY, "test");
+    new TestVector(values, NO_EXPECTED_SCORE, SecurityLabelExample.OKAY, "test");
+  }
+
+  @Test
+  public void notApplicableScore() {
+    Set<Value> values = new HashSet<>();
+    values.add(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1));
+    new TestVector(values, NO_EXPECTED_SCORE, SecurityLabelExample.OKAY, "test", NOT_APPLICABLE);
   }
 
   @Test
@@ -90,22 +102,26 @@ public class TestVectorTest {
             .set(allUnknown(ExampleFeatures.SECURITY_REVIEW_DONE_EXAMPLE))
             .expectedScore(expectedScoreOne)
             .expectedLabel(SecurityLabelExample.OKAY)
+            .alias("test")
             .make(),
         newTestVector()
             .set(allUnknown(ExampleFeatures.SECURITY_REVIEW_DONE_EXAMPLE))
             .expectedScore(expectedScoreOne)
             .expectedLabel(SecurityLabelExample.OKAY)
+            .alias("test")
             .make());
     assertEquals(
         newTestVector()
             .set(new BooleanValue(ExampleFeatures.SECURITY_REVIEW_DONE_EXAMPLE, true))
             .expectedScore(expectedScoreOne)
             .expectedLabel(SecurityLabelExample.OKAY)
+            .alias("test")
             .make(),
         newTestVector()
             .set(new BooleanValue(ExampleFeatures.SECURITY_REVIEW_DONE_EXAMPLE, true))
             .expectedScore(expectedScoreOne)
             .expectedLabel(SecurityLabelExample.OKAY)
+            .alias("test")
             .make());
 
     assertNotEquals(
@@ -113,33 +129,39 @@ public class TestVectorTest {
             .set(new BooleanValue(ExampleFeatures.SECURITY_REVIEW_DONE_EXAMPLE, true))
             .expectedScore(expectedScoreOne)
             .expectedLabel(SecurityLabelExample.OKAY)
+            .alias("test")
             .make(),
         newTestVector()
             .set(new BooleanValue(ExampleFeatures.SECURITY_REVIEW_DONE_EXAMPLE, false))
             .expectedScore(expectedScoreOne)
             .expectedLabel(SecurityLabelExample.OKAY)
+            .alias("test")
             .make());
     assertNotEquals(
         newTestVector()
             .set(new BooleanValue(ExampleFeatures.SECURITY_REVIEW_DONE_EXAMPLE, true))
             .expectedScore(expectedScoreOne)
             .expectedLabel(SecurityLabelExample.OKAY)
+            .alias("test")
             .make(),
         newTestVector()
             .set(new BooleanValue(ExampleFeatures.SECURITY_REVIEW_DONE_EXAMPLE, true))
             .expectedScore(expectedScoreTwo)
             .expectedLabel(SecurityLabelExample.OKAY)
+            .alias("test")
             .make());
     assertNotEquals(
         newTestVector()
             .set(new BooleanValue(ExampleFeatures.SECURITY_REVIEW_DONE_EXAMPLE, true))
             .expectedScore(expectedScoreOne)
             .expectedLabel(SecurityLabelExample.OKAY)
+            .alias("test")
             .make(),
         newTestVector()
             .set(new BooleanValue(ExampleFeatures.SECURITY_REVIEW_DONE_EXAMPLE, true))
             .expectedScore(expectedScoreOne)
             .expectedLabel(SecurityLabelExample.AWFUL)
+            .alias("test")
             .make());
   }
 
@@ -175,6 +197,37 @@ public class TestVectorTest {
     YAMLFactory factory = new YAMLFactory();
     factory.disable(YAMLGenerator.Feature.USE_NATIVE_TYPE_ID);
     ObjectMapper mapper = new ObjectMapper(factory);
+    byte[] bytes = mapper.writeValueAsBytes(vector);
+    assertNotNull(bytes);
+    assertTrue(bytes.length > 0);
+    TestVector clone = mapper.readValue(bytes, TestVector.class);
+    assertEquals(vector, clone);
+    assertEquals(vector.hashCode(), clone.hashCode());
+  }
+
+  @Test
+  public void jsonSerializeAndDeserialize() throws IOException {
+    Set<Value> values = new HashSet<>();
+    values.add(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1));
+    Interval expectedScore = DoubleInterval.init().from(4.0).to(6.4).closed().make();
+    TestVector vector = new TestVector(values, expectedScore, SecurityLabelExample.OKAY, "test");
+
+    ObjectMapper mapper = new ObjectMapper();
+    byte[] bytes = mapper.writeValueAsBytes(vector);
+    assertNotNull(bytes);
+    assertTrue(bytes.length > 0);
+    TestVector clone = mapper.readValue(bytes, TestVector.class);
+    assertEquals(vector, clone);
+    assertEquals(vector.hashCode(), clone.hashCode());
+  }
+
+  @Test
+  public void jsonSerializeAndDeserializeWithNotApplicableScoreValue() throws IOException {
+    Set<Value> values = new HashSet<>();
+    values.add(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1));
+    TestVector vector = new TestVector(values, null, SecurityLabelExample.OKAY, "test", true);
+
+    ObjectMapper mapper = new ObjectMapper();
     byte[] bytes = mapper.writeValueAsBytes(vector);
     assertNotNull(bytes);
     assertTrue(bytes.length > 0);

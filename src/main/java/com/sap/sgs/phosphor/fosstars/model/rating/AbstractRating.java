@@ -66,6 +66,9 @@ public abstract class AbstractRating implements Rating {
   }
 
   private RatingValue calculate(ScoreValue scoreValue) {
+    if (scoreValue.isNotApplicable()) {
+      return new RatingValue(scoreValue, Label.NOT_APPLICABLE);
+    }
     return new RatingValue(scoreValue, label(scoreValue.get()));
   }
 

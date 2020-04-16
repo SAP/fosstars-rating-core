@@ -2,6 +2,7 @@ package com.sap.sgs.phosphor.fosstars.model.qa;
 
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.allUnknown;
 import static com.sap.sgs.phosphor.fosstars.model.qa.TestVectorBuilder.newTestVector;
+import static com.sap.sgs.phosphor.fosstars.model.score.example.ExampleScores.PROJECT_ACTIVITY_SCORE_EXAMPLE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
@@ -11,6 +12,7 @@ import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.sgs.phosphor.fosstars.model.math.DoubleInterval;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVectorResult.Status;
+import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import org.junit.Test;
 
 public class TestVectorResultTest {
@@ -28,10 +30,13 @@ public class TestVectorResultTest {
         .set(allUnknown(OssFeatures.HAS_SECURITY_TEAM))
         .expectedScore(ALMOST_MIN)
         .expectedLabel(TestLabel.BAD)
+        .alias("bad")
         .make();
-    TestVectorResult testVectorResult
-        = new TestVectorResult(vector, 0, 5.0, Status.PASSED, "Alles kaputt!");
+    TestVectorResult testVectorResult = new TestVectorResult(
+        vector, 0, new ScoreValue(PROJECT_ACTIVITY_SCORE_EXAMPLE).set(0.5),
+        Status.FAILED, "Alles kaputt!");
     assertEquals(0, testVectorResult.index);
+    assertEquals(Status.FAILED, testVectorResult.status);
     assertEquals("Alles kaputt!", testVectorResult.message);
     assertEquals(ALMOST_MIN, testVectorResult.vector.expectedScore());
     assertEquals(TestLabel.BAD, testVectorResult.vector.expectedLabel());
@@ -44,18 +49,21 @@ public class TestVectorResultTest {
             .set(allUnknown(OssFeatures.HAS_SECURITY_TEAM))
             .expectedScore(ALMOST_MIN)
             .expectedLabel(TestLabel.BAD)
+            .alias("1")
             .make();
     TestVector sameTestVector =
         newTestVector()
             .set(allUnknown(OssFeatures.HAS_SECURITY_TEAM))
             .expectedScore(ALMOST_MIN)
             .expectedLabel(TestLabel.BAD)
+            .alias("1")
             .make();
     TestVector differentTestVector =
         newTestVector()
             .set(allUnknown(OssFeatures.HAS_SECURITY_TEAM))
             .expectedScore(ALMOST_MIN)
             .expectedLabel(TestLabel.GOOD)
+            .alias("2")
             .make();
 
     assertEquals(testVector, sameTestVector);
@@ -66,11 +74,19 @@ public class TestVectorResultTest {
     assertNotEquals(sameTestVector.hashCode(), differentTestVector.hashCode());
 
     assertEquals(
-        new TestVectorResult(testVector, 0, 4.0, Status.PASSED,"Alles kaputt!"),
-        new TestVectorResult(testVector, 0, 4.0, Status.PASSED,"Alles kaputt!"));
+        new TestVectorResult(testVector, 0,
+            new ScoreValue(PROJECT_ACTIVITY_SCORE_EXAMPLE).set(4.0),
+            Status.PASSED,"Alles gut!"),
+        new TestVectorResult(testVector, 0,
+            new ScoreValue(PROJECT_ACTIVITY_SCORE_EXAMPLE).set(4.0),
+            Status.PASSED,"Alles gut!"));
     assertEquals(
-        new TestVectorResult(testVector, 0, 4.0, Status.PASSED,"Alles kaputt!"),
-        new TestVectorResult(sameTestVector, 0, 4.0, Status.PASSED,"Alles kaputt!"));
+        new TestVectorResult(testVector, 0,
+            new ScoreValue(PROJECT_ACTIVITY_SCORE_EXAMPLE).set(4.0),
+            Status.PASSED,"Alles gut!"),
+        new TestVectorResult(sameTestVector, 0,
+            new ScoreValue(PROJECT_ACTIVITY_SCORE_EXAMPLE).set(4.0),
+            Status.PASSED,"Alles gut!"));
   }
 
 }

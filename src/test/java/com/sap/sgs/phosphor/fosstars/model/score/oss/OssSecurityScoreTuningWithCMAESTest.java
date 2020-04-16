@@ -65,6 +65,7 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(UnknownValue.of(USES_LGTM))
           .set(UnknownValue.of(WORST_LGTM_GRADE))
           .expectedScore(DoubleInterval.closed(Score.MIN, 0.1))
+          .alias("one")
           .make(),
 
       // very bad project
@@ -85,6 +86,7 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(USES_LGTM.value(false))
           .set(WORST_LGTM_GRADE.unknown())
           .expectedScore(DoubleInterval.closed(1.0, 4.0))
+          .alias("two")
           .make(),
 
       // very good project
@@ -105,6 +107,7 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(USES_LGTM.value(true))
           .set(WORST_LGTM_GRADE.value(LgtmGrade.A_PLUS))
           .expectedScore(DoubleInterval.init().from(9.0).to(Score.MAX).make())
+          .alias("three")
           .make()
   ));
 

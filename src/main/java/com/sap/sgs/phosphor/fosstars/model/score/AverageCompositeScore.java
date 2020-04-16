@@ -84,15 +84,24 @@ public class AverageCompositeScore extends AbstractScore {
 
     double subScoreSum = 0.0;
     double confidenceSum = 0.0;
+    int numberOfSubScores = 0;
     for (Score subScore : subScores) {
       ScoreValue subScoreValue = calculateIfNecessary(subScore, valueSet);
+      if (subScoreValue.isNotApplicable()) {
+        continue;
+      }
+      numberOfSubScores++;
       scoreValue.usedValues(subScoreValue);
       subScoreSum += subScoreValue.get();
       confidenceSum += subScoreValue.confidence();
     }
 
-    scoreValue.set(subScoreSum / subScores.size());
-    scoreValue.confidence(confidenceSum / subScores.size());
+    if (numberOfSubScores == 0) {
+      return scoreValue.makeNotApplicable();
+    }
+
+    scoreValue.set(subScoreSum / numberOfSubScores);
+    scoreValue.confidence(confidenceSum / numberOfSubScores);
 
     return scoreValue;
   }

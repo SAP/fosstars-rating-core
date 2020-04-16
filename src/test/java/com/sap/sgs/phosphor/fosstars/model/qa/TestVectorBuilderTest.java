@@ -18,6 +18,7 @@ public class TestVectorBuilderTest {
         .set(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 10))
         .expectedLabel(SecurityLabelExample.AWESOME)
         .expectedScore(DoubleInterval.init().from(1).to(4).open().make())
+        .alias("test")
         .make();
 
     assertNotNull(vector);
