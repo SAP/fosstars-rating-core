@@ -2,7 +2,6 @@ package com.sap.sgs.phosphor.fosstars.model.value;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Score;
@@ -50,6 +49,16 @@ public class ScoreValue implements Value<Double>, Confidence {
   private final List<String> explanation;
 
   /**
+   * A flag that tells if the score value is unknown.
+   */
+  private boolean isUnknown;
+
+  /**
+   * A flag that tells if the score value is not applicable.
+   */
+  private boolean isNotApplicable;
+
+  /**
    * Initializes a score value for a specified score.
    *
    * @param score The score.
@@ -73,7 +82,7 @@ public class ScoreValue implements Value<Double>, Confidence {
       double confidence,
       List<Value> usedValues) {
 
-    this(score, value, weight, confidence, usedValues, Collections.emptyList());
+    this(score, value, weight, confidence, usedValues, Collections.emptyList(), false, false);
   }
 
   /**
@@ -92,7 +101,9 @@ public class ScoreValue implements Value<Double>, Confidence {
       @JsonProperty("weight") double weight,
       @JsonProperty("confidence") double confidence,
       @JsonProperty("usedValues") List<Value> usedValues,
-      @JsonProperty("explanation") List<String> explanation) {
+      @JsonProperty("explanation") List<String> explanation,
+      @JsonProperty(value = "isUnknown", defaultValue = "false") boolean isUnknown,
+      @JsonProperty(value = "isNotApplicable", defaultValue = "false") boolean isNotApplicable) {
 
     this.score = Objects.requireNonNull(score, "Score can't be null!");
     this.value = Score.check(value);
@@ -102,6 +113,8 @@ public class ScoreValue implements Value<Double>, Confidence {
         Objects.requireNonNull(usedValues, "Values can't be null!"));
     this.explanation = new ArrayList<>(
         Objects.requireNonNull(explanation, "Explanation can't be null!"));
+    this.isUnknown = isUnknown;
+    this.isNotApplicable = isNotApplicable;
   }
 
   @JsonGetter("score")
@@ -115,15 +128,15 @@ public class ScoreValue implements Value<Double>, Confidence {
   }
 
   @Override
-  @JsonIgnore
+  @JsonGetter("isUnknown")
   public boolean isUnknown() {
-    return false;
+    return isUnknown;
   }
 
   @Override
-  @JsonIgnore
+  @JsonGetter("isNotApplicable")
   public boolean isNotApplicable() {
-    return false;
+    return isNotApplicable;
   }
 
   @Override
@@ -197,7 +210,7 @@ public class ScoreValue implements Value<Double>, Confidence {
   }
 
   @Override
-  public Value<Double> processIfKnown(Processor<Double> processor) {
+  public ScoreValue processIfKnown(Processor<Double> processor) {
     Objects.requireNonNull(processor, "Processor can't be null!");
     if (!isUnknown()) {
       processor.process(get());
@@ -206,7 +219,7 @@ public class ScoreValue implements Value<Double>, Confidence {
   }
 
   @Override
-  public Value<Double> processIfUnknown(Runnable processor) {
+  public ScoreValue processIfUnknown(Runnable processor) {
     Objects.requireNonNull(processor, "Processor can't be null!");
     if (isUnknown()) {
       processor.run();
@@ -285,6 +298,16 @@ public class ScoreValue implements Value<Double>, Confidence {
     return confidence;
   }
 
+  /**
+   * Mark the value as not-applicable.
+   *
+   * @return The same score value.
+   */
+  public ScoreValue makeNotApplicable() {
+    isNotApplicable = true;
+    return this;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -294,7 +317,9 @@ public class ScoreValue implements Value<Double>, Confidence {
       return false;
     }
     ScoreValue that = (ScoreValue) o;
-    return Double.compare(that.value, value) == 0
+    return isUnknown == that.isUnknown
+        && isNotApplicable == that.isNotApplicable
+        && Double.compare(that.value, value) == 0
         && Double.compare(that.confidence, confidence) == 0
         && Double.compare(that.weight, weight) == 0
         && Objects.equals(score, that.score)
@@ -304,6 +329,7 @@ public class ScoreValue implements Value<Double>, Confidence {
 
   @Override
   public int hashCode() {
-    return Objects.hash(score, value, confidence, weight, usedValues, explanation);
+    return Objects.hash(score, value, confidence, weight,
+        usedValues, explanation, isUnknown, isNotApplicable);
   }
 }

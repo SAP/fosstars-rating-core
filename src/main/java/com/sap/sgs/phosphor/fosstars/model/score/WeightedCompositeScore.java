@@ -27,6 +27,9 @@ import java.util.Set;
  */
 public class WeightedCompositeScore extends AbstractScore implements Tunable {
 
+  /**
+   * The default weight for sub-scores.
+   */
   private static final double DEFAULT_WEIGHT = 1.0;
 
   /**
@@ -119,14 +122,23 @@ public class WeightedCompositeScore extends AbstractScore implements Tunable {
     double scoreSum = 0.0;
     double confidenceSum = 0.0;
     ScoreValue scoreValue = new ScoreValue(this);
+    boolean allNotApplicable = true;
     for (WeightedScore weightedScore : weightedScores) {
       double weight = weightedScore.weight.value();
       ScoreValue subScoreValue = calculateIfNecessary(weightedScore.score, valueSet);
+      if (subScoreValue.isNotApplicable()) {
+        continue;
+      }
+      allNotApplicable = false;
       subScoreValue.weight(weightedScore.weight.value());
       scoreValue.usedValues(subScoreValue);
       scoreSum += weight * subScoreValue.get();
       confidenceSum += weight * subScoreValue.confidence();
       weightSum += weight;
+    }
+
+    if (allNotApplicable) {
+      return scoreValue.makeNotApplicable();
     }
 
     if (weightSum == 0) {

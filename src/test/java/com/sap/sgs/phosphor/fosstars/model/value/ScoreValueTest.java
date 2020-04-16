@@ -123,7 +123,7 @@ public class ScoreValueTest {
     notes.add("second note");
 
     ScoreValue value = new ScoreValue(PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.0, 1.0, 10.0,
-        Collections.emptyList(), notes);
+        Collections.emptyList(), notes, false, false);
     assertNotNull(value.explanation());
     assertEquals(2, value.explanation().size());
     assertTrue(value.explanation().containsAll(notes));

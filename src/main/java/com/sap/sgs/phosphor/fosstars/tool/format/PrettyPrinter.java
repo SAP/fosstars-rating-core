@@ -115,7 +115,7 @@ public class PrettyPrinter implements Formatter {
 
     sb.append(String.format("%sValue:........%s out of %2.2f%n",
         indent,
-        append(String.format("%.2f", scoreValue.get()), ' ', 4),
+        append(String.format("%s", tellMeActualValueOf(scoreValue)), ' ', 4),
         Score.MAX));
     sb.append(String.format("%sConfidence:...%s out of %2.2f%n",
         indent,
@@ -176,6 +176,23 @@ public class PrettyPrinter implements Formatter {
     }
 
     return sb.toString();
+  }
+
+  /**
+   * Prints an actual value of a score value. The method takes care about
+   * unknown and not-applicable score values.
+   *
+   * @param scoreValue The score value.
+   * @return A string that represents the score value.
+   */
+  public static String tellMeActualValueOf(ScoreValue scoreValue) {
+    if (scoreValue.isNotApplicable()) {
+      return "N/A";
+    }
+    if (scoreValue.isUnknown()) {
+      return "unknown";
+    }
+    return String.format("%2.2f", scoreValue.get());
   }
 
   /**

@@ -205,7 +205,8 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
     if (!something.isPresent()) {
       return UNKNOWN;
     }
-    return String.format("%2.2f", something.get().scoreValue().get());
+    ScoreValue scoreValue = something.get().scoreValue();
+    return PrettyPrinter.tellMeActualValueOf(scoreValue);
   }
 
   /**

@@ -1,6 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.model.score;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -112,7 +113,78 @@ public class AverageCompositeScoreTest {
     assertEquals(expectedConfidence, scoreValue.confidence(), PRECISION);
   }
 
-  private static class FirstScore extends FeatureBasedScore {
+  @Test
+  public void testWithOneNotApplicable() {
+    TestAverageCompositeScore score = new TestAverageCompositeScore(
+        new FirstScore().returnsNotApplicable(),
+        new SecondScore()
+    );
+
+    ScoreValue scoreValue = score.calculate(
+        FirstScore.FEATURE.value(5.0),
+        SecondScore.FEATURE.value(8.0));
+
+    assertFalse(scoreValue.isUnknown());
+    assertFalse(scoreValue.isNotApplicable());
+    assertEquals(Confidence.MAX, scoreValue.confidence(), PRECISION);
+    assertEquals(1, scoreValue.usedValues().size());
+    assertTrue(scoreValue.usedValues().get(0) instanceof ScoreValue);
+    ScoreValue subScoreValue = (ScoreValue) scoreValue.usedValues().get(0);
+    assertEquals(SecondScore.VALUE, subScoreValue.get(), PRECISION);
+    assertEquals(Confidence.MAX, subScoreValue.confidence(), PRECISION);
+  }
+
+  @Test
+  public void testWithAllNotApplicable() {
+    TestAverageCompositeScore score = new TestAverageCompositeScore(
+        new FirstScore().returnsNotApplicable(),
+        new SecondScore().returnsNotApplicable()
+    );
+
+    ScoreValue scoreValue = score.calculate(
+        FirstScore.FEATURE.value(5.0),
+        SecondScore.FEATURE.value(8.0));
+
+    assertFalse(scoreValue.isUnknown());
+    assertTrue(scoreValue.isNotApplicable());
+  }
+
+  private abstract static class AbstractTestScore extends FeatureBasedScore {
+
+    private boolean returnsNotApplicable = false;
+
+    AbstractTestScore(String name, Feature... features) {
+      super(name, features);
+    }
+
+    AbstractTestScore returnsNotApplicable() {
+      returnsNotApplicable = true;
+      return this;
+    }
+
+    @Override
+    public ScoreValue calculate(Value... values) {
+      ScoreValue value = calculateImpl(values);
+      if (returnsNotApplicable) {
+        return value.makeNotApplicable();
+      }
+      return value;
+    }
+
+    abstract ScoreValue calculateImpl(Value... values);
+
+    @Override
+    public int hashCode() {
+      return getClass().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      return obj.getClass() == getClass();
+    }
+  }
+
+  private static class FirstScore extends AbstractTestScore {
 
     private static final Feature<Double> FEATURE = new DoubleFeature("first feature");
 
@@ -123,22 +195,12 @@ public class AverageCompositeScoreTest {
     }
 
     @Override
-    public ScoreValue calculate(Value... values) {
+    public ScoreValue calculateImpl(Value... values) {
       return scoreValue(VALUE, values);
-    }
-
-    @Override
-    public int hashCode() {
-      return getClass().hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-      return obj.getClass() == getClass();
     }
   }
 
-  private static class SecondScore extends FeatureBasedScore {
+  private static class SecondScore extends AbstractTestScore {
 
     private static final Feature<Double> FEATURE = new DoubleFeature("second feature");
 
@@ -149,24 +211,18 @@ public class AverageCompositeScoreTest {
     }
 
     @Override
-    public ScoreValue calculate(Value... values) {
+    public ScoreValue calculateImpl(Value... values) {
       return scoreValue(VALUE, values);
-    }
-
-    @Override
-    public int hashCode() {
-      return getClass().hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-      return obj.getClass() == getClass();
     }
   }
 
   private static class TestAverageCompositeScore extends AverageCompositeScore {
 
     private static final String NAME = "test";
+
+    TestAverageCompositeScore(Score... scores) {
+      super(NAME, scores);
+    }
 
     TestAverageCompositeScore() {
       super(NAME, new FirstScore(), new SecondScore());

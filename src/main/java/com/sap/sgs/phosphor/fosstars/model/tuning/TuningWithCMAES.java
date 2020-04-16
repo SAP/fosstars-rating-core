@@ -261,8 +261,8 @@ public class TuningWithCMAES extends AbstractTuning {
       for (TestVectorResult result : results) {
         if (result.failed()) {
           value += PENALTY;
-        } else {
-          value += Math.abs(result.vector.expectedScore().mean() - result.scoreValue);
+        } else if (!result.scoreValue.isNotApplicable()) {
+          value += Math.abs(result.vector.expectedScore().mean() - result.scoreValue.get());
         }
       }
 

@@ -16,6 +16,7 @@ import com.sap.sgs.phosphor.fosstars.model.rating.example.SecurityRatingExampleV
 import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.sgs.phosphor.fosstars.model.value.IntegerValue;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.junit.Test;
 
@@ -29,6 +30,7 @@ public class RatingVerifierTest {
       .set(new BooleanValue(ExampleFeatures.STATIC_CODE_ANALYSIS_DONE_EXAMPLE, false))
       .expectedScore(DoubleInterval.init().from(9).to(10).make())
       .expectedLabel(SecurityLabelExample.AWESOME)
+      .alias("test")
       .make();
 
   private static final List<TestVector> TEST_VECTORS = new ArrayList<>();
@@ -52,15 +54,41 @@ public class RatingVerifierTest {
       if (result.failed()) {
         assertEquals(FAILING_TEST_VECTOR, result.vector);
         assertEquals(Status.FAILED, result.status);
-        assertFalse(result.vector.expectedScore().contains(result.scoreValue));
+        assertFalse(result.vector.expectedScore().contains(result.scoreValue.get()));
       } else {
         assertNotEquals(FAILING_TEST_VECTOR, result.vector);
         assertEquals(Status.PASSED, result.status);
-        assertTrue(result.vector.expectedScore().contains(result.scoreValue));
+        assertTrue(result.vector.expectedScore().contains(result.scoreValue.get()));
       }
       assertNotNull(result.message);
       assertFalse(result.message.isEmpty());
     }
+  }
+
+  @Test
+  public void testWithNotApplicableScoreValue() {
+    TestVector vector = TestVectorBuilder.newTestVector()
+        .alias("test")
+        .set(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1))
+        .set(new IntegerValue(ExampleFeatures.NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, 1))
+        .set(new BooleanValue(ExampleFeatures.SECURITY_REVIEW_DONE_EXAMPLE, false))
+        .set(new BooleanValue(ExampleFeatures.STATIC_CODE_ANALYSIS_DONE_EXAMPLE, false))
+        .expectNotApplicableScore()
+        .make();
+
+    assertTrue(vector.expectsNotApplicableScore());
+
+    RatingVerifier verifier = new RatingVerifier(
+        RatingRepository.INSTANCE.rating(SecurityRatingExample.class),
+        Collections.singletonList(vector));
+
+    List<TestVectorResult> results = verifier.run();
+
+    assertEquals(1, results.size());
+    TestVectorResult result = results.get(0);
+    assertEquals(vector, result.vector);
+    assertEquals(Status.FAILED, result.status);
+    assertFalse(result.scoreValue.isNotApplicable());
   }
 
   @Test(expected = VerificationFailedException.class)

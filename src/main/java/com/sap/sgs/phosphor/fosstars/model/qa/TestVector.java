@@ -1,5 +1,6 @@
 package com.sap.sgs.phosphor.fosstars.model.qa;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,7 +22,10 @@ import java.util.Set;
  */
 public class TestVector {
 
-  private static final Label NO_LABEL = null;
+  /**
+   * Shows that no expected label is specified in a test vector.
+   */
+  static final Label NO_LABEL = null;
 
   /**
    * An ObjectMapper for serialization and deserialization.
@@ -39,12 +43,17 @@ public class TestVector {
   private final Interval expectedScore;
 
   /**
+   * If it's set to true, then a not-applicable score value is expected.
+   */
+  private final boolean expectedNotApplicableScore;
+
+  /**
    * An expected label.
    */
   private final Label expectedLabel;
 
   /**
-   * A alias of the test vector.
+   * An alias of the test vector.
    */
   private final String alias;
 
@@ -56,24 +65,47 @@ public class TestVector {
    * @param expectedLabel An expected label (can be null).
    * @param alias A alias of the test vector.
    */
+  public TestVector(Set<Value> values, Interval expectedScore, Label expectedLabel, String alias) {
+    this(values, expectedScore, expectedLabel, alias, false);
+  }
+
+  /**
+   * Initializes a new {@link TestVector}.
+   *
+   * @param values A set of feature values.
+   * @param expectedScore An interval for an expected score.
+   * @param expectedLabel An expected label (can be null).
+   * @param alias A alias of the test vector.
+   * @param expectedNotApplicableScore
+   *        If it's set to true, then a not-applicable score value is expected.
+   */
+  @JsonCreator
   public TestVector(
       @JsonProperty("values") Set<Value> values,
       @JsonProperty("expectedScore") Interval expectedScore,
       @JsonProperty("expectedLabel") Label expectedLabel,
-      @JsonProperty("alias") String alias) {
+      @JsonProperty("alias") String alias,
+      @JsonProperty(
+          value = "expectedNotApplicableScore",
+          defaultValue = "false") boolean expectedNotApplicableScore) {
 
     Objects.requireNonNull(values, "Hey! Values can't be null!");
-    Objects.requireNonNull(expectedScore, "Hey! Expected score can't be null!");
     Objects.requireNonNull(alias, "Hey! alias can't be null!");
 
     if (values.isEmpty()) {
       throw new IllegalArgumentException("Hey! Values can't be empty");
     }
 
+    if (expectedScore == null && !expectedNotApplicableScore) {
+      throw new IllegalArgumentException(
+          "Hey! Expected score can't be null unless a not-applicable value is expected!");
+    }
+
     this.values = values;
     this.expectedScore = expectedScore;
     this.expectedLabel = expectedLabel;
     this.alias = alias;
+    this.expectedNotApplicableScore = expectedNotApplicableScore;
   }
 
   /**
@@ -93,13 +125,11 @@ public class TestVector {
   }
 
   /**
-   * Checks if a score belongs to the expected interval.
-   *
-   * @param score The score to be checked.
-   * @return True if the score belongs to the expected interval, false otherwise.
+   * Returns true if a not-applicable score value is expected, false otherwise.
    */
-  public boolean containsExpected(double score) {
-    return expectedScore.contains(score);
+  @JsonGetter("expectedNotApplicableScore")
+  boolean expectsNotApplicableScore() {
+    return expectedNotApplicableScore;
   }
 
   /**

@@ -286,7 +286,78 @@ public class WeightedCompositeScoreTest {
     assertTrue(new WeightedScoreImpl().description().isEmpty());
   }
 
-  private static class FirstScore extends FeatureBasedScore {
+  @Test
+  public void testWithOneNotApplicable() {
+    WeightedScoreImpl score = new WeightedScoreImpl(
+        new FirstScore().returnsNotApplicable(),
+        new SecondScore()
+    );
+
+    ScoreValue scoreValue = score.calculate(
+        FirstScore.FEATURE.value(5.0),
+        SecondScore.FEATURE.value(8.0));
+
+    assertFalse(scoreValue.isUnknown());
+    assertFalse(scoreValue.isNotApplicable());
+    assertEquals(Confidence.MAX, scoreValue.confidence(), PRECISION);
+    assertEquals(1, scoreValue.usedValues().size());
+    assertTrue(scoreValue.usedValues().get(0) instanceof ScoreValue);
+    ScoreValue subScoreValue = (ScoreValue) scoreValue.usedValues().get(0);
+    assertEquals(SecondScore.VALUE, subScoreValue.get(), PRECISION);
+    assertEquals(Confidence.MAX, subScoreValue.confidence(), PRECISION);
+  }
+
+  @Test
+  public void testWithAllNotApplicable() {
+    WeightedScoreImpl score = new WeightedScoreImpl(
+        new FirstScore().returnsNotApplicable(),
+        new SecondScore().returnsNotApplicable()
+    );
+
+    ScoreValue scoreValue = score.calculate(
+        FirstScore.FEATURE.value(5.0),
+        SecondScore.FEATURE.value(8.0));
+
+    assertFalse(scoreValue.isUnknown());
+    assertTrue(scoreValue.isNotApplicable());
+  }
+
+  private abstract static class AbstractTestScore extends FeatureBasedScore {
+
+    private boolean returnsNotApplicable = false;
+
+    AbstractTestScore(String name, Feature... features) {
+      super(name, features);
+    }
+
+    AbstractTestScore returnsNotApplicable() {
+      returnsNotApplicable = true;
+      return this;
+    }
+
+    @Override
+    public ScoreValue calculate(Value... values) {
+      ScoreValue value = calculateImpl(values);
+      if (returnsNotApplicable) {
+        return value.makeNotApplicable();
+      }
+      return value;
+    }
+
+    abstract ScoreValue calculateImpl(Value... values);
+
+    @Override
+    public int hashCode() {
+      return getClass().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      return obj.getClass() == getClass();
+    }
+  }
+
+  private static class FirstScore extends AbstractTestScore {
 
     private static final Feature<Double> FEATURE = new DoubleFeature("first feature");
 
@@ -297,22 +368,12 @@ public class WeightedCompositeScoreTest {
     }
 
     @Override
-    public ScoreValue calculate(Value... values) {
+    public ScoreValue calculateImpl(Value... values) {
       return scoreValue(VALUE, values);
-    }
-
-    @Override
-    public int hashCode() {
-      return getClass().hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-      return obj.getClass() == getClass();
     }
   }
 
-  private static class SecondScore extends FeatureBasedScore {
+  private static class SecondScore extends AbstractTestScore {
 
     private static final Feature<Double> FEATURE = new DoubleFeature("second feature");
 
@@ -323,18 +384,8 @@ public class WeightedCompositeScoreTest {
     }
 
     @Override
-    public ScoreValue calculate(Value... values) {
+    public ScoreValue calculateImpl(Value... values) {
       return scoreValue(VALUE, values);
-    }
-
-    @Override
-    public int hashCode() {
-      return getClass().hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-      return obj.getClass() == getClass();
     }
   }
 
@@ -344,6 +395,10 @@ public class WeightedCompositeScoreTest {
 
     private static final double FIRST_WEIGHT = 0.8;
     private static final double SECOND_WEIGHT = 0.3;
+
+    WeightedScoreImpl(Score... scores) {
+      super(NAME, scores);
+    }
 
     WeightedScoreImpl() {
       super(NAME, init());
