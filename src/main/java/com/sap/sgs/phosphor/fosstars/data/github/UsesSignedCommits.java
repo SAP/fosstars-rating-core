@@ -2,26 +2,20 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_VERIFIED_SIGNED_COMMITS;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.io.UncheckedIOException;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Date;
-import java.util.Locale;
+import java.util.List;
 import java.util.Optional;
-import org.apache.http.Header;
-import org.apache.http.HttpHeaders;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.entity.ContentType;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
+import java.util.stream.Collectors;
+import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GitHub;
 
 /**
@@ -32,14 +26,9 @@ import org.kohsuke.github.GitHub;
 public class UsesSignedCommits extends AbstractGitHubDataProvider {
 
   /**
-   * For parsing JSON.
+   * The date after which all the commits would be considered.
    */
-  private static final ObjectMapper MAPPER = new ObjectMapper();
-
-  /**
-   * 1 year in millis.
-   */
-  private static final long DELTA = 365 * 24 * 60 * 60 * 1000L;
+  private static final Date ONE_YEAR_AGO = Date.from(Instant.now().minus(Duration.ofDays(365)));
 
   /**
    * The threshold in % of number of verified signed commits against total number of commits in a
@@ -48,35 +37,12 @@ public class UsesSignedCommits extends AbstractGitHubDataProvider {
   private static final double SIGNED_COMMIT_PERCENTAGE_THRESHOLD = 90;
 
   /**
-   * Maximum number of items to be populated per page during the call to GitHub API.
-   */
-  private static final int MAX_ITEMS_PER_PAGE = 100;
-
-  /**
-   * First page number during the call to GitHub API.
-   */
-  private static final int FIRST_PAGE = 1;
-
-  /**
-   * A GitHub token provided by user to access the GitHub API.
-   */
-  private final String githubToken;
-
-  /**
-   * The date format to be used during GitHub API call.
-   */
-  private static final SimpleDateFormat DATE_FORMAT =
-      new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.US);
-
-  /**
    * Initializes a data provider.
    *
    * @param github An interface to the GitHub API.
-   * @param githubToken provided by user to access GitHub API.
    */
-  public UsesSignedCommits(GitHub github, String githubToken) {
+  public UsesSignedCommits(GitHub github) {
     super(github);
-    this.githubToken = githubToken;
   }
 
   @Override
@@ -121,111 +87,32 @@ public class UsesSignedCommits extends AbstractGitHubDataProvider {
    *
    * @param project The project.
    * @return boolean True if the project uses verified signed commits. Otherwise, False
-   * @throws IOException #{@link HttpClient} may throw an exception during REST call.
-   * @see GitHub Issue: <a link="https://github.com/github-api/github-api/issues/737">Get commit or
-   *      tag signature verified flag</a> and the associated
-   *      <a link= "https://github.com/github-api/github-api/pull/738">Pull Request</a>.
+   * @throws IOException caused during REST call to GitHub API.
    */  
   private boolean askGithub(GitHubProject project) throws IOException {
-    // TODO: The data gathering process here from GitHub API will have to be merged with other
-    // related data providers. More information can be found in
-    // https://github.com/SAP/fosstars-rating-core/issues/69
-    
-    int signedCounter = 0;
-    int counter = 0;
-    String commitDate = DATE_FORMAT.format(new Date(System.currentTimeMillis() - DELTA));
-    int pageNumber = FIRST_PAGE;
-    Page page;
-    
-    do {
-      page = nextPage(project.path(), commitDate, pageNumber++);
-      
-      for (JsonNode commitNode : page.commitNodes) {
-        counter++;
-        JsonNode verifiedNode = commitNode.findPath("verified");
-        if (verifiedNode != null && verifiedNode.booleanValue()) {
-          signedCounter++;
-        }
-      }
-    } while (page.hasNextPage);
-    
+    List<GHCommit> yearCommits = gitHubDataFetcher().commitsAfter(ONE_YEAR_AGO, project, github);
+    int counter = yearCommits.size();
+
+    List<GHCommit> verifiedCommits =
+        yearCommits.stream().filter(commit -> isCommitVerified(commit))
+            .collect(Collectors.toList());
+    int signedCounter = verifiedCommits.size();
+
     return counter > 0 && signedCounter > 0
         && (signedCounter * 100 / counter) >= SIGNED_COMMIT_PERCENTAGE_THRESHOLD;
   }
 
   /**
-   * Does a REST API call to public URL <a link="https://api.github.com">GitHub API</a> to list all
-   * the commits after a specific date.
-   *
-   * @param path The path to the project.
-   * @param commitDate Only commits after this date will be returned. 
-   *                   This is a timestamp in ISO 8601, format: YYYY-MM-DDTHH:MM:SSZ
-   * @param pageNumber Index of the page.
-   * @return The {@link Page} object.
-   * @throws IOException #{@link HttpClient} may throw an exception during REST call.
-   */
-  private Page nextPage(String path, String commitDate, int pageNumber) throws IOException {
-    try (CloseableHttpClient client = httpClient()) {
-      HttpGet httpGetRequest = buildRequest(path, commitDate, pageNumber);
-      try (CloseableHttpResponse response = client.execute(httpGetRequest)) {
-        return new Page(hasNextPage(response), MAPPER.readTree(response.getEntity().getContent()));
-      }
-    }
-  }
-
-  /**
-   * Builds a {@link HttpGet} request.
-   *
-   * @param path The path to the project.
-   * @param commitDate This is a timestamp in ISO 8601, format: YYYY-MM-DDTHH:MM:SSZ
-   * @param pageNumber Index of the page.
-   * @return The {@link HttpGet} object.
-   */
-  private HttpGet buildRequest(String path, String commitDate, int pageNumber) {
-    String url =
-        String.format("https://api.github.com/repos/%s/commits?since=%s&page=%s&per_page=%s",
-            path, commitDate, pageNumber, MAX_ITEMS_PER_PAGE);
-
-    HttpGet httpGetRequest = new HttpGet(url);
-    httpGetRequest.addHeader(HttpHeaders.ACCEPT, ContentType.APPLICATION_JSON.getMimeType());
-
-    if (githubToken != null && !githubToken.isEmpty()) {
-      httpGetRequest.addHeader(HttpHeaders.AUTHORIZATION, String.format("token %s", githubToken));
-    }
-
-    return httpGetRequest;
-  }
-
-  /**
-   * Returns an HTTP client.
-   */
-  CloseableHttpClient httpClient() {
-    return HttpClients.createDefault();
-  }
-
-  /**
-   * Check if the next page is available.
+   * Check if the commit is signed.
    * 
-   * @param response {@link CloseableHttpResponse} from the GET Request.
-   * @return True if the next page is available, false otherwise.
+   * @param commit of type {@link GHCommit}.
+   * @return true if the commit is signed. Otherwise, false.
    */
-  private boolean hasNextPage(CloseableHttpResponse response) {
-    Header header = response.getFirstHeader("link");
-    return header != null && header.toString().contains("rel=\"next\"");
-  }
-
-  /**
-   * This class is used to store the commit nodes and hasNextPage indication after each call to
-   * GitHub API. After the call the variables hasNextPage and commitNodes gets populated.
-   */
-  private static class Page {
-
-    private final boolean hasNextPage;
-    private final JsonNode commitNodes;
-
-    private Page(boolean hasNextPage, JsonNode commitNodes) {
-      this.hasNextPage = hasNextPage;
-      this.commitNodes = commitNodes;
+  public static final boolean isCommitVerified(GHCommit commit) {
+    try {
+      return commit.getCommitShortInfo().getVerification().isVerified();
+    } catch (IOException e) {
+      throw new UncheckedIOException("Could not get the short info of commit", e);
     }
   }
 }

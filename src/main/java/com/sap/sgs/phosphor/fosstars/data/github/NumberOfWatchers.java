@@ -7,7 +7,6 @@ import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.util.Optional;
-import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
 
 /**
@@ -44,10 +43,10 @@ public class NumberOfWatchers extends AbstractGitHubDataProvider {
       return something.get();
     }
 
-    GHRepository repository = github.getRepository(project.path());
-    Value<Integer> value = NUMBER_OF_WATCHERS_ON_GITHUB.value(repository.getSubscribersCount());
-    cache.put(project, value);
+    Value<Integer> value = NUMBER_OF_WATCHERS_ON_GITHUB
+        .value(gitHubDataFetcher().repositoryFor(project, github).getSubscribersCount());
 
+    cache.put(project, value);
     return value;
   }
 }

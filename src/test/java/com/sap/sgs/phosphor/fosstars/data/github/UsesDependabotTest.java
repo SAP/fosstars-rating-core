@@ -4,7 +4,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_D
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
@@ -12,27 +12,33 @@ import static org.mockito.Mockito.when;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubDataFetcher;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectValueCache;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import org.junit.Test;
 import org.kohsuke.github.GHCommit;
-import org.kohsuke.github.GHCommitQueryBuilder;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GHUser;
 import org.kohsuke.github.GitHub;
-import org.kohsuke.github.PagedIterable;
-import org.kohsuke.github.PagedIterator;
 
 public class UsesDependabotTest {
 
   @Test
   public void foundCommits() throws IOException {
+    GitHub github = mock(GitHub.class);
+
+    UsesDependabot provider = new UsesDependabot(github);
+    provider = spy(provider);
+    when(provider.cache()).thenReturn(new GitHubProjectValueCache());
+
     GHUser user = mock(GHUser.class);
     when(user.getLogin()).thenReturn("dependabot");
 
@@ -42,29 +48,29 @@ public class UsesDependabotTest {
     when(commit.getAuthor()).thenReturn(user);
     when(commit.getCommitShortInfo()).thenReturn(commitInfo);
     when(commit.getCommitDate()).thenReturn(Date.from(Instant.now().minus(Duration.ofDays(100))));
+    List<GHCommit> list = new ArrayList<>();
+    list.add(commit);
 
-    PagedIterator<GHCommit> iterator = mock(PagedIterator.class);
-    when(iterator.hasNext()).thenReturn(true, false);
-    when(iterator.next()).thenReturn(commit);
-
-    PagedIterable iterable = mock(PagedIterable.class);
-    when(iterable.iterator()).thenReturn(iterator);
-
-    GHCommitQueryBuilder builder = mock(GHCommitQueryBuilder.class);
-    when(builder.since(any())).thenReturn(builder);
-    when(builder.list()).thenReturn(iterable);
+    GitHubProject project = mock(GitHubProject.class);
 
     GHRepository repository = mock(GHRepository.class);
-    when(repository.queryCommits()).thenReturn(builder);
+    GitHubDataFetcher fetcher = mock(GitHubDataFetcher.class);
+    when(provider.gitHubDataFetcher()).thenReturn(fetcher);
+    when(fetcher.repositoryFor(project, github)).thenReturn(repository);
+    when(fetcher.commitsAfter(any(), eq(project), eq(github))).thenReturn(list);
 
-    GitHub github = mock(GitHub.class);
-    when(github.getRepository(anyString())).thenReturn(repository);
-
-    testProvider(true, github);
+    testProvider(true, github, project, provider);
   }
+
 
   @Test
   public void foundConfig() throws IOException {
+    GitHub github = mock(GitHub.class);
+
+    UsesDependabot provider = new UsesDependabot(github);
+    provider = spy(provider);
+    when(provider.cache()).thenReturn(new GitHubProjectValueCache());
+
     GHContent content = mock(GHContent.class);
     when(content.isFile()).thenReturn(true);
     when(content.getSize()).thenReturn(100L);
@@ -72,14 +78,23 @@ public class UsesDependabotTest {
     GHRepository repository = mock(GHRepository.class);
     when(repository.getFileContent(".dependabot/config.yml")).thenReturn(content);
 
-    GitHub github = mock(GitHub.class);
-    when(github.getRepository(anyString())).thenReturn(repository);
+    GitHubProject project = mock(GitHubProject.class);
 
-    testProvider(true, github);
+    GitHubDataFetcher fetcher = mock(GitHubDataFetcher.class);
+    when(provider.gitHubDataFetcher()).thenReturn(fetcher);
+    when(fetcher.repositoryFor(project, github)).thenReturn(repository);
+
+    testProvider(true, github, project, provider);
   }
 
   @Test
   public void noDependabot() throws IOException {
+    GitHub github = mock(GitHub.class);
+
+    UsesDependabot provider = new UsesDependabot(github);
+    provider = spy(provider);
+    when(provider.cache()).thenReturn(new GitHubProjectValueCache());
+
     GHUser githubUser = mock(GHUser.class);
     when(githubUser.getLogin()).thenReturn("someone");
 
@@ -96,35 +111,26 @@ public class UsesDependabotTest {
     when(commit.getCommitShortInfo()).thenReturn(commitInfo);
     when(commit.getCommitDate()).thenReturn(Date.from(Instant.now().minus(Duration.ofDays(100))));
 
-    PagedIterator<GHCommit> iterator = mock(PagedIterator.class);
-    when(iterator.hasNext()).thenReturn(true, false);
-    when(iterator.next()).thenReturn(commit);
+    List<GHCommit> list = new ArrayList<>();
+    list.add(commit);
 
-    PagedIterable iterable = mock(PagedIterable.class);
-    when(iterable.iterator()).thenReturn(iterator);
-
-    GHCommitQueryBuilder builder = mock(GHCommitQueryBuilder.class);
-    when(builder.since(any())).thenReturn(builder);
-    when(builder.list()).thenReturn(iterable);
+    GitHubProject project = mock(GitHubProject.class);
 
     GHRepository repository = mock(GHRepository.class);
-    when(repository.queryCommits()).thenReturn(builder);
+    GitHubDataFetcher fetcher = mock(GitHubDataFetcher.class);
+    when(provider.gitHubDataFetcher()).thenReturn(fetcher);
+    when(fetcher.repositoryFor(project, github)).thenReturn(repository);
+    when(fetcher.commitsAfter(any(), eq(project), eq(github))).thenReturn(list);
 
-    GitHub github = mock(GitHub.class);
-    when(github.getRepository(anyString())).thenReturn(repository);
-
-    testProvider(false, github);
+    testProvider(false, github, project, provider);
   }
-
-  private static void testProvider(boolean expected, GitHub github) throws IOException {
-    UsesDependabot provider = new UsesDependabot(github);
-    provider = spy(provider);
-    when(provider.cache()).thenReturn(new GitHubProjectValueCache());
+  
+  private static void testProvider(boolean expected, GitHub github, GitHubProject project,
+      UsesDependabot provider)
+      throws IOException {
 
     ValueSet values = new ValueHashSet();
     assertEquals(0, values.size());
-
-    GitHubProject project = new GitHubProject("test", "test");
 
     provider.update(project, values);
     assertEquals(1, values.size());
@@ -134,5 +140,4 @@ public class UsesDependabotTest {
     Value numberOfContributors = something.get();
     assertEquals(expected, numberOfContributors.get());
   }
-
 }

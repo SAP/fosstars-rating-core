@@ -12,7 +12,6 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import org.kohsuke.github.GHCommit;
-import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GHUser;
 import org.kohsuke.github.GitHub;
 import org.kohsuke.github.GitUser;
@@ -46,7 +45,6 @@ public class NumberOfContributors extends AbstractGitHubDataProvider {
   @Override
   protected NumberOfContributors doUpdate(GitHubProject project, ValueSet values)
       throws IOException {
-
     logger.info("Counting how many people contributed to the project in the last three months ...");
 
     Optional<Value> something = cache.get(project, NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS);
@@ -55,21 +53,16 @@ public class NumberOfContributors extends AbstractGitHubDataProvider {
       return this;
     }
 
-    GHRepository repository = github.getRepository(project.path());
     Date date = new Date(System.currentTimeMillis() - DELTA);
     Set<String> contributors = new HashSet<>();
-    for (GHCommit commit : repository.listCommits().asList()) {
-      if (commit.getCommitDate().after(date)) {
-        contributors.add(authorOf(commit));
-        contributors.add(committerOf(commit));
-      } else {
-        break;
-      }
+    for (GHCommit commit : gitHubDataFetcher().commitsAfter(date, project, github)) {
+      contributors.add(authorOf(commit));
+      contributors.add(committerOf(commit));
     }
     contributors.remove(UNKNOWN_USER);
 
-    Value<Integer> numberOfContributors = new IntegerValue(
-        NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS, contributors.size());
+    Value<Integer> numberOfContributors =
+        new IntegerValue(NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS, contributors.size());
     values.update(numberOfContributors);
     cache.put(project, numberOfContributors, tomorrow());
 
@@ -129,5 +122,4 @@ public class NumberOfContributors extends AbstractGitHubDataProvider {
 
     return UNKNOWN_USER;
   }
-
 }

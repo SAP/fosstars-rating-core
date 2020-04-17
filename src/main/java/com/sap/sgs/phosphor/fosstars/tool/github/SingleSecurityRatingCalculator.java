@@ -113,7 +113,7 @@ class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
         new IsApache(github),
         new IsEclipse(github),
         new LgtmDataProvider(github),
-        new UsesSignedCommits(github, token),
+        new UsesSignedCommits(github),
         new CompositeDataProvider<>(
             new UsesOwaspDependencyCheck(github),
             new UsesSnykDependencyCheck(github))

@@ -4,11 +4,13 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_D
 
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubDataFetcher;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import org.kohsuke.github.GHCommit;
@@ -68,13 +70,12 @@ public class UsesDependabot extends AbstractGitHubDataProvider {
   /**
    * Checks if a repository contains commits from Dependabot in its commit history.
    *
-   * @param repository The repository.
+   * @param List of type {@link GHCommit} after a specific date.
    * @return True if a commit from Dependabot was found, false otherwise.
    */
-  private boolean hasDependabotCommits(GHRepository repository) {
+  private boolean hasDependabotCommits(List<GHCommit> commits) {
     try {
-      Date date = Date.from(Instant.now().minus(LATEST_MONTHS));
-      for (GHCommit commit : repository.queryCommits().since(date).list()) {
+      for (GHCommit commit : commits) {
         if (isDependabot(commit)) {
           return true;
         }
@@ -125,9 +126,12 @@ public class UsesDependabot extends AbstractGitHubDataProvider {
       something.get();
     }
 
-    GHRepository repository = github.getRepository(project.path());
+    Date date = Date.from(Instant.now().minus(LATEST_MONTHS));
+    GitHubDataFetcher fetcher = gitHubDataFetcher();
+
     Value<Boolean> value = USES_DEPENDABOT.value(
-        hasDependabotConfig(repository) || hasDependabotCommits(repository));
+        hasDependabotConfig(fetcher.repositoryFor(project, github))
+            || hasDependabotCommits(fetcher.commitsAfter(date, project, github)));
     cache.put(project, value);
 
     return value;

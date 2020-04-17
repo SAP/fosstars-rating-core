@@ -1,6 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.data.github;
 
 import com.sap.sgs.phosphor.fosstars.data.AbstractDataProvider;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubDataFetcher;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.util.Date;
 import java.util.Objects;
@@ -36,6 +37,13 @@ public abstract class AbstractGitHubDataProvider extends AbstractDataProvider<Gi
    */
   static Date tomorrow() {
     return new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000L);
+  }
+
+  /**
+   * Get the Singleton instance of {@link GitHubDataFetcher}.
+   */
+  public GitHubDataFetcher gitHubDataFetcher() {
+    return GitHubDataFetcher.instance();
   }
 
 }

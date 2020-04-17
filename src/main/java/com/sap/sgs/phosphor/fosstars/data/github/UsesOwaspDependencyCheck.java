@@ -41,7 +41,7 @@ public class UsesOwaspDependencyCheck extends AbstractGitHubDataProvider {
 
     logger.info("Figuring out if the project uses OWASP Dependency Check ...");
 
-    GHRepository repository = github.getRepository(project.path());
+    GHRepository repository = gitHubDataFetcher().repositoryFor(project, github);
     boolean answer = checkMaven(repository) || checkGradle(repository);
     Value<Boolean> value = new BooleanValue(SCANS_FOR_VULNERABLE_DEPENDENCIES, answer);
     values.update(value);
@@ -137,5 +137,4 @@ public class UsesOwaspDependencyCheck extends AbstractGitHubDataProvider {
     return "org.owasp".equals(plugin.getGroupId())
         && "dependency-check-maven".equals(plugin.getArtifactId());
   }
-
 }

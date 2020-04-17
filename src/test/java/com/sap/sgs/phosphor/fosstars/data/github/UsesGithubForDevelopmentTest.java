@@ -4,12 +4,12 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_G
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubDataFetcher;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectValueCache;
 import java.io.IOException;
@@ -23,19 +23,22 @@ public class UsesGithubForDevelopmentTest {
   @Test
   public void testWithMirrorUrl() throws IOException {
     GitHub github = mock(GitHub.class);
+
     UsesGithubForDevelopment provider = new UsesGithubForDevelopment(github);
     provider = spy(provider);
     when(provider.cache()).thenReturn(new GitHubProjectValueCache());
 
     GHRepository repository = mock(GHRepository.class);
-    when(github.getRepository(any())).thenReturn(repository);
+    GitHubDataFetcher fetcher = mock(GitHubDataFetcher.class);
+    when(provider.gitHubDataFetcher()).thenReturn(fetcher);
 
+    GitHubProject project = mock(GitHubProject.class);
+    when(fetcher.repositoryFor(project, github)).thenReturn(repository);
     when(repository.getMirrorUrl()).thenReturn("https://other.scm.com/org/original_repository");
 
     ValueHashSet values = new ValueHashSet();
     assertEquals(0, values.size());
 
-    GitHubProject project = new GitHubProject("org", "mirror_repository");
     provider.update(project, values);
 
     assertEquals(1, values.size());
@@ -55,14 +58,16 @@ public class UsesGithubForDevelopmentTest {
     when(provider.cache()).thenReturn(new GitHubProjectValueCache());
 
     GHRepository repository = mock(GHRepository.class);
-    when(github.getRepository(any())).thenReturn(repository);
+    GitHubDataFetcher fetcher = mock(GitHubDataFetcher.class);
+    when(provider.gitHubDataFetcher()).thenReturn(fetcher);
 
+    GitHubProject project = mock(GitHubProject.class);
+    when(fetcher.repositoryFor(project, github)).thenReturn(repository);
     when(repository.getMirrorUrl()).thenReturn(null);
 
     ValueHashSet values = new ValueHashSet();
     assertEquals(0, values.size());
 
-    GitHubProject project = new GitHubProject("org", "mirror_repository");
     provider.update(project, values);
 
     assertEquals(1, values.size());
@@ -76,19 +81,22 @@ public class UsesGithubForDevelopmentTest {
   @Test
   public void testWithEmptyMirrorUrl() throws IOException {
     GitHub github = mock(GitHub.class);
+
     UsesGithubForDevelopment provider = new UsesGithubForDevelopment(github);
     provider = spy(provider);
     when(provider.cache()).thenReturn(new GitHubProjectValueCache());
 
     GHRepository repository = mock(GHRepository.class);
-    when(github.getRepository(any())).thenReturn(repository);
+    GitHubDataFetcher fetcher = mock(GitHubDataFetcher.class);
+    when(provider.gitHubDataFetcher()).thenReturn(fetcher);
 
+    GitHubProject project = mock(GitHubProject.class);
+    when(fetcher.repositoryFor(project, github)).thenReturn(repository);
     when(repository.getMirrorUrl()).thenReturn(StringUtils.EMPTY);
 
     ValueHashSet values = new ValueHashSet();
     assertEquals(0, values.size());
 
-    GitHubProject project = new GitHubProject("org", "mirror_repository");
     provider.update(project, values);
 
     assertEquals(1, values.size());
@@ -106,13 +114,15 @@ public class UsesGithubForDevelopmentTest {
     UsesGithubForDevelopment provider = new UsesGithubForDevelopment(github);
     provider = spy(provider);
     when(provider.cache()).thenReturn(new GitHubProjectValueCache());
+    GitHubDataFetcher fetcher = mock(GitHubDataFetcher.class);
+    when(provider.gitHubDataFetcher()).thenReturn(fetcher);
 
-    when(github.getRepository(any())).thenThrow(new IOException());
+    GitHubProject project = mock(GitHubProject.class);
+    when(fetcher.repositoryFor(project, github)).thenThrow(new IOException());
 
     ValueHashSet values = new ValueHashSet();
     assertEquals(0, values.size());
 
-    GitHubProject project = new GitHubProject("org", "mirror_repository");
     provider.update(project, values);
 
     assertEquals(1, values.size());

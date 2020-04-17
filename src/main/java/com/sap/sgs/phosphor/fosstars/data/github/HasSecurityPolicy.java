@@ -56,11 +56,9 @@ public class HasSecurityPolicy extends AbstractGitHubDataProvider {
       return something.get();
     }
 
-    GHRepository repository = github.getRepository(project.path());
-
     boolean found = false;
     for (String path : POLICY_LOCATIONS) {
-      if (exists(repository, path)) {
+      if (exists(gitHubDataFetcher().repositoryFor(project, github), path)) {
         found = true;
         break;
       }

@@ -4,31 +4,17 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.FIRST_
 
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
-import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 import org.kohsuke.github.GHCommit;
-import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
-import org.kohsuke.github.PagedIterator;
 
 /**
  * This data provider returns a date of the first commit.
  */
 public class FirstCommit extends AbstractGitHubDataProvider {
-
-  /**
-   * A size of a page for GitHub API.
-   */
-  private static final int PAGE_SIZE = 10000;
-
-  /**
-   * 7 days in millis.
-   */
-  private static final long DELTA = 7 * 24 * 60 * 60 * 1000L;
 
   /**
    * Initializes a data provider.
@@ -61,27 +47,12 @@ public class FirstCommit extends AbstractGitHubDataProvider {
       return something.get();
     }
 
-    GHRepository repository = github.getRepository(project.path());
-    long millis = repository.getCreatedAt().getTime() + DELTA;
-
-    PagedIterator<GHCommit> iterator = repository.queryCommits()
-        .until(millis)
-        .list()
-        .withPageSize(PAGE_SIZE)
-        .iterator();
-
-    List<GHCommit> lastPage = null;
-    while (iterator.hasNext()) {
-      lastPage = iterator.nextPage();
+    Value<Date> value = FIRST_COMMIT_DATE.unknown();
+    Optional<GHCommit> firstCommit = gitHubDataFetcher().firstCommitFor(project, github);
+    if (firstCommit.isPresent()) {
+      value = FIRST_COMMIT_DATE.value(firstCommit.get().getCommitDate());
     }
-
-    if (lastPage == null) {
-      return UnknownValue.of(FIRST_COMMIT_DATE);
-    }
-
-    Value<Date> value = FIRST_COMMIT_DATE.value(lastPage.get(lastPage.size() - 1).getCommitDate());
-    cache.put(project, value);
-
+    cache.put(project, value, tomorrow());
     return value;
   }
 }

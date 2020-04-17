@@ -5,103 +5,116 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubDataFetcher;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectValueCache;
 import java.io.IOException;
-import java.io.InputStream;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.impl.client.CloseableHttpClient;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Test;
+import org.kohsuke.github.GHCommit;
+import org.kohsuke.github.GHCommit.ShortInfo;
+import org.kohsuke.github.GHVerification;
 import org.kohsuke.github.GitHub;
 
 public class UsesSignedCommitTest {
 
   @Test
-  public void testUsesSignedCommitsTrue() throws IOException {
+  public void testCommitWithSignature() throws IOException {
     GitHub github = mock(GitHub.class);
-    GitHubProject project = new GitHubProject("spring-projects", "spring-integration");
-    UsesSignedCommits provider = new UsesSignedCommits(github, null);
+
+    UsesSignedCommits provider = new UsesSignedCommits(github);
     provider = spy(provider);
     when(provider.cache()).thenReturn(new GitHubProjectValueCache());
 
-    CloseableHttpClient httpClient = mock(CloseableHttpClient.class);
-    when(provider.httpClient()).thenReturn(httpClient);
+    GHCommit commit = mock(GHCommit.class);
+    List<GHCommit> list = new ArrayList<>();
+    list.add(commit);
 
-    CloseableHttpResponse response = mock(CloseableHttpResponse.class);
-    when(httpClient.execute(any())).thenReturn(response);
+    ShortInfo info = mock(ShortInfo.class);
+    when(commit.getCommitShortInfo()).thenReturn(info);
 
-    HttpEntity entity = mock(HttpEntity.class);
-    when(response.getEntity()).thenReturn(entity);
+    GHVerification verification = mock(GHVerification.class);
+    when(info.getVerification()).thenReturn(verification);
+    when(verification.isVerified()).thenReturn(true);
 
-    try (InputStream content = getClass().getResourceAsStream("UsesSignedCommitTrue.json")) {
-      when(entity.getContent()).thenReturn(content);
+    GitHubProject project = mock(GitHubProject.class);
+    GitHubDataFetcher fetcher = mock(GitHubDataFetcher.class);
+    when(provider.gitHubDataFetcher()).thenReturn(fetcher);
+    when(fetcher.commitsAfter(any(), eq(project), eq(github))).thenReturn(list);
 
-      ValueHashSet values = new ValueHashSet();
-      assertEquals(0, values.size());
+    ValueHashSet values = new ValueHashSet();
+    assertEquals(0, values.size());
 
-      provider.update(project, values);
+    provider.update(project, values);
 
-      assertEquals(1, values.size());
-      assertTrue(values.has(USES_VERIFIED_SIGNED_COMMITS));
-      assertTrue(values.of(USES_VERIFIED_SIGNED_COMMITS).isPresent());
-      assertFalse(values.of(USES_VERIFIED_SIGNED_COMMITS).get().isUnknown());
-      assertEquals(USES_VERIFIED_SIGNED_COMMITS.value(true),
-          values.of(USES_VERIFIED_SIGNED_COMMITS).get());
-    }
+    assertEquals(1, values.size());
+    assertTrue(values.has(USES_VERIFIED_SIGNED_COMMITS));
+    assertTrue(values.of(USES_VERIFIED_SIGNED_COMMITS).isPresent());
+    assertFalse(values.of(USES_VERIFIED_SIGNED_COMMITS).get().isUnknown());
+    assertEquals(USES_VERIFIED_SIGNED_COMMITS.value(true),
+        values.of(USES_VERIFIED_SIGNED_COMMITS).get());
   }
 
   @Test
-  public void testUsesSignedCommitsFalse() throws IOException {
+  public void testCommitWithoutSignature() throws IOException {
     GitHub github = mock(GitHub.class);
-    GitHubProject project = new GitHubProject("spring-projects", "spring-integration");
-    UsesSignedCommits provider = new UsesSignedCommits(github, null);
+
+    UsesSignedCommits provider = new UsesSignedCommits(github);
     provider = spy(provider);
     when(provider.cache()).thenReturn(new GitHubProjectValueCache());
 
-    CloseableHttpClient httpClient = mock(CloseableHttpClient.class);
-    when(provider.httpClient()).thenReturn(httpClient);
+    GHCommit commit = mock(GHCommit.class);
+    List<GHCommit> list = new ArrayList<>();
+    list.add(commit);
 
-    CloseableHttpResponse response = mock(CloseableHttpResponse.class);
-    when(httpClient.execute(any())).thenReturn(response);
+    ShortInfo info = mock(ShortInfo.class);
+    when(commit.getCommitShortInfo()).thenReturn(info);
 
-    HttpEntity entity = mock(HttpEntity.class);
-    when(response.getEntity()).thenReturn(entity);
+    GHVerification verification = mock(GHVerification.class);
+    when(info.getVerification()).thenReturn(verification);
+    when(verification.isVerified()).thenReturn(false);
 
-    try (InputStream content = getClass().getResourceAsStream("UsesSignedCommitFalse.json")) {
-      when(entity.getContent()).thenReturn(content);
+    GitHubProject project = mock(GitHubProject.class);
+    GitHubDataFetcher fetcher = mock(GitHubDataFetcher.class);
+    when(provider.gitHubDataFetcher()).thenReturn(fetcher);
+    when(fetcher.commitsAfter(any(), eq(project), eq(github))).thenReturn(list);
 
-      ValueHashSet values = new ValueHashSet();
-      assertEquals(0, values.size());
+    ValueHashSet values = new ValueHashSet();
+    assertEquals(0, values.size());
 
-      provider.update(project, values);
+    provider.update(project, values);
 
-      assertEquals(1, values.size());
-      assertTrue(values.has(USES_VERIFIED_SIGNED_COMMITS));
-      assertTrue(values.of(USES_VERIFIED_SIGNED_COMMITS).isPresent());
-      assertFalse(values.of(USES_VERIFIED_SIGNED_COMMITS).get().isUnknown());
-      assertEquals(USES_VERIFIED_SIGNED_COMMITS.value(false),
-          values.of(USES_VERIFIED_SIGNED_COMMITS).get());
-    }
+    assertEquals(1, values.size());
+    assertTrue(values.has(USES_VERIFIED_SIGNED_COMMITS));
+    assertTrue(values.of(USES_VERIFIED_SIGNED_COMMITS).isPresent());
+    assertFalse(values.of(USES_VERIFIED_SIGNED_COMMITS).get().isUnknown());
+    assertEquals(USES_VERIFIED_SIGNED_COMMITS.value(false),
+        values.of(USES_VERIFIED_SIGNED_COMMITS).get());
   }
 
   @Test
-  public void testUsesSignedUnknown() throws IOException {
+  public void testWhenGettingRepositoryFails() throws IOException {
     GitHub github = mock(GitHub.class);
-    final GitHubProject project = new GitHubProject("spring-projects", "spring-integration");
-    UsesSignedCommits provider = new UsesSignedCommits(github, null);
+
+    UsesSignedCommits provider = new UsesSignedCommits(github);
     provider = spy(provider);
     when(provider.cache()).thenReturn(new GitHubProjectValueCache());
 
-    CloseableHttpClient httpClient = mock(CloseableHttpClient.class);
-    when(provider.httpClient()).thenReturn(httpClient);
+    GHCommit commit = mock(GHCommit.class);
+    List<GHCommit> list = new ArrayList<>();
+    list.add(commit);
 
-    when(httpClient.execute(any())).thenThrow(IOException.class);
+    GitHubProject project = mock(GitHubProject.class);
+    GitHubDataFetcher fetcher = mock(GitHubDataFetcher.class);
+    when(provider.gitHubDataFetcher()).thenReturn(fetcher);
+    when(fetcher.commitsAfter(any(), eq(project), eq(github))).thenThrow(new IOException());
 
     ValueHashSet values = new ValueHashSet();
     assertEquals(0, values.size());

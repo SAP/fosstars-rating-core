@@ -71,7 +71,7 @@ public class UsesGithubForDevelopment extends AbstractGitHubDataProvider {
    * @throws IOException may throw an exception during REST call to GitHub API.
    */
   private boolean isMirror(GitHubProject project) throws IOException {
-    GHRepository repository = github.getRepository(project.path());
+    GHRepository repository = gitHubDataFetcher().repositoryFor(project, github);
     return StringUtils.isNotEmpty(repository.getMirrorUrl());
   }
 }

@@ -51,7 +51,7 @@ public class ProgrammingLanguages extends AbstractGitHubDataProvider {
       return something.get();
     }
 
-    GHRepository repository = github.getRepository(project.path());
+    GHRepository repository = gitHubDataFetcher().repositoryFor(project, github);
 
     Set<Language> set = EnumSet.noneOf(Language.class);
     for (String string : repository.listLanguages().keySet()) {
