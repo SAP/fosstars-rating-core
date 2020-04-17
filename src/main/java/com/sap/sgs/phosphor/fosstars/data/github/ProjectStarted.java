@@ -8,7 +8,8 @@ import com.sap.sgs.phosphor.fosstars.model.value.DateValue;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.util.Date;
-import org.kohsuke.github.GHRepository;
+import java.util.Optional;
+import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GitHub;
 
 /**
@@ -30,20 +31,20 @@ public class ProjectStarted extends FirstCommit {
   public ProjectStarted doUpdate(GitHubProject project, ValueSet values) throws IOException {
     logger.info("Figuring out when the project started ...");
 
-    Value<Date> firstCommitDate = firstCommitDate(project);
-
-    GHRepository repository = github.getRepository(project.path());
-    Date repositoryCreated = repository.getCreatedAt();
-
     Value<Date> projectStarted = PROJECT_START_DATE.unknown();
-    if (!firstCommitDate.isUnknown() && firstCommitDate.get().before(repositoryCreated)) {
-      projectStarted = new DateValue(PROJECT_START_DATE, firstCommitDate.get());
+
+    Optional<GHCommit> firstCommit = gitHubDataFetcher().firstCommitFor(project, github);
+    Date firstCommitDate = firstCommit.isPresent() ? firstCommit.get().getCommitDate() : null;
+    Date repositoryCreated = gitHubDataFetcher().repositoryFor(project, github).getCreatedAt();
+
+    if (firstCommitDate != null && repositoryCreated != null
+        && firstCommitDate.before(repositoryCreated)) {
+      projectStarted = new DateValue(PROJECT_START_DATE, firstCommitDate);
     } else if (repositoryCreated != null) {
       projectStarted = new DateValue(PROJECT_START_DATE, repositoryCreated);
     }
 
     values.update(projectStarted);
-
     return this;
   }
 }

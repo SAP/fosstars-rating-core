@@ -150,7 +150,7 @@ public class PackageManagement extends AbstractGitHubDataProvider {
       }
     }
 
-    GHRepository repository = github.getRepository(project.path());
+    GHRepository repository = gitHubDataFetcher().repositoryFor(project, github);
     PackageManagers packageManagers = new PackageManagers();
     for (GHContent content : repository.getDirectoryContent("/")) {
       if (!content.isFile()) {
@@ -229,5 +229,4 @@ public class PackageManagement extends AbstractGitHubDataProvider {
     provider.update(project, values);
     System.out.println("package managers: " + values.of(PACKAGE_MANAGERS).get());
   }
-
 }

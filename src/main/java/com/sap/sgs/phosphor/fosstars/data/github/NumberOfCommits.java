@@ -9,8 +9,6 @@ import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Optional;
-import org.kohsuke.github.GHCommit;
-import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
 
 /**
@@ -42,18 +40,10 @@ public class NumberOfCommits extends AbstractGitHubDataProvider {
       return this;
     }
 
-    GHRepository repository = github.getRepository(project.path());
-    int counter = 0;
     Date date = new Date(System.currentTimeMillis() - DELTA);
-    for (GHCommit commit : repository.listCommits()) {
-      if (commit.getCommitDate().after(date)) {
-        counter++;
-      } else {
-        break;
-      }
-    }
 
-    Value<Integer> numberOfCommits = new IntegerValue(NUMBER_OF_COMMITS_LAST_THREE_MONTHS, counter);
+    Value<Integer> numberOfCommits = new IntegerValue(NUMBER_OF_COMMITS_LAST_THREE_MONTHS,
+        gitHubDataFetcher().commitsAfter(date, project, github).size());
     values.update(numberOfCommits);
     cache.put(project, numberOfCommits, tomorrow());
 

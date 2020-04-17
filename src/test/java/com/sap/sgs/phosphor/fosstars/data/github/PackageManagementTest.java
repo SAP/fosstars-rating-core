@@ -12,6 +12,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
@@ -22,6 +23,7 @@ import com.sap.sgs.phosphor.fosstars.model.value.Languages;
 import com.sap.sgs.phosphor.fosstars.model.value.PackageManager;
 import com.sap.sgs.phosphor.fosstars.model.value.PackageManagers;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubDataFetcher;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -66,10 +68,13 @@ public class PackageManagementTest {
     GHRepository repository = mock(GHRepository.class);
     when(repository.getDirectoryContent("/")).thenReturn(contents);
 
-    when(github.getRepository(any())).thenReturn(repository);
+    GitHubProject project = new GitHubProject("org", "test");
+
+    GitHubDataFetcher fetcher = mock(GitHubDataFetcher.class);
+    when(provider.gitHubDataFetcher()).thenReturn(fetcher);
+    when(fetcher.repositoryFor(project, github)).thenReturn(repository);
 
     ValueSet values = new ValueHashSet();
-    GitHubProject project = new GitHubProject("org", "test");
     provider.update(project, values);
 
     assertTrue(values.has(PACKAGE_MANAGERS));
