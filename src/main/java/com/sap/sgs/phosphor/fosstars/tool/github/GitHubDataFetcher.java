@@ -39,12 +39,12 @@ public class GitHubDataFetcher {
   /**
    * A limited capacity cache to store all the commits of a {@link GitHubProject}.
    */
-  final GitHubDataCache<List<GHCommit>> commitsCache = new GitHubDataCache<>();
+  private final GitHubDataCache<List<GHCommit>> commitsCache = new GitHubDataCache<>();
 
   /**
    * A limited capacity cache to store the repository of a {@link GitHubProject}.
    */
-  final GitHubDataCache<GHRepository> repositoryCache = new GitHubDataCache<>();
+  private final GitHubDataCache<GHRepository> repositoryCache = new GitHubDataCache<>();
 
   /**
    * A private constructor for singleton pattern.
@@ -154,6 +154,20 @@ public class GitHubDataFetcher {
     }
 
     return subList;
+  }
+
+  /**
+   * Returns the cache for commits.
+   */
+  public GitHubDataCache<List<GHCommit>> commitsCache() {
+    return commitsCache;
+  }
+
+  /**
+   * Returns the cache for repositories.
+   */
+  public GitHubDataCache<GHRepository> repositoryCache() {
+    return repositoryCache;
   }
 
   /**
