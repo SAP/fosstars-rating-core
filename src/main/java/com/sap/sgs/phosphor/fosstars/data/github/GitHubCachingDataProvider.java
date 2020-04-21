@@ -1,15 +1,16 @@
 package com.sap.sgs.phosphor.fosstars.data.github;
 
-import com.sap.sgs.phosphor.fosstars.data.AbstractDataProvider;
+import com.sap.sgs.phosphor.fosstars.data.AbstractCachingDataProvider;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubDataFetcher;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.util.Objects;
 import org.kohsuke.github.GitHub;
 
 /**
- * Base class for data providers which get data from GitHub.
+ * This is a base class for data providers that would like to check the cache
+ * before trying to fetch values for a project on GitHub.
  */
-public abstract class AbstractGitHubDataProvider extends AbstractDataProvider<GitHubProject> {
+public abstract class GitHubCachingDataProvider extends AbstractCachingDataProvider<GitHubProject> {
 
   /**
    * An interface to the GitHub API.
@@ -21,14 +22,11 @@ public abstract class AbstractGitHubDataProvider extends AbstractDataProvider<Gi
    *
    * @param github An interface to the GitHub API.
    */
-  public AbstractGitHubDataProvider(GitHub github) {
+  public GitHubCachingDataProvider(GitHub github) {
     this.github = Objects.requireNonNull(
         github, "Oh no! You gave me a null instead of a GitHub instance!");
   }
 
-  /**
-   * The method always returns false, so that all child classes can't be interactive.
-   */
   @Override
   public final boolean interactive() {
     return false;
@@ -40,4 +38,5 @@ public abstract class AbstractGitHubDataProvider extends AbstractDataProvider<Gi
   protected GitHubDataFetcher gitHubDataFetcher() {
     return GitHubDataFetcher.instance();
   }
+
 }

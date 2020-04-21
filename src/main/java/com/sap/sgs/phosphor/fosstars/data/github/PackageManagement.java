@@ -20,6 +20,7 @@ import static com.sap.sgs.phosphor.fosstars.model.value.PackageManager.PIP;
 import static com.sap.sgs.phosphor.fosstars.model.value.PackageManager.RUBYGEMS;
 import static com.sap.sgs.phosphor.fosstars.model.value.PackageManager.YARN;
 
+import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.Language;
@@ -31,7 +32,6 @@ import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.util.EnumMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
 import org.kohsuke.github.GHContent;
@@ -41,7 +41,7 @@ import org.kohsuke.github.GitHub;
 /**
  * This data provider returns package managers which are used in a project.
  */
-public class PackageManagement extends AbstractGitHubDataProvider {
+public class PackageManagement extends CachedSingleFeatureGitHubDataProvider {
 
   /**
    * A minimal number of characters in a config to consider it valid.
@@ -122,11 +122,14 @@ public class PackageManagement extends AbstractGitHubDataProvider {
   }
 
   @Override
-  protected PackageManagement doUpdate(GitHubProject project, ValueSet values) throws IOException {
-    Objects.requireNonNull(values, "Hey! Values can't be null!");
+  protected Feature supportedFeature() {
+    return PACKAGE_MANAGERS;
+  }
+
+  @Override
+  protected Value fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Looking for package managers ...");
-    values.update(packageManagers(project));
-    return this;
+    return packageManagers(project);
   }
 
   /**
@@ -138,11 +141,6 @@ public class PackageManagement extends AbstractGitHubDataProvider {
    * @throws IOException If something went wrong.
    */
   private Value<PackageManagers> packageManagers(GitHubProject project) throws IOException {
-    Optional<Value> something = cache.get(project, PACKAGE_MANAGERS);
-    if (something.isPresent()) {
-      return something.get();
-    }
-
     PackageManagers possiblePackageManagers = new PackageManagers();
     for (Language language : languages(project).get()) {
       if (KNOWN_PACKAGE_MANAGERS.containsKey(language)) {
@@ -164,10 +162,7 @@ public class PackageManagement extends AbstractGitHubDataProvider {
       });
     }
 
-    Value<PackageManagers> value = PACKAGE_MANAGERS.value(packageManagers);
-    cache.put(project, value);
-
-    return value;
+    return PACKAGE_MANAGERS.value(packageManagers);
   }
 
   /**

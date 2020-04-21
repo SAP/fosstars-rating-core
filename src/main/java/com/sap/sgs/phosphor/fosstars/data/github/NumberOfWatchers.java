@@ -2,17 +2,16 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_WATCHERS_ON_GITHUB;
 
+import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
-import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
-import java.util.Optional;
 import org.kohsuke.github.GitHub;
 
 /**
  * This data provider returns a number of watchers for a project.
  */
-public class NumberOfWatchers extends AbstractGitHubDataProvider {
+public class NumberOfWatchers extends CachedSingleFeatureGitHubDataProvider {
 
   /**
    * Initializes a data provider.
@@ -24,10 +23,8 @@ public class NumberOfWatchers extends AbstractGitHubDataProvider {
   }
 
   @Override
-  protected NumberOfWatchers doUpdate(GitHubProject project, ValueSet values) throws IOException {
-    logger.info("Counting how many watchers the project has ...");
-    values.update(watchersOf(project));
-    return this;
+  protected Feature supportedFeature() {
+    return NUMBER_OF_WATCHERS_ON_GITHUB;
   }
 
   /**
@@ -37,16 +34,10 @@ public class NumberOfWatchers extends AbstractGitHubDataProvider {
    * @return The number of watchers.
    * @throws IOException If something went wrong.
    */
-  private Value<Integer> watchersOf(GitHubProject project) throws IOException {
-    Optional<Value> something = cache.get(project, NUMBER_OF_WATCHERS_ON_GITHUB);
-    if (something.isPresent()) {
-      return something.get();
-    }
-
-    Value<Integer> value = NUMBER_OF_WATCHERS_ON_GITHUB
-        .value(gitHubDataFetcher().repositoryFor(project, github).getSubscribersCount());
-
-    cache.put(project, value);
-    return value;
+  @Override
+  protected Value fetchValueFor(GitHubProject project) throws IOException {
+    logger.info("Counting how many watchers the project has ...");
+    return NUMBER_OF_WATCHERS_ON_GITHUB.value(
+        gitHubDataFetcher().repositoryFor(project, github).getSubscribersCount());
   }
 }

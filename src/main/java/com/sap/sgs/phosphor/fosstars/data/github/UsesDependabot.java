@@ -2,8 +2,8 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_DEPENDABOT;
 
+import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
-import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubDataFetcher;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
@@ -11,8 +11,6 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GHRepository;
@@ -28,7 +26,7 @@ import org.kohsuke.github.GitHub;
  * Next, the provider searches for commits from Dependabot in the commit history.
  * If the commits are found, then the provider also reports that the project uses Dependabot.</p>
  */
-public class UsesDependabot extends AbstractGitHubDataProvider {
+public class UsesDependabot extends CachedSingleFeatureGitHubDataProvider {
 
   /**
    * A path to Dependabot configuration file in a repository.
@@ -60,18 +58,21 @@ public class UsesDependabot extends AbstractGitHubDataProvider {
   }
 
   @Override
-  public UsesDependabot doUpdate(GitHubProject project, ValueSet values) throws IOException {
-    Objects.requireNonNull(values, "Hey! Values can't be null!");
+  protected Feature supportedFeature() {
+    return USES_DEPENDABOT;
+  }
+
+  @Override
+  protected Value fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Checking if the project uses Dependabot ...");
-    values.update(usesDependabot(project));
-    return this;
+    return usesDependabot(project);
   }
 
   /**
-   * Checks if a repository contains commits from Dependabot in its commit history.
+   * Checks if a repository contains commits from Dependabot in the commit history.
    *
-   * @param List of type {@link GHCommit} after a specific date.
-   * @return True if a commit from Dependabot was found, false otherwise.
+   * @param commits A list of commits after a specific date.
+   * @return True if at least one commit from Dependabot was found, false otherwise.
    */
   private boolean hasDependabotCommits(List<GHCommit> commits) {
     try {
@@ -121,20 +122,12 @@ public class UsesDependabot extends AbstractGitHubDataProvider {
    *         feature.
    */
   private Value<Boolean> usesDependabot(GitHubProject project) throws IOException {
-    Optional<Value> something = cache.get(project, USES_DEPENDABOT);
-    if (something.isPresent()) {
-      something.get();
-    }
-
     Date date = Date.from(Instant.now().minus(LATEST_MONTHS));
     GitHubDataFetcher fetcher = gitHubDataFetcher();
 
-    Value<Boolean> value = USES_DEPENDABOT.value(
+    return USES_DEPENDABOT.value(
         hasDependabotConfig(fetcher.repositoryFor(project, github))
             || hasDependabotCommits(fetcher.commitsAfter(date, project, github)));
-    cache.put(project, value);
-
-    return value;
   }
 
   private static boolean isDependabot(GHCommit commit) throws IOException {

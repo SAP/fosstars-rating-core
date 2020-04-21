@@ -2,17 +2,19 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
+import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
-import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
+import java.util.Set;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -29,7 +31,7 @@ import org.kohsuke.github.GitHub;
  *   <li>{@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#WORST_LGTM_GRADE}</li>
  * </ul>
  */
-public class LgtmDataProvider extends AbstractGitHubDataProvider {
+public class LgtmDataProvider extends GitHubCachingDataProvider {
 
   /**
    * For parsing JSON.
@@ -46,11 +48,14 @@ public class LgtmDataProvider extends AbstractGitHubDataProvider {
   }
 
   @Override
-  protected LgtmDataProvider doUpdate(GitHubProject project, ValueSet values) {
+  protected Set<Feature> supportedFeatures() {
+    return setOf(USES_LGTM, WORST_LGTM_GRADE);
+  }
+
+  @Override
+  protected Set<Value> fetchValuesFor(GitHubProject project) throws IOException {
     JsonNode json = lgtmProjectInfo(project);
-    values.update(usesLgtm(json));
-    values.update(worstLgtmGrade(json));
-    return this;
+    return setOf(usesLgtm(json), worstLgtmGrade(json));
   }
 
   /**
@@ -58,7 +63,7 @@ public class LgtmDataProvider extends AbstractGitHubDataProvider {
    *
    * @return The info about the project.
    */
-  private JsonNode lgtmProjectInfo(GitHubProject project) {
+  private JsonNode lgtmProjectInfo(GitHubProject project) throws IOException {
     try (CloseableHttpClient client = httpClient()) {
       String url = String.format("https://lgtm.com/api/v1.0/projects/g/%s", project.path());
       HttpGet httpGetRequest = new HttpGet(url);
@@ -66,9 +71,6 @@ public class LgtmDataProvider extends AbstractGitHubDataProvider {
       try (CloseableHttpResponse httpResponse = client.execute(httpGetRequest)) {
         return MAPPER.readTree(httpResponse.getEntity().getContent());
       }
-    } catch (IOException e) {
-      logger.warn("Couldn't fetch data from lgtm.com!", e);
-      return MAPPER.createObjectNode();
     }
   }
 

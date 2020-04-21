@@ -2,8 +2,8 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_VERIFIED_SIGNED_COMMITS;
 
+import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
-import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
@@ -13,7 +13,6 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GitHub;
@@ -23,7 +22,7 @@ import org.kohsuke.github.GitHub;
  * a density ratio compared against a percentage threshold
  * ({@link #SIGNED_COMMIT_PERCENTAGE_THRESHOLD}).
  */
-public class UsesSignedCommits extends AbstractGitHubDataProvider {
+public class UsesSignedCommits extends CachedSingleFeatureGitHubDataProvider {
 
   /**
    * The date after which all the commits would be considered.
@@ -46,20 +45,14 @@ public class UsesSignedCommits extends AbstractGitHubDataProvider {
   }
 
   @Override
-  protected UsesSignedCommits doUpdate(GitHubProject project, ValueSet values) {
+  protected Feature supportedFeature() {
+    return USES_VERIFIED_SIGNED_COMMITS;
+  }
+
+  @Override
+  protected Value fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out if the project uses verified signed commits ...");
-
-    Optional<Value> something = cache.get(project, USES_VERIFIED_SIGNED_COMMITS);
-    if (something.isPresent()) {
-      values.update(something.get());
-      return this;
-    }
-
-    Value<Boolean> signedCommits = usesSignedCommits(project);
-    values.update(signedCommits);
-    cache.put(project, signedCommits, tomorrow());
-
-    return this;
+    return usesSignedCommits(project);
   }
 
   /**
@@ -94,7 +87,7 @@ public class UsesSignedCommits extends AbstractGitHubDataProvider {
     int counter = yearCommits.size();
 
     List<GHCommit> verifiedCommits =
-        yearCommits.stream().filter(commit -> isCommitVerified(commit))
+        yearCommits.stream().filter(UsesSignedCommits::isCommitVerified)
             .collect(Collectors.toList());
     int signedCounter = verifiedCommits.size();
 

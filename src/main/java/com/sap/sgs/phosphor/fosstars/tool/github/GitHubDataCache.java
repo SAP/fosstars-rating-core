@@ -24,7 +24,7 @@ public class GitHubDataCache<T> implements DataCache<GitHubProject, T> {
   /**
    * This constant means that the value has no expiration date.
    */
-  public static final Date NO_EXPIRATION = null;
+  private static final Date NO_EXPIRATION = null;
 
   /**
    * A map of cache entries.
@@ -56,11 +56,21 @@ public class GitHubDataCache<T> implements DataCache<GitHubProject, T> {
 
   @Override
   public void put(GitHubProject project, T value, Date expiration) {
-    entries.put(project, new GitHubData<T>(value, expiration));
+    entries.put(project, new GitHubData<>(value, expiration));
   }
 
+  /**
+   * Returns a size of the cache.
+   */
   public int size() {
     return entries.size();
+  }
+
+  /**
+   * Returns the maximum size of the cache.
+   */
+  public int maxSize() {
+    return entries.maxSize();
   }
 
   @Override
@@ -81,7 +91,7 @@ public class GitHubDataCache<T> implements DataCache<GitHubProject, T> {
   }
 
   /**
-   * Clear cache.
+   * Clear the cache.
    */
   public void clear() {
     entries.clear();
@@ -109,7 +119,7 @@ public class GitHubDataCache<T> implements DataCache<GitHubProject, T> {
      * @param data from GitHub project.
      * @param expiration date decided from {@link GitHubDataCache}.
      */
-    public GitHubData(T data, Date expiration) {
+    private GitHubData(T data, Date expiration) {
       this.data = data;
       this.expiration = expiration;
     }
@@ -119,7 +129,7 @@ public class GitHubDataCache<T> implements DataCache<GitHubProject, T> {
      * 
      * @return true if expired. Otherwise, false.
      */
-    public boolean expired() {
+    private boolean expired() {
       Date now = new Date();
       return expiration != null && now.after(expiration);
     }
@@ -127,7 +137,7 @@ public class GitHubDataCache<T> implements DataCache<GitHubProject, T> {
     /**
      * Returns the cached GitHub data.
      */
-    public T get() {
+    private T get() {
       return data;
     }
   }

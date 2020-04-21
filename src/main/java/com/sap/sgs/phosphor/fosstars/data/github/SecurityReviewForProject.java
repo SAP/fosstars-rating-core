@@ -1,7 +1,10 @@
 package com.sap.sgs.phosphor.fosstars.data.github;
 
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SECURITY_REVIEWS_DONE;
+
 import com.sap.sgs.phosphor.fosstars.data.json.SecurityReviewStorage;
-import com.sap.sgs.phosphor.fosstars.model.ValueSet;
+import com.sap.sgs.phosphor.fosstars.model.Feature;
+import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.value.SecurityReviewsDoneValue;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
@@ -13,7 +16,7 @@ import org.kohsuke.github.GitHub;
  *       which contains info about known security teams.
  *       SecurityReviewForProject may be converted to a data provider.
  */
-public class SecurityReviewForProject extends AbstractGitHubDataProvider {
+public class SecurityReviewForProject extends CachedSingleFeatureGitHubDataProvider {
 
   /**
    * Where the info about security review is stored.
@@ -32,9 +35,13 @@ public class SecurityReviewForProject extends AbstractGitHubDataProvider {
   }
 
   @Override
-  protected SecurityReviewForProject doUpdate(GitHubProject project, ValueSet values) {
+  protected Feature supportedFeature() {
+    return SECURITY_REVIEWS_DONE;
+  }
+
+  @Override
+  protected Value fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out if any security review has been done for the project ...");
-    values.update(new SecurityReviewsDoneValue(storage.get(project.url())));
-    return this;
+    return new SecurityReviewsDoneValue(storage.get(project.url()));
   }
 }

@@ -4,7 +4,8 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SE
 
 import com.sap.sgs.phosphor.fosstars.data.UserCallback;
 import com.sap.sgs.phosphor.fosstars.data.json.SecurityTeamStorage;
-import com.sap.sgs.phosphor.fosstars.model.ValueSet;
+import com.sap.sgs.phosphor.fosstars.model.Feature;
+import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import org.kohsuke.github.GitHub;
@@ -14,7 +15,7 @@ import org.kohsuke.github.GitHub;
  * project belongs to an organization which provides a security team such as Apache Software
  * Foundation. Next, it tries to ask a user if {@link UserCallback} is available.
  */
-public class HasSecurityTeam extends AbstractGitHubDataProvider {
+public class HasSecurityTeam extends CachedSingleFeatureGitHubDataProvider {
 
   /**
    * Where info about security teams are stored.
@@ -32,15 +33,16 @@ public class HasSecurityTeam extends AbstractGitHubDataProvider {
   }
 
   @Override
-  protected HasSecurityTeam doUpdate(GitHubProject project, ValueSet values) {
+  protected Feature supportedFeature() {
+    return HAS_SECURITY_TEAM;
+  }
+
+  @Override
+  protected Value fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out if the project has a security team ...");
-
     if (securityTeam.existsFor(project.url())) {
-      values.update(HAS_SECURITY_TEAM.value(true));
-    } else {
-      values.update(HAS_SECURITY_TEAM.unknown());
+      HAS_SECURITY_TEAM.value(true);
     }
-
-    return this;
+    return HAS_SECURITY_TEAM.unknown();
   }
 }

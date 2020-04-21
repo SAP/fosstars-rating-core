@@ -23,7 +23,7 @@ public class VulnerabilitiesInProject extends AbstractFeature<Vulnerabilities> {
   /**
    * Initializes a new feature.
    */
-  VulnerabilitiesInProject() {
+  public VulnerabilitiesInProject() {
     super("Info about vulnerabilities in open-source project");
   }
 

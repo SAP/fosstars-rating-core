@@ -1,10 +1,8 @@
 package com.sap.sgs.phosphor.fosstars.data.github;
 
-import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES;
-
+import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
-import com.sap.sgs.phosphor.fosstars.model.ValueSet;
-import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
+import com.sap.sgs.phosphor.fosstars.model.feature.BooleanFeature;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,11 +18,15 @@ import org.kohsuke.github.GitHub;
 
 /**
  * This data provider checks if an open-source project uses OWASP Dependency Check Maven plugin to
- * scan dependencies for known vulnerabilities. If it does, the provider sets {@link
- * com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#SCANS_FOR_VULNERABLE_DEPENDENCIES}
- * to true.
+ * scan dependencies for known vulnerabilities.
  */
-public class UsesOwaspDependencyCheck extends AbstractGitHubDataProvider {
+public class UsesOwaspDependencyCheck extends CachedSingleFeatureGitHubDataProvider {
+
+  /**
+   * A feature which is filled out by the provider.
+   */
+  public static final Feature<Boolean> USES_OWASP_DEPENDENCY_CHECK
+      = new BooleanFeature("If a project uses OWASP Dependency Check");
 
   /**
    * Initializes a data provider.
@@ -36,17 +38,16 @@ public class UsesOwaspDependencyCheck extends AbstractGitHubDataProvider {
   }
 
   @Override
-  protected UsesOwaspDependencyCheck doUpdate(GitHubProject project, ValueSet values)
-      throws IOException {
+  protected Feature supportedFeature() {
+    return USES_OWASP_DEPENDENCY_CHECK;
+  }
 
+  @Override
+  protected Value<Boolean> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out if the project uses OWASP Dependency Check ...");
-
     GHRepository repository = gitHubDataFetcher().repositoryFor(project, github);
     boolean answer = checkMaven(repository) || checkGradle(repository);
-    Value<Boolean> value = new BooleanValue(SCANS_FOR_VULNERABLE_DEPENDENCIES, answer);
-    values.update(value);
-
-    return this;
+    return USES_OWASP_DEPENDENCY_CHECK.value(answer);
   }
 
   /**

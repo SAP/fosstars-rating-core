@@ -2,10 +2,13 @@ package com.sap.sgs.phosphor.fosstars.data.interactive;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_TEAM;
 
+import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.sgs.phosphor.fosstars.tool.YesNoSkipQuestion;
 import com.sap.sgs.phosphor.fosstars.tool.YesNoSkipQuestion.Answer;
+import java.util.Collections;
+import java.util.Set;
 
 /**
  * This data provider asks a user about security teams.
@@ -35,5 +38,10 @@ public class AskAboutSecurityTeam<T> extends AbstractInteractiveDataProvider<T> 
     // TODO: store the answer in the SecurityTeamStorage
 
     return this;
+  }
+
+  @Override
+  protected Set<Feature> supportedFeatures() {
+    return Collections.singleton(HAS_SECURITY_TEAM);
   }
 }

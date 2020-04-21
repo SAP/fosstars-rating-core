@@ -1,12 +1,10 @@
 package com.sap.sgs.phosphor.fosstars.tool.github;
 
-import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES;
-
-import com.sap.sgs.phosphor.fosstars.data.CompositeDataProvider;
 import com.sap.sgs.phosphor.fosstars.data.DataProvider;
 import com.sap.sgs.phosphor.fosstars.data.github.HasCompanySupport;
 import com.sap.sgs.phosphor.fosstars.data.github.HasSecurityPolicy;
 import com.sap.sgs.phosphor.fosstars.data.github.HasSecurityTeam;
+import com.sap.sgs.phosphor.fosstars.data.github.InfoAboutVulnerabilities;
 import com.sap.sgs.phosphor.fosstars.data.github.IsApache;
 import com.sap.sgs.phosphor.fosstars.data.github.IsEclipse;
 import com.sap.sgs.phosphor.fosstars.data.github.LgtmDataProvider;
@@ -15,12 +13,9 @@ import com.sap.sgs.phosphor.fosstars.data.github.NumberOfContributors;
 import com.sap.sgs.phosphor.fosstars.data.github.NumberOfStars;
 import com.sap.sgs.phosphor.fosstars.data.github.NumberOfWatchers;
 import com.sap.sgs.phosphor.fosstars.data.github.ProjectStarted;
+import com.sap.sgs.phosphor.fosstars.data.github.ScansForVulnerableDependencies;
 import com.sap.sgs.phosphor.fosstars.data.github.SecurityReviewForProject;
-import com.sap.sgs.phosphor.fosstars.data.github.UnpatchedVulnerabilities;
-import com.sap.sgs.phosphor.fosstars.data.github.UsesOwaspDependencyCheck;
 import com.sap.sgs.phosphor.fosstars.data.github.UsesSignedCommits;
-import com.sap.sgs.phosphor.fosstars.data.github.UsesSnykDependencyCheck;
-import com.sap.sgs.phosphor.fosstars.data.github.VulnerabilitiesFromNvd;
 import com.sap.sgs.phosphor.fosstars.data.interactive.AskAboutSecurityTeam;
 import com.sap.sgs.phosphor.fosstars.data.interactive.AskAboutUnpatchedVulnerabilities;
 import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
@@ -108,16 +103,14 @@ class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
         new HasCompanySupport(github),
         new HasSecurityPolicy(github),
         new SecurityReviewForProject(github),
-        new UnpatchedVulnerabilities(github),
-        new VulnerabilitiesFromNvd(github),
+        new InfoAboutVulnerabilities(github),
         new IsApache(github),
         new IsEclipse(github),
         new LgtmDataProvider(github),
         new UsesSignedCommits(github),
-        new CompositeDataProvider<>(
-            new UsesOwaspDependencyCheck(github),
-            new UsesSnykDependencyCheck(github))
-            .stopWhenFilledOut(SCANS_FOR_VULNERABLE_DEPENDENCIES),
+        new ScansForVulnerableDependencies(github),
+
+        // currently interactive data provider have to be added to the end, see issue #133
         new AskAboutSecurityTeam<>(),
         new AskAboutUnpatchedVulnerabilities<>()
     );

@@ -7,6 +7,7 @@ import static com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.UNKNOWN_FI
 import static com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.UNKNOWN_INTRODUCED_DATE;
 import static com.sap.sgs.phosphor.fosstars.tool.YesNoQuestion.Answer.YES;
 
+import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.CVSS;
@@ -16,6 +17,8 @@ import com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.Resolution;
 import com.sap.sgs.phosphor.fosstars.tool.InputURL;
 import com.sap.sgs.phosphor.fosstars.tool.YesNoQuestion;
 import com.sap.sgs.phosphor.fosstars.tool.YesNoQuestion.Answer;
+import java.util.Collections;
+import java.util.Set;
 
 /**
  * This data provider asks a user about unpatched vulnerabilities.
@@ -61,5 +64,10 @@ public class AskAboutUnpatchedVulnerabilities<T> extends AbstractInteractiveData
    */
   private static Value<Vulnerabilities> knownVulnerabilities(ValueSet values) {
     return values.of(VULNERABILITIES).orElseGet(() -> VULNERABILITIES.value(new Vulnerabilities()));
+  }
+
+  @Override
+  protected Set<Feature> supportedFeatures() {
+    return Collections.singleton(VULNERABILITIES);
   }
 }

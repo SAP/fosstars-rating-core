@@ -2,9 +2,7 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.LANGUAGES;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.PACKAGE_MANAGERS;
-import static com.sap.sgs.phosphor.fosstars.model.value.Language.CPP;
 import static com.sap.sgs.phosphor.fosstars.model.value.Language.JAVA;
-import static com.sap.sgs.phosphor.fosstars.model.value.Language.JAVASCRIPT;
 import static com.sap.sgs.phosphor.fosstars.model.value.Language.OTHER;
 import static com.sap.sgs.phosphor.fosstars.model.value.PackageManager.NPM;
 import static org.junit.Assert.assertEquals;
@@ -12,7 +10,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
@@ -25,9 +22,12 @@ import com.sap.sgs.phosphor.fosstars.model.value.PackageManagers;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubDataFetcher;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectValueCache;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import org.junit.Test;
 import org.kohsuke.github.GHContent;
@@ -38,19 +38,27 @@ public class PackageManagementTest {
 
   @Test
   public void update() throws IOException {
-    ProgrammingLanguages programmingLanguagesProvider = mock(ProgrammingLanguages.class);
-    when(programmingLanguagesProvider.update(any(), any())).thenAnswer(invocation -> {
-      ValueSet values = (ValueSet) invocation.getArguments()[1];
-      values.update(LANGUAGES.value(new Languages(JAVASCRIPT, CPP)));
-      return null;
-    });
+    final GitHubProjectValueCache cache = new GitHubProjectValueCache();
+    final GitHub github = mock(GitHub.class);
+    final GitHubProject project = new GitHubProject("org", "test");
 
-    GitHub github = mock(GitHub.class);
-    PackageManagement provider = new PackageManagement(github);
-    provider = spy(provider);
-    when(provider.languagesProvider()).thenReturn(programmingLanguagesProvider);
+    Map<String, Long> languagesMap = new HashMap<>();
+    languagesMap.put("Javascript", 42L);
+    languagesMap.put("C++", 1001L);
+
+    final GHRepository repository = mock(GHRepository.class);
+    when(repository.listLanguages()).thenReturn(languagesMap);
+
+    final GitHubDataFetcher fetcher = mock(GitHubDataFetcher.class);
+    when(fetcher.repositoryFor(project, github)).thenReturn(repository);
+
+    ProgrammingLanguages programmingLanguagesProvider = new ProgrammingLanguages(github);
+    programmingLanguagesProvider.set(cache);
+    programmingLanguagesProvider = spy(programmingLanguagesProvider);
+    when(programmingLanguagesProvider.gitHubDataFetcher()).thenReturn(fetcher);
 
     final List<GHContent> contents = new ArrayList<>();
+    when(repository.getDirectoryContent("/")).thenReturn(contents);
 
     GHContent src = mock(GHContent.class);
     when(src.getName()).thenReturn("src");
@@ -65,14 +73,11 @@ public class PackageManagementTest {
     when(packageJson.getSize()).thenReturn(1500L);
     contents.add(packageJson);
 
-    GHRepository repository = mock(GHRepository.class);
-    when(repository.getDirectoryContent("/")).thenReturn(contents);
-
-    GitHubProject project = new GitHubProject("org", "test");
-
-    GitHubDataFetcher fetcher = mock(GitHubDataFetcher.class);
+    PackageManagement provider = new PackageManagement(github);
+    provider.set(cache);
+    provider = spy(provider);
+    when(provider.languagesProvider()).thenReturn(programmingLanguagesProvider);
     when(provider.gitHubDataFetcher()).thenReturn(fetcher);
-    when(fetcher.repositoryFor(project, github)).thenReturn(repository);
 
     ValueSet values = new ValueHashSet();
     provider.update(project, values);
@@ -110,15 +115,26 @@ public class PackageManagementTest {
 
   @Test
   public void languages() throws IOException {
-    ProgrammingLanguages programmingLanguagesProvider = mock(ProgrammingLanguages.class);
-    when(programmingLanguagesProvider.update(any(), any())).thenAnswer(invocation -> {
-      ValueSet values = (ValueSet) invocation.getArguments()[1];
-      values.update(LANGUAGES.value(new Languages(JAVA, OTHER)));
-      return null;
-    });
+    final GitHubProjectValueCache cache = new GitHubProjectValueCache();
+    final GitHub github = mock(GitHub.class);
 
-    GitHub github = mock(GitHub.class);
+    Map<String, Long> languagesMap = new HashMap<>();
+    languagesMap.put("Java", 42L);
+    languagesMap.put("Super language", 1001L);
+
+    final GHRepository repository = mock(GHRepository.class);
+    when(repository.listLanguages()).thenReturn(languagesMap);
+
+    final GitHubDataFetcher fetcher = mock(GitHubDataFetcher.class);
+    when(fetcher.repositoryFor(any(), any())).thenReturn(repository);
+
+    ProgrammingLanguages programmingLanguagesProvider = new ProgrammingLanguages(github);
+    programmingLanguagesProvider.set(cache);
+    programmingLanguagesProvider = spy(programmingLanguagesProvider);
+    when(programmingLanguagesProvider.gitHubDataFetcher()).thenReturn(fetcher);
+
     PackageManagement provider = new PackageManagement(github);
+    provider.set(cache);
     provider = spy(provider);
     when(provider.languagesProvider()).thenReturn(programmingLanguagesProvider);
 
