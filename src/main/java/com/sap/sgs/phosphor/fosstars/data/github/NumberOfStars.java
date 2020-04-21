@@ -2,17 +2,16 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_GITHUB_STARS;
 
+import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
-import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
-import java.util.Optional;
 import org.kohsuke.github.GitHub;
 
 /**
  * This data provider returns a number of stars for a project.
  */
-public class NumberOfStars extends AbstractGitHubDataProvider {
+public class NumberOfStars extends CachedSingleFeatureGitHubDataProvider {
 
   /**
    * Initializes a data provider.
@@ -24,10 +23,8 @@ public class NumberOfStars extends AbstractGitHubDataProvider {
   }
 
   @Override
-  protected NumberOfStars doUpdate(GitHubProject project, ValueSet values) throws IOException {
-    logger.info("Counting how many stars the project has ...");
-    values.update(starsOf(project));
-    return this;
+  protected Feature supportedFeature() {
+    return NUMBER_OF_GITHUB_STARS;
   }
 
   /**
@@ -37,16 +34,11 @@ public class NumberOfStars extends AbstractGitHubDataProvider {
    * @return The number of stars.
    * @throws IOException If something went wrong.
    */
-  private Value<Integer> starsOf(GitHubProject project) throws IOException {
-    Optional<Value> something = cache.get(project, NUMBER_OF_GITHUB_STARS);
-    if (something.isPresent()) {
-      return something.get();
-    }
-
-    Value<Integer> value = NUMBER_OF_GITHUB_STARS
-        .value(gitHubDataFetcher().repositoryFor(project, github).getStargazersCount());
-
-    cache.put(project, value);
-    return value;
+  @Override
+  protected Value fetchValueFor(GitHubProject project) throws IOException {
+    logger.info("Counting how many stars the project has ...");
+    return NUMBER_OF_GITHUB_STARS.value(
+        gitHubDataFetcher().repositoryFor(project, github).getStargazersCount());
   }
+
 }

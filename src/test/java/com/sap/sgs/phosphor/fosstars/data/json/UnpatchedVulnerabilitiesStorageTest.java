@@ -41,7 +41,7 @@ public class UnpatchedVulnerabilitiesStorageTest {
     try {
       storage.store(filename);
       storage = UnpatchedVulnerabilitiesStorage.load(filename);
-      Vulnerabilities vulnerabilities = storage.get(projectUrl);
+      Vulnerabilities vulnerabilities = storage.getFor(projectUrl);
       assertEquals(1, vulnerabilities.entries().size());
       assertTrue(vulnerabilities.entries().contains(new Vulnerability("https://bugtracker/1")));
     } finally {
@@ -52,7 +52,7 @@ public class UnpatchedVulnerabilitiesStorageTest {
   @Test
   public void testApachePOI() throws IOException {
     UnpatchedVulnerabilitiesStorage storage = UnpatchedVulnerabilitiesStorage.load();
-    Vulnerabilities vulnerabilities = storage.get("https://github.com/apache/poi");
+    Vulnerabilities vulnerabilities = storage.getFor("https://github.com/apache/poi");
     assertNotNull(vulnerabilities);
     assertTrue(vulnerabilities.entries().isEmpty());
   }
@@ -60,7 +60,7 @@ public class UnpatchedVulnerabilitiesStorageTest {
   @Test
   public void testApacheBatik() throws IOException {
     UnpatchedVulnerabilitiesStorage storage = UnpatchedVulnerabilitiesStorage.load();
-    Vulnerabilities vulnerabilities = storage.get("https://github.com/apache/batik");
+    Vulnerabilities vulnerabilities = storage.getFor("https://github.com/apache/batik");
     assertNotNull(vulnerabilities);
     assertEquals(1, vulnerabilities.entries().size());
   }
@@ -68,7 +68,7 @@ public class UnpatchedVulnerabilitiesStorageTest {
   @Test
   public void testOdata4j() throws IOException {
     UnpatchedVulnerabilitiesStorage storage = UnpatchedVulnerabilitiesStorage.load();
-    Vulnerabilities vulnerabilities = storage.get("https://github.com/odata4j/odata4j");
+    Vulnerabilities vulnerabilities = storage.getFor("https://github.com/odata4j/odata4j");
     assertNotNull(vulnerabilities);
     assertEquals(3, vulnerabilities.entries().size());
   }

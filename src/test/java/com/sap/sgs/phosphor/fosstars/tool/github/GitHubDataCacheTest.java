@@ -1,56 +1,61 @@
 package com.sap.sgs.phosphor.fosstars.tool.github;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
-import java.io.IOException;
 import org.junit.Test;
 
 public class GitHubDataCacheTest {
 
   @Test
-  public void testPut() throws IOException {
-    GitHubDataCache<String> gitHubDataCache = new GitHubDataCache<String>();
+  public void testPut() {
+    GitHubDataCache<String> cache = new GitHubDataCache<>();
     
-    String test = "test1";
-    GitHubProject project = new GitHubProject(new GitHubOrganization(test), test);
-    gitHubDataCache.put(project, test);
-    assertTrue(gitHubDataCache.size() == 1);
-    assertTrue(gitHubDataCache.get(project).get().equals(test));
+    String data = "data to be cached";
+    GitHubProject project = new GitHubProject(new GitHubOrganization(data), data);
+    cache.put(project, data);
+    assertEquals(1, cache.size());
+    String cached = cache.get(project).orElseThrow(RuntimeException::new);
+    assertEquals(data, cached);
 
-    GitHubProject project2 = new GitHubProject(new GitHubOrganization(test), test);
-    test = "test2";
-    gitHubDataCache.put(project2, test);
-    assertTrue(gitHubDataCache.size() == 1);
-    assertTrue(gitHubDataCache.get(project2).get().equals(test));
+    // fill out the cache
+    for (int i = 1, cacheSize = cache.size(); cacheSize < cache.maxSize(); cacheSize++, i++) {
+      project = new GitHubProject(String.format("org%d", i), String.format("project%d", i));
+      data = String.format("data%d", i);
+      cache.put(project, data);
+    }
 
-    test = "test3";
-    GitHubProject project3 = new GitHubProject(new GitHubOrganization(test), test);
-    gitHubDataCache.put(project3, test);
-    assertTrue(gitHubDataCache.size() == 2);
-    assertTrue(gitHubDataCache.get(project3).get().equals(test));
+    assertEquals(cache.size(), cache.maxSize());
 
-    test = "test4";
-    GitHubProject project4 = new GitHubProject(new GitHubOrganization(test), test);
-    gitHubDataCache.put(project4, test);
-    assertTrue(gitHubDataCache.size() == 3);
-    assertTrue(gitHubDataCache.get(project4).get().equals(test));
+    // try to add one more item
+    project = new GitHubProject("one", "more");
+    data = "extra data";
+    cache.put(project, data);
+    assertEquals(cache.size(), cache.maxSize());
+    cached = cache.get(project).orElseThrow(RuntimeException::new);
+    assertEquals(data, cached);
+  }
 
-    test = "test5";
-    GitHubProject project5 = new GitHubProject(new GitHubOrganization(test), test);
-    gitHubDataCache.put(project5, test);
-    assertTrue(gitHubDataCache.size() == 4);
-    assertTrue(gitHubDataCache.get(project5).get().equals(test));
+  @Test
+  public void testClear() {
+    GitHubDataCache<String> cache = new GitHubDataCache<>();
 
-    test = "test6";
-    GitHubProject project6 = new GitHubProject(new GitHubOrganization(test), test);
-    gitHubDataCache.put(project6, test);
-    assertTrue(gitHubDataCache.size() == 5);
-    assertTrue(gitHubDataCache.get(project6).get().equals(test));
+    String data = "data to be cached";
+    GitHubProject project = new GitHubProject(new GitHubOrganization(data), data);
+    cache.put(project, data);
+    assertEquals(1, cache.size());
+    String cached = cache.get(project).orElseThrow(RuntimeException::new);
+    assertEquals(data, cached);
 
-    test = "test7";
-    GitHubProject project7 = new GitHubProject(new GitHubOrganization(test), test);
-    gitHubDataCache.put(project7, test);
-    assertTrue(gitHubDataCache.size() == 5);
-    assertTrue(gitHubDataCache.get(project7).get().equals(test));
+    // fill out the cache
+    for (int i = 1, cacheSize = cache.size(); cacheSize < cache.maxSize(); cacheSize++, i++) {
+      project = new GitHubProject(String.format("org%d", i), String.format("project%d", i));
+      data = String.format("data%d", i);
+      cache.put(project, data);
+    }
+
+    assertEquals(cache.size(), cache.maxSize());
+
+    cache.clear();
+    assertEquals(0, cache.size());
   }
 }

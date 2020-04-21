@@ -2,11 +2,10 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
 
+import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
-import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
-import java.util.Optional;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
@@ -15,7 +14,7 @@ import org.kohsuke.github.GitHub;
  * This data provider check if an open-source project has a security policy which describes how
  * vulnerabilities should be reported and fixed.
  */
-public class HasSecurityPolicy extends AbstractGitHubDataProvider {
+public class HasSecurityPolicy extends CachedSingleFeatureGitHubDataProvider {
 
   /**
    * A minimal number of characters in a security policy to consider it valid.
@@ -44,18 +43,17 @@ public class HasSecurityPolicy extends AbstractGitHubDataProvider {
   }
 
   @Override
-  protected HasSecurityPolicy doUpdate(GitHubProject project, ValueSet values) throws IOException {
+  protected Feature supportedFeature() {
+    return HAS_SECURITY_POLICY;
+  }
+
+  @Override
+  protected Value fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out if the project has a security policy ...");
-    values.update(hasSecurityPolicy(project));
-    return this;
+    return hasSecurityPolicy(project);
   }
 
   private Value<Boolean> hasSecurityPolicy(GitHubProject project) throws IOException {
-    Optional<Value> something = cache.get(project, HAS_SECURITY_POLICY);
-    if (something.isPresent()) {
-      return something.get();
-    }
-
     boolean found = false;
     for (String path : POLICY_LOCATIONS) {
       if (exists(gitHubDataFetcher().repositoryFor(project, github), path)) {
@@ -64,10 +62,7 @@ public class HasSecurityPolicy extends AbstractGitHubDataProvider {
       }
     }
 
-    Value<Boolean> value = HAS_SECURITY_POLICY.value(found);
-    cache.put(project, value);
-
-    return value;
+    return HAS_SECURITY_POLICY.value(found);
   }
 
   /**

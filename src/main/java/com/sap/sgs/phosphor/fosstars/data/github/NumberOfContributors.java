@@ -2,14 +2,12 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS;
 
+import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
-import com.sap.sgs.phosphor.fosstars.model.ValueSet;
-import com.sap.sgs.phosphor.fosstars.model.value.IntegerValue;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHUser;
@@ -21,7 +19,7 @@ import org.kohsuke.github.GitUser;
  * is an author of a commit or a person who committed the commit. The provider iterates over all
  * commits which have been made for lat 3 months, and collect unique login names of contributors.
  */
-public class NumberOfContributors extends AbstractGitHubDataProvider {
+public class NumberOfContributors extends CachedSingleFeatureGitHubDataProvider {
 
   /**
    * This constant means that no user found.
@@ -43,16 +41,15 @@ public class NumberOfContributors extends AbstractGitHubDataProvider {
   }
 
   @Override
-  protected NumberOfContributors doUpdate(GitHubProject project, ValueSet values)
-      throws IOException {
+  protected Feature supportedFeature() {
+    return NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS;
+  }
+
+  @Override
+  protected Value fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Counting how many people contributed to the project in the last three months ...");
 
-    Optional<Value> something = cache.get(project, NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS);
-    if (something.isPresent()) {
-      values.update(something.get());
-      return this;
-    }
-
+    // TODO: define a date in a modern way
     Date date = new Date(System.currentTimeMillis() - DELTA);
     Set<String> contributors = new HashSet<>();
     for (GHCommit commit : gitHubDataFetcher().commitsAfter(date, project, github)) {
@@ -61,12 +58,7 @@ public class NumberOfContributors extends AbstractGitHubDataProvider {
     }
     contributors.remove(UNKNOWN_USER);
 
-    Value<Integer> numberOfContributors =
-        new IntegerValue(NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS, contributors.size());
-    values.update(numberOfContributors);
-    cache.put(project, numberOfContributors, tomorrow());
-
-    return this;
+    return NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(contributors.size());
   }
 
   /**

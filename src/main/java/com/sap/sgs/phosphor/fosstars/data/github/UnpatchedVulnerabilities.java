@@ -1,26 +1,29 @@
 package com.sap.sgs.phosphor.fosstars.data.github;
 
-import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
-
 import com.sap.sgs.phosphor.fosstars.data.json.UnpatchedVulnerabilitiesStorage;
+import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
-import com.sap.sgs.phosphor.fosstars.model.ValueSet;
+import com.sap.sgs.phosphor.fosstars.model.feature.oss.VulnerabilitiesInProject;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import org.kohsuke.github.GitHub;
 
 /**
- * This data provider tries to figure out if an open-source project has any unpatched
- * vulnerabilities.
- * TODO: The data provider should use the cache.
+ * This data provider tries to figure out if an open-source project has unpatched vulnerabilities.
  */
-public class UnpatchedVulnerabilities extends AbstractGitHubDataProvider {
+public class UnpatchedVulnerabilities extends CachedSingleFeatureGitHubDataProvider {
+
+  /**
+   * A feature that hold info about unpatched vulnerabilities.
+   */
+  public static final Feature<Vulnerabilities> UNPATCHED_VULNERABILITIES
+      = new VulnerabilitiesInProject();
 
   /**
    * A storage of unpatched vulnerabilities.
    */
-  private final UnpatchedVulnerabilitiesStorage storage;
+  private final UnpatchedVulnerabilitiesStorage unpatchedVulnerabilities;
 
   /**
    * Initializes a data provider.
@@ -30,30 +33,17 @@ public class UnpatchedVulnerabilities extends AbstractGitHubDataProvider {
    */
   public UnpatchedVulnerabilities(GitHub github) throws IOException {
     super(github);
-    storage = UnpatchedVulnerabilitiesStorage.load();
+    unpatchedVulnerabilities = UnpatchedVulnerabilitiesStorage.load();
   }
 
   @Override
-  protected UnpatchedVulnerabilities doUpdate(GitHubProject project, ValueSet values) {
-    logger.info("Figuring out if the project has any unpatched vulnerability ...");
-
-    Vulnerabilities unpatchedVulnerabilities = storage.get(project.url());
-    Value<Vulnerabilities> vulnerabilities = knownVulnerabilities(values);
-    vulnerabilities.get().add(unpatchedVulnerabilities);
-    values.update(vulnerabilities);
-
-    return this;
+  protected Feature supportedFeature() {
+    return UNPATCHED_VULNERABILITIES;
   }
 
-  /**
-   * Searches for
-   * {@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#VULNERABILITIES}
-   * feature a set of values.
-   *
-   * @param values The set of value.
-   * @return An existing value for the feature, or an empty value otherwise.
-   */
-  private static Value<Vulnerabilities> knownVulnerabilities(ValueSet values) {
-    return values.of(VULNERABILITIES).orElseGet(() -> VULNERABILITIES.value(new Vulnerabilities()));
+  @Override
+  protected Value fetchValueFor(GitHubProject project) {
+    logger.info("Figuring out if the project has any unpatched vulnerability ...");
+    return UNPATCHED_VULNERABILITIES.value(unpatchedVulnerabilities.getFor(project.url()));
   }
 }

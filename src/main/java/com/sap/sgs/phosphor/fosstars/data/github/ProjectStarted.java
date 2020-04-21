@@ -2,9 +2,8 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.PROJECT_START_DATE;
 
+import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
-import com.sap.sgs.phosphor.fosstars.model.ValueSet;
-import com.sap.sgs.phosphor.fosstars.model.value.DateValue;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.util.Date;
@@ -16,7 +15,8 @@ import org.kohsuke.github.GitHub;
  * This data provider estimates a date when a project was created by the date when the repository
  * was created.
  */
-public class ProjectStarted extends FirstCommit {
+// TODO: don't extend FirstCommit
+public class ProjectStarted extends CachedSingleFeatureGitHubDataProvider {
 
   /**
    * Initializes a data provider.
@@ -28,10 +28,13 @@ public class ProjectStarted extends FirstCommit {
   }
 
   @Override
-  public ProjectStarted doUpdate(GitHubProject project, ValueSet values) throws IOException {
-    logger.info("Figuring out when the project started ...");
+  protected Feature supportedFeature() {
+    return PROJECT_START_DATE;
+  }
 
-    Value<Date> projectStarted = PROJECT_START_DATE.unknown();
+  @Override
+  protected Value fetchValueFor(GitHubProject project) throws IOException {
+    logger.info("Figuring out when the project started ...");
 
     Optional<GHCommit> firstCommit = gitHubDataFetcher().firstCommitFor(project, github);
     Date firstCommitDate = firstCommit.isPresent() ? firstCommit.get().getCommitDate() : null;
@@ -39,12 +42,11 @@ public class ProjectStarted extends FirstCommit {
 
     if (firstCommitDate != null && repositoryCreated != null
         && firstCommitDate.before(repositoryCreated)) {
-      projectStarted = new DateValue(PROJECT_START_DATE, firstCommitDate);
+      return PROJECT_START_DATE.value(firstCommitDate);
     } else if (repositoryCreated != null) {
-      projectStarted = new DateValue(PROJECT_START_DATE, repositoryCreated);
+      return PROJECT_START_DATE.value(repositoryCreated);
     }
 
-    values.update(projectStarted);
-    return this;
+    return PROJECT_START_DATE.unknown();
   }
 }

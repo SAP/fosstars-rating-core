@@ -2,6 +2,8 @@ package com.sap.sgs.phosphor.fosstars.tool.github;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -21,7 +23,7 @@ public class GitHubDataFetcher {
   /**
    * The singleton instance.
    */
-  private static GitHubDataFetcher INSTANCE;
+  private static final GitHubDataFetcher INSTANCE = new GitHubDataFetcher();
 
   /**
    * {@link Comparator} which compares {@link Date} object.
@@ -37,12 +39,12 @@ public class GitHubDataFetcher {
   /**
    * A limited capacity cache to store all the commits of a {@link GitHubProject}.
    */
-  public final GitHubDataCache<List<GHCommit>> commitsCache = new GitHubDataCache<>();
+  final GitHubDataCache<List<GHCommit>> commitsCache = new GitHubDataCache<>();
 
   /**
    * A limited capacity cache to store the repository of a {@link GitHubProject}.
    */
-  public final GitHubDataCache<GHRepository> repositoryCache = new GitHubDataCache<>();
+  final GitHubDataCache<GHRepository> repositoryCache = new GitHubDataCache<>();
 
   /**
    * A private constructor for singleton pattern.
@@ -57,9 +59,6 @@ public class GitHubDataFetcher {
    * @return instance of this data pull helper.
    */
   public static GitHubDataFetcher instance() {
-    if (INSTANCE == null) {
-      INSTANCE = new GitHubDataFetcher();
-    }
     return INSTANCE;
   }
   
@@ -82,7 +81,7 @@ public class GitHubDataFetcher {
 
     List<GHCommit> commits = new ArrayList<>(commitsFor(repositoryFor(project, github)));
     commits.sort(BY_COMMIT_DATE.reversed());
-    commitsCache.put(project, commits, tomorrow());
+    commitsCache.put(project, commits, expiration());
     return commits;
   }
 
@@ -113,7 +112,7 @@ public class GitHubDataFetcher {
     }
 
     GHRepository repository = github.getRepository(project.path());
-    repositoryCache.put(project, repository, tomorrow());
+    repositoryCache.put(project, repository, expiration());
     return repository;
   }
 
@@ -158,9 +157,9 @@ public class GitHubDataFetcher {
   }
 
   /**
-   * Returns a date for tomorrow.
+   * Returns an expiration date for cache entries.
    */
-  private static Date tomorrow() {
-    return new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000L);
+  protected Date expiration() {
+    return Date.from(Instant.now().plus(1, ChronoUnit.DAYS)); // tomorrow
   }
 }

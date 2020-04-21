@@ -3,7 +3,8 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
 
 import com.sap.sgs.phosphor.fosstars.data.json.CompanySupportStorage;
-import com.sap.sgs.phosphor.fosstars.model.ValueSet;
+import com.sap.sgs.phosphor.fosstars.model.Feature;
+import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import org.kohsuke.github.GitHub;
@@ -11,7 +12,7 @@ import org.kohsuke.github.GitHub;
 /**
  * This data provider check if an open-source project is supported by a company.
  */
-public class HasCompanySupport extends AbstractGitHubDataProvider {
+public class HasCompanySupport extends CachedSingleFeatureGitHubDataProvider {
 
   /**
    * Where the info about open-source projects is stored.
@@ -30,9 +31,13 @@ public class HasCompanySupport extends AbstractGitHubDataProvider {
   }
 
   @Override
-  protected HasCompanySupport doUpdate(GitHubProject project, ValueSet values) {
+  protected Feature supportedFeature() {
+    return SUPPORTED_BY_COMPANY;
+  }
+
+  @Override
+  protected Value fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out if the project is supported by a company ...");
-    values.update(SUPPORTED_BY_COMPANY.value(company.supports(project.url())));
-    return this;
+    return SUPPORTED_BY_COMPANY.value(company.supports(project.url()));
   }
 }

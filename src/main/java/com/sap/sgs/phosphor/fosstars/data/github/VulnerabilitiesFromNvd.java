@@ -1,11 +1,11 @@
 package com.sap.sgs.phosphor.fosstars.data.github;
 
-import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.date;
 import static com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.UNKNOWN_INTRODUCED_DATE;
 
+import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
-import com.sap.sgs.phosphor.fosstars.model.ValueSet;
+import com.sap.sgs.phosphor.fosstars.model.feature.oss.VulnerabilitiesInProject;
 import com.sap.sgs.phosphor.fosstars.model.value.CVSS;
 import com.sap.sgs.phosphor.fosstars.model.value.Reference;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
@@ -27,11 +27,14 @@ import org.kohsuke.github.GitHub;
 
 /**
  * This data provider looks for vulnerabilities in NVD.
- * TODO: This class doesn't talk to GitHub. Instead, it uses a local storage
- *       which contains info about known security teams.
- *       VulnerabilitiesFromNvd may be converted to a data provider.
  */
-public class VulnerabilitiesFromNvd extends AbstractGitHubDataProvider {
+public class VulnerabilitiesFromNvd extends CachedSingleFeatureGitHubDataProvider {
+
+  /**
+   * A feature that hold info about vulnerabilities in the NVD.
+   */
+  public static final Feature<Vulnerabilities> VULNERABILITIES_IN_NVD
+      = new VulnerabilitiesInProject();
 
   /**
    * An interface to the NVD database.
@@ -49,20 +52,22 @@ public class VulnerabilitiesFromNvd extends AbstractGitHubDataProvider {
   }
 
   @Override
-  protected VulnerabilitiesFromNvd doUpdate(GitHubProject project, ValueSet values)
-      throws IOException {
+  protected Feature supportedFeature() {
+    return VULNERABILITIES_IN_NVD;
+  }
 
+  @Override
+  protected Value fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Looking for vulnerabilities in NVD ...");
 
-    Value<Vulnerabilities> vulnerabilities = knownVulnerabilities(values);
-
     nvd.download();
-    for (NvdEntry entry : nvd.find(project.organization().name(), project.name())) {
-      vulnerabilities.get().add(vulnerabilityFrom(entry));
-    }
-    values.update(vulnerabilities);
 
-    return this;
+    Vulnerabilities vulnerabilities = new Vulnerabilities();
+    for (NvdEntry entry : nvd.find(project.organization().name(), project.name())) {
+      vulnerabilities.add(vulnerabilityFrom(entry));
+    }
+
+    return VULNERABILITIES_IN_NVD.value(vulnerabilities);
   }
 
   /**
@@ -96,17 +101,5 @@ public class VulnerabilitiesFromNvd extends AbstractGitHubDataProvider {
 
     return new Vulnerability(
         id, description, cvss, references, resolution, UNKNOWN_INTRODUCED_DATE, fixed);
-  }
-
-  /**
-   * Searches for
-   * {@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#VULNERABILITIES}
-   * feature a set of values.
-   *
-   * @param values The set of value.
-   * @return An existing value for the feature, or an empty value otherwise.
-   */
-  private static Value<Vulnerabilities> knownVulnerabilities(ValueSet values) {
-    return values.of(VULNERABILITIES).orElseGet(() -> VULNERABILITIES.value(new Vulnerabilities()));
   }
 }

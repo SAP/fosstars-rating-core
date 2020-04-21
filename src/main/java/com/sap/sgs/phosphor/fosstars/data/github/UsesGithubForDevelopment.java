@@ -2,12 +2,11 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GITHUB_FOR_DEVELOPMENT;
 
+import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
-import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
-import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
@@ -17,7 +16,7 @@ import org.kohsuke.github.GitHub;
  * would be based on mirror url is null or empty. This will ensure whether the underlying project is
  * a mirror project or not.
  */
-public class UsesGithubForDevelopment extends AbstractGitHubDataProvider {
+public class UsesGithubForDevelopment extends CachedSingleFeatureGitHubDataProvider {
 
   /**
    * Initializes a data provider.
@@ -29,21 +28,14 @@ public class UsesGithubForDevelopment extends AbstractGitHubDataProvider {
   }
 
   @Override
-  protected UsesGithubForDevelopment doUpdate(GitHubProject project, ValueSet values)
-      throws IOException {
+  protected Feature supportedFeature() {
+    return USES_GITHUB_FOR_DEVELOPMENT;
+  }
+
+  @Override
+  protected Value fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out if the project uses GitHub as the main development platform ...");
-
-    Optional<Value> something = cache.get(project, USES_GITHUB_FOR_DEVELOPMENT);
-    if (something.isPresent()) {
-      values.update(something.get());
-      return this;
-    }
-
-    Value<Boolean> usesGithubForDevelopment = usesGithubForDevelopment(project);
-    values.update(usesGithubForDevelopment);
-    cache.put(project, usesGithubForDevelopment, tomorrow());
-
-    return this;
+    return usesGithubForDevelopment(project);
   }
 
   /**
