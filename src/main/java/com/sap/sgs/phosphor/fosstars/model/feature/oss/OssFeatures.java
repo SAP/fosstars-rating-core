@@ -234,4 +234,11 @@ public class OssFeatures {
    */
   public static final Feature<Boolean> USES_GITHUB_FOR_DEVELOPMENT =
       new BooleanFeature("If a project uses GitHub as the main development platform");
+
+  /**
+   * Shows if an open-source project uses <a href="https://github.com/spring-io/nohttp">nohttp</a>
+   * tool to make sure that plain HTTP is not used.
+   */
+  public static final Feature<Boolean> USES_NOHTTP =
+      new BooleanFeature("If a project uses nohttp tool");
 }
