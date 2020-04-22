@@ -4,11 +4,11 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SE
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import com.sap.sgs.phosphor.fosstars.data.StandardValueCache;
 import com.sap.sgs.phosphor.fosstars.data.UserCallback;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectValueCache;
 import java.io.IOException;
 import org.junit.Test;
 
@@ -28,7 +28,7 @@ public class AskAboutSecurityTeamTest {
       boolean expected, AskAboutSecurityTeam provider, UserCallback callback) throws IOException {
 
     ValueSet values = new ValueHashSet();
-    provider.set(new StandardValueCache());
+    provider.set(new GitHubProjectValueCache());
     provider.set(callback);
     GitHubProject project = new GitHubProject("org", "test");
     provider.update(project, values);

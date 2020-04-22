@@ -1,6 +1,7 @@
-package com.sap.sgs.phosphor.fosstars.tool.github;
+package com.sap.sgs.phosphor.fosstars.data.github;
 
-import com.sap.sgs.phosphor.fosstars.data.DataCache;
+import com.sap.sgs.phosphor.fosstars.data.Cache;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
@@ -9,7 +10,7 @@ import org.apache.commons.collections4.map.LRUMap;
 /**
  * This is a cache for data of GitHub projects.
  */
-public class GitHubDataCache<T> implements DataCache<GitHubProject, T> {
+public class GitHubDataCache<T> implements Cache<GitHubProject, T> {
 
   /**
    * This flag doesn't allow exceeding the maximum cache size.

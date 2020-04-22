@@ -21,7 +21,7 @@ public class GitHubOrganization {
    * @param name A name of the organization.
    */
   @JsonCreator
-  GitHubOrganization(@JsonProperty("name") String name) {
+  public GitHubOrganization(@JsonProperty("name") String name) {
     this.name = Objects.requireNonNull(name, "Hey! Organization's name can't be null!");
   }
 

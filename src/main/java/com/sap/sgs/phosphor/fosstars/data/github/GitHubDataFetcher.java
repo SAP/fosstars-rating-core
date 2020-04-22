@@ -1,6 +1,5 @@
 package com.sap.sgs.phosphor.fosstars.data.github;
 
-import com.sap.sgs.phosphor.fosstars.tool.github.GitHubDataCache;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -94,7 +93,7 @@ public class GitHubDataFetcher {
    * @return List of {@link GHCommit}.
    * @throws IOException occurred during REST call to GitHub API.
    */
-  public List<GHCommit> commitsFor(GHRepository repository) throws IOException {
+  private List<GHCommit> commitsFor(GHRepository repository) throws IOException {
     return repository.listCommits().toList();
   }
 

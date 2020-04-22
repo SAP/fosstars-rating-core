@@ -61,14 +61,13 @@ public abstract class AbstractCachingDataProvider<T> extends AbstractDataProvide
     }
 
     // otherwise, try to find values for all features
-    Set<Value> updatedValues = fetchValuesFor(object);
+    ValueSet updatedValues = fetchValuesFor(object);
 
     // put the fetched values to the cache
+    cache.put(object, updatedValues, expiration());
+
     // and update the resulting set of values
-    for (Value value : updatedValues) {
-      cache.put(object, value, expiration());
-      values.update(value);
-    }
+    values.update(updatedValues);
 
     return this;
   }
@@ -80,7 +79,7 @@ public abstract class AbstractCachingDataProvider<T> extends AbstractDataProvide
    * @return A set of values for the object.
    * @throws IOException If something went wrong.
    */
-  protected abstract Set<Value> fetchValuesFor(T object) throws IOException;
+  protected abstract ValueSet fetchValuesFor(T object) throws IOException;
 
   /**
    * Returns an expiration date for cache entries.

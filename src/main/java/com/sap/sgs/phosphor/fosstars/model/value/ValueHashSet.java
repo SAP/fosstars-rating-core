@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * This is an implementation of {@link ValueSet} based on a hash map.
@@ -37,10 +38,30 @@ public class ValueHashSet implements ValueSet {
   private final Map<Feature, Value> featureToValue = new HashMap<>();
 
   /**
+   * Initializes a new {@link ValueHashSet} with a number of values.
+   *
+   * @param values The values.
+   * @return The new {@link ValueHashSet}.
+   */
+  public static ValueHashSet from(Value... values) {
+    Objects.requireNonNull(values, "Values can't be null!");
+    return new ValueHashSet(values);
+  }
+
+  /**
    * Initializes an empty {@link ValueHashSet}.
    */
   public ValueHashSet() {
 
+  }
+
+  /**
+   * Initializes a {@link ValueHashSet} with a number of values.
+   *
+   * @param values The values.
+   */
+  public ValueHashSet(Set<Value> values) {
+    this(Objects.requireNonNull(values, "Values can't be null!").toArray(new Value[0]));
   }
 
   /**
@@ -104,6 +125,15 @@ public class ValueHashSet implements ValueSet {
   }
 
   @Override
+  public ValueSet update(ValueSet values) {
+    Objects.requireNonNull(values, "Oh no! Values is null!");
+    for (Value value : values.toArray()) {
+      update(value);
+    }
+    return this;
+  }
+
+  @Override
   public Value[] toArray() {
     Value[] array = new Value[featureToValue.size()];
     int i = 0;
@@ -126,6 +156,11 @@ public class ValueHashSet implements ValueSet {
       return Optional.empty();
     }
     return Optional.of(value);
+  }
+
+  @Override
+  public boolean isEmpty() {
+    return featureToValue.isEmpty();
   }
 
   @Override

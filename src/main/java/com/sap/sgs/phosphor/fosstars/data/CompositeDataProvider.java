@@ -27,7 +27,7 @@ public class CompositeDataProvider<T> implements DataProvider<T> {
   /**
    * A cache of values.
    */
-  protected ValueCache<T> cache = NoCache.create();
+  protected ValueCache<T> cache = NoValueCache.create();
 
   /**
    * A list of underlying data providers.

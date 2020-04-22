@@ -4,7 +4,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.VULNER
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import com.sap.sgs.phosphor.fosstars.data.StandardValueCache;
+import com.sap.sgs.phosphor.fosstars.data.NoValueCache;
 import com.sap.sgs.phosphor.fosstars.data.UserCallback;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
@@ -41,7 +41,7 @@ public class AskAboutUnpatchedVulnerabilitiesTest {
       AskAboutUnpatchedVulnerabilities provider, UserCallback callback) {
 
     ValueSet values = new ValueHashSet();
-    provider.set(new StandardValueCache());
+    provider.set(NoValueCache.create());
     provider.set(callback);
     GitHubProject project = new GitHubProject("org", "test");
     provider.ask(project, values);

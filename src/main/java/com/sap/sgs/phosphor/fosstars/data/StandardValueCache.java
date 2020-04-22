@@ -24,7 +24,7 @@ import java.util.Optional;
 /**
  * This is a cache of feature values which use string as keys.
  */
-public class StandardValueCache implements ValueCache<String> {
+public class StandardValueCache implements Cache<String, ValueSet> {
 
   /**
    * An ObjectMapper for serialization and deserialization.
@@ -68,7 +68,6 @@ public class StandardValueCache implements ValueCache<String> {
    * @param feature The feature.
    * @return An {@link Optional} with a cached value if it's available.
    */
-  @Override
   public Optional<Value> get(String key, Feature feature) {
     ValueSet values = entries.get(key);
     if (values == null) {
@@ -78,18 +77,60 @@ public class StandardValueCache implements ValueCache<String> {
     if (!something.isPresent()) {
       return Optional.empty();
     }
-    Value value = something.get();
+
+    return unwrapExpiring(something.get());
+  }
+
+  @Override
+  public Optional<ValueSet> get(String key) {
+    ValueSet set = entries.get(key);
+    if (set == null) {
+      return Optional.empty();
+    }
+
+    ValueSet result = new ValueHashSet();
+    for (Value value : set.toArray()) {
+      unwrapExpiring(value).ifPresent(result::update);
+    }
+
+    return Optional.of(result);
+  }
+
+  /**
+   * The method extracts an original value from a ExpiringValue if it's not expired.
+   *
+   * @param value The ExpiringValue.
+   * @return The original value if it's not expired.
+   * @throws IllegalStateException If the value is not an instance of ExpiringValue.
+   */
+  private static Optional<Value> unwrapExpiring(Value value) {
     if (value instanceof ExpiringValue == false) {
       throw new IllegalStateException("It should be an expiring value!");
     }
     ExpiringValue expiringValue = (ExpiringValue) value;
-    if (expiringValue.neverExpires()) {
-      return something;
+
+    if (expiringValue.neverExpires() || !expiringValue.expired()) {
+      return Optional.of(expiringValue.original());
     }
-    if (expiringValue.expired()) {
-      return Optional.empty();
+
+    return Optional.empty();
+  }
+
+  @Override
+  public int size() {
+    return entries.size();
+  }
+
+  @Override
+  public void put(String key, ValueSet value) {
+    put(key, value, NO_EXPIRATION);
+  }
+
+  @Override
+  public void put(String key, ValueSet set, Date expiration) {
+    for (Value value : set.toArray()) {
+      put(key, value, expiration);
     }
-    return something;
   }
 
   /**
@@ -98,7 +139,6 @@ public class StandardValueCache implements ValueCache<String> {
    * @param key The key.
    * @param value The value to store to the cache.
    */
-  @Override
   public void put(String key, Value value) {
     put(key, value, NO_EXPIRATION);
   }
@@ -110,7 +150,6 @@ public class StandardValueCache implements ValueCache<String> {
    * @param value The value to store in the cache.
    * @param expiration The expiration date.
    */
-  @Override
   public void put(String key, Value value, Date expiration) {
     ValueSet set = entries.get(key);
     if (set == null) {

@@ -8,10 +8,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
+import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.util.Set;
@@ -53,9 +55,9 @@ public class LgtmDataProvider extends GitHubCachingDataProvider {
   }
 
   @Override
-  protected Set<Value> fetchValuesFor(GitHubProject project) throws IOException {
+  protected ValueSet fetchValuesFor(GitHubProject project) throws IOException {
     JsonNode json = lgtmProjectInfo(project);
-    return setOf(usesLgtm(json), worstLgtmGrade(json));
+    return ValueHashSet.from(usesLgtm(json), worstLgtmGrade(json));
   }
 
   /**

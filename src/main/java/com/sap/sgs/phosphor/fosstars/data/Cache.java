@@ -6,7 +6,7 @@ import java.util.Optional;
 /**
  * This is an interface of a cache that stores different data types for a specific type of objects.
  */
-public interface DataCache<K, V> {
+public interface Cache<K, V> {
 
   /**
    * Returns a value of a object type for a key.
@@ -32,4 +32,9 @@ public interface DataCache<K, V> {
    * @param expiration When the value expires.
    */
   void put(K key, V value, Date expiration);
+
+  /**
+   * Returns a number of elements in the cache.
+   */
+  int size();
 }
