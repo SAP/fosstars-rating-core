@@ -1,7 +1,6 @@
 package com.sap.sgs.phosphor.fosstars.data.github;
 
 import com.sap.sgs.phosphor.fosstars.data.AbstractDataProvider;
-import com.sap.sgs.phosphor.fosstars.tool.github.GitHubDataFetcher;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.util.Objects;
 import org.kohsuke.github.GitHub;
