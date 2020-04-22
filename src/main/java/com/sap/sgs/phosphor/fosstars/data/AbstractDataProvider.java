@@ -24,7 +24,7 @@ public abstract class AbstractDataProvider<T> implements DataProvider<T> {
   /**
    * A cache of values.
    */
-  protected ValueCache<T> cache = NoCache.create();
+  protected ValueCache<T> cache = NoValueCache.create();
 
   /**
    * An interface for interacting with a user.

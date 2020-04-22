@@ -4,6 +4,7 @@ import com.sap.sgs.phosphor.fosstars.data.StandardValueCache;
 import com.sap.sgs.phosphor.fosstars.data.ValueCache;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Objects;
@@ -36,19 +37,31 @@ public class GitHubProjectValueCache implements ValueCache<GitHubProject> {
     this.cache = Objects.requireNonNull(cache, "Unfortunately cache can't be null");
   }
 
-  @Override
   public Optional<Value> get(GitHubProject project, Feature feature) {
     return cache.get(project.url().toString(), feature);
   }
 
   @Override
+  public Optional<ValueSet> get(GitHubProject project) {
+    return cache.get(project.url().toString());
+  }
+
   public void put(GitHubProject project, Value value) {
     cache.put(project.url().toString(), value);
   }
 
-  @Override
   public void put(GitHubProject project, Value value, Date expiration) {
     cache.put(project.url().toString(), value, expiration);
+  }
+
+  @Override
+  public void put(GitHubProject project, ValueSet set) {
+    cache.put(project.url().toString(), set);
+  }
+
+  @Override
+  public void put(GitHubProject project, ValueSet set, Date expiration) {
+    cache.put(project.url().toString(), set, expiration);
   }
 
   /**
@@ -70,5 +83,10 @@ public class GitHubProjectValueCache implements ValueCache<GitHubProject> {
    */
   public static GitHubProjectValueCache load(String filename) throws IOException {
     return new GitHubProjectValueCache(StandardValueCache.load(filename));
+  }
+
+  @Override
+  public int size() {
+    return cache.size();
   }
 }

@@ -1,7 +1,13 @@
-package com.sap.sgs.phosphor.fosstars.tool.github;
+package com.sap.sgs.phosphor.fosstars.data.github;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubOrganization;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
+import java.util.Date;
+import java.util.Optional;
 import org.junit.Test;
 
 public class GitHubDataCacheTest {
@@ -11,7 +17,7 @@ public class GitHubDataCacheTest {
     GitHubDataCache<String> cache = new GitHubDataCache<>();
     
     String data = "data to be cached";
-    GitHubProject project = new GitHubProject(new GitHubOrganization(data), data);
+    GitHubProject project = new GitHubProject("org", "test");
     cache.put(project, data);
     assertEquals(1, cache.size());
     String cached = cache.get(project).orElseThrow(RuntimeException::new);
@@ -57,5 +63,20 @@ public class GitHubDataCacheTest {
 
     cache.clear();
     assertEquals(0, cache.size());
+  }
+
+  @Test
+  public void testExpiration() throws InterruptedException {
+    GitHubDataCache<String> cache = new GitHubDataCache<>();
+
+    String data = "data to be cached";
+    GitHubProject project = new GitHubProject("org", "test");
+    Date inTwoSecond = new Date(System.currentTimeMillis() + 2 * 1000);
+    cache.put(project, data, inTwoSecond);
+    Optional<String> something = cache.get(project);
+    assertTrue(something.isPresent());
+    Thread.sleep(5000); // sleep for 5 seconds
+    something = cache.get(project);
+    assertFalse(something.isPresent());
   }
 }

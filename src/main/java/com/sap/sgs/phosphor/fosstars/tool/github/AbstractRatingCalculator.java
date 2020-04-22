@@ -1,7 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.tool.github;
 
-import com.sap.sgs.phosphor.fosstars.data.NoCache;
 import com.sap.sgs.phosphor.fosstars.data.NoUserCallback;
+import com.sap.sgs.phosphor.fosstars.data.NoValueCache;
 import com.sap.sgs.phosphor.fosstars.data.UserCallback;
 import com.sap.sgs.phosphor.fosstars.data.ValueCache;
 import java.util.Objects;
@@ -27,7 +27,7 @@ abstract class AbstractRatingCalculator implements RatingCalculator {
   /**
    * A cache of feature values for GitHub projects.
    */
-  ValueCache<GitHubProject> cache = NoCache.create();
+  ValueCache<GitHubProject> cache = NoValueCache.create();
 
   /**
    * A token for accessing the GitHub APIs.

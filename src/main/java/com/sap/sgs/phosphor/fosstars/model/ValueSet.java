@@ -31,6 +31,14 @@ public interface ValueSet {
   ValueSet update(Value value);
 
   /**
+   * Updates a number of values in the set.
+   *
+   * @param values The new values.
+   * @return This ValueSet,
+   */
+  ValueSet update(ValueSet values);
+
+  /**
    * Converts the set to an array of values.
    *
    * @return An array of values.
@@ -49,4 +57,9 @@ public interface ValueSet {
    * @return A value of the specified feature.
    */
   Optional<Value> of(Feature feature);
+
+  /**
+   * Returns true if the set is empty, false otherwise.
+   */
+  boolean isEmpty();
 }

@@ -2,6 +2,8 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.ValueSet;
+import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.util.Collections;
@@ -23,8 +25,8 @@ public abstract class CachedSingleFeatureGitHubDataProvider extends GitHubCachin
   }
 
   @Override
-  protected final Set<Value> fetchValuesFor(GitHubProject project) throws IOException {
-    return Collections.singleton(fetchValueFor(project));
+  protected final ValueSet fetchValuesFor(GitHubProject project) throws IOException {
+    return ValueHashSet.from(fetchValueFor(project));
   }
 
   @Override
