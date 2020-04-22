@@ -1,4 +1,4 @@
-package com.sap.sgs.phosphor.fosstars.tool.github;
+package com.sap.sgs.phosphor.fosstars.data.github;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -6,6 +6,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import org.junit.Test;
 import org.kohsuke.github.GHRepository;

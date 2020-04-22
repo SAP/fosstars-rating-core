@@ -1,5 +1,7 @@
-package com.sap.sgs.phosphor.fosstars.tool.github;
+package com.sap.sgs.phosphor.fosstars.data.github;
 
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubDataCache;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.time.Instant;
