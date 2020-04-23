@@ -11,6 +11,9 @@
       }, {
         "type" : "LgtmScore",
         "name" : "How a project addresses issues reported by LGTM"
+      }, {
+        "type" : "NoHttpToolScore",
+        "name" : "If a project uses nohttp tool"
       } ]
     },
     "weight" : {

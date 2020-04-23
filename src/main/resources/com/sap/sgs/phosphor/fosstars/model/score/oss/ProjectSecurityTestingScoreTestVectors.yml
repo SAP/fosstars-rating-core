@@ -1,4 +1,6 @@
 ---
+
+# only min values
 - values:
   - type: "ScoreValue"
     score:
@@ -13,6 +15,15 @@
     score:
       type: "DependencyScanScore"
       name: "How a project scans its dependencies for vulnerabilities"
+    value: 0.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "NoHttpToolScore"
+      name: "If a project uses nohttp tool"
     value: 0.0
     weight: 1.0
     confidence: 10.0
@@ -27,7 +38,9 @@
     openRight: false
     positiveInfinity: false
   expectedLabel: null
-  alias: "test_vector_0"
+  alias: "all_min"
+
+#
 - values:
   - type: "ScoreValue"
     score:
@@ -47,16 +60,27 @@
     confidence: 10.0
     usedValues: []
     explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "NoHttpToolScore"
+      name: "If a project uses nohttp tool"
+    value: 10.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
   expectedScore:
     type: "DoubleInterval"
-    from: 5.0
+    from: 6.0
     openLeft: false
     negativeInfinity: false
-    to: 5.0
+    to: 7.0
     openRight: false
     positiveInfinity: false
   expectedLabel: null
   alias: "test_vector_1"
+
+#
 - values:
   - type: "ScoreValue"
     score:
@@ -76,16 +100,27 @@
     confidence: 10.0
     usedValues: []
     explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "NoHttpToolScore"
+      name: "If a project uses nohttp tool"
+    value: 0.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
   expectedScore:
     type: "DoubleInterval"
-    from: 5.0
+    from: 3.0
     openLeft: false
     negativeInfinity: false
-    to: 5.0
+    to: 4.0
     openRight: false
     positiveInfinity: false
   expectedLabel: null
   alias: "test_vector_2"
+
+#
 - values:
   - type: "ScoreValue"
     score:
@@ -105,16 +140,27 @@
     confidence: 10.0
     usedValues: []
     explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "NoHttpToolScore"
+      name: "If a project uses nohttp tool"
+    value: 0.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
   expectedScore:
     type: "DoubleInterval"
-    from: 5.0
+    from: 3.0
     openLeft: false
     negativeInfinity: false
-    to: 5.0
+    to: 4.0
     openRight: false
     positiveInfinity: false
   expectedLabel: null
   alias: "test_vector_3"
+
+# all max values
 - values:
   - type: "ScoreValue"
     score:
@@ -129,6 +175,15 @@
     score:
       type: "LgtmScore"
       name: "How a project addresses issues reported by LGTM"
+    value: 10.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "NoHttpToolScore"
+      name: "If a project uses nohttp tool"
     value: 10.0
     weight: 1.0
     confidence: 10.0
@@ -144,3 +199,44 @@
     positiveInfinity: false
   expectedLabel: null
   alias: "test_vector_4"
+
+# NoHttpToolScore is N/A
+- values:
+    - type: "ScoreValue"
+      score:
+        type: "DependencyScanScore"
+        name: "How a project scans its dependencies for vulnerabilities"
+      value: 3.0
+      weight: 1.0
+      confidence: 10.0
+      usedValues: []
+      explanation: []
+    - type: "ScoreValue"
+      score:
+        type: "LgtmScore"
+        name: "How a project addresses issues reported by LGTM"
+      value: 7.0
+      weight: 1.0
+      confidence: 10.0
+      usedValues: []
+      explanation: []
+    - type: "ScoreValue"
+      score:
+        type: "NoHttpToolScore"
+        name: "If a project uses nohttp tool"
+      value: 0.0
+      weight: 1.0
+      confidence: 0.0
+      usedValues: []
+      explanation: []
+      isNotApplicable: true
+  expectedScore:
+    type: "DoubleInterval"
+    from: 5.0
+    openLeft: false
+    negativeInfinity: false
+    to: 10.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "nohttp_tool_not_applicable"

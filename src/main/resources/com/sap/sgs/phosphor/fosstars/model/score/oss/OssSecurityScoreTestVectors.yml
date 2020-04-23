@@ -1,4 +1,6 @@
 ---
+
+#
 - values:
   - type: "ScoreValue"
     score:
@@ -9,6 +11,8 @@
         name: "How a project scans its dependencies for vulnerabilities"
       - type: "LgtmScore"
         name: "How a project addresses issues reported by LGTM"
+      - type: "NoHttpToolScore"
+        name: "If a project uses nohttp tool"
     value: 0.0
     weight: 1.0
     confidence: 10.0
@@ -78,6 +82,8 @@
     positiveInfinity: false
   expectedLabel: null
   alias: "test_vector_0"
+
+#
 - values:
   - type: "ScoreValue"
     score:
@@ -88,6 +94,8 @@
         name: "How a project scans its dependencies for vulnerabilities"
       - type: "LgtmScore"
         name: "How a project addresses issues reported by LGTM"
+      - type: "NoHttpToolScore"
+        name: "If a project uses nohttp tool"
     value: 0.0
     weight: 1.0
     confidence: 10.0
@@ -157,6 +165,8 @@
     positiveInfinity: false
   expectedLabel: null
   alias: "test_vector_1"
+
+#
 - values:
   - type: "ScoreValue"
     score:
@@ -176,6 +186,8 @@
         name: "How a project scans its dependencies for vulnerabilities"
       - type: "LgtmScore"
         name: "How a project addresses issues reported by LGTM"
+      - type: "NoHttpToolScore"
+        name: "If a project uses nohttp tool"
     value: 5.0
     weight: 1.0
     confidence: 10.0
@@ -236,6 +248,8 @@
     positiveInfinity: false
   expectedLabel: null
   alias: "test_vector_2"
+
+#
 - values:
   - type: "ScoreValue"
     score:
@@ -246,6 +260,8 @@
         name: "How a project scans its dependencies for vulnerabilities"
       - type: "LgtmScore"
         name: "How a project addresses issues reported by LGTM"
+      - type: "NoHttpToolScore"
+        name: "If a project uses nohttp tool"
     value: 0.0
     weight: 1.0
     confidence: 10.0
@@ -315,6 +331,8 @@
     positiveInfinity: false
   expectedLabel: null
   alias: "test_vector_3"
+
+
 - values:
   - type: "ScoreValue"
     score:
@@ -325,6 +343,8 @@
         name: "How a project scans its dependencies for vulnerabilities"
       - type: "LgtmScore"
         name: "How a project addresses issues reported by LGTM"
+      - type: "NoHttpToolScore"
+        name: "If a project uses nohttp tool"
     value: 0.0
     weight: 1.0
     confidence: 10.0
@@ -394,6 +414,8 @@
     positiveInfinity: false
   expectedLabel: null
   alias: "test_vector_4"
+
+#
 - values:
   - type: "ScoreValue"
     score:
@@ -404,6 +426,8 @@
         name: "How a project scans its dependencies for vulnerabilities"
       - type: "LgtmScore"
         name: "How a project addresses issues reported by LGTM"
+      - type: "NoHttpToolScore"
+        name: "If a project uses nohttp tool"
     value: 8.0
     weight: 1.0
     confidence: 10.0
@@ -473,6 +497,8 @@
     positiveInfinity: false
   expectedLabel: null
   alias: "test_vector_5"
+
+#
 - values:
   - type: "ScoreValue"
     score:
@@ -492,6 +518,8 @@
         name: "How a project scans its dependencies for vulnerabilities"
       - type: "LgtmScore"
         name: "How a project addresses issues reported by LGTM"
+      - type: "NoHttpToolScore"
+        name: "If a project uses nohttp tool"
     value: 10.0
     weight: 1.0
     confidence: 10.0
@@ -552,6 +580,8 @@
     positiveInfinity: false
   expectedLabel: null
   alias: "test_vector_6"
+
+#
 - values:
   - type: "ScoreValue"
     score:
@@ -562,6 +592,8 @@
         name: "How a project scans its dependencies for vulnerabilities"
       - type: "LgtmScore"
         name: "How a project addresses issues reported by LGTM"
+      - type: "NoHttpToolScore"
+        name: "If a project uses nohttp tool"
     value: 0.0
     weight: 1.0
     confidence: 10.0
@@ -631,6 +663,8 @@
     positiveInfinity: false
   expectedLabel: null
   alias: "test_vector_7"
+
+#
 - values:
   - type: "ScoreValue"
     score:
@@ -650,6 +684,8 @@
         name: "How a project scans its dependencies for vulnerabilities"
       - type: "LgtmScore"
         name: "How a project addresses issues reported by LGTM"
+      - type: "NoHttpToolScore"
+        name: "If a project uses nohttp tool"
     value: 10.0
     weight: 1.0
     confidence: 10.0
@@ -710,6 +746,8 @@
     positiveInfinity: false
   expectedLabel: null
   alias: "test_vector_8"
+
+#
 - values:
   - type: "ScoreValue"
     score:
@@ -729,6 +767,8 @@
         name: "How a project scans its dependencies for vulnerabilities"
       - type: "LgtmScore"
         name: "How a project addresses issues reported by LGTM"
+      - type: "NoHttpToolScore"
+        name: "If a project uses nohttp tool"
     value: 10.0
     weight: 1.0
     confidence: 10.0

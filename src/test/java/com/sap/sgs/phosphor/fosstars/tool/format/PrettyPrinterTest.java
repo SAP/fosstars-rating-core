@@ -9,15 +9,19 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_GITHUB_STARS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_WATCHERS_ON_GITHUB;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.PACKAGE_MANAGERS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.PROJECT_START_DATE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GITHUB_FOR_DEVELOPMENT;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_NOHTTP;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_VERIFIED_SIGNED_COMMITS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
+import static com.sap.sgs.phosphor.fosstars.model.value.PackageManager.GRADLE;
+import static com.sap.sgs.phosphor.fosstars.model.value.PackageManager.MAVEN;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -28,6 +32,7 @@ import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade;
+import com.sap.sgs.phosphor.fosstars.model.value.PackageManagers;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
 import java.util.Date;
@@ -56,7 +61,9 @@ public class PrettyPrinterTest {
         USES_VERIFIED_SIGNED_COMMITS.value(false),
         USES_LGTM.value(true),
         WORST_LGTM_GRADE.value(LgtmGrade.A),
-        USES_GITHUB_FOR_DEVELOPMENT.value(false));
+        USES_GITHUB_FOR_DEVELOPMENT.value(false),
+        USES_NOHTTP.value(false),
+        PACKAGE_MANAGERS.value(new PackageManagers(MAVEN)));
     
     RatingValue ratingValue = rating.calculate(values);
 
@@ -100,7 +107,9 @@ public class PrettyPrinterTest {
         USES_VERIFIED_SIGNED_COMMITS.value(false),
         USES_LGTM.value(true),
         WORST_LGTM_GRADE.value(LgtmGrade.A),
-        USES_GITHUB_FOR_DEVELOPMENT.value(false));
+        USES_GITHUB_FOR_DEVELOPMENT.value(false),
+        USES_NOHTTP.value(true),
+        PACKAGE_MANAGERS.value(new PackageManagers(GRADLE)));
     RatingValue ratingValue = rating.calculate(values);
 
     PrettyPrinter printer = new PrettyPrinter();

@@ -8,15 +8,18 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_GITHUB_STARS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_WATCHERS_ON_GITHUB;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.PACKAGE_MANAGERS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.PROJECT_START_DATE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_NOHTTP;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_VERIFIED_SIGNED_COMMITS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 import static com.sap.sgs.phosphor.fosstars.model.qa.RatingVerification.loadTestVectorsFromCsvResource;
 import static com.sap.sgs.phosphor.fosstars.model.qa.TestVectorBuilder.newTestVector;
+import static com.sap.sgs.phosphor.fosstars.model.value.PackageManager.MAVEN;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -25,6 +28,7 @@ import com.sap.sgs.phosphor.fosstars.model.math.DoubleInterval;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
 import com.sap.sgs.phosphor.fosstars.model.qa.VerificationFailedException;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade;
+import com.sap.sgs.phosphor.fosstars.model.value.PackageManagers;
 import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
 import java.io.IOException;
@@ -64,6 +68,8 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(UnknownValue.of(USES_VERIFIED_SIGNED_COMMITS))
           .set(UnknownValue.of(USES_LGTM))
           .set(UnknownValue.of(WORST_LGTM_GRADE))
+          .set(UnknownValue.of(USES_NOHTTP))
+          .set(UnknownValue.of(PACKAGE_MANAGERS))
           .expectedScore(DoubleInterval.closed(Score.MIN, 0.1))
           .alias("one")
           .make(),
@@ -85,6 +91,8 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(USES_VERIFIED_SIGNED_COMMITS.value(false))
           .set(USES_LGTM.value(false))
           .set(WORST_LGTM_GRADE.unknown())
+          .set(USES_NOHTTP.value(false))
+          .set(PACKAGE_MANAGERS.unknown())
           .expectedScore(DoubleInterval.closed(1.0, 4.0))
           .alias("two")
           .make(),
@@ -106,6 +114,8 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(USES_VERIFIED_SIGNED_COMMITS.value(true))
           .set(USES_LGTM.value(true))
           .set(WORST_LGTM_GRADE.value(LgtmGrade.A_PLUS))
+          .set(USES_NOHTTP.value(true))
+          .set(PACKAGE_MANAGERS.value(new PackageManagers(MAVEN)))
           .expectedScore(DoubleInterval.init().from(9.0).to(Score.MAX).make())
           .alias("three")
           .make()
