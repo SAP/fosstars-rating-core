@@ -153,7 +153,7 @@ public class UnpatchedVulnerabilitiesScore extends FeatureBasedScore {
      */
     static Verification createFor(UnpatchedVulnerabilitiesScore score) throws IOException {
       try (InputStream is = Verification.class.getResourceAsStream(TEST_VECTORS_YAML)) {
-        return new Verification(score, loadTestVectorsFromYamlResource(is));
+        return new Verification(score, loadTestVectorsFromYaml(is));
       }
     }
   }

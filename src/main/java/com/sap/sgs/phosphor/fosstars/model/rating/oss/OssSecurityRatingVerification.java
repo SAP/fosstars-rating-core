@@ -36,7 +36,7 @@ class OssSecurityRatingVerification extends RatingVerification {
     try (InputStream is = OssSecurityRatingVerification.class
         .getResourceAsStream(TEST_VECTORS_YAML)) {
 
-      return new OssSecurityRatingVerification(rating, loadTestVectorsFromYamlResource(is));
+      return new OssSecurityRatingVerification(rating, loadTestVectorsFromYaml(is));
     }
   }
 }

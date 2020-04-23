@@ -74,7 +74,7 @@ public class DependencyScanScore extends FeatureBasedScore {
      */
     static Verification createFor(DependencyScanScore score) throws IOException {
       try (InputStream is = Verification.class.getResourceAsStream(TEST_VECTORS_YAML)) {
-        return new Verification(score, loadTestVectorsFromYamlResource(is));
+        return new Verification(score, loadTestVectorsFromYaml(is));
       }
     }
   }

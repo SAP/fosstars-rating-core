@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -163,17 +165,42 @@ public abstract class AbstractVerification {
   }
 
   /**
+   * Loads a list of test vectors from a YAML file.
+   *
+   * @param filename The filename.
+   * @return A list of loaded test vectors.
+   * @throws IOException If something went wrong (file doesn't exist, the content is wrong, etc).
+   */
+  public static List<TestVector> loadTestVectorsFromYaml(Path filename) throws IOException {
+    Objects.requireNonNull(filename, "Filename can't be null!");
+    return loadTestVectorsFromYaml(Files.newInputStream(filename));
+  }
+
+  /**
    * Loads a list of test vectors from YAML.
    *
    * @param is An input stream with YAML.
    * @return A list of test vectors.
    * @throws IOException If something went wrong.
    */
-  public static List<TestVector> loadTestVectorsFromYamlResource(InputStream is)
-      throws IOException {
-
+  public static List<TestVector> loadTestVectorsFromYaml(InputStream is) throws IOException {
     Objects.requireNonNull(is, "Input stream can't be null!");
     return YAML_OBJECT_MAPPER.readValue(is, TEST_VECTOR_LIST_TYPE_REFERENCE);
+  }
+
+  /**
+   * Stores a list of test vectors to a YAML file.
+   *
+   * @param vectors The test vectors.
+   * @param filename The filename.
+   * @throws IOException If something went wrong.
+   */
+  public static void storeTestVectorsToYaml(List<TestVector> vectors, Path filename)
+      throws IOException {
+
+    Objects.requireNonNull(vectors, "Test vectors can't be null!");
+    Objects.requireNonNull(filename, "Filename can't be null!");
+    Files.write(filename, YAML_OBJECT_MAPPER.writeValueAsBytes(vectors));
   }
 
   /**
