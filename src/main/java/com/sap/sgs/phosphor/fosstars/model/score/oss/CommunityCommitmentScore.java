@@ -98,7 +98,7 @@ public class CommunityCommitmentScore extends FeatureBasedScore {
      */
     static Verification createFor(CommunityCommitmentScore score) throws IOException {
       try (InputStream is = Verification.class.getResourceAsStream(TEST_VECTORS_YAML)) {
-        return new Verification(score, loadTestVectorsFromYamlResource(is));
+        return new Verification(score, loadTestVectorsFromYaml(is));
       }
     }
   }

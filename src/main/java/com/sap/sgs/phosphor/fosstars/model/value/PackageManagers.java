@@ -86,6 +86,28 @@ public class PackageManagers {
     packageManagers.add(packageManager);
   }
 
+  /**
+   * Check if the collection has at least one of the specified package managers.
+   *
+   * @param packageManagers The package managers.
+   * @return True if the collection contains at least one of the package managers, false otherwise.
+   */
+  public boolean containsAny(PackageManager... packageManagers) {
+    Objects.requireNonNull(packageManagers, "Package manager can't be null!");
+
+    if (packageManagers.length == 0) {
+      throw new IllegalArgumentException("Package managers can't be empty!");
+    }
+
+    for (PackageManager packageManager : packageManagers) {
+      if (this.packageManagers.contains(packageManager)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {

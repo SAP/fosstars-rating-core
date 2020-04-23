@@ -1,0 +1,21 @@
+---
+- values:
+  - type: "UnknownValue"
+    feature:
+      type: "PackageManagersFeature"
+      name: "A set of package managers"
+  - type: "UnknownValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses nohttp tool"
+  expectedScore:
+    type: "DoubleInterval"
+    from: 0.0
+    openLeft: false
+    negativeInfinity: false
+    to: 10.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "1"
+  expectedNotApplicableScore: false
