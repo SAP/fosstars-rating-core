@@ -12,6 +12,7 @@ import java.util.List;
  * <ul>
  *  <li>{@link DependencyScanScore}</li>
  *  <li>{@link LgtmScore}</li>
+ *  <li>{@link NoHttpToolScore}</li>
  * </ul>
  * There is plenty room for improvements.
  * The score can take into account a lot of other information.
@@ -24,7 +25,8 @@ public class ProjectSecurityTestingScore extends AverageCompositeScore {
   ProjectSecurityTestingScore() {
     super("How well security testing is done for an open-source project",
         new DependencyScanScore(),
-        new LgtmScore());
+        new LgtmScore(),
+        new NoHttpToolScore());
   }
 
   /**

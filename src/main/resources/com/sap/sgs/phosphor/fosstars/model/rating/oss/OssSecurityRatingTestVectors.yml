@@ -1,4 +1,6 @@
 ---
+
+# all unknown
 - values:
   - type: "UnknownValue"
     feature:
@@ -60,6 +62,14 @@
     feature:
       type: "BooleanFeature"
       name: "If an open-source project is supported by a company"
+  - type: "UnknownValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses nohttp tool"
+  - type: "UnknownValue"
+    feature:
+      type: "PackageManagersFeature"
+      name: "A set of package managers"
   expectedScore:
     type: "DoubleInterval"
     from: 0.0
@@ -71,7 +81,9 @@
   expectedLabel:
   - "OssSecurityRating$SecurityLabel"
   - "BAD"
-  alias: "test_vector_0"
+  alias: "all_unknown"
+
+#
 - values:
   - type: "DateValue"
     feature:
@@ -156,6 +168,18 @@
       type: "BooleanFeature"
       name: "If an open-source project has a security policy"
     flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses nohttp tool"
+    flag: true
+  - type: "PackageManagersValue"
+    feature:
+      type: "PackageManagersFeature"
+      name: "A set of package managers"
+    packageManagers:
+      packageManagers:
+        - "MAVEN"
   expectedScore:
     type: "DoubleInterval"
     from: 0.0
@@ -167,7 +191,7 @@
   expectedLabel:
   - "OssSecurityRating$SecurityLabel"
   - "BAD"
-  alias: "test_vector_1"
+  alias: "bad"
 - values:
   - type: "BooleanValue"
     feature:
@@ -269,6 +293,18 @@
       type: "BooleanFeature"
       name: "If an open-source project is regularly scanned for vulnerable dependencies"
     flag: true
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses nohttp tool"
+    flag: false
+  - type: "PackageManagersValue"
+    feature:
+      type: "PackageManagersFeature"
+      name: "A set of package managers"
+    packageManagers:
+      packageManagers:
+        - "GRADLE"
   expectedScore:
     type: "DoubleInterval"
     from: 9.0
@@ -280,13 +316,14 @@
   expectedLabel:
   - "OssSecurityRating$SecurityLabel"
   - "GOOD"
-  alias: "test_vector_2"
+  alias: "good"
+
 - values:
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
       name: "If an open-source project has a security policy"
-    flag: true
+    flag: false
   - type: "DateValue"
     feature:
       type: "DateFeature"
@@ -296,728 +333,12 @@
     feature:
       type: "PositiveIntegerFeature"
       name: "Number of watchers for a GitHub repository"
-    number: 5000
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of contributors in the last three months"
-    number: 50
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses LGTM"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security team"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project is supported by a company"
-    flag: true
-  - type: "LgtmGradeValue"
-    feature:
-      type: "LgtmGradeFeature"
-      name: "The worst LGTM grade of a project"
-    value: "A+"
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of stars for a GitHub repository"
-    number: 15000
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of commits in the last three months"
-    number: 1000
-  - type: "VulnerabilitiesValue"
-    vulnerabilities:
-      entries:
-      - id: "VULN-123-1"
-        cvss:
-          version: "V3"
-          value: 9.0
-        references: []
-        resolution: "PATCHED"
-        introduced: "2019-01-01"
-        fixed: "2019-01-03"
-      - id: "VULN-124-2"
-        cvss:
-          version: "V3"
-          value: 7.0
-        references: []
-        resolution: "PATCHED"
-        introduced: "2018-11-28"
-        fixed: "2018-12-02"
-      - id: "VULN-125-3"
-        cvss:
-          version: "V3"
-          value: 3.0
-        references: []
-        resolution: "PATCHED"
-        introduced: "2017-07-04"
-        fixed: "2017-07-08"
-    feature:
-      type: "VulnerabilitiesInProject"
-      name: "Info about vulnerabilities in open-source project"
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Eclipse Foundation"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses verified signed commits"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project is regularly scanned for vulnerable dependencies"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Apache Foundation"
-    flag: true
-  expectedScore:
-    type: "DoubleInterval"
-    from: 9.0
-    openLeft: false
-    negativeInfinity: false
-    to: 10.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel:
-  - "OssSecurityRating$SecurityLabel"
-  - "GOOD"
-  alias: "test_vector_3"
-- values:
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security policy"
-    flag: true
-  - type: "DateValue"
-    feature:
-      type: "DateFeature"
-      name: "When a project started"
-    date: "2015-03-21T23:00:00.000+0000"
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Apache Foundation"
-    flag: false
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of watchers for a GitHub repository"
-    number: 5000
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of contributors in the last three months"
-    number: 50
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses LGTM"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security team"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project is supported by a company"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Eclipse Foundation"
-    flag: true
-  - type: "LgtmGradeValue"
-    feature:
-      type: "LgtmGradeFeature"
-      name: "The worst LGTM grade of a project"
-    value: "A+"
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of stars for a GitHub repository"
-    number: 15000
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of commits in the last three months"
-    number: 1000
-  - type: "VulnerabilitiesValue"
-    vulnerabilities:
-      entries:
-      - id: "VULN-123-1"
-        cvss:
-          version: "V3"
-          value: 9.0
-        references: []
-        resolution: "PATCHED"
-        introduced: "2019-01-01"
-        fixed: "2019-01-03"
-      - id: "VULN-124-2"
-        cvss:
-          version: "V3"
-          value: 7.0
-        references: []
-        resolution: "PATCHED"
-        introduced: "2018-11-28"
-        fixed: "2018-12-02"
-      - id: "VULN-125-3"
-        cvss:
-          version: "V3"
-          value: 3.0
-        references: []
-        resolution: "PATCHED"
-        introduced: "2017-07-04"
-        fixed: "2017-07-08"
-    feature:
-      type: "VulnerabilitiesInProject"
-      name: "Info about vulnerabilities in open-source project"
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses verified signed commits"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project is regularly scanned for vulnerable dependencies"
-    flag: true
-  expectedScore:
-    type: "DoubleInterval"
-    from: 9.0
-    openLeft: false
-    negativeInfinity: false
-    to: 10.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel:
-  - "OssSecurityRating$SecurityLabel"
-  - "GOOD"
-  alias: "test_vector_4"
-- values:
-  - type: "VulnerabilitiesValue"
-    vulnerabilities:
-      entries: []
-    feature:
-      type: "VulnerabilitiesInProject"
-      name: "Info about vulnerabilities in open-source project"
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security policy"
-    flag: true
-  - type: "DateValue"
-    feature:
-      type: "DateFeature"
-      name: "When a project started"
-    date: "2015-03-21T23:00:00.000+0000"
-  - type: "LgtmGradeValue"
-    feature:
-      type: "LgtmGradeFeature"
-      name: "The worst LGTM grade of a project"
-    value: "A"
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Apache Foundation"
-    flag: false
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of watchers for a GitHub repository"
-    number: 5000
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of contributors in the last three months"
-    number: 50
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses LGTM"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security team"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project is supported by a company"
-    flag: false
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of stars for a GitHub repository"
-    number: 15000
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of commits in the last three months"
-    number: 1000
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Eclipse Foundation"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses verified signed commits"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project is regularly scanned for vulnerable dependencies"
-    flag: true
-  expectedScore:
-    type: "DoubleInterval"
-    from: 8.0
-    openLeft: false
-    negativeInfinity: false
-    to: 10.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel:
-  - "OssSecurityRating$SecurityLabel"
-  - "GOOD"
-  alias: "test_vector_5"
-- values:
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security policy"
-    flag: true
-  - type: "DateValue"
-    feature:
-      type: "DateFeature"
-      name: "When a project started"
-    date: "2015-03-21T23:00:00.000+0000"
-  - type: "LgtmGradeValue"
-    feature:
-      type: "LgtmGradeFeature"
-      name: "The worst LGTM grade of a project"
-    value: "A"
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Apache Foundation"
-    flag: false
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of watchers for a GitHub repository"
-    number: 5000
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of contributors in the last three months"
-    number: 50
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses LGTM"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security team"
-    flag: true
-  - type: "VulnerabilitiesValue"
-    vulnerabilities:
-      entries:
-      - id: "VULN-126-4"
-        cvss:
-          version: "V3"
-          value: 9.0
-        references: []
-        resolution: "PATCHED"
-        introduced: "2019-01-01"
-        fixed: "2019-01-12"
-      - id: "VULN-127-5"
-        cvss:
-          version: "V3"
-          value: 7.0
-        references: []
-        resolution: "PATCHED"
-        introduced: "2018-11-28"
-        fixed: "2018-12-10"
-      - id: "VULN-128-6"
-        cvss:
-          version: "V3"
-          value: 3.0
-        references: []
-        resolution: "PATCHED"
-        introduced: "2017-07-04"
-        fixed: "2017-07-10"
-    feature:
-      type: "VulnerabilitiesInProject"
-      name: "Info about vulnerabilities in open-source project"
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project is supported by a company"
-    flag: false
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of stars for a GitHub repository"
-    number: 15000
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of commits in the last three months"
-    number: 1000
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Eclipse Foundation"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses verified signed commits"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project is regularly scanned for vulnerable dependencies"
-    flag: true
-  expectedScore:
-    type: "DoubleInterval"
-    from: 8.0
-    openLeft: false
-    negativeInfinity: false
-    to: 10.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel:
-  - "OssSecurityRating$SecurityLabel"
-  - "GOOD"
-  alias: "test_vector_6"
-- values:
-  - type: "DateValue"
-    feature:
-      type: "DateFeature"
-      name: "When a project started"
-    date: "2015-03-21T23:00:00.000+0000"
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses verified signed commits"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project is regularly scanned for vulnerable dependencies"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Apache Foundation"
-    flag: false
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of watchers for a GitHub repository"
-    number: 5000
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of contributors in the last three months"
-    number: 50
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security team"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses LGTM"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project is supported by a company"
-    flag: false
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of stars for a GitHub repository"
-    number: 15000
-  - type: "VulnerabilitiesValue"
-    vulnerabilities:
-      entries:
-      - id: "VULN-137-15"
-        cvss:
-          version: "V3"
-          value: 5.0
-        references: []
-        resolution: "UNPATCHED"
-        introduced: null
-        fixed: null
-      - id: "VULN-138-16"
-        cvss:
-          version: "V3"
-          value: 6.0
-        references: []
-        resolution: "UNPATCHED"
-        introduced: null
-        fixed: null
-    feature:
-      type: "VulnerabilitiesInProject"
-      name: "Info about vulnerabilities in open-source project"
-  - type: "UnknownValue"
-    feature:
-      type: "LgtmGradeFeature"
-      name: "The worst LGTM grade of a project"
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of commits in the last three months"
-    number: 1000
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Eclipse Foundation"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security policy"
-    flag: false
-  expectedScore:
-    type: "DoubleInterval"
-    from: 3.0
-    openLeft: false
-    negativeInfinity: false
-    to: 5.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_7"
-- values:
-  - type: "DateValue"
-    feature:
-      type: "DateFeature"
-      name: "When a project started"
-    date: "2015-03-21T23:00:00.000+0000"
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses verified signed commits"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project is regularly scanned for vulnerable dependencies"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Apache Foundation"
-    flag: false
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of watchers for a GitHub repository"
-    number: 5000
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of contributors in the last three months"
-    number: 50
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security team"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses LGTM"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project is supported by a company"
-    flag: false
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of stars for a GitHub repository"
-    number: 15000
-  - type: "VulnerabilitiesValue"
-    vulnerabilities:
-      entries:
-      - id: "VULN-134-12"
-        cvss:
-          version: "V3"
-          value: 9.5
-        references: []
-        resolution: "UNPATCHED"
-        introduced: null
-        fixed: null
-    feature:
-      type: "VulnerabilitiesInProject"
-      name: "Info about vulnerabilities in open-source project"
-  - type: "UnknownValue"
-    feature:
-      type: "LgtmGradeFeature"
-      name: "The worst LGTM grade of a project"
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of commits in the last three months"
-    number: 1000
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Eclipse Foundation"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security policy"
-    flag: false
-  expectedScore:
-    type: "DoubleInterval"
-    from: 3.0
-    openLeft: false
-    negativeInfinity: false
-    to: 5.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_8"
-- values:
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of watchers for a GitHub repository"
-    number: 2
-  - type: "VulnerabilitiesValue"
-    vulnerabilities:
-      entries: []
-    feature:
-      type: "VulnerabilitiesInProject"
-      name: "Info about vulnerabilities in open-source project"
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security policy"
-    flag: true
-  - type: "DateValue"
-    feature:
-      type: "DateFeature"
-      name: "When a project started"
-    date: "2015-03-21T23:00:00.000+0000"
-  - type: "LgtmGradeValue"
-    feature:
-      type: "LgtmGradeFeature"
-      name: "The worst LGTM grade of a project"
-    value: "A"
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Apache Foundation"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses LGTM"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security team"
-    flag: true
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of commits in the last three months"
     number: 500
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project is supported by a company"
-    flag: false
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of stars for a GitHub repository"
-    number: 23
   - type: "IntegerValue"
     feature:
       type: "PositiveIntegerFeature"
       name: "Number of contributors in the last three months"
-    number: 2
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Eclipse Foundation"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses verified signed commits"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project is regularly scanned for vulnerable dependencies"
-    flag: true
-  expectedScore:
-    type: "DoubleInterval"
-    from: 6.0
-    openLeft: false
-    negativeInfinity: false
-    to: 7.5
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_9"
-- values:
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of watchers for a GitHub repository"
-    number: 2
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security policy"
-    flag: true
-  - type: "DateValue"
-    feature:
-      type: "DateFeature"
-      name: "When a project started"
-    date: "2015-03-21T23:00:00.000+0000"
-  - type: "LgtmGradeValue"
-    feature:
-      type: "LgtmGradeFeature"
-      name: "The worst LGTM grade of a project"
-    value: "A"
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Apache Foundation"
-    flag: false
+    number: 5
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
@@ -1027,98 +348,62 @@
     feature:
       type: "BooleanFeature"
       name: "If an open-source project has a security team"
+    flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If an open-source project is supported by a company"
     flag: true
+  - type: "LgtmGradeValue"
+    feature:
+      type: "LgtmGradeFeature"
+      name: "The worst LGTM grade of a project"
+    value: "A+"
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of stars for a GitHub repository"
+    number: 15000
   - type: "IntegerValue"
     feature:
       type: "PositiveIntegerFeature"
       name: "Number of commits in the last three months"
-    number: 500
+    number: 1000
   - type: "VulnerabilitiesValue"
     vulnerabilities:
       entries:
-      - id: "VULN-126-4"
+      - id: "VULN-123-1"
         cvss:
           version: "V3"
           value: 9.0
         references: []
         resolution: "PATCHED"
         introduced: "2019-01-01"
-        fixed: "2019-01-12"
-      - id: "VULN-127-5"
+        fixed: "2019-01-03"
+      - id: "VULN-124-2"
         cvss:
           version: "V3"
           value: 7.0
         references: []
         resolution: "PATCHED"
         introduced: "2018-11-28"
-        fixed: "2018-12-10"
-      - id: "VULN-128-6"
+        fixed: "2018-12-02"
+      - id: "VULN-125-3"
         cvss:
           version: "V3"
           value: 3.0
         references: []
         resolution: "PATCHED"
         introduced: "2017-07-04"
-        fixed: "2017-07-10"
+        fixed: "2017-07-08"
     feature:
       type: "VulnerabilitiesInProject"
       name: "Info about vulnerabilities in open-source project"
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
-      name: "If an open-source project is supported by a company"
-    flag: false
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of stars for a GitHub repository"
-    number: 23
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of contributors in the last three months"
-    number: 2
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
       name: "If an open-source project belongs to Eclipse Foundation"
     flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses verified signed commits"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project is regularly scanned for vulnerable dependencies"
-    flag: true
-  expectedScore:
-    type: "DoubleInterval"
-    from: 6.0
-    openLeft: false
-    negativeInfinity: false
-    to: 7.5
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_10"
-- values:
-  - type: "DateValue"
-    feature:
-      type: "DateFeature"
-      name: "When a project started"
-    date: "2015-03-21T23:00:00.000+0000"
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of commits in the last three months"
-    number: 2000
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of contributors in the last three months"
-    number: 20
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
@@ -1133,277 +418,19 @@
     feature:
       type: "BooleanFeature"
       name: "If an open-source project belongs to Apache Foundation"
-    flag: false
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of watchers for a GitHub repository"
-    number: 7
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security team"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses LGTM"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project is supported by a company"
-    flag: false
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of stars for a GitHub repository"
-    number: 89
-  - type: "VulnerabilitiesValue"
-    vulnerabilities:
-      entries:
-      - id: "VULN-134-12"
-        cvss:
-          version: "V3"
-          value: 9.5
-        references: []
-        resolution: "UNPATCHED"
-        introduced: null
-        fixed: null
-    feature:
-      type: "VulnerabilitiesInProject"
-      name: "Info about vulnerabilities in open-source project"
-  - type: "UnknownValue"
-    feature:
-      type: "LgtmGradeFeature"
-      name: "The worst LGTM grade of a project"
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Eclipse Foundation"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security policy"
-    flag: false
-  expectedScore:
-    type: "DoubleInterval"
-    from: 1.0
-    openLeft: false
-    negativeInfinity: false
-    to: 3.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel:
-  - "OssSecurityRating$SecurityLabel"
-  - "BAD"
-  alias: "test_vector_11"
-- values:
-  - type: "DateValue"
-    feature:
-      type: "DateFeature"
-      name: "When a project started"
-    date: "2015-03-21T23:00:00.000+0000"
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of commits in the last three months"
-    number: 2000
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of contributors in the last three months"
-    number: 20
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses verified signed commits"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project is regularly scanned for vulnerable dependencies"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Apache Foundation"
-    flag: false
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of watchers for a GitHub repository"
-    number: 7
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security team"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses LGTM"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project is supported by a company"
-    flag: false
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of stars for a GitHub repository"
-    number: 89
-  - type: "UnknownValue"
-    feature:
-      type: "LgtmGradeFeature"
-      name: "The worst LGTM grade of a project"
-  - type: "VulnerabilitiesValue"
-    vulnerabilities:
-      entries:
-      - id: "VULN-139-17"
-        cvss:
-          version: "V3"
-          value: 9.0
-        references: []
-        resolution: "UNPATCHED"
-        introduced: null
-        fixed: null
-      - id: "VULN-140-18"
-        cvss:
-          version: "V3"
-          value: 10.0
-        references: []
-        resolution: "UNPATCHED"
-        introduced: null
-        fixed: null
-    feature:
-      type: "VulnerabilitiesInProject"
-      name: "Info about vulnerabilities in open-source project"
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Eclipse Foundation"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security policy"
-    flag: false
-  expectedScore:
-    type: "DoubleInterval"
-    from: 0.0
-    openLeft: false
-    negativeInfinity: false
-    to: 3.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel:
-  - "OssSecurityRating$SecurityLabel"
-  - "BAD"
-  alias: "test_vector_12"
-- values:
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security policy"
-    flag: true
-  - type: "DateValue"
-    feature:
-      type: "DateFeature"
-      name: "When a project started"
-    date: "2015-03-21T23:00:00.000+0000"
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project is regularly scanned for vulnerable dependencies"
-    flag: false
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of watchers for a GitHub repository"
-    number: 1000
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses LGTM"
     flag: true
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
-      name: "If an open-source project has a security team"
-    flag: true
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of contributors in the last three months"
-    number: 42
-  - type: "VulnerabilitiesValue"
-    vulnerabilities:
-      entries:
-      - id: "VULN-126-4"
-        cvss:
-          version: "V3"
-          value: 9.0
-        references: []
-        resolution: "PATCHED"
-        introduced: "2019-01-01"
-        fixed: "2019-01-12"
-      - id: "VULN-127-5"
-        cvss:
-          version: "V3"
-          value: 7.0
-        references: []
-        resolution: "PATCHED"
-        introduced: "2018-11-28"
-        fixed: "2018-12-10"
-      - id: "VULN-128-6"
-        cvss:
-          version: "V3"
-          value: 3.0
-        references: []
-        resolution: "PATCHED"
-        introduced: "2017-07-04"
-        fixed: "2017-07-10"
-    feature:
-      type: "VulnerabilitiesInProject"
-      name: "Info about vulnerabilities in open-source project"
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project is supported by a company"
+      name: "If a project uses nohttp tool"
     flag: false
-  - type: "IntegerValue"
+  - type: "PackageManagersValue"
     feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of commits in the last three months"
-    number: 1000
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of stars for a GitHub repository"
-    number: 10000
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Eclipse Foundation"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses verified signed commits"
-    flag: true
-  - type: "LgtmGradeValue"
-    feature:
-      type: "LgtmGradeFeature"
-      name: "The worst LGTM grade of a project"
-    value: "B"
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Apache Foundation"
-    flag: true
+      type: "PackageManagersFeature"
+      name: "A set of package managers"
+    packageManagers:
+      packageManagers:
+        - "MAVEN"
   expectedScore:
     type: "DoubleInterval"
     from: 6.0
@@ -1412,5 +439,7 @@
     to: 9.0
     openRight: false
     positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_13"
+  expectedLabel:
+  - "OssSecurityRating$SecurityLabel"
+  - "MODERATE"
+  alias: "moderate"

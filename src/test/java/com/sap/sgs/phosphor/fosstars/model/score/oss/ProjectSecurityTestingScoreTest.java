@@ -25,21 +25,24 @@ public class ProjectSecurityTestingScoreTest {
         PROJECT_SECURITY_TESTING,
         setOf(
             PROJECT_SECURITY_TESTING.score(LgtmScore.class).value(Score.MIN),
-            PROJECT_SECURITY_TESTING.score(DependencyScanScore.class).value(Score.MIN)));
+            PROJECT_SECURITY_TESTING.score(DependencyScanScore.class).value(Score.MIN),
+            PROJECT_SECURITY_TESTING.score(NoHttpToolScore.class).value(Score.MIN)));
 
     assertScore(
         Score.INTERVAL,
         PROJECT_SECURITY_TESTING,
         setOf(
             PROJECT_SECURITY_TESTING.score(LgtmScore.class).value(Score.MAX),
-            PROJECT_SECURITY_TESTING.score(DependencyScanScore.class).value(Score.MAX)));
+            PROJECT_SECURITY_TESTING.score(DependencyScanScore.class).value(Score.MAX),
+            PROJECT_SECURITY_TESTING.score(NoHttpToolScore.class).value(Score.MAX)));
   }
 
   @Test
   public void explanation() {
     ScoreValue value = PROJECT_SECURITY_TESTING.calculate(
         PROJECT_SECURITY_TESTING.score(LgtmScore.class).value(Score.MAX / 3),
-        PROJECT_SECURITY_TESTING.score(DependencyScanScore.class).value(Score.MAX / 5));
+        PROJECT_SECURITY_TESTING.score(DependencyScanScore.class).value(Score.MAX / 5),
+        PROJECT_SECURITY_TESTING.score(NoHttpToolScore.class).value(Score.MAX / 2));
 
     assertTrue(value.score().description().isEmpty());
     assertTrue(value.explanation().isEmpty());
