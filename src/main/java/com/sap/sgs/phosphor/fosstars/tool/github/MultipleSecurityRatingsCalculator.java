@@ -1,6 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.tool.github;
 
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
+import com.sap.sgs.phosphor.fosstars.nvd.NVD;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +28,10 @@ class MultipleSecurityRatingsCalculator extends AbstractRatingCalculator {
    * Initializes a new calculator.
    *
    * @param github An interface to GitHub.
+   * @param nvd An interface to NVD.
    */
-  MultipleSecurityRatingsCalculator(GitHub github) {
-    super(github);
+  MultipleSecurityRatingsCalculator(GitHub github, NVD nvd) {
+    super(github, nvd);
   }
 
   /**
@@ -93,7 +95,7 @@ class MultipleSecurityRatingsCalculator extends AbstractRatingCalculator {
    * @return An instance of {@link SingleSecurityRatingCalculator}.
    */
   RatingCalculator singleSecurityRatingCalculator() {
-    return new SingleSecurityRatingCalculator(github)
+    return new SingleSecurityRatingCalculator(github, nvd)
         .token(token)
         .set(callback)
         .set(cache);

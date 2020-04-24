@@ -2,7 +2,16 @@ package com.sap.sgs.phosphor.fosstars.nvd;
 
 import com.sap.sgs.phosphor.fosstars.nvd.data.NvdEntry;
 
+/**
+ * An interface for a matcher that checks if an entry from NVD satisfies a requirement.
+ */
 public interface Matcher {
 
-  boolean match(NvdEntry entry, String vendor, String product);
+  /**
+   * Checks if an entry from NVD satisfies a requirement.
+   *
+   * @param entry The entry to be checked.
+   * @return True if the requirement is met, false otherwise.
+   */
+  boolean match(NvdEntry entry);
 }

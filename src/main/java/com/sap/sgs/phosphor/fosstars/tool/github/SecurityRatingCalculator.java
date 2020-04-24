@@ -8,6 +8,7 @@ import com.sap.sgs.phosphor.fosstars.data.NoUserCallback;
 import com.sap.sgs.phosphor.fosstars.data.Terminal;
 import com.sap.sgs.phosphor.fosstars.data.UserCallback;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
+import com.sap.sgs.phosphor.fosstars.nvd.NVD;
 import com.sap.sgs.phosphor.fosstars.tool.InputString;
 import com.sap.sgs.phosphor.fosstars.tool.Reporter;
 import com.sap.sgs.phosphor.fosstars.tool.YesNoQuestion;
@@ -60,13 +61,18 @@ public class SecurityRatingCalculator {
   /**
    * A file name of the default cache of projects.
    */
-  private static final String DEFAULT_PROJECT_CACHE_FILE = ".fosstars_model/project_cache.json";
+  private static final String DEFAULT_PROJECT_CACHE_FILE = ".fosstars/project_cache.json";
 
   /**
    * A usage message.
    */
   private static final String USAGE =
       "java -jar fosstars-github-rating-calc.jar [options]";
+
+  /**
+   * An interface to NVD.
+   */
+  private static final NVD nvd = new NVD();
 
   /**
    * Entry point.
@@ -142,6 +148,9 @@ public class SecurityRatingCalculator {
 
     GitHub github = connectToGithub(token, callback);
 
+    nvd.download();
+    nvd.parse();
+
     try {
       if (commandLine.hasOption("url")) {
         processUrl(commandLine.getOptionValue("url"), github, token, callback);
@@ -169,7 +178,7 @@ public class SecurityRatingCalculator {
 
     GitHubProject project = GitHubProject.parse(url);
 
-    new SingleSecurityRatingCalculator(github)
+    new SingleSecurityRatingCalculator(github, nvd)
         .set(callback)
         .set(VALUE_CACHE)
         .token(githubToken)
@@ -214,7 +223,8 @@ public class SecurityRatingCalculator {
     GitHubProjectCache projectCache = loadProjectCache(projectCacheFile);
 
     LOGGER.info("Starting calculating ratings ...");
-    MultipleSecurityRatingsCalculator calculator = new MultipleSecurityRatingsCalculator(github);
+    MultipleSecurityRatingsCalculator calculator
+        = new MultipleSecurityRatingsCalculator(github, nvd);
     calculator.set(projectCache);
     calculator.set(VALUE_CACHE);
     calculator.set(callback);

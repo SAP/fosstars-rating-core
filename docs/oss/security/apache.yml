@@ -1,5 +1,5 @@
 # this is a configuration for generating a report for Apache projects
-cache: .fosstars_model/project_rating_cache.json
+cache: .fosstars/project_rating_cache.json
 reports:
   - type: markdown
     where: docs/oss/security

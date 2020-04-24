@@ -4,16 +4,25 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sap.sgs.phosphor.fosstars.nvd.data.CVE;
+import com.sap.sgs.phosphor.fosstars.nvd.data.CVEDataMeta;
 import com.sap.sgs.phosphor.fosstars.nvd.data.NvdEntry;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import us.springett.nistdatamirror.NistDataMirror;
 
 /**
@@ -22,9 +31,14 @@ import us.springett.nistdatamirror.NistDataMirror;
 public class NVD {
 
   /**
+   * A logger.
+   */
+  private static final Logger LOGGER = LogManager.getLogger(NVD.class);
+
+  /**
    * The default location where the date from the NVD is stored.
    */
-  private static final String DEFAULT_DOWNLOAD_DIRECTORY = ".fosstars_model";
+  private static final String DEFAULT_DOWNLOAD_DIRECTORY = ".fosstars";
 
   /**
    * The version of NVD feed to be used.
@@ -38,16 +52,14 @@ public class NVD {
   private static final ObjectMapper MAPPER = new ObjectMapper();
 
   /**
-   * A list of matchers to find vulnerabilities for an open-source project.
-   */
-  private static final Matcher[] MATCHERS = {
-      new ExactMatcher()
-  };
-
-  /**
    * The location where the data from the NVD is stored.
    */
   private final String downloadDirectory;
+
+  /**
+   * Maps a CVE identifier to its entry in NVD.
+   */
+  private final Map<String, NvdEntry> nvdEntries = new HashMap<>();
 
   /**
    * The default constructor.
@@ -77,7 +89,7 @@ public class NVD {
    */
   boolean downloadFailed() {
     try {
-      return jsonFiles().isEmpty();
+      return contents().isEmpty();
     } catch (IOException e) {
       return true;
     }
@@ -91,36 +103,84 @@ public class NVD {
   }
 
   /**
-   * Returns a list of JSON files downloaded from the NVD.
+   * Returns content of the downloaded database.
    *
-   * @return A list of downloaded JSON files.
+   * @return A list of input streams that contain contend of NVD.
    * @throws IOException If something went wrong.
    */
-  List<String> jsonFiles() throws IOException {
-    try (Stream<Path> walk = Files.walk(Paths.get(downloadDirectory))) {
+  public List<InputStream> contents() throws IOException {
+    Path downloadDirectoryPath = Paths.get(downloadDirectory);
+    if (!Files.exists(downloadDirectoryPath)) {
+      return Collections.emptyList();
+    }
+
+    try (Stream<Path> walk = Files.walk(downloadDirectoryPath)) {
       return walk
           .filter(Files::isRegularFile)
           .filter(path -> path.toString().contains(NVD_FEED_VERSION))
           .filter(path -> path.toString().endsWith(".json"))
-          .map(Path::toString)
+          .map(NVD::open)
           .collect(Collectors.toList());
     }
   }
 
   /**
-   * Looks for NVD entries for a specific vendor and product.
+   * Creates an input stream for a file.
    *
-   * @param vendor The vendor's name.
-   * @param product The product's name.
+   * @param file The file.
+   * @return The input stream.
+   */
+  private static InputStream open(Path file) {
+    try {
+      return Files.newInputStream(file);
+    } catch (IOException e) {
+      throw new UncheckedIOException(e);
+    }
+  }
+
+  /**
+   * Looks for NVD entries that match to criteria set by a number of matchers.
+   *
+   * @param matchers The matchers.
    * @return A list of NVD entries for the specified vendor and product.
+   */
+  public List<NvdEntry> search(Matcher... matchers) {
+    List<NvdEntry> result = new ArrayList<>();
+
+    for (NvdEntry entry : nvdEntries.values()) {
+      for (Matcher matcher : matchers) {
+        if (matcher.match(entry)) {
+          result.add(entry);
+        }
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * Find a vulnerability by CVE ID.
+   *
+   * @param cve The CVE ID.
+   * @return The vulnerability.
+   */
+  public Optional<NvdEntry> get(String cve) {
+    return Optional.ofNullable(nvdEntries.get(cve));
+  }
+
+  /**
+   * Parses the downloaded data from NVD.
+   *
    * @throws IOException If something went wrong.
    */
-  public List<NvdEntry> find(String vendor, String product) throws IOException {
-    List<NvdEntry> nvdEntries = new ArrayList<>();
+  public void parse() throws IOException {
+    if (!nvdEntries.isEmpty()) {
+      return;
+    }
 
     JsonFactory factory = MAPPER.getFactory();
-    for (String path : jsonFiles()) {
-      try (JsonParser parser = factory.createParser(new FileInputStream(path))) {
+    for (InputStream content : contents()) {
+      try (JsonParser parser = factory.createParser(content)) {
         while (!parser.isClosed()) {
           if (!JsonToken.FIELD_NAME.equals(parser.nextToken())) {
             continue;
@@ -135,14 +195,35 @@ public class NVD {
         }
 
         for (NvdEntry entry : MAPPER.readValue(parser, NvdEntry[].class)) {
-          for (Matcher matcher : MATCHERS) {
-            if (matcher.match(entry, vendor, product)) {
-              nvdEntries.add(entry);
-            }
+
+          // if one of the following null-checks becomes true,
+          // that would mean the there is an entry in NVD without a CVE id
+          // that's almost impossible
+          // so we just are paranoids
+
+          CVE cve = entry.getCve();
+          if (cve == null) {
+            LOGGER.warn("Found an entry without CVE! Skip it.");
+            continue;
           }
+
+          CVEDataMeta metadata = cve.getCveDataMeta();
+          if (metadata == null) {
+            LOGGER.warn("Found an entry without CVE metadata! Skip it.");
+            continue;
+          }
+
+          String id = metadata.getID();
+          if (id == null) {
+            LOGGER.warn("Found an entry without CVE id! Skip it.");
+            continue;
+          }
+
+          nvdEntries.put(id, entry);
         }
+      } finally {
+        content.close();
       }
     }
-    return nvdEntries;
   }
 }

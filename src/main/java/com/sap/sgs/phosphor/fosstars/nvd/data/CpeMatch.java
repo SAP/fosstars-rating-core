@@ -12,7 +12,9 @@ import java.util.Map;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "vulnerable",
-    "cpe23Uri"
+    "cpe23Uri",
+    "versionEndExcluding",
+    "versionEndIncluding"
 })
 public class CpeMatch {
 
@@ -21,6 +23,12 @@ public class CpeMatch {
 
   @JsonProperty("cpe23Uri")
   private String cpe23Uri;
+
+  @JsonProperty("versionEndExcluding")
+  private String versionEndExcluding;
+
+  @JsonProperty("versionEndIncluding")
+  private String versionEndIncluding;
 
   @JsonIgnore
   private Map<String, Object> additionalProperties = new HashMap<>();
@@ -43,6 +51,16 @@ public class CpeMatch {
   @JsonProperty("cpe23Uri")
   public void setCpe23Uri(String cpe23Uri) {
     this.cpe23Uri = cpe23Uri;
+  }
+
+  @JsonProperty("versionEndExcluding")
+  public String getVersionEndExcluding() {
+    return versionEndExcluding;
+  }
+
+  @JsonProperty("versionEndIncluding")
+  public String getVersionEndIncluding() {
+    return versionEndIncluding;
   }
 
   @JsonAnyGetter
