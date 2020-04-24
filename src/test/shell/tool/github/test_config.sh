@@ -12,8 +12,8 @@ fi
 
 JAR=${JAR:-"target/fosstars-github-rating-calc.jar"}
 
-rm -rf .fosstars_model/report > /dev/null 2>&1
-mkdir -p .fosstars_model/report
+rm -rf .fosstars/report > /dev/null 2>&1
+mkdir -p .fosstars/report
 
 # check if --config works (smoke test)
 $JAVA -jar $JAR \

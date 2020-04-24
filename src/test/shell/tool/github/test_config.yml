@@ -1,11 +1,11 @@
 # this is a test configuration for the SecurityRatingCalculator class
-cache: .fosstars_model/project_rating_cache.json
+cache: .fosstars/project_rating_cache.json
 reports:
   - type: markdown
-    where: .fosstars_model/report
-    source: .fosstars_model/report/github_projects.json
+    where: .fosstars/report
+    source: .fosstars/report/github_projects.json
   - type: json
-    where: .fosstars_model/report/github_projects.json
+    where: .fosstars/report/github_projects.json
 finder:
   organizations:
     - name: netty

@@ -8,10 +8,12 @@ import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
+import com.sap.sgs.phosphor.fosstars.nvd.NVD;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import org.kohsuke.github.GitHub;
 
 /**
@@ -37,11 +39,12 @@ public class InfoAboutVulnerabilities extends CachedSingleFeatureGitHubDataProvi
    *
    * @param github An interface to the GitHub API.
    */
-  public InfoAboutVulnerabilities(GitHub github) throws IOException {
+  public InfoAboutVulnerabilities(GitHub github, NVD nvd) throws IOException {
     super(github);
+    Objects.requireNonNull(nvd, "NVD can't be null!");
     providers = Arrays.asList(
-        new UnpatchedVulnerabilities(github),
-        new VulnerabilitiesFromNvd(github));
+        new UnpatchedVulnerabilities(github, nvd),
+        new VulnerabilitiesFromNvd(github, nvd));
   }
 
   @Override

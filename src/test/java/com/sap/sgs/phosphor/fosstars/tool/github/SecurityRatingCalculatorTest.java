@@ -35,7 +35,7 @@ public class SecurityRatingCalculatorTest {
     try (InputStream is = getClass().getResourceAsStream(filename)) {
       SecurityRatingCalculator.Config mainConfig = SecurityRatingCalculator.config(is);
 
-      assertEquals(".fosstars_model/project_rating_cache.json", mainConfig.cacheFilename);
+      assertEquals(".fosstars/project_rating_cache.json", mainConfig.cacheFilename);
 
       assertNotNull(mainConfig.reportConfigs);
       assertEquals(2, mainConfig.reportConfigs.size());
@@ -44,11 +44,11 @@ public class SecurityRatingCalculatorTest {
         assertNotNull(reportConfig.type);
         switch (reportConfig.type) {
           case MARKDOWN:
-            assertEquals(".fosstars_model/report", reportConfig.where);
-            assertEquals(".fosstars_model/report/github_projects.json", reportConfig.source);
+            assertEquals(".fosstars/report", reportConfig.where);
+            assertEquals(".fosstars/report/github_projects.json", reportConfig.source);
             break;
           case JSON:
-            assertEquals(".fosstars_model/report/github_projects.json", reportConfig.where);
+            assertEquals(".fosstars/report/github_projects.json", reportConfig.where);
             break;
           default:
             fail("Unexpected report type: " + reportConfig.type);

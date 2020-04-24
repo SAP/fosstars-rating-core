@@ -20,7 +20,7 @@
     lines="11"/>
   <suppress checks="AbbreviationAsWordInName"
     files="NVD.java"
-    lines="22"/>
+    lines="31"/>
   <suppress checks="AbbreviationAsWordInName"
     files="CVE.java"
     lines="23"/>

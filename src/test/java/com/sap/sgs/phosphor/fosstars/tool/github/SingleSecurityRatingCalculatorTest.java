@@ -13,6 +13,7 @@ import com.sap.sgs.phosphor.fosstars.data.github.IsEclipse;
 import com.sap.sgs.phosphor.fosstars.model.math.DoubleInterval;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
+import com.sap.sgs.phosphor.fosstars.nvd.NVD;
 import java.io.IOException;
 import java.util.Arrays;
 import org.junit.Test;
@@ -24,7 +25,9 @@ public class SingleSecurityRatingCalculatorTest {
   public void calculateFor() throws IOException {
     GitHub github = mock(GitHub.class);
 
-    SingleSecurityRatingCalculator calculator = new SingleSecurityRatingCalculator(github);
+    SingleSecurityRatingCalculator calculator
+        = new SingleSecurityRatingCalculator(github, new NVD());
+
     calculator.token("test");
     calculator.set(NoUserCallback.INSTANCE);
     calculator = spy(calculator);

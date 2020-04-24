@@ -4,71 +4,59 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 
+import com.sap.sgs.phosphor.fosstars.data.github.VendorDataMatcher;
 import com.sap.sgs.phosphor.fosstars.nvd.data.NvdEntry;
+import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.InputStream;
+import java.util.Collections;
 import java.util.List;
-import org.junit.Ignore;
+import java.util.Optional;
 import org.junit.Test;
 
-/**
- * The test is unstable since it tries downloading data from NVD.
- * It needs to be improved to test only parsing data from NVD.
- * Meanwhile, the test is ignored.
- */
-@Ignore
 public class NVDTest {
 
   @Test
-  public void download() throws IOException {
+  public void get() throws IOException {
     NVD nvd = new NVD();
-    nvd.download();
-
-    if (nvd.downloadFailed()) {
-      return;
-    }
-
-    assertNotNull(nvd.location());
-    assertTrue(Files.exists(Paths.get(nvd.location())));
-
-    List<String> files = nvd.jsonFiles();
-    assertNotNull(files);
-
-    assertTrue(files.size() > 0);
-    for (String file : files) {
-      Path path = Paths.get(file);
-      assertTrue(Files.exists(path));
-      assertTrue(Files.isRegularFile(path));
-      assertFalse(Files.isDirectory(path));
-      byte[] content = Files.readAllBytes(path);
-      assertNotNull(content);
-      assertTrue(content.length > 0);
+    nvd = spy(nvd);
+    try (InputStream content = getClass().getResourceAsStream("NVD_part_2014.json")) {
+      when(nvd.contents()).thenReturn(Collections.singletonList(content));
+      assertFalse(nvd.downloadFailed());
+      nvd.parse();
+      Optional<NvdEntry> something = nvd.get("CVE-2014-0171");
+      assertTrue(something.isPresent());
+      NvdEntry nvdEntry = something.get();
+      assertNotNull(nvdEntry);
+      assertEquals("CVE-2014-0171", nvdEntry.getCve().getCveDataMeta().getID());
+      assertNotNull(nvdEntry.getConfigurations());
+      assertEquals(2, nvdEntry.getConfigurations().getNodes().size());
     }
   }
 
   @Test
   public void find() throws IOException {
     NVD nvd = new NVD();
-    nvd.download();
+    nvd = spy(nvd);
+    try (InputStream content = getClass().getResourceAsStream("NVD_part_2014.json")) {
+      when(nvd.contents()).thenReturn(Collections.singletonList(content));
+      nvd.parse();
 
-    if (nvd.downloadFailed()) {
-      return;
+      List<NvdEntry> entries = nvd.search(
+          VendorDataMatcher.with(
+              new GitHubProject("odata4j_project", "odata4j")));
+      assertNotNull(entries);
+
+      assertEquals(1, entries.size());
+
+      entries = nvd.search(
+          VendorDataMatcher.with(
+              new GitHubProject("not_existing", "odata4j")));
+      assertNotNull(entries);
+      assertEquals(0, entries.size());
     }
-
-    List<NvdEntry> entries = nvd.find("apache", "poi");
-    assertNotNull(entries);
-
-    assertTrue(entries.size() >= 7);
-
-    entries = nvd.find("not_existing", "poi");
-    assertNotNull(entries);
-    assertEquals(0, entries.size());
-
-    entries = nvd.find("apache", "not_existing");
-    assertNotNull(entries);
-    assertEquals(0, entries.size());
   }
 }

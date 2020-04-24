@@ -23,6 +23,7 @@ import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
+import com.sap.sgs.phosphor.fosstars.nvd.NVD;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -38,9 +39,10 @@ class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
    * Initializes a new calculator.
    *
    * @param github An interface to GitHub.
+   * @param nvd An interface to NVD.
    */
-  SingleSecurityRatingCalculator(GitHub github) {
-    super(github);
+  SingleSecurityRatingCalculator(GitHub github, NVD nvd) {
+    super(github, nvd);
   }
 
   @Override
@@ -103,7 +105,7 @@ class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
         new HasCompanySupport(github),
         new HasSecurityPolicy(github),
         new SecurityReviewForProject(github),
-        new InfoAboutVulnerabilities(github),
+        new InfoAboutVulnerabilities(github, nvd),
         new IsApache(github),
         new IsEclipse(github),
         new LgtmDataProvider(github),

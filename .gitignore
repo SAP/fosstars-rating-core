@@ -2,7 +2,7 @@
 fosstars-model.iml
 target
 .attach_pid*
-.fosstars_model
+.fosstars
 src/main/jupyter/oss/security/.ipynb_checkpoints
 src/main/jupyter/oss/security/__pycache__/
 src/test/shell/tool/github/*.log
