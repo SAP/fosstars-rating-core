@@ -48,7 +48,17 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
    * A template for a table row in the report.
    */
   private static final String PROJECT_LINE_TEMPLATE
-      = "| %URL% | %STARS% | %SCORE% | %LABEL% | %CONFIDENCE% | %DATE% |";
+      = "| %NAME% | %STARS% | %SCORE% | %LABEL% | %CONFIDENCE% | %DATE% |";
+
+  /**
+   * If confidence is lower than this value, then it's considered low.
+   */
+  private static final double CONFIDENCE_THRESHOLD = 7.0;
+
+  /**
+   * A length of line in a project name.
+   */
+  static final int NAME_LINE_LENGTH = 42;
 
   /**
    * A date formatter.
@@ -59,7 +69,22 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
   /**
    * This string is printed out if something is unknown.
    */
-  private static final String UNKNOWN = "unknown";
+  static final String UNKNOWN = "Unknown";
+
+  /**
+   * This string is printed out if something is unclear, for example, rating.
+   */
+  static final String UNCLEAR = "Unclear";
+
+  /**
+   * This string is printed out if something is low, for example, confidence.
+   */
+  static final String LOW = "Low";
+
+  /**
+   * This string is printed out if something is high, for example, confidence.
+   */
+  static final String HIGH = "High";
 
   /**
    * An output directory.
@@ -129,13 +154,13 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
 
       String relativePathToDetails = String.format("%s/%s",
           project.organization().name(), projectReportFilename);
-      String url = String.format("[%s](%s)", projectPath, project.url());
+
       String labelString = String.format("[%s](%s)", labelOf(project), relativePathToDetails);
       Integer numberOfStars = stars.get(project);
       String numberOfStarsString = numberOfStars != null && numberOfStars >= 0
           ? numberOfStars.toString() : UNKNOWN;
       String line = PROJECT_LINE_TEMPLATE
-          .replace("%URL%", url)
+          .replace("%NAME%", nameOf(project))
           .replace("%STARS%", numberOfStarsString)
           .replace("%SCORE%", scoreOf(project))
           .replace("%LABEL%", labelString)
@@ -149,6 +174,45 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
     Path path = Paths.get(outputDirectory).resolve(REPORT_FILENAME);
     logger.info("Storing a report to {}", path);
     Files.write(path, build(sb.toString(), statistics).getBytes());
+  }
+
+
+
+  /**
+   * Prints out a name of a project.
+   *
+   * @param project The project.
+   * @return A name of the project.
+   */
+  private static String nameOf(GitHubProject project) {
+    String name = insert("<br>", NAME_LINE_LENGTH,
+        project.url().getPath().replaceFirst("/", ""));
+    return String.format("[%s](%s)", name, project.url());
+  }
+
+  /**
+   * Insert a string after each n characters.
+   *
+   * @param string The string to be inserted.
+   * @param n The number of characters.
+   * @param content The original string.
+   * @return The updated string.
+   */
+  static String insert(String string, int n, String content) {
+    if (content.length() <= n) {
+      return content;
+    }
+    int start = 0;
+    int end = n;
+    StringBuilder sb = new StringBuilder();
+    while (end < content.length()) {
+      sb.append(content, start, end);
+      sb.append(string);
+      start = end;
+      end += n;
+    }
+    sb.append(content, start, content.length());
+    return sb.toString();
   }
 
   /**
@@ -171,12 +235,15 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
           .replace("%NUMBER_MODERATE_RATINGS%", String.valueOf(statistics.moderateRatings))
           .replace("%NUMBER_GOOD_RATINGS%", String.valueOf(statistics.goodRatings))
           .replace("%NUMBER_UNKNOWN_RATINGS%", String.valueOf(statistics.unknownRatings))
+          .replace("%NUMBER_UNCLEAR_RATINGS%", String.valueOf(statistics.unclearRatings))
           .replace("%PERCENT_BAD_RATINGS%",
               printPercent(statistics.badRatingsPercent()))
           .replace("%PERCENT_MODERATE_RATINGS%",
               printPercent(statistics.moderateRatingsPercent()))
           .replace("%PERCENT_GOOD_RATINGS%",
               printPercent(statistics.goodRatingsPercent()))
+          .replace("%PERCENT_UNCLEAR_RATINGS%",
+              printPercent(statistics.unclearRatingsPercent()))
           .replace("%PERCENT_UNKNOWN_RATINGS%",
               printPercent(statistics.unknownRatingsPercent()));
     }
@@ -223,7 +290,13 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
     if (!something.isPresent()) {
       return UNKNOWN;
     }
-    return String.format("%2.2f", something.get().confidence());
+
+    RatingValue ratingValue = something.get();
+    if (unclear(ratingValue)) {
+      return LOW;
+    }
+
+    return HIGH;
   }
 
   /**
@@ -234,7 +307,20 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
     if (!something.isPresent()) {
       return UNKNOWN;
     }
-    return something.get().label().name();
+
+    RatingValue ratingValue = something.get();
+    if (unclear(ratingValue)) {
+      return UNCLEAR;
+    }
+
+    return ratingValue.label().name();
+  }
+
+  /**
+   * Returns true if confidence of a rating value is low, false otherwise.
+   */
+  private static boolean unclear(RatingValue ratingValue) {
+    return ratingValue.scoreValue().confidence() < CONFIDENCE_THRESHOLD;
   }
 
   /**
@@ -245,7 +331,13 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
     if (!something.isPresent()) {
       return UNKNOWN;
     }
-    ScoreValue scoreValue = something.get().scoreValue();
+
+    RatingValue ratingValue = something.get();
+    if (unclear(ratingValue)) {
+      return UNCLEAR;
+    }
+
+    ScoreValue scoreValue = ratingValue.scoreValue();
     return PrettyPrinter.tellMeActualValueOf(scoreValue);
   }
 
@@ -327,6 +419,16 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
      */
     int badRatings = 0;
 
+    /**
+     * A number of projects with unclear ratings.
+     */
+    int unclearRatings = 0;
+
+    /**
+     * Adds a project to the statistics.
+     *
+     * @param project The project.
+     */
     void add(GitHubProject project) {
       total++;
 
@@ -335,7 +437,14 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
         return;
       }
 
-      if (project.ratingValue().get().label() instanceof SecurityLabel == false) {
+      RatingValue ratingValue = project.ratingValue().get();
+
+      if (unclear(ratingValue)) {
+        unclearRatings++;
+        return;
+      }
+
+      if (ratingValue.label() instanceof SecurityLabel == false) {
         unknownRatings++;
         return;
       }
@@ -357,20 +466,39 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
       }
     }
 
+    /**
+     * Returns a percent of projects with a bad rating.
+     */
     double badRatingsPercent() {
       return (double) badRatings * 100 / total;
     }
 
+    /**
+     * Returns a percent of projects with a moderate rating.
+     */
     double moderateRatingsPercent() {
       return (double) moderateRatings * 100 / total;
     }
 
+    /**
+     * Returns a percent of projects with a good rating.
+     */
     double goodRatingsPercent() {
       return (double) goodRatings * 100 / total;
     }
 
+    /**
+     * Returns a percent of projects with an unknown rating.
+     */
     double unknownRatingsPercent() {
       return (double) unknownRatings * 100 / total;
+    }
+
+    /**
+     * Returns a percent of projects with an unclear rating.
+     */
+    double unclearRatingsPercent() {
+      return (double) unclearRatings * 100 / total;
     }
   }
 

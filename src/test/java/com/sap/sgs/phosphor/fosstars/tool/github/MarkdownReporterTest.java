@@ -7,6 +7,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import com.sap.sgs.phosphor.fosstars.model.Label;
 import com.sap.sgs.phosphor.fosstars.model.Rating;
 import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
 import com.sap.sgs.phosphor.fosstars.model.Score;
@@ -32,16 +33,31 @@ public class MarkdownReporterTest {
       Rating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
 
       GitHubProject goodProject = new GitHubProject("org", "good");
-      goodProject.set(new RatingValue(new ScoreValue(rating.score()).set(Score.MAX), GOOD));
+      goodProject.set(
+          new RatingValue(
+              new ScoreValue(rating.score()).set(Score.MAX).confidence(10.0),
+              GOOD));
 
       GitHubProject moderateProject = new GitHubProject("org", "moderate");
-      moderateProject.set(new RatingValue(new ScoreValue(rating.score()).set(5.0), MODERATE));
+      moderateProject.set(
+          new RatingValue(
+              new ScoreValue(rating.score()).set(5.0).confidence(9.0),
+              MODERATE));
 
       GitHubProject badProject = new GitHubProject("org", "bad");
-      badProject.set(new RatingValue(new ScoreValue(rating.score()).set(Score.MIN), BAD));
+      badProject.set(
+          new RatingValue(
+              new ScoreValue(rating.score()).set(Score.MIN).confidence(8.0),
+              BAD));
+
+      GitHubProject projectWithLowConfidence = new GitHubProject("org", "unclear");
+      projectWithLowConfidence.set(
+          new RatingValue(
+              new ScoreValue(rating.score()).set(Score.MIN).confidence(1.0),
+              BAD));
 
       List<GitHubProject> projects = Arrays.asList(
-          goodProject, moderateProject, badProject
+          goodProject, moderateProject, badProject, projectWithLowConfidence
       );
 
       MarkdownReporter reporter = new MarkdownReporter(outputDirectory.toString(), null);
@@ -51,14 +67,15 @@ public class MarkdownReporterTest {
       assertTrue(Files.exists(reportFileName));
 
       String report = new String(Files.readAllBytes(reportFileName));
-
       System.out.println(report);
 
       assertFalse(report.isEmpty());
       assertTrue(report.contains("Total"));
-      assertTrue(report.contains("GOOD"));
-      assertTrue(report.contains("BAD"));
-      assertTrue(report.contains("MODERATE"));
+      for (Label label : OssSecurityRating.SecurityLabel.values()) {
+        assertTrue(report.contains(label.name()));
+      }
+      assertTrue(report.contains(MarkdownReporter.UNKNOWN));
+      assertTrue(report.contains(MarkdownReporter.UNCLEAR));
       assertTrue(report.contains("org/good"));
       assertTrue(report.contains("org/bad"));
       assertTrue(report.contains("org/moderate"));
@@ -66,11 +83,26 @@ public class MarkdownReporterTest {
       assertTrue(report.contains("0.00"));
       assertTrue(report.contains("5.00"));
       assertEquals(1, linesWith("100%", report));
-      assertEquals(3, linesWith("33.3%", report));
+      assertEquals(4, linesWith("25.0%", report));
       assertEquals(1, linesWith("0.0%", report));
+      assertEquals(1, linesWith(MarkdownReporter.LOW, report));
+      assertEquals(3, linesWith(MarkdownReporter.HIGH, report));
     } finally {
       cleanup(outputDirectory);
     }
+  }
+
+  @Test
+  public void testInsert() {
+    assertEquals(
+        "aaa<br>bbb<br>ccc",
+        MarkdownReporter.insert("<br>", 3, "aaabbbccc"));
+    assertEquals(
+        "aaa<br>bbb<br>ccc<br>dd",
+        MarkdownReporter.insert("<br>", 3, "aaabbbcccdd"));
+    assertEquals(
+        "aaa",
+        MarkdownReporter.insert("<br>", 3, "aaa"));
   }
 
   private static int linesWith(String string, String content) throws IOException {
