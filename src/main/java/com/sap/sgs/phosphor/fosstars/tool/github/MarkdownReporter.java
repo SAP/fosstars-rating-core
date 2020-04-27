@@ -3,6 +3,7 @@ package com.sap.sgs.phosphor.fosstars.tool.github;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_GITHUB_STARS;
 
 import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.sgs.phosphor.fosstars.tool.format.PrettyPrinter;
@@ -41,7 +42,7 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
   /**
    * A file where a report is going to be stored.
    */
-  private static final String REPORT_FILENAME = "README.md";
+  static final String REPORT_FILENAME = "README.md";
 
   /**
    * A template for a table row in the report.
@@ -107,6 +108,7 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
     }
 
     StringBuilder sb = new StringBuilder();
+    Statistics statistics = new Statistics();
     for (GitHubProject project : allProjects) {
       String projectPath = project.url().getPath().replaceFirst("/", "");
 
@@ -128,7 +130,7 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
       String relativePathToDetails = String.format("%s/%s",
           project.organization().name(), projectReportFilename);
       String url = String.format("[%s](%s)", projectPath, project.url());
-      String label = String.format("[%s](%s)", labelOf(project), relativePathToDetails);
+      String labelString = String.format("[%s](%s)", labelOf(project), relativePathToDetails);
       Integer numberOfStars = stars.get(project);
       String numberOfStarsString = numberOfStars != null && numberOfStars >= 0
           ? numberOfStars.toString() : UNKNOWN;
@@ -136,20 +138,58 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
           .replace("%URL%", url)
           .replace("%STARS%", numberOfStarsString)
           .replace("%SCORE%", scoreOf(project))
-          .replace("%LABEL%", label)
+          .replace("%LABEL%", labelString)
           .replace("%CONFIDENCE%", confidenceOf(project))
           .replace("%DATE%", lastUpdateOf(project));
       sb.append(line).append("\n");
+
+      statistics.add(project);
     }
 
-    try (InputStream is = getClass().getResourceAsStream("MarkdownReporterMainTemplate.md")) {
+    Path path = Paths.get(outputDirectory).resolve(REPORT_FILENAME);
+    logger.info("Storing a report to {}", path);
+    Files.write(path, build(sb.toString(), statistics).getBytes());
+  }
+
+  /**
+   * Builds a report for projects.
+   *
+   * @param table A content of the table with projects.
+   * @param statistics Statistics about the projects.
+   * @return The report.
+   * @throws IOException If something went wrong.
+   */
+  private static String build(String table, Statistics statistics) throws IOException {
+    try (InputStream is = MarkdownReporter.class
+        .getResourceAsStream("MarkdownReporterMainTemplate.md")) {
+
       String template = IOUtils.toString(is, "UTF-8");
-      String content = template.replace("%PROJECT_TABLE%", sb.toString());
-
-      Path path = Paths.get(outputDirectory).resolve(REPORT_FILENAME);
-      logger.info("Storing a report to {}", path);
-      Files.write(path, content.getBytes());
+      return template
+          .replace("%PROJECT_TABLE%", table)
+          .replace("%NUMBER_OF_PROJECTS%", String.valueOf(statistics.total))
+          .replace("%NUMBER_BAD_RATINGS%", String.valueOf(statistics.badRatings))
+          .replace("%NUMBER_MODERATE_RATINGS%", String.valueOf(statistics.moderateRatings))
+          .replace("%NUMBER_GOOD_RATINGS%", String.valueOf(statistics.goodRatings))
+          .replace("%NUMBER_UNKNOWN_RATINGS%", String.valueOf(statistics.unknownRatings))
+          .replace("%PERCENT_BAD_RATINGS%",
+              printPercent(statistics.badRatingsPercent()))
+          .replace("%PERCENT_MODERATE_RATINGS%",
+              printPercent(statistics.moderateRatingsPercent()))
+          .replace("%PERCENT_GOOD_RATINGS%",
+              printPercent(statistics.goodRatingsPercent()))
+          .replace("%PERCENT_UNKNOWN_RATINGS%",
+              printPercent(statistics.unknownRatingsPercent()));
     }
+  }
+
+  /**
+   * Formats a percent value.
+   *
+   * @param value The value.
+   * @return A formatted string.
+   */
+  private static String printPercent(double value) {
+    return String.format("%2.1f", value);
   }
 
   /**
@@ -255,6 +295,83 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
     }
 
     return UNKNOWN_NUMBER_OF_STARS;
+  }
+
+  /**
+   * This class holds statistics about projects.
+   */
+  private static class Statistics {
+
+    /**
+     * Total number of projects.
+     */
+    int total;
+
+    /**
+     * A number of projects with an unknown rating.
+     */
+    int unknownRatings = 0;
+
+    /**
+     * A number of projects with a good rating.
+     */
+    int goodRatings = 0;
+
+    /**
+     * A number of projects with a moderate rating.
+     */
+    int moderateRatings = 0;
+
+    /**
+     * A number of projects with a bad rating.
+     */
+    int badRatings = 0;
+
+    void add(GitHubProject project) {
+      total++;
+
+      if (!project.ratingValue().isPresent()) {
+        unknownRatings++;
+        return;
+      }
+
+      if (project.ratingValue().get().label() instanceof SecurityLabel == false) {
+        unknownRatings++;
+        return;
+      }
+
+      SecurityLabel label = (SecurityLabel) project.ratingValue().get().label();
+      switch (label) {
+        case BAD:
+          badRatings++;
+          break;
+        case MODERATE:
+          moderateRatings++;
+          break;
+        case GOOD:
+          goodRatings++;
+          break;
+        default:
+          throw new IllegalArgumentException(
+              String.format("Hey! I don't know this label: %s", label));
+      }
+    }
+
+    double badRatingsPercent() {
+      return (double) badRatings * 100 / total;
+    }
+
+    double moderateRatingsPercent() {
+      return (double) moderateRatings * 100 / total;
+    }
+
+    double goodRatingsPercent() {
+      return (double) goodRatings * 100 / total;
+    }
+
+    double unknownRatingsPercent() {
+      return (double) unknownRatings * 100 / total;
+    }
   }
 
 }

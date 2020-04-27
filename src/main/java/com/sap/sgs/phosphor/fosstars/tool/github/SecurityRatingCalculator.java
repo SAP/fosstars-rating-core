@@ -14,10 +14,12 @@ import com.sap.sgs.phosphor.fosstars.tool.Reporter;
 import com.sap.sgs.phosphor.fosstars.tool.YesNoQuestion;
 import com.sap.sgs.phosphor.fosstars.tool.YesNoQuestion.Answer;
 import com.sap.sgs.phosphor.fosstars.tool.format.PrettyPrinter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,9 +51,15 @@ public class SecurityRatingCalculator {
   private static final Logger LOGGER = LogManager.getLogger(SecurityRatingCalculator.class);
 
   /**
+   * A directory where the tool stores stuff.
+   */
+  private static final String FOSSTARS_DIRECTORY = ".fosstars";
+
+  /**
    * A path to the cache.
    */
-  private static final String PATH_TO_VALUE_CACHE = ".fosstars/github_project_value_cache.json";
+  private static final String PATH_TO_VALUE_CACHE
+      = FOSSTARS_DIRECTORY + File.separator + "github_project_value_cache.json";
 
   /**
    * A shared cache.
@@ -61,7 +69,8 @@ public class SecurityRatingCalculator {
   /**
    * A file name of the default cache of projects.
    */
-  private static final String DEFAULT_PROJECT_CACHE_FILE = ".fosstars/project_cache.json";
+  private static final String DEFAULT_PROJECT_CACHE_FILE
+      = FOSSTARS_DIRECTORY + File.separator + "project_cache.json";
 
   /**
    * A usage message.
@@ -150,6 +159,11 @@ public class SecurityRatingCalculator {
 
     nvd.download();
     nvd.parse();
+
+    Path path = Paths.get(FOSSTARS_DIRECTORY);
+    if (!Files.exists(path)) {
+      Files.createDirectories(path);
+    }
 
     try {
       if (commandLine.hasOption("url")) {
