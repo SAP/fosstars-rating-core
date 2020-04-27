@@ -1,0 +1,40 @@
+{
+  securityVulnerabilities(first: %s, after: \"%s\", ecosystem: %s, package: \"%s\") {
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    nodes {
+      firstPatchedVersion {
+        identifier
+      }
+      package {
+        name
+        ecosystem
+      }
+      severity
+      updatedAt
+      vulnerableVersionRange
+      advisory {
+        identifiers {
+          value
+          type
+        }
+        databaseId
+        description
+        ghsaId
+        id
+        origin
+        permalink
+        publishedAt
+        references {
+          url
+        }
+        severity
+        summary
+        updatedAt
+        withdrawnAt
+      }
+    }
+  }
+}
