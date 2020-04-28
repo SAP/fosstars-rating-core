@@ -1,7 +1,8 @@
 ---
-
-# all unknown
-- values:
+defaults: []
+elements:
+- type: "StandardTestVector"
+  values:
   - type: "UnknownValue"
     feature:
       type: "BooleanFeature"
@@ -84,7 +85,8 @@
   alias: "all_unknown"
 
 #
-- values:
+- type: "StandardTestVector"
+  values:
   - type: "DateValue"
     feature:
       type: "DateFeature"
@@ -192,7 +194,8 @@
   - "OssSecurityRating$SecurityLabel"
   - "BAD"
   alias: "bad"
-- values:
+- type: "StandardTestVector"
+  values:
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
@@ -318,7 +321,8 @@
   - "GOOD"
   alias: "good"
 
-- values:
+- type: "StandardTestVector"
+  values:
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"

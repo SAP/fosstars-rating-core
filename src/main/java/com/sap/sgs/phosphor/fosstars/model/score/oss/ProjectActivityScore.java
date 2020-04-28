@@ -7,7 +7,7 @@ import static com.sap.sgs.phosphor.fosstars.model.other.Utils.findValue;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.math.MathHelper;
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
-import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
+import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.sgs.phosphor.fosstars.model.score.FeatureBasedScore;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.io.IOException;
@@ -231,7 +231,7 @@ public class ProjectActivityScore extends FeatureBasedScore {
      * @param score A score to be verified.
      * @param vectors A list of test vectors.
      */
-    public Verification(ProjectActivityScore score, List<TestVector> vectors) {
+    public Verification(ProjectActivityScore score, TestVectors vectors) {
       super(score, vectors);
     }
 
@@ -244,7 +244,7 @@ public class ProjectActivityScore extends FeatureBasedScore {
      */
     static Verification createFor(ProjectActivityScore score) throws IOException {
       try (InputStream is = Verification.class.getResourceAsStream(TEST_VECTORS_YAML)) {
-        return new Verification(score, loadTestVectorsFromYaml(is));
+        return new Verification(score, TestVectors.loadFromYaml(is));
       }
     }
   }

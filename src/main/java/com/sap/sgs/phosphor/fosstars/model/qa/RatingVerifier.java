@@ -23,7 +23,7 @@ public class RatingVerifier extends AbstractVerifier {
    * @param rating A rating to be verified.
    * @param vectors A list of test vectors.
    */
-  public RatingVerifier(Rating rating, List<TestVector> vectors) {
+  public RatingVerifier(Rating rating, TestVectors vectors) {
     super(vectors);
 
     Objects.requireNonNull(rating, "Rating can't be null!");

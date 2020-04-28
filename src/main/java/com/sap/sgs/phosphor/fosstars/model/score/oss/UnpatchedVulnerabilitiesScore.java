@@ -7,7 +7,7 @@ import static com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.Resolution
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
-import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
+import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.sgs.phosphor.fosstars.model.score.FeatureBasedScore;
 import com.sap.sgs.phosphor.fosstars.model.value.CVSS;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
@@ -15,7 +15,6 @@ import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerability;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 /**
  * The score analyses unpatched vulnerabilities in an open-source project.
@@ -140,7 +139,7 @@ public class UnpatchedVulnerabilitiesScore extends FeatureBasedScore {
      * @param score A score to be verified.
      * @param vectors A list of test vectors.
      */
-    public Verification(UnpatchedVulnerabilitiesScore score, List<TestVector> vectors) {
+    public Verification(UnpatchedVulnerabilitiesScore score, TestVectors vectors) {
       super(score, vectors);
     }
 
@@ -153,7 +152,7 @@ public class UnpatchedVulnerabilitiesScore extends FeatureBasedScore {
      */
     static Verification createFor(UnpatchedVulnerabilitiesScore score) throws IOException {
       try (InputStream is = Verification.class.getResourceAsStream(TEST_VECTORS_YAML)) {
-        return new Verification(score, loadTestVectorsFromYaml(is));
+        return new Verification(score, TestVectors.loadFromYaml(is));
       }
     }
   }

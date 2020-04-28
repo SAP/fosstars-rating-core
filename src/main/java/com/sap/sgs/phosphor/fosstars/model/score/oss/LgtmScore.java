@@ -7,14 +7,13 @@ import static com.sap.sgs.phosphor.fosstars.model.other.Utils.findValue;
 import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
-import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
+import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.sgs.phosphor.fosstars.model.score.FeatureBasedScore;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.EnumMap;
-import java.util.List;
 
 /**
  * The score shows if and how a project addresses issues reported by LGTM.
@@ -96,7 +95,7 @@ public class LgtmScore extends FeatureBasedScore {
      * @param score A score to be verified.
      * @param vectors A list of test vectors.
      */
-    public Verification(LgtmScore score, List<TestVector> vectors) {
+    public Verification(LgtmScore score, TestVectors vectors) {
       super(score, vectors);
     }
 
@@ -109,7 +108,7 @@ public class LgtmScore extends FeatureBasedScore {
      */
     static Verification createFor(LgtmScore score) throws IOException {
       try (InputStream is = Verification.class.getResourceAsStream(TEST_VECTORS_YAML)) {
-        return new Verification(score, loadTestVectorsFromYaml(is));
+        return new Verification(score, TestVectors.loadFromYaml(is));
       }
     }
   }

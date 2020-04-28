@@ -1,7 +1,8 @@
 ---
-
-# only min values
-- values:
+defaults: []
+elements:
+- type: "StandardTestVector"
+  values:
   - type: "ScoreValue"
     score:
       type: "LgtmScore"
@@ -41,7 +42,8 @@
   alias: "all_min"
 
 #
-- values:
+- type: "StandardTestVector"
+  values:
   - type: "ScoreValue"
     score:
       type: "LgtmScore"
@@ -81,7 +83,8 @@
   alias: "test_vector_1"
 
 #
-- values:
+- type: "StandardTestVector"
+  values:
   - type: "ScoreValue"
     score:
       type: "DependencyScanScore"
@@ -121,7 +124,8 @@
   alias: "test_vector_2"
 
 #
-- values:
+- type: "StandardTestVector"
+  values:
   - type: "ScoreValue"
     score:
       type: "DependencyScanScore"
@@ -161,7 +165,8 @@
   alias: "test_vector_3"
 
 # all max values
-- values:
+- type: "StandardTestVector"
+  values:
   - type: "ScoreValue"
     score:
       type: "DependencyScanScore"
@@ -201,7 +206,8 @@
   alias: "test_vector_4"
 
 # NoHttpToolScore is N/A
-- values:
+- type: "StandardTestVector"
+  values:
     - type: "ScoreValue"
       score:
         type: "DependencyScanScore"

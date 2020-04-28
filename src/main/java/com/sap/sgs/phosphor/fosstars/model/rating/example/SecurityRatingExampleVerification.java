@@ -13,11 +13,10 @@ import com.sap.sgs.phosphor.fosstars.model.Label;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.math.DoubleInterval;
 import com.sap.sgs.phosphor.fosstars.model.qa.RatingVerification;
+import com.sap.sgs.phosphor.fosstars.model.qa.StandardTestVector;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
-import java.util.Arrays;
-import java.util.Collections;
+import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -35,14 +34,14 @@ public class SecurityRatingExampleVerification extends RatingVerification {
   /**
    * Test vectors for {@link SecurityRatingExample}.
    */
-  public static final List<TestVector> TEST_VECTORS = Collections.unmodifiableList(Arrays.asList(
+  public static final TestVectors TEST_VECTORS = new TestVectors(
       make(0, 0, false, false, AWFUL_SCORE, AWFUL),
       make(7, 1, false, true, BAD_SCORE, OKAY),
       make(100, 20, false, false, BAD_SCORE, OKAY),
       make(100, 20, true, false, OKAY_SCORE, OKAY),
       make(100, 20, false, true, OKAY_SCORE, OKAY),
       make(100, 20, true, true, AWESOME_SCORE, AWESOME)
-  ));
+  );
 
   public SecurityRatingExampleVerification(SecurityRatingExample rating) {
     super(rating, TEST_VECTORS);
@@ -60,7 +59,7 @@ public class SecurityRatingExampleVerification extends RatingVerification {
     values.add(NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE.value(numberOfContributors));
     values.add(SECURITY_REVIEW_DONE_EXAMPLE.value(securityReviewDone));
     values.add(STATIC_CODE_ANALYSIS_DONE_EXAMPLE.value(staticAnalysisDone));
-    return new TestVector(values, expectedScore, expectedLabel, "unknown");
+    return new StandardTestVector(values, expectedScore, expectedLabel, "unknown");
   }
 
 }

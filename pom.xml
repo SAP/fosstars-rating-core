@@ -17,7 +17,6 @@
     <version.github-api>1.109</version.github-api>
     <version.log4j-api>2.13.1</version.log4j-api>
     <version.log4j-core>2.13.1</version.log4j-core>
-    <version.commons-csv>1.7</version.commons-csv>
     <version.nist-data-mirror>1.4.0</version.nist-data-mirror>
     <version.maven-model>3.6.2</version.maven-model>
     <version.httpclient>4.5.10</version.httpclient>
@@ -140,11 +139,6 @@
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-core</artifactId>
       <version>${version.log4j-core}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-csv</artifactId>
-      <version>${version.commons-csv}</version>
     </dependency>
     <dependency>
       <groupId>us.springett</groupId>

@@ -1,7 +1,8 @@
 ---
-
-#
-- values:
+defaults: []
+elements:
+- type: "StandardTestVector"
+  values:
   - type: "ScoreValue"
     score:
       type: "ProjectSecurityTestingScore"
@@ -84,7 +85,8 @@
   alias: "test_vector_0"
 
 #
-- values:
+- type: "StandardTestVector"
+  values:
   - type: "ScoreValue"
     score:
       type: "ProjectSecurityTestingScore"
@@ -167,7 +169,8 @@
   alias: "test_vector_1"
 
 #
-- values:
+- type: "StandardTestVector"
+  values:
   - type: "ScoreValue"
     score:
       type: "UnpatchedVulnerabilitiesScore"
@@ -250,7 +253,8 @@
   alias: "test_vector_2"
 
 #
-- values:
+- type: "StandardTestVector"
+  values:
   - type: "ScoreValue"
     score:
       type: "ProjectSecurityTestingScore"
@@ -333,7 +337,8 @@
   alias: "test_vector_3"
 
 
-- values:
+- type: "StandardTestVector"
+  values:
   - type: "ScoreValue"
     score:
       type: "ProjectSecurityTestingScore"
@@ -416,7 +421,8 @@
   alias: "test_vector_4"
 
 #
-- values:
+- type: "StandardTestVector"
+  values:
   - type: "ScoreValue"
     score:
       type: "ProjectSecurityTestingScore"
@@ -499,7 +505,8 @@
   alias: "test_vector_5"
 
 #
-- values:
+- type: "StandardTestVector"
+  values:
   - type: "ScoreValue"
     score:
       type: "UnpatchedVulnerabilitiesScore"
@@ -582,7 +589,8 @@
   alias: "test_vector_6"
 
 #
-- values:
+- type: "StandardTestVector"
+  values:
   - type: "ScoreValue"
     score:
       type: "ProjectSecurityTestingScore"
@@ -665,7 +673,8 @@
   alias: "test_vector_7"
 
 #
-- values:
+- type: "StandardTestVector"
+  values:
   - type: "ScoreValue"
     score:
       type: "UnpatchedVulnerabilitiesScore"
@@ -748,7 +757,8 @@
   alias: "test_vector_8"
 
 #
-- values:
+- type: "StandardTestVector"
+  values:
   - type: "ScoreValue"
     score:
       type: "UnpatchedVulnerabilitiesScore"

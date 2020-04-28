@@ -11,7 +11,6 @@ import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.math.DoubleInterval;
 import com.sap.sgs.phosphor.fosstars.model.rating.example.SecurityRatingExample;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.Test;
@@ -27,11 +26,11 @@ public class RatingVerificationTest {
     values.add(NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE.value(0));
     values.add(SECURITY_REVIEW_DONE_EXAMPLE.value(false));
     values.add(STATIC_CODE_ANALYSIS_DONE_EXAMPLE.value(false));
-    TestVector vector = new TestVector(
+    StandardTestVector vector = new StandardTestVector(
         values, DoubleInterval.init().from(0).to(1).closed().make(), AWFUL, "unknown");
 
     RatingVerification verification = new RatingVerification(
-        rating, Collections.singletonList(vector));
+        rating, new TestVectors(vector));
 
     verification.run();
   }
@@ -45,11 +44,11 @@ public class RatingVerificationTest {
     values.add(NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE.value(0));
     values.add(SECURITY_REVIEW_DONE_EXAMPLE.value(false));
     values.add(STATIC_CODE_ANALYSIS_DONE_EXAMPLE.value(false));
-    TestVector vector = new TestVector(
+    StandardTestVector vector = new StandardTestVector(
         values, DoubleInterval.init().from(8).to(10).closed().make(), AWESOME, "unknown");
 
     RatingVerification verification = new RatingVerification(
-        rating, Collections.singletonList(vector));
+        rating, new TestVectors(vector));
 
     verification.run();
   }

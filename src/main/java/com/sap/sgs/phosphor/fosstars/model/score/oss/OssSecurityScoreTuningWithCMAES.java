@@ -1,11 +1,10 @@
 package com.sap.sgs.phosphor.fosstars.model.score.oss;
 
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerifier;
-import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
+import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.sgs.phosphor.fosstars.model.qa.VerificationFailedException;
 import com.sap.sgs.phosphor.fosstars.model.tuning.TuningWithCMAES;
 import java.io.IOException;
-import java.util.List;
 
 public class OssSecurityScoreTuningWithCMAES extends TuningWithCMAES {
 
@@ -19,7 +18,7 @@ public class OssSecurityScoreTuningWithCMAES extends TuningWithCMAES {
    * @param vectors A list of test vectors.
    * @param path A path to a file where a tuned score should be stored.
    */
-  OssSecurityScoreTuningWithCMAES(OssSecurityScore score, List<TestVector> vectors, String path) {
+  OssSecurityScoreTuningWithCMAES(OssSecurityScore score, TestVectors vectors, String path) {
     super(score, new ScoreVerifier(score, vectors), path);
   }
 

@@ -8,12 +8,11 @@ import static com.sap.sgs.phosphor.fosstars.model.other.Utils.findValue;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
-import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
+import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.sgs.phosphor.fosstars.model.score.FeatureBasedScore;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 /**
  * The community commitment score depends on the following features:
@@ -85,7 +84,7 @@ public class CommunityCommitmentScore extends FeatureBasedScore {
      * @param score A score to be verified.
      * @param vectors A list of test vectors.
      */
-    public Verification(CommunityCommitmentScore score, List<TestVector> vectors) {
+    public Verification(CommunityCommitmentScore score, TestVectors vectors) {
       super(score, vectors);
     }
 
@@ -98,7 +97,7 @@ public class CommunityCommitmentScore extends FeatureBasedScore {
      */
     static Verification createFor(CommunityCommitmentScore score) throws IOException {
       try (InputStream is = Verification.class.getResourceAsStream(TEST_VECTORS_YAML)) {
-        return new Verification(score, loadTestVectorsFromYaml(is));
+        return new Verification(score, TestVectors.loadFromYaml(is));
       }
     }
   }
