@@ -1,10 +1,9 @@
 package com.sap.sgs.phosphor.fosstars.model.rating.oss;
 
 import com.sap.sgs.phosphor.fosstars.model.qa.RatingVerification;
-import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
+import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 /**
  * This class implements a verification procedure for {@link OssSecurityRating}.
@@ -21,7 +20,7 @@ class OssSecurityRatingVerification extends RatingVerification {
    * @param rating A rating to be verified.
    * @param vectors A list of test vectors.
    */
-  OssSecurityRatingVerification(OssSecurityRating rating, List<TestVector> vectors) {
+  OssSecurityRatingVerification(OssSecurityRating rating, TestVectors vectors) {
     super(rating, vectors);
   }
 
@@ -36,7 +35,7 @@ class OssSecurityRatingVerification extends RatingVerification {
     try (InputStream is = OssSecurityRatingVerification.class
         .getResourceAsStream(TEST_VECTORS_YAML)) {
 
-      return new OssSecurityRatingVerification(rating, loadTestVectorsFromYaml(is));
+      return new OssSecurityRatingVerification(rating, TestVectors.loadFromYaml(is));
     }
   }
 }

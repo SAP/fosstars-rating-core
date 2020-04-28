@@ -8,12 +8,11 @@ import static com.sap.sgs.phosphor.fosstars.model.other.Utils.findValue;
 import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
-import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
+import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.sgs.phosphor.fosstars.model.score.FeatureBasedScore;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 /**
  * The security awareness score is currently based on the following features:
@@ -110,7 +109,7 @@ public class ProjectSecurityAwarenessScore extends FeatureBasedScore {
      * @param score A score to be verified.
      * @param vectors A list of test vectors.
      */
-    public Verification(ProjectSecurityAwarenessScore score, List<TestVector> vectors) {
+    public Verification(ProjectSecurityAwarenessScore score, TestVectors vectors) {
       super(score, vectors);
     }
 
@@ -123,7 +122,7 @@ public class ProjectSecurityAwarenessScore extends FeatureBasedScore {
      */
     static Verification createFor(ProjectSecurityAwarenessScore score) throws IOException {
       try (InputStream is = Verification.class.getResourceAsStream(TEST_VECTORS_YAML)) {
-        return new Verification(score, loadTestVectorsFromYaml(is));
+        return new Verification(score, TestVectors.loadFromYaml(is));
       }
     }
   }

@@ -14,7 +14,7 @@ public class TestVectorBuilderTest {
   @Test
   public void smoke() {
     TestVectorBuilder builder = TestVectorBuilder.newTestVector();
-    TestVector vector = builder
+    StandardTestVector vector = builder
         .set(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 10))
         .expectedLabel(SecurityLabelExample.AWESOME)
         .expectedScore(DoubleInterval.init().from(1).to(4).open().make())

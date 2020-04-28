@@ -2,7 +2,6 @@ package com.sap.sgs.phosphor.fosstars.model.qa;
 
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVectorResult.Status;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import org.apache.logging.log4j.LogManager;
@@ -11,28 +10,28 @@ import org.apache.logging.log4j.Logger;
 public abstract class AbstractVerifier implements Verifier {
 
   /**
-   * A list of test vectors.
-   */
-  final List<TestVector> vectors;
-
-  /**
    * A logger.
    */
-  final Logger logger = LogManager.getLogger(getClass());
+  private final Logger logger = LogManager.getLogger(getClass());
+
+  /**
+   * A list of test vectors.
+   */
+  final TestVectors vectors;
 
   /**
    * Initialize a verifier.
    *
    * @param vectors A list of test vectors.
    */
-  AbstractVerifier(List<TestVector> vectors) {
+  AbstractVerifier(TestVectors vectors) {
     Objects.requireNonNull(vectors, "Vectors can't be null!");
 
     if (vectors.isEmpty()) {
       throw new IllegalArgumentException("No test vectors specified!");
     }
 
-    this.vectors = Collections.unmodifiableList(vectors);
+    this.vectors = vectors;
   }
 
   /**

@@ -1,5 +1,8 @@
 ---
-- values:
+defaults: []
+elements:
+- type: "StandardTestVector"
+  values:
   - type: "UnknownValue"
     feature:
       type: "BooleanFeature"
@@ -14,7 +17,8 @@
     positiveInfinity: false
   expectedLabel: null
   alias: "test_vector_0"
-- values:
+- type: "StandardTestVector"
+  values:
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
@@ -30,7 +34,8 @@
     positiveInfinity: false
   expectedLabel: null
   alias: "test_vector_1"
-- values:
+- type: "StandardTestVector"
+  values:
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"

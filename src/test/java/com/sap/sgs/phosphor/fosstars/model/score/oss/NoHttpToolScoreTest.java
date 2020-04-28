@@ -7,14 +7,12 @@ import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
 import static com.sap.sgs.phosphor.fosstars.model.qa.TestVectorBuilder.newTestVector;
 
 import com.sap.sgs.phosphor.fosstars.model.Score;
-import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
+import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.sgs.phosphor.fosstars.model.qa.VerificationFailedException;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.NoHttpToolScore.Verification;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.List;
 import org.junit.Test;
 
 public class NoHttpToolScoreTest {
@@ -39,7 +37,7 @@ public class NoHttpToolScoreTest {
 
   @Test
   public void testVerification() throws VerificationFailedException, IOException {
-    List<TestVector> vectors = Arrays.asList(
+    TestVectors vectors = new TestVectors(
         newTestVector()
             .alias("1")
             .expectedScore(Score.INTERVAL)
@@ -50,11 +48,11 @@ public class NoHttpToolScoreTest {
 
     Path file = Files.createTempFile("NoHttpToolScoreTestVectors", "test");
     try {
-      Verification.storeTestVectorsToYaml(vectors, file);
+      vectors.storeToYaml(file);
 
       Verification verification = new Verification(
           new NoHttpToolScore(),
-          Verification.loadTestVectorsFromYaml(file));
+          TestVectors.loadFromYaml(file));
 
       verification.run();
     } finally {

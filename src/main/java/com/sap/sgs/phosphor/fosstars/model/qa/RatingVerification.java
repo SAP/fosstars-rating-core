@@ -1,7 +1,6 @@
 package com.sap.sgs.phosphor.fosstars.model.qa;
 
 import com.sap.sgs.phosphor.fosstars.model.Rating;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -22,7 +21,7 @@ public class RatingVerification extends AbstractVerification {
    * @param rating A rating to be verified.
    * @param vectors A list of test vectors.
    */
-  public RatingVerification(Rating rating, List<TestVector> vectors) {
+  public RatingVerification(Rating rating, TestVectors vectors) {
     super(vectors);
     Objects.requireNonNull(rating, "Rating can't be null!");
     this.rating = rating;

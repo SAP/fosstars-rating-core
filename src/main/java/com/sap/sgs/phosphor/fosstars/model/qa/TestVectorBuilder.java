@@ -12,7 +12,7 @@ import java.util.Set;
 /**
  * A builder for test vectors.
  *
- * @see TestVector
+ * @see StandardTestVector
  */
 public class TestVectorBuilder {
 
@@ -144,11 +144,11 @@ public class TestVectorBuilder {
   }
 
   /**
-   * Create an instance of {@link TestVector} with specified parameters.
+   * Create an instance of {@link StandardTestVector} with specified parameters.
    *
    * @return An instance of TestVector.
    */
-  public TestVector make() {
+  public StandardTestVector make() {
     if (expectedScore == null && !expectNotApplicableScore) {
       throw new IllegalArgumentException(
           "Hey! Expected score can't be null unless a not-applicable value is expected!");
@@ -159,7 +159,7 @@ public class TestVectorBuilder {
           "Oh no! Looks like you forgot to give me features values!");
     }
 
-    return new TestVector(Collections.unmodifiableSet(values), expectedScore, expectedLabel,
+    return new StandardTestVector(Collections.unmodifiableSet(values), expectedScore, expectedLabel,
         alias, expectNotApplicableScore);
   }
 

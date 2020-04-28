@@ -8,13 +8,12 @@ import static com.sap.sgs.phosphor.fosstars.model.value.PackageManager.MAVEN;
 
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
-import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
+import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.sgs.phosphor.fosstars.model.score.FeatureBasedScore;
 import com.sap.sgs.phosphor.fosstars.model.value.PackageManagers;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 /**
  * <p>The score shows if an open-source project uses nohttp tool
@@ -88,7 +87,7 @@ public class NoHttpToolScore extends FeatureBasedScore {
      * @param score A score to be verified.
      * @param vectors A list of test vectors.
      */
-    public Verification(NoHttpToolScore score, List<TestVector> vectors) {
+    public Verification(NoHttpToolScore score, TestVectors vectors) {
       super(score, vectors);
     }
 
@@ -101,7 +100,7 @@ public class NoHttpToolScore extends FeatureBasedScore {
      */
     static Verification createFor(NoHttpToolScore score) throws IOException {
       try (InputStream is = Verification.class.getResourceAsStream(TEST_VECTORS_YAML)) {
-        return new Verification(score, loadTestVectorsFromYaml(is));
+        return new Verification(score, TestVectors.loadFromYaml(is));
       }
     }
   }

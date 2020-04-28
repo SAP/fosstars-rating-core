@@ -1,11 +1,10 @@
 package com.sap.sgs.phosphor.fosstars.model.score.oss;
 
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
-import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
+import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.sgs.phosphor.fosstars.model.score.AverageCompositeScore;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 /**
  * The security testing score uses the following sub-scores:
@@ -49,7 +48,7 @@ public class ProjectSecurityTestingScore extends AverageCompositeScore {
      * @param score A score to be verified.
      * @param vectors A list of test vectors.
      */
-    public Verification(ProjectSecurityTestingScore score, List<TestVector> vectors) {
+    public Verification(ProjectSecurityTestingScore score, TestVectors vectors) {
       super(score, vectors);
     }
 
@@ -62,7 +61,7 @@ public class ProjectSecurityTestingScore extends AverageCompositeScore {
      */
     static Verification createFor(ProjectSecurityTestingScore score) throws IOException {
       try (InputStream is = Verification.class.getResourceAsStream(TEST_VECTORS_YAML)) {
-        return new Verification(score, loadTestVectorsFromYaml(is));
+        return new Verification(score, TestVectors.loadFromYaml(is));
       }
     }
   }

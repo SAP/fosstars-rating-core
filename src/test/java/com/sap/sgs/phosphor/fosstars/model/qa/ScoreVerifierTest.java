@@ -19,8 +19,6 @@ import com.sap.sgs.phosphor.fosstars.model.rating.example.SecurityRatingExampleV
 import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.sgs.phosphor.fosstars.model.value.IntegerValue;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import org.junit.Test;
@@ -37,10 +35,10 @@ public class ScoreVerifierTest {
       .alias("test")
       .make();
 
-  private static final List<TestVector> TEST_VECTORS = new ArrayList<>();
+  private static final TestVectors TEST_VECTORS = new TestVectors();
 
   static {
-    TEST_VECTORS.addAll(SecurityRatingExampleVerification.TEST_VECTORS);
+    TEST_VECTORS.add(SecurityRatingExampleVerification.TEST_VECTORS);
     TEST_VECTORS.add(FAILING_TEST_VECTOR);
   }
 
@@ -56,7 +54,7 @@ public class ScoreVerifierTest {
     for (TestVectorResult result : results) {
       assertNotNull(result);
       if (result.failed()) {
-        assertEquals(FAILING_TEST_VECTOR, result.vector);
+        assertEquals(FAILING_TEST_VECTOR.alias(), result.vector.alias());
         assertEquals(Status.FAILED, result.status);
         assertFalse(result.vector.expectedScore().contains(result.scoreValue.get()));
       } else {
@@ -71,7 +69,7 @@ public class ScoreVerifierTest {
 
   @Test
   public void testWithNotApplicableScoreValue() {
-    List<TestVector> vectors = Arrays.asList(
+    TestVectors vectors = new TestVectors(
         TestVectorBuilder.newTestVector()
             .alias("1")
             .set(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1))

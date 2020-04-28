@@ -15,8 +15,6 @@ import com.sap.sgs.phosphor.fosstars.model.rating.example.SecurityRatingExample.
 import com.sap.sgs.phosphor.fosstars.model.rating.example.SecurityRatingExampleVerification;
 import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.sgs.phosphor.fosstars.model.value.IntegerValue;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import org.junit.Test;
 
@@ -33,10 +31,10 @@ public class RatingVerifierTest {
       .alias("test")
       .make();
 
-  private static final List<TestVector> TEST_VECTORS = new ArrayList<>();
+  private static final TestVectors TEST_VECTORS = new TestVectors();
 
   static {
-    TEST_VECTORS.addAll(SecurityRatingExampleVerification.TEST_VECTORS);
+    TEST_VECTORS.add(SecurityRatingExampleVerification.TEST_VECTORS);
     TEST_VECTORS.add(FAILING_TEST_VECTOR);
   }
 
@@ -52,7 +50,7 @@ public class RatingVerifierTest {
     for (TestVectorResult result : results) {
       assertNotNull(result);
       if (result.failed()) {
-        assertEquals(FAILING_TEST_VECTOR, result.vector);
+        assertEquals("test", result.vector.alias());
         assertEquals(Status.FAILED, result.status);
         assertFalse(result.vector.expectedScore().contains(result.scoreValue.get()));
       } else {
@@ -67,7 +65,7 @@ public class RatingVerifierTest {
 
   @Test
   public void testWithNotApplicableScoreValue() {
-    TestVector vector = TestVectorBuilder.newTestVector()
+    StandardTestVector vector = TestVectorBuilder.newTestVector()
         .alias("test")
         .set(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1))
         .set(new IntegerValue(ExampleFeatures.NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, 1))
@@ -80,13 +78,13 @@ public class RatingVerifierTest {
 
     RatingVerifier verifier = new RatingVerifier(
         RatingRepository.INSTANCE.rating(SecurityRatingExample.class),
-        Collections.singletonList(vector));
+        new TestVectors(vector));
 
     List<TestVectorResult> results = verifier.run();
 
     assertEquals(1, results.size());
     TestVectorResult result = results.get(0);
-    assertEquals(vector, result.vector);
+    assertEquals("test", result.vector.alias());
     assertEquals(Status.FAILED, result.status);
     assertFalse(result.scoreValue.isNotApplicable());
   }

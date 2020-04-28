@@ -26,7 +26,7 @@ public class TestVectorResultTest {
 
   @Test
   public void smoke() {
-    TestVector vector = newTestVector()
+    StandardTestVector vector = newTestVector()
         .set(allUnknown(OssFeatures.HAS_SECURITY_TEAM))
         .expectedScore(ALMOST_MIN)
         .expectedLabel(TestLabel.BAD)
@@ -44,21 +44,21 @@ public class TestVectorResultTest {
 
   @Test
   public void equalsAndHashCode() {
-    TestVector testVector =
+    StandardTestVector testVector =
         newTestVector()
             .set(allUnknown(OssFeatures.HAS_SECURITY_TEAM))
             .expectedScore(ALMOST_MIN)
             .expectedLabel(TestLabel.BAD)
             .alias("1")
             .make();
-    TestVector sameTestVector =
+    StandardTestVector sameTestVector =
         newTestVector()
             .set(allUnknown(OssFeatures.HAS_SECURITY_TEAM))
             .expectedScore(ALMOST_MIN)
             .expectedLabel(TestLabel.BAD)
             .alias("1")
             .make();
-    TestVector differentTestVector =
+    StandardTestVector differentTestVector =
         newTestVector()
             .set(allUnknown(OssFeatures.HAS_SECURITY_TEAM))
             .expectedScore(ALMOST_MIN)

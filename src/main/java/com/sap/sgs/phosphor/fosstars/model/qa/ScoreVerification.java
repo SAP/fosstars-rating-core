@@ -1,7 +1,6 @@
 package com.sap.sgs.phosphor.fosstars.model.qa;
 
 import com.sap.sgs.phosphor.fosstars.model.Score;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -22,7 +21,7 @@ public class ScoreVerification extends AbstractVerification {
    * @param score A score to be verified.
    * @param vectors A list of test vectors.
    */
-  public ScoreVerification(Score score, List<TestVector> vectors) {
+  public ScoreVerification(Score score, TestVectors vectors) {
     super(vectors);
     Objects.requireNonNull(score, "Score can't be null!");
     this.score = score;

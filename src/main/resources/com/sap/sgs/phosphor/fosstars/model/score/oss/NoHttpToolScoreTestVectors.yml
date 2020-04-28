@@ -1,7 +1,8 @@
 ---
-
-# all unknown
-- values:
+defaults: []
+elements:
+- type: "StandardTestVector"
+  values:
   - type: "UnknownValue"
     feature:
       type: "PackageManagersFeature"
@@ -23,7 +24,8 @@
   expectedNotApplicableScore: false
 
 # uses nohttp
-- values:
+- type: "StandardTestVector"
+  values:
     - type: "BooleanValue"
       feature:
         type: "BooleanFeature"
@@ -49,7 +51,8 @@
   expectedNotApplicableScore: false
 
 # doesn't use nohttp
-- values:
+- type: "StandardTestVector"
+  values:
     - type: "BooleanValue"
       feature:
         type: "BooleanFeature"
@@ -75,7 +78,8 @@
   expectedNotApplicableScore: false
 
 # doesn't know whether nohttp is used or not, but it may be used with Maven
-- values:
+- type: "StandardTestVector"
+  values:
     - type: "PackageManagersValue"
       feature:
         type: "PackageManagersFeature"
@@ -100,7 +104,8 @@
   expectedNotApplicableScore: false
 
 # doesn't know whether nohttp is used or not, but it may be used with Gradle
-- values:
+- type: "StandardTestVector"
+  values:
     - type: "PackageManagersValue"
       feature:
         type: "PackageManagersFeature"
@@ -125,7 +130,8 @@
   expectedNotApplicableScore: false
 
 # doesn't know whether nohttp is used or not, but it may be used
-- values:
+- type: "StandardTestVector"
+  values:
     - type: "PackageManagersValue"
       feature:
         type: "PackageManagersFeature"

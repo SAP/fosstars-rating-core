@@ -2,11 +2,10 @@ package com.sap.sgs.phosphor.fosstars.model.rating.example;
 
 import com.sap.sgs.phosphor.fosstars.model.Version;
 import com.sap.sgs.phosphor.fosstars.model.qa.RatingVerifier;
-import com.sap.sgs.phosphor.fosstars.model.qa.TestVector;
+import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.sgs.phosphor.fosstars.model.qa.VerificationFailedException;
 import com.sap.sgs.phosphor.fosstars.model.tuning.TuningWithCMAES;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * This class tunes a {@link SecurityRatingExample} to make it pass test vectors.
@@ -28,7 +27,7 @@ public class SecurityRatingExampleTuningWithCMAES extends TuningWithCMAES {
    * @param path A path to a file where a tuned score should be stored.
    */
   SecurityRatingExampleTuningWithCMAES(
-      SecurityRatingExample rating, List<TestVector> vectors, String path) {
+      SecurityRatingExample rating, TestVectors vectors, String path) {
 
     super(rating, new RatingVerifier(rating, vectors), path);
   }

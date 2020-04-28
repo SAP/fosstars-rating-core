@@ -22,7 +22,7 @@ public class ScoreVerifier extends AbstractVerifier {
    * @param score A score to be verified.
    * @param vectors A list of test vectors.
    */
-  public ScoreVerifier(Score score, List<TestVector> vectors) {
+  public ScoreVerifier(Score score, TestVectors vectors) {
     super(vectors);
 
     Objects.requireNonNull(score, "Score can't be null!");

@@ -5,10 +5,10 @@
 <suppressions>
   <suppress checks="AbbreviationAsWordInName"
     files="OssSecurityScoreTuningWithCMAES.java"
-    lines="10"/>
+    lines="9"/>
   <suppress checks="AbbreviationAsWordInName"
     files="SecurityRatingExampleTuningWithCMAES.java"
-    lines="14"/>
+    lines="13"/>
   <suppress checks="AbbreviationAsWordInName"
     files="TuningWithCMAES.java"
     lines="28,81"/>
