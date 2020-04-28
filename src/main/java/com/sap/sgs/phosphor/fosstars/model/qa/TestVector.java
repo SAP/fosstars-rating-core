@@ -166,7 +166,8 @@ public class TestVector {
       return false;
     }
     TestVector vector = (TestVector) o;
-    return Objects.equals(values, vector.values)
+    return expectedNotApplicableScore == vector.expectedNotApplicableScore
+        && Objects.equals(values, vector.values)
         && Objects.equals(expectedScore, vector.expectedScore)
         && Objects.equals(expectedLabel, vector.expectedLabel)
         && Objects.equals(alias, vector.alias);
@@ -174,23 +175,42 @@ public class TestVector {
 
   @Override
   public int hashCode() {
-    return Objects.hash(values, expectedScore, expectedLabel, alias);
+    return Objects.hash(values, expectedScore, expectedNotApplicableScore, expectedLabel, alias);
   }
 
-  static void storeTestVectorsToJson(String filename, List<TestVector> vectors)
-      throws IOException {
-
+  /**
+   * Store a list of test vectors to a JSON file.
+   *
+   * @param filename The file.
+   * @param vectors The test vectors.
+   * @throws IOException If something went wrong.
+   */
+  static void storeTestVectorsToJson(String filename, List<TestVector> vectors) throws IOException {
     Files.write(
         Paths.get(filename),
         MAPPER.writerWithDefaultPrettyPrinter().writeValueAsBytes(vectors));
   }
 
+  /**
+   * Load a list of test vectors from a JSON file.
+   *
+   * @param filename The file.
+   * @return A list of loaded test vectors.
+   * @throws IOException If something went wrong.
+   */
   static List<TestVector> loadTestVectorsFromJson(String filename)
       throws IOException {
 
     return loadTestVectorsFromJson(Files.newInputStream(Paths.get(filename)));
   }
 
+  /**
+   * Loads a list of test vectors from JSON.
+   *
+   * @param is An input stream with the JSON.
+   * @return A list of loaded test vectors.
+   * @throws IOException If something went wrong.
+   */
   static List<TestVector> loadTestVectorsFromJson(InputStream is) throws IOException {
     return MAPPER.readValue(
         is,

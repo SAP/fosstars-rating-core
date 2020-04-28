@@ -7,6 +7,9 @@
     files="OssSecurityScoreTuningWithCMAES.java"
     lines="10"/>
   <suppress checks="AbbreviationAsWordInName"
+    files="SecurityRatingExampleTuningWithCMAES.java"
+    lines="14"/>
+  <suppress checks="AbbreviationAsWordInName"
     files="TuningWithCMAES.java"
     lines="28,81"/>
   <suppress checks="AbbreviationAsWordInName"

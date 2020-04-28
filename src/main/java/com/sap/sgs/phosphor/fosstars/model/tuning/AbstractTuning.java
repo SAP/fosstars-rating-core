@@ -82,7 +82,7 @@ public abstract class AbstractTuning {
 
         for (Value value : result.vector.values()) {
           logger.info("      {}: {}",
-              value.feature(), value.isUnknown() ? "unknown" : value.get());
+              value.feature().name(), value.isUnknown() ? "unknown" : value.get());
         }
       }
     }

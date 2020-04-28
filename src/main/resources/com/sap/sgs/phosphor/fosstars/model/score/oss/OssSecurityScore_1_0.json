@@ -1,78 +1,68 @@
 {
   "type" : "OssSecurityScore",
   "name" : "Security score for open-source projects",
-  "weightedScores" : [ {
-    "score" : {
-      "type" : "ProjectSecurityTestingScore",
-      "name" : "How well security testing is done for an open-source project",
-      "subScores" : [ {
-        "type" : "DependencyScanScore",
-        "name" : "How a project scans its dependencies for vulnerabilities"
-      }, {
-        "type" : "LgtmScore",
-        "name" : "How a project addresses issues reported by LGTM"
-      }, {
-        "type" : "NoHttpToolScore",
-        "name" : "If a project uses nohttp tool"
-      } ]
-    },
-    "weight" : {
-      "type" : "MutableWeight",
-      "value" : 0.6283118906878548
-    }
+  "subScores" : [ {
+    "type" : "UnpatchedVulnerabilitiesScore",
+    "name" : "How well vulnerabilities are patched"
   }, {
-    "score" : {
-      "type" : "UnpatchedVulnerabilitiesScore",
-      "name" : "How well vulnerabilities are patched"
-    },
-    "weight" : {
-      "type" : "MutableWeight",
-      "value" : 0.8362090433439393
-    }
+    "type" : "ProjectActivityScore",
+    "name" : "Open-source project activity score"
   }, {
-    "score" : {
-      "type" : "CommunityCommitmentScore",
-      "name" : "How well open-source community commits to support an open-source project"
-    },
-    "weight" : {
-      "type" : "MutableWeight",
-      "value" : 0.5529742430404292
-    }
+    "type" : "CommunityCommitmentScore",
+    "name" : "How well open-source community commits to support an open-source project"
   }, {
-    "score" : {
-      "type" : "ProjectSecurityAwarenessScore",
-      "name" : "How well open-source community is aware about security"
-    },
-    "weight" : {
-      "type" : "MutableWeight",
-      "value" : 0.5383270608555468
-    }
+    "type" : "ProjectSecurityAwarenessScore",
+    "name" : "How well open-source community is aware about security"
   }, {
-    "score" : {
-      "type" : "VulnerabilityLifetimeScore",
-      "name" : "How fast vulnerabilities are patched"
-    },
-    "weight" : {
-      "type" : "MutableWeight",
-      "value" : 0.22939855566110368
-    }
+    "type" : "VulnerabilityLifetimeScore",
+    "name" : "How fast vulnerabilities are patched"
   }, {
-    "score" : {
-      "type" : "ProjectActivityScore",
-      "name" : "Open-source project activity score"
-    },
-    "weight" : {
-      "type" : "MutableWeight",
-      "value" : 0.6300785405632551
-    }
+    "type" : "ProjectSecurityTestingScore",
+    "name" : "How well security testing is done for an open-source project",
+    "subScores" : [ {
+      "type" : "DependencyScanScore",
+      "name" : "How a project scans its dependencies for vulnerabilities"
+    }, {
+      "type" : "NoHttpToolScore",
+      "name" : "If a project uses nohttp tool"
+    }, {
+      "type" : "LgtmScore",
+      "name" : "How a project addresses issues reported by LGTM"
+    } ]
   }, {
-    "score" : {
-      "type" : "ProjectPopularityScore",
-      "name" : "Open-source project popularity score"
-    },
-    "weight" : {
-      "type" : "MutableWeight",
-      "value" : 0.30515788031015273
+    "type" : "ProjectPopularityScore",
+    "name" : "Open-source project popularity score"
+  } ],
+  "weights" : {
+    "values" : {
+      "com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectSecurityAwarenessScore" : {
+        "type" : "MutableWeight",
+        "value" : 0.5383270608555468
+      },
+      "com.sap.sgs.phosphor.fosstars.model.score.oss.UnpatchedVulnerabilitiesScore" : {
+        "type" : "MutableWeight",
+        "value" : 0.8362090433439393
+      },
+      "com.sap.sgs.phosphor.fosstars.model.score.oss.VulnerabilityLifetimeScore" : {
+        "type" : "MutableWeight",
+        "value" : 0.22939855566110368
+      },
+      "com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectPopularityScore" : {
+        "type" : "MutableWeight",
+        "value" : 0.30515788031015273
+      },
+      "com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectActivityScore" : {
+        "type" : "MutableWeight",
+        "value" : 0.6300785405632551
+      },
+      "com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectSecurityTestingScore" : {
+        "type" : "MutableWeight",
+        "value" : 0.6283118906878548
+      },
+      "com.sap.sgs.phosphor.fosstars.model.score.oss.CommunityCommitmentScore" : {
+        "type" : "MutableWeight",
+        "value" : 0.5529742430404292
+      }
     }
-  } ]
+  }
 }

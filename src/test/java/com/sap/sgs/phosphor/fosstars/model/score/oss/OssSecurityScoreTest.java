@@ -81,8 +81,8 @@ public class OssSecurityScoreTest {
         USES_VERIFIED_SIGNED_COMMITS.value(false),
         USES_LGTM.value(true),
         WORST_LGTM_GRADE.value(LgtmGrade.B),
-        USES_NOHTTP.value(false),
-        PACKAGE_MANAGERS.value(new PackageManagers(MAVEN)));
+        USES_NOHTTP.value(true),
+        PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)));
     ScoreValue scoreValue = score.calculate(values);
     assertTrue(Score.INTERVAL.contains(scoreValue.get()));
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
