@@ -8,6 +8,7 @@ import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.Instant;
@@ -19,6 +20,11 @@ import java.util.Optional;
  * This is a cache of {@link GitHubProject}s.
  */
 class GitHubProjectCache {
+
+  /**
+   * For serialization and deserialization.
+   */
+  private static final ObjectMapper MAPPER = new ObjectMapper();
 
   /**
    * The default lifetime of a cache entry in days.
@@ -122,7 +128,18 @@ class GitHubProjectCache {
    * @throws IOException If something went wrong.
    */
   static GitHubProjectCache load(String filename) throws IOException {
-    return load(Files.newInputStream(Paths.get(filename)));
+    return load(Paths.get(filename));
+  }
+
+  /**
+   * Load a cache from a file.
+   *
+   * @param filename A path to the file.
+   * @return A loaded cache.
+   * @throws IOException If something went wrong.
+   */
+  static GitHubProjectCache load(Path filename) throws IOException {
+    return load(Files.newInputStream(filename));
   }
 
   /**
@@ -133,6 +150,28 @@ class GitHubProjectCache {
    * @throws IOException If something went wrong.
    */
   static GitHubProjectCache load(InputStream is) throws IOException {
-    return new ObjectMapper().readValue(is, GitHubProjectCache.class);
+    return MAPPER.readValue(is, GitHubProjectCache.class);
+  }
+
+  /**
+   * Stores a cache of projects to a file.
+   *
+   * @param filename A path to the file.
+   * @throws IOException If something went wrong.
+   */
+  void store(String filename) throws IOException {
+    store(Paths.get(filename));
+  }
+
+  /**
+   * Store the cache to a file.
+   *
+   * @param filename The file.
+   * @throws IOException If something went wrong.
+   */
+  void store(Path filename) throws IOException {
+    Files.write(
+        filename,
+        MAPPER.writerWithDefaultPrettyPrinter().writeValueAsBytes(this));
   }
 }

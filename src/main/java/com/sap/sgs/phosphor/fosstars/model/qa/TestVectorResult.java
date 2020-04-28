@@ -77,15 +77,16 @@ public class TestVectorResult {
     if (o instanceof TestVectorResult == false) {
       return false;
     }
-    TestVectorResult that = (TestVectorResult) o;
-    return index == that.index
-        && Objects.equals(vector, that.vector)
-        && status == that.status
-        && Objects.equals(message, that.message);
+    TestVectorResult result = (TestVectorResult) o;
+    return index == result.index
+        && Objects.equals(vector, result.vector)
+        && Objects.equals(scoreValue, result.scoreValue)
+        && status == result.status
+        && Objects.equals(message, result.message);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(vector, index, status, message);
+    return Objects.hash(vector, index, scoreValue, status, message);
   }
 }

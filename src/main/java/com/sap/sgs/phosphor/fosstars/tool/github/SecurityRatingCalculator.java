@@ -245,7 +245,8 @@ public class SecurityRatingCalculator {
     calculator.token(githubToken);
     calculator.calculateFor(projects);
 
-    storeProjectCache(projectCache, projectCacheFile);
+    LOGGER.info("Storing the project cache to {}", projectCacheFile);
+    projectCache.store(projectCacheFile);
 
     LOGGER.info("Okay, we've done calculating the ratings");
 
@@ -264,23 +265,6 @@ public class SecurityRatingCalculator {
         reporter.runFor(projects);
       }
     }
-  }
-
-  /**
-   * Stores a cache of projects to a file.
-   *
-   * @param projectCache The cache of projects.
-   * @param projectCacheFile A path to the file.
-   * @throws IOException If something went wrong.
-   */
-  private static void storeProjectCache(GitHubProjectCache projectCache, String projectCacheFile)
-      throws IOException {
-
-    LOGGER.info("Storing the project cache to {}", projectCacheFile);
-    ObjectMapper mapper = new ObjectMapper();
-    Files.write(
-        Paths.get(projectCacheFile),
-        mapper.writerWithDefaultPrettyPrinter().writeValueAsBytes(projectCache));
   }
 
   /**

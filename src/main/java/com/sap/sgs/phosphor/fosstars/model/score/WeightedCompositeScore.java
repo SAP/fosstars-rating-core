@@ -1,6 +1,9 @@
 package com.sap.sgs.phosphor.fosstars.model.score;
 
+import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.sgs.phosphor.fosstars.model.Confidence;
@@ -12,9 +15,7 @@ import com.sap.sgs.phosphor.fosstars.model.Visitor;
 import com.sap.sgs.phosphor.fosstars.model.Weight;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
-import com.sap.sgs.phosphor.fosstars.model.weight.ImmutableWeight;
-import com.sap.sgs.phosphor.fosstars.model.weight.MutableWeight;
-import java.util.ArrayList;
+import com.sap.sgs.phosphor.fosstars.model.weight.ScoreWeights;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -28,84 +29,82 @@ import java.util.Set;
 public class WeightedCompositeScore extends AbstractScore implements Tunable {
 
   /**
-   * The default weight for sub-scores.
-   */
-  private static final double DEFAULT_WEIGHT = 1.0;
-
-  /**
    * A set of weighted sub-scores.
    */
-  private final Set<WeightedScore> weightedScores;
+  private final Set<Score> subScores;
+
+  /**
+   * Weights of the sub-scores.
+   */
+  private final ScoreWeights weights;
 
   /**
    * Makes a score from a list of sub-scores.
    */
-  public WeightedCompositeScore(String name, Score... scores) {
-    this(name, prepare(scores));
+  public WeightedCompositeScore(String name, Score... subScores) {
+    this(name, setOf(subScores), ScoreWeights.createFor(subScores));
   }
 
   /**
-   * This is a constructor which is used by Jackson during deserialization.
-   * TODO: Check if Jackson changes access for this constructor, and don't revert it back.
-   *       If so, is it a security issue?
+   * Initializes a new score.
+   * This constructor is used by Jackson during deserialization.
    */
   @JsonCreator
   WeightedCompositeScore(
       @JsonProperty("name") String name,
-      @JsonProperty("weightedScores") Set<WeightedScore> weightedScores) {
+      @JsonProperty("subScores") Set<Score> subScores,
+      @JsonProperty("weights") ScoreWeights weights) {
 
     super(name);
-    this.weightedScores = check(weightedScores);
+
+    Objects.requireNonNull(subScores, "Sub-scores can't be null!");
+    Objects.requireNonNull(weights, "Weights can't be null");
+
+    if (subScores.isEmpty()) {
+      throw new IllegalArgumentException("Sub-scores can't be empty!");
+    }
+
+    if (subScores.size() != weights.size()) {
+      throw new IllegalArgumentException(
+          "Hey! Number of sub-scores should be equal to number of weights!");
+    }
+
+    for (Score score : subScores) {
+      if (!weights.of(score).isPresent()) {
+        throw new IllegalArgumentException(
+            String.format("Hey! You have to give me a weight for %s!", score.getClass()));
+      }
+    }
+
+    this.subScores = subScores;
+    this.weights = weights;
   }
 
-  /**
-   * This is a getter for Jackson to get the set of weighted scores.
-   * The method returns a copy of the set to prevent modification of the set by the caller.
-   * TODO: Figure out if Jackson changes access level for this method, and don't revert it back.
-   *       If so, is it a security issue?
-   */
-  @JsonProperty("weightedScores")
-  private Set<WeightedScore> weightedScores() {
-    return new HashSet<>(weightedScores);
+  @Override
+  @JsonProperty("subScores")
+  public Set<Score> subScores() {
+    return new HashSet<>(subScores);
+  }
+
+  @JsonGetter("weights")
+  ScoreWeights weights() {
+    return weights;
   }
 
   @Override
   public List<Weight> parameters() {
-    // TODO: should it return all parameters which are used by underlying sub-scores?
-    List<Weight> weights = new ArrayList<>();
-    for (WeightedScore weightedScore : weightedScores) {
-      weights.add(weightedScore.weight);
-    }
-    return weights;
+    return weights.parameters();
   }
 
   @Override
   @JsonIgnore
   public boolean isImmutable() {
-    for (WeightedScore weightedScore : weightedScores) {
-      if (!weightedScore.weight.isImmutable()) {
-        return false;
-      }
-    }
-    return true;
+    return weights.isImmutable();
   }
 
   @Override
   public void makeImmutable() {
-    Set<WeightedScore> immutableWeightedScores = new HashSet<>();
-    for (WeightedScore weightedScore : weightedScores) {
-      if (weightedScore.weight.isImmutable()) {
-        immutableWeightedScores.add(weightedScore);
-      } else {
-        immutableWeightedScores.add(
-            new WeightedScore(
-                weightedScore.score,
-                new ImmutableWeight(weightedScore.weight.value())));
-      }
-    }
-
-    weightedScores.clear();
-    weightedScores.addAll(immutableWeightedScores);
+    weights.makeImmutable();
   }
 
   /**
@@ -121,20 +120,21 @@ public class WeightedCompositeScore extends AbstractScore implements Tunable {
     double weightSum = 0.0;
     double scoreSum = 0.0;
     double confidenceSum = 0.0;
+
     ScoreValue scoreValue = new ScoreValue(this);
     boolean allNotApplicable = true;
-    for (WeightedScore weightedScore : weightedScores) {
-      double weight = weightedScore.weight.value();
-      ScoreValue subScoreValue = calculateIfNecessary(weightedScore.score, valueSet);
+    for (Score subScore : subScores) {
+      Weight weight = weights.of(subScore).orElseThrow(IllegalStateException::new);
+      ScoreValue subScoreValue = calculateIfNecessary(subScore, valueSet);
       if (subScoreValue.isNotApplicable()) {
         continue;
       }
       allNotApplicable = false;
-      subScoreValue.weight(weightedScore.weight.value());
+      subScoreValue.weight(weight.value());
       scoreValue.usedValues(subScoreValue);
-      scoreSum += weight * subScoreValue.get();
-      confidenceSum += weight * subScoreValue.confidence();
-      weightSum += weight;
+      scoreSum += weight.value() * subScoreValue.get();
+      confidenceSum += weight.value() * subScoreValue.confidence();
+      weightSum += weight.value();
     }
 
     if (allNotApplicable) {
@@ -162,15 +162,6 @@ public class WeightedCompositeScore extends AbstractScore implements Tunable {
     return Collections.emptySet();
   }
 
-  @Override
-  public final Set<Score> subScores() {
-    Set<Score> scores = new HashSet<>();
-    for (WeightedScore weightedScore : weightedScores) {
-      scores.add(weightedScore.score);
-    }
-    return scores;
-  }
-
   /**
    * Looks for a sub-score by its type.
    *
@@ -195,9 +186,11 @@ public class WeightedCompositeScore extends AbstractScore implements Tunable {
   @Override
   public void accept(Visitor visitor) {
     super.accept(visitor);
-    for (WeightedScore weightedScore : weightedScores) {
-      weightedScore.score.accept(visitor);
-      weightedScore.weight.accept(visitor);
+    for (Score score : subScores) {
+      score.accept(visitor);
+    }
+    for (Weight weight : weights.parameters()) {
+      weight.accept(visitor);
     }
   }
 
@@ -213,106 +206,12 @@ public class WeightedCompositeScore extends AbstractScore implements Tunable {
       return false;
     }
     WeightedCompositeScore that = (WeightedCompositeScore) o;
-    return Objects.equals(weightedScores, that.weightedScores);
+    return Objects.equals(subScores, that.subScores)
+        && Objects.equals(weights, that.weights);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), weightedScores);
+    return Objects.hash(super.hashCode(), subScores, weights);
   }
-
-  /**
-   * Converts a number of scores to a set of weighted scores with the default weight.
-   */
-  private static Set<WeightedScore> prepare(Score... scores) {
-    Objects.requireNonNull(scores, "Hey! Scores can't be null!");
-    if (scores.length == 0) {
-      throw new IllegalArgumentException("Hey! Scores can't be empty!");
-    }
-    Set<WeightedScore> weightedScores = new HashSet<>();
-    for (Score score : scores) {
-      boolean success = weightedScores.add(
-          new WeightedScore(score, new MutableWeight(DEFAULT_WEIGHT)));
-      if (!success) {
-        throw new IllegalArgumentException(String.format(
-            "Score already exists in the rating: %s", score.name()));
-      }
-    }
-
-    // let's be paranoids and check the weights even here
-    return check(weightedScores);
-  }
-
-  /**
-   * Checks if the specified scores have correct weights.
-   *
-   * @return The same set of weighted scores if the weights are correct.
-   * @throws IllegalArgumentException if at least one of the weights are not correct.
-   */
-  private static Set<WeightedScore> check(Set<WeightedScore> weightedScores) {
-    Objects.requireNonNull(weightedScores, "Hey! Weighted score can't be null!");
-    if (weightedScores.isEmpty()) {
-      throw new IllegalArgumentException("Hey! Weighted scores can't be empty!");
-    }
-
-    for (WeightedScore weightedScore : weightedScores) {
-      Objects.requireNonNull(weightedScore, "Weighted score can't be null!");
-      Objects.requireNonNull(weightedScore.weight, "Weight can't be null!");
-      Objects.requireNonNull(weightedScore.score, "Score can't be null!");
-
-      double weight = weightedScore.weight.value();
-      if (!Weight.INTERVAL.contains(weight)) {
-        throw new IllegalArgumentException(
-            String.format("Weight %s doesn't belong to %s",
-                String.valueOf(weight), Weight.INTERVAL));
-      }
-    }
-
-    // return a new set to prevent modification of the set by the caller
-    return new HashSet<>(weightedScores);
-  }
-
-  /**
-   * A score with a weight. Or, just weighted score. The class is immutable.
-   */
-  static class WeightedScore {
-
-    // those fields need to be public for successful serialization with Jackson
-    // otherwise, it needs getters and setters
-    public final Score score;
-    public final Weight weight;
-
-    @JsonCreator
-    WeightedScore(@JsonProperty("score") Score score, @JsonProperty("weight") Weight weight) {
-      this.score = score;
-      this.weight = weight;
-    }
-
-    /**
-     * The equals() method considers only the score.
-     */
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) {
-        return true;
-      }
-      if (o == null) {
-        return false;
-      }
-      if (o.getClass() != getClass()) {
-        return false;
-      }
-      WeightedScore that = (WeightedScore) o;
-      return Objects.equals(score, that.score);
-    }
-
-    /**
-     * The hashCode() method considers only the score.
-     */
-    @Override
-    public int hashCode() {
-      return Objects.hashCode(score);
-    }
-  }
-
 }

@@ -10,36 +10,34 @@ import com.sap.sgs.phosphor.fosstars.model.score.example.ExampleScores;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.io.IOException;
-import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Optional;
 import org.junit.Test;
 
 public class GitHubProjectCacheTest {
 
   @Test
-  public void load() throws IOException {
-    final String filename = "TestProjectRatingCache.json";
-    try (InputStream is = getClass().getResourceAsStream(filename)) {
-      GitHubProjectCache cache = GitHubProjectCache.load(is);
-      assertNotNull(cache);
-      assertEquals(3, cache.size());
-      cache.lifetime(100000);
+  public void testStoreAndLoad() throws IOException {
+    GitHubProjectCache cache = GitHubProjectCache.empty();
 
-      GitHubProject project = new GitHubProject(new GitHubOrganization("netty"), "netty");
-      Optional<RatingValue> something = cache.cachedRatingValueFor(project);
+    GitHubProject project = new GitHubProject(new GitHubOrganization("netty"), "netty");
+    RatingValue ratingValue = new RatingValue(
+        new ScoreValue(ExampleScores.SECURITY_SCORE_EXAMPLE),
+        SecurityLabelExample.OKAY);
+    project.set(ratingValue);
+
+    cache.add(project);
+    Path filename = Files.createTempFile(GitHubProjectCacheTest.class.getName(), "test");
+    try {
+      cache.store(filename);
+
+      GitHubProjectCache clone = GitHubProjectCache.load(filename);
+      Optional<RatingValue> something = clone.cachedRatingValueFor(project);
       assertTrue(something.isPresent());
-
-      project = new GitHubProject(new GitHubOrganization("netty"), "netty-tcnative");
-      something = cache.cachedRatingValueFor(project);
-      assertTrue(something.isPresent());
-
-      project = new GitHubProject(new GitHubOrganization("FasterXML"), "jackson-databind");
-      something = cache.cachedRatingValueFor(project);
-      assertTrue(something.isPresent());
-
-      project = new GitHubProject(new GitHubOrganization("not-existing"), "test");
-      something = cache.cachedRatingValueFor(project);
-      assertFalse(something.isPresent());
+      assertEquals(ratingValue, something.get());
+    } finally {
+      Files.delete(filename);
     }
   }
 

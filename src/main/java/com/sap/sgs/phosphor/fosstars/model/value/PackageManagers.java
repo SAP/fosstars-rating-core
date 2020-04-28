@@ -24,6 +24,15 @@ public class PackageManagers {
   /**
    * Initializes a set of package managers.
    *
+   * @param entries A number of package managers.
+   */
+  public static PackageManagers from(PackageManager... entries) {
+    return new PackageManagers(entries);
+  }
+
+  /**
+   * Initializes a set of package managers.
+   *
    * @param packageManagers A set of package managers.
    */
   @JsonCreator

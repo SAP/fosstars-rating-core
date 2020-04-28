@@ -1,5 +1,9 @@
 package com.sap.sgs.phosphor.fosstars.model.score;
 
+import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
+import static com.sap.sgs.phosphor.fosstars.model.score.example.ExampleScores.PROJECT_ACTIVITY_SCORE_EXAMPLE;
+import static com.sap.sgs.phosphor.fosstars.model.score.example.ExampleScores.SECURITY_SCORE_EXAMPLE;
+import static com.sap.sgs.phosphor.fosstars.model.score.example.ExampleScores.SECURITY_TESTING_SCORE_EXAMPLE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -7,6 +11,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Parameter;
@@ -14,9 +19,10 @@ import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.Weight;
 import com.sap.sgs.phosphor.fosstars.model.feature.DoubleFeature;
-import com.sap.sgs.phosphor.fosstars.model.score.WeightedCompositeScore.WeightedScore;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.sgs.phosphor.fosstars.model.weight.MutableWeight;
+import com.sap.sgs.phosphor.fosstars.model.weight.ScoreWeights;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -84,26 +90,6 @@ public class WeightedCompositeScoreTest {
   }
 
   @Test
-  public void equalWeightedScores() {
-    MutableWeight mutableWeightOne = new MutableWeight(0.7);
-    MutableWeight mutableWeightTwo = new MutableWeight(0.7);
-    assertEquals(mutableWeightOne, mutableWeightTwo);
-
-    WeightedCompositeScore.WeightedScore one = new WeightedCompositeScore.WeightedScore(
-        new FirstScore(), mutableWeightOne);
-    WeightedCompositeScore.WeightedScore two = new WeightedCompositeScore.WeightedScore(
-        new FirstScore(), mutableWeightTwo);
-    assertEquals(one, two);
-    assertEquals(one.hashCode(), two.hashCode());
-
-    // check if WeightedScore considers only scores in equals() and hashCode()
-    mutableWeightOne.value(0.5);
-    assertNotEquals(mutableWeightOne, mutableWeightTwo);
-    assertEquals(one, two);
-    assertEquals(one.hashCode(), two.hashCode());
-  }
-
-  @Test
   public void validValue() {
     Score score = new WeightedScoreImpl();
     Value<Double> value = score.value(7.54);
@@ -123,19 +109,16 @@ public class WeightedCompositeScoreTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void zeroWeights() {
-    MutableWeight mutableWeightOne = new MutableWeight(0);
-    MutableWeight mutableWeightTwo = new MutableWeight(0);
+    ScoreWeights weights = ScoreWeights.createFor(
+        PROJECT_ACTIVITY_SCORE_EXAMPLE,
+        SECURITY_TESTING_SCORE_EXAMPLE);
+    weights.set(PROJECT_ACTIVITY_SCORE_EXAMPLE, new MutableWeight(0));
+    weights.set(SECURITY_SCORE_EXAMPLE, new MutableWeight(0));
 
-    WeightedCompositeScore.WeightedScore one = new WeightedCompositeScore.WeightedScore(
-        new FirstScore(), mutableWeightOne);
-    WeightedCompositeScore.WeightedScore two = new WeightedCompositeScore.WeightedScore(
-        new SecondScore(), mutableWeightTwo);
-
-    Set<WeightedScore> weightedScores = new HashSet<>();
-    weightedScores.add(one);
-    weightedScores.add(two);
-
-    WeightedCompositeScore score = new WeightedCompositeScore("test", weightedScores);
+    WeightedCompositeScore score = new WeightedCompositeScore(
+        "test",
+        setOf(PROJECT_ACTIVITY_SCORE_EXAMPLE, SECURITY_SCORE_EXAMPLE),
+        weights);
     score.calculate();
   }
 
@@ -151,7 +134,7 @@ public class WeightedCompositeScoreTest {
 
   @Test(expected = NullPointerException.class)
   public void nullScoreSet() {
-    new WeightedCompositeScore("test", (Set<WeightedScore>) null);
+    new WeightedCompositeScore("test", null, ScoreWeights.createFor());
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -161,7 +144,10 @@ public class WeightedCompositeScoreTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void emptyScoreSet() {
-    new WeightedCompositeScore("test", new HashSet<>());
+    new WeightedCompositeScore(
+        "test",
+        new HashSet<>(),
+        ScoreWeights.createFor(SECURITY_TESTING_SCORE_EXAMPLE));
   }
 
   @Test
@@ -322,6 +308,19 @@ public class WeightedCompositeScoreTest {
     assertTrue(scoreValue.isNotApplicable());
   }
 
+  @Test
+  public void testSerializationAndDeserialization() throws IOException {
+    ObjectMapper mapper = new ObjectMapper();
+    WeightedScoreImpl score = new WeightedScoreImpl(
+        SECURITY_TESTING_SCORE_EXAMPLE, PROJECT_ACTIVITY_SCORE_EXAMPLE);
+    score.weights().set(SECURITY_TESTING_SCORE_EXAMPLE, new MutableWeight(0.1));
+    score.weights().set(PROJECT_ACTIVITY_SCORE_EXAMPLE, new MutableWeight(0.7));
+    WeightedScoreImpl clone = mapper.readValue(
+        mapper.writeValueAsBytes(score), WeightedScoreImpl.class
+    );
+    assertEquals(score, clone);
+  }
+
   private abstract static class AbstractTestScore extends FeatureBasedScore {
 
     private boolean returnsNotApplicable = false;
@@ -396,20 +395,27 @@ public class WeightedCompositeScoreTest {
     private static final double FIRST_WEIGHT = 0.8;
     private static final double SECOND_WEIGHT = 0.3;
 
+    private static final FirstScore FIRST_SCORE = new FirstScore();
+    private static final SecondScore SECOND_SCORE = new SecondScore();
+
     WeightedScoreImpl(Score... scores) {
       super(NAME, scores);
     }
 
     WeightedScoreImpl() {
-      super(NAME, init());
+      super(
+          NAME,
+          setOf(FIRST_SCORE, SECOND_SCORE),
+          initWeights());
     }
 
-    private static Set<WeightedScore> init() {
-      Set<WeightedScore> scores = new HashSet<>();
-      scores.add(new WeightedScore(new FirstScore(), new MutableWeight(FIRST_WEIGHT)));
-      scores.add(new WeightedScore(new SecondScore(), new MutableWeight(SECOND_WEIGHT)));
-      return scores;
+    private static ScoreWeights initWeights() {
+      ScoreWeights weights = ScoreWeights.createFor(FIRST_SCORE, SECOND_SCORE);
+      weights.set(FIRST_SCORE, new MutableWeight(FIRST_WEIGHT));
+      weights.set(SECOND_SCORE, new MutableWeight(SECOND_WEIGHT));
+      return weights;
     }
+
   }
 
 }

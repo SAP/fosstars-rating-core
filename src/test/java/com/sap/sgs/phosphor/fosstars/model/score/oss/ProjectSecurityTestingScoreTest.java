@@ -2,6 +2,7 @@ package com.sap.sgs.phosphor.fosstars.model.score.oss;
 
 import static com.sap.sgs.phosphor.fosstars.TestUtils.assertScore;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import com.sap.sgs.phosphor.fosstars.model.Score;
@@ -46,6 +47,15 @@ public class ProjectSecurityTestingScoreTest {
 
     assertTrue(value.score().description().isEmpty());
     assertTrue(value.explanation().isEmpty());
+  }
+
+  @Test
+  public void testEqualsAndHashCode() {
+    ProjectSecurityTestingScore one = new ProjectSecurityTestingScore();
+    ProjectSecurityTestingScore two = new ProjectSecurityTestingScore();
+    assertEquals(one, one);
+    assertTrue(one.equals(two) && two.equals(one));
+    assertEquals(one.hashCode(), two.hashCode());
   }
 
 }
