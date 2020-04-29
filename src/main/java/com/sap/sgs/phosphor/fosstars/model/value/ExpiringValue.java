@@ -67,6 +67,11 @@ public class ExpiringValue<T> implements Value<T> {
   }
 
   @Override
+  public T orElse(T other) {
+    return value.orElse(other);
+  }
+
+  @Override
   public Value<T> processIfKnown(Processor<T> processor) {
     value.processIfKnown(processor);
     return this;

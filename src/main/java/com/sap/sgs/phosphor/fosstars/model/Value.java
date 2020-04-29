@@ -62,6 +62,15 @@ public interface Value<T> {
   T get();
 
   /**
+   * Returns the value if it is known and applicable,
+   * otherwise a specified default value.
+   *
+   * @param other The default value.
+   * @return The value of the default value.
+   */
+  T orElse(T other);
+
+  /**
    * Call a processor to process the value if it's known.
    *
    * @param processor The processor to be called.
