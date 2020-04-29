@@ -4,6 +4,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SE
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_TEAM;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.IS_APACHE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.IS_ECLIPSE;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.LANGUAGES;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_COMMITS_LAST_THREE_MONTHS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_GITHUB_STARS;
@@ -12,12 +13,15 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.PACKAG
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.PROJECT_START_DATE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_DEPENDABOT;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GITHUB_FOR_DEVELOPMENT;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_NOHTTP;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_VERIFIED_SIGNED_COMMITS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
+import static com.sap.sgs.phosphor.fosstars.model.value.Language.JAVA;
 import static com.sap.sgs.phosphor.fosstars.model.value.PackageManager.MAVEN;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -29,6 +33,7 @@ import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.other.Utils;
+import com.sap.sgs.phosphor.fosstars.model.value.Languages;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.sgs.phosphor.fosstars.model.value.PackageManagers;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
@@ -82,6 +87,9 @@ public class OssSecurityScoreTest {
         USES_LGTM.value(true),
         WORST_LGTM_GRADE.value(LgtmGrade.B),
         USES_NOHTTP.value(true),
+        USES_DEPENDABOT.value(true),
+        USES_GITHUB_FOR_DEVELOPMENT.value(true),
+        LANGUAGES.value(Languages.of(JAVA)),
         PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)));
     ScoreValue scoreValue = score.calculate(values);
     assertTrue(Score.INTERVAL.contains(scoreValue.get()));

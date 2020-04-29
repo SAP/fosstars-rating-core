@@ -5,8 +5,7 @@ import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.Arrays;
-import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
@@ -47,7 +46,7 @@ public class Languages implements Iterable<Language> {
   @JsonCreator
   public Languages(@JsonProperty("elements") Set<Language> languages) {
     Objects.requireNonNull(languages, "Languages can't be null!");
-    this.elements = EnumSet.copyOf(languages);
+    this.elements = new HashSet<>(languages);
   }
 
   /**
@@ -56,7 +55,7 @@ public class Languages implements Iterable<Language> {
    * @param languages A number of languages.
    */
   public Languages(Language... languages) {
-    this(EnumSet.copyOf(Arrays.asList(languages)));
+    this(setOf(languages));
   }
 
   /**
@@ -66,7 +65,14 @@ public class Languages implements Iterable<Language> {
     return elements.size();
   }
 
-  public boolean contains(Languages languages) {
+  /**
+   * Checks if the collection contains one of the other languages.
+   *
+   * @param languages The other languages.
+   * @return True if at least one of the other languages is present in the collection,
+   *         false otherwise.
+   */
+  public boolean containsAnyOf(Languages languages) {
     for (Language language : languages) {
       if (this.elements.contains(language)) {
         return true;
@@ -81,7 +87,7 @@ public class Languages implements Iterable<Language> {
    */
   @JsonGetter("elements")
   public Set<Language> get() {
-    return EnumSet.copyOf(elements);
+    return new HashSet<>(elements);
   }
 
   @Override
