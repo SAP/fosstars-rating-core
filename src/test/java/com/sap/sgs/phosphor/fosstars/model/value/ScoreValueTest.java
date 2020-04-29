@@ -24,7 +24,7 @@ public class ScoreValueTest {
   private static final double ACCURACY = 0.01;
 
   @Test
-  public void increase() {
+  public void testIncrease() {
     ScoreValue value = new ScoreValue(PROJECT_ACTIVITY_SCORE_EXAMPLE);
     Assert.assertEquals(Score.MIN, value.get(), ACCURACY);
     value.increase(2.1);
@@ -36,12 +36,12 @@ public class ScoreValueTest {
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void increaseNegative() {
+  public void testIncreaseNegative() {
     new ScoreValue(PROJECT_ACTIVITY_SCORE_EXAMPLE).increase(-1.0);
   }
 
   @Test
-  public void decrease() {
+  public void testDecrease() {
     ScoreValue value = new ScoreValue(
         PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.0, 1.0, 10.0, Collections.emptyList());
     assertEquals(5.0, value.get(), ACCURACY);
@@ -54,12 +54,12 @@ public class ScoreValueTest {
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void decreaseNegative() {
+  public void testDecreaseNegative() {
     new ScoreValue(PROJECT_ACTIVITY_SCORE_EXAMPLE).decrease(-1.0);
   }
 
   @Test
-  public void confidence() {
+  public void testConfidence() {
     ScoreValue value = new ScoreValue(
         PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.0, 1.0, 10.0, Collections.emptyList());
     assertEquals(10.0, value.confidence(), ACCURACY);
@@ -68,7 +68,7 @@ public class ScoreValueTest {
   }
 
   @Test
-  public void usedValues() {
+  public void testUsedValues() {
     List<Value> usedValues = Arrays.asList(
         NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE.value(10),
         NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE.value(3));
@@ -87,7 +87,7 @@ public class ScoreValueTest {
   }
 
   @Test
-  public void weight() {
+  public void testWeight() {
     ScoreValue value = new ScoreValue(
         PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.0, 0.7, 10.0, Collections.emptyList());
     assertEquals(0.7, value.weight(), 0.01);
@@ -96,28 +96,28 @@ public class ScoreValueTest {
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void negativeWeight() {
+  public void testNegativeWeight() {
     new ScoreValue(
         PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.0, 0.7, 10.0, Collections.emptyList())
         .weight(-1);
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void zeroWeight() {
+  public void testZeroWeight() {
     new ScoreValue(
         PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.0, 0.7, 10.0, Collections.emptyList())
         .weight(0.0);
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void tooBigWeight() {
+  public void testTooBigWeight() {
     new ScoreValue(
         PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.0, 0.7, 10.0, Collections.emptyList())
         .weight(1.1);
   }
 
   @Test
-  public void explanation() {
+  public void testExplanation() {
     List<String> notes = new ArrayList<>();
     notes.add("first note");
     notes.add("second note");
@@ -138,7 +138,7 @@ public class ScoreValueTest {
   }
 
   @Test
-  public void equalsAndHashCode() {
+  public void testEqualsAndHashCode() {
     List<Value> usedValues = Arrays.asList(
         NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE.value(10),
         NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE.value(3));
@@ -168,7 +168,7 @@ public class ScoreValueTest {
   }
 
   @Test
-  public void serializeAndDeserialize() throws IOException {
+  public void testSerializeAndDeserialize() throws IOException {
     List<Value> usedValues = Arrays.asList(
         NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE.value(10),
         NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE.value(3));
@@ -184,6 +184,18 @@ public class ScoreValueTest {
     assertNotNull(clone);
     assertEquals(value, clone);
     assertEquals(value.hashCode(), clone.hashCode());
+  }
+
+  @Test
+  public void testOrElse() {
+    ScoreValue value = new ScoreValue(PROJECT_ACTIVITY_SCORE_EXAMPLE).set(5.1);
+    assertEquals(5.1, value.orElse(1.2), ACCURACY);
+
+    Value<Double> unknown = UnknownValue.of(PROJECT_ACTIVITY_SCORE_EXAMPLE);
+    assertEquals(3.0, unknown.orElse(3.0), ACCURACY);
+
+    Value<Double> notApplicable = NotApplicableValue.of(PROJECT_ACTIVITY_SCORE_EXAMPLE);
+    assertEquals(3.0, notApplicable.orElse(3.0), ACCURACY);
   }
 
 }

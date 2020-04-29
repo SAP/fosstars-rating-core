@@ -46,7 +46,7 @@ public class AbstractValueTest {
   }
 
   @Test
-  public void processIfKnown() {
+  public void testProcessIfKnown() {
     ValueImpl value = new ValueImpl(new FeatureImpl("feature"), "test");
     assertFalse(value.isUnknown());
 
@@ -67,5 +67,12 @@ public class AbstractValueTest {
     assertEquals(2, processedValues.size());
     assertEquals("test", processedValues.get(0));
     assertEquals("unknown", processedValues.get(1));
+  }
+
+  @Test
+  public void testOrElse() {
+    FeatureImpl feature = new FeatureImpl("feature");
+    assertEquals("value", new ValueImpl(feature, "value").orElse("another"));
+    assertEquals("another", feature.unknown().orElse("another"));
   }
 }

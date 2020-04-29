@@ -59,6 +59,11 @@ public final class UnknownValue<T> implements Value<T> {
   }
 
   @Override
+  public T orElse(T other) {
+    return other;
+  }
+
+  @Override
   public Value<T> processIfKnown(Processor<T> processor) {
     return this;
   }

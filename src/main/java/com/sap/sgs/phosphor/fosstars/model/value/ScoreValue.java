@@ -145,6 +145,11 @@ public class ScoreValue implements Value<Double>, Confidence {
     return value;
   }
 
+  @Override
+  public Double orElse(Double other) {
+    return isUnknown() || isNotApplicable ? other : get();
+  }
+
   /**
    * Returns a list of values which were used to calculate the score value.
    */

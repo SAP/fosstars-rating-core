@@ -64,6 +64,11 @@ public abstract class AbstractValue<T> implements Value<T> {
   }
 
   @Override
+  public T orElse(T other) {
+    return isUnknown() || isNotApplicable() ? other : get();
+  }
+
+  @Override
   public boolean equals(Object o) {
     if (this == o) {
       return true;
