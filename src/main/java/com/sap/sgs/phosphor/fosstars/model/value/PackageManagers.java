@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -14,12 +15,19 @@ import java.util.stream.Collectors;
 /**
  * A set of package managers.
  */
-public class PackageManagers {
+public class PackageManagers implements Iterable<PackageManager> {
 
   /**
    * A set of package managers.
    */
   private final Set<PackageManager> packageManagers;
+
+  /**
+   * Returns an empty set of package managers.
+   */
+  public static PackageManagers empty() {
+    return new PackageManagers();
+  }
 
   /**
    * Initializes a set of package managers.
@@ -137,5 +145,10 @@ public class PackageManagers {
   @Override
   public String toString() {
     return packageManagers.stream().map(Enum::toString).collect(Collectors.joining(", "));
+  }
+
+  @Override
+  public Iterator<PackageManager> iterator() {
+    return packageManagers.iterator();
   }
 }

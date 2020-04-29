@@ -142,7 +142,7 @@ public class PackageManagement extends CachedSingleFeatureGitHubDataProvider {
    */
   private Value<PackageManagers> packageManagers(GitHubProject project) throws IOException {
     PackageManagers possiblePackageManagers = new PackageManagers();
-    for (Language language : languages(project).get()) {
+    for (Language language : languages(project)) {
       if (KNOWN_PACKAGE_MANAGERS.containsKey(language)) {
         possiblePackageManagers.add(KNOWN_PACKAGE_MANAGERS.get(language));
       }
