@@ -5,6 +5,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SE
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_TEAM;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.IS_APACHE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.IS_ECLIPSE;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.LANGUAGES;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_COMMITS_LAST_THREE_MONTHS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_GITHUB_STARS;
@@ -13,6 +14,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.PACKAG
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.PROJECT_START_DATE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_DEPENDABOT;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GITHUB_FOR_DEVELOPMENT;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_NOHTTP;
@@ -20,6 +22,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_V
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
+import static com.sap.sgs.phosphor.fosstars.model.value.Language.JAVA;
 import static com.sap.sgs.phosphor.fosstars.model.value.PackageManager.GRADLE;
 import static com.sap.sgs.phosphor.fosstars.model.value.PackageManager.MAVEN;
 import static org.junit.Assert.assertEquals;
@@ -31,6 +34,7 @@ import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating;
+import com.sap.sgs.phosphor.fosstars.model.value.Languages;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.sgs.phosphor.fosstars.model.value.PackageManagers;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
@@ -63,6 +67,8 @@ public class PrettyPrinterTest {
         WORST_LGTM_GRADE.value(LgtmGrade.A),
         USES_GITHUB_FOR_DEVELOPMENT.value(false),
         USES_NOHTTP.value(false),
+        USES_DEPENDABOT.value(false),
+        LANGUAGES.value(Languages.of(JAVA)),
         PACKAGE_MANAGERS.value(new PackageManagers(MAVEN)));
     
     RatingValue ratingValue = rating.calculate(values);
@@ -109,6 +115,8 @@ public class PrettyPrinterTest {
         WORST_LGTM_GRADE.value(LgtmGrade.A),
         USES_GITHUB_FOR_DEVELOPMENT.value(false),
         USES_NOHTTP.value(true),
+        USES_DEPENDABOT.value(true),
+        LANGUAGES.value(Languages.of(JAVA)),
         PACKAGE_MANAGERS.value(new PackageManagers(GRADLE)));
     RatingValue ratingValue = rating.calculate(values);
 

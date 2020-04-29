@@ -182,6 +182,29 @@ public abstract class AbstractScore implements Score {
   }
 
   /**
+   * Looks for a value of a specified feature in a list of values.
+   *
+   * @param feature The feature.
+   * @param values The list of values.
+   * @param <T> A type of the feature.
+   * @return A value for the specified feature if it's in the list.
+   * @throws IllegalArgumentException If a value was not found.
+   */
+  protected <T> Value<T> find(Feature<T> feature, Value... values) {
+    Objects.requireNonNull(values, "Oh no! Feature values can't be null!");
+    Objects.requireNonNull(feature, "Oh no! Feature can't be null!");
+
+    for (Value value : values) {
+      if (feature.equals(value.feature())) {
+        return value;
+      }
+    }
+
+    throw new IllegalArgumentException(
+        String.format("Oh no! We could not find feature: %s", feature.name()));
+  }
+
+  /**
    * The method tries to get a value for a specified score. First, the method checks
    * if the set of values already contains a value for the specified score. If yes, the method
    * just returns the existing value. Otherwise, the method tries to calculate a value
