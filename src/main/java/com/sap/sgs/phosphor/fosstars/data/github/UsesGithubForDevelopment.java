@@ -4,7 +4,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_G
 
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
-import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
+import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.time.Instant;
@@ -34,6 +34,9 @@ public class UsesGithubForDevelopment extends CachedSingleFeatureGitHubDataProvi
    */
   private static final double RESOLVED_USERS_THRESHOLD = 0.9;
 
+  /**
+   * A list of checks to figure out if a project uses GitHub for development.
+   */
   private static final List<Check> CHECKS = Arrays.asList(
 
       // check if the repository doesn't have an explicit link to the original repository
@@ -75,7 +78,7 @@ public class UsesGithubForDevelopment extends CachedSingleFeatureGitHubDataProvi
   );
   
   /**
-   * Initializes a data providerepository.
+   * Initializes a data provider.
    *
    * @param github An interface to the GitHub API.
    */
@@ -98,13 +101,13 @@ public class UsesGithubForDevelopment extends CachedSingleFeatureGitHubDataProvi
    * Checks if a project uses GitHub as a main development platform.
    *
    * @param project The project to be checked.
-   * @return {@link BooleanValue} of the feature.
+   * @return A value of {@link OssFeatures#USES_GITHUB_FOR_DEVELOPMENT}.
    */
   private Value<Boolean> usesGithubForDevelopment(GitHubProject project) {
     try {
       GHRepository repository = gitHubDataFetcher().repositoryFor(project, github);
 
-      Date threeMonthsAgo = Date.from(Instant.now().minus(3, ChronoUnit.MONTHS));
+      Date threeMonthsAgo = Date.from(Instant.now().minus(90, ChronoUnit.DAYS));
       List<GHCommit> commits = gitHubDataFetcher().commitsAfter(threeMonthsAgo, project, github);
 
       return USES_GITHUB_FOR_DEVELOPMENT.value(
@@ -136,7 +139,7 @@ public class UsesGithubForDevelopment extends CachedSingleFeatureGitHubDataProvi
   }
 
   /**
-   * Checks if user names from a commit point to existing GitHub users.
+   * Checks if user names from a commit point to real GitHub users.
    *
    * @param commit The commit to be checked.
    * @return True if user names from the commit can be resolved to existing GitHub users,
