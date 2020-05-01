@@ -12,8 +12,11 @@ import java.util.Date;
 import java.util.List;
 import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHContent;
+import org.kohsuke.github.GHFileNotFoundException;
 import org.kohsuke.github.GHRepository;
+import org.kohsuke.github.GHUser;
 import org.kohsuke.github.GitHub;
+import org.kohsuke.github.GitUser;
 
 /**
  * <p>This data provider checks if an open-source project on GitHub
@@ -106,6 +109,8 @@ public class UsesDependabot extends CachedSingleFeatureGitHubDataProvider {
       }
 
       return content.getSize() >= ACCEPTABLE_CONFIG_SIZE;
+    } catch (GHFileNotFoundException e) {
+      return false; // okay, the config doesn't exist
     } catch (IOException e) {
       logger.warn("Something went wrong!", e);
     }
@@ -129,11 +134,47 @@ public class UsesDependabot extends CachedSingleFeatureGitHubDataProvider {
             || hasDependabotCommits(fetcher.commitsAfter(date, project, github)));
   }
 
+  /**
+   * Checks if a commit was done by Dependabot.
+   *
+   * @param commit The commit to be checked.
+   * @return True if the commit was done by Dependabot, false otherwise.
+   * @throws IOException If something went wrong.
+   */
   private static boolean isDependabot(GHCommit commit) throws IOException {
+    if (isDependabot(commit.getAuthor()) || isDependabot(commit.getCommitter())) {
+      return true;
+    }
+
     GHCommit.ShortInfo info = commit.getCommitShortInfo();
-    return commit.getAuthor().getLogin().toLowerCase().contains(DEPENDABOT_PATTERN)
-        || commit.getCommitter().getLogin().toLowerCase().contains(DEPENDABOT_PATTERN)
-        || info.getAuthor().getName().toLowerCase().contains(DEPENDABOT_PATTERN)
-        || info.getCommitter().getName().toLowerCase().contains(DEPENDABOT_PATTERN);
+    if (info == null) {
+      return false;
+    }
+
+    return isDependabot(info.getAuthor()) || isDependabot(info.getCommitter());
+  }
+
+  /**
+   * Check if a GitHub user looks like Dependabot.
+   *
+   * @param user The user to be checked.
+   * @return True if the user looks like Dependabot, false otherwise.
+   */
+  private static boolean isDependabot(GHUser user) {
+    return user != null
+        && user.getLogin() != null
+        && user.getLogin().toLowerCase().contains(DEPENDABOT_PATTERN);
+  }
+
+  /**
+   * Check if a git user looks like Dependabot.
+   *
+   * @param user The user to be checked.
+   * @return True if the user looks like Dependabot, false otherwise.
+   */
+  private static boolean isDependabot(GitUser user) {
+    return user != null
+        && user.getName() != null
+        && user.getName().toLowerCase().contains(DEPENDABOT_PATTERN);
   }
 }
