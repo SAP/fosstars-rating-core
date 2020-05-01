@@ -234,19 +234,16 @@ public class SecurityRatingCalculator {
     }
 
     String projectCacheFile = projectCacheFile(config);
-    GitHubProjectCache projectCache = loadProjectCache(projectCacheFile);
 
     LOGGER.info("Starting calculating ratings ...");
-    MultipleSecurityRatingsCalculator calculator
-        = new MultipleSecurityRatingsCalculator(github, nvd);
-    calculator.set(projectCache);
-    calculator.set(VALUE_CACHE);
-    calculator.set(callback);
-    calculator.token(githubToken);
-    calculator.calculateFor(projects);
-
-    LOGGER.info("Storing the project cache to {}", projectCacheFile);
-    projectCache.store(projectCacheFile);
+    MultipleSecurityRatingsCalculator calculator =
+        (MultipleSecurityRatingsCalculator) new MultipleSecurityRatingsCalculator(github, nvd)
+            .set(loadProjectCache(projectCacheFile))
+            .storeProjectCacheTo(projectCacheFile)
+            .set(VALUE_CACHE)
+            .set(callback)
+            .token(githubToken)
+            .calculateFor(projects);
 
     LOGGER.info("Okay, we've done calculating the ratings");
 

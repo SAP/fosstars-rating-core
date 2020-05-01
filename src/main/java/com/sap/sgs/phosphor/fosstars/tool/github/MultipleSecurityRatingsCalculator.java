@@ -20,6 +20,11 @@ class MultipleSecurityRatingsCalculator extends AbstractRatingCalculator {
   private GitHubProjectCache projectCache = GitHubProjectCache.empty();
 
   /**
+   * A filename where the cache of projects should be stored.
+   */
+  private String projectCacheFile;
+
+  /**
    * A list of projects for which a rating couldn't be calculated.
    */
   private final List<GitHubProject> failedProjects = new ArrayList<>();
@@ -42,6 +47,17 @@ class MultipleSecurityRatingsCalculator extends AbstractRatingCalculator {
    */
   MultipleSecurityRatingsCalculator set(GitHubProjectCache projectCache) {
     this.projectCache = Objects.requireNonNull(projectCache, "Oh no! Project cache can't be null!");
+    return this;
+  }
+
+  /**
+   * Sets a file where the cache of processed projects should be stored.
+   *
+   * @param filename The file.
+   * @return The same {@link MultipleSecurityRatingsCalculator}.
+   */
+  MultipleSecurityRatingsCalculator storeProjectCacheTo(String filename) {
+    projectCacheFile = filename;
     return this;
   }
 
@@ -70,15 +86,22 @@ class MultipleSecurityRatingsCalculator extends AbstractRatingCalculator {
   @Override
   public MultipleSecurityRatingsCalculator calculateFor(List<GitHubProject> projects) {
     failedProjects.clear();
+
     for (GitHubProject project : projects) {
       try {
         calculateFor(project);
+
+        if (projectCacheFile != null) {
+          logger.info("Storing the project cache to {}", projectCacheFile);
+          projectCache.store(projectCacheFile);
+        }
       } catch (Exception e) {
         logger.warn("Oh no! Could not calculate a rating for {}", project.url());
         logger.warn(e);
         failedProjects.add(project);
       }
     }
+
     return this;
   }
 
