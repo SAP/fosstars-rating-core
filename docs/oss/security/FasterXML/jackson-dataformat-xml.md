@@ -3,16 +3,17 @@
 ```
 Here is how the rating was calculated:
   Score:........Security of project
-  Value:........3.93  out of 10.00
-  Confidence:...8.67  out of 10.00
+  Value:........0.84  out of 10.00
+  Confidence:...9.41  out of 10.00
   Based on:.....7 sub-scores:
       Sub-score:....Unpatched vulnerabilities
       Importance:...High (weight 0.84 out of 1.00)
-      Value:........10.00 out of 10.00
+      Value:........0.00  out of 10.00
       Confidence:...10.00 out of 10.00
       Based on:...1 features:
-          Info about vulnerabilities:...0 vulnerabilities
-      Explanation:..No unpatched vulnerabilities found which is good
+          Info about vulnerabilities:...5 vulnerabilities
+      Explanation:..Found 4 unpatched vulnerabilities with high severity which decreased the score on 32.00 (4 * 8.00)
+                    Found 1 unpatched vulnerabilities with medium severity which decreased the score on 4.00 (1 * 4.00)
 
       Sub-score:....Project activity
       Description:..The score is based on number of commits and contributors.
@@ -29,15 +30,16 @@ Here is how the rating was calculated:
 
       Sub-score:....Security testing
       Importance:...Medium (weight 0.63 out of 1.00)
-      Value:........4.00  out of 10.00
-      Confidence:...5.00  out of 10.00
-      Based on:.....2 sub-scores:
-          Sub-score:....How a project scans its dependencies for vulnerabilities
+      Value:........2.67  out of 10.00
+      Confidence:...9.33  out of 10.00
+      Based on:.....3 sub-scores:
+          Sub-score:....If a project uses nohttp tool
           Importance:...High (weight 1.00 out of 1.00)
           Value:........0.00  out of 10.00
-          Confidence:...0.00  out of 10.00
-          Based on:...1 features:
-              Does it scan for vulnerable dependencies?....unknown
+          Confidence:...10.00 out of 10.00
+          Based on:...2 features:
+              A set of package managers:.......MAVEN
+              If a project uses nohttp tool:...false
 
           Sub-score:....How a project addresses issues reported by LGTM
           Importance:...High (weight 1.00 out of 1.00)
@@ -46,6 +48,17 @@ Here is how the rating was calculated:
           Based on:...2 features:
               If a project uses LGTM:..............true
               The worst LGTM grade of a project:...B
+
+          Sub-score:....How a project scans its dependencies for vulnerabilities
+          Importance:...High (weight 1.00 out of 1.00)
+          Value:........0.00  out of 10.00
+          Confidence:...8.00  out of 10.00
+          Based on:...5 features:
+              A set of package managers:..............................MAVEN
+              A set of programming languages:.........................JAVA, OTHER
+              Does it scan for vulnerable dependencies?...............unknown
+              Does it use GitHub as the main development platform?....false
+              If a project uses Dependabot:...........................false
 
 
       Sub-score:....Community commitment
@@ -85,13 +98,13 @@ Here is how the rating was calculated:
 
       Sub-score:....Vulnerability lifetime
       Importance:...Low (weight 0.23 out of 1.00)
-      Value:........10.00 out of 10.00
+      Value:........0.00  out of 10.00
       Confidence:...10.00 out of 10.00
       Based on:...2 features:
-          Info about vulnerabilities:...0 vulnerabilities
+          Info about vulnerabilities:...5 vulnerabilities
           When a project started:.......Fri Dec 31 06:00:50 CET 2010
 
-Rating: 3.93 out of 10.00 -> BAD
-Confidence: 8.67 out of 10.00
+Rating: 0.84 out of 10.00 -> BAD
+Confidence: 9.41 out of 10.00
 
 ```

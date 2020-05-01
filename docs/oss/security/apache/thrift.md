@@ -1,97 +1,109 @@
 # apache/thrift
 
 ```
-[+] Here is how the rating was calculated:
-[+]   Score:........Security of project
-[+]   Value:........6.17  out of 10.00
-[+]   Confidence:...10.00 out of 10.00
-[+]   Based on:.....7 sub-scores:
-[+]       Sub-score:....Unpatched vulnerabilities
-[+]       Importance:...High (weight 0.84 out of 1.00)
-[+]       Value:........10.00 out of 10.00
-[+]       Confidence:...10.00 out of 10.00
-[+]       Based on:...1 features:
-[+]           Info about vulnerabilities:...6 vulnerabilities
-[+]       Explanation:..No unpatched vulnerabilities found which is good
-[+]
-[+]       Sub-score:....Project activity
-[+]       Description:..The score is based on number of commits and contributors.
-[+]                     Here is how the number of commits contributes to the score (up to 5.10):
-[+]                     0 -> 0.10, 200 -> 2.55, 310 -> 4.59
-[+]                     Here is how the number of contributors contributes to the score (up to 5.10):
-[+]                     0 -> 0.10, 5 -> 2.55, 10 -> 4.59
-[+]       Importance:...Medium (weight 0.63 out of 1.00)
-[+]       Value:........6.44  out of 10.00
-[+]       Confidence:...10.00 out of 10.00
-[+]       Based on:...2 features:
-[+]           Number of commits in the last three months:........68
-[+]           Number of contributors in the last three months:...27
-[+]
-[+]       Sub-score:....Security testing
-[+]       Importance:...Medium (weight 0.63 out of 1.00)
-[+]       Value:........2.00  out of 10.00
-[+]       Confidence:...10.00 out of 10.00
-[+]       Based on:.....2 sub-scores:
-[+]           Sub-score:....How a project scans its dependencies for vulnerabilities
-[+]           Importance:...High (weight 1.00 out of 1.00)
-[+]           Value:........0.00  out of 10.00
-[+]           Confidence:...10.00 out of 10.00
-[+]           Based on:...1 features:
-[+]               Does it scan for vulnerable dependencies?....false
-[+]
-[+]           Sub-score:....How a project addresses issues reported by LGTM
-[+]           Importance:...High (weight 1.00 out of 1.00)
-[+]           Value:........4.00  out of 10.00
-[+]           Confidence:...10.00 out of 10.00
-[+]           Based on:...2 features:
-[+]               If a project uses LGTM:..............true
-[+]               The worst LGTM grade of a project:...D
-[+]
-[+]
-[+]       Sub-score:....Community commitment
-[+]       Importance:...Medium (weight 0.55 out of 1.00)
-[+]       Value:........7.00  out of 10.00
-[+]       Confidence:...10.00 out of 10.00
-[+]       Based on:...3 features:
-[+]           Does it belong to Apache?........true
-[+]           Does it belong to Eclipse?.......false
-[+]           Is it supported by a company?....false
-[+]
-[+]       Sub-score:....Security awareness
-[+]       Description:..The score checks if a project has a security policy and a security team.
-[+]                     If the project has a security policy, then the score adds 3.00.
-[+]                     If the project has a security team, then the score adds 5.00.
-[+]                     If the project uses verified signed commits, then the score adds 2.00.
-[+]       Importance:...Medium (weight 0.54 out of 1.00)
-[+]       Value:........5.00  out of 10.00
-[+]       Confidence:...10.00 out of 10.00
-[+]       Based on:...3 features:
-[+]           Does it have a security policy?.........false
-[+]           Does it have a security team?...........true
-[+]           Does it use verified signed commits?....false
-[+]
-[+]       Sub-score:....Project popularity
-[+]       Description:..The score is based on number of stars and watchers.
-[+]                     Here is how a number of stars contributes to the score:
-[+]                     0 -> 0.00 (min), 2500 -> 2.50, 5000 -> 5.00, 10000 -> 10.00 (max)
-[+]                     Here is how a number of watchers contributes to the score:
-[+]                     0 -> 0.00 (min), 450 -> 1.50, 750 -> 2.50, 3000 -> 10.00 (max)
-[+]       Importance:...Medium (weight 0.31 out of 1.00)
-[+]       Value:........8.89  out of 10.00
-[+]       Confidence:...10.00 out of 10.00
-[+]       Based on:...2 features:
-[+]           Number of stars for a GitHub repository:......7321
-[+]           Number of watchers for a GitHub repository:...472
-[+]
-[+]       Sub-score:....Vulnerability lifetime
-[+]       Importance:...Low (weight 0.23 out of 1.00)
-[+]       Value:........0.00  out of 10.00
-[+]       Confidence:...10.00 out of 10.00
-[+]       Based on:...2 features:
-[+]           Info about vulnerabilities:...6 vulnerabilities
-[+]           When a project started:.......Fri May 16 22:33:47 CEST 2008
-[+]
-[+] Rating: 6.17 out of 10.00 -> MODERATE
-[+] Confidence: 10.00 out of 10.00
+Here is how the rating was calculated:
+  Score:........Security of project
+  Value:........5.01  out of 10.00
+  Confidence:...9.41  out of 10.00
+  Based on:.....7 sub-scores:
+      Sub-score:....Unpatched vulnerabilities
+      Importance:...High (weight 0.84 out of 1.00)
+      Value:........6.00  out of 10.00
+      Confidence:...10.00 out of 10.00
+      Based on:...1 features:
+          Info about vulnerabilities:...1 vulnerability
+      Explanation:..Found 1 unpatched vulnerabilities with medium severity which decreased the score on 4.00 (1 * 4.00)
+
+      Sub-score:....Project activity
+      Description:..The score is based on number of commits and contributors.
+                    Here is how the number of commits contributes to the score (up to 5.10):
+                    0 -> 0.10, 200 -> 2.55, 310 -> 4.59
+                    Here is how the number of contributors contributes to the score (up to 5.10):
+                    0 -> 0.10, 5 -> 2.55, 10 -> 4.59
+      Importance:...Medium (weight 0.63 out of 1.00)
+      Value:........6.68  out of 10.00
+      Confidence:...10.00 out of 10.00
+      Based on:...2 features:
+          Number of commits in the last three months:........97
+          Number of contributors in the last three months:...37
+
+      Sub-score:....Security testing
+      Importance:...Medium (weight 0.63 out of 1.00)
+      Value:........1.33  out of 10.00
+      Confidence:...9.33  out of 10.00
+      Based on:.....3 sub-scores:
+          Sub-score:....If a project uses nohttp tool
+          Importance:...High (weight 1.00 out of 1.00)
+          Value:........0.00  out of 10.00
+          Confidence:...10.00 out of 10.00
+          Based on:...2 features:
+              A set of package managers:.......NPM, YARN, COMPOSER
+              If a project uses nohttp tool:...false
+
+          Sub-score:....How a project addresses issues reported by LGTM
+          Importance:...High (weight 1.00 out of 1.00)
+          Value:........4.00  out of 10.00
+          Confidence:...10.00 out of 10.00
+          Based on:...2 features:
+              If a project uses LGTM:..............true
+              The worst LGTM grade of a project:...D
+
+          Sub-score:....How a project scans its dependencies for vulnerabilities
+          Importance:...High (weight 1.00 out of 1.00)
+          Value:........0.00  out of 10.00
+          Confidence:...8.00  out of 10.00
+          Based on:...5 features:
+              A set of package managers:..............................NPM, YARN, COMPOSER
+              A set of programming languages:.........................C_SHARP, PHP, RUBY, C, JAVA, CPP, JAVASCRIPT, OTHER, PYTHON
+              Does it scan for vulnerable dependencies?...............unknown
+              Does it use GitHub as the main development platform?....false
+              If a project uses Dependabot:...........................false
+
+
+      Sub-score:....Community commitment
+      Importance:...Medium (weight 0.55 out of 1.00)
+      Value:........7.00  out of 10.00
+      Confidence:...10.00 out of 10.00
+      Based on:...3 features:
+          Does it belong to Apache?........true
+          Does it belong to Eclipse?.......false
+          Is it supported by a company?....false
+
+      Sub-score:....Security awareness
+      Description:..The score checks if a project has a security policy and a security team.
+                    If the project has a security policy, then the score adds 3.00.
+                    If the project has a security team, then the score adds 5.00.
+                    If the project uses verified signed commits, then the score adds 2.00.
+      Importance:...Medium (weight 0.54 out of 1.00)
+      Value:........0.00  out of 10.00
+      Confidence:...6.67  out of 10.00
+      Based on:...3 features:
+          Does it have a security policy?.........false
+          Does it have a security team?...........unknown
+          Does it use verified signed commits?....false
+
+      Sub-score:....Project popularity
+      Description:..The score is based on number of stars and watchers.
+                    Here is how a number of stars contributes to the score:
+                    0 -> 0.00 (min), 2500 -> 2.50, 5000 -> 5.00, 10000 -> 10.00 (max)
+                    Here is how a number of watchers contributes to the score:
+                    0 -> 0.00 (min), 450 -> 1.50, 750 -> 2.50, 3000 -> 10.00 (max)
+      Importance:...Medium (weight 0.31 out of 1.00)
+      Value:........8.98  out of 10.00
+      Confidence:...10.00 out of 10.00
+      Based on:...2 features:
+          Number of stars for a GitHub repository:......7407
+          Number of watchers for a GitHub repository:...473
+
+      Sub-score:....Vulnerability lifetime
+      Importance:...Low (weight 0.23 out of 1.00)
+      Value:........8.50  out of 10.00
+      Confidence:...10.00 out of 10.00
+      Based on:...2 features:
+          Info about vulnerabilities:...1 vulnerability
+          When a project started:.......Wed May 24 23:45:31 CEST 2006
+
+Rating: 5.01 out of 10.00 -> MODERATE
+Confidence: 9.41 out of 10.00
 
 ```
