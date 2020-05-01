@@ -12,9 +12,13 @@ import com.sap.sgs.phosphor.fosstars.data.github.NumberOfCommits;
 import com.sap.sgs.phosphor.fosstars.data.github.NumberOfContributors;
 import com.sap.sgs.phosphor.fosstars.data.github.NumberOfStars;
 import com.sap.sgs.phosphor.fosstars.data.github.NumberOfWatchers;
+import com.sap.sgs.phosphor.fosstars.data.github.PackageManagement;
+import com.sap.sgs.phosphor.fosstars.data.github.ProgrammingLanguages;
 import com.sap.sgs.phosphor.fosstars.data.github.ProjectStarted;
 import com.sap.sgs.phosphor.fosstars.data.github.ScansForVulnerableDependencies;
-import com.sap.sgs.phosphor.fosstars.data.github.SecurityReviewForProject;
+import com.sap.sgs.phosphor.fosstars.data.github.UsesDependabot;
+import com.sap.sgs.phosphor.fosstars.data.github.UsesGithubForDevelopment;
+import com.sap.sgs.phosphor.fosstars.data.github.UsesNoHttpTool;
 import com.sap.sgs.phosphor.fosstars.data.github.UsesSignedCommits;
 import com.sap.sgs.phosphor.fosstars.data.interactive.AskAboutSecurityTeam;
 import com.sap.sgs.phosphor.fosstars.data.interactive.AskAboutUnpatchedVulnerabilities;
@@ -104,12 +108,16 @@ class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
         new HasSecurityTeam(github),
         new HasCompanySupport(github),
         new HasSecurityPolicy(github),
-        new SecurityReviewForProject(github),
         new InfoAboutVulnerabilities(github, nvd),
         new IsApache(github),
         new IsEclipse(github),
         new LgtmDataProvider(github),
         new UsesSignedCommits(github),
+        new UsesDependabot(github),
+        new ProgrammingLanguages(github),
+        new PackageManagement(github),
+        new UsesNoHttpTool(github),
+        new UsesGithubForDevelopment(github),
         new ScansForVulnerableDependencies(github),
 
         // currently interactive data provider have to be added to the end, see issue #133
