@@ -37,7 +37,7 @@ Here is how the rating was calculated:
           Value:........0.00  out of 10.00
           Confidence:...10.00 out of 10.00
           Based on:...2 features:
-              A set of package managers:.......GRADLE, NPM, YARN
+              A set of package managers:.......NPM, YARN, GRADLE
               If a project uses nohttp tool:...false
 
           Sub-score:....How a project addresses issues reported by LGTM
@@ -53,7 +53,7 @@ Here is how the rating was calculated:
           Value:........0.00  out of 10.00
           Confidence:...8.00  out of 10.00
           Based on:...5 features:
-              A set of package managers:..............................GRADLE, NPM, YARN
+              A set of package managers:..............................NPM, YARN, GRADLE
               A set of programming languages:.........................JAVA, SCALA, JAVASCRIPT, OTHER
               Does it scan for vulnerable dependencies?...............unknown
               Does it use GitHub as the main development platform?....false

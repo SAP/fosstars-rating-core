@@ -54,7 +54,7 @@ Here is how the rating was calculated:
           Confidence:...10.00 out of 10.00
           Based on:...5 features:
               A set of package managers:..............................MAVEN
-              A set of programming languages:.........................C, JAVA, CPP, JAVASCRIPT, OTHER, PYTHON
+              A set of programming languages:.........................PYTHON, JAVA, CPP, C, JAVASCRIPT, OTHER
               Does it scan for vulnerable dependencies?...............true
               Does it use GitHub as the main development platform?....false
               If a project uses Dependabot:...........................false
