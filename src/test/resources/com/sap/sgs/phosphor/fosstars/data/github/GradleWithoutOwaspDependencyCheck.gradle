@@ -1,0 +1,10 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.owasp:another-plugin:1.0.0'
+    }
+}
+
+apply plugin: 'org.owasp:another-plugin'

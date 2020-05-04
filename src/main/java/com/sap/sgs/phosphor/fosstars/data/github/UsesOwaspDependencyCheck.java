@@ -4,8 +4,10 @@ import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.feature.BooleanFeature;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Plugin;
 import org.apache.maven.model.ReportPlugin;
@@ -25,7 +27,7 @@ public class UsesOwaspDependencyCheck extends CachedSingleFeatureGitHubDataProvi
   /**
    * A feature which is filled out by the provider.
    */
-  public static final Feature<Boolean> USES_OWASP_DEPENDENCY_CHECK
+  static final Feature<Boolean> USES_OWASP_DEPENDENCY_CHECK
       = new BooleanFeature("If a project uses OWASP Dependency Check");
 
   /**
@@ -95,8 +97,27 @@ public class UsesOwaspDependencyCheck extends CachedSingleFeatureGitHubDataProvi
    * @param repository The project's repository.
    * @return True if the project uses the plugin, false otherwise.
    */
-  private boolean checkGradle(GHRepository repository) {
-    // TODO: implement
+  private boolean checkGradle(GHRepository repository) throws IOException {
+    GHContent content;
+    try {
+      content = repository.getFileContent("build.gradle");
+    } catch (GHFileNotFoundException e) {
+      return false;
+    }
+
+    if (content == null || !content.isFile()) {
+      return false;
+    }
+
+    try (BufferedReader reader = new BufferedReader(new InputStreamReader(content.read()))) {
+      String line;
+      while ((line = reader.readLine()) != null) {
+        if (line.trim().contains("org.owasp:dependency-check-gradle")) {
+          return true;
+        }
+      }
+    }
+
     return false;
   }
 
