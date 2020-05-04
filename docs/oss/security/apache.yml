@@ -9,6 +9,7 @@ reports:
 finder:
   organizations:
     - name: apache
+      stars: 100
       exclude:
         - incubator
         - website
@@ -23,3 +24,5 @@ finder:
         - wiki
         - infra
         - github.io
+        - demo
+        - sample

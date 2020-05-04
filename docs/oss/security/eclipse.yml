@@ -9,6 +9,7 @@ reports:
 finder:
   organizations:
     - name: eclipse
+      stars: 100
       exclude:
         - incubator
         - website
@@ -23,3 +24,5 @@ finder:
         - wiki
         - Test
         - org.eclipse
+        - demo
+        - sample

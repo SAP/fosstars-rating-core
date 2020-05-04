@@ -61,15 +61,15 @@ public class SecurityRatingCalculatorTest {
       assertThat(
           mainConfig.finderConfig.organizationConfigs,
           hasItem(
-              new OrganizationConfig("apache", Arrays.asList("incubator", "incubating"))));
+              new OrganizationConfig("apache", Arrays.asList("incubator", "incubating"), 0)));
       assertThat(
           mainConfig.finderConfig.organizationConfigs,
           hasItem(
-              new OrganizationConfig("eclipse", Collections.singletonList("incubator"))));
+              new OrganizationConfig("eclipse", Collections.singletonList("incubator"), 0)));
       assertThat(
           mainConfig.finderConfig.organizationConfigs,
           hasItem(
-              new OrganizationConfig("spring-projects", EMPTY_EXCLUDE_LIST)));
+              new OrganizationConfig("spring-projects", EMPTY_EXCLUDE_LIST, 0)));
       assertNotNull(mainConfig.finderConfig.projectConfigs);
       assertEquals(2, mainConfig.finderConfig.projectConfigs.size());
       assertThat(

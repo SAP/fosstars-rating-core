@@ -38,13 +38,13 @@ public class GitHubProjectFinderTest {
       assertThat(
           config.organizationConfigs,
           hasItem(
-              new OrganizationConfig("apache", Arrays.asList("incubator", "incubating"))));
+              new OrganizationConfig("apache", Arrays.asList("incubator", "incubating"), 100)));
       assertThat(config.organizationConfigs,
           hasItem(
-              new OrganizationConfig("eclipse", Collections.singletonList("incubator"))));
+              new OrganizationConfig("eclipse", Collections.singletonList("incubator"), 0)));
       assertThat(config.organizationConfigs,
           hasItem(
-              new OrganizationConfig("spring-projects", EMPTY_EXCLUDE_LIST)));
+              new OrganizationConfig("spring-projects", EMPTY_EXCLUDE_LIST, 0)));
       assertNotNull(config.projectConfigs);
       assertEquals(2, config.projectConfigs.size());
       assertThat(

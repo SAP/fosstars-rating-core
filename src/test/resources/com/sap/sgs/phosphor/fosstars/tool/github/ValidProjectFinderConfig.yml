@@ -1,6 +1,7 @@
 # this is a test configuration for the ConfigParser class
 organizations:
   - name: apache
+    stars: 100
     exclude:
       - incubator
       - incubating
