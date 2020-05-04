@@ -3,11 +3,13 @@ package com.sap.sgs.phosphor.fosstars.tool.github;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 import com.sap.sgs.phosphor.fosstars.data.NoUserCallback;
+import com.sap.sgs.phosphor.fosstars.data.github.GitHubDataFetcher;
 import com.sap.sgs.phosphor.fosstars.model.math.DoubleInterval;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
@@ -16,14 +18,27 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
 
 public class MultipleSecurityRatingsCalculatorTest {
 
+  @Before
+  @After
+  public void cleanup() {
+    GitHubDataFetcher.instance().repositoryCache().clear();
+    GitHubDataFetcher.instance().commitsCache().clear();
+  }
+
   @Test
-  public void calculateFor() throws IOException {
+  public void testCalculateFor() throws IOException {
     GitHub github = mock(GitHub.class);
+
+    GHRepository repository = mock(GHRepository.class);
+    when(github.getRepository(any())).thenReturn(repository);
 
     NVD nvd = new NVD();
 

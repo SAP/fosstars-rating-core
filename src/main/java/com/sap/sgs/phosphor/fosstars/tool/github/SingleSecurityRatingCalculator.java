@@ -1,6 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.tool.github;
 
 import com.sap.sgs.phosphor.fosstars.data.DataProvider;
+import com.sap.sgs.phosphor.fosstars.data.github.GitHubDataFetcher;
 import com.sap.sgs.phosphor.fosstars.data.github.HasCompanySupport;
 import com.sap.sgs.phosphor.fosstars.data.github.HasSecurityPolicy;
 import com.sap.sgs.phosphor.fosstars.data.github.HasSecurityTeam;
@@ -53,10 +54,19 @@ class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
   public SingleSecurityRatingCalculator calculateFor(GitHubProject project) throws IOException {
     Objects.requireNonNull(project, "Oh no! Project can't be null!");
 
-    OssSecurityRating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
-
     logger.info("Project: {}", project.url());
+
+    try {
+      GitHubDataFetcher.instance().repositoryFor(project, github);
+    } catch (IOException e) {
+      logger.error("Looks like something is wrong with the project!", e);
+      logger.warn("Let's skip the project ...");
+      return this;
+    }
+
     logger.info("Let's get info about the project and calculate a security rating");
+
+    OssSecurityRating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
 
     ValueSet values = ValueHashSet.unknown(rating.allFeatures());
     for (DataProvider<GitHubProject> provider : dataProviders()) {
