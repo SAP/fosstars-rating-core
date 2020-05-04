@@ -6,20 +6,30 @@ import java.io.UncheckedIOException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.apache.commons.collections4.map.LRUMap;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.kohsuke.github.GHCommit;
+import org.kohsuke.github.GHFileNotFoundException;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
+import org.kohsuke.github.HttpException;
 
 /**
  * Helper class for GitHub data providers which pulls the data from a GitHub repository. Also, the
  * class caches the fetched data for a certain amount of time.
  */
 public class GitHubDataFetcher {
+
+  /**
+   * A logger.
+   */
+  private static final Logger LOGGER = LogManager.getLogger(GitHubDataFetcher.class);
 
   /**
    * The singleton instance.
@@ -94,7 +104,12 @@ public class GitHubDataFetcher {
    * @throws IOException occurred during REST call to GitHub API.
    */
   private List<GHCommit> commitsFor(GHRepository repository) throws IOException {
-    return repository.listCommits().toList();
+    try {
+      return repository.listCommits().toList();
+    } catch (HttpException e) {
+      LOGGER.error(String.format("Could not fetch commits from %s", repository.getUrl()), e);
+      return Collections.emptyList();
+    }
   }
 
   /**
@@ -113,7 +128,18 @@ public class GitHubDataFetcher {
     }
 
     GHRepository repository = github.getRepository(project.path());
+    if (repository == null) {
+      throw new IOException(String.format("Could not fetch repository %s (null)", project.url()));
+    }
+
+    try {
+      repository.getDirectoryContent("/");
+    } catch (GHFileNotFoundException e) {
+      throw new IOException(String.format("Could not fetch content of / in %s", project.url()));
+    }
+
     repositoryCache.put(project, repository, expiration());
+
     return repository;
   }
 
