@@ -25,6 +25,11 @@ import org.kohsuke.github.GitHub;
 public class GitHubProjectFinder {
 
   /**
+   * The default minimal number of stars.
+   */
+  private static final int DEFAULT_STARS = 0;
+
+  /**
    * A page size for requests to GitHub.
    */
   private static final int PAGE_SIZE = 100;
@@ -70,7 +75,7 @@ public class GitHubProjectFinder {
    * @return The same {@link GitHubProjectFinder}.
    */
   public GitHubProjectFinder organization(String name) {
-    config.organizationConfigs.add(new OrganizationConfig(name, EMPTY_EXCLUDE_LIST));
+    config.organizationConfigs.add(new OrganizationConfig(name, EMPTY_EXCLUDE_LIST, DEFAULT_STARS));
     return this;
   }
 
@@ -83,7 +88,7 @@ public class GitHubProjectFinder {
    * @return The same {@link GitHubProjectFinder}.
    */
   public GitHubProjectFinder organization(String name, List<String> excludeList) {
-    config.organizationConfigs.add(new OrganizationConfig(name, excludeList));
+    config.organizationConfigs.add(new OrganizationConfig(name, excludeList, DEFAULT_STARS));
     return this;
   }
 
@@ -95,7 +100,8 @@ public class GitHubProjectFinder {
    * @return The same {@link GitHubProjectFinder}.
    */
   public GitHubProjectFinder add(GitHubOrganization organization) {
-    config.organizationConfigs.add(new OrganizationConfig(organization.name(), EMPTY_EXCLUDE_LIST));
+    config.organizationConfigs.add(
+        new OrganizationConfig(organization.name(), EMPTY_EXCLUDE_LIST, DEFAULT_STARS));
     return this;
   }
 
@@ -198,6 +204,9 @@ public class GitHubProjectFinder {
     GHOrganization organization = githubOrganization(organizationConfig.name);
     List<GitHubProject> projects = new ArrayList<>();
     for (GHRepository repository : organization.listRepositories(PAGE_SIZE).asList()) {
+      if (repository.getStargazersCount() < organizationConfig.stars) {
+        continue;
+      }
       String name = repository.getName();
       String path = String.format("%s/%s", organizationConfig.name, name);
       repositories.put(path, repository);
@@ -307,18 +316,31 @@ public class GitHubProjectFinder {
     final List<String> excludeList;
 
     /**
+     * A minimal number of stars for a project.
+     */
+    final int stars;
+
+    /**
      * Initializes a new config.
      *
      * @param name Organization's name.
      * @param excludeList A list of patterns that show which projects should be excluded.
+     * @param stars A minimal number of stars for a project.
      */
     @JsonCreator
     OrganizationConfig(
         @JsonProperty("name") String name,
-        @JsonProperty("exclude") List<String> excludeList) {
+        @JsonProperty("exclude") List<String> excludeList,
+        @JsonProperty(value = "stars", defaultValue = "0") int stars) {
 
-      this.name = Objects.requireNonNull(name, "Hey! Name can't be null!");
+      Objects.requireNonNull(name, "Hey! Name can't be null!");
+      if (stars < 0) {
+        throw new IllegalArgumentException("Hey! Stars can't be negative!");
+      }
+
+      this.name = name;
       this.excludeList = excludeList != null ? excludeList : EMPTY_EXCLUDE_LIST;
+      this.stars = stars;
     }
 
     /**
@@ -346,13 +368,14 @@ public class GitHubProjectFinder {
         return false;
       }
       OrganizationConfig that = (OrganizationConfig) o;
-      return Objects.equals(name, that.name)
+      return stars == that.stars
+          && Objects.equals(name, that.name)
           && Objects.equals(excludeList, that.excludeList);
     }
 
     @Override
     public int hashCode() {
-      return Objects.hash(name, excludeList);
+      return Objects.hash(name, excludeList, stars);
     }
   }
 
