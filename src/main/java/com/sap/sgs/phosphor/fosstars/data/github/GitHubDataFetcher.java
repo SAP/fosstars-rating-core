@@ -9,6 +9,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
@@ -51,6 +52,11 @@ public class GitHubDataFetcher {
       = new TypeReference<HashMap<URL, LocalRepository>>() {};
 
   /**
+   * Defines how often new updates should be pulled to a local repository by default.
+   */
+  private static final Duration DEFAULT_PULL_INTERVAL = Duration.ofDays(1);
+
+  /**
    * The default base directory.
    */
   private static final String DEFAULT_DIRECTORY = ".fosstars/repositories";
@@ -79,6 +85,11 @@ public class GitHubDataFetcher {
    * Info about local repositories.
    */
   private final Map<URL, LocalRepository> localRepositories;
+
+  /**
+   * Defines how often new updates should be pulled to a local repository.
+   */
+  private Duration pullInterval = DEFAULT_PULL_INTERVAL;
 
   /**
    * Initializes a new data fetcher.
@@ -165,9 +176,9 @@ public class GitHubDataFetcher {
     LocalRepository repository = localRepositories.get(project.url());
     if (repository == null) {
       repository = clone(project, base);
+    } else if (shouldUpdate(repository)) {
+      repository.pull();
     }
-
-    // TODO: pull data after some time
 
     repository.updated(Date.from(Instant.now()));
 
@@ -175,6 +186,20 @@ public class GitHubDataFetcher {
     storeLocalRepositories();
 
     return repository;
+  }
+
+  /**
+   * Sets how often new updates should be pulled to a local repository by default.
+   */
+  public void pullAfter(Duration duration) {
+    pullInterval = duration;
+  }
+
+  /**
+   * Returns true if a repository should be updated, false otherwise.
+   */
+  boolean shouldUpdate(LocalRepository repository) {
+    return repository.updated().toInstant().plus(pullInterval).isBefore(Instant.now());
   }
 
   /**
