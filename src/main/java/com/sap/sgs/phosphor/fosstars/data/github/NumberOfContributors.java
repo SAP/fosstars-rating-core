@@ -11,7 +11,6 @@ import java.util.HashSet;
 import java.util.Set;
 import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHUser;
-import org.kohsuke.github.GitHub;
 import org.kohsuke.github.GitUser;
 
 /**
@@ -34,10 +33,10 @@ public class NumberOfContributors extends CachedSingleFeatureGitHubDataProvider 
   /**
    * Initializes a data provider.
    *
-   * @param github An interface to the GitHub API.
+   * @param fetcher An interface to GitHub.
    */
-  public NumberOfContributors(GitHub github) {
-    super(github);
+  public NumberOfContributors(GitHubDataFetcher fetcher) {
+    super(fetcher);
   }
 
   @Override
@@ -52,7 +51,7 @@ public class NumberOfContributors extends CachedSingleFeatureGitHubDataProvider 
     // TODO: define a date in a modern way
     Date date = new Date(System.currentTimeMillis() - DELTA);
     Set<String> contributors = new HashSet<>();
-    for (GHCommit commit : gitHubDataFetcher().commitsAfter(date, project, github)) {
+    for (GHCommit commit : gitHubDataFetcher().commitsAfter(date, project)) {
       contributors.add(authorOf(commit));
       contributors.add(committerOf(commit));
     }

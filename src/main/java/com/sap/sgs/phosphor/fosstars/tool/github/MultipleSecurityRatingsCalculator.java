@@ -1,5 +1,6 @@
 package com.sap.sgs.phosphor.fosstars.tool.github;
 
+import com.sap.sgs.phosphor.fosstars.data.github.GitHubDataFetcher;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import com.sap.sgs.phosphor.fosstars.nvd.NVD;
 import java.io.IOException;
@@ -7,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import org.kohsuke.github.GitHub;
 
 /**
  * The class calculates security ratings for multiple open-source projects.
@@ -32,11 +32,11 @@ class MultipleSecurityRatingsCalculator extends AbstractRatingCalculator {
   /**
    * Initializes a new calculator.
    *
-   * @param github An interface to GitHub.
+   * @param fetcher An interface to GitHub.
    * @param nvd An interface to NVD.
    */
-  MultipleSecurityRatingsCalculator(GitHub github, NVD nvd) {
-    super(github, nvd);
+  MultipleSecurityRatingsCalculator(GitHubDataFetcher fetcher, NVD nvd) {
+    super(fetcher, nvd);
   }
 
   /**
@@ -118,7 +118,7 @@ class MultipleSecurityRatingsCalculator extends AbstractRatingCalculator {
    * @return An instance of {@link SingleSecurityRatingCalculator}.
    */
   RatingCalculator singleSecurityRatingCalculator() {
-    return new SingleSecurityRatingCalculator(github, nvd)
+    return new SingleSecurityRatingCalculator(fetcher, nvd)
         .token(token)
         .set(callback)
         .set(cache);

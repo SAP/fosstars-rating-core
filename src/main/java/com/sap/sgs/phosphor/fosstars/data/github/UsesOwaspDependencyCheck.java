@@ -16,7 +16,6 @@ import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GHFileNotFoundException;
 import org.kohsuke.github.GHRepository;
-import org.kohsuke.github.GitHub;
 
 /**
  * This data provider checks if an open-source project uses OWASP Dependency Check Maven plugin to
@@ -33,10 +32,10 @@ public class UsesOwaspDependencyCheck extends CachedSingleFeatureGitHubDataProvi
   /**
    * Initializes a data provider.
    *
-   * @param github An interface to the GitHub API.
+   * @param fetcher An interface to GitHub.
    */
-  public UsesOwaspDependencyCheck(GitHub github) {
-    super(github);
+  public UsesOwaspDependencyCheck(GitHubDataFetcher fetcher) {
+    super(fetcher);
   }
 
   @Override
@@ -47,7 +46,7 @@ public class UsesOwaspDependencyCheck extends CachedSingleFeatureGitHubDataProvi
   @Override
   protected Value<Boolean> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out if the project uses OWASP Dependency Check ...");
-    GHRepository repository = gitHubDataFetcher().repositoryFor(project, github);
+    GHRepository repository = gitHubDataFetcher().repositoryFor(project);
     boolean answer = checkMaven(repository) || checkGradle(repository);
     return USES_OWASP_DEPENDENCY_CHECK.value(answer);
   }

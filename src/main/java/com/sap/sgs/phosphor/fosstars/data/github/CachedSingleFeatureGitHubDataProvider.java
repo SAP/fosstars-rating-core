@@ -8,7 +8,6 @@ import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Set;
-import org.kohsuke.github.GitHub;
 
 /**
  * This is a base class for data providers that fill out a single feature for a project on GitHub.
@@ -18,10 +17,10 @@ public abstract class CachedSingleFeatureGitHubDataProvider extends GitHubCachin
   /**
    * Initializes a data provider.
    *
-   * @param github An interface to the GitHub API.
+   * @param fetcher An interface to GitHub.
    */
-  public CachedSingleFeatureGitHubDataProvider(GitHub github) {
-    super(github);
+  public CachedSingleFeatureGitHubDataProvider(GitHubDataFetcher fetcher) {
+    super(fetcher);
   }
 
   @Override

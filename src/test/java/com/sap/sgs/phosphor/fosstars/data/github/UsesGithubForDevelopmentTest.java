@@ -9,6 +9,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
+import com.sap.sgs.phosphor.fosstars.TestGitHubDataFetcherHolder;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectValueCache;
@@ -21,15 +22,12 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.function.Consumer;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GHUser;
-import org.kohsuke.github.GitHub;
 
-public class UsesGithubForDevelopmentTest {
+public class UsesGithubForDevelopmentTest extends TestGitHubDataFetcherHolder {
 
   private static class RepositoryMockBuilder {
 
@@ -144,16 +142,14 @@ public class UsesGithubForDevelopmentTest {
 
   @Test
   public void testWhenGettingRepositoryFails() throws IOException {
-    GitHub github = mock(GitHub.class);
-
-    UsesGithubForDevelopment provider = new UsesGithubForDevelopment(github);
+    UsesGithubForDevelopment provider = new UsesGithubForDevelopment(fetcher);
     provider = spy(provider);
     when(provider.cache()).thenReturn(new GitHubProjectValueCache());
     GitHubDataFetcher fetcher = mock(GitHubDataFetcher.class);
     when(provider.gitHubDataFetcher()).thenReturn(fetcher);
 
     GitHubProject project = mock(GitHubProject.class);
-    when(fetcher.repositoryFor(project, github)).thenThrow(new IOException());
+    when(fetcher.repositoryFor(project)).thenThrow(new IOException());
 
     ValueHashSet values = new ValueHashSet();
     assertEquals(0, values.size());
@@ -166,10 +162,4 @@ public class UsesGithubForDevelopmentTest {
     assertTrue(values.of(USES_GITHUB_FOR_DEVELOPMENT).get().isUnknown());
   }
 
-  @Before
-  @After
-  public void cleanup() {
-    GitHubDataFetcher.instance().repositoryCache().clear();
-    GitHubDataFetcher.instance().commitsCache().clear();
-  }
 }

@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Optional;
 import org.kohsuke.github.GHCommit;
-import org.kohsuke.github.GitHub;
 
 /**
  * This data provider estimates a date when a project was created by the date when the repository
@@ -21,10 +20,10 @@ public class ProjectStarted extends CachedSingleFeatureGitHubDataProvider {
   /**
    * Initializes a data provider.
    *
-   * @param github An interface to the GitHub API.
+   * @param fetcher An interface to GitHub.
    */
-  public ProjectStarted(GitHub github) {
-    super(github);
+  public ProjectStarted(GitHubDataFetcher fetcher) {
+    super(fetcher);
   }
 
   @Override
@@ -36,9 +35,9 @@ public class ProjectStarted extends CachedSingleFeatureGitHubDataProvider {
   protected Value fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out when the project started ...");
 
-    Optional<GHCommit> firstCommit = gitHubDataFetcher().firstCommitFor(project, github);
+    Optional<GHCommit> firstCommit = gitHubDataFetcher().firstCommitFor(project);
     Date firstCommitDate = firstCommit.isPresent() ? firstCommit.get().getCommitDate() : null;
-    Date repositoryCreated = gitHubDataFetcher().repositoryFor(project, github).getCreatedAt();
+    Date repositoryCreated = gitHubDataFetcher().repositoryFor(project).getCreatedAt();
 
     if (firstCommitDate != null && repositoryCreated != null
         && firstCommitDate.before(repositoryCreated)) {

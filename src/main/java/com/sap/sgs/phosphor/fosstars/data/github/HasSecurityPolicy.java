@@ -8,7 +8,6 @@ import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GHRepository;
-import org.kohsuke.github.GitHub;
 
 /**
  * This data provider check if an open-source project has a security policy which describes how
@@ -36,10 +35,10 @@ public class HasSecurityPolicy extends CachedSingleFeatureGitHubDataProvider {
   /**
    * Initializes a data provider.
    *
-   * @param github An interface to the GitHub API.
+   * @param fetcher An interface to GitHub.
    */
-  public HasSecurityPolicy(GitHub github) {
-    super(github);
+  public HasSecurityPolicy(GitHubDataFetcher fetcher) {
+    super(fetcher);
   }
 
   @Override
@@ -56,7 +55,7 @@ public class HasSecurityPolicy extends CachedSingleFeatureGitHubDataProvider {
   private Value<Boolean> hasSecurityPolicy(GitHubProject project) throws IOException {
     boolean found = false;
     for (String path : POLICY_LOCATIONS) {
-      if (exists(gitHubDataFetcher().repositoryFor(project, github), path)) {
+      if (exists(gitHubDataFetcher().repositoryFor(project), path)) {
         found = true;
         break;
       }

@@ -8,7 +8,6 @@ import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
-import org.kohsuke.github.GitHub;
 
 /**
  * This data provider tries to figure out if a project has a security team. First, it checks if a
@@ -25,10 +24,10 @@ public class HasSecurityTeam extends CachedSingleFeatureGitHubDataProvider {
   /**
    * Initializes a data provider.
    *
-   * @param github An interface to the GitHub API.
+   * @param fetcher An interface to GitHub.
    */
-  public HasSecurityTeam(GitHub github) throws IOException {
-    super(github);
+  public HasSecurityTeam(GitHubDataFetcher fetcher) throws IOException {
+    super(fetcher);
     securityTeam = SecurityTeamStorage.load();
   }
 

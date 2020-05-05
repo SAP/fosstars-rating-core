@@ -23,6 +23,7 @@
     <version.junit>4.12</version.junit>
     <version.mockito-core>3.2.4</version.mockito-core>
     <version.commons-collections4>4.4</version.commons-collections4>
+    <version.org.eclipse.jgit>5.7.0.202003110725-r</version.org.eclipse.jgit>
   </properties>
 
   <build>
@@ -176,6 +177,11 @@
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-collections4</artifactId>
       <version>${version.commons-collections4}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jgit</groupId>
+      <artifactId>org.eclipse.jgit</artifactId>
+      <version>${version.org.eclipse.jgit}</version>
     </dependency>
   </dependencies>
 

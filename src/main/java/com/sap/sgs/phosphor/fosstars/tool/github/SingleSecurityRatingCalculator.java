@@ -33,7 +33,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import org.kohsuke.github.GitHub;
 
 /**
  * The class calculates a security rating for a single open-source project.
@@ -43,11 +42,11 @@ class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
   /**
    * Initializes a new calculator.
    *
-   * @param github An interface to GitHub.
+   * @param fetcher An interface to GitHub.
    * @param nvd An interface to NVD.
    */
-  SingleSecurityRatingCalculator(GitHub github, NVD nvd) {
-    super(github, nvd);
+  SingleSecurityRatingCalculator(GitHubDataFetcher fetcher, NVD nvd) {
+    super(fetcher, nvd);
   }
 
   @Override
@@ -57,7 +56,7 @@ class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
     logger.info("Project: {}", project.url());
 
     try {
-      GitHubDataFetcher.instance().repositoryFor(project, github);
+      fetcher.repositoryFor(project);
     } catch (IOException e) {
       logger.error("Looks like something is wrong with the project!", e);
       logger.warn("Let's skip the project ...");
@@ -110,25 +109,25 @@ class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
    */
   List<DataProvider<GitHubProject>> dataProviders() throws IOException {
     return Arrays.asList(
-        new NumberOfCommits(github),
-        new NumberOfContributors(github),
-        new NumberOfStars(github),
-        new NumberOfWatchers(github),
-        new ProjectStarted(github),
-        new HasSecurityTeam(github),
-        new HasCompanySupport(github),
-        new HasSecurityPolicy(github),
-        new InfoAboutVulnerabilities(github, nvd),
-        new IsApache(github),
-        new IsEclipse(github),
-        new LgtmDataProvider(github),
-        new UsesSignedCommits(github),
-        new UsesDependabot(github),
-        new ProgrammingLanguages(github),
-        new PackageManagement(github),
-        new UsesNoHttpTool(github),
-        new UsesGithubForDevelopment(github),
-        new ScansForVulnerableDependencies(github),
+        new NumberOfCommits(fetcher),
+        new NumberOfContributors(fetcher),
+        new NumberOfStars(fetcher),
+        new NumberOfWatchers(fetcher),
+        new ProjectStarted(fetcher),
+        new HasSecurityTeam(fetcher),
+        new HasCompanySupport(fetcher),
+        new HasSecurityPolicy(fetcher),
+        new InfoAboutVulnerabilities(fetcher, nvd),
+        new IsApache(fetcher),
+        new IsEclipse(fetcher),
+        new LgtmDataProvider(fetcher),
+        new UsesSignedCommits(fetcher),
+        new UsesDependabot(fetcher),
+        new ProgrammingLanguages(fetcher),
+        new PackageManagement(fetcher),
+        new UsesNoHttpTool(fetcher),
+        new UsesGithubForDevelopment(fetcher),
+        new ScansForVulnerableDependencies(fetcher),
 
         // currently interactive data provider have to be added to the end, see issue #133
         new AskAboutSecurityTeam<>(),

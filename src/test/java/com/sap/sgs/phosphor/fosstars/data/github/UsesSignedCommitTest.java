@@ -10,6 +10,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
+import com.sap.sgs.phosphor.fosstars.TestGitHubDataFetcherHolder;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectValueCache;
@@ -20,15 +21,12 @@ import org.junit.Test;
 import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHCommit.ShortInfo;
 import org.kohsuke.github.GHVerification;
-import org.kohsuke.github.GitHub;
 
-public class UsesSignedCommitTest {
+public class UsesSignedCommitTest extends TestGitHubDataFetcherHolder {
 
   @Test
   public void testCommitWithSignature() throws IOException {
-    GitHub github = mock(GitHub.class);
-
-    UsesSignedCommits provider = new UsesSignedCommits(github);
+    UsesSignedCommits provider = new UsesSignedCommits(fetcher);
     provider = spy(provider);
     when(provider.cache()).thenReturn(new GitHubProjectValueCache());
 
@@ -46,7 +44,7 @@ public class UsesSignedCommitTest {
     GitHubProject project = mock(GitHubProject.class);
     GitHubDataFetcher fetcher = mock(GitHubDataFetcher.class);
     when(provider.gitHubDataFetcher()).thenReturn(fetcher);
-    when(fetcher.commitsAfter(any(), eq(project), eq(github))).thenReturn(list);
+    when(fetcher.commitsAfter(any(), eq(project))).thenReturn(list);
 
     ValueHashSet values = new ValueHashSet();
     assertEquals(0, values.size());
@@ -63,9 +61,7 @@ public class UsesSignedCommitTest {
 
   @Test
   public void testCommitWithoutSignature() throws IOException {
-    GitHub github = mock(GitHub.class);
-
-    UsesSignedCommits provider = new UsesSignedCommits(github);
+    UsesSignedCommits provider = new UsesSignedCommits(fetcher);
     provider = spy(provider);
     when(provider.cache()).thenReturn(new GitHubProjectValueCache());
 
@@ -83,7 +79,7 @@ public class UsesSignedCommitTest {
     GitHubProject project = mock(GitHubProject.class);
     GitHubDataFetcher fetcher = mock(GitHubDataFetcher.class);
     when(provider.gitHubDataFetcher()).thenReturn(fetcher);
-    when(fetcher.commitsAfter(any(), eq(project), eq(github))).thenReturn(list);
+    when(fetcher.commitsAfter(any(), eq(project))).thenReturn(list);
 
     ValueHashSet values = new ValueHashSet();
     assertEquals(0, values.size());
@@ -100,9 +96,7 @@ public class UsesSignedCommitTest {
 
   @Test
   public void testWhenGettingRepositoryFails() throws IOException {
-    GitHub github = mock(GitHub.class);
-
-    UsesSignedCommits provider = new UsesSignedCommits(github);
+    UsesSignedCommits provider = new UsesSignedCommits(fetcher);
     provider = spy(provider);
     when(provider.cache()).thenReturn(new GitHubProjectValueCache());
 
@@ -113,7 +107,7 @@ public class UsesSignedCommitTest {
     GitHubProject project = mock(GitHubProject.class);
     GitHubDataFetcher fetcher = mock(GitHubDataFetcher.class);
     when(provider.gitHubDataFetcher()).thenReturn(fetcher);
-    when(fetcher.commitsAfter(any(), eq(project), eq(github))).thenThrow(new IOException());
+    when(fetcher.commitsAfter(any(), eq(project))).thenThrow(new IOException());
 
     ValueHashSet values = new ValueHashSet();
     assertEquals(0, values.size());

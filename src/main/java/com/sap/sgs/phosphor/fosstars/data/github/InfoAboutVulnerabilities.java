@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import org.kohsuke.github.GitHub;
 
 /**
  * This data provider tries to fill out the
@@ -37,14 +36,14 @@ public class InfoAboutVulnerabilities extends CachedSingleFeatureGitHubDataProvi
   /**
    * Initializes a data provider.
    *
-   * @param github An interface to the GitHub API.
+   * @param fetcher An interface to GitHub.
    */
-  public InfoAboutVulnerabilities(GitHub github, NVD nvd) throws IOException {
-    super(github);
+  public InfoAboutVulnerabilities(GitHubDataFetcher fetcher, NVD nvd) throws IOException {
+    super(fetcher);
     Objects.requireNonNull(nvd, "NVD can't be null!");
     providers = Arrays.asList(
-        new UnpatchedVulnerabilities(github, nvd),
-        new VulnerabilitiesFromNvd(github, nvd));
+        new UnpatchedVulnerabilities(fetcher, nvd),
+        new VulnerabilitiesFromNvd(fetcher, nvd));
   }
 
   @Override

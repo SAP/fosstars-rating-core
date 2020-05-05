@@ -10,7 +10,6 @@ import com.sap.sgs.phosphor.fosstars.nvd.data.NvdEntry;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.util.Objects;
-import org.kohsuke.github.GitHub;
 
 /**
  * This data provider looks for vulnerabilities in NVD.
@@ -31,11 +30,11 @@ public class VulnerabilitiesFromNvd extends CachedSingleFeatureGitHubDataProvide
   /**
    * Initializes a data provider.
    *
-   * @param github An interface to the GitHub API.
+   * @param fetcher An interface to GitHub.
    * @param nvd An interface to NVD.
    */
-  public VulnerabilitiesFromNvd(GitHub github, NVD nvd) {
-    super(github);
+  public VulnerabilitiesFromNvd(GitHubDataFetcher fetcher, NVD nvd) {
+    super(fetcher);
     this.nvd = Objects.requireNonNull(nvd, "NVD can't be null!");
   }
 

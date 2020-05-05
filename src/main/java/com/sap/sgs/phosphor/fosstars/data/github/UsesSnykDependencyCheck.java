@@ -6,7 +6,6 @@ import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.feature.BooleanFeature;
 import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
-import org.kohsuke.github.GitHub;
 
 /**
  * This data provider checks if an open-source project uses OWASP Dependency Check Maven plugin to
@@ -23,10 +22,10 @@ public class UsesSnykDependencyCheck extends CachedSingleFeatureGitHubDataProvid
   /**
    * Initializes a data provider.
    *
-   * @param github An interface to the GitHub API.
+   * @param fetcher An interface to GitHub.
    */
-  public UsesSnykDependencyCheck(GitHub github) {
-    super(github);
+  public UsesSnykDependencyCheck(GitHubDataFetcher fetcher) {
+    super(fetcher);
   }
 
   @Override

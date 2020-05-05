@@ -15,7 +15,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.kohsuke.github.GHCommit;
-import org.kohsuke.github.GitHub;
 
 /**
  * This data provider checks if a project uses verified signed commits. The check would be based on
@@ -38,10 +37,10 @@ public class UsesSignedCommits extends CachedSingleFeatureGitHubDataProvider {
   /**
    * Initializes a data provider.
    *
-   * @param github An interface to the GitHub API.
+   * @param fetcher An interface to GitHub.
    */
-  public UsesSignedCommits(GitHub github) {
-    super(github);
+  public UsesSignedCommits(GitHubDataFetcher fetcher) {
+    super(fetcher);
   }
 
   @Override
@@ -83,7 +82,7 @@ public class UsesSignedCommits extends CachedSingleFeatureGitHubDataProvider {
    * @throws IOException caused during REST call to GitHub API.
    */  
   private boolean askGithub(GitHubProject project) throws IOException {
-    List<GHCommit> yearCommits = gitHubDataFetcher().commitsAfter(ONE_YEAR_AGO, project, github);
+    List<GHCommit> yearCommits = gitHubDataFetcher().commitsAfter(ONE_YEAR_AGO, project);
     int counter = yearCommits.size();
 
     List<GHCommit> verifiedCommits =

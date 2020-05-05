@@ -16,7 +16,6 @@ import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.util.Objects;
 import org.apache.commons.lang3.StringUtils;
-import org.kohsuke.github.GitHub;
 
 /**
  * This data provider tries to figure out if an open-source project has unpatched vulnerabilities.
@@ -42,12 +41,12 @@ public class UnpatchedVulnerabilities extends CachedSingleFeatureGitHubDataProvi
   /**
    * Initializes a data provider.
    *
-   * @param github An interface to the GitHub API.
+   * @param fetcher An interface to GitHub.
    * @param nvd An interface to NVD.
    * @throws IOException If the info about unpatched vulnerabilities can't be loaded.
    */
-  public UnpatchedVulnerabilities(GitHub github, NVD nvd) throws IOException {
-    super(github);
+  public UnpatchedVulnerabilities(GitHubDataFetcher fetcher, NVD nvd) throws IOException {
+    super(fetcher);
     this.nvd = Objects.requireNonNull(nvd, "NVD can't be null!");
     knownUnpatchedVulnerabilities = UnpatchedVulnerabilitiesStorage.load();
   }

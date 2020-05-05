@@ -8,7 +8,6 @@ import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import org.kohsuke.github.GitHub;
 
 /**
  * This data provider tries to fill out the
@@ -28,13 +27,13 @@ public class ScansForVulnerableDependencies extends CachedSingleFeatureGitHubDat
   /**
    * Initializes a data provider.
    *
-   * @param github An interface to the GitHub API.
+   * @param fetcher An interface to GitHub.
    */
-  public ScansForVulnerableDependencies(GitHub github) {
-    super(github);
+  public ScansForVulnerableDependencies(GitHubDataFetcher fetcher) {
+    super(fetcher);
     providers = Arrays.asList(
-        new UsesOwaspDependencyCheck(github),
-        new UsesSnykDependencyCheck(github)
+        new UsesOwaspDependencyCheck(fetcher),
+        new UsesSnykDependencyCheck(fetcher)
     );
     // TODO: include UsesDependabot provider
   }

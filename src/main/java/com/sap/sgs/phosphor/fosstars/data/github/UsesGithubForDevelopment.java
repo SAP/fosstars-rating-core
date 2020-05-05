@@ -15,7 +15,6 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHRepository;
-import org.kohsuke.github.GitHub;
 
 /**
  * This data provider tries to figure out if a project uses GitHub for development.
@@ -80,10 +79,10 @@ public class UsesGithubForDevelopment extends CachedSingleFeatureGitHubDataProvi
   /**
    * Initializes a data provider.
    *
-   * @param github An interface to the GitHub API.
+   * @param fetcher An interface to GitHub.
    */
-  public UsesGithubForDevelopment(GitHub github) {
-    super(github);
+  public UsesGithubForDevelopment(GitHubDataFetcher fetcher) {
+    super(fetcher);
   }
 
   @Override
@@ -105,10 +104,10 @@ public class UsesGithubForDevelopment extends CachedSingleFeatureGitHubDataProvi
    */
   private Value<Boolean> usesGithubForDevelopment(GitHubProject project) {
     try {
-      GHRepository repository = gitHubDataFetcher().repositoryFor(project, github);
+      GHRepository repository = gitHubDataFetcher().repositoryFor(project);
 
       Date threeMonthsAgo = Date.from(Instant.now().minus(90, ChronoUnit.DAYS));
-      List<GHCommit> commits = gitHubDataFetcher().commitsAfter(threeMonthsAgo, project, github);
+      List<GHCommit> commits = gitHubDataFetcher().commitsAfter(threeMonthsAgo, project);
 
       return USES_GITHUB_FOR_DEVELOPMENT.value(
           usesGitHubForDevelopment(repository, commits, CONFIDENCE_THRESHOLD));

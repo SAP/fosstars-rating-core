@@ -8,27 +8,18 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.sap.sgs.phosphor.fosstars.TestGitHubDataFetcherHolder;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectValueCache;
 import java.io.IOException;
 import java.util.Optional;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GHRepository;
-import org.kohsuke.github.GitHub;
 
-public class HasSecurityPolicyTest {
-
-  @Before
-  @After
-  public void cleanup() {
-    GitHubDataFetcher.instance().repositoryCache().clear();
-    GitHubDataFetcher.instance().commitsCache().clear();
-  }
+public class HasSecurityPolicyTest extends TestGitHubDataFetcherHolder {
 
   @Test
   public void testHasPolicy() throws IOException {
@@ -39,10 +30,9 @@ public class HasSecurityPolicyTest {
     GHRepository repository = mock(GHRepository.class);
     when(repository.getFileContent("SECURITY.md")).thenReturn(content);
 
-    GitHub github = mock(GitHub.class);
-    when(github.getRepository(any())).thenReturn(repository);
+    when(fetcher.github().getRepository(any())).thenReturn(repository);
 
-    HasSecurityPolicy provider = new HasSecurityPolicy(github);
+    HasSecurityPolicy provider = new HasSecurityPolicy(fetcher);
     provider.set(new GitHubProjectValueCache());
 
     check(provider, true);
@@ -53,10 +43,9 @@ public class HasSecurityPolicyTest {
     GHRepository repository = mock(GHRepository.class);
     when(repository.getFileContent("SECURITY.md")).thenThrow(IOException.class);
 
-    GitHub github = mock(GitHub.class);
-    when(github.getRepository(any())).thenReturn(repository);
+    when(fetcher.github().getRepository(any())).thenReturn(repository);
 
-    HasSecurityPolicy provider = new HasSecurityPolicy(github);
+    HasSecurityPolicy provider = new HasSecurityPolicy(fetcher);
     provider.set(new GitHubProjectValueCache());
 
     check(provider, false);

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.sap.sgs.phosphor.fosstars.data.NoUserCallback;
 import com.sap.sgs.phosphor.fosstars.data.Terminal;
 import com.sap.sgs.phosphor.fosstars.data.UserCallback;
+import com.sap.sgs.phosphor.fosstars.data.github.GitHubDataFetcher;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import com.sap.sgs.phosphor.fosstars.nvd.NVD;
 import com.sap.sgs.phosphor.fosstars.tool.InputString;
@@ -155,7 +156,7 @@ public class SecurityRatingCalculator {
 
     String token = commandLine.getOptionValue("token");
 
-    GitHub github = connectToGithub(token, callback);
+    GitHubDataFetcher fetcher = new GitHubDataFetcher(connectToGithub(token, callback));
 
     nvd.download();
     nvd.parse();
@@ -167,11 +168,11 @@ public class SecurityRatingCalculator {
 
     try {
       if (commandLine.hasOption("url")) {
-        processUrl(commandLine.getOptionValue("url"), github, token, callback);
+        processUrl(commandLine.getOptionValue("url"), fetcher, token, callback);
       }
 
       if (commandLine.hasOption("config")) {
-        processConfig(commandLine.getOptionValue("config"), github, token, callback);
+        processConfig(commandLine.getOptionValue("config"), fetcher, token, callback);
       }
     } finally {
       VALUE_CACHE.store(PATH_TO_VALUE_CACHE);
@@ -182,17 +183,17 @@ public class SecurityRatingCalculator {
    * Calculate a rating for a single project.
    *
    * @param url A URL of the project repository.
-   * @param github An interface for accessing the GitHub APIs.
+   * @param fetcher An interface for accessing the GitHub.
    * @param githubToken A token for accessing the GitHub APIs.
    * @param callback An interface for interacting with a user.
    * @throws IOException If something went wrong.
    */
-  private static void processUrl(String url, GitHub github, String githubToken,
+  private static void processUrl(String url, GitHubDataFetcher fetcher, String githubToken,
       UserCallback callback) throws IOException {
 
     GitHubProject project = GitHubProject.parse(url);
 
-    new SingleSecurityRatingCalculator(github, nvd)
+    new SingleSecurityRatingCalculator(fetcher, nvd)
         .set(callback)
         .set(VALUE_CACHE)
         .token(githubToken)
@@ -211,12 +212,12 @@ public class SecurityRatingCalculator {
    * Calculate a rating for projects specified in a config.
    *
    * @param filename A path to the config.
-   * @param github An interface for accessing the GitHub APIs.
+   * @param fetcher An interface for accessing the GitHub.
    * @param githubToken A token for accessing the GitHub APIs.
    * @param callback An interface for interacting with a user.
    * @throws IOException If something went wrong.
    */
-  private static void processConfig(String filename, GitHub github, String githubToken,
+  private static void processConfig(String filename, GitHubDataFetcher fetcher, String githubToken,
       UserCallback callback) throws IOException {
 
     LOGGER.info("Loading config from {}", filename);
@@ -227,7 +228,9 @@ public class SecurityRatingCalculator {
     final List<Reporter<GitHubProject>> reporters = makeReporters(config);
 
     LOGGER.info("Look for projects ...");
-    List<GitHubProject> projects = new GitHubProjectFinder(github).set(config.finderConfig).run();
+    List<GitHubProject> projects = new GitHubProjectFinder(fetcher.github())
+        .set(config.finderConfig)
+        .run();
     LOGGER.info("Found {} project{}", projects.size(), projects.size() > 1 ? "s" : "");
     for (GitHubProject project : projects) {
       LOGGER.info("  {}", project.url());
@@ -237,7 +240,7 @@ public class SecurityRatingCalculator {
 
     LOGGER.info("Starting calculating ratings ...");
     MultipleSecurityRatingsCalculator calculator =
-        (MultipleSecurityRatingsCalculator) new MultipleSecurityRatingsCalculator(github, nvd)
+        (MultipleSecurityRatingsCalculator) new MultipleSecurityRatingsCalculator(fetcher, nvd)
             .set(loadProjectCache(projectCacheFile))
             .storeProjectCacheTo(projectCacheFile)
             .set(VALUE_CACHE)

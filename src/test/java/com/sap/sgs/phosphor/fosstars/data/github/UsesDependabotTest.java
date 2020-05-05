@@ -9,6 +9,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
+import com.sap.sgs.phosphor.fosstars.TestGitHubDataFetcherHolder;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
@@ -26,15 +27,12 @@ import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GHUser;
-import org.kohsuke.github.GitHub;
 
-public class UsesDependabotTest {
+public class UsesDependabotTest extends TestGitHubDataFetcherHolder {
 
   @Test
   public void foundCommits() throws IOException {
-    GitHub github = mock(GitHub.class);
-
-    UsesDependabot provider = new UsesDependabot(github);
+    UsesDependabot provider = new UsesDependabot(fetcher);
     provider = spy(provider);
     when(provider.cache()).thenReturn(new GitHubProjectValueCache());
 
@@ -55,18 +53,16 @@ public class UsesDependabotTest {
     GHRepository repository = mock(GHRepository.class);
     GitHubDataFetcher fetcher = mock(GitHubDataFetcher.class);
     when(provider.gitHubDataFetcher()).thenReturn(fetcher);
-    when(fetcher.repositoryFor(project, github)).thenReturn(repository);
-    when(fetcher.commitsAfter(any(), eq(project), eq(github))).thenReturn(list);
+    when(fetcher.repositoryFor(project)).thenReturn(repository);
+    when(fetcher.commitsAfter(any(), eq(project))).thenReturn(list);
 
-    testProvider(true, github, project, provider);
+    testProvider(true, project, provider);
   }
 
 
   @Test
   public void foundConfig() throws IOException {
-    GitHub github = mock(GitHub.class);
-
-    UsesDependabot provider = new UsesDependabot(github);
+    UsesDependabot provider = new UsesDependabot(fetcher);
     provider = spy(provider);
     when(provider.cache()).thenReturn(new GitHubProjectValueCache());
 
@@ -81,16 +77,14 @@ public class UsesDependabotTest {
 
     GitHubDataFetcher fetcher = mock(GitHubDataFetcher.class);
     when(provider.gitHubDataFetcher()).thenReturn(fetcher);
-    when(fetcher.repositoryFor(project, github)).thenReturn(repository);
+    when(fetcher.repositoryFor(project)).thenReturn(repository);
 
-    testProvider(true, github, project, provider);
+    testProvider(true, project, provider);
   }
 
   @Test
   public void noDependabot() throws IOException {
-    GitHub github = mock(GitHub.class);
-
-    UsesDependabot provider = new UsesDependabot(github);
+    UsesDependabot provider = new UsesDependabot(fetcher);
     provider = spy(provider);
     when(provider.cache()).thenReturn(new GitHubProjectValueCache());
 
@@ -118,13 +112,13 @@ public class UsesDependabotTest {
     GHRepository repository = mock(GHRepository.class);
     GitHubDataFetcher fetcher = mock(GitHubDataFetcher.class);
     when(provider.gitHubDataFetcher()).thenReturn(fetcher);
-    when(fetcher.repositoryFor(project, github)).thenReturn(repository);
-    when(fetcher.commitsAfter(any(), eq(project), eq(github))).thenReturn(list);
+    when(fetcher.repositoryFor(project)).thenReturn(repository);
+    when(fetcher.commitsAfter(any(), eq(project))).thenReturn(list);
 
-    testProvider(false, github, project, provider);
+    testProvider(false, project, provider);
   }
   
-  private static void testProvider(boolean expected, GitHub github, GitHubProject project,
+  private static void testProvider(boolean expected, GitHubProject project,
       UsesDependabot provider)
       throws IOException {
 
