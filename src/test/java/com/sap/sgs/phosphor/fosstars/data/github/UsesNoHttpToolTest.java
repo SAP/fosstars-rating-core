@@ -7,6 +7,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.sap.sgs.phosphor.fosstars.TestGitHubDataFetcherHolder;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
@@ -17,9 +18,8 @@ import java.io.InputStream;
 import org.junit.Test;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GHRepository;
-import org.kohsuke.github.GitHub;
 
-public class UsesNoHttpToolTest {
+public class UsesNoHttpToolTest extends TestGitHubDataFetcherHolder {
 
   @Test
   public void testMavenWithNoHTTP() throws IOException {
@@ -49,7 +49,7 @@ public class UsesNoHttpToolTest {
     }
   }
 
-  private static UsesNoHttpTool createProvider(InputStream is, String filename) throws IOException {
+  private UsesNoHttpTool createProvider(InputStream is, String filename) throws IOException {
     GHContent content = mock(GHContent.class);
     when(content.isFile()).thenReturn(true);
     when(content.read()).thenReturn(is);
@@ -57,10 +57,9 @@ public class UsesNoHttpToolTest {
     GHRepository repository = mock(GHRepository.class);
     when(repository.getFileContent(filename)).thenReturn(content);
 
-    GitHub github = mock(GitHub.class);
-    when(github.getRepository(any())).thenReturn(repository);
+    when(fetcher.github().getRepository(any())).thenReturn(repository);
 
-    UsesNoHttpTool provider = new UsesNoHttpTool(github);
+    UsesNoHttpTool provider = new UsesNoHttpTool(fetcher);
     provider.set(new GitHubProjectValueCache());
     provider.gitHubDataFetcher().repositoryCache().clear();
 

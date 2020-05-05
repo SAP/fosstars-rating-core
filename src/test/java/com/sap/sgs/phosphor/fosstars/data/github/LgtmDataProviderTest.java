@@ -10,6 +10,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
+import com.sap.sgs.phosphor.fosstars.TestGitHubDataFetcherHolder;
 import com.sap.sgs.phosphor.fosstars.data.NoUserCallback;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
@@ -20,15 +21,12 @@ import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.junit.Test;
-import org.kohsuke.github.GitHub;
 
-public class LgtmDataProviderTest {
+public class LgtmDataProviderTest extends TestGitHubDataFetcherHolder {
 
   @Test
   public void testIfProjectExist() throws IOException {
-    GitHub github = mock(GitHub.class);
-
-    LgtmDataProvider provider = new LgtmDataProvider(github);
+    LgtmDataProvider provider = new LgtmDataProvider(fetcher);
     provider = spy(provider);
 
     CloseableHttpClient httpClient = mock(CloseableHttpClient.class);
@@ -66,9 +64,7 @@ public class LgtmDataProviderTest {
 
   @Test
   public void testIfProjectDoesNotExist() throws IOException {
-    GitHub github = mock(GitHub.class);
-
-    LgtmDataProvider provider = new LgtmDataProvider(github);
+    LgtmDataProvider provider = new LgtmDataProvider(fetcher);
     provider = spy(provider);
 
     CloseableHttpClient httpClient = mock(CloseableHttpClient.class);

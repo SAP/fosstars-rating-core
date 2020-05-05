@@ -8,7 +8,6 @@ import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.value.SecurityReviewsDoneValue;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
-import org.kohsuke.github.GitHub;
 
 /**
  * This data provider provides info about security reviews for an open-source project.
@@ -26,11 +25,11 @@ public class SecurityReviewForProject extends CachedSingleFeatureGitHubDataProvi
   /**
    * Initializes a data provider.
    *
-   * @param github An interface to the GitHub API.
+   * @param fetcher An interface to GitHub.
    * @throws IOException If the information about security reviews can't be loaded.
    */
-  public SecurityReviewForProject(GitHub github) throws IOException {
-    super(github);
+  public SecurityReviewForProject(GitHubDataFetcher fetcher) throws IOException {
+    super(fetcher);
     storage = SecurityReviewStorage.load();
   }
 

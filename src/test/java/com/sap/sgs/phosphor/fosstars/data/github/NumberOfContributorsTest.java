@@ -9,6 +9,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
+import com.sap.sgs.phosphor.fosstars.TestGitHubDataFetcherHolder;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
@@ -22,9 +23,8 @@ import java.util.Optional;
 import org.junit.Test;
 import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHUser;
-import org.kohsuke.github.GitHub;
 
-public class NumberOfContributorsTest {
+public class NumberOfContributorsTest extends TestGitHubDataFetcherHolder {
 
   @Test
   public void update() throws IOException {
@@ -59,15 +59,14 @@ public class NumberOfContributorsTest {
     list.add(commitWithGitUsers);
     list.add(commitWithGitHubUsers);
 
-    GitHub github = mock(GitHub.class);
     final GitHubProject project = new GitHubProject("test", "test");
-    NumberOfContributors provider = new NumberOfContributors(github);
+    NumberOfContributors provider = new NumberOfContributors(fetcher);
     provider = spy(provider);
     when(provider.cache()).thenReturn(new GitHubProjectValueCache());
     
     GitHubDataFetcher fetcher = mock(GitHubDataFetcher.class);
     when(provider.gitHubDataFetcher()).thenReturn(fetcher);
-    when(fetcher.commitsAfter(any(), eq(project), eq(github))).thenReturn(list);
+    when(fetcher.commitsAfter(any(), eq(project))).thenReturn(list);
 
     ValueSet values = new ValueHashSet();
     assertEquals(0, values.size());

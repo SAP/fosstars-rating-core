@@ -7,7 +7,6 @@ import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.util.Date;
-import org.kohsuke.github.GitHub;
 
 /**
  * This data provider returns a number of commits last 3 months.
@@ -22,10 +21,10 @@ public class NumberOfCommits extends CachedSingleFeatureGitHubDataProvider {
   /**
    * Initializes a data provider.
    *
-   * @param github An interface to the GitHub API.
+   * @param fetcher An interface to GitHub.
    */
-  public NumberOfCommits(GitHub github) {
-    super(github);
+  public NumberOfCommits(GitHubDataFetcher fetcher) {
+    super(fetcher);
   }
 
   @Override
@@ -40,6 +39,6 @@ public class NumberOfCommits extends CachedSingleFeatureGitHubDataProvider {
     // TODO: define a date in a modern way
     Date date = new Date(System.currentTimeMillis() - DELTA);
     return NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(
-        gitHubDataFetcher().commitsAfter(date, project, github).size());
+        gitHubDataFetcher().commitsAfter(date, project).size());
   }
 }

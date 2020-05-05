@@ -3,7 +3,6 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 import com.sap.sgs.phosphor.fosstars.data.AbstractCachingDataProvider;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.util.Objects;
-import org.kohsuke.github.GitHub;
 
 /**
  * This is a base class for data providers that would like to check the cache
@@ -12,18 +11,18 @@ import org.kohsuke.github.GitHub;
 public abstract class GitHubCachingDataProvider extends AbstractCachingDataProvider<GitHubProject> {
 
   /**
-   * An interface to the GitHub API.
+   * An interface to GitHub.
    */
-  protected final GitHub github;
+  protected final GitHubDataFetcher fetcher;
 
   /**
    * Initializes a data provider.
    *
-   * @param github An interface to the GitHub API.
+   * @param fetcher An interface to GitHub.
    */
-  public GitHubCachingDataProvider(GitHub github) {
-    this.github = Objects.requireNonNull(
-        github, "Oh no! You gave me a null instead of a GitHub instance!");
+  public GitHubCachingDataProvider(GitHubDataFetcher fetcher) {
+    this.fetcher = Objects.requireNonNull(
+        fetcher, "Oh no! You gave me a null instead of a GitHub fetcher!");
   }
 
   @Override
@@ -35,7 +34,7 @@ public abstract class GitHubCachingDataProvider extends AbstractCachingDataProvi
    * Returns an instance of {@link GitHubDataFetcher}.
    */
   protected GitHubDataFetcher gitHubDataFetcher() {
-    return GitHubDataFetcher.instance();
+    return fetcher;
   }
 
 }

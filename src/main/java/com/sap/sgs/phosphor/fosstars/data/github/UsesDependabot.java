@@ -15,7 +15,6 @@ import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GHFileNotFoundException;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GHUser;
-import org.kohsuke.github.GitHub;
 import org.kohsuke.github.GitUser;
 
 /**
@@ -53,10 +52,10 @@ public class UsesDependabot extends CachedSingleFeatureGitHubDataProvider {
   /**
    * Initializes a data provider.
    *
-   * @param github An interface to the GitHub API.
+   * @param fetcher An interface to GitHub.
    */
-  public UsesDependabot(GitHub github) {
-    super(github);
+  public UsesDependabot(GitHubDataFetcher fetcher) {
+    super(fetcher);
   }
 
   @Override
@@ -130,8 +129,8 @@ public class UsesDependabot extends CachedSingleFeatureGitHubDataProvider {
     GitHubDataFetcher fetcher = gitHubDataFetcher();
 
     return USES_DEPENDABOT.value(
-        hasDependabotConfig(fetcher.repositoryFor(project, github))
-            || hasDependabotCommits(fetcher.commitsAfter(date, project, github)));
+        hasDependabotConfig(fetcher.repositoryFor(project))
+            || hasDependabotCommits(fetcher.commitsAfter(date, project)));
   }
 
   /**

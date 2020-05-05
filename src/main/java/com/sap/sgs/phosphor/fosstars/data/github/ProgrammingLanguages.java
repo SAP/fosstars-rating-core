@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.EnumSet;
 import java.util.Set;
 import org.kohsuke.github.GHRepository;
-import org.kohsuke.github.GitHub;
 
 /**
  * This data provider returns a number of languages that are used
@@ -22,10 +21,10 @@ public class ProgrammingLanguages extends CachedSingleFeatureGitHubDataProvider 
   /**
    * Initializes a data provider.
    *
-   * @param github An interface to the GitHub API.
+   * @param fetcher An interface to GitHub.
    */
-  public ProgrammingLanguages(GitHub github) {
-    super(github);
+  public ProgrammingLanguages(GitHubDataFetcher fetcher) {
+    super(fetcher);
   }
 
   @Override
@@ -47,7 +46,7 @@ public class ProgrammingLanguages extends CachedSingleFeatureGitHubDataProvider 
    * @throws IOException If something went wrong.
    */
   private Value<Languages> languagesOf(GitHubProject project) throws IOException {
-    GHRepository repository = gitHubDataFetcher().repositoryFor(project, github);
+    GHRepository repository = gitHubDataFetcher().repositoryFor(project);
 
     Set<Language> set = EnumSet.noneOf(Language.class);
     for (String string : repository.listLanguages().keySet()) {

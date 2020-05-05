@@ -36,7 +36,6 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GHRepository;
-import org.kohsuke.github.GitHub;
 
 /**
  * This data provider returns package managers which are used in a project.
@@ -115,10 +114,10 @@ public class PackageManagement extends CachedSingleFeatureGitHubDataProvider {
   /**
    * Initializes a data provider.
    *
-   * @param github An interface to the GitHub API.
+   * @param fetcher An interface to GitHub.
    */
-  public PackageManagement(GitHub github) {
-    super(github);
+  public PackageManagement(GitHubDataFetcher fetcher) {
+    super(fetcher);
   }
 
   @Override
@@ -148,7 +147,7 @@ public class PackageManagement extends CachedSingleFeatureGitHubDataProvider {
       }
     }
 
-    GHRepository repository = gitHubDataFetcher().repositoryFor(project, github);
+    GHRepository repository = gitHubDataFetcher().repositoryFor(project);
     PackageManagers packageManagers = new PackageManagers();
     for (GHContent content : repository.getDirectoryContent("/")) {
       if (!content.isFile()) {
@@ -210,18 +209,6 @@ public class PackageManagement extends CachedSingleFeatureGitHubDataProvider {
    * Creates an instance of {@link ProgrammingLanguages}.
    */
   ProgrammingLanguages languagesProvider() {
-    return new ProgrammingLanguages(github);
-  }
-
-  /**
-   * This entry point is for demo and testing purposes.
-   */
-  public static void main(String... args) throws IOException {
-    GitHub github = GitHub.connectUsingOAuth(System.getenv("TOKEN"));
-    GitHubProject project = new GitHubProject("spring-projects", "spring-security");
-    PackageManagement provider = new PackageManagement(github);
-    ValueSet values = new ValueHashSet();
-    provider.update(project, values);
-    System.out.println("package managers: " + values.of(PACKAGE_MANAGERS).get());
+    return new ProgrammingLanguages(fetcher);
   }
 }

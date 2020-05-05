@@ -4,11 +4,11 @@ import com.sap.sgs.phosphor.fosstars.data.NoUserCallback;
 import com.sap.sgs.phosphor.fosstars.data.NoValueCache;
 import com.sap.sgs.phosphor.fosstars.data.UserCallback;
 import com.sap.sgs.phosphor.fosstars.data.ValueCache;
+import com.sap.sgs.phosphor.fosstars.data.github.GitHubDataFetcher;
 import com.sap.sgs.phosphor.fosstars.nvd.NVD;
 import java.util.Objects;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.kohsuke.github.GitHub;
 
 /**
  * A base class for rating calculators.
@@ -23,7 +23,7 @@ abstract class AbstractRatingCalculator implements RatingCalculator {
   /**
    * An interface to GitHub.
    */
-  final GitHub github;
+  final GitHubDataFetcher fetcher;
 
   /**
    * An interface to NVD.
@@ -48,13 +48,13 @@ abstract class AbstractRatingCalculator implements RatingCalculator {
   /**
    * Initializes a new calculator.
    *
-   * @param github An interface to GitHub.
+   * @param fetcher An interface to GitHub.
    * @param nvd An interface to NVD.
    */
-  AbstractRatingCalculator(GitHub github, NVD nvd) {
-    Objects.requireNonNull(github, "Oh no! An interface to GitHub can't be null!");
+  AbstractRatingCalculator(GitHubDataFetcher fetcher, NVD nvd) {
+    Objects.requireNonNull(fetcher, "Oh no! An interface to GitHub can't be null!");
     Objects.requireNonNull(nvd, "Oh no! An interface to NVD can't be null!");
-    this.github = github;
+    this.fetcher = fetcher;
     this.nvd = nvd;
   }
 

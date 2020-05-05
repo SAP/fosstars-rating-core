@@ -23,7 +23,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.entity.ContentType;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.kohsuke.github.GitHub;
 
 /**
  * The data provider gathers info about how a project uses static analysis with LGTM.
@@ -43,10 +42,10 @@ public class LgtmDataProvider extends GitHubCachingDataProvider {
   /**
    * Initializes a data provider.
    *
-   * @param github An interface to the GitHub API.
+   * @param fetcher An interface to GitHub.
    */
-  public LgtmDataProvider(GitHub github) {
-    super(github);
+  public LgtmDataProvider(GitHubDataFetcher fetcher) {
+    super(fetcher);
   }
 
   @Override

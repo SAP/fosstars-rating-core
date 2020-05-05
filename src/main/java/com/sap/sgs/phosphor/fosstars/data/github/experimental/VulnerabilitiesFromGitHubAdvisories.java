@@ -4,6 +4,7 @@ import static com.sap.sgs.phosphor.fosstars.model.other.Utils.date;
 import static com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.UNKNOWN_INTRODUCED_DATE;
 
 import com.sap.sgs.phosphor.fosstars.data.github.CachedSingleFeatureGitHubDataProvider;
+import com.sap.sgs.phosphor.fosstars.data.github.GitHubDataFetcher;
 import com.sap.sgs.phosphor.fosstars.data.github.experimental.graphql.GitHubAdvisories;
 import com.sap.sgs.phosphor.fosstars.data.github.experimental.graphql.data.Advisory;
 import com.sap.sgs.phosphor.fosstars.data.github.experimental.graphql.data.AdvisoryReference;
@@ -32,11 +33,10 @@ import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GHFileNotFoundException;
 import org.kohsuke.github.GHRepository;
-import org.kohsuke.github.GitHub;
 
 /**
  * This data provider looks for vulnerabilities in {@link GitHubAdvisories} which are not present in
- * {@link NVD}.
+ * {@link com.sap.sgs.phosphor.fosstars.nvd.NVD}.
  */
 public class VulnerabilitiesFromGitHubAdvisories extends CachedSingleFeatureGitHubDataProvider {
 
@@ -54,11 +54,11 @@ public class VulnerabilitiesFromGitHubAdvisories extends CachedSingleFeatureGitH
   /**
    * Initializes a data provider.
    *
-   * @param github An interface to the GitHub API.
+   * @param fetcher An interface to GitHub.
    * @param gitHubToken The token to access GitHub API.
    */
-  public VulnerabilitiesFromGitHubAdvisories(GitHub github, String gitHubToken) {
-    super(github);
+  public VulnerabilitiesFromGitHubAdvisories(GitHubDataFetcher fetcher, String gitHubToken) {
+    super(fetcher);
     this.gitHubAdvisories = new GitHubAdvisories(gitHubToken);
   }
 
@@ -75,7 +75,7 @@ public class VulnerabilitiesFromGitHubAdvisories extends CachedSingleFeatureGitH
     // TODO: Make this method recursively loop and gather all config files present in the project
     // and gather the identifiers to pull all possible advisories for the project. More information
     // can be found here https://github.com/SAP/fosstars-rating-core/issues/144
-    Optional<String> artifact = artifactFor(gitHubDataFetcher().repositoryFor(project, github));
+    Optional<String> artifact = artifactFor(gitHubDataFetcher().repositoryFor(project));
 
     if (artifact.isPresent()) {
       for (Node node : gitHubAdvisories.advisoriesFor(PackageManager.MAVEN, artifact.get())) {
@@ -148,7 +148,6 @@ public class VulnerabilitiesFromGitHubAdvisories extends CachedSingleFeatureGitH
   /**
    * Converts an {@link Node} to a {@link Vulnerability}.
    *
-   * @param entry The {@link Node} to be converted.
    * @return An instance of {@link Vulnerability}.
    */
   private Vulnerability vulnerabilityFrom(Node node) {

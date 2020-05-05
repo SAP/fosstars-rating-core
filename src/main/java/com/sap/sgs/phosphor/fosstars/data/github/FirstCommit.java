@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Optional;
 import org.kohsuke.github.GHCommit;
-import org.kohsuke.github.GitHub;
 
 /**
  * This data provider returns a date of the first commit.
@@ -19,10 +18,10 @@ public class FirstCommit extends CachedSingleFeatureGitHubDataProvider {
   /**
    * Initializes a data provider.
    *
-   * @param github An interface to the GitHub API.
+   * @param fetcher An interface to GitHub.
    */
-  public FirstCommit(GitHub github) {
-    super(github);
+  public FirstCommit(GitHubDataFetcher fetcher) {
+    super(fetcher);
   }
 
   @Override
@@ -43,7 +42,7 @@ public class FirstCommit extends CachedSingleFeatureGitHubDataProvider {
    * @throws IOException If something went wrong.
    */
   private Value<Date> firstCommitDate(GitHubProject project) throws IOException {
-    Optional<GHCommit> firstCommit = gitHubDataFetcher().firstCommitFor(project, github);
+    Optional<GHCommit> firstCommit = gitHubDataFetcher().firstCommitFor(project);
     if (firstCommit.isPresent()) {
       return FIRST_COMMIT_DATE.value(firstCommit.get().getCommitDate());
     }

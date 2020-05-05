@@ -21,7 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
 public class MarkdownReporterTest {
@@ -88,7 +88,7 @@ public class MarkdownReporterTest {
       assertEquals(1, linesWith(MarkdownReporter.LOW, report));
       assertEquals(3, linesWith(MarkdownReporter.HIGH, report));
     } finally {
-      cleanup(outputDirectory);
+      FileUtils.deleteDirectory(outputDirectory.toFile());
     }
   }
 
@@ -117,35 +117,5 @@ public class MarkdownReporterTest {
     }
 
     return n;
-  }
-
-  private static void cleanup(Path directory) throws IOException {
-
-    // first, remove files
-    try (Stream<Path> walk = Files.walk(directory)) {
-      walk.filter(Files::isRegularFile)
-          .forEach(path -> {
-            try {
-              Files.delete(path);
-            } catch (IOException e) {
-              // ignore
-            }
-          });
-    }
-
-    // then, remove directories
-    try (Stream<Path> walk = Files.walk(directory)) {
-      walk.filter(Files::isDirectory)
-          .forEach(path -> {
-            try {
-              Files.delete(path);
-            } catch (IOException e) {
-              // ignore
-            }
-          });
-    }
-
-    // finally, remove the output directory
-    Files.delete(directory);
   }
 }

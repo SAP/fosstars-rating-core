@@ -7,6 +7,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
+import com.sap.sgs.phosphor.fosstars.TestGitHubDataFetcherHolder;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.Language;
@@ -18,14 +19,12 @@ import java.util.HashMap;
 import java.util.Map;
 import org.junit.Test;
 import org.kohsuke.github.GHRepository;
-import org.kohsuke.github.GitHub;
 
-public class ProgrammingLanguagesTest {
+public class ProgrammingLanguagesTest extends TestGitHubDataFetcherHolder {
 
   @Test
   public void updates() throws IOException {
-    GitHub github = mock(GitHub.class);
-    ProgrammingLanguages provider = new ProgrammingLanguages(github);
+    ProgrammingLanguages provider = new ProgrammingLanguages(fetcher);
     provider = spy(provider);
 
     Map<String, Long> languages = new HashMap<>();
@@ -40,7 +39,7 @@ public class ProgrammingLanguagesTest {
 
     GitHubDataFetcher fetcher = mock(GitHubDataFetcher.class);
     when(provider.gitHubDataFetcher()).thenReturn(fetcher);
-    when(fetcher.repositoryFor(project, github)).thenReturn(repository);
+    when(fetcher.repositoryFor(project)).thenReturn(repository);
 
     ValueSet values = new ValueHashSet();
     assertEquals(0, values.size());

@@ -6,7 +6,6 @@ import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
-import org.kohsuke.github.GitHub;
 
 /**
  * The data provider tries to figure out if an open-source project belongs to the Apache Software
@@ -17,10 +16,10 @@ public class IsApache extends CachedSingleFeatureGitHubDataProvider {
   /**
    * Initializes a data provider.
    *
-   * @param github An interface to the GitHub API.
+   * @param fetcher An interface to GitHub.
    */
-  public IsApache(GitHub github) {
-    super(github);
+  public IsApache(GitHubDataFetcher fetcher) {
+    super(fetcher);
   }
 
   @Override

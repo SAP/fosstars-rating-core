@@ -17,7 +17,6 @@ import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GHFileNotFoundException;
 import org.kohsuke.github.GHRepository;
-import org.kohsuke.github.GitHub;
 
 /**
  * This data provider checks if an open-source project uses
@@ -31,10 +30,10 @@ public class UsesNoHttpTool extends CachedSingleFeatureGitHubDataProvider {
   /**
    * Initializes a data provider.
    *
-   * @param github An interface to the GitHub API.
+   * @param fetcher An interface to GitHub.
    */
-  public UsesNoHttpTool(GitHub github) {
-    super(github);
+  public UsesNoHttpTool(GitHubDataFetcher fetcher) {
+    super(fetcher);
   }
 
   @Override
@@ -46,7 +45,7 @@ public class UsesNoHttpTool extends CachedSingleFeatureGitHubDataProvider {
   protected Value fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out if the project uses NoHTTP ...");
 
-    GHRepository repository = gitHubDataFetcher().repositoryFor(project, github);
+    GHRepository repository = gitHubDataFetcher().repositoryFor(project);
     return USES_NOHTTP.value(checkMaven(repository) || checkGradle(repository));
   }
 

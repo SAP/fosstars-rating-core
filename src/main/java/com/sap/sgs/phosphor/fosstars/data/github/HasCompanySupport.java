@@ -7,7 +7,6 @@ import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
-import org.kohsuke.github.GitHub;
 
 /**
  * This data provider check if an open-source project is supported by a company.
@@ -22,11 +21,11 @@ public class HasCompanySupport extends CachedSingleFeatureGitHubDataProvider {
   /**
    * Initializes a data provider.
    *
-   * @param github An interface to the GitHub API.
+   * @param fetcher An interface to GitHub.
    * @throws IOException If the info about open-source projects can't be loaded.
    */
-  public HasCompanySupport(GitHub github) throws IOException {
-    super(github);
+  public HasCompanySupport(GitHubDataFetcher fetcher) throws IOException {
+    super(fetcher);
     company = CompanySupportStorage.load();
   }
 

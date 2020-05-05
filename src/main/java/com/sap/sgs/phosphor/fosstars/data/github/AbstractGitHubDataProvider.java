@@ -3,7 +3,6 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 import com.sap.sgs.phosphor.fosstars.data.AbstractDataProvider;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.util.Objects;
-import org.kohsuke.github.GitHub;
 
 /**
  * Base class for data providers which get data from GitHub.
@@ -11,18 +10,18 @@ import org.kohsuke.github.GitHub;
 public abstract class AbstractGitHubDataProvider extends AbstractDataProvider<GitHubProject> {
 
   /**
-   * An interface to the GitHub API.
+   * An interface to GitHub.
    */
-  protected final GitHub github;
+  protected final GitHubDataFetcher fetcher;
 
   /**
    * Initializes a data provider.
    *
-   * @param github An interface to the GitHub API.
+   * @param fetcher An interface to GitHub.
    */
-  public AbstractGitHubDataProvider(GitHub github) {
-    this.github = Objects.requireNonNull(
-        github, "Oh no! You gave me a null instead of a GitHub instance!");
+  public AbstractGitHubDataProvider(GitHubDataFetcher fetcher) {
+    this.fetcher = Objects.requireNonNull(
+        fetcher, "Oh no! You gave me a null instead of a GitHub fetcher!");
   }
 
   /**
@@ -36,7 +35,8 @@ public abstract class AbstractGitHubDataProvider extends AbstractDataProvider<Gi
   /**
    * Returns an instance of {@link GitHubDataFetcher}.
    */
+  // TODO: this method looks redundant
   protected GitHubDataFetcher gitHubDataFetcher() {
-    return GitHubDataFetcher.instance();
+    return fetcher;
   }
 }

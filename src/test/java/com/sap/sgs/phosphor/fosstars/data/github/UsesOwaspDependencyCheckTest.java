@@ -7,6 +7,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.sap.sgs.phosphor.fosstars.TestGitHubDataFetcherHolder;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
@@ -19,7 +20,8 @@ import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
 
-public class UsesOwaspDependencyCheckTest {
+
+public class UsesOwaspDependencyCheckTest extends TestGitHubDataFetcherHolder {
 
   @Test
   public void testMavenWithOwaspDependencyCheckInBuild() throws IOException {
@@ -66,7 +68,7 @@ public class UsesOwaspDependencyCheckTest {
     }
   }
 
-  private static UsesOwaspDependencyCheck createProvider(InputStream is, String filename)
+  private UsesOwaspDependencyCheck createProvider(InputStream is, String filename)
       throws IOException {
 
     GHContent content = mock(GHContent.class);
@@ -79,7 +81,7 @@ public class UsesOwaspDependencyCheckTest {
     GitHub github = mock(GitHub.class);
     when(github.getRepository(any())).thenReturn(repository);
 
-    UsesOwaspDependencyCheck provider = new UsesOwaspDependencyCheck(github);
+    UsesOwaspDependencyCheck provider = new UsesOwaspDependencyCheck(fetcher);
     provider.set(new GitHubProjectValueCache());
     provider.gitHubDataFetcher().repositoryCache().clear();
 
