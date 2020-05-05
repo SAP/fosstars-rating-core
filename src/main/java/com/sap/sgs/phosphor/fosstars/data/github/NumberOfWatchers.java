@@ -37,6 +37,6 @@ public class NumberOfWatchers extends CachedSingleFeatureGitHubDataProvider {
   protected Value fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Counting how many watchers the project has ...");
     return NUMBER_OF_WATCHERS_ON_GITHUB.value(
-        gitHubDataFetcher().repositoryFor(project).getSubscribersCount());
+        fetcher.repositoryFor(project).getSubscribersCount());
   }
 }

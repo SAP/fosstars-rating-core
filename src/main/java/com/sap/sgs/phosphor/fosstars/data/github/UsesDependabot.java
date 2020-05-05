@@ -4,23 +4,16 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_D
 
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
-import java.util.List;
-import org.kohsuke.github.GHCommit;
-import org.kohsuke.github.GHContent;
-import org.kohsuke.github.GHFileNotFoundException;
-import org.kohsuke.github.GHRepository;
-import org.kohsuke.github.GHUser;
-import org.kohsuke.github.GitUser;
 
 /**
  * <p>This data provider checks if an open-source project on GitHub
- * uses Dependabot, and fills out the
- * {@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#USES_DEPENDABOT} feature.</p>
+ * uses Dependabot, and fills out the {@link OssFeatures#USES_DEPENDABOT} feature.</p>
  *
  * <p>First, the provider checks if a repository contains a configuration file for Dependabot.
  * If the config exists, then the provider reports that the projects uses Dependabot.
@@ -47,7 +40,7 @@ public class UsesDependabot extends CachedSingleFeatureGitHubDataProvider {
   /**
    * Period of time to be checked.
    */
-  private static final Duration LATEST_MONTHS = Duration.ofDays(365);
+  private static final Duration ONE_YEAR = Duration.ofDays(365);
 
   /**
    * Initializes a data provider.
@@ -72,12 +65,14 @@ public class UsesDependabot extends CachedSingleFeatureGitHubDataProvider {
   /**
    * Checks if a repository contains commits from Dependabot in the commit history.
    *
-   * @param commits A list of commits after a specific date.
+   * @param repository The repository.
    * @return True if at least one commit from Dependabot was found, false otherwise.
    */
-  private boolean hasDependabotCommits(List<GHCommit> commits) {
+  private boolean hasDependabotCommits(LocalRepository repository) {
+    Date date = Date.from(Instant.now().minus(ONE_YEAR));
+
     try {
-      for (GHCommit commit : commits) {
+      for (Commit commit : repository.commitsAfter(date)) {
         if (isDependabot(commit)) {
           return true;
         }
@@ -95,42 +90,22 @@ public class UsesDependabot extends CachedSingleFeatureGitHubDataProvider {
    * @param repository The repository
    * @return True if a config was found, false otherwise.
    */
-  private boolean hasDependabotConfig(GHRepository repository) {
-    try {
-      GHContent content = repository.getFileContent(DEPENDABOT_CONFIG);
-
-      if (content == null) {
-        return false;
-      }
-
-      if (!content.isFile()) {
-        return false;
-      }
-
-      return content.getSize() >= ACCEPTABLE_CONFIG_SIZE;
-    } catch (GHFileNotFoundException e) {
-      return false; // okay, the config doesn't exist
-    } catch (IOException e) {
-      logger.warn("Something went wrong!", e);
-    }
-
-    return false;
+  private boolean hasDependabotConfig(LocalRepository repository) {
+    return repository.file(DEPENDABOT_CONFIG)
+        .filter(content -> content.length() >= ACCEPTABLE_CONFIG_SIZE)
+        .isPresent();
   }
 
   /**
    * Checks if a project uses Dependabot.
    *
-   * @return A value for the
-   *         {@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#USES_DEPENDABOT}
-   *         feature.
+   * @return A value for the {@link OssFeatures#USES_DEPENDABOT} feature.
    */
   private Value<Boolean> usesDependabot(GitHubProject project) throws IOException {
-    Date date = Date.from(Instant.now().minus(LATEST_MONTHS));
-    GitHubDataFetcher fetcher = gitHubDataFetcher();
-
+    LocalRepository repository = fetcher.localRepositoryFor(project);
     return USES_DEPENDABOT.value(
-        hasDependabotConfig(fetcher.repositoryFor(project))
-            || hasDependabotCommits(fetcher.commitsAfter(date, project)));
+        hasDependabotConfig(repository)
+            || hasDependabotCommits(repository));
   }
 
   /**
@@ -138,42 +113,9 @@ public class UsesDependabot extends CachedSingleFeatureGitHubDataProvider {
    *
    * @param commit The commit to be checked.
    * @return True if the commit was done by Dependabot, false otherwise.
-   * @throws IOException If something went wrong.
    */
-  private static boolean isDependabot(GHCommit commit) throws IOException {
-    if (isDependabot(commit.getAuthor()) || isDependabot(commit.getCommitter())) {
-      return true;
-    }
-
-    GHCommit.ShortInfo info = commit.getCommitShortInfo();
-    if (info == null) {
-      return false;
-    }
-
-    return isDependabot(info.getAuthor()) || isDependabot(info.getCommitter());
-  }
-
-  /**
-   * Check if a GitHub user looks like Dependabot.
-   *
-   * @param user The user to be checked.
-   * @return True if the user looks like Dependabot, false otherwise.
-   */
-  private static boolean isDependabot(GHUser user) {
-    return user != null
-        && user.getLogin() != null
-        && user.getLogin().toLowerCase().contains(DEPENDABOT_PATTERN);
-  }
-
-  /**
-   * Check if a git user looks like Dependabot.
-   *
-   * @param user The user to be checked.
-   * @return True if the user looks like Dependabot, false otherwise.
-   */
-  private static boolean isDependabot(GitUser user) {
-    return user != null
-        && user.getName() != null
-        && user.getName().toLowerCase().contains(DEPENDABOT_PATTERN);
+  private static boolean isDependabot(Commit commit) {
+    return commit.authorName().toLowerCase().contains(DEPENDABOT_PATTERN)
+        || commit.committerName().toLowerCase().contains(DEPENDABOT_PATTERN);
   }
 }

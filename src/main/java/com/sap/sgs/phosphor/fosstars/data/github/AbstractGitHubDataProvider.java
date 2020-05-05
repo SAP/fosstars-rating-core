@@ -31,12 +31,4 @@ public abstract class AbstractGitHubDataProvider extends AbstractDataProvider<Gi
   public final boolean interactive() {
     return false;
   }
-
-  /**
-   * Returns an instance of {@link GitHubDataFetcher}.
-   */
-  // TODO: this method looks redundant
-  protected GitHubDataFetcher gitHubDataFetcher() {
-    return fetcher;
-  }
 }

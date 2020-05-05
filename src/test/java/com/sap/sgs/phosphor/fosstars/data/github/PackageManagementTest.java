@@ -51,7 +51,6 @@ public class PackageManagementTest extends TestGitHubDataFetcherHolder {
     ProgrammingLanguages programmingLanguagesProvider = new ProgrammingLanguages(fetcher);
     programmingLanguagesProvider.set(cache);
     programmingLanguagesProvider = spy(programmingLanguagesProvider);
-    when(programmingLanguagesProvider.gitHubDataFetcher()).thenReturn(fetcher);
 
     final List<GHContent> contents = new ArrayList<>();
     when(repository.getDirectoryContent("/")).thenReturn(contents);
@@ -73,7 +72,6 @@ public class PackageManagementTest extends TestGitHubDataFetcherHolder {
     provider.set(cache);
     provider = spy(provider);
     when(provider.languagesProvider()).thenReturn(programmingLanguagesProvider);
-    when(provider.gitHubDataFetcher()).thenReturn(fetcher);
 
     ValueSet values = new ValueHashSet();
     provider.update(project, values);
@@ -126,7 +124,6 @@ public class PackageManagementTest extends TestGitHubDataFetcherHolder {
     ProgrammingLanguages programmingLanguagesProvider = new ProgrammingLanguages(fetcher);
     programmingLanguagesProvider.set(cache);
     programmingLanguagesProvider = spy(programmingLanguagesProvider);
-    when(programmingLanguagesProvider.gitHubDataFetcher()).thenReturn(fetcher);
 
     PackageManagement provider = new PackageManagement(fetcher);
     provider.set(cache);

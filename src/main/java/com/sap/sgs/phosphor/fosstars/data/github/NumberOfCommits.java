@@ -6,6 +6,8 @@ import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Date;
 
 /**
@@ -14,9 +16,9 @@ import java.util.Date;
 public class NumberOfCommits extends CachedSingleFeatureGitHubDataProvider {
 
   /**
-   * 3 months in millis.
+   * ~3 months.
    */
-  private static final long DELTA = 90 * 24 * 60 * 60 * 1000L;
+  private static final Duration THREE_MONTHS = Duration.ofDays(90);
 
   /**
    * Initializes a data provider.
@@ -36,9 +38,8 @@ public class NumberOfCommits extends CachedSingleFeatureGitHubDataProvider {
   protected Value fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Counting how many commits have been done in the last three months ...");
 
-    // TODO: define a date in a modern way
-    Date date = new Date(System.currentTimeMillis() - DELTA);
+    Date date = Date.from(Instant.now().minus(THREE_MONTHS));
     return NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(
-        gitHubDataFetcher().commitsAfter(date, project).size());
+        fetcher.localRepositoryFor(project).commitsAfter(date).size());
   }
 }

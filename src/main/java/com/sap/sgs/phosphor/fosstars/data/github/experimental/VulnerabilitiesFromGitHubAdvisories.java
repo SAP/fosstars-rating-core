@@ -75,7 +75,7 @@ public class VulnerabilitiesFromGitHubAdvisories extends CachedSingleFeatureGitH
     // TODO: Make this method recursively loop and gather all config files present in the project
     // and gather the identifiers to pull all possible advisories for the project. More information
     // can be found here https://github.com/SAP/fosstars-rating-core/issues/144
-    Optional<String> artifact = artifactFor(gitHubDataFetcher().repositoryFor(project));
+    Optional<String> artifact = artifactFor(fetcher.repositoryFor(project));
 
     if (artifact.isPresent()) {
       for (Node node : gitHubAdvisories.advisoriesFor(PackageManager.MAVEN, artifact.get())) {

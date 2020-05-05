@@ -61,7 +61,6 @@ public class UsesNoHttpToolTest extends TestGitHubDataFetcherHolder {
 
     UsesNoHttpTool provider = new UsesNoHttpTool(fetcher);
     provider.set(new GitHubProjectValueCache());
-    provider.gitHubDataFetcher().repositoryCache().clear();
 
     return provider;
   }

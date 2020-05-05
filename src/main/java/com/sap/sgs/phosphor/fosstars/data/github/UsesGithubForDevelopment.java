@@ -7,13 +7,10 @@ import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
+import java.util.function.Predicate;
 import org.apache.commons.lang3.StringUtils;
-import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHRepository;
 
 /**
@@ -28,52 +25,35 @@ public class UsesGithubForDevelopment extends CachedSingleFeatureGitHubDataProvi
   static final double CONFIDENCE_THRESHOLD = 0.7;
 
   /**
-   * This threshold shows how many commits have to point to existing GitHub user names
-   * to say that commits are mostly done by users on GitHub.
-   */
-  private static final double RESOLVED_USERS_THRESHOLD = 0.9;
-
-  /**
    * A list of checks to figure out if a project uses GitHub for development.
    */
-  private static final List<Check> CHECKS = Arrays.asList(
+  private static final List<Predicate<GHRepository>> CHECKS = Arrays.asList(
 
       // check if the repository doesn't have an explicit link to the original repository
-      (repository, commits) -> StringUtils.isEmpty(repository.getMirrorUrl()),
+      repository -> StringUtils.isEmpty(repository.getMirrorUrl()),
 
       // check if the description mentions "mirror"
-      (repository, commits) -> !repository.getDescription().toLowerCase().contains("mirror"),
+      repository -> !repository.getDescription().toLowerCase().contains("mirror"),
 
       // if GitHub issues are enabled, then it's likely that the project uses GitHub
-      (repository, commits) -> repository.hasIssues(),
+      GHRepository::hasIssues,
 
       // if GitHub pages are enabled, then it's likely that the project uses GitHub
-      (repository, commits) -> repository.hasPages(),
+      GHRepository::hasPages,
 
       // if GitHub Wiki is enabled, then it's likely that the project uses GitHub
-      (repository, commits) -> repository.hasWiki(),
+      GHRepository::hasWiki,
 
       // if one of the three options for pull requests is enabled, then it looks like
       // that the project uses pull requests
-      (repository, commits) ->  repository.isAllowMergeCommit()
+      repository ->  repository.isAllowMergeCommit()
           || repository.isAllowRebaseMerge() || repository.isAllowSquashMerge(),
 
       // check if repository is not archived
-      (repository, commits) ->  !repository.isArchived(),
+      repository ->  !repository.isArchived(),
 
       // check if the project doesn't have an explicit link to an SVN repository
-      (repository, commits) ->  StringUtils.isEmpty(repository.getSvnUrl()),
-
-      // check if most of user names in the latest commits are valid GitHub users
-      (repository, commits) ->  {
-        if (commits.isEmpty()) {
-          return false;
-        }
-        int resolved = commits.stream()
-            .map(commit -> canResolveUsersFor(commit) ? 1 : 0)
-            .reduce(0, Integer::sum);
-        return resolved / commits.size() >= RESOLVED_USERS_THRESHOLD;
-      }
+      repository ->  StringUtils.isEmpty(repository.getSvnUrl())
   );
   
   /**
@@ -104,13 +84,10 @@ public class UsesGithubForDevelopment extends CachedSingleFeatureGitHubDataProvi
    */
   private Value<Boolean> usesGithubForDevelopment(GitHubProject project) {
     try {
-      GHRepository repository = gitHubDataFetcher().repositoryFor(project);
-
-      Date threeMonthsAgo = Date.from(Instant.now().minus(90, ChronoUnit.DAYS));
-      List<GHCommit> commits = gitHubDataFetcher().commitsAfter(threeMonthsAgo, project);
+      GHRepository repository = fetcher.repositoryFor(project);
 
       return USES_GITHUB_FOR_DEVELOPMENT.value(
-          usesGitHubForDevelopment(repository, commits, CONFIDENCE_THRESHOLD));
+          usesGitHubForDevelopment(repository, CONFIDENCE_THRESHOLD));
     } catch (IOException e) {
       logger.warn("Couldn't fetch data, something went wrong!", e);
       return USES_GITHUB_FOR_DEVELOPMENT.unknown();
@@ -123,54 +100,14 @@ public class UsesGithubForDevelopment extends CachedSingleFeatureGitHubDataProvi
    * then the method concludes that the projects uses GitHub for development.
    * 
    * @param repository The project's repository.
-   * @param commits The project's commit history.
    * @return True if it looks like that the project uses GitHub, false otherwise.
    *
    */
-  static boolean usesGitHubForDevelopment(
-      GHRepository repository, List<GHCommit> commits, double threshold) {
-
+  static boolean usesGitHubForDevelopment(GHRepository repository, double threshold) {
     int points = CHECKS.stream()
-        .map(check -> check.run(repository, commits) ? 1 : 0)
+        .map(check -> check.test(repository) ? 1 : 0)
         .reduce(0, Integer::sum);
 
     return points / CHECKS.size() >= threshold;
-  }
-
-  /**
-   * Checks if user names from a commit point to real GitHub users.
-   *
-   * @param commit The commit to be checked.
-   * @return True if user names from the commit can be resolved to existing GitHub users,
-   *         false otherwise.
-   */
-  private static boolean canResolveUsersFor(GHCommit commit) {
-    if (commit == null) {
-      return false;
-    }
-
-    try {
-      commit.getCommitter();
-      commit.getAuthor();
-    } catch (IOException e) {
-      return false;
-    }
-
-    return true;
-  }
-
-  /**
-   * An interface for a check for a project.
-   */
-  interface Check {
-
-    /**
-     * Runs the check for a repository and commit history.
-     * 
-     * @param repository The repository,
-     * @param commits The commit history.
-     * @return Returns true if the check is passed, false otherwise.
-     */
-    boolean run(GHRepository repository, List<GHCommit> commits);
   }
 }

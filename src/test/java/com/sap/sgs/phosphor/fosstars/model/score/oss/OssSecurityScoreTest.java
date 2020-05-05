@@ -17,7 +17,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_D
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GITHUB_FOR_DEVELOPMENT;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_NOHTTP;
-import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_VERIFIED_SIGNED_COMMITS;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SIGNED_COMMITS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
@@ -83,7 +83,7 @@ public class OssSecurityScoreTest {
         SCANS_FOR_VULNERABLE_DEPENDENCIES.value(false),
         VULNERABILITIES.value(new Vulnerabilities()),
         PROJECT_START_DATE.value(new Date()),
-        USES_VERIFIED_SIGNED_COMMITS.value(false),
+        USES_SIGNED_COMMITS.value(false),
         USES_LGTM.value(true),
         WORST_LGTM_GRADE.value(LgtmGrade.B),
         USES_NOHTTP.value(true),

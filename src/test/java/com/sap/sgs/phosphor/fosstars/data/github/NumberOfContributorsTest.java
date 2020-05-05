@@ -4,9 +4,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 import com.sap.sgs.phosphor.fosstars.TestGitHubDataFetcherHolder;
@@ -14,59 +12,39 @@ import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
-import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectValueCache;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.junit.Test;
-import org.kohsuke.github.GHCommit;
-import org.kohsuke.github.GHUser;
 
 public class NumberOfContributorsTest extends TestGitHubDataFetcherHolder {
 
   @Test
-  public void update() throws IOException {
-    GHUser githubAuthor = mock(GHUser.class);
-    when(githubAuthor.getLogin()).thenReturn("one");
+  public void testUpdate() throws IOException {
+    final List<Commit> commits = new ArrayList<>();
 
-    GHUser githubCommitter = mock(GHUser.class);
-    when(githubCommitter.getLogin()).thenReturn("two");
+    Commit commit = mock(Commit.class);
+    when(commit.date()).thenReturn(new Date());
+    when(commit.authorName()).thenReturn("Mr. Yellow");
+    when(commit.committerName()).thenReturn("Mr. Black");
+    commits.add(commit);
 
-    GHCommit commitWithGitHubUsers = mock(GHCommit.class);
-    when(commitWithGitHubUsers.getAuthor()).thenReturn(githubAuthor);
-    when(commitWithGitHubUsers.getCommitter()).thenReturn(githubCommitter);
-    when(commitWithGitHubUsers.getCommitDate()).thenReturn(new Date());
+    commit = mock(Commit.class);
+    when(commit.date()).thenReturn(new Date());
+    when(commit.authorName()).thenReturn("Mr. White");
+    when(commit.committerName()).thenReturn("Mr. Pink");
+    commits.add(commit);
 
-    GHCommit.GHAuthor gitAuthor = mock(GHCommit.GHAuthor.class);
-    when(gitAuthor.getName()).thenReturn("three");
+    LocalRepository repository = mock(LocalRepository.class);
+    when(repository.commitsAfter(any())).thenReturn(commits);
 
-    GHCommit.GHAuthor gitCommitter = mock(GHCommit.GHAuthor.class);
-    when(gitCommitter.getName()).thenReturn("four");
+    GitHubProject project = new GitHubProject("org", "test");
 
-    GHCommit.ShortInfo commitInfo = mock(GHCommit.ShortInfo.class);
-    when(commitInfo.getAuthor()).thenReturn(gitAuthor);
-    when(commitInfo.getCommitter()).thenReturn(gitCommitter);
+    when(fetcher.localRepositoryFor(project)).thenReturn(repository);
 
-    GHCommit commitWithGitUsers = mock(GHCommit.class);
-    when(commitWithGitUsers.getAuthor()).thenReturn(null);
-    when(commitWithGitUsers.getCommitter()).thenReturn(null);
-    when(commitWithGitUsers.getCommitShortInfo()).thenReturn(commitInfo);
-    when(commitWithGitUsers.getCommitDate()).thenReturn(new Date());
-
-    List<GHCommit> list = new ArrayList<>();
-    list.add(commitWithGitUsers);
-    list.add(commitWithGitHubUsers);
-
-    final GitHubProject project = new GitHubProject("test", "test");
     NumberOfContributors provider = new NumberOfContributors(fetcher);
-    provider = spy(provider);
-    when(provider.cache()).thenReturn(new GitHubProjectValueCache());
-    
-    GitHubDataFetcher fetcher = mock(GitHubDataFetcher.class);
-    when(provider.gitHubDataFetcher()).thenReturn(fetcher);
-    when(fetcher.commitsAfter(any(), eq(project))).thenReturn(list);
 
     ValueSet values = new ValueHashSet();
     assertEquals(0, values.size());

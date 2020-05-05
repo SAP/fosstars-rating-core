@@ -147,7 +147,7 @@ public class PackageManagement extends CachedSingleFeatureGitHubDataProvider {
       }
     }
 
-    GHRepository repository = gitHubDataFetcher().repositoryFor(project);
+    GHRepository repository = fetcher.repositoryFor(project);
     PackageManagers packageManagers = new PackageManagers();
     for (GHContent content : repository.getDirectoryContent("/")) {
       if (!content.isFile()) {

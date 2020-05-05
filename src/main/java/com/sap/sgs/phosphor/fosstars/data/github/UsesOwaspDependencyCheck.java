@@ -46,7 +46,7 @@ public class UsesOwaspDependencyCheck extends CachedSingleFeatureGitHubDataProvi
   @Override
   protected Value<Boolean> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out if the project uses OWASP Dependency Check ...");
-    GHRepository repository = gitHubDataFetcher().repositoryFor(project);
+    GHRepository repository = fetcher.repositoryFor(project);
     boolean answer = checkMaven(repository) || checkGradle(repository);
     return USES_OWASP_DEPENDENCY_CHECK.value(answer);
   }

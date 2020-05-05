@@ -60,7 +60,7 @@ public class PrettyPrinter implements Formatter {
     FEATURE_TO_NAME.put(OssFeatures.HAS_SECURITY_TEAM, "Does it have a security team?");
     FEATURE_TO_NAME.put(OssFeatures.HAS_SECURITY_POLICY, "Does it have a security policy?");
     FEATURE_TO_NAME.put(
-        OssFeatures.USES_VERIFIED_SIGNED_COMMITS, "Does it use verified signed commits?");
+        OssFeatures.USES_SIGNED_COMMITS, "Does it use verified signed commits?");
     FEATURE_TO_NAME.put(OssFeatures.VULNERABILITIES, "Info about vulnerabilities");
     FEATURE_TO_NAME.put(OssFeatures.SECURITY_REVIEWS_DONE, "Security reviews");
     FEATURE_TO_NAME.put(OssFeatures.IS_APACHE, "Does it belong to Apache?");
