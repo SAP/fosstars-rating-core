@@ -4,7 +4,6 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SE
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -15,22 +14,20 @@ import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectValueCache;
 import java.io.IOException;
 import java.util.Optional;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
-import org.kohsuke.github.GHContent;
-import org.kohsuke.github.GHRepository;
 
 public class HasSecurityPolicyTest extends TestGitHubDataFetcherHolder {
 
   @Test
   public void testHasPolicy() throws IOException {
-    GHContent content = mock(GHContent.class);
-    when(content.isFile()).thenReturn(true);
-    when(content.getSize()).thenReturn(1000L);
+    final LocalRepository repository = mock(LocalRepository.class);
+    when(repository.file("SECURITY.md"))
+        .thenReturn(Optional.of(StringUtils.repeat("x", 1000)));
 
-    GHRepository repository = mock(GHRepository.class);
-    when(repository.getFileContent("SECURITY.md")).thenReturn(content);
+    GitHubProject project = new GitHubProject("org", "test");
 
-    when(fetcher.github().getRepository(any())).thenReturn(repository);
+    when(fetcher.localRepositoryFor(project)).thenReturn(repository);
 
     HasSecurityPolicy provider = new HasSecurityPolicy(fetcher);
     provider.set(new GitHubProjectValueCache());
@@ -40,10 +37,12 @@ public class HasSecurityPolicyTest extends TestGitHubDataFetcherHolder {
 
   @Test
   public void testNoPolicy() throws IOException {
-    GHRepository repository = mock(GHRepository.class);
-    when(repository.getFileContent("SECURITY.md")).thenThrow(IOException.class);
+    final LocalRepository repository = mock(LocalRepository.class);
+    when(repository.file("SECURITY.md")).thenReturn(Optional.empty());
 
-    when(fetcher.github().getRepository(any())).thenReturn(repository);
+    GitHubProject project = new GitHubProject("org", "test");
+
+    when(fetcher.localRepositoryFor(project)).thenReturn(repository);
 
     HasSecurityPolicy provider = new HasSecurityPolicy(fetcher);
     provider.set(new GitHubProjectValueCache());

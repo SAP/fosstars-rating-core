@@ -4,10 +4,9 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SE
 
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
-import org.kohsuke.github.GHContent;
-import org.kohsuke.github.GHRepository;
 
 /**
  * This data provider check if an open-source project has a security policy which describes how
@@ -52,16 +51,21 @@ public class HasSecurityPolicy extends CachedSingleFeatureGitHubDataProvider {
     return hasSecurityPolicy(project);
   }
 
+  /**
+   * Check if a project has a security policy.
+   * @param project The project.
+   * @return A value of {@link OssFeatures#HAS_SECURITY_POLICY} feature.
+   * @throws IOException If something went wrong.
+   */
   private Value<Boolean> hasSecurityPolicy(GitHubProject project) throws IOException {
-    boolean found = false;
+    LocalRepository repository = fetcher.localRepositoryFor(project);
     for (String path : POLICY_LOCATIONS) {
-      if (exists(fetcher.repositoryFor(project), path)) {
-        found = true;
-        break;
+      if (isPolicy(repository, path)) {
+        return HAS_SECURITY_POLICY.value(true);
       }
     }
 
-    return HAS_SECURITY_POLICY.value(found);
+    return HAS_SECURITY_POLICY.value(false);
   }
 
   /**
@@ -72,19 +76,9 @@ public class HasSecurityPolicy extends CachedSingleFeatureGitHubDataProvider {
    * @param path A path to the file
    * @return True if the file exists in the repository and it's big enough, false otherwise.
    */
-  private static boolean exists(GHRepository repository, String path) {
-    try {
-      GHContent content = repository.getFileContent(path);
-      if (content == null) {
-        return false;
-      }
-      if (!content.isFile()) {
-        return false;
-      }
-
-      return content.getSize() > ACCEPTABLE_POLICY_SIZE;
-    } catch (IOException e) {
-      return false;
-    }
+  private static boolean isPolicy(LocalRepository repository, String path) {
+    return repository.file(path)
+        .filter(content -> content.length() > ACCEPTABLE_POLICY_SIZE)
+        .isPresent();
   }
 }
