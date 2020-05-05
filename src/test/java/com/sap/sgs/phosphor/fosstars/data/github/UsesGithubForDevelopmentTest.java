@@ -5,6 +5,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_G
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
@@ -14,8 +15,6 @@ import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectValueCache;
 import java.io.IOException;
-import java.io.UncheckedIOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -23,16 +22,13 @@ import java.util.Random;
 import java.util.Set;
 import java.util.function.Consumer;
 import org.junit.Test;
-import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHRepository;
-import org.kohsuke.github.GHUser;
 
 public class UsesGithubForDevelopmentTest extends TestGitHubDataFetcherHolder {
 
   private static class RepositoryMockBuilder {
 
     GHRepository repository;
-    List<GHCommit> commits;
     Set<Integer> passedChecks;
 
     private final List<Consumer<Boolean>> checks = Arrays.asList(
@@ -46,23 +42,7 @@ public class UsesGithubForDevelopmentTest extends TestGitHubDataFetcherHolder {
         passed -> when(repository.isAllowMergeCommit()).thenReturn(passed),
         passed -> when(repository.isArchived()).thenReturn(!passed),
         passed -> when(repository.getSvnUrl())
-            .thenReturn(passed ? null : "svn://other.com/org/project"),
-        passed -> {
-          try {
-            commits.clear();
-            GHCommit commit = mock(GHCommit.class);
-            if (passed) {
-              GHUser user = mock(GHUser.class);
-              when(commit.getCommitter()).thenReturn(user);
-              when(commit.getAuthor()).thenReturn(user);
-            } else {
-              when(commit.getCommitter()).thenThrow(new IOException());
-            }
-            commits.add(commit);
-          } catch (IOException e) {
-            throw new UncheckedIOException("This should not happen", e);
-          }
-        }
+            .thenReturn(passed ? null : "svn://other.com/org/project")
     );
 
     RepositoryMockBuilder() {
@@ -71,7 +51,6 @@ public class UsesGithubForDevelopmentTest extends TestGitHubDataFetcherHolder {
 
     final void init() {
       repository = mock(GHRepository.class);
-      commits = new ArrayList<>();
       passedChecks = new HashSet<>();
       checks.forEach(check -> check.accept(false));
     }
@@ -93,10 +72,6 @@ public class UsesGithubForDevelopmentTest extends TestGitHubDataFetcherHolder {
       return repository;
     }
 
-    List<GHCommit> commits() {
-      return commits;
-    }
-
   }
 
   @Test
@@ -115,7 +90,7 @@ public class UsesGithubForDevelopmentTest extends TestGitHubDataFetcherHolder {
       assertEquals(
           expected,
           UsesGithubForDevelopment.usesGitHubForDevelopment(
-              builder.repository(), builder.commits(), CONFIDENCE_THRESHOLD));
+              builder.repository(), CONFIDENCE_THRESHOLD));
       i++;
     }
   }
@@ -129,7 +104,7 @@ public class UsesGithubForDevelopmentTest extends TestGitHubDataFetcherHolder {
     assertEquals(builder.allChecks(), builder.passedChecks());
     assertTrue(
         UsesGithubForDevelopment.usesGitHubForDevelopment(
-            builder.repository(), builder.commits(), 0.99));
+            builder.repository(), 0.99));
   }
 
   @Test
@@ -137,7 +112,7 @@ public class UsesGithubForDevelopmentTest extends TestGitHubDataFetcherHolder {
     RepositoryMockBuilder builder = new RepositoryMockBuilder();
     assertFalse(
         UsesGithubForDevelopment.usesGitHubForDevelopment(
-            builder.repository(), builder.commits(), 0.01));
+            builder.repository(), 0.01));
   }
 
   @Test
@@ -145,11 +120,9 @@ public class UsesGithubForDevelopmentTest extends TestGitHubDataFetcherHolder {
     UsesGithubForDevelopment provider = new UsesGithubForDevelopment(fetcher);
     provider = spy(provider);
     when(provider.cache()).thenReturn(new GitHubProjectValueCache());
-    GitHubDataFetcher fetcher = mock(GitHubDataFetcher.class);
-    when(provider.gitHubDataFetcher()).thenReturn(fetcher);
 
-    GitHubProject project = mock(GitHubProject.class);
-    when(fetcher.repositoryFor(project)).thenThrow(new IOException());
+    GitHubProject project = new GitHubProject("org", "test");
+    when(fetcher.github().getRepository(any())).thenThrow(new IOException());
 
     ValueHashSet values = new ValueHashSet();
     assertEquals(0, values.size());
@@ -161,5 +134,4 @@ public class UsesGithubForDevelopmentTest extends TestGitHubDataFetcherHolder {
     assertTrue(values.of(USES_GITHUB_FOR_DEVELOPMENT).isPresent());
     assertTrue(values.of(USES_GITHUB_FOR_DEVELOPMENT).get().isUnknown());
   }
-
 }

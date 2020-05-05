@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.math.BigInteger;
 import java.net.URL;
 import java.nio.file.Files;
@@ -12,12 +11,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -27,15 +22,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.kohsuke.github.GHCommit;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.kohsuke.github.GHFileNotFoundException;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
-import org.kohsuke.github.HttpException;
 
 /**
- * Helper class for GitHub data providers which pulls the data from a GitHub repository. Also, the
- * class caches the fetched data for a certain amount of time.
+ * Helper class for GitHub data providers which pulls the data from a GitHub repository.
+ * Also, the class caches the fetched data for a certain amount of time.
  */
 public class GitHubDataFetcher {
 
@@ -66,25 +61,9 @@ public class GitHubDataFetcher {
   private static final String DEFAULT_LOCAL_REPOSITORIES_INFO_FILE = "local_repositories_info.json";
 
   /**
-   * {@link Comparator} which compares {@link Date} object.
-   */
-  private static final Comparator<GHCommit> BY_COMMIT_DATE = (firstCommit, secondCommit) -> {
-    try {
-      return firstCommit.getCommitDate().compareTo(secondCommit.getCommitDate());
-    } catch (IOException e) {
-      throw new UncheckedIOException("Could not get date from the commit.", e);
-    }
-  };
-
-  /**
    * An interface to the GitHub API.
    */
   private final GitHub github;
-
-  /**
-   * A limited capacity cache to store all the commits of a {@link GitHubProject}.
-   */
-  private final GitHubDataCache<List<GHCommit>> commitsCache = new GitHubDataCache<>();
 
   /**
    * A limited capacity cache to store the repository of a {@link GitHubProject}.
@@ -142,44 +121,6 @@ public class GitHubDataFetcher {
 
     this.localRepositories = loadLocalRepositories();
   }
-  
-  /**
-   * Gets the list of commits for a GitHub project repository using GitHub API. Then, the commit
-   * list is sorted in reverse order by commit date. This will ensure that the commit list will hold
-   * data from latest commit to the first commit. This sorted list will then be stored in a cache
-   * ({@link LRUMap}).
-   * 
-   * @param project of type {@link GitHubProject}, which holds the project information.
-   * @return List of {@link GHCommit}.
-   * @throws IOException occurred during REST call to GitHub API.
-   */
-  public List<GHCommit> commitsFor(GitHubProject project) throws IOException {
-    Optional<List<GHCommit>> cachedCommits = commitsCache.get(project);
-    if (cachedCommits.isPresent()) {
-      return cachedCommits.get();
-    }
-
-    List<GHCommit> commits = new ArrayList<>(commitsFor(repositoryFor(project)));
-    commits.sort(BY_COMMIT_DATE.reversed());
-    commitsCache.put(project, commits, expiration());
-    return commits;
-  }
-
-  /**
-   * Gets the list of commits for a GitHub project repository using GitHub API.
-   * 
-   * @param repository The {@link GHRepository}.
-   * @return List of {@link GHCommit}.
-   * @throws IOException occurred during REST call to GitHub API.
-   */
-  private List<GHCommit> commitsFor(GHRepository repository) throws IOException {
-    try {
-      return repository.listCommits().toList();
-    } catch (HttpException e) {
-      LOGGER.error(String.format("Could not fetch commits from %s", repository.getUrl()), e);
-      return Collections.emptyList();
-    }
-  }
 
   /**
    * Gets the GitHub project repository. This repository will then be stored in a cache
@@ -212,44 +153,6 @@ public class GitHubDataFetcher {
   }
 
   /**
-   * Gets the first commit of the repository.
-   * 
-   * @param project of type {@link GitHubProject}, which holds the project information.
-   * @return {@link GHCommit} with the project information.
-   * @throws IOException occurred during REST call to GitHub API.
-   */
-  public Optional<GHCommit> firstCommitFor(GitHubProject project)
-      throws IOException {
-    List<GHCommit> commits = commitsFor(project);
-    if (commits.isEmpty()) {
-      return Optional.empty();
-    }
-    return Optional.ofNullable(commits.get(commits.size() - 1));
-  }
-
-  /**
-   * Get a list of commits which comes after a specific date.
-   * 
-   * @param date which is used as boundary.
-   * @param project of type {@link GitHubProject}, which holds the project information.
-   * @return sub-list of type {@link GHCommit}.
-   * @throws IOException occurred during REST call to GitHub API.
-   */
-  public List<GHCommit> commitsAfter(Date date, GitHubProject project)
-      throws IOException {
-    List<GHCommit> subList = new ArrayList<>();
-
-    for (GHCommit commit : commitsFor(project)) {
-      if (commit.getCommitDate().before(date)) {
-        break;
-      }
-      subList.add(commit);
-    }
-
-    return subList;
-  }
-
-  /**
    * Clones a repository of a specified project.
    *
    * @param project The project.
@@ -257,12 +160,14 @@ public class GitHubDataFetcher {
    * @throws IOException If something went wrong while cloning the repository.
    */
   public LocalRepository localRepositoryFor(GitHubProject project) throws IOException {
+    Objects.requireNonNull(project, "On no! Project is null!");
+
     LocalRepository repository = localRepositories.get(project.url());
     if (repository == null) {
       repository = clone(project, base);
-    } else {
-      pull(repository);
     }
+
+    // TODO: pull data after some time
 
     repository.updated(Date.from(Instant.now()));
 
@@ -280,7 +185,7 @@ public class GitHubDataFetcher {
    * @return Info about cloned repository.
    * @throws IOException If something went wrong while cloning the repository.
    */
-  private LocalRepository clone(GitHubProject project, Path base) throws IOException {
+  protected LocalRepository clone(GitHubProject project, Path base) throws IOException {
     Path repositoryPath = base
         .resolve(project.organization().name())
         .resolve(project.name());
@@ -298,30 +203,13 @@ public class GitHubDataFetcher {
       throw new IOException("Could not clone repository!", e);
     }
 
-    return new LocalRepository(repositoryPath);
-  }
+    Repository repository = new FileRepositoryBuilder()
+        .setGitDir(repositoryPath.toFile())
+        .readEnvironment()
+        .findGitDir()
+        .build();
 
-  /**
-   * Pulls updates for a local repository.
-   *
-   * @param repository The repository.
-   * @throws IOException If something went wrong.
-   */
-  private void pull(LocalRepository repository) throws IOException {
-    try {
-      Git git = Git.open(repository.path().toFile());
-      String branch = git.getRepository().getBranch();
-      git.pull().setRemote("origin").setRemoteBranchName(branch).call();
-    } catch (GitAPIException e) {
-      throw new IOException("Could not pull to repository!", e);
-    }
-  }
-
-  /**
-   * Returns the cache for commits.
-   */
-  public GitHubDataCache<List<GHCommit>> commitsCache() {
-    return commitsCache;
+    return new LocalRepository(repositoryPath, repository);
   }
 
   /**
@@ -344,7 +232,7 @@ public class GitHubDataFetcher {
    * @return The info about local repositories.
    * @throws IOException If something went wrong.
    */
-  private Map<URL, LocalRepository> loadLocalRepositories() throws IOException {
+  protected Map<URL, LocalRepository> loadLocalRepositories() throws IOException {
     Path path = base.resolve(DEFAULT_LOCAL_REPOSITORIES_INFO_FILE);
 
     if (!Files.exists(path)) {
@@ -363,7 +251,7 @@ public class GitHubDataFetcher {
    *
    * @throws IOException If something went wrong.
    */
-  private void storeLocalRepositories() throws IOException {
+  protected void storeLocalRepositories() throws IOException {
     Files.write(
         base.resolve(DEFAULT_LOCAL_REPOSITORIES_INFO_FILE),
         MAPPER.writeValueAsBytes(localRepositories));
@@ -380,6 +268,9 @@ public class GitHubDataFetcher {
     BigInteger total = BigInteger.valueOf(0L);
     for (Map.Entry<URL, LocalRepository> entry : localRepositories.entrySet()) {
       LocalRepository repository = entry.getValue();
+      if (!Files.exists(repository.path())) {
+        continue;
+      }
       total = total.add(FileUtils.sizeOfAsBigInteger(repository.path().toFile()));
     }
 
@@ -394,6 +285,7 @@ public class GitHubDataFetcher {
           LOGGER.error(
               String.format("Could not delete a local repository: %s", repository.path()), e);
         }
+        repository.close();
         localRepositories.remove(url);
       }
     }

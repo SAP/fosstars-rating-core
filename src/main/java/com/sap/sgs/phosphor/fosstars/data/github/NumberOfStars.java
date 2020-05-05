@@ -37,7 +37,7 @@ public class NumberOfStars extends CachedSingleFeatureGitHubDataProvider {
   protected Value fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Counting how many stars the project has ...");
     return NUMBER_OF_GITHUB_STARS.value(
-        gitHubDataFetcher().repositoryFor(project).getStargazersCount());
+        fetcher.repositoryFor(project).getStargazersCount());
   }
 
 }

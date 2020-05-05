@@ -46,7 +46,7 @@ public class ProgrammingLanguages extends CachedSingleFeatureGitHubDataProvider 
    * @throws IOException If something went wrong.
    */
   private Value<Languages> languagesOf(GitHubProject project) throws IOException {
-    GHRepository repository = gitHubDataFetcher().repositoryFor(project);
+    GHRepository repository = fetcher.repositoryFor(project);
 
     Set<Language> set = EnumSet.noneOf(Language.class);
     for (String string : repository.listLanguages().keySet()) {

@@ -10,7 +10,7 @@ elements:
   - type: "UnknownValue"
     feature:
       type: "BooleanFeature"
-      name: "If a project uses verified signed commits"
+      name: "If a project uses signed commits"
   - type: "UnknownValue"
     feature:
       type: "BooleanFeature"
@@ -30,7 +30,7 @@ elements:
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
-      name: "If a project uses verified signed commits"
+      name: "If a project uses signed commits"
     flag: false
   - type: "BooleanValue"
     feature:
@@ -62,7 +62,7 @@ elements:
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
-      name: "If a project uses verified signed commits"
+      name: "If a project uses signed commits"
     flag: false
   - type: "BooleanValue"
     feature:
@@ -94,7 +94,7 @@ elements:
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
-      name: "If a project uses verified signed commits"
+      name: "If a project uses signed commits"
     flag: true
   expectedScore:
     type: "DoubleInterval"
@@ -111,7 +111,7 @@ elements:
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
-      name: "If a project uses verified signed commits"
+      name: "If a project uses signed commits"
     flag: false
   - type: "BooleanValue"
     feature:
@@ -143,7 +143,7 @@ elements:
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
-      name: "If a project uses verified signed commits"
+      name: "If a project uses signed commits"
     flag: false
   - type: "BooleanValue"
     feature:
@@ -175,7 +175,7 @@ elements:
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
-      name: "If a project uses verified signed commits"
+      name: "If a project uses signed commits"
     flag: true
   expectedScore:
     type: "DoubleInterval"
@@ -202,7 +202,7 @@ elements:
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
-      name: "If a project uses verified signed commits"
+      name: "If a project uses signed commits"
     flag: true
   expectedScore:
     type: "DoubleInterval"
@@ -229,7 +229,7 @@ elements:
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
-      name: "If a project uses verified signed commits"
+      name: "If a project uses signed commits"
     flag: true
   expectedScore:
     type: "DoubleInterval"

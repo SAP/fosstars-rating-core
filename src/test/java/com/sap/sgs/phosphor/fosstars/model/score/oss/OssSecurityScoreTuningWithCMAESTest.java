@@ -17,7 +17,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_D
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GITHUB_FOR_DEVELOPMENT;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_NOHTTP;
-import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_VERIFIED_SIGNED_COMMITS;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SIGNED_COMMITS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 import static com.sap.sgs.phosphor.fosstars.model.qa.TestVectorBuilder.newTestVector;
@@ -62,7 +62,7 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(UnknownValue.of(SCANS_FOR_VULNERABLE_DEPENDENCIES))
           .set(UnknownValue.of(VULNERABILITIES))
           .set(UnknownValue.of(PROJECT_START_DATE))
-          .set(UnknownValue.of(USES_VERIFIED_SIGNED_COMMITS))
+          .set(UnknownValue.of(USES_SIGNED_COMMITS))
           .set(UnknownValue.of(USES_LGTM))
           .set(UnknownValue.of(WORST_LGTM_GRADE))
           .set(UnknownValue.of(USES_NOHTTP))
@@ -88,7 +88,7 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(SCANS_FOR_VULNERABLE_DEPENDENCIES.value(false))
           .set(VULNERABILITIES.value(NO_VULNERABILITIES))
           .set(PROJECT_START_DATE.value(FIVE_YEARS_AGO))
-          .set(USES_VERIFIED_SIGNED_COMMITS.value(false))
+          .set(USES_SIGNED_COMMITS.value(false))
           .set(USES_LGTM.value(false))
           .set(WORST_LGTM_GRADE.unknown())
           .set(USES_NOHTTP.value(false))
@@ -114,7 +114,7 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(SCANS_FOR_VULNERABLE_DEPENDENCIES.value(true))
           .set(VULNERABILITIES.value(NO_VULNERABILITIES))
           .set(PROJECT_START_DATE.value(FIVE_YEARS_AGO))
-          .set(USES_VERIFIED_SIGNED_COMMITS.value(true))
+          .set(USES_SIGNED_COMMITS.value(true))
           .set(USES_LGTM.value(true))
           .set(WORST_LGTM_GRADE.value(LgtmGrade.A_PLUS))
           .set(USES_NOHTTP.value(true))

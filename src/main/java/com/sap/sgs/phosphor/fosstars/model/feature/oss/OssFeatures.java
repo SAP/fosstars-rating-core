@@ -219,14 +219,10 @@ public class OssFeatures {
       "The worst LGTM grade of a project");
 
   /**
-   * Shows if an open-source project uses verified signed commits.
-   * 
-   * @see <a link=
-   *      "https://help.github.com/en/github/authenticating-to-github/managing-commit-signature-verification">Managing
-   *      commit signature verification</a> on GitHub.
+   * Shows if an open-source project uses signed commits.
    */
-  public static final Feature<Boolean> USES_VERIFIED_SIGNED_COMMITS =
-      new BooleanFeature("If a project uses verified signed commits");
+  public static final Feature<Boolean> USES_SIGNED_COMMITS =
+      new BooleanFeature("If a project uses signed commits");
   
   /**
    * Shows if an open-source project uses GitHub as a main development platform. More precisely, it

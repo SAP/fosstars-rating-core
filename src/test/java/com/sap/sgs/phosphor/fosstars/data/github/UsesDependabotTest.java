@@ -4,9 +4,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_D
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 import com.sap.sgs.phosphor.fosstars.TestGitHubDataFetcherHolder;
@@ -16,104 +14,86 @@ import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectValueCache;
 import java.io.IOException;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
-import org.kohsuke.github.GHCommit;
-import org.kohsuke.github.GHContent;
-import org.kohsuke.github.GHRepository;
-import org.kohsuke.github.GHUser;
 
 public class UsesDependabotTest extends TestGitHubDataFetcherHolder {
 
   @Test
-  public void foundCommits() throws IOException {
+  public void testFoundCommits() throws IOException {
     UsesDependabot provider = new UsesDependabot(fetcher);
-    provider = spy(provider);
-    when(provider.cache()).thenReturn(new GitHubProjectValueCache());
+    provider.set(new GitHubProjectValueCache());
 
-    GHUser user = mock(GHUser.class);
-    when(user.getLogin()).thenReturn("dependabot");
+    final List<Commit> commits = new ArrayList<>();
 
-    GHCommit.ShortInfo commitInfo = mock(GHCommit.ShortInfo.class);
+    Commit commit = mock(Commit.class);
+    when(commit.date()).thenReturn(new Date());
+    when(commit.authorName()).thenReturn("dependabot");
+    when(commit.committerName()).thenReturn("dependabot");
+    commits.add(commit);
 
-    GHCommit commit = mock(GHCommit.class);
-    when(commit.getAuthor()).thenReturn(user);
-    when(commit.getCommitShortInfo()).thenReturn(commitInfo);
-    when(commit.getCommitDate()).thenReturn(Date.from(Instant.now().minus(Duration.ofDays(100))));
-    List<GHCommit> list = new ArrayList<>();
-    list.add(commit);
+    commit = mock(Commit.class);
+    when(commit.date()).thenReturn(new Date());
+    when(commit.authorName()).thenReturn("Mr. Test");
+    when(commit.committerName()).thenReturn("Mr. Test");
+    commits.add(commit);
 
-    GitHubProject project = mock(GitHubProject.class);
+    LocalRepository repository = mock(LocalRepository.class);
+    when(repository.commitsAfter(any())).thenReturn(commits);
 
-    GHRepository repository = mock(GHRepository.class);
-    GitHubDataFetcher fetcher = mock(GitHubDataFetcher.class);
-    when(provider.gitHubDataFetcher()).thenReturn(fetcher);
-    when(fetcher.repositoryFor(project)).thenReturn(repository);
-    when(fetcher.commitsAfter(any(), eq(project))).thenReturn(list);
+    GitHubProject project = new GitHubProject("org", "test");
 
-    testProvider(true, project, provider);
-  }
-
-
-  @Test
-  public void foundConfig() throws IOException {
-    UsesDependabot provider = new UsesDependabot(fetcher);
-    provider = spy(provider);
-    when(provider.cache()).thenReturn(new GitHubProjectValueCache());
-
-    GHContent content = mock(GHContent.class);
-    when(content.isFile()).thenReturn(true);
-    when(content.getSize()).thenReturn(100L);
-
-    GHRepository repository = mock(GHRepository.class);
-    when(repository.getFileContent(".dependabot/config.yml")).thenReturn(content);
-
-    GitHubProject project = mock(GitHubProject.class);
-
-    GitHubDataFetcher fetcher = mock(GitHubDataFetcher.class);
-    when(provider.gitHubDataFetcher()).thenReturn(fetcher);
-    when(fetcher.repositoryFor(project)).thenReturn(repository);
+    when(fetcher.localRepositoryFor(project)).thenReturn(repository);
 
     testProvider(true, project, provider);
   }
 
   @Test
-  public void noDependabot() throws IOException {
+  public void testFoundConfig() throws IOException {
     UsesDependabot provider = new UsesDependabot(fetcher);
-    provider = spy(provider);
-    when(provider.cache()).thenReturn(new GitHubProjectValueCache());
+    provider.set(new GitHubProjectValueCache());
 
-    GHUser githubUser = mock(GHUser.class);
-    when(githubUser.getLogin()).thenReturn("someone");
+    final LocalRepository repository = mock(LocalRepository.class);
+    when(repository.file(".dependabot/config.yml"))
+        .thenReturn(Optional.of(StringUtils.repeat("x", 1000)));
 
-    GHCommit.GHAuthor gitUser = mock(GHCommit.GHAuthor.class);
-    when(gitUser.getName()).thenReturn("someone");
+    GitHubProject project = new GitHubProject("org", "test");
 
-    GHCommit.ShortInfo commitInfo = mock(GHCommit.ShortInfo.class);
-    when(commitInfo.getAuthor()).thenReturn(gitUser);
-    when(commitInfo.getCommitter()).thenReturn(gitUser);
+    when(fetcher.localRepositoryFor(project)).thenReturn(repository);
 
-    GHCommit commit = mock(GHCommit.class);
-    when(commit.getAuthor()).thenReturn(githubUser);
-    when(commit.getCommitter()).thenReturn(githubUser);
-    when(commit.getCommitShortInfo()).thenReturn(commitInfo);
-    when(commit.getCommitDate()).thenReturn(Date.from(Instant.now().minus(Duration.ofDays(100))));
+    testProvider(true, project, provider);
+  }
 
-    List<GHCommit> list = new ArrayList<>();
-    list.add(commit);
+  @Test
+  public void testNoDependabot() throws IOException {
+    UsesDependabot provider = new UsesDependabot(fetcher);
+    provider.set(new GitHubProjectValueCache());
 
-    GitHubProject project = mock(GitHubProject.class);
+    final List<Commit> commits = new ArrayList<>();
 
-    GHRepository repository = mock(GHRepository.class);
-    GitHubDataFetcher fetcher = mock(GitHubDataFetcher.class);
-    when(provider.gitHubDataFetcher()).thenReturn(fetcher);
-    when(fetcher.repositoryFor(project)).thenReturn(repository);
-    when(fetcher.commitsAfter(any(), eq(project))).thenReturn(list);
+    Commit commit = mock(Commit.class);
+    when(commit.date()).thenReturn(new Date());
+    when(commit.authorName()).thenReturn("Mr. Orange");
+    when(commit.committerName()).thenReturn("Mr. Orange");
+    commits.add(commit);
+
+    commit = mock(Commit.class);
+    when(commit.date()).thenReturn(new Date());
+    when(commit.authorName()).thenReturn("Mr. Pink");
+    when(commit.committerName()).thenReturn("Mr. Pink");
+    commits.add(commit);
+
+    LocalRepository repository = mock(LocalRepository.class);
+    when(repository.file(".dependabot/config.yml")).thenReturn(Optional.empty());
+
+    GitHubProject project = new GitHubProject("org", "test");
+
+    when(repository.commitsAfter(any())).thenReturn(commits);
+    when(fetcher.localRepositoryFor(project)).thenReturn(repository);
 
     testProvider(false, project, provider);
   }

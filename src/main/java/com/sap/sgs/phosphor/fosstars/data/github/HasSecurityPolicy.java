@@ -55,7 +55,7 @@ public class HasSecurityPolicy extends CachedSingleFeatureGitHubDataProvider {
   private Value<Boolean> hasSecurityPolicy(GitHubProject project) throws IOException {
     boolean found = false;
     for (String path : POLICY_LOCATIONS) {
-      if (exists(gitHubDataFetcher().repositoryFor(project), path)) {
+      if (exists(fetcher.repositoryFor(project), path)) {
         found = true;
         break;
       }

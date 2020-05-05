@@ -3,6 +3,7 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.LANGUAGES;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
@@ -23,7 +24,7 @@ import org.kohsuke.github.GHRepository;
 public class ProgrammingLanguagesTest extends TestGitHubDataFetcherHolder {
 
   @Test
-  public void updates() throws IOException {
+  public void testUpdate() throws IOException {
     ProgrammingLanguages provider = new ProgrammingLanguages(fetcher);
     provider = spy(provider);
 
@@ -35,10 +36,10 @@ public class ProgrammingLanguagesTest extends TestGitHubDataFetcherHolder {
     GHRepository repository = mock(GHRepository.class);
     when(repository.listLanguages()).thenReturn(languages);
 
+    when(fetcher.github().getRepository(any())).thenReturn(repository);
+
     GitHubProject project = new GitHubProject("org", "test");
 
-    GitHubDataFetcher fetcher = mock(GitHubDataFetcher.class);
-    when(provider.gitHubDataFetcher()).thenReturn(fetcher);
     when(fetcher.repositoryFor(project)).thenReturn(repository);
 
     ValueSet values = new ValueHashSet();

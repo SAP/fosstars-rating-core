@@ -8,7 +8,6 @@ import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Optional;
-import org.kohsuke.github.GHCommit;
 
 /**
  * This data provider returns a date of the first commit.
@@ -42,9 +41,9 @@ public class FirstCommit extends CachedSingleFeatureGitHubDataProvider {
    * @throws IOException If something went wrong.
    */
   private Value<Date> firstCommitDate(GitHubProject project) throws IOException {
-    Optional<GHCommit> firstCommit = gitHubDataFetcher().firstCommitFor(project);
+    Optional<Commit> firstCommit = fetcher.localRepositoryFor(project).firstCommit();
     if (firstCommit.isPresent()) {
-      return FIRST_COMMIT_DATE.value(firstCommit.get().getCommitDate());
+      return FIRST_COMMIT_DATE.value(firstCommit.get().date());
     }
 
     return FIRST_COMMIT_DATE.unknown();

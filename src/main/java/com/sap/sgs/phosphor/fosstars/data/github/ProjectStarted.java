@@ -8,13 +8,11 @@ import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Optional;
-import org.kohsuke.github.GHCommit;
 
 /**
  * This data provider estimates a date when a project was created by the date when the repository
  * was created.
  */
-// TODO: don't extend FirstCommit
 public class ProjectStarted extends CachedSingleFeatureGitHubDataProvider {
 
   /**
@@ -35,9 +33,9 @@ public class ProjectStarted extends CachedSingleFeatureGitHubDataProvider {
   protected Value fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out when the project started ...");
 
-    Optional<GHCommit> firstCommit = gitHubDataFetcher().firstCommitFor(project);
-    Date firstCommitDate = firstCommit.isPresent() ? firstCommit.get().getCommitDate() : null;
-    Date repositoryCreated = gitHubDataFetcher().repositoryFor(project).getCreatedAt();
+    Optional<Commit> firstCommit = fetcher.localRepositoryFor(project).firstCommit();
+    Date firstCommitDate = firstCommit.map(Commit::date).orElse(null);
+    Date repositoryCreated = fetcher.repositoryFor(project).getCreatedAt();
 
     if (firstCommitDate != null && repositoryCreated != null
         && firstCommitDate.before(repositoryCreated)) {

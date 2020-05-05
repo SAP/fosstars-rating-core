@@ -2,7 +2,7 @@ package com.sap.sgs.phosphor.fosstars.model.score.oss;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_TEAM;
-import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_VERIFIED_SIGNED_COMMITS;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SIGNED_COMMITS;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.findValue;
 
 import com.sap.sgs.phosphor.fosstars.model.Confidence;
@@ -52,7 +52,7 @@ public class ProjectSecurityAwarenessScore extends FeatureBasedScore {
    */
   ProjectSecurityAwarenessScore() {
     super("How well open-source community is aware about security", DESCRIPTION,
-        HAS_SECURITY_POLICY, HAS_SECURITY_TEAM, USES_VERIFIED_SIGNED_COMMITS);
+        HAS_SECURITY_POLICY, HAS_SECURITY_TEAM, USES_SIGNED_COMMITS);
   }
 
   @Override
@@ -61,7 +61,7 @@ public class ProjectSecurityAwarenessScore extends FeatureBasedScore {
         "Hey! You have to tell me if the project has a security policy!");
     Value<Boolean> securityTeam = findValue(values, HAS_SECURITY_TEAM,
         "Hey! You have to tell me if the project has a security team!");
-    Value<Boolean> signedCommits = findValue(values, USES_VERIFIED_SIGNED_COMMITS,
+    Value<Boolean> signedCommits = findValue(values, USES_SIGNED_COMMITS,
         "Hey! You have to tell me if the project uses verified signed commits!");
 
     ScoreValue scoreValue = new ScoreValue(this);
