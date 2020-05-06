@@ -10,7 +10,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
-import com.sap.sgs.phosphor.fosstars.TestGitHubDataFetcherHolder;
 import com.sap.sgs.phosphor.fosstars.data.NoUserCallback;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;

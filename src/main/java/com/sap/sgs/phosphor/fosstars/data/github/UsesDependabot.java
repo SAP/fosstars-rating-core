@@ -90,7 +90,7 @@ public class UsesDependabot extends CachedSingleFeatureGitHubDataProvider {
    * @param repository The repository
    * @return True if a config was found, false otherwise.
    */
-  private boolean hasDependabotConfig(LocalRepository repository) {
+  private boolean hasDependabotConfig(LocalRepository repository) throws IOException {
     return repository.file(DEPENDABOT_CONFIG)
         .filter(content -> content.length() >= ACCEPTABLE_CONFIG_SIZE)
         .isPresent();

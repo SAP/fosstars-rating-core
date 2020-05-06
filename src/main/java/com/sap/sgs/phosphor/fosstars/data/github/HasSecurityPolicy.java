@@ -76,7 +76,7 @@ public class HasSecurityPolicy extends CachedSingleFeatureGitHubDataProvider {
    * @param path A path to the file
    * @return True if the file exists in the repository and it's big enough, false otherwise.
    */
-  private static boolean isPolicy(LocalRepository repository, String path) {
+  private static boolean isPolicy(LocalRepository repository, String path) throws IOException {
     return repository.file(path)
         .filter(content -> content.length() > ACCEPTABLE_POLICY_SIZE)
         .isPresent();

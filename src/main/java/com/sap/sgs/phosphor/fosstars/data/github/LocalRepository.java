@@ -1,17 +1,13 @@
 package com.sap.sgs.phosphor.fosstars.data.github;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -28,90 +24,45 @@ import org.eclipse.jgit.revwalk.RevCommit;
 public class LocalRepository implements AutoCloseable {
 
   /**
-   * A date when the repository was updated.
+   * Info about the repository.
    */
-  private Date updated;
-
-  /**
-   * A path to the repository.
-   */
-  private final Path path;
+  private final LocalRepositoryInfo info;
 
   /**
    * A list of commits in the repository.
    */
-  @JsonIgnore
   private final List<Commit> commits = new ArrayList<>();
 
   /**
    * An instance of {@link Repository} from JGit.
    */
-  @JsonIgnore
   private final Repository repository;
 
   /**
    * Initializes a repository.
    *
-   * @param path A path to the repository.
+   * @param info Info about repository.
    * @param repository An instance of {@link Repository} from JGit.
    */
-  public LocalRepository(Path path, Repository repository) {
-    this(path, Date.from(Instant.now()), repository);
-  }
+  public LocalRepository(LocalRepositoryInfo info, Repository repository) {
+    Objects.requireNonNull(info, "Oh no! Info is null!");
+    Objects.requireNonNull(repository, "Oh no! Repository is null!");
 
-  /**
-   * Initializes a repository.
-   *
-   * @param updated A date when the repository was updated.
-   * @param path A path to the repository.
-   */
-  @JsonCreator
-  public LocalRepository(
-      @JsonProperty("path") Path path,
-      @JsonProperty("updated") Date updated) {
+    if (!info.path().toAbsolutePath().equals(
+        Paths.get(repository.getDirectory().getParent()).toAbsolutePath())) {
 
-    this(path, updated, null);
-  }
+      throw new IllegalArgumentException("Oh no! Paths don't match!");
+    }
 
-  /**
-   * Initializes a repository.
-   *
-   * @param updated A date when the repository was updated.
-   * @param path A path to the repository.
-   * @param repository An instance of {@link Repository} from JGit.
-   */
-  public LocalRepository(Path path, Date updated, Repository repository) {
-    Objects.requireNonNull(path, "Hey! Path can't be null!");
-    Objects.requireNonNull(updated, "Hey! Date can't be null!");
-
-    this.path = path;
-    this.updated = updated;
+    this.info = info;
     this.repository = repository;
   }
 
   /**
-   * Returns a date when the repository was updated.
+   * Returns info about the repository.
    */
-  @JsonGetter("updated")
-  public Date updated() {
-    return updated;
-  }
-
-  /**
-   * Updates the date when the repository was updated.
-   *
-   * @param date A new date.
-   */
-  public void updated(Date date) {
-    updated = date;
-  }
-
-  /**
-   * Returns a path to the repository.
-   */
-  @JsonGetter("path")
-  public Path path() {
-    return path;
+  public LocalRepositoryInfo info() {
+    return info;
   }
 
   /**
@@ -185,7 +136,7 @@ public class LocalRepository implements AutoCloseable {
    * @param file The file name.
    * @return A content of the file.
    */
-  public Optional<String> file(String file) {
+  public Optional<String> file(String file) throws IOException {
     Objects.requireNonNull(file, "On no! File name is null!");
     return file(Paths.get(file));
   }
@@ -196,18 +147,14 @@ public class LocalRepository implements AutoCloseable {
    * @param file The file name.
    * @return A content of the file.
    */
-  // TODO: don't swallow exceptions
-  public Optional<String> file(Path file) {
+  public Optional<String> file(Path file) throws IOException {
     Objects.requireNonNull(file, "On no! File name is null!");
-    if (!Files.isRegularFile(file)) {
+    Path path = info.path().resolve(file);
+    if (!Files.isRegularFile(path)) {
       return Optional.empty();
     }
 
-    try (InputStream is = Files.newInputStream(file)) {
-      return Optional.of(IOUtils.toString(is, StandardCharsets.UTF_8.name()));
-    } catch (IOException e) {
-      return Optional.empty();
-    }
+    return Optional.of(IOUtils.toString(Files.newInputStream(path)));
   }
 
   /**
@@ -229,11 +176,12 @@ public class LocalRepository implements AutoCloseable {
    */
   public Optional<InputStream> read(Path file) throws IOException {
     Objects.requireNonNull(file, "On no! File name is null!");
-    if (!Files.isRegularFile(file)) {
+    Path path = info.path().resolve(file);
+    if (!Files.isRegularFile(path)) {
       return Optional.empty();
     }
 
-    return Optional.of(Files.newInputStream(file));
+    return Optional.of(Files.newInputStream(path));
   }
 
   @Override
@@ -258,5 +206,7 @@ public class LocalRepository implements AutoCloseable {
     } catch (GitAPIException e) {
       throw new IOException("Could not list commits!", e);
     }
+
+    commits.sort(Comparator.comparing(Commit::date).reversed());
   }
 }

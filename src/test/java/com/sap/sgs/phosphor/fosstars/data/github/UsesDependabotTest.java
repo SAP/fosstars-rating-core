@@ -7,7 +7,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.sap.sgs.phosphor.fosstars.TestGitHubDataFetcherHolder;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
@@ -46,8 +45,7 @@ public class UsesDependabotTest extends TestGitHubDataFetcherHolder {
     when(repository.commitsAfter(any())).thenReturn(commits);
 
     GitHubProject project = new GitHubProject("org", "test");
-
-    when(fetcher.localRepositoryFor(project)).thenReturn(repository);
+    fetcher.addForTesting(project, repository);
 
     testProvider(true, project, provider);
   }
@@ -62,8 +60,7 @@ public class UsesDependabotTest extends TestGitHubDataFetcherHolder {
         .thenReturn(Optional.of(StringUtils.repeat("x", 1000)));
 
     GitHubProject project = new GitHubProject("org", "test");
-
-    when(fetcher.localRepositoryFor(project)).thenReturn(repository);
+    fetcher.addForTesting(project, repository);
 
     testProvider(true, project, provider);
   }
@@ -89,11 +86,10 @@ public class UsesDependabotTest extends TestGitHubDataFetcherHolder {
 
     LocalRepository repository = mock(LocalRepository.class);
     when(repository.file(".dependabot/config.yml")).thenReturn(Optional.empty());
+    when(repository.commitsAfter(any())).thenReturn(commits);
 
     GitHubProject project = new GitHubProject("org", "test");
-
-    when(repository.commitsAfter(any())).thenReturn(commits);
-    when(fetcher.localRepositoryFor(project)).thenReturn(repository);
+    fetcher.addForTesting(project, repository);
 
     testProvider(false, project, provider);
   }

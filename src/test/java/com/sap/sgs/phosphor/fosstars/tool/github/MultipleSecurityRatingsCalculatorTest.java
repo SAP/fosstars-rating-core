@@ -8,8 +8,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
-import com.sap.sgs.phosphor.fosstars.TestGitHubDataFetcherHolder;
 import com.sap.sgs.phosphor.fosstars.data.NoUserCallback;
+import com.sap.sgs.phosphor.fosstars.data.github.TestGitHubDataFetcherHolder;
 import com.sap.sgs.phosphor.fosstars.model.math.DoubleInterval;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
