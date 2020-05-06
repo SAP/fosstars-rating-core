@@ -29,12 +29,4 @@ public abstract class GitHubCachingDataProvider extends AbstractCachingDataProvi
   public final boolean interactive() {
     return false;
   }
-
-  /**
-   * Returns an instance of {@link GitHubDataFetcher}.
-   */
-  protected GitHubDataFetcher gitHubDataFetcher() {
-    return fetcher;
-  }
-
 }

@@ -196,6 +196,7 @@ public class LocalRepository implements AutoCloseable {
    * @param file The file name.
    * @return A content of the file.
    */
+  // TODO: don't swallow exceptions
   public Optional<String> file(Path file) {
     Objects.requireNonNull(file, "On no! File name is null!");
     if (!Files.isRegularFile(file)) {
@@ -207,6 +208,32 @@ public class LocalRepository implements AutoCloseable {
     } catch (IOException e) {
       return Optional.empty();
     }
+  }
+
+  /**
+   * Returns a stream of a file if it exists.
+   *
+   * @param file The file name.
+   * @return A content of the file.
+   */
+  public Optional<InputStream> read(String file) throws IOException {
+    Objects.requireNonNull(file, "On no! File name is null!");
+    return read(Paths.get(file));
+  }
+
+  /**
+   * Returns a stream of a file if it exists.
+   *
+   * @param file The file name.
+   * @return A content of the file.
+   */
+  public Optional<InputStream> read(Path file) throws IOException {
+    Objects.requireNonNull(file, "On no! File name is null!");
+    if (!Files.isRegularFile(file)) {
+      return Optional.empty();
+    }
+
+    return Optional.of(Files.newInputStream(file));
   }
 
   @Override
