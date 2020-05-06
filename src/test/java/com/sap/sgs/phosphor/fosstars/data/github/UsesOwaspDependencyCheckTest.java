@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.sap.sgs.phosphor.fosstars.TestGitHubDataFetcherHolder;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
@@ -71,8 +70,7 @@ public class UsesOwaspDependencyCheckTest extends TestGitHubDataFetcherHolder {
     when(repository.read(filename)).thenReturn(Optional.of(is));
 
     GitHubProject project = new GitHubProject("org", "test");
-
-    when(fetcher.localRepositoryFor(project)).thenReturn(repository);
+    fetcher.addForTesting(project, repository);
 
     UsesOwaspDependencyCheck provider = new UsesOwaspDependencyCheck(fetcher);
     provider.set(new GitHubProjectValueCache());

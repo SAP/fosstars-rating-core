@@ -8,7 +8,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.sap.sgs.phosphor.fosstars.TestGitHubDataFetcherHolder;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
@@ -45,8 +44,7 @@ public class UsesSignedCommitTest extends TestGitHubDataFetcherHolder {
     when(repository.commitsAfter(any())).thenReturn(commits);
 
     GitHubProject project = new GitHubProject("org", "test");
-
-    when(fetcher.localRepositoryFor(project)).thenReturn(repository);
+    fetcher.addForTesting(project, repository);
 
     ValueHashSet values = new ValueHashSet();
     assertEquals(0, values.size());
@@ -69,8 +67,7 @@ public class UsesSignedCommitTest extends TestGitHubDataFetcherHolder {
     when(repository.commitsAfter(any())).thenThrow(new IOException());
 
     GitHubProject project = new GitHubProject("org", "test");
-
-    when(fetcher.localRepositoryFor(project)).thenReturn(repository);
+    fetcher.addForTesting(project, repository);
 
     ValueHashSet values = new ValueHashSet();
     assertEquals(0, values.size());

@@ -7,7 +7,6 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.sap.sgs.phosphor.fosstars.TestGitHubDataFetcherHolder;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
@@ -27,7 +26,7 @@ public class HasSecurityPolicyTest extends TestGitHubDataFetcherHolder {
 
     GitHubProject project = new GitHubProject("org", "test");
 
-    when(fetcher.localRepositoryFor(project)).thenReturn(repository);
+    fetcher.addForTesting(project, repository);
 
     HasSecurityPolicy provider = new HasSecurityPolicy(fetcher);
     provider.set(new GitHubProjectValueCache());
@@ -41,8 +40,7 @@ public class HasSecurityPolicyTest extends TestGitHubDataFetcherHolder {
     when(repository.file("SECURITY.md")).thenReturn(Optional.empty());
 
     GitHubProject project = new GitHubProject("org", "test");
-
-    when(fetcher.localRepositoryFor(project)).thenReturn(repository);
+    fetcher.addForTesting(project, repository);
 
     HasSecurityPolicy provider = new HasSecurityPolicy(fetcher);
     provider.set(new GitHubProjectValueCache());

@@ -8,17 +8,18 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.sap.sgs.phosphor.fosstars.TestGitHubDataFetcherHolder;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import org.eclipse.jgit.lib.Repository;
 import org.junit.Test;
 import org.kohsuke.github.GHRepository;
-import org.kohsuke.github.GitHub;
 
 public class GitHubDataFetcherTest extends TestGitHubDataFetcherHolder  {
 
@@ -56,12 +57,26 @@ public class GitHubDataFetcherTest extends TestGitHubDataFetcherHolder  {
 
   @Test
   public void testShouldUpdate() throws IOException {
-    GitHubDataFetcher fetcher = new GitHubDataFetcher(mock(GitHub.class));
     Date now = Date.from(Instant.now());
     Duration twoDays = Duration.ofDays(2);
     fetcher.pullAfter(twoDays);
     Date threeDaysAgo = Date.from(Instant.now().minus(3, ChronoUnit.DAYS));
-    assertTrue(fetcher.shouldUpdate(new LocalRepository(Paths.get("."), threeDaysAgo)));
-    assertFalse(fetcher.shouldUpdate(new LocalRepository(Paths.get("."), now)));
+
+    Path path = Paths.get("test");
+
+    Repository repository = mock(Repository.class);
+    when(repository.getDirectory()).thenReturn(path.resolve(".git").toFile());
+
+    LocalRepository outdatedRepository = new LocalRepository(
+        new LocalRepositoryInfo(
+            path, threeDaysAgo, new URL("https://scm/org/test")),
+        repository);
+    assertTrue(fetcher.shouldUpdate(outdatedRepository));
+
+    LocalRepository freshRepository = new LocalRepository(
+        new LocalRepositoryInfo(
+            path, now, new URL("https://scm/org/test")),
+        repository);
+    assertFalse(fetcher.shouldUpdate(freshRepository));
   }
 }

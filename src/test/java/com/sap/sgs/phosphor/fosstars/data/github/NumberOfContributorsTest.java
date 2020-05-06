@@ -7,7 +7,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.sap.sgs.phosphor.fosstars.TestGitHubDataFetcherHolder;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
@@ -42,7 +41,7 @@ public class NumberOfContributorsTest extends TestGitHubDataFetcherHolder {
 
     GitHubProject project = new GitHubProject("org", "test");
 
-    when(fetcher.localRepositoryFor(project)).thenReturn(repository);
+    fetcher.addForTesting(project, repository);
 
     NumberOfContributors provider = new NumberOfContributors(fetcher);
 

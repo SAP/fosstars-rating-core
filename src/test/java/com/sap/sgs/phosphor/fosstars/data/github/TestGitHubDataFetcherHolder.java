@@ -1,11 +1,9 @@
-package com.sap.sgs.phosphor.fosstars;
+package com.sap.sgs.phosphor.fosstars.data.github;
 
 import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
-import com.sap.sgs.phosphor.fosstars.data.github.GitHubDataFetcher;
-import com.sap.sgs.phosphor.fosstars.data.github.LocalRepository;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.net.URL;
@@ -16,7 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.io.FileUtils;
-import org.eclipse.jgit.lib.Repository;
 import org.junit.After;
 import org.junit.Before;
 import org.kohsuke.github.GitHub;
@@ -75,20 +72,22 @@ public class TestGitHubDataFetcherHolder {
       super(github, base);
     }
 
-    @Override
-    protected LocalRepository clone(GitHubProject project, Path base) {
-      return spy(new LocalRepository(
-          base.resolve(project.organization().name()).resolve(project.name()),
-          mock(Repository.class)));
+    public void addForTesting(GitHubProject project, LocalRepository repository) {
+      localRepositories.put(project, repository);
     }
 
     @Override
-    protected Map<URL, LocalRepository> loadLocalRepositories() {
+    protected void clone(GitHubProject project, Path base) {
+      // do nothing
+    }
+
+    @Override
+    protected Map<URL, LocalRepositoryInfo> loadLocalRepositoriesInfo() {
       return new HashMap<>();
     }
 
     @Override
-    protected void storeLocalRepositories() {
+    protected void storeLocalRepositoriesInfo() {
       // do nothing
     }
   }
