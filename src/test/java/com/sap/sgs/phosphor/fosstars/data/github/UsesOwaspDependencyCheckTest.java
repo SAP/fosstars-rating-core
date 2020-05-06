@@ -3,7 +3,6 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 import static com.sap.sgs.phosphor.fosstars.data.github.UsesOwaspDependencyCheck.USES_OWASP_DEPENDENCY_CHECK;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -15,11 +14,8 @@ import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectValueCache;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Optional;
 import org.junit.Test;
-import org.kohsuke.github.GHContent;
-import org.kohsuke.github.GHRepository;
-import org.kohsuke.github.GitHub;
-
 
 public class UsesOwaspDependencyCheckTest extends TestGitHubDataFetcherHolder {
 
@@ -71,19 +67,15 @@ public class UsesOwaspDependencyCheckTest extends TestGitHubDataFetcherHolder {
   private UsesOwaspDependencyCheck createProvider(InputStream is, String filename)
       throws IOException {
 
-    GHContent content = mock(GHContent.class);
-    when(content.isFile()).thenReturn(true);
-    when(content.read()).thenReturn(is);
+    final LocalRepository repository = mock(LocalRepository.class);
+    when(repository.read(filename)).thenReturn(Optional.of(is));
 
-    GHRepository repository = mock(GHRepository.class);
-    when(repository.getFileContent(filename)).thenReturn(content);
+    GitHubProject project = new GitHubProject("org", "test");
 
-    GitHub github = mock(GitHub.class);
-    when(github.getRepository(any())).thenReturn(repository);
+    when(fetcher.localRepositoryFor(project)).thenReturn(repository);
 
     UsesOwaspDependencyCheck provider = new UsesOwaspDependencyCheck(fetcher);
     provider.set(new GitHubProjectValueCache());
-    provider.gitHubDataFetcher().repositoryCache().clear();
 
     return provider;
   }

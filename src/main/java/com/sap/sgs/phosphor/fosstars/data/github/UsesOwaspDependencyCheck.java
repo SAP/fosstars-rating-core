@@ -8,14 +8,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Optional;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Plugin;
 import org.apache.maven.model.ReportPlugin;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
-import org.kohsuke.github.GHContent;
-import org.kohsuke.github.GHFileNotFoundException;
-import org.kohsuke.github.GHRepository;
 
 /**
  * This data provider checks if an open-source project uses OWASP Dependency Check Maven plugin to
@@ -46,7 +44,7 @@ public class UsesOwaspDependencyCheck extends CachedSingleFeatureGitHubDataProvi
   @Override
   protected Value<Boolean> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out if the project uses OWASP Dependency Check ...");
-    GHRepository repository = fetcher.repositoryFor(project);
+    LocalRepository repository = fetcher.localRepositoryFor(project);
     boolean answer = checkMaven(repository) || checkGradle(repository);
     return USES_OWASP_DEPENDENCY_CHECK.value(answer);
   }
@@ -57,19 +55,14 @@ public class UsesOwaspDependencyCheck extends CachedSingleFeatureGitHubDataProvi
    * @param repository The project's repository.
    * @return True if the project uses the plugin, false otherwise.
    */
-  private boolean checkMaven(GHRepository repository) throws IOException {
-    GHContent content;
-    try {
-      content = repository.getFileContent("pom.xml");
-    } catch (GHFileNotFoundException e) {
+  private boolean checkMaven(LocalRepository repository) throws IOException {
+    Optional<InputStream> content = repository.read("pom.xml");
+
+    if (!content.isPresent()) {
       return false;
     }
 
-    if (content == null || !content.isFile()) {
-      return false;
-    }
-
-    Model model = readModel(content);
+    Model model = readModel(content.get());
 
     if (model.getBuild() != null) {
       for (Plugin plugin : model.getBuild().getPlugins()) {
@@ -96,19 +89,14 @@ public class UsesOwaspDependencyCheck extends CachedSingleFeatureGitHubDataProvi
    * @param repository The project's repository.
    * @return True if the project uses the plugin, false otherwise.
    */
-  private boolean checkGradle(GHRepository repository) throws IOException {
-    GHContent content;
-    try {
-      content = repository.getFileContent("build.gradle");
-    } catch (GHFileNotFoundException e) {
+  private boolean checkGradle(LocalRepository repository) throws IOException {
+    Optional<InputStream> content = repository.read("build.gradle");
+
+    if (!content.isPresent()) {
       return false;
     }
 
-    if (content == null || !content.isFile()) {
-      return false;
-    }
-
-    try (BufferedReader reader = new BufferedReader(new InputStreamReader(content.read()))) {
+    try (BufferedReader reader = new BufferedReader(new InputStreamReader(content.get()))) {
       String line;
       while ((line = reader.readLine()) != null) {
         if (line.trim().contains("org.owasp:dependency-check-gradle")) {
@@ -127,13 +115,11 @@ public class UsesOwaspDependencyCheck extends CachedSingleFeatureGitHubDataProvi
    * @return A {@link Model} which represents the pom.xml file.
    * @throws IOException If something went wrong.
    */
-  private static Model readModel(GHContent content) throws IOException {
-    try (InputStream is = content.read()) {
-      try {
-        return new MavenXpp3Reader().read(is);
-      } catch (XmlPullParserException e) {
-        throw new IOException(e);
-      }
+  private static Model readModel(InputStream content) throws IOException {
+    try {
+      return new MavenXpp3Reader().read(content);
+    } catch (XmlPullParserException e) {
+      throw new IOException(e);
     }
   }
 
