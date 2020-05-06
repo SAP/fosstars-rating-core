@@ -20,6 +20,7 @@ import com.sap.sgs.phosphor.fosstars.data.github.ScansForVulnerableDependencies;
 import com.sap.sgs.phosphor.fosstars.data.github.UsesDependabot;
 import com.sap.sgs.phosphor.fosstars.data.github.UsesGithubForDevelopment;
 import com.sap.sgs.phosphor.fosstars.data.github.UsesNoHttpTool;
+import com.sap.sgs.phosphor.fosstars.data.github.UsesSanitizers;
 import com.sap.sgs.phosphor.fosstars.data.github.UsesSignedCommits;
 import com.sap.sgs.phosphor.fosstars.data.interactive.AskAboutSecurityTeam;
 import com.sap.sgs.phosphor.fosstars.data.interactive.AskAboutUnpatchedVulnerabilities;
@@ -128,6 +129,7 @@ class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
         new UsesNoHttpTool(fetcher),
         new UsesGithubForDevelopment(fetcher),
         new ScansForVulnerableDependencies(fetcher),
+        new UsesSanitizers(fetcher),
 
         // currently interactive data provider have to be added to the end, see issue #133
         new AskAboutSecurityTeam<>(),

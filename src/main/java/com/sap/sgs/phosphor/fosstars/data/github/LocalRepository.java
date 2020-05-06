@@ -14,6 +14,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import org.apache.commons.io.IOUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -198,6 +200,20 @@ public class LocalRepository implements AutoCloseable {
     }
 
     return Optional.of(Files.newInputStream(path));
+  }
+
+  /**
+   * Looks for files in the repository.
+   *
+   * @param criteria Defines which files should be returned.
+   * @return A list of files.
+   * @throws IOException If something went wrong.
+   */
+  public List<Path> files(Predicate<Path> criteria) throws IOException {
+    Objects.requireNonNull(criteria, "Oh no! Search criteria is null!");
+    return Files.walk(info().path())
+        .filter(criteria)
+        .collect(Collectors.toList());
   }
 
   @Override
