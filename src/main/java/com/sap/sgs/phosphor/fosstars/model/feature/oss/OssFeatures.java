@@ -109,18 +109,25 @@ public class OssFeatures {
       = new BooleanFeature("If an open-source project scanned in Coverity Scan project");
 
   /**
-   * Shows if an open-source project uses AddressSanitizer,
-   * for example, for running tests, fuzzing, and so on.
+   * Shows if an open-source project uses
+   * <a href="https://github.com/google/sanitizers/wiki/AddressSanitizer">AddressSanitizer</a>.
    */
   public static final Feature<Boolean> USES_ADDRESS_SANITIZER
-      = new BooleanFeature("If an open-source project uses AddressSanitizer (ASan)");
+      = new BooleanFeature("If an open-source project uses AddressSanitizer");
 
   /**
-   * Shows if an open-source project uses UndefinedBehaviorSanitizer,
-   * for example, for running tests, fuzzing, and so on.
+   * Shows if an open-source project uses
+   * <a href="https://github.com/google/sanitizers/wiki/MemorySanitizer">MemorySanitizer</a>.
+   */
+  public static final Feature<Boolean> USES_MEMORY_SANITIZER
+      = new BooleanFeature("If an open-source project uses MemorySanitizer");
+
+  /**
+   * Shows if an open-source project uses
+   * <a href="https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html">UndefinedBehaviorSanitizer</a>.
    */
   public static final Feature<Boolean> USES_UNDEFINED_BEHAVIOR_SANITIZER
-      = new BooleanFeature("If an open-source project uses UndefinedBehaviorSanitizer (UBSan)");
+      = new BooleanFeature("If an open-source project uses UndefinedBehaviorSanitizer");
 
   /**
    * Shows if an open-source project is added to Google's open-source-Fuzz project
