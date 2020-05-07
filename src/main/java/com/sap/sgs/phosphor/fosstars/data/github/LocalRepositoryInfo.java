@@ -2,11 +2,14 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.math.BigInteger;
 import java.net.URL;
 import java.nio.file.Path;
 import java.util.Date;
 import java.util.Objects;
+import org.apache.commons.io.FileUtils;
 
 /**
  * The class holds info about a local repository.
@@ -27,6 +30,12 @@ public class LocalRepositoryInfo {
    * A URL to the repository.
    */
   private final URL url;
+
+  /**
+   * Holds a size of repository (may be outdated).
+   */
+  @JsonIgnore
+  private BigInteger cachedRepositorySize;
 
   /**
    * Initializes a repository.
@@ -80,5 +89,24 @@ public class LocalRepositoryInfo {
   @JsonGetter("url")
   public URL url() {
     return url;
+  }
+
+  /**
+   * Returns a cached repository size if it's available. If not, it calculates the size.
+   */
+  @JsonIgnore
+  public BigInteger cachedRepositorySize() {
+    if (cachedRepositorySize != null) {
+      return cachedRepositorySize;
+    }
+    return repositorySize();
+  }
+
+  /**
+   * Returns a size of the repository.
+   */
+  @JsonIgnore
+  public BigInteger repositorySize() {
+    return cachedRepositorySize = FileUtils.sizeOfAsBigInteger(path.toFile());
   }
 }
