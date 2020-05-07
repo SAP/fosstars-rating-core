@@ -372,7 +372,7 @@ public class GitHubDataFetcher {
       if (!Files.exists(info.path())) {
         continue;
       }
-      total = total.add(FileUtils.sizeOfAsBigInteger(info.path().toFile()));
+      total = total.add(info.repositorySize());
     }
 
     for (Map.Entry<URL, LocalRepositoryInfo> entry : localRepositoriesInfo.entrySet()) {
