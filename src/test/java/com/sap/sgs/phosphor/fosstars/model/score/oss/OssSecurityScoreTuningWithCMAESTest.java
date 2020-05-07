@@ -13,11 +13,14 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.PACKAG
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.PROJECT_START_DATE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_ADDRESS_SANITIZER;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_DEPENDABOT;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GITHUB_FOR_DEVELOPMENT;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_MEMORY_SANITIZER;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_NOHTTP;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SIGNED_COMMITS;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_UNDEFINED_BEHAVIOR_SANITIZER;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 import static com.sap.sgs.phosphor.fosstars.model.qa.TestVectorBuilder.newTestVector;
@@ -70,6 +73,9 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(UnknownValue.of(USES_GITHUB_FOR_DEVELOPMENT))
           .set(UnknownValue.of(LANGUAGES))
           .set(UnknownValue.of(PACKAGE_MANAGERS))
+          .set(UnknownValue.of(USES_ADDRESS_SANITIZER))
+          .set(UnknownValue.of(USES_MEMORY_SANITIZER))
+          .set(UnknownValue.of(USES_UNDEFINED_BEHAVIOR_SANITIZER))
           .expectedScore(DoubleInterval.closed(Score.MIN, 0.1))
           .alias("one")
           .make(),
@@ -96,6 +102,9 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(USES_GITHUB_FOR_DEVELOPMENT.value(false))
           .set(LANGUAGES.value(Languages.of(OTHER)))
           .set(PACKAGE_MANAGERS.unknown())
+          .set(USES_ADDRESS_SANITIZER.value(false))
+          .set(USES_MEMORY_SANITIZER.value(false))
+          .set(USES_UNDEFINED_BEHAVIOR_SANITIZER.value(false))
           .expectedScore(DoubleInterval.closed(1.0, 4.0))
           .alias("two")
           .make(),
@@ -122,6 +131,9 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(USES_GITHUB_FOR_DEVELOPMENT.value(true))
           .set(LANGUAGES.value(Languages.of(JAVA)))
           .set(PACKAGE_MANAGERS.value(new PackageManagers(MAVEN)))
+          .set(USES_ADDRESS_SANITIZER.value(true))
+          .set(USES_MEMORY_SANITIZER.value(true))
+          .set(USES_UNDEFINED_BEHAVIOR_SANITIZER.value(true))
           .expectedScore(DoubleInterval.init().from(9.0).to(Score.MAX).make())
           .alias("three")
           .make()

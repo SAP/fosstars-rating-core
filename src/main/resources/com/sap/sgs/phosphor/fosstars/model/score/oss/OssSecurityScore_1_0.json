@@ -28,6 +28,9 @@
     }, {
       "type" : "LgtmScore",
       "name" : "How a project addresses issues reported by LGTM"
+    }, {
+      "type" : "MemorySafetyTestingScore",
+      "name" : "How a project tests for memory-safety issues"
     } ]
   }, {
     "type" : "ProjectPopularityScore",

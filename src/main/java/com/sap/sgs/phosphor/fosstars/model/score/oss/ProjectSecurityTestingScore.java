@@ -12,6 +12,7 @@ import java.io.InputStream;
  *  <li>{@link DependencyScanScore}</li>
  *  <li>{@link LgtmScore}</li>
  *  <li>{@link NoHttpToolScore}</li>
+ *  <li>{@link MemorySafetyTestingScore}</li>
  * </ul>
  * There is plenty room for improvements.
  * The score can take into account a lot of other information.
@@ -25,7 +26,8 @@ public class ProjectSecurityTestingScore extends AverageCompositeScore {
     super("How well security testing is done for an open-source project",
         new DependencyScanScore(),
         new LgtmScore(),
-        new NoHttpToolScore());
+        new NoHttpToolScore(),
+        new MemorySafetyTestingScore());
   }
 
   /**

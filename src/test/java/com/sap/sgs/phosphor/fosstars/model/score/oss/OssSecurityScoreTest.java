@@ -13,11 +13,14 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.PACKAG
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.PROJECT_START_DATE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_ADDRESS_SANITIZER;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_DEPENDABOT;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GITHUB_FOR_DEVELOPMENT;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_MEMORY_SANITIZER;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_NOHTTP;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SIGNED_COMMITS;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_UNDEFINED_BEHAVIOR_SANITIZER;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
@@ -90,6 +93,9 @@ public class OssSecurityScoreTest {
         USES_DEPENDABOT.value(true),
         USES_GITHUB_FOR_DEVELOPMENT.value(true),
         LANGUAGES.value(Languages.of(JAVA)),
+        USES_ADDRESS_SANITIZER.unknown(),
+        USES_MEMORY_SANITIZER.unknown(),
+        USES_UNDEFINED_BEHAVIOR_SANITIZER.unknown(),
         PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)));
     ScoreValue scoreValue = score.calculate(values);
     assertTrue(Score.INTERVAL.contains(scoreValue.get()));

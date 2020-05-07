@@ -14,6 +14,8 @@ elements:
         name: "How a project addresses issues reported by LGTM"
       - type: "NoHttpToolScore"
         name: "If a project uses nohttp tool"
+      - type: "MemorySafetyTestingScore"
+        name: "How a project tests for memory-safety issues"
     value: 0.0
     weight: 1.0
     confidence: 10.0
@@ -98,6 +100,8 @@ elements:
         name: "How a project addresses issues reported by LGTM"
       - type: "NoHttpToolScore"
         name: "If a project uses nohttp tool"
+      - type: "MemorySafetyTestingScore"
+        name: "How a project tests for memory-safety issues"
     value: 0.0
     weight: 1.0
     confidence: 10.0
@@ -191,6 +195,8 @@ elements:
         name: "How a project addresses issues reported by LGTM"
       - type: "NoHttpToolScore"
         name: "If a project uses nohttp tool"
+      - type: "MemorySafetyTestingScore"
+        name: "How a project tests for memory-safety issues"
     value: 5.0
     weight: 1.0
     confidence: 10.0
@@ -266,6 +272,8 @@ elements:
         name: "How a project addresses issues reported by LGTM"
       - type: "NoHttpToolScore"
         name: "If a project uses nohttp tool"
+      - type: "MemorySafetyTestingScore"
+        name: "How a project tests for memory-safety issues"
     value: 0.0
     weight: 1.0
     confidence: 10.0
@@ -336,7 +344,7 @@ elements:
   expectedLabel: null
   alias: "test_vector_3"
 
-
+#
 - type: "StandardTestVector"
   values:
   - type: "ScoreValue"
@@ -350,6 +358,8 @@ elements:
         name: "How a project addresses issues reported by LGTM"
       - type: "NoHttpToolScore"
         name: "If a project uses nohttp tool"
+      - type: "MemorySafetyTestingScore"
+        name: "How a project tests for memory-safety issues"
     value: 0.0
     weight: 1.0
     confidence: 10.0
@@ -434,6 +444,8 @@ elements:
         name: "How a project addresses issues reported by LGTM"
       - type: "NoHttpToolScore"
         name: "If a project uses nohttp tool"
+      - type: "MemorySafetyTestingScore"
+        name: "How a project tests for memory-safety issues"
     value: 8.0
     weight: 1.0
     confidence: 10.0
@@ -527,6 +539,8 @@ elements:
         name: "How a project addresses issues reported by LGTM"
       - type: "NoHttpToolScore"
         name: "If a project uses nohttp tool"
+      - type: "MemorySafetyTestingScore"
+        name: "How a project tests for memory-safety issues"
     value: 10.0
     weight: 1.0
     confidence: 10.0
@@ -602,6 +616,8 @@ elements:
         name: "How a project addresses issues reported by LGTM"
       - type: "NoHttpToolScore"
         name: "If a project uses nohttp tool"
+      - type: "MemorySafetyTestingScore"
+        name: "How a project tests for memory-safety issues"
     value: 0.0
     weight: 1.0
     confidence: 10.0
@@ -695,6 +711,8 @@ elements:
         name: "How a project addresses issues reported by LGTM"
       - type: "NoHttpToolScore"
         name: "If a project uses nohttp tool"
+      - type: "MemorySafetyTestingScore"
+        name: "How a project tests for memory-safety issues"
     value: 10.0
     weight: 1.0
     confidence: 10.0
@@ -779,6 +797,8 @@ elements:
         name: "How a project addresses issues reported by LGTM"
       - type: "NoHttpToolScore"
         name: "If a project uses nohttp tool"
+      - type: "MemorySafetyTestingScore"
+        name: "How a project tests for memory-safety issues"
     value: 10.0
     weight: 1.0
     confidence: 10.0

@@ -14,14 +14,18 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.PACKAG
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.PROJECT_START_DATE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_ADDRESS_SANITIZER;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_DEPENDABOT;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GITHUB_FOR_DEVELOPMENT;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_MEMORY_SANITIZER;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_NOHTTP;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SIGNED_COMMITS;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_UNDEFINED_BEHAVIOR_SANITIZER;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
+import static com.sap.sgs.phosphor.fosstars.model.value.Language.C;
 import static com.sap.sgs.phosphor.fosstars.model.value.Language.JAVA;
 import static com.sap.sgs.phosphor.fosstars.model.value.PackageManager.GRADLE;
 import static com.sap.sgs.phosphor.fosstars.model.value.PackageManager.MAVEN;
@@ -46,7 +50,7 @@ import org.junit.Test;
 public class PrettyPrinterTest {
 
   @Test
-  public void print() {
+  public void testPrint() {
     OssSecurityRating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
     Set<Value> values = setOf(
         SUPPORTED_BY_COMPANY.value(false),
@@ -68,7 +72,10 @@ public class PrettyPrinterTest {
         USES_GITHUB_FOR_DEVELOPMENT.value(false),
         USES_NOHTTP.value(false),
         USES_DEPENDABOT.value(false),
-        LANGUAGES.value(Languages.of(JAVA)),
+        USES_ADDRESS_SANITIZER.value(false),
+        USES_MEMORY_SANITIZER.value(false),
+        USES_UNDEFINED_BEHAVIOR_SANITIZER.value(false),
+        LANGUAGES.value(Languages.of(C)),
         PACKAGE_MANAGERS.value(new PackageManagers(MAVEN)));
     
     RatingValue ratingValue = rating.calculate(values);
@@ -83,7 +90,8 @@ public class PrettyPrinterTest {
       assertTrue(text.contains(PrettyPrinter.nameOf(value.feature())));
     }
     for (Feature feature : rating.allFeatures()) {
-      assertTrue(text.contains(PrettyPrinter.nameOf(feature)));
+      assertTrue(String.format("'%s' feature should be there!", feature.name()),
+          text.contains(PrettyPrinter.nameOf(feature)));
     }
     assertTrue(text.contains("Value"));
     assertTrue(text.contains("Confidence"));
@@ -94,7 +102,7 @@ public class PrettyPrinterTest {
   }
 
   @Test
-  public void consistency() {
+  public void testConsistency() {
     OssSecurityRating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
     Set<Value> values = setOf(
         SUPPORTED_BY_COMPANY.value(false),
@@ -116,6 +124,9 @@ public class PrettyPrinterTest {
         USES_GITHUB_FOR_DEVELOPMENT.value(false),
         USES_NOHTTP.value(true),
         USES_DEPENDABOT.value(true),
+        USES_ADDRESS_SANITIZER.value(false),
+        USES_MEMORY_SANITIZER.value(false),
+        USES_UNDEFINED_BEHAVIOR_SANITIZER.value(false),
         LANGUAGES.value(Languages.of(JAVA)),
         PACKAGE_MANAGERS.value(new PackageManagers(GRADLE)));
     RatingValue ratingValue = rating.calculate(values);
