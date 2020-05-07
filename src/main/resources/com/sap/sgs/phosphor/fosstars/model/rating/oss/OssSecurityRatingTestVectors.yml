@@ -26,6 +26,21 @@ defaults:
   languages:
     elements:
     - "JAVA"
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If an open-source project uses MemorySanitizer"
+  flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If an open-source project uses UndefinedBehaviorSanitizer"
+  flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If an open-source project uses AddressSanitizer"
+  flag: false
 
 # test vectors
 elements:

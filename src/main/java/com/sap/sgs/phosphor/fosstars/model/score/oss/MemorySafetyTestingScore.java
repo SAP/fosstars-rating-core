@@ -7,7 +7,6 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_U
 import static com.sap.sgs.phosphor.fosstars.model.value.Language.C;
 import static com.sap.sgs.phosphor.fosstars.model.value.Language.CPP;
 
-import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
@@ -17,10 +16,6 @@ import com.sap.sgs.phosphor.fosstars.model.value.Languages;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * <p>The score shows how an open-source project tests for memory-corruption issues such as
@@ -43,21 +38,25 @@ public class MemorySafetyTestingScore extends FeatureBasedScore {
   private static final Languages UNSAFE_LANGUAGES = Languages.of(C, CPP);
 
   /**
-   * Defines points for using a sanitizer.
+   * How the score increases for a project that uses AddressSanitizer.
    */
-  private static final Map<Feature, Double> POINTS = new HashMap<>();
+  private static final double POINTS_FOR_ADDRESS_SANITIZER = 7.0;
 
-  static {
-    POINTS.put(USES_ADDRESS_SANITIZER, 7.0);
-    POINTS.put(USES_MEMORY_SANITIZER, 1.5);
-    POINTS.put(USES_UNDEFINED_BEHAVIOR_SANITIZER, 1.5);
-  }
+  /**
+   * How the score increases for a project that uses MemorySanitizer.
+   */
+  private static final double POINTS_FOR_MEMORY_SANITIZER = 1.5;
+
+  /**
+   * How the score increases for a project that uses UndefinedBehaviorSanitizer.
+   */
+  private static final double POINTS_FOR_UNDEFINED_BEHAVIOR_SANITIZER = 1.5;
 
   /**
    * Initializes a new score.
    */
   MemorySafetyTestingScore() {
-    super("How a project tests for memory-corruption issues",
+    super("How a project tests for memory-safety issues",
         LANGUAGES,
         USES_ADDRESS_SANITIZER,
         USES_MEMORY_SANITIZER,
@@ -67,25 +66,28 @@ public class MemorySafetyTestingScore extends FeatureBasedScore {
   @Override
   public ScoreValue calculate(Value... values) {
     Value<Languages> languages = find(LANGUAGES, values);
+    Value<Boolean> usesAddressSanitizer = find(USES_ADDRESS_SANITIZER, values);
+    Value<Boolean> usesMemorySanitizer = find(USES_MEMORY_SANITIZER, values);
+    Value<Boolean> usesUndefinedBehaviorSanitizer = find(USES_UNDEFINED_BEHAVIOR_SANITIZER, values);
 
-    ScoreValue scoreValue = scoreValue(MIN, languages);
+    ScoreValue scoreValue = scoreValue(MIN,
+        languages, usesAddressSanitizer, usesMemorySanitizer, usesUndefinedBehaviorSanitizer);
 
     boolean applicable = languages.isUnknown() || languages.get().containsAnyOf(UNSAFE_LANGUAGES);
     if (!applicable) {
       return scoreValue.makeNotApplicable();
     }
 
-    List<Value<Boolean>> interestingValues = Arrays.asList(
-        find(USES_ADDRESS_SANITIZER, values),
-        find(USES_MEMORY_SANITIZER, values),
-        find(USES_UNDEFINED_BEHAVIOR_SANITIZER, values)
-    );
+    if (usesAddressSanitizer.orElse(Boolean.FALSE)) {
+      scoreValue.increase(POINTS_FOR_ADDRESS_SANITIZER);
+    }
 
-    for (Value<Boolean> value : interestingValues) {
-      if (value.orElse(Boolean.FALSE)) {
-        scoreValue.increase(POINTS.get(value.feature()));
-      }
-      scoreValue.usedValues(value);
+    if (usesMemorySanitizer.orElse(Boolean.FALSE)) {
+      scoreValue.increase(POINTS_FOR_MEMORY_SANITIZER);
+    }
+
+    if (usesUndefinedBehaviorSanitizer.orElse(Boolean.FALSE)) {
+      scoreValue.increase(POINTS_FOR_UNDEFINED_BEHAVIOR_SANITIZER);
     }
 
     return scoreValue;

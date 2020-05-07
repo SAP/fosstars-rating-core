@@ -27,7 +27,8 @@ public class ProjectSecurityTestingScoreTest {
         setOf(
             PROJECT_SECURITY_TESTING.score(LgtmScore.class).value(Score.MIN),
             PROJECT_SECURITY_TESTING.score(DependencyScanScore.class).value(Score.MIN),
-            PROJECT_SECURITY_TESTING.score(NoHttpToolScore.class).value(Score.MIN)));
+            PROJECT_SECURITY_TESTING.score(NoHttpToolScore.class).value(Score.MIN),
+            PROJECT_SECURITY_TESTING.score(MemorySafetyTestingScore.class).value(Score.MIN)));
 
     assertScore(
         Score.INTERVAL,
@@ -35,7 +36,8 @@ public class ProjectSecurityTestingScoreTest {
         setOf(
             PROJECT_SECURITY_TESTING.score(LgtmScore.class).value(Score.MAX),
             PROJECT_SECURITY_TESTING.score(DependencyScanScore.class).value(Score.MAX),
-            PROJECT_SECURITY_TESTING.score(NoHttpToolScore.class).value(Score.MAX)));
+            PROJECT_SECURITY_TESTING.score(NoHttpToolScore.class).value(Score.MAX),
+            PROJECT_SECURITY_TESTING.score(MemorySafetyTestingScore.class).value(Score.MAX)));
   }
 
   @Test
@@ -43,7 +45,8 @@ public class ProjectSecurityTestingScoreTest {
     ScoreValue value = PROJECT_SECURITY_TESTING.calculate(
         PROJECT_SECURITY_TESTING.score(LgtmScore.class).value(Score.MAX / 3),
         PROJECT_SECURITY_TESTING.score(DependencyScanScore.class).value(Score.MAX / 5),
-        PROJECT_SECURITY_TESTING.score(NoHttpToolScore.class).value(Score.MAX / 2));
+        PROJECT_SECURITY_TESTING.score(NoHttpToolScore.class).value(Score.MAX / 2),
+        PROJECT_SECURITY_TESTING.score(MemorySafetyTestingScore.class).value(Score.MAX / 4));
 
     assertTrue(value.score().description().isEmpty());
     assertTrue(value.explanation().isEmpty());

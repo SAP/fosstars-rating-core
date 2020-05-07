@@ -30,6 +30,15 @@ elements:
     confidence: 10.0
     usedValues: []
     explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "MemorySafetyTestingScore"
+      name: "How a project tests for memory-safety issues"
+    value: 0.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
   expectedScore:
     type: "DoubleInterval"
     from: 0.0
@@ -66,7 +75,16 @@ elements:
     score:
       type: "NoHttpToolScore"
       name: "If a project uses nohttp tool"
-    value: 10.0
+    value: 9.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "MemorySafetyTestingScore"
+      name: "How a project tests for memory-safety issues"
+    value: 5.0
     weight: 1.0
     confidence: 10.0
     usedValues: []
@@ -98,7 +116,7 @@ elements:
     score:
       type: "LgtmScore"
       name: "How a project addresses issues reported by LGTM"
-    value: 5.0
+    value: 4.0
     weight: 1.0
     confidence: 10.0
     usedValues: []
@@ -107,7 +125,16 @@ elements:
     score:
       type: "NoHttpToolScore"
       name: "If a project uses nohttp tool"
-    value: 0.0
+    value: 1.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "MemorySafetyTestingScore"
+      name: "How a project tests for memory-safety issues"
+    value: 2.0
     weight: 1.0
     confidence: 10.0
     usedValues: []
@@ -153,6 +180,15 @@ elements:
     confidence: 10.0
     usedValues: []
     explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "MemorySafetyTestingScore"
+      name: "How a project tests for memory-safety issues"
+    value: 5.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
   expectedScore:
     type: "DoubleInterval"
     from: 3.0
@@ -189,6 +225,15 @@ elements:
     score:
       type: "NoHttpToolScore"
       name: "If a project uses nohttp tool"
+    value: 10.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "MemorySafetyTestingScore"
+      name: "How a project tests for memory-safety issues"
     value: 10.0
     weight: 1.0
     confidence: 10.0
@@ -236,6 +281,15 @@ elements:
       usedValues: []
       explanation: []
       isNotApplicable: true
+    - type: "ScoreValue"
+      score:
+        type: "MemorySafetyTestingScore"
+        name: "How a project tests for memory-safety issues"
+      value: 10.0
+      weight: 1.0
+      confidence: 10.0
+      usedValues: []
+      explanation: []
   expectedScore:
     type: "DoubleInterval"
     from: 5.0
@@ -246,3 +300,54 @@ elements:
     positiveInfinity: false
   expectedLabel: null
   alias: "nohttp_tool_not_applicable"
+
+  # NoHttpToolScore is N/A
+- type: "StandardTestVector"
+  values:
+    - type: "ScoreValue"
+      score:
+        type: "DependencyScanScore"
+        name: "How a project scans its dependencies for vulnerabilities"
+      value: 3.0
+      weight: 1.0
+      confidence: 10.0
+      usedValues: []
+      explanation: []
+    - type: "ScoreValue"
+      score:
+        type: "LgtmScore"
+        name: "How a project addresses issues reported by LGTM"
+      value: 7.0
+      weight: 1.0
+      confidence: 10.0
+      usedValues: []
+      explanation: []
+    - type: "ScoreValue"
+      score:
+        type: "NoHttpToolScore"
+        name: "If a project uses nohttp tool"
+      value: 6.0
+      weight: 1.0
+      confidence: 0.0
+      usedValues: []
+      explanation: []
+    - type: "ScoreValue"
+      score:
+        type: "MemorySafetyTestingScore"
+        name: "How a project tests for memory-safety issues"
+      value: 0.0
+      weight: 1.0
+      confidence: 10.0
+      usedValues: []
+      explanation: []
+      isNotApplicable: true
+  expectedScore:
+    type: "DoubleInterval"
+    from: 5.0
+    openLeft: false
+    negativeInfinity: false
+    to: 10.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "memory_safety_not_applicable"
