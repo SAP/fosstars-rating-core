@@ -1,5 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.data.github;
 
+import static com.sap.sgs.phosphor.fosstars.maven.MavenUtils.readModel;
+
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.feature.BooleanFeature;
@@ -12,8 +14,6 @@ import java.util.Optional;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Plugin;
 import org.apache.maven.model.ReportPlugin;
-import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
-import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 
 /**
  * This data provider checks if an open-source project uses OWASP Dependency Check Maven plugin to
@@ -109,21 +109,6 @@ public class UsesOwaspDependencyCheck extends CachedSingleFeatureGitHubDataProvi
     }
 
     return false;
-  }
-
-  /**
-   * Parses a pom.xml file.
-   *
-   * @param content The content of the pom.xml file.
-   * @return A {@link Model} which represents the pom.xml file.
-   * @throws IOException If something went wrong.
-   */
-  private static Model readModel(InputStream content) throws IOException {
-    try {
-      return new MavenXpp3Reader().read(content);
-    } catch (XmlPullParserException e) {
-      throw new IOException(e);
-    }
   }
 
   /**

@@ -17,7 +17,6 @@ import java.util.List;
  * It is based on a number of data providers:
  * <ul>
  *   <li>{@link UsesOwaspDependencyCheck}</li>
- *   <li>{@link UsesSnykDependencyCheck}</li>
  * </ul>
  */
 public class ScansForVulnerableDependencies extends CachedSingleFeatureGitHubDataProvider {
@@ -32,10 +31,8 @@ public class ScansForVulnerableDependencies extends CachedSingleFeatureGitHubDat
   public ScansForVulnerableDependencies(GitHubDataFetcher fetcher) {
     super(fetcher);
     providers = Arrays.asList(
-        new UsesOwaspDependencyCheck(fetcher),
-        new UsesSnykDependencyCheck(fetcher)
+        new UsesOwaspDependencyCheck(fetcher)
     );
-    // TODO: include UsesDependabot provider
   }
 
   @Override
