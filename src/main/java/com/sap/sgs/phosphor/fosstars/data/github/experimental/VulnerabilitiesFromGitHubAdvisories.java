@@ -1,5 +1,6 @@
 package com.sap.sgs.phosphor.fosstars.data.github.experimental;
 
+import static com.sap.sgs.phosphor.fosstars.maven.MavenUtils.readModel;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.date;
 import static com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.UNKNOWN_INTRODUCED_DATE;
 
@@ -20,7 +21,6 @@ import com.sap.sgs.phosphor.fosstars.model.value.Vulnerability;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.Resolution;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -28,8 +28,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.apache.maven.model.Model;
-import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
-import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GHFileNotFoundException;
 import org.kohsuke.github.GHRepository;
@@ -102,30 +100,13 @@ public class VulnerabilitiesFromGitHubAdvisories extends CachedSingleFeatureGitH
       return Optional.empty();
     }
 
-    Model model = readModel(content);
+    Model model = readModel(content.read());
 
     String groupId =
         model.getGroupId() != null ? model.getGroupId() : model.getParent().getGroupId();
     String artifactId = model.getArtifactId();
 
     return Optional.ofNullable(String.format("%s:%s", groupId, artifactId));
-  }
-
-  /**
-   * Parses a pom.xml file.
-   *
-   * @param content The content of the pom.xml file.
-   * @return A {@link Model} which represents the pom.xml file.
-   * @throws IOException If something went wrong.
-   */
-  private static Model readModel(GHContent content) throws IOException {
-    try (InputStream is = content.read()) {
-      try {
-        return new MavenXpp3Reader().read(is);
-      } catch (XmlPullParserException e) {
-        throw new IOException(e);
-      }
-    }
   }
 
   /**

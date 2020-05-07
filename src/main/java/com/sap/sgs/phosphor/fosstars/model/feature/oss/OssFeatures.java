@@ -2,7 +2,6 @@ package com.sap.sgs.phosphor.fosstars.model.feature.oss;
 
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.feature.BooleanFeature;
-import com.sap.sgs.phosphor.fosstars.model.feature.BoundedIntegerFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.DateFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.LgtmGradeFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.PositiveIntegerFeature;
@@ -37,19 +36,6 @@ public class OssFeatures {
    */
   public static final Feature<Integer> NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS
       = new PositiveIntegerFeature("Number of contributors in the last three months");
-
-  /**
-   * Shows when the latest version of an open-source project was released.
-   */
-  public static final Feature<Date> DATE_OF_LATEST_RELEASE
-      = new DateFeature("Date of latest release");
-
-  /**
-   * Shows how many projects use an open-source project.
-   * For GitHub projects, the "used by" number may be used.
-   */
-  public static final Feature<Integer> NUMBER_OF_DEPENDENT_PROJECTS
-      = new PositiveIntegerFeature("Number of other projects which use an open-source project");
 
   /**
    * Shows if an open-source project has a dedicated security team. It may be a team
@@ -101,12 +87,10 @@ public class OssFeatures {
       = new PackageManagersFeature("A set of package managers");
 
   /**
-   * Shows if an open-source project has been scanned in Coverity Scan project.
-   * See <a href="https://scan.coverity.com/projects">https://scan.coverity.com/projects</a>.
-   * The project provides additions metrics which may be also useful.
+   * Shows if an open-source project uses <a href="https://find-sec-bugs.github.io/">FindSecBugs</a>.
    */
-  public static final Feature<Boolean> SCANNED_WITH_COVERITY
-      = new BooleanFeature("If an open-source project scanned in Coverity Scan project");
+  public static final Feature<Boolean> USES_FIND_SEC_BUGS
+      = new BooleanFeature("If an open-source project uses FindSecBugs");
 
   /**
    * Shows if an open-source project uses
@@ -181,19 +165,6 @@ public class OssFeatures {
    */
   public static final Feature<Integer> NUMBER_OF_WATCHERS_ON_GITHUB
       = new PositiveIntegerFeature("Number of watchers for a GitHub repository");
-
-  /**
-   * Shows if the vulnerability alerts feature is enabled for an open-source project on GitHub.
-   */
-  public static final Feature<Boolean> ENABLED_VULNERABILITY_ALERTS_ON_GITHUB
-      = new BooleanFeature("GitHub vulnerability alerts enabled");
-
-  /**
-   * Holds an overall health score for an open-source project on GitHub.
-   * See <a href="https://developer.github.com/v3/repos/community">https://developer.github.com/v3/repos/community</a>.
-   */
-  public static final Feature<Integer> GITHUB_OVERALL_HEALTH_SCORE
-      = new BoundedIntegerFeature("Overall health score for a GitHub repository", 0, 100);
 
   /**
    * Show how many collaborators an open-source project has on GitHub.

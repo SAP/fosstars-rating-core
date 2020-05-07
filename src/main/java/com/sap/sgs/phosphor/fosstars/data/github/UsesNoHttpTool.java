@@ -1,5 +1,6 @@
 package com.sap.sgs.phosphor.fosstars.data.github;
 
+import static com.sap.sgs.phosphor.fosstars.maven.MavenUtils.readModel;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_NOHTTP;
 
 import com.sap.sgs.phosphor.fosstars.model.Feature;
@@ -7,13 +8,10 @@ import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import org.apache.maven.model.Dependency;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Plugin;
-import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
-import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GHFileNotFoundException;
 import org.kohsuke.github.GHRepository;
@@ -67,7 +65,7 @@ public class UsesNoHttpTool extends CachedSingleFeatureGitHubDataProvider {
       return false;
     }
 
-    Model model = readModel(content);
+    Model model = readModel(content.read());
 
     if (model.getBuild() != null) {
       for (Plugin plugin : model.getBuild().getPlugins()) {
@@ -108,23 +106,6 @@ public class UsesNoHttpTool extends CachedSingleFeatureGitHubDataProvider {
     }
 
     return false;
-  }
-
-  /**
-   * Parses a pom.xml file.
-   *
-   * @param content The content of the pom.xml file.
-   * @return A {@link Model} which represents the pom.xml file.
-   * @throws IOException If something went wrong.
-   */
-  private static Model readModel(GHContent content) throws IOException {
-    try (InputStream is = content.read()) {
-      try {
-        return new MavenXpp3Reader().read(is);
-      } catch (XmlPullParserException e) {
-        throw new IOException(e);
-      }
-    }
   }
 
   /**
