@@ -62,7 +62,10 @@ public class UsesOwaspDependencyCheck extends CachedSingleFeatureGitHubDataProvi
       return false;
     }
 
-    Model model = readModel(content.get());
+    Model model;
+    try (InputStream is = content.get()) {
+      model = readModel(is);
+    }
 
     if (model.getBuild() != null) {
       for (Plugin plugin : model.getBuild().getPlugins()) {
