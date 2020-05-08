@@ -1,11 +1,11 @@
 package com.sap.sgs.phosphor.fosstars.nvd.data;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,19 +20,28 @@ import java.util.Map;
     "references",
     "description"
 })
+// the properties below are ignored because they are not used
+// that saves a bit of memory
+// when they become necessary, then can be enabled
+@JsonIgnoreProperties({
+    "problemtype",
+    "data_version",
+    "data_format",
+    "data_type"
+})
 public class CVE {
 
   @JsonProperty("data_type")
-  private String dataType;
+  private CVE.DataType dataType;
 
   @JsonProperty("data_format")
-  private String dataFormat;
+  private CVE.DataFormat dataFormat;
 
   @JsonProperty("data_version")
-  private String dataVersion;
+  private CVE.DataVersion dataVersion;
 
   @JsonProperty("CVE_data_meta")
-  private CVEDataMeta cveDataMeta;
+  private CveMetaData cveDataMetaData;
 
   @JsonProperty("affects")
   private Affects affects;
@@ -46,47 +55,14 @@ public class CVE {
   @JsonProperty("description")
   private Description description;
 
-  @JsonIgnore
-  private Map<String, Object> additionalProperties = new HashMap<>();
-
-  @JsonProperty("data_type")
-  public String getDataType() {
-    return dataType;
-  }
-
-  @JsonProperty("data_type")
-  public void setDataType(String dataType) {
-    this.dataType = dataType;
-  }
-
   @JsonProperty("data_format")
-  public String getDataFormat() {
+  public CVE.DataFormat getDataFormat() {
     return dataFormat;
   }
 
-  @JsonProperty("data_format")
-  public void setDataFormat(String dataFormat) {
-    this.dataFormat = dataFormat;
-  }
-
-  @JsonProperty("data_version")
-  public String getDataVersion() {
-    return dataVersion;
-  }
-
-  @JsonProperty("data_version")
-  public void setDataVersion(String dataVersion) {
-    this.dataVersion = dataVersion;
-  }
-
   @JsonProperty("CVE_data_meta")
-  public CVEDataMeta getCveDataMeta() {
-    return cveDataMeta;
-  }
-
-  @JsonProperty("CVE_data_meta")
-  public void setCveDataMeta(CVEDataMeta cveDataMeta) {
-    this.cveDataMeta = cveDataMeta;
+  public CveMetaData getCveDataMeta() {
+    return cveDataMetaData;
   }
 
   @JsonProperty("affects")
@@ -94,29 +70,9 @@ public class CVE {
     return affects;
   }
 
-  @JsonProperty("affects")
-  public void setAffects(Affects affects) {
-    this.affects = affects;
-  }
-
-  @JsonProperty("problemtype")
-  public ProblemType getProblemType() {
-    return problemType;
-  }
-
-  @JsonProperty("problemtype")
-  public void setProblemType(ProblemType problemType) {
-    this.problemType = problemType;
-  }
-
   @JsonProperty("references")
   public References getReferences() {
     return references;
-  }
-
-  @JsonProperty("references")
-  public void setReferences(References references) {
-    this.references = references;
   }
 
   @JsonProperty("description")
@@ -124,19 +80,123 @@ public class CVE {
     return description;
   }
 
-  @JsonProperty("description")
-  public void setDescription(Description description) {
-    this.description = description;
+  public enum DataFormat {
+
+    MITRE("MITRE");
+
+    private static final Map<String, CVE.DataFormat> CONSTANTS = new HashMap<>();
+
+    static {
+      for (CVE.DataFormat c : values()) {
+        CONSTANTS.put(c.value, c);
+      }
+    }
+
+    private final String value;
+
+    DataFormat(String value) {
+      this.value = value;
+    }
+
+    @JsonCreator
+    static CVE.DataFormat fromValue(String value) {
+      CVE.DataFormat constant = CONSTANTS.get(value);
+      if (constant == null) {
+        throw new IllegalArgumentException(value);
+      } else {
+        return constant;
+      }
+    }
+
+    @Override
+    public String toString() {
+      return this.value;
+    }
+
+    @JsonValue
+    public String value() {
+      return this.value;
+    }
+
   }
 
-  @JsonAnyGetter
-  public Map<String, Object> getAdditionalProperties() {
-    return this.additionalProperties;
+  public enum DataType {
+
+    CVE("CVE");
+
+    private static final Map<String, DataType> CONSTANTS = new HashMap<>();
+
+    static {
+      for (DataType c : values()) {
+        CONSTANTS.put(c.value, c);
+      }
+    }
+
+    private final String value;
+
+    DataType(String value) {
+      this.value = value;
+    }
+
+    @JsonCreator
+    static DataType fromValue(String value) {
+      DataType constant = CONSTANTS.get(value);
+      if (constant == null) {
+        throw new IllegalArgumentException(value);
+      } else {
+        return constant;
+      }
+    }
+
+    @Override
+    public String toString() {
+      return this.value;
+    }
+
+    @JsonValue
+    public String value() {
+      return this.value;
+    }
+
   }
 
-  @JsonAnySetter
-  public void setAdditionalProperty(String name, Object value) {
-    this.additionalProperties.put(name, value);
+  public enum DataVersion {
+
+    _4_0("4.0");
+
+    private static final Map<String, CVE.DataVersion> CONSTANTS = new HashMap<>();
+
+    static {
+      for (CVE.DataVersion c : values()) {
+        CONSTANTS.put(c.value, c);
+      }
+    }
+
+    private final String value;
+
+    DataVersion(String value) {
+      this.value = value;
+    }
+
+    @JsonCreator
+    static CVE.DataVersion fromValue(String value) {
+      CVE.DataVersion constant = CONSTANTS.get(value);
+      if (constant == null) {
+        throw new IllegalArgumentException(value);
+      } else {
+        return constant;
+      }
+    }
+
+    @Override
+    public String toString() {
+      return this.value;
+    }
+
+    @JsonValue
+    public String value() {
+      return this.value;
+    }
   }
 
 }

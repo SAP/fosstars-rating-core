@@ -1,5 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.model.feature.oss;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.sgs.phosphor.fosstars.model.Value;
@@ -23,8 +25,9 @@ public class VulnerabilitiesInProject extends AbstractFeature<Vulnerabilities> {
   /**
    * Initializes a new feature.
    */
-  public VulnerabilitiesInProject() {
-    super("Info about vulnerabilities in open-source project");
+  @JsonCreator
+  public VulnerabilitiesInProject(@JsonProperty("name") String name) {
+    super(name);
   }
 
   @Override

@@ -17,8 +17,7 @@ public class VulnerabilitiesInProjectTest {
 
   @Test
   public void value() {
-    VulnerabilitiesInProject feature = new VulnerabilitiesInProject();
-    assertEquals(OssFeatures.VULNERABILITIES, feature);
+    VulnerabilitiesInProject feature = new VulnerabilitiesInProject("test");
     assertNotNull(feature.name());
     Value<Vulnerabilities> value = feature.value(new Vulnerabilities(
         new Vulnerability("1", "test", CVSS.v3(5.1), Collections.emptyList(), UNPATCHED)));
@@ -34,7 +33,7 @@ public class VulnerabilitiesInProjectTest {
 
   @Test
   public void unknown() {
-    VulnerabilitiesInProject feature = new VulnerabilitiesInProject();
+    VulnerabilitiesInProject feature = new VulnerabilitiesInProject("test");
     Value value = feature.unknown();
     assertNotNull(value);
     assertTrue(value.isUnknown());

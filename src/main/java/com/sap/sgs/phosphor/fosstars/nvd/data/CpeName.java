@@ -4,21 +4,23 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+/**
+ * CPE name.
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "product_name",
-    "version"
+    "cpe22Uri",
+    "cpe23Uri",
+    "lastModifiedDate"
 })
-public class ProductData {
+public class CpeName {
 
-  @JsonProperty("product_name")
-  private String productName;
+  @JsonProperty("cpe22Uri")
+  private String cpe22Uri;
 
-  @JsonProperty("version")
-  private Version version;
+  @JsonProperty("cpe23Uri")
+  private String cpe23Uri;
 
-  @JsonProperty("product_name")
-  public String getProductName() {
-    return productName;
-  }
+  @JsonProperty("lastModifiedDate")
+  private String lastModifiedDate;
 }

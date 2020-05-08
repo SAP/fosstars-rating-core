@@ -3,7 +3,10 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 import com.sap.sgs.phosphor.fosstars.nvd.Matcher;
 import com.sap.sgs.phosphor.fosstars.nvd.data.Affects;
 import com.sap.sgs.phosphor.fosstars.nvd.data.CVE;
-import com.sap.sgs.phosphor.fosstars.nvd.data.CVEDataMeta;
+import com.sap.sgs.phosphor.fosstars.nvd.data.Configurations;
+import com.sap.sgs.phosphor.fosstars.nvd.data.CpeMatch;
+import com.sap.sgs.phosphor.fosstars.nvd.data.CveMetaData;
+import com.sap.sgs.phosphor.fosstars.nvd.data.Node;
 import com.sap.sgs.phosphor.fosstars.nvd.data.NvdEntry;
 import com.sap.sgs.phosphor.fosstars.nvd.data.ProductData;
 import com.sap.sgs.phosphor.fosstars.nvd.data.Vendor;
@@ -14,15 +17,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * This is a matcher that check if vendor data from an NVD entry matched to
- * a project's owner and name.
+ * A data matcher to search for entries in NVD for a GitHub project.
  */
-public class VendorDataMatcher implements Matcher {
+public class NvdEntryMatcher implements Matcher {
 
   /**
    * A logger.
    */
-  private static final Logger LOGGER = LogManager.getLogger(VendorDataMatcher.class);
+  private static final Logger LOGGER = LogManager.getLogger(NvdEntryMatcher.class);
 
   /**
    * A project to be checked.
@@ -35,8 +37,8 @@ public class VendorDataMatcher implements Matcher {
    * @param project The project.
    * @return The new matcher.
    */
-  public static VendorDataMatcher with(GitHubProject project) {
-    return new VendorDataMatcher(project);
+  public static NvdEntryMatcher entriesFor(GitHubProject project) {
+    return new NvdEntryMatcher(project);
   }
 
   /**
@@ -44,7 +46,7 @@ public class VendorDataMatcher implements Matcher {
    *
    * @param project A project to be checked.
    */
-  private VendorDataMatcher(GitHubProject project) {
+  private NvdEntryMatcher(GitHubProject project) {
     this.project = Objects.requireNonNull(project, "Null is not a project!");
   }
 
@@ -52,33 +54,75 @@ public class VendorDataMatcher implements Matcher {
   public boolean match(NvdEntry entry) {
     Objects.requireNonNull(entry, "NVD entry can't be null!");
 
+    if (match(entry.getConfigurations())) {
+      return true;
+    }
+
     CVE cve = entry.getCve();
     if (cve == null) {
       LOGGER.warn("No CVE in NVD entry");
       return false;
     }
 
-    CVEDataMeta meta = cve.getCveDataMeta();
+    CveMetaData meta = cve.getCveDataMeta();
     if (meta == null) {
       LOGGER.warn("No metadata in NVD entry");
       return false;
     }
 
-    String cveId = meta.getID();
+    String cveId = meta.getId();
     if (cveId == null) {
       LOGGER.warn("No CVE ID in NVD entry");
-      cveId = "unknown";
+      return false;
     }
 
-    Affects affects = cve.getAffects();
+    return match(cve.getAffects());
+  }
+
+  /**
+   * Returns true if one of the configurations matches the project, false otherwise.
+   */
+  private boolean match(Configurations configurations) {
+    if (configurations == null || configurations.getNodes() == null) {
+      return false;
+    }
+
+    for (Node node : configurations.getNodes()) {
+      if (node.getCpeMatches() == null) {
+        continue;
+      }
+
+      for (CpeMatch cpeMatch : node.getCpeMatches()) {
+        if (cpeMatch == null) {
+          continue;
+        }
+
+        if (match(cpeMatch.getCpe22Uri()) || match(cpeMatch.getCpe23Uri())) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Returns true if a string matches the project, false otherwise.
+   */
+  private boolean match(String string) {
+    return string != null && string.toLowerCase().contains(project.name());
+  }
+
+  /**
+   * Returns true if one of the entries in an Affects element match the project, false otherwise.
+   */
+  private boolean match(Affects affects) {
     if (affects == null) {
-      LOGGER.warn("No affects in NVD entry for {}", cveId);
       return false;
     }
 
     Vendor cveVendor = affects.getVendor();
     if (cveVendor == null) {
-      LOGGER.warn("No vendor in NVD entry for {}", cveId);
       return false;
     }
 

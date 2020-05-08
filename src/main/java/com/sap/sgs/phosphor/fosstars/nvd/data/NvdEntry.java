@@ -1,14 +1,13 @@
 package com.sap.sgs.phosphor.fosstars.nvd.data;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import java.util.HashMap;
-import java.util.Map;
 
+/**
+ * Defines a vulnerability in the NVD data feed.
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "cve",
@@ -17,14 +16,26 @@ import java.util.Map;
     "publishedDate",
     "lastModifiedDate"
 })
+// the properties below are ignored because they are not used
+// that saves a bit of memory
+// when they become necessary, then can be enabled
+@JsonIgnoreProperties({
+    "lastModifiedDate"
+})
 public class NvdEntry {
 
   @JsonProperty("cve")
   private CVE cve;
 
+  /**
+   * Defines the set of product configurations for a NVD applicability statement.
+   */
   @JsonProperty("configurations")
   private Configurations configurations;
 
+  /**
+   * Impact scores for a vulnerability as found on NVD.
+   */
   @JsonProperty("impact")
   private Impact impact;
 
@@ -33,9 +44,6 @@ public class NvdEntry {
 
   @JsonProperty("lastModifiedDate")
   private String lastModifiedDate;
-
-  @JsonIgnore
-  private Map<String, Object> additionalProperties = new HashMap<>();
 
   @JsonProperty("cve")
   public CVE getCve() {
@@ -47,54 +55,24 @@ public class NvdEntry {
     this.cve = cve;
   }
 
+  /**
+   * Defines the set of product configurations for a NVD applicability statement.
+   */
   @JsonProperty("configurations")
   public Configurations getConfigurations() {
     return configurations;
   }
 
-  @JsonProperty("configurations")
-  public void setConfigurations(Configurations configurations) {
-    this.configurations = configurations;
-  }
-
+  /**
+   * Impact scores for a vulnerability as found on NVD.
+   */
   @JsonProperty("impact")
   public Impact getImpact() {
     return impact;
-  }
-
-  @JsonProperty("impact")
-  public void setImpact(Impact impact) {
-    this.impact = impact;
   }
 
   @JsonProperty("publishedDate")
   public String getPublishedDate() {
     return publishedDate;
   }
-
-  @JsonProperty("publishedDate")
-  public void setPublishedDate(String publishedDate) {
-    this.publishedDate = publishedDate;
-  }
-
-  @JsonProperty("lastModifiedDate")
-  public String getLastModifiedDate() {
-    return lastModifiedDate;
-  }
-
-  @JsonProperty("lastModifiedDate")
-  public void setLastModifiedDate(String lastModifiedDate) {
-    this.lastModifiedDate = lastModifiedDate;
-  }
-
-  @JsonAnyGetter
-  public Map<String, Object> getAdditionalProperties() {
-    return this.additionalProperties;
-  }
-
-  @JsonAnySetter
-  public void setAdditionalProperty(String name, Object value) {
-    this.additionalProperties.put(name, value);
-  }
-
 }

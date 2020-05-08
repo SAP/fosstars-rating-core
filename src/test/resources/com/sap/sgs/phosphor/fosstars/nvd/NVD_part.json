@@ -1,0 +1,258 @@
+{
+  "CVE_data_type": "CVE",
+  "CVE_data_format": "MITRE",
+  "CVE_data_version": "4.0",
+  "CVE_data_numberOfCVEs": "8824",
+  "CVE_data_timestamp": "2020-04-02T08:25Z",
+  "CVE_Items": [
+    {
+      "cve" : {
+        "data_type" : "CVE",
+        "data_format" : "MITRE",
+        "data_version" : "4.0",
+        "CVE_data_meta" : {
+          "ID" : "CVE-2020-9547",
+          "ASSIGNER" : "cve@mitre.org"
+        },
+        "problemtype" : {
+          "problemtype_data" : [ {
+            "description" : [ {
+              "lang" : "en",
+              "value" : "CWE-502"
+            } ]
+          } ]
+        },
+        "references" : {
+          "reference_data" : [ {
+            "url" : "https://github.com/FasterXML/jackson-databind/issues/2634",
+            "name" : "https://github.com/FasterXML/jackson-databind/issues/2634",
+            "refsource" : "MISC",
+            "tags" : [ "Third Party Advisory" ]
+          }, {
+            "url" : "https://lists.apache.org/thread.html/r35d30db00440ef63b791c4b7f7acb036e14d4a23afa2a249cb66c0fd@%3Cissues.zookeeper.apache.org%3E",
+            "name" : "[zookeeper-issues] 20200308 [jira] [Commented] (ZOOKEEPER-3750) update jackson-databind to address CVE-2020-9547, CVE-2020-9548, CVE-2020-9546",
+            "refsource" : "MLIST",
+            "tags" : [ ]
+          }, {
+            "url" : "https://lists.apache.org/thread.html/r4accb2e0de9679174efd3d113a059bab71ff3ec53e882790d21c1cc1@%3Cnotifications.zookeeper.apache.org%3E",
+            "name" : "https://lists.apache.org/thread.html/r4accb2e0de9679174efd3d113a059bab71ff3ec53e882790d21c1cc1@%3Cnotifications.zookeeper.apache.org%3E",
+            "refsource" : "MISC",
+            "tags" : [ ]
+          }, {
+            "url" : "https://lists.apache.org/thread.html/r742ef70d126548dcf7de5be5779355c9d76a9aec71d7a9ef02c6398a@%3Cnotifications.zookeeper.apache.org%3E",
+            "name" : "https://lists.apache.org/thread.html/r742ef70d126548dcf7de5be5779355c9d76a9aec71d7a9ef02c6398a@%3Cnotifications.zookeeper.apache.org%3E",
+            "refsource" : "MISC",
+            "tags" : [ ]
+          }, {
+            "url" : "https://lists.apache.org/thread.html/r893a0104e50c1c2559eb9a5812add28ae8c3e5f43712947a9847ec18@%3Cnotifications.zookeeper.apache.org%3E",
+            "name" : "https://lists.apache.org/thread.html/r893a0104e50c1c2559eb9a5812add28ae8c3e5f43712947a9847ec18@%3Cnotifications.zookeeper.apache.org%3E",
+            "refsource" : "MISC",
+            "tags" : [ ]
+          }, {
+            "url" : "https://lists.apache.org/thread.html/r9464a40d25c3ba1a55622db72f113eb494a889656962d098c70c5bb1@%3Cdev.zookeeper.apache.org%3E",
+            "name" : "[zookeeper-dev] 20200307 [jira] [Created] (ZOOKEEPER-3750) update jackson-databind to address CVE-2020-9547, CVE-2020-9548, CVE-2020-9546",
+            "refsource" : "MLIST",
+            "tags" : [ ]
+          }, {
+            "url" : "https://lists.apache.org/thread.html/r98c9b6e4c9e17792e2cd1ec3e4aa20b61a791939046d3f10888176bb@%3Cissues.zookeeper.apache.org%3E",
+            "name" : "[zookeeper-issues] 20200319 [jira] [Commented] (ZOOKEEPER-3750) update jackson-databind to address CVE-2020-9547, CVE-2020-9548, CVE-2020-9546",
+            "refsource" : "MLIST",
+            "tags" : [ ]
+          }, {
+            "url" : "https://lists.apache.org/thread.html/ra3e90712f2d59f8cef03fa796f5adf163d32b81fe7b95385f21790e6@%3Cnotifications.zookeeper.apache.org%3E",
+            "name" : "https://lists.apache.org/thread.html/ra3e90712f2d59f8cef03fa796f5adf163d32b81fe7b95385f21790e6@%3Cnotifications.zookeeper.apache.org%3E",
+            "refsource" : "MISC",
+            "tags" : [ ]
+          }, {
+            "url" : "https://lists.apache.org/thread.html/rb6fecb5e96a6d61e175ff49f33f2713798dd05cf03067c169d195596@%3Cissues.zookeeper.apache.org%3E",
+            "name" : "[zookeeper-issues] 20200307 [jira] [Created] (ZOOKEEPER-3750) update jackson-databind to address CVE-2020-9547, CVE-2020-9548, CVE-2020-9546",
+            "refsource" : "MLIST",
+            "tags" : [ ]
+          }, {
+            "url" : "https://lists.apache.org/thread.html/rc0d5d0f72da1ed6fc5e438b1ddb3fa090c73006b55f873cf845375ab@%3Cnotifications.zookeeper.apache.org%3E",
+            "name" : "https://lists.apache.org/thread.html/rc0d5d0f72da1ed6fc5e438b1ddb3fa090c73006b55f873cf845375ab@%3Cnotifications.zookeeper.apache.org%3E",
+            "refsource" : "MISC",
+            "tags" : [ ]
+          }, {
+            "url" : "https://lists.apache.org/thread.html/rd0e958d6d5c5ee16efed73314cd0e445c8dbb4bdcc80fc9d1d6c11fc@%3Cdev.zookeeper.apache.org%3E",
+            "name" : "[zookeeper-dev] 20200307 Build failed in Jenkins: PreCommit-ZOOKEEPER-github-pr-build-maven #1898",
+            "refsource" : "MLIST",
+            "tags" : [ ]
+          }, {
+            "url" : "https://lists.apache.org/thread.html/rd5a4457be4623038c3989294429bc063eec433a2e55995d81591e2ca@%3Cissues.zookeeper.apache.org%3E",
+            "name" : "[zookeeper-issues] 20200319 [jira] [Updated] (ZOOKEEPER-3750) update jackson-databind to address CVE-2020-9547, CVE-2020-9548, CVE-2020-9546",
+            "refsource" : "MLIST",
+            "tags" : [ ]
+          }, {
+            "url" : "https://lists.apache.org/thread.html/rdd49ab9565bec436a896bc00c4b9fc9dce1598e106c318524fbdfec6@%3Cissues.zookeeper.apache.org%3E",
+            "name" : "[zookeeper-issues] 20200307 [jira] [Updated] (ZOOKEEPER-3750) update jackson-databind to address CVE-2020-9547, CVE-2020-9548, CVE-2020-9546",
+            "refsource" : "MLIST",
+            "tags" : [ ]
+          }, {
+            "url" : "https://lists.apache.org/thread.html/rdd4df698d5d8e635144d2994922bf0842e933809eae259521f3b5097@%3Cissues.zookeeper.apache.org%3E",
+            "name" : "[zookeeper-issues] 20200430 [jira] [Resolved] (ZOOKEEPER-3750) update jackson-databind to address CVE-2020-9547, CVE-2020-9548, CVE-2020-9546",
+            "refsource" : "MLIST",
+            "tags" : [ ]
+          }, {
+            "url" : "https://lists.apache.org/thread.html/redbe4f1e21bf080f637cf9fbec47729750a2f443a919765360337428@%3Cnotifications.zookeeper.apache.org%3E",
+            "name" : "https://lists.apache.org/thread.html/redbe4f1e21bf080f637cf9fbec47729750a2f443a919765360337428@%3Cnotifications.zookeeper.apache.org%3E",
+            "refsource" : "MISC",
+            "tags" : [ ]
+          }, {
+            "url" : "https://lists.debian.org/debian-lts-announce/2020/03/msg00008.html",
+            "name" : "[debian-lts-announce] 20200305 [SECURITY] [DLA 2135-1] jackson-databind security update",
+            "refsource" : "MLIST",
+            "tags" : [ ]
+          }, {
+            "url" : "https://medium.com/@cowtowncoder/on-jackson-cves-dont-panic-here-is-what-you-need-to-know-54cd0d6e8062",
+            "name" : "https://medium.com/@cowtowncoder/on-jackson-cves-dont-panic-here-is-what-you-need-to-know-54cd0d6e8062",
+            "refsource" : "MISC",
+            "tags" : [ "Third Party Advisory" ]
+          } ]
+        },
+        "description" : {
+          "description_data" : [ {
+            "lang" : "en",
+            "value" : "FasterXML jackson-databind 2.x before 2.9.10.4 mishandles the interaction between serialization gadgets and typing, related to com.ibatis.sqlmap.engine.transaction.jta.JtaTransactionConfig (aka ibatis-sqlmap)."
+          } ]
+        }
+      },
+      "configurations" : {
+        "CVE_data_version" : "4.0",
+        "nodes" : [ {
+          "operator" : "OR",
+          "cpe_match" : [ {
+            "vulnerable" : true,
+            "cpe23Uri" : "cpe:2.3:a:fasterxml:jackson-databind:*:*:*:*:*:*:*:*",
+            "versionStartIncluding" : "2.0.0",
+            "versionEndExcluding" : "2.9.10.4"
+          } ]
+        } ]
+      },
+      "impact" : {
+        "baseMetricV3" : {
+          "cvssV3" : {
+            "version" : "3.1",
+            "vectorString" : "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "attackVector" : "NETWORK",
+            "attackComplexity" : "LOW",
+            "privilegesRequired" : "NONE",
+            "userInteraction" : "NONE",
+            "scope" : "UNCHANGED",
+            "confidentialityImpact" : "HIGH",
+            "integrityImpact" : "HIGH",
+            "availabilityImpact" : "HIGH",
+            "baseScore" : 9.8,
+            "baseSeverity" : "CRITICAL"
+          },
+          "exploitabilityScore" : 3.9,
+          "impactScore" : 5.9
+        },
+        "baseMetricV2" : {
+          "cvssV2" : {
+            "version" : "2.0",
+            "vectorString" : "AV:N/AC:M/Au:N/C:P/I:P/A:P",
+            "accessVector" : "NETWORK",
+            "accessComplexity" : "MEDIUM",
+            "authentication" : "NONE",
+            "confidentialityImpact" : "PARTIAL",
+            "integrityImpact" : "PARTIAL",
+            "availabilityImpact" : "PARTIAL",
+            "baseScore" : 6.8
+          },
+          "severity" : "MEDIUM",
+          "exploitabilityScore" : 8.6,
+          "impactScore" : 6.4,
+          "acInsufInfo" : false,
+          "obtainAllPrivilege" : false,
+          "obtainUserPrivilege" : false,
+          "obtainOtherPrivilege" : false,
+          "userInteractionRequired" : false
+        }
+      },
+      "publishedDate" : "2020-03-02T04:15Z",
+      "lastModifiedDate" : "2020-03-06T01:15Z"
+    }, {
+      "cve" : {
+        "data_type" : "CVE",
+        "data_format" : "MITRE",
+        "data_version" : "4.0",
+        "CVE_data_meta" : {
+          "ID" : "CVE-2014-0171",
+          "ASSIGNER" : "cve@mitre.org"
+        },
+        "problemtype" : {
+          "problemtype_data" : [ {
+            "description" : [ {
+              "lang" : "en",
+              "value" : "NVD-CWE-Other"
+            } ]
+          } ]
+        },
+        "references" : {
+          "reference_data" : [ {
+            "url" : "http://rhn.redhat.com/errata/RHSA-2015-0034.html",
+            "name" : "RHSA-2015:0034",
+            "refsource" : "REDHAT",
+            "tags" : [ "Vendor Advisory" ]
+          }, {
+            "url" : "https://issues.jboss.org/browse/TEIID-2911",
+            "name" : "https://issues.jboss.org/browse/TEIID-2911",
+            "refsource" : "CONFIRM",
+            "tags" : [ "Exploit" ]
+          } ]
+        },
+        "description" : {
+          "description_data" : [ {
+            "lang" : "en",
+            "value" : "XML external entity (XXE) vulnerability in StaxXMLFactoryProvider2 in Odata4j, as used in Red Hat JBoss Data Virtualization before 6.0.0 patch 4, allows remote attackers to read arbitrary files via a crafted request to a REST endpoint."
+          }, {
+            "lang" : "en",
+            "value" : "CWE-611: Improper Restriction of XML External Entity Reference ('XXE')"
+          } ]
+        }
+      },
+      "configurations" : {
+        "CVE_data_version" : "4.0",
+        "nodes" : [ {
+          "operator" : "OR",
+          "cpe_match" : [ {
+            "vulnerable" : true,
+            "cpe23Uri" : "cpe:2.3:a:redhat:jboss_data_virtualization:*:*:*:*:*:*:*:*",
+            "versionEndIncluding" : "6.0.0"
+          } ]
+        }, {
+          "operator" : "OR",
+          "cpe_match" : [ {
+            "vulnerable" : true,
+            "cpe23Uri" : "cpe:2.3:a:odata4j_project:odata4j:-:*:*:*:*:*:*:*"
+          } ]
+        } ]
+      },
+      "impact" : {
+        "baseMetricV2" : {
+          "cvssV2" : {
+            "version" : "2.0",
+            "vectorString" : "AV:N/AC:L/Au:N/C:P/I:N/A:N",
+            "accessVector" : "NETWORK",
+            "accessComplexity" : "LOW",
+            "authentication" : "NONE",
+            "confidentialityImpact" : "PARTIAL",
+            "integrityImpact" : "NONE",
+            "availabilityImpact" : "NONE",
+            "baseScore" : 5.0
+          },
+          "severity" : "MEDIUM",
+          "exploitabilityScore" : 10.0,
+          "impactScore" : 2.9,
+          "obtainAllPrivilege" : false,
+          "obtainUserPrivilege" : false,
+          "obtainOtherPrivilege" : false,
+          "userInteractionRequired" : false
+        }
+      },
+      "publishedDate" : "2015-01-15T15:59Z",
+      "lastModifiedDate" : "2020-03-26T19:33Z"
+    }
+  ]
+}

@@ -133,7 +133,8 @@ public class OssFeatures {
   /**
    * Provides information about vulnerabilities.
    */
-  public static final Feature<Vulnerabilities> VULNERABILITIES = new VulnerabilitiesInProject();
+  public static final Feature<Vulnerabilities> VULNERABILITIES = new VulnerabilitiesInProject(
+      "Info about vulnerabilities in open-source project");
 
   /**
    * Provides information about security reviews which have been done for an open-source project.

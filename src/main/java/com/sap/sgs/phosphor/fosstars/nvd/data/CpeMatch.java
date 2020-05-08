@@ -1,28 +1,41 @@
 package com.sap.sgs.phosphor.fosstars.nvd.data;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * CPE match string or range.
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "vulnerable",
+    "cpe22Uri",
     "cpe23Uri",
+    "versionStartExcluding",
+    "versionStartIncluding",
     "versionEndExcluding",
-    "versionEndIncluding"
+    "versionEndIncluding",
+    "cpe_name"
 })
 public class CpeMatch {
 
   @JsonProperty("vulnerable")
   private Boolean vulnerable;
 
+  @JsonProperty("cpe22Uri")
+  private String cpe22Uri;
+
   @JsonProperty("cpe23Uri")
   private String cpe23Uri;
+
+  @JsonProperty("versionStartExcluding")
+  private String versionStartExcluding;
+
+  @JsonProperty("versionStartIncluding")
+  private String versionStartIncluding;
 
   @JsonProperty("versionEndExcluding")
   private String versionEndExcluding;
@@ -30,27 +43,12 @@ public class CpeMatch {
   @JsonProperty("versionEndIncluding")
   private String versionEndIncluding;
 
-  @JsonIgnore
-  private Map<String, Object> additionalProperties = new HashMap<>();
+  @JsonProperty("cpe_name")
+  private List<CpeName> cpeName = new ArrayList<>();
 
   @JsonProperty("vulnerable")
   public Boolean getVulnerable() {
     return vulnerable;
-  }
-
-  @JsonProperty("vulnerable")
-  public void setVulnerable(Boolean vulnerable) {
-    this.vulnerable = vulnerable;
-  }
-
-  @JsonProperty("cpe23Uri")
-  public String getCpe23Uri() {
-    return cpe23Uri;
-  }
-
-  @JsonProperty("cpe23Uri")
-  public void setCpe23Uri(String cpe23Uri) {
-    this.cpe23Uri = cpe23Uri;
   }
 
   @JsonProperty("versionEndExcluding")
@@ -63,14 +61,13 @@ public class CpeMatch {
     return versionEndIncluding;
   }
 
-  @JsonAnyGetter
-  public Map<String, Object> getAdditionalProperties() {
-    return this.additionalProperties;
+  @JsonProperty("cpe22Uri")
+  public String getCpe22Uri() {
+    return cpe22Uri;
   }
 
-  @JsonAnySetter
-  public void setAdditionalProperty(String name, Object value) {
-    this.additionalProperties.put(name, value);
+  @JsonProperty("cpe23Uri")
+  public String getCpe23Uri() {
+    return cpe23Uri;
   }
-
 }
