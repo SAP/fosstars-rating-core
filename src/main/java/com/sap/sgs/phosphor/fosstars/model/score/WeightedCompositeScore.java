@@ -124,14 +124,14 @@ public class WeightedCompositeScore extends AbstractScore implements Tunable {
     ScoreValue scoreValue = new ScoreValue(this);
     boolean allNotApplicable = true;
     for (Score subScore : subScores) {
-      Weight weight = weights.of(subScore).orElseThrow(IllegalStateException::new);
       ScoreValue subScoreValue = calculateIfNecessary(subScore, valueSet);
+      scoreValue.usedValues(subScoreValue);
       if (subScoreValue.isNotApplicable()) {
         continue;
       }
       allNotApplicable = false;
+      Weight weight = weights.of(subScore).orElseThrow(IllegalStateException::new);
       subScoreValue.weight(weight.value());
-      scoreValue.usedValues(subScoreValue);
       scoreSum += weight.value() * subScoreValue.get();
       confidenceSum += weight.value() * subScoreValue.confidence();
       weightSum += weight.value();

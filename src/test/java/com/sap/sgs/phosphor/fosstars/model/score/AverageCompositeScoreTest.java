@@ -12,6 +12,8 @@ import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.feature.DoubleFeature;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
+import java.util.Comparator;
+import java.util.List;
 import org.junit.Test;
 
 public class AverageCompositeScoreTest {
@@ -127,9 +129,17 @@ public class AverageCompositeScoreTest {
     assertFalse(scoreValue.isUnknown());
     assertFalse(scoreValue.isNotApplicable());
     assertEquals(Confidence.MAX, scoreValue.confidence(), PRECISION);
-    assertEquals(1, scoreValue.usedValues().size());
-    assertTrue(scoreValue.usedValues().get(0) instanceof ScoreValue);
-    ScoreValue subScoreValue = (ScoreValue) scoreValue.usedValues().get(0);
+
+    List<Value> usedValues = scoreValue.usedValues();
+    usedValues.sort(Comparator.comparing(a -> a.feature().name()));
+
+    assertEquals(2, usedValues.size());
+
+    assertTrue(usedValues.get(0) instanceof ScoreValue);
+    assertTrue(usedValues.get(0).isNotApplicable());
+
+    assertTrue(usedValues.get(1) instanceof ScoreValue);
+    ScoreValue subScoreValue = (ScoreValue) usedValues.get(1);
     assertEquals(SecondScore.VALUE, subScoreValue.get(), PRECISION);
     assertEquals(Confidence.MAX, subScoreValue.confidence(), PRECISION);
   }
