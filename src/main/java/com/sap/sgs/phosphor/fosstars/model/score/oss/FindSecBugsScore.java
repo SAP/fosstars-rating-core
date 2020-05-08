@@ -30,7 +30,7 @@ public class FindSecBugsScore extends FeatureBasedScore {
    * Initializes a new score.
    */
   FindSecBugsScore() {
-    super("If a project uses FindSecBugs", LANGUAGES, USES_FIND_SEC_BUGS);
+    super("How a project uses FindSecBugs", LANGUAGES, USES_FIND_SEC_BUGS);
   }
 
   @Override

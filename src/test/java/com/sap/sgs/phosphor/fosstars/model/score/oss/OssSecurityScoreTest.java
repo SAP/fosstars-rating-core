@@ -15,6 +15,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_ADDRESS_SANITIZER;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_DEPENDABOT;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_FIND_SEC_BUGS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GITHUB_FOR_DEVELOPMENT;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_MEMORY_SANITIZER;
@@ -96,6 +97,7 @@ public class OssSecurityScoreTest {
         USES_ADDRESS_SANITIZER.unknown(),
         USES_MEMORY_SANITIZER.unknown(),
         USES_UNDEFINED_BEHAVIOR_SANITIZER.unknown(),
+        USES_FIND_SEC_BUGS.value(true),
         PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)));
     ScoreValue scoreValue = score.calculate(values);
     assertTrue(Score.INTERVAL.contains(scoreValue.get()));

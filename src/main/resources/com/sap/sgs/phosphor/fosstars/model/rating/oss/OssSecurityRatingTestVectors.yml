@@ -29,6 +29,11 @@ defaults:
 - type: "BooleanValue"
   feature:
     type: "BooleanFeature"
+    name: "If an open-source project uses FindSecBugs"
+  flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
     name: "If an open-source project uses MemorySanitizer"
   flag: false
 - type: "BooleanValue"
@@ -367,6 +372,18 @@ elements:
     packageManagers:
       packageManagers:
         - "GRADLE"
+  - type: "LanguagesValue"
+    feature:
+      type: "LanguagesFeature"
+      name: "A set of programming languages"
+    languages:
+      elements:
+        - "JAVA"
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If an open-source project uses FindSecBugs"
+    flag: true
   expectedScore:
     type: "DoubleInterval"
     from: 9.0

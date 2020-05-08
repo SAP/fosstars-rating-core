@@ -16,6 +16,8 @@ elements:
         name: "If a project uses nohttp tool"
       - type: "MemorySafetyTestingScore"
         name: "How a project tests for memory-safety issues"
+      - type: "FindSecBugsScore"
+        name: "How a project uses FindSecBugs"
     value: 0.0
     weight: 1.0
     confidence: 10.0
@@ -102,6 +104,8 @@ elements:
         name: "If a project uses nohttp tool"
       - type: "MemorySafetyTestingScore"
         name: "How a project tests for memory-safety issues"
+      - type: "FindSecBugsScore"
+        name: "How a project uses FindSecBugs"
     value: 0.0
     weight: 1.0
     confidence: 10.0
@@ -197,6 +201,8 @@ elements:
         name: "If a project uses nohttp tool"
       - type: "MemorySafetyTestingScore"
         name: "How a project tests for memory-safety issues"
+      - type: "FindSecBugsScore"
+        name: "How a project uses FindSecBugs"
     value: 5.0
     weight: 1.0
     confidence: 10.0
@@ -274,6 +280,8 @@ elements:
         name: "If a project uses nohttp tool"
       - type: "MemorySafetyTestingScore"
         name: "How a project tests for memory-safety issues"
+      - type: "FindSecBugsScore"
+        name: "How a project uses FindSecBugs"
     value: 0.0
     weight: 1.0
     confidence: 10.0
@@ -360,6 +368,8 @@ elements:
         name: "If a project uses nohttp tool"
       - type: "MemorySafetyTestingScore"
         name: "How a project tests for memory-safety issues"
+      - type: "FindSecBugsScore"
+        name: "How a project uses FindSecBugs"
     value: 0.0
     weight: 1.0
     confidence: 10.0
@@ -446,6 +456,8 @@ elements:
         name: "If a project uses nohttp tool"
       - type: "MemorySafetyTestingScore"
         name: "How a project tests for memory-safety issues"
+      - type: "FindSecBugsScore"
+        name: "How a project uses FindSecBugs"
     value: 8.0
     weight: 1.0
     confidence: 10.0
@@ -541,6 +553,8 @@ elements:
         name: "If a project uses nohttp tool"
       - type: "MemorySafetyTestingScore"
         name: "How a project tests for memory-safety issues"
+      - type: "FindSecBugsScore"
+        name: "How a project uses FindSecBugs"
     value: 10.0
     weight: 1.0
     confidence: 10.0
@@ -618,6 +632,8 @@ elements:
         name: "If a project uses nohttp tool"
       - type: "MemorySafetyTestingScore"
         name: "How a project tests for memory-safety issues"
+      - type: "FindSecBugsScore"
+        name: "How a project uses FindSecBugs"
     value: 0.0
     weight: 1.0
     confidence: 10.0
@@ -713,6 +729,8 @@ elements:
         name: "If a project uses nohttp tool"
       - type: "MemorySafetyTestingScore"
         name: "How a project tests for memory-safety issues"
+      - type: "FindSecBugsScore"
+        name: "How a project uses FindSecBugs"
     value: 10.0
     weight: 1.0
     confidence: 10.0
@@ -799,6 +817,8 @@ elements:
         name: "If a project uses nohttp tool"
       - type: "MemorySafetyTestingScore"
         name: "How a project tests for memory-safety issues"
+      - type: "FindSecBugsScore"
+        name: "How a project uses FindSecBugs"
     value: 10.0
     weight: 1.0
     confidence: 10.0

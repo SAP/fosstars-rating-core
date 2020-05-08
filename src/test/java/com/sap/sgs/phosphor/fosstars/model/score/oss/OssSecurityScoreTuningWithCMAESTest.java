@@ -15,6 +15,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_ADDRESS_SANITIZER;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_DEPENDABOT;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_FIND_SEC_BUGS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GITHUB_FOR_DEVELOPMENT;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_MEMORY_SANITIZER;
@@ -76,6 +77,7 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(UnknownValue.of(USES_ADDRESS_SANITIZER))
           .set(UnknownValue.of(USES_MEMORY_SANITIZER))
           .set(UnknownValue.of(USES_UNDEFINED_BEHAVIOR_SANITIZER))
+          .set(UnknownValue.of(USES_FIND_SEC_BUGS))
           .expectedScore(DoubleInterval.closed(Score.MIN, 0.1))
           .alias("one")
           .make(),
@@ -105,6 +107,7 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(USES_ADDRESS_SANITIZER.value(false))
           .set(USES_MEMORY_SANITIZER.value(false))
           .set(USES_UNDEFINED_BEHAVIOR_SANITIZER.value(false))
+          .set(USES_FIND_SEC_BUGS.value(false))
           .expectedScore(DoubleInterval.closed(1.0, 4.0))
           .alias("two")
           .make(),
@@ -134,6 +137,7 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(USES_ADDRESS_SANITIZER.value(true))
           .set(USES_MEMORY_SANITIZER.value(true))
           .set(USES_UNDEFINED_BEHAVIOR_SANITIZER.value(true))
+          .set(USES_FIND_SEC_BUGS.value(true))
           .expectedScore(DoubleInterval.init().from(9.0).to(Score.MAX).make())
           .alias("three")
           .make()
