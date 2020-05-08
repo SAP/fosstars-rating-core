@@ -26,7 +26,7 @@ public class LocalRepositoryTest {
 
   @Test
   public void testReadFile() throws IOException, GitAPIException {
-    Path directory = Files.createTempDirectory(getClass().getName());
+    Path directory = Files.createTempDirectory(getClass().getSimpleName());
     try (Repository repository = FileRepositoryBuilder.create(directory.resolve(".git").toFile());
         Git git = new Git(repository)) {
 
@@ -50,11 +50,13 @@ public class LocalRepositoryTest {
       assertTrue(something.isPresent());
       assertEquals("test", something.get());
 
-      Optional<InputStream> is = localRepository.read("file");
-      assertTrue(is.isPresent());
-      assertEquals("test", IOUtils.toString(is.get()));
+      Optional<InputStream> file = localRepository.read("file");
+      assertTrue(file.isPresent());
+      try (InputStream is = file.get()) {
+        assertEquals("test", IOUtils.toString(is));
+      }
     } finally {
-      FileUtils.deleteDirectory(directory.toFile());
+      FileUtils.forceDeleteOnExit(directory.toFile());
     }
   }
 

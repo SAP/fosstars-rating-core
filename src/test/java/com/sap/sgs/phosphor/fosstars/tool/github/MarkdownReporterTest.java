@@ -88,7 +88,7 @@ public class MarkdownReporterTest {
       assertEquals(1, linesWith(MarkdownReporter.LOW, report));
       assertEquals(3, linesWith(MarkdownReporter.HIGH, report));
     } finally {
-      FileUtils.deleteDirectory(outputDirectory.toFile());
+      FileUtils.forceDeleteOnExit(outputDirectory.toFile());
     }
   }
 

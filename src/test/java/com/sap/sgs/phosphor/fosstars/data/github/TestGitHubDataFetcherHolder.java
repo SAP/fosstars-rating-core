@@ -62,8 +62,7 @@ public class TestGitHubDataFetcherHolder {
       assertFalse(Files.exists(deletedPath));
     }
 
-    FileUtils.deleteDirectory(path.toFile());
-    assertFalse(Files.exists(path));
+    FileUtils.forceDeleteOnExit(path.toFile());
   }
 
   public static class TestGitHubDateFetcher extends GitHubDataFetcher {
