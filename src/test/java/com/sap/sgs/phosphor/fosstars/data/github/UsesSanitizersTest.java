@@ -17,6 +17,7 @@ import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectValueCache;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -40,7 +41,12 @@ public class UsesSanitizersTest extends TestGitHubDataFetcherHolder {
   }
 
   @Test
-  public void testFetchValuesForWithoutSanitizers() throws IOException {
+  public void testFetchValuesForWithSomeSanitizers() throws IOException {
+    testProvider("-fsanitize= address", USES_ADDRESS_SANITIZER.value(true));
+    testProvider("-fsanitize=address ", USES_ADDRESS_SANITIZER.value(true));
+    testProvider("--test  -fsanitize=address,    memory  --other=a,b --test",
+        USES_ADDRESS_SANITIZER.value(true), USES_MEMORY_SANITIZER.value(true));
+
     String content = String.join("\n", new String[] {
         "first line",
         "-fsanitize=undefined,address",
@@ -54,7 +60,7 @@ public class UsesSanitizersTest extends TestGitHubDataFetcherHolder {
   }
 
   @Test
-  public void testFetchValuesForWithSomeSanitizers() throws IOException {
+  public void testFetchValuesForWithoutSanitizers() throws IOException {
     String content = String.join("\n", new String[] {
         "first line",
         "another line",
@@ -106,10 +112,27 @@ public class UsesSanitizersTest extends TestGitHubDataFetcherHolder {
         "--debug -fsanitize=memory --another-option",
         "--option -fsanitize=undefined,address --another-option --debug"
     });
-    List<String> lines = UsesSanitizers.lookForSanitizers(content);
-    assertEquals(3, lines.size());
-    assertEquals("-fsanitize=address", lines.get(0));
-    assertEquals("-fsanitize=memory", lines.get(1));
-    assertEquals("-fsanitize=undefined,address", lines.get(2));
+    List<String> options = UsesSanitizers.lookForSanitizers(content);
+    assertEquals(Arrays.asList("address", "memory", "undefined", "address"), options);
+  }
+
+  @Test
+  public void testParse() {
+    assertTrue(UsesSanitizers.parse("something else").isEmpty());
+    assertEquals(
+        Arrays.asList("address"),
+        UsesSanitizers.parse("something else -fsanitize=address"));
+    assertEquals(
+        Arrays.asList("address"),
+        UsesSanitizers.parse("-fsanitize=address"));
+    assertEquals(
+        Arrays.asList("address", "memory", "test"),
+        UsesSanitizers.parse("-fsanitize=address,memory,test"));
+    assertEquals(
+        Arrays.asList("address", "memory", "test"),
+        UsesSanitizers.parse("-fsanitize=address,memory --opt -fsanitize=test --another"));
+    assertEquals(
+        Arrays.asList("address", "memory", "test"),
+        UsesSanitizers.parse("-fsanitize=  address, memory --opt -fsanitize=test --another"));
   }
 }
