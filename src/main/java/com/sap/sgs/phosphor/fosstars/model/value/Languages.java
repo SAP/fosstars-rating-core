@@ -83,6 +83,17 @@ public class Languages implements Iterable<Language> {
   }
 
   /**
+   * Checks if the collection contains one of the other languages.
+   *
+   * @param languages The other languages.
+   * @return True if at least one of the other languages is present in the collection,
+   *         false otherwise.
+   */
+  public boolean containsAnyOf(Language... languages) {
+    return containsAnyOf(Languages.of(languages));
+  }
+
+  /**
    * Returns the languages.
    */
   @JsonGetter("elements")
