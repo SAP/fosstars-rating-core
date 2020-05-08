@@ -26,7 +26,8 @@ public class UnpatchedVulnerabilities extends CachedSingleFeatureGitHubDataProvi
    * A feature that hold info about unpatched vulnerabilities.
    */
   private static final Feature<Vulnerabilities> UNPATCHED_VULNERABILITIES
-      = new VulnerabilitiesInProject();
+      = new VulnerabilitiesInProject(
+          "Info about unpatched vulnerabilities in an open-source project");
 
   /**
    * A storage of unpatched vulnerabilities.
@@ -75,8 +76,8 @@ public class UnpatchedVulnerabilities extends CachedSingleFeatureGitHubDataProvi
    */
   Vulnerabilities vulnerabilitiesFromNvdFor(GitHubProject project) {
     Vulnerabilities vulnerabilities = new Vulnerabilities();
-    for (NvdEntry entry : nvd.search(VendorDataMatcher.with(project))) {
-      if (isUnpatched(entry)) {
+    for (NvdEntry entry : nvd.search(NvdEntryMatcher.entriesFor(project))) {
+      if (isUnpatched(entry, project)) {
         vulnerabilities.add(
             Vulnerability.Builder.from(entry)
                 .set(UNPATCHED)
@@ -94,36 +95,52 @@ public class UnpatchedVulnerabilities extends CachedSingleFeatureGitHubDataProvi
    * @param entry The entry from NVD.
    * @return True if the entry looks like an unpatched vulnerability, false otherwise.
    */
-  private static boolean isUnpatched(NvdEntry entry) {
+  private static boolean isUnpatched(NvdEntry entry, GitHubProject project) {
     if (entry.getConfigurations() == null || entry.getConfigurations().getNodes() == null) {
       return false;
     }
 
     for (Node node : entry.getConfigurations().getNodes()) {
-      if (node == null || node.getCpeMatch() == null) {
+      if (node == null || node.getCpeMatches() == null) {
         continue;
       }
 
-      for (CpeMatch cpeMatch : node.getCpeMatch()) {
-        if (cpeMatch.getVulnerable() && noVersionEnd(cpeMatch)) {
-          return true;
+      for (CpeMatch cpeMatch : node.getCpeMatches()) {
+        if (cpeMatch == null || !cpeMatch.getVulnerable() || !match(cpeMatch, project)) {
+          continue;
+        }
+
+        if (hasEndVersion(cpeMatch)) {
+          return false;
         }
       }
     }
 
-    return false;
+    return true;
   }
 
   /**
-   * Checks if a CPE match doesn't have
-   * either "versionEndIncluding" or "versionEndExcluding" fields.
+   * Returns true if one of the CPE URIs in a CpeMatch element matches a project, false otherwise.
+   */
+  private static boolean match(CpeMatch cpeMatch, GitHubProject project) {
+    return match(cpeMatch.getCpe22Uri(), project) || match(cpeMatch.getCpe23Uri(), project);
+  }
+
+  /**
+   * Returns true if a string matcher a project, false otherwise.
+   */
+  private static boolean match(String string, GitHubProject project) {
+    return string != null && string.toLowerCase().contains(project.name());
+  }
+
+  /**
+   * Checks if a CPE match has either "versionEndIncluding" or "versionEndExcluding" fields.
    *
    * @param cpeMatch The CPE match to be checked.
    * @return True if the CPE match doesn't have the fields, false otherwise.
    */
-  private static boolean noVersionEnd(CpeMatch cpeMatch) {
-    return StringUtils.isEmpty(cpeMatch.getVersionEndExcluding())
-        && StringUtils.isEmpty(cpeMatch.getVersionEndIncluding());
+  private static boolean hasEndVersion(CpeMatch cpeMatch) {
+    return !StringUtils.isEmpty(cpeMatch.getVersionEndExcluding())
+        || !StringUtils.isEmpty(cpeMatch.getVersionEndIncluding());
   }
-
 }

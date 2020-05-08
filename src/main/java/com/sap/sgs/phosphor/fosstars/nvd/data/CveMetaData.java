@@ -4,33 +4,34 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import java.util.ArrayList;
-import java.util.List;
 
-/**
- * Defines the set of product configurations for a NVD applicability statement.
- */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "CVE_data_version",
-    "nodes"
+    "ID",
+    "ASSIGNER"
 })
 // the properties below are ignored because they are not used
 // that saves a bit of memory
 // when they become necessary, then can be enabled
 @JsonIgnoreProperties({
-    "CVE_data_version"
+    "assigner"
 })
-public class Configurations {
+public class CveMetaData {
 
-  @JsonProperty("CVE_data_version")
-  private String cveDataVersion;
+  @JsonProperty("ID")
+  private String id;
 
-  @JsonProperty("nodes")
-  private List<Node> nodes = new ArrayList<>();
+  @JsonProperty("ASSIGNER")
+  private String assigner;
 
-  @JsonProperty("nodes")
-  public List<Node> getNodes() {
-    return nodes;
+  @JsonProperty("ID")
+  public String getId() {
+    return id;
   }
+
+  @JsonProperty("ID")
+  public void setId(String id) {
+    this.id = id;
+  }
+
 }

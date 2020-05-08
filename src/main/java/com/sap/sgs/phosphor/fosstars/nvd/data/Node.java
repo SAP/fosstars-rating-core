@@ -1,59 +1,46 @@
 package com.sap.sgs.phosphor.fosstars.nvd.data;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
+/**
+ * Defines a node or sub-node in an NVD applicability statement.
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "operator",
+    "negate",
+    "children",
     "cpe_match"
+})
+// the properties below are ignored because they are not used
+// that saves a bit of memory
+// when they become necessary, then can be enabled
+@JsonIgnoreProperties({
+    "operator",
+    "negate",
+    "children"
 })
 public class Node {
 
   @JsonProperty("operator")
   private String operator;
 
-  @JsonProperty("cpe_match")
-  private List<CpeMatch> cpeMatch = null;
+  @JsonProperty("negate")
+  private Boolean negate;
 
-  @JsonIgnore
-  private Map<String, Object> additionalProperties = new HashMap<>();
-
-  @JsonProperty("operator")
-  public String getOperator() {
-    return operator;
-  }
-
-  @JsonProperty("operator")
-  public void setOperator(String operator) {
-    this.operator = operator;
-  }
+  @JsonProperty("children")
+  private List<Node> children = new ArrayList<>();
 
   @JsonProperty("cpe_match")
-  public List<CpeMatch> getCpeMatch() {
+  private List<CpeMatch> cpeMatch = new ArrayList<>();
+
+  @JsonProperty("cpe_match")
+  public List<CpeMatch> getCpeMatches() {
     return cpeMatch;
   }
-
-  @JsonProperty("cpe_match")
-  public void setCpeMatch(List<CpeMatch> cpeMatch) {
-    this.cpeMatch = cpeMatch;
-  }
-
-  @JsonAnyGetter
-  public Map<String, Object> getAdditionalProperties() {
-    return this.additionalProperties;
-  }
-
-  @JsonAnySetter
-  public void setAdditionalProperty(String name, Object value) {
-    this.additionalProperties.put(name, value);
-  }
-
 }

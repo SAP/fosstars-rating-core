@@ -1,5 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.data.github;
 
+import static com.sap.sgs.phosphor.fosstars.data.github.NvdEntryMatcher.entriesFor;
+
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.feature.oss.VulnerabilitiesInProject;
@@ -20,7 +22,8 @@ public class VulnerabilitiesFromNvd extends CachedSingleFeatureGitHubDataProvide
    * A feature that hold info about vulnerabilities in the NVD.
    */
   private static final Feature<Vulnerabilities> VULNERABILITIES_IN_NVD
-      = new VulnerabilitiesInProject();
+      = new VulnerabilitiesInProject(
+          "Info about vulnerabilities in an open-source project from NVD");
 
   /**
    * An interface to NVD.
@@ -48,7 +51,7 @@ public class VulnerabilitiesFromNvd extends CachedSingleFeatureGitHubDataProvide
     logger.info("Looking for vulnerabilities in NVD ...");
 
     Vulnerabilities vulnerabilities = new Vulnerabilities();
-    for (NvdEntry entry : nvd.search(VendorDataMatcher.with(project))) {
+    for (NvdEntry entry : nvd.search(entriesFor(project))) {
       vulnerabilities.add(Vulnerability.Builder.from(entry).make());
     }
 

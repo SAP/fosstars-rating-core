@@ -5,16 +5,14 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.sgs.phosphor.fosstars.nvd.data.CVE;
-import com.sap.sgs.phosphor.fosstars.nvd.data.CVEDataMeta;
+import com.sap.sgs.phosphor.fosstars.nvd.data.CveMetaData;
 import com.sap.sgs.phosphor.fosstars.nvd.data.NvdEntry;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,13 +41,17 @@ public class NVD {
   /**
    * The version of NVD feed to be used.
    */
-  // TODO: migrate to 1.1
-  private static final String NVD_FEED_VERSION = "1.0";
+  private static final String NVD_FEED_VERSION = "1.1";
 
   /**
    * An {@link ObjectMapper} for serialization and deserialization.
    */
   private static final ObjectMapper MAPPER = new ObjectMapper();
+
+  /**
+   * A factory for parsing JSON.
+   */
+  private static final JsonFactory JSON_FACTORY = MAPPER.getFactory();
 
   /**
    * The location where the data from the NVD is stored.
@@ -89,7 +91,7 @@ public class NVD {
    */
   boolean downloadFailed() {
     try {
-      return contents().isEmpty();
+      return jsonFiles().isEmpty();
     } catch (IOException e) {
       return true;
     }
@@ -103,38 +105,19 @@ public class NVD {
   }
 
   /**
-   * Returns content of the downloaded database.
+   * Returns a list of JSON files downloaded from the NVD.
    *
-   * @return A list of input streams that contain contend of NVD.
+   * @return A list of downloaded JSON files.
    * @throws IOException If something went wrong.
    */
-  public List<InputStream> contents() throws IOException {
-    Path downloadDirectoryPath = Paths.get(downloadDirectory);
-    if (!Files.exists(downloadDirectoryPath)) {
-      return Collections.emptyList();
-    }
-
-    try (Stream<Path> walk = Files.walk(downloadDirectoryPath)) {
+  public List<String> jsonFiles() throws IOException {
+    try (Stream<Path> walk = Files.walk(Paths.get(downloadDirectory))) {
       return walk
           .filter(Files::isRegularFile)
           .filter(path -> path.toString().contains(NVD_FEED_VERSION))
           .filter(path -> path.toString().endsWith(".json"))
-          .map(NVD::open)
+          .map(Path::toString)
           .collect(Collectors.toList());
-    }
-  }
-
-  /**
-   * Creates an input stream for a file.
-   *
-   * @param file The file.
-   * @return The input stream.
-   */
-  private static InputStream open(Path file) {
-    try {
-      return Files.newInputStream(file);
-    } catch (IOException e) {
-      throw new UncheckedIOException(e);
     }
   }
 
@@ -169,6 +152,17 @@ public class NVD {
   }
 
   /**
+   * Open a file.
+   *
+   * @param file The file.
+   * @return Content of the file.
+   * @throws IOException If something went wrong.
+   */
+  InputStream open(String file) throws IOException {
+    return Files.newInputStream(Paths.get(file));
+  }
+
+  /**
    * Parses the downloaded data from NVD.
    *
    * @throws IOException If something went wrong.
@@ -178,9 +172,8 @@ public class NVD {
       return;
     }
 
-    JsonFactory factory = MAPPER.getFactory();
-    for (InputStream content : contents()) {
-      try (JsonParser parser = factory.createParser(content)) {
+    for (String file : jsonFiles()) {
+      try (JsonParser parser = JSON_FACTORY.createParser(open(file))) {
         while (!parser.isClosed()) {
           if (!JsonToken.FIELD_NAME.equals(parser.nextToken())) {
             continue;
@@ -207,13 +200,13 @@ public class NVD {
             continue;
           }
 
-          CVEDataMeta metadata = cve.getCveDataMeta();
+          CveMetaData metadata = cve.getCveDataMeta();
           if (metadata == null) {
             LOGGER.warn("Found an entry without CVE metadata! Skip it.");
             continue;
           }
 
-          String id = metadata.getID();
+          String id = metadata.getId();
           if (id == null) {
             LOGGER.warn("Found an entry without CVE id! Skip it.");
             continue;
@@ -221,8 +214,6 @@ public class NVD {
 
           nvdEntries.put(id, entry);
         }
-      } finally {
-        content.close();
       }
     }
   }

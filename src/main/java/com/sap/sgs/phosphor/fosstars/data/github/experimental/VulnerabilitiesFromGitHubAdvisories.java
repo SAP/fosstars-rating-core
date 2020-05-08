@@ -44,7 +44,8 @@ public class VulnerabilitiesFromGitHubAdvisories extends CachedSingleFeatureGitH
    * A feature that holds info about vulnerabilities in the GitHub Advisory Database.
    */
   public static final Feature<Vulnerabilities> VULNERABILITIES_IN_ADVISORIES =
-      new VulnerabilitiesInProject();
+      new VulnerabilitiesInProject(
+          "Info about vulnerabilities in an open-source project from GitHub Security Advisories");
 
   /**
    * An interface to the GitHub Advisory database.
@@ -148,6 +149,7 @@ public class VulnerabilitiesFromGitHubAdvisories extends CachedSingleFeatureGitH
   /**
    * Converts an {@link Node} to a {@link Vulnerability}.
    *
+   * @param node The {@link Node} to be converted.
    * @return An instance of {@link Vulnerability}.
    */
   private Vulnerability vulnerabilityFrom(Node node) {
