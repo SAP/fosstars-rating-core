@@ -13,6 +13,7 @@ import java.io.InputStream;
  *  <li>{@link LgtmScore}</li>
  *  <li>{@link NoHttpToolScore}</li>
  *  <li>{@link MemorySafetyTestingScore}</li>
+ *  <li>{@link FindSecBugsScore}</li>
  * </ul>
  * There is plenty room for improvements.
  * The score can take into account a lot of other information.
@@ -27,7 +28,8 @@ public class ProjectSecurityTestingScore extends AverageCompositeScore {
         new DependencyScanScore(),
         new LgtmScore(),
         new NoHttpToolScore(),
-        new MemorySafetyTestingScore());
+        new MemorySafetyTestingScore(),
+        new FindSecBugsScore());
   }
 
   /**

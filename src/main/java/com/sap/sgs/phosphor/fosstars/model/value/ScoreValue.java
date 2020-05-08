@@ -155,7 +155,7 @@ public class ScoreValue implements Value<Double>, Confidence {
    */
   @JsonGetter("usedValues")
   public List<Value> usedValues() {
-    return usedValues;
+    return new ArrayList<>(usedValues);
   }
 
   /**

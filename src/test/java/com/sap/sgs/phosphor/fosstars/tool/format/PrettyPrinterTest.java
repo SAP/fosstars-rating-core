@@ -16,6 +16,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_ADDRESS_SANITIZER;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_DEPENDABOT;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_FIND_SEC_BUGS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GITHUB_FOR_DEVELOPMENT;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_MEMORY_SANITIZER;
@@ -76,6 +77,7 @@ public class PrettyPrinterTest {
         USES_MEMORY_SANITIZER.value(false),
         USES_UNDEFINED_BEHAVIOR_SANITIZER.value(false),
         LANGUAGES.value(Languages.of(C)),
+        USES_FIND_SEC_BUGS.value(false),
         PACKAGE_MANAGERS.value(new PackageManagers(MAVEN)));
     
     RatingValue ratingValue = rating.calculate(values);
@@ -128,6 +130,7 @@ public class PrettyPrinterTest {
         USES_MEMORY_SANITIZER.value(false),
         USES_UNDEFINED_BEHAVIOR_SANITIZER.value(false),
         LANGUAGES.value(Languages.of(JAVA)),
+        USES_FIND_SEC_BUGS.value(true),
         PACKAGE_MANAGERS.value(new PackageManagers(GRADLE)));
     RatingValue ratingValue = rating.calculate(values);
 

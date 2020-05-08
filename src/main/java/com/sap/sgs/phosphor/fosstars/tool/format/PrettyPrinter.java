@@ -1,5 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.tool.format;
 
+import com.sap.sgs.phosphor.fosstars.data.github.UsesFindSecBugs;
+import com.sap.sgs.phosphor.fosstars.data.github.UsesNoHttpTool;
 import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Score;
@@ -7,6 +9,8 @@ import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.Weight;
 import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.CommunityCommitmentScore;
+import com.sap.sgs.phosphor.fosstars.model.score.oss.DependencyScanScore;
+import com.sap.sgs.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.OssSecurityScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectActivityScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectPopularityScore;
@@ -14,6 +18,7 @@ import com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectSecurityAwarenessSco
 import com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectSecurityTestingScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.UnpatchedVulnerabilitiesScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.VulnerabilityLifetimeScore;
+import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.util.ArrayList;
@@ -49,6 +54,10 @@ public class PrettyPrinter implements Formatter {
     FEATURE_CLASS_TO_NAME.put(ProjectSecurityTestingScore.class, "Security testing");
     FEATURE_CLASS_TO_NAME.put(UnpatchedVulnerabilitiesScore.class, "Unpatched vulnerabilities");
     FEATURE_CLASS_TO_NAME.put(VulnerabilityLifetimeScore.class, "Vulnerability lifetime");
+    FEATURE_CLASS_TO_NAME.put(MemorySafetyTestingScore.class, "Memory-safety testing");
+    FEATURE_CLASS_TO_NAME.put(UsesFindSecBugs.class, "Uses FindSecBugs");
+    FEATURE_CLASS_TO_NAME.put(UsesNoHttpTool.class, "Uses nohttp");
+    FEATURE_CLASS_TO_NAME.put(DependencyScanScore.class, "Dependency testing");
   }
 
   /**
@@ -70,6 +79,14 @@ public class PrettyPrinter implements Formatter {
         OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES, "Does it scan for vulnerable dependencies?");
     FEATURE_TO_NAME.put(OssFeatures.USES_GITHUB_FOR_DEVELOPMENT,
         "Does it use GitHub as the main development platform?");
+    FEATURE_TO_NAME.put(OssFeatures.USES_ADDRESS_SANITIZER, "Does it use AddressSanitizer?");
+    FEATURE_TO_NAME.put(OssFeatures.USES_MEMORY_SANITIZER, "Does it use MemorySanitizer?");
+    FEATURE_TO_NAME.put(OssFeatures.USES_UNDEFINED_BEHAVIOR_SANITIZER,
+        "Does it use UndefinedBehaviorSanitizer?");
+    FEATURE_TO_NAME.put(OssFeatures.USES_NOHTTP, "Does it use nohttp?");
+    FEATURE_TO_NAME.put(OssFeatures.USES_FIND_SEC_BUGS, "Does it use FindSecBugs?");
+    FEATURE_TO_NAME.put(OssFeatures.USES_DEPENDABOT, "Does it use Dependabot?");
+    FEATURE_TO_NAME.put(OssFeatures.USES_LGTM, "Does it use LGTM?");
   }
 
   @Override
@@ -113,10 +130,9 @@ public class PrettyPrinter implements Formatter {
           indent, importance(scoreValue.weight()), scoreValue.weight(), Weight.MAX));
     }
 
-    sb.append(String.format("%sValue:........%s out of %2.2f%n",
+    sb.append(String.format("%sValue:........%s%n",
         indent,
-        append(String.format("%s", tellMeActualValueOf(scoreValue)), ' ', 4),
-        Score.MAX));
+        append(String.format("%s", tellMeActualValueOf(scoreValue)), ' ', 4)));
     sb.append(String.format("%sConfidence:...%s out of %2.2f%n",
         indent,
         append(String.format("%.2f", scoreValue.confidence()), ' ', 4),
@@ -147,11 +163,21 @@ public class PrettyPrinter implements Formatter {
 
     if (!featureValues.isEmpty()) {
       sb.append(String.format("%sBased on:...%d features:%n", indent, featureValues.size()));
+
       Map<String, Object> nameToValue = new TreeMap<>(String::compareTo);
       int maxLength = 0;
       for (Value usedValue : featureValues) {
         String name = nameOf(usedValue.feature());
-        nameToValue.put(name, usedValue.isUnknown() ? "unknown" : usedValue.get());
+
+        if (usedValue.isUnknown()) {
+          nameToValue.put(name, "unknown");
+        } else if (usedValue instanceof BooleanValue) {
+          BooleanValue booleanValue = (BooleanValue) usedValue;
+          nameToValue.put(name, booleanValue.get() ? "Yes" : "No");
+        } else {
+          nameToValue.put(name, usedValue.get());
+        }
+
         if (maxLength < name.length()) {
           maxLength = name.length();
         }
@@ -192,7 +218,7 @@ public class PrettyPrinter implements Formatter {
     if (scoreValue.isUnknown()) {
       return "unknown";
     }
-    return String.format("%2.2f", scoreValue.get());
+    return String.format("%2.2f  out of %2.2f", scoreValue.get(), Score.MAX);
   }
 
   /**

@@ -31,6 +31,9 @@
     }, {
       "type" : "MemorySafetyTestingScore",
       "name" : "How a project tests for memory-safety issues"
+    }, {
+      "type" : "FindSecBugsScore",
+      "name" : "How a project uses FindSecBugs"
     } ]
   }, {
     "type" : "ProjectPopularityScore",
