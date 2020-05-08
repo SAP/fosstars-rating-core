@@ -41,7 +41,7 @@ public class UsesSignedCommitTest extends TestGitHubDataFetcherHolder {
     commits.add(commit);
 
     final LocalRepository repository = mock(LocalRepository.class);
-    when(repository.commitsAfter(any())).thenReturn(commits);
+    when(repository.commitsWithin(any())).thenReturn(commits);
 
     GitHubProject project = new GitHubProject("org", "test");
     fetcher.addForTesting(project, repository);
@@ -64,7 +64,7 @@ public class UsesSignedCommitTest extends TestGitHubDataFetcherHolder {
     final UsesSignedCommits provider = new UsesSignedCommits(fetcher);
 
     LocalRepository repository = mock(LocalRepository.class);
-    when(repository.commitsAfter(any())).thenThrow(new IOException());
+    when(repository.commitsWithin(any())).thenThrow(new IOException());
 
     GitHubProject project = new GitHubProject("org", "test");
     fetcher.addForTesting(project, repository);

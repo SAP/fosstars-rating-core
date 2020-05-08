@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -99,6 +101,20 @@ public class LocalRepository implements AutoCloseable {
     }
 
     return result;
+  }
+
+  /**
+   * Returns a list of commits during some time from now.
+   *
+   * @param duration The duration
+   * @return The list of commits.
+   * @throws IOException If something went wrong.
+   */
+  @JsonIgnore
+  public List<Commit> commitsWithin(Duration duration) throws IOException {
+    Objects.requireNonNull(duration, "Oh no! Duration is null!");
+    Date date = Date.from(Instant.now().minus(duration));
+    return commitsAfter(date);
   }
 
   /**

@@ -9,8 +9,6 @@ import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.time.Duration;
-import java.time.Instant;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,9 +20,9 @@ import java.util.stream.Collectors;
 public class UsesSignedCommits extends CachedSingleFeatureGitHubDataProvider {
 
   /**
-   * The date after which all the commits would be considered.
+   * A period of time when the provider should look for signed commits.
    */
-  private static final Date ONE_YEAR = Date.from(Instant.now().minus(Duration.ofDays(365)));
+  private static final Duration ONE_YEAR = Duration.ofDays(365);
 
   /**
    * The threshold in % of number of signed commits against total number of commits in a
@@ -80,7 +78,7 @@ public class UsesSignedCommits extends CachedSingleFeatureGitHubDataProvider {
    * @throws IOException caused during REST call to GitHub API.
    */  
   private boolean askGithub(GitHubProject project) throws IOException {
-    List<Commit> yearCommits = fetcher.localRepositoryFor(project).commitsAfter(ONE_YEAR);
+    List<Commit> yearCommits = fetcher.localRepositoryFor(project).commitsWithin(ONE_YEAR);
     int counter = yearCommits.size();
 
     List<Commit> signedCommits = yearCommits.stream()
