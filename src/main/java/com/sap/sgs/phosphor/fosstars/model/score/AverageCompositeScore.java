@@ -87,11 +87,11 @@ public class AverageCompositeScore extends AbstractScore {
     int numberOfSubScores = 0;
     for (Score subScore : subScores) {
       ScoreValue subScoreValue = calculateIfNecessary(subScore, valueSet);
+      scoreValue.usedValues(subScoreValue);
       if (subScoreValue.isNotApplicable()) {
         continue;
       }
       numberOfSubScores++;
-      scoreValue.usedValues(subScoreValue);
       subScoreSum += subScoreValue.get();
       confidenceSum += subScoreValue.confidence();
     }
