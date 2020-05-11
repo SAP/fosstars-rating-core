@@ -5,11 +5,9 @@ import com.sap.sgs.phosphor.fosstars.model.feature.BooleanFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.DateFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.LgtmGradeFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.PositiveIntegerFeature;
-import com.sap.sgs.phosphor.fosstars.model.value.FuzzingAttempts;
 import com.sap.sgs.phosphor.fosstars.model.value.Languages;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.sgs.phosphor.fosstars.model.value.PackageManagers;
-import com.sap.sgs.phosphor.fosstars.model.value.SecurityReviews;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
 import java.util.Date;
 
@@ -114,28 +112,17 @@ public class OssFeatures {
       = new BooleanFeature("If an open-source project uses UndefinedBehaviorSanitizer");
 
   /**
-   * Shows if an open-source project is added to Google's open-source-Fuzz project
+   * Shows if an open-source project is added to <a href="https://github.com/google/oss-fuzz">OSS-Fuzz</a> project
    * to be regularly fuzzed.
-   * See <a href="https://github.com/google/oss-fuzz">https://github.com/google/oss-fuzz</a>.
    */
   public static final Feature<Boolean> FUZZED_IN_OSS_FUZZ
-      = new BooleanFeature("If an open-source project is included to Google's OSS-Fuzz project");
+      = new BooleanFeature("If an open-source project is included to OSS-Fuzz project");
 
   /**
    * Provides information about vulnerabilities.
    */
   public static final Feature<Vulnerabilities> VULNERABILITIES = new VulnerabilitiesInProject(
       "Info about vulnerabilities in open-source project");
-
-  /**
-   * Provides information about security reviews which have been done for an open-source project.
-   */
-  public static final Feature<SecurityReviews> SECURITY_REVIEWS_DONE = new SecurityReviewsDone();
-
-  /**
-   * Provides information about fuzz testing which have been done for an open-source project.
-   */
-  public static final Feature<FuzzingAttempts> FUZZING_ATTEMPTS_DONE = new FuzzingAttemptsDone();
 
   /**
    * Shows if an open-source project scans for known vulnerabilities in its dependencies.

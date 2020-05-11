@@ -14,7 +14,6 @@ import com.sap.sgs.phosphor.fosstars.model.feature.example.SecurityReviewDoneExa
 import com.sap.sgs.phosphor.fosstars.model.feature.example.StaticCodeAnalysisDoneExample;
 import com.sap.sgs.phosphor.fosstars.model.feature.oss.LanguagesFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.oss.PackageManagersFeature;
-import com.sap.sgs.phosphor.fosstars.model.feature.oss.SecurityReviewsDone;
 import com.sap.sgs.phosphor.fosstars.model.feature.oss.VulnerabilitiesInProject;
 
 /**
@@ -36,7 +35,6 @@ import com.sap.sgs.phosphor.fosstars.model.feature.oss.VulnerabilitiesInProject;
     @JsonSubTypes.Type(value = BoundedIntegerFeature.class),
     @JsonSubTypes.Type(value = DateFeature.class),
     @JsonSubTypes.Type(value = VulnerabilitiesInProject.class),
-    @JsonSubTypes.Type(value = SecurityReviewsDone.class),
     @JsonSubTypes.Type(value = SecurityReviewDoneExample.class),
     @JsonSubTypes.Type(value = StaticCodeAnalysisDoneExample.class),
     @JsonSubTypes.Type(value = NumberOfCommitsLastMonthExample.class),
