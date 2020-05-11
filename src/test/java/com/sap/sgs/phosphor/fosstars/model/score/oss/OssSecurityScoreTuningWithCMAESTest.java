@@ -1,5 +1,6 @@
 package com.sap.sgs.phosphor.fosstars.model.score.oss;
 
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.FUZZED_IN_OSS_FUZZ;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_TEAM;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.IS_APACHE;
@@ -77,6 +78,7 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(UnknownValue.of(USES_ADDRESS_SANITIZER))
           .set(UnknownValue.of(USES_MEMORY_SANITIZER))
           .set(UnknownValue.of(USES_UNDEFINED_BEHAVIOR_SANITIZER))
+          .set(UnknownValue.of(FUZZED_IN_OSS_FUZZ))
           .set(UnknownValue.of(USES_FIND_SEC_BUGS))
           .expectedScore(DoubleInterval.closed(Score.MIN, 0.1))
           .alias("one")
@@ -107,6 +109,7 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(USES_ADDRESS_SANITIZER.value(false))
           .set(USES_MEMORY_SANITIZER.value(false))
           .set(USES_UNDEFINED_BEHAVIOR_SANITIZER.value(false))
+          .set(FUZZED_IN_OSS_FUZZ.value(false))
           .set(USES_FIND_SEC_BUGS.value(false))
           .expectedScore(DoubleInterval.closed(1.0, 4.0))
           .alias("two")
@@ -137,6 +140,7 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(USES_ADDRESS_SANITIZER.value(true))
           .set(USES_MEMORY_SANITIZER.value(true))
           .set(USES_UNDEFINED_BEHAVIOR_SANITIZER.value(true))
+          .set(FUZZED_IN_OSS_FUZZ.value(true))
           .set(USES_FIND_SEC_BUGS.value(true))
           .expectedScore(DoubleInterval.init().from(9.0).to(Score.MAX).make())
           .alias("three")

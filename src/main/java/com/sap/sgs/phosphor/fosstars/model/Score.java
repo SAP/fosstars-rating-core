@@ -11,6 +11,7 @@ import com.sap.sgs.phosphor.fosstars.model.score.example.SecurityTestingScoreExa
 import com.sap.sgs.phosphor.fosstars.model.score.oss.CommunityCommitmentScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.DependencyScanScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.FindSecBugsScore;
+import com.sap.sgs.phosphor.fosstars.model.score.oss.FuzzingScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.LgtmScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.NoHttpToolScore;
@@ -53,6 +54,7 @@ import java.util.Set;
     @JsonSubTypes.Type(value = NoHttpToolScore.class),
     @JsonSubTypes.Type(value = MemorySafetyTestingScore.class),
     @JsonSubTypes.Type(value = FindSecBugsScore.class),
+    @JsonSubTypes.Type(value = FuzzingScore.class),
 })
 public interface Score extends Feature<Double> {
 

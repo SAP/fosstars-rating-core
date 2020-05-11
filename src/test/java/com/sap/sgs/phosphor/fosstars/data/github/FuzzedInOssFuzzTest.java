@@ -42,8 +42,8 @@ public class FuzzedInOssFuzzTest extends TestGitHubDataFetcherHolder {
           .call();
 
       LocalRepository localRepository = new LocalRepository(
-        new LocalRepositoryInfo(directory, new Date(), OSS_FUZZ_PROJECT.url()),
-        repository
+          new LocalRepositoryInfo(directory, new Date(), OSS_FUZZ_PROJECT.url()),
+          repository
       );
       fetcher.addForTesting(OSS_FUZZ_PROJECT, localRepository);
 

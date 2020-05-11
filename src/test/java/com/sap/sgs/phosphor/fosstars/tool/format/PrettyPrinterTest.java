@@ -1,6 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.tool.format;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.FIRST_COMMIT_DATE;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.FUZZED_IN_OSS_FUZZ;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_TEAM;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.IS_APACHE;
@@ -76,6 +77,7 @@ public class PrettyPrinterTest {
         USES_ADDRESS_SANITIZER.value(false),
         USES_MEMORY_SANITIZER.value(false),
         USES_UNDEFINED_BEHAVIOR_SANITIZER.value(false),
+        FUZZED_IN_OSS_FUZZ.value(false),
         LANGUAGES.value(Languages.of(C)),
         USES_FIND_SEC_BUGS.value(false),
         PACKAGE_MANAGERS.value(new PackageManagers(MAVEN)));
@@ -129,6 +131,7 @@ public class PrettyPrinterTest {
         USES_ADDRESS_SANITIZER.value(false),
         USES_MEMORY_SANITIZER.value(false),
         USES_UNDEFINED_BEHAVIOR_SANITIZER.value(false),
+        FUZZED_IN_OSS_FUZZ.value(false),
         LANGUAGES.value(Languages.of(JAVA)),
         USES_FIND_SEC_BUGS.value(true),
         PACKAGE_MANAGERS.value(new PackageManagers(GRADLE)));
