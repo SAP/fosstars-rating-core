@@ -1,6 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.tool.github;
 
 import com.sap.sgs.phosphor.fosstars.data.DataProvider;
+import com.sap.sgs.phosphor.fosstars.data.github.FuzzedInOssFuzz;
 import com.sap.sgs.phosphor.fosstars.data.github.GitHubDataFetcher;
 import com.sap.sgs.phosphor.fosstars.data.github.HasCompanySupport;
 import com.sap.sgs.phosphor.fosstars.data.github.HasSecurityPolicy;
@@ -132,6 +133,7 @@ class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
         new ScansForVulnerableDependencies(fetcher),
         new UsesSanitizers(fetcher),
         new UsesFindSecBugs(fetcher),
+        new FuzzedInOssFuzz(fetcher),
 
         // currently interactive data provider have to be added to the end, see issue #133
         new AskAboutSecurityTeam<>(),
