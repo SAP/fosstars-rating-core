@@ -46,18 +46,42 @@ public class PrettyPrinter implements Formatter {
   private static final Map<Class, String> FEATURE_CLASS_TO_NAME = new HashMap<>();
 
   static {
-    FEATURE_CLASS_TO_NAME.put(OssSecurityScore.class, "Security of project");
-    FEATURE_CLASS_TO_NAME.put(CommunityCommitmentScore.class, "Community commitment");
-    FEATURE_CLASS_TO_NAME.put(ProjectActivityScore.class, "Project activity");
-    FEATURE_CLASS_TO_NAME.put(ProjectPopularityScore.class, "Project popularity");
-    FEATURE_CLASS_TO_NAME.put(ProjectSecurityAwarenessScore.class, "Security awareness");
-    FEATURE_CLASS_TO_NAME.put(ProjectSecurityTestingScore.class, "Security testing");
-    FEATURE_CLASS_TO_NAME.put(UnpatchedVulnerabilitiesScore.class, "Unpatched vulnerabilities");
-    FEATURE_CLASS_TO_NAME.put(VulnerabilityLifetimeScore.class, "Vulnerability lifetime");
-    FEATURE_CLASS_TO_NAME.put(MemorySafetyTestingScore.class, "Memory-safety testing");
-    FEATURE_CLASS_TO_NAME.put(UsesFindSecBugs.class, "Uses FindSecBugs");
-    FEATURE_CLASS_TO_NAME.put(UsesNoHttpTool.class, "Uses nohttp");
-    FEATURE_CLASS_TO_NAME.put(DependencyScanScore.class, "Dependency testing");
+    FEATURE_CLASS_TO_NAME.put(
+        OssSecurityScore.class,
+        "Security of project");
+    FEATURE_CLASS_TO_NAME.put(
+        CommunityCommitmentScore.class,
+        "Community commitment");
+    FEATURE_CLASS_TO_NAME.put(
+        ProjectActivityScore.class,
+        "Project activity");
+    FEATURE_CLASS_TO_NAME.put(
+        ProjectPopularityScore.class,
+        "Project popularity");
+    FEATURE_CLASS_TO_NAME.put(
+        ProjectSecurityAwarenessScore.class,
+        "Security awareness");
+    FEATURE_CLASS_TO_NAME.put(
+        ProjectSecurityTestingScore.class,
+        "Security testing");
+    FEATURE_CLASS_TO_NAME.put(
+        UnpatchedVulnerabilitiesScore.class,
+        "Unpatched vulnerabilities");
+    FEATURE_CLASS_TO_NAME.put(
+        VulnerabilityLifetimeScore.class,
+        "Vulnerability lifetime");
+    FEATURE_CLASS_TO_NAME.put(
+        MemorySafetyTestingScore.class,
+        "Memory-safety testing");
+    FEATURE_CLASS_TO_NAME.put(
+        UsesFindSecBugs.class,
+        "Uses FindSecBugs");
+    FEATURE_CLASS_TO_NAME.put(
+        UsesNoHttpTool.class,
+        "Uses nohttp");
+    FEATURE_CLASS_TO_NAME.put(
+        DependencyScanScore.class,
+        "Dependency testing");
   }
 
   /**
@@ -66,27 +90,54 @@ public class PrettyPrinter implements Formatter {
   private static final Map<Feature, String> FEATURE_TO_NAME = new HashMap<>();
 
   static {
-    FEATURE_TO_NAME.put(OssFeatures.HAS_SECURITY_TEAM, "Does it have a security team?");
-    FEATURE_TO_NAME.put(OssFeatures.HAS_SECURITY_POLICY, "Does it have a security policy?");
     FEATURE_TO_NAME.put(
-        OssFeatures.USES_SIGNED_COMMITS, "Does it use verified signed commits?");
-    FEATURE_TO_NAME.put(OssFeatures.VULNERABILITIES, "Info about vulnerabilities");
-    FEATURE_TO_NAME.put(OssFeatures.SECURITY_REVIEWS_DONE, "Security reviews");
-    FEATURE_TO_NAME.put(OssFeatures.IS_APACHE, "Does it belong to Apache?");
-    FEATURE_TO_NAME.put(OssFeatures.IS_ECLIPSE, "Does it belong to Eclipse?");
-    FEATURE_TO_NAME.put(OssFeatures.SUPPORTED_BY_COMPANY, "Is it supported by a company?");
+        OssFeatures.HAS_SECURITY_TEAM,
+        "Does it have a security team?");
     FEATURE_TO_NAME.put(
-        OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES, "Does it scan for vulnerable dependencies?");
-    FEATURE_TO_NAME.put(OssFeatures.USES_GITHUB_FOR_DEVELOPMENT,
+        OssFeatures.HAS_SECURITY_POLICY,
+        "Does it have a security policy?");
+    FEATURE_TO_NAME.put(
+        OssFeatures.USES_SIGNED_COMMITS,
+        "Does it use verified signed commits?");
+    FEATURE_TO_NAME.put(
+        OssFeatures.VULNERABILITIES,
+        "Info about vulnerabilities");
+    FEATURE_TO_NAME.put(
+        OssFeatures.IS_APACHE,
+        "Does it belong to Apache?");
+    FEATURE_TO_NAME.put(
+        OssFeatures.IS_ECLIPSE,
+        "Does it belong to Eclipse?");
+    FEATURE_TO_NAME.put(
+        OssFeatures.SUPPORTED_BY_COMPANY,
+        "Is it supported by a company?");
+    FEATURE_TO_NAME.put(
+        OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES,
+        "Does it scan for vulnerable dependencies?");
+    FEATURE_TO_NAME.put(
+        OssFeatures.USES_GITHUB_FOR_DEVELOPMENT,
         "Does it use GitHub as the main development platform?");
-    FEATURE_TO_NAME.put(OssFeatures.USES_ADDRESS_SANITIZER, "Does it use AddressSanitizer?");
-    FEATURE_TO_NAME.put(OssFeatures.USES_MEMORY_SANITIZER, "Does it use MemorySanitizer?");
-    FEATURE_TO_NAME.put(OssFeatures.USES_UNDEFINED_BEHAVIOR_SANITIZER,
+    FEATURE_TO_NAME.put(
+        OssFeatures.USES_ADDRESS_SANITIZER,
+        "Does it use AddressSanitizer?");
+    FEATURE_TO_NAME.put(
+        OssFeatures.USES_MEMORY_SANITIZER,
+        "Does it use MemorySanitizer?");
+    FEATURE_TO_NAME.put(
+        OssFeatures.USES_UNDEFINED_BEHAVIOR_SANITIZER,
         "Does it use UndefinedBehaviorSanitizer?");
-    FEATURE_TO_NAME.put(OssFeatures.USES_NOHTTP, "Does it use nohttp?");
-    FEATURE_TO_NAME.put(OssFeatures.USES_FIND_SEC_BUGS, "Does it use FindSecBugs?");
-    FEATURE_TO_NAME.put(OssFeatures.USES_DEPENDABOT, "Does it use Dependabot?");
-    FEATURE_TO_NAME.put(OssFeatures.USES_LGTM, "Does it use LGTM?");
+    FEATURE_TO_NAME.put(
+        OssFeatures.USES_NOHTTP,
+        "Does it use nohttp?");
+    FEATURE_TO_NAME.put(
+        OssFeatures.USES_FIND_SEC_BUGS,
+        "Does it use FindSecBugs?");
+    FEATURE_TO_NAME.put(
+        OssFeatures.USES_DEPENDABOT,
+        "Does it use Dependabot?");
+    FEATURE_TO_NAME.put(
+        OssFeatures.USES_LGTM,
+        "Does it use LGTM?");
   }
 
   @Override

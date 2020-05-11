@@ -1,6 +1,4 @@
 /**
- * The package contains data storage which store data in local JSON files.
- * <br/>
- * TODO: a storage should be a data provider
+ * The package contains data storage that store data in local JSON files.
  */
 package com.sap.sgs.phosphor.fosstars.data.json;
