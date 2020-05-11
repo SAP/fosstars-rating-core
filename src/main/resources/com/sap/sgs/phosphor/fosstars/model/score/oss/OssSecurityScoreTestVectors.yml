@@ -18,6 +18,8 @@ elements:
         name: "How a project tests for memory-safety issues"
       - type: "FindSecBugsScore"
         name: "How a project uses FindSecBugs"
+      - type: "FuzzingScore"
+        name: "How a project uses fuzzing"
     value: 0.0
     weight: 1.0
     confidence: 10.0
@@ -106,6 +108,8 @@ elements:
         name: "How a project tests for memory-safety issues"
       - type: "FindSecBugsScore"
         name: "How a project uses FindSecBugs"
+      - type: "FuzzingScore"
+        name: "How a project uses fuzzing"
     value: 0.0
     weight: 1.0
     confidence: 10.0
@@ -203,6 +207,8 @@ elements:
         name: "How a project tests for memory-safety issues"
       - type: "FindSecBugsScore"
         name: "How a project uses FindSecBugs"
+      - type: "FuzzingScore"
+        name: "How a project uses fuzzing"
     value: 5.0
     weight: 1.0
     confidence: 10.0
@@ -282,6 +288,8 @@ elements:
         name: "How a project tests for memory-safety issues"
       - type: "FindSecBugsScore"
         name: "How a project uses FindSecBugs"
+      - type: "FuzzingScore"
+        name: "How a project uses fuzzing"
     value: 0.0
     weight: 1.0
     confidence: 10.0
@@ -370,6 +378,8 @@ elements:
         name: "How a project tests for memory-safety issues"
       - type: "FindSecBugsScore"
         name: "How a project uses FindSecBugs"
+      - type: "FuzzingScore"
+        name: "How a project uses fuzzing"
     value: 0.0
     weight: 1.0
     confidence: 10.0
@@ -458,6 +468,8 @@ elements:
         name: "How a project tests for memory-safety issues"
       - type: "FindSecBugsScore"
         name: "How a project uses FindSecBugs"
+      - type: "FuzzingScore"
+        name: "How a project uses fuzzing"
     value: 8.0
     weight: 1.0
     confidence: 10.0
@@ -555,6 +567,8 @@ elements:
         name: "How a project tests for memory-safety issues"
       - type: "FindSecBugsScore"
         name: "How a project uses FindSecBugs"
+      - type: "FuzzingScore"
+        name: "How a project uses fuzzing"
     value: 10.0
     weight: 1.0
     confidence: 10.0
@@ -634,6 +648,8 @@ elements:
         name: "How a project tests for memory-safety issues"
       - type: "FindSecBugsScore"
         name: "How a project uses FindSecBugs"
+      - type: "FuzzingScore"
+        name: "How a project uses fuzzing"
     value: 0.0
     weight: 1.0
     confidence: 10.0
@@ -731,6 +747,8 @@ elements:
         name: "How a project tests for memory-safety issues"
       - type: "FindSecBugsScore"
         name: "How a project uses FindSecBugs"
+      - type: "FuzzingScore"
+        name: "How a project uses fuzzing"
     value: 10.0
     weight: 1.0
     confidence: 10.0
@@ -819,6 +837,8 @@ elements:
         name: "How a project tests for memory-safety issues"
       - type: "FindSecBugsScore"
         name: "How a project uses FindSecBugs"
+      - type: "FuzzingScore"
+        name: "How a project uses fuzzing"
     value: 10.0
     weight: 1.0
     confidence: 10.0

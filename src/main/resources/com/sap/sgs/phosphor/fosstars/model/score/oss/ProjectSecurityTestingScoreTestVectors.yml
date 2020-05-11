@@ -41,6 +41,15 @@ elements:
     explanation: []
   - type: "ScoreValue"
     score:
+      type: "FuzzingScore"
+      name: "How a project uses fuzzing"
+    value: 0.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
       type: "FindSecBugsScore"
       name: "How a project uses FindSecBugs"
     value: 0.0
@@ -94,6 +103,15 @@ elements:
       type: "MemorySafetyTestingScore"
       name: "How a project tests for memory-safety issues"
     value: 5.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "FuzzingScore"
+      name: "How a project uses fuzzing"
+    value: 8.0
     weight: 1.0
     confidence: 10.0
     usedValues: []
@@ -159,6 +177,15 @@ elements:
     explanation: []
   - type: "ScoreValue"
     score:
+      type: "FuzzingScore"
+      name: "How a project uses fuzzing"
+    value: 5.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
       type: "FindSecBugsScore"
       name: "How a project uses FindSecBugs"
     value: 3.7
@@ -218,6 +245,15 @@ elements:
     explanation: []
   - type: "ScoreValue"
     score:
+      type: "FuzzingScore"
+      name: "How a project uses fuzzing"
+    value: 5.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
       type: "FindSecBugsScore"
       name: "How a project uses FindSecBugs"
     value: 0.0
@@ -270,6 +306,15 @@ elements:
     score:
       type: "MemorySafetyTestingScore"
       name: "How a project tests for memory-safety issues"
+    value: 10.0
+    weight: 1.0
+    confidence: 10.0
+    usedValues: []
+    explanation: []
+  - type: "ScoreValue"
+    score:
+      type: "FuzzingScore"
+      name: "How a project uses fuzzing"
     value: 10.0
     weight: 1.0
     confidence: 10.0
@@ -337,6 +382,15 @@ elements:
       explanation: []
     - type: "ScoreValue"
       score:
+        type: "FuzzingScore"
+        name: "How a project uses fuzzing"
+      value: 5.0
+      weight: 1.0
+      confidence: 10.0
+      usedValues: []
+      explanation: []
+    - type: "ScoreValue"
+      score:
         type: "FindSecBugsScore"
         name: "How a project uses FindSecBugs"
       value: 0.0
@@ -355,7 +409,7 @@ elements:
   expectedLabel: null
   alias: "nohttp_tool_not_applicable"
 
-# NoHttpToolScore is N/A
+# MemorySafetyTestingScore and FussingScore are N/A
 - type: "StandardTestVector"
   values:
     - type: "ScoreValue"
@@ -397,6 +451,16 @@ elements:
       isNotApplicable: true
     - type: "ScoreValue"
       score:
+        type: "FuzzingScore"
+        name: "How a project uses fuzzing"
+      value: 0.0
+      weight: 1.0
+      confidence: 10.0
+      usedValues: []
+      explanation: []
+      isNotApplicable: true
+    - type: "ScoreValue"
+      score:
         type: "FindSecBugsScore"
         name: "How a project uses FindSecBugs"
       value: 10.0
@@ -413,7 +477,7 @@ elements:
     openRight: false
     positiveInfinity: false
   expectedLabel: null
-  alias: "memory_safety_not_applicable"
+  alias: "memory_safety_and_fuzzing_not_applicable"
 
 # FindSecBugsScore is N/A
 - type: "StandardTestVector"
@@ -450,6 +514,15 @@ elements:
         type: "MemorySafetyTestingScore"
         name: "How a project tests for memory-safety issues"
       value: 5.0
+      weight: 1.0
+      confidence: 10.0
+      usedValues: []
+      explanation: []
+    - type: "ScoreValue"
+      score:
+        type: "FuzzingScore"
+        name: "How a project uses fuzzing"
+      value: 8.0
       weight: 1.0
       confidence: 10.0
       usedValues: []

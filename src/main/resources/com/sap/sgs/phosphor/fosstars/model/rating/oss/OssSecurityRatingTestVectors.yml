@@ -46,6 +46,11 @@ defaults:
     type: "BooleanFeature"
     name: "If an open-source project uses AddressSanitizer"
   flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If an open-source project is included to OSS-Fuzz project"
+  flag: false
 
 # test vectors
 elements:
