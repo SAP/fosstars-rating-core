@@ -18,6 +18,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * A base class for scores.
@@ -36,6 +38,12 @@ public abstract class AbstractScore implements Score {
    */
   @JsonIgnore
   private final String description;
+
+  /**
+   * A logger.
+   */
+  @JsonIgnore
+  protected final Logger logger = LogManager.getLogger(getClass());
 
   /**
    * Initializes a new score.
