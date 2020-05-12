@@ -111,11 +111,12 @@ public class NVD {
    * @throws IOException If something went wrong.
    */
   public List<String> jsonFiles() throws IOException {
-    try (Stream<Path> walk = Files.walk(Paths.get(downloadDirectory))) {
+    String prefix = String.format("nvdcve-%s-", NVD_FEED_VERSION);
+    try (Stream<Path> walk = Files.walk(Paths.get(downloadDirectory), 1)) {
       return walk
           .filter(Files::isRegularFile)
-          .filter(path -> path.toString().contains(NVD_FEED_VERSION))
-          .filter(path -> path.toString().endsWith(".json"))
+          .filter(path -> path.getFileName().toString().startsWith(prefix))
+          .filter(path -> path.getFileName().toString().endsWith(".json"))
           .map(Path::toString)
           .collect(Collectors.toList());
     }
