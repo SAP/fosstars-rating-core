@@ -22,8 +22,7 @@ import java.util.List;
 // when they become necessary, then can be enabled
 @JsonIgnoreProperties({
     "operator",
-    "negate",
-    "children"
+    "negate"
 })
 public class Node {
 
@@ -42,5 +41,10 @@ public class Node {
   @JsonProperty("cpe_match")
   public List<CpeMatch> getCpeMatches() {
     return cpeMatch;
+  }
+
+  @JsonProperty("children")
+  public List<Node> getChildren() {
+    return children;
   }
 }
