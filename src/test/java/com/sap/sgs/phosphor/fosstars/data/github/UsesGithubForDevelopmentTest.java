@@ -1,6 +1,5 @@
 package com.sap.sgs.phosphor.fosstars.data.github;
 
-import static com.sap.sgs.phosphor.fosstars.data.github.UsesGithubForDevelopment.CONFIDENCE_THRESHOLD;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GITHUB_FOR_DEVELOPMENT;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -81,15 +80,16 @@ public class UsesGithubForDevelopmentTest extends TestGitHubDataFetcherHolder {
     RepositoryMockBuilder builder = new RepositoryMockBuilder();
 
     int i = 0;
+    final double threshold = 0.4;
     while (i < builder.allChecks()) {
       builder.init();
       random.ints(i, 0, builder.allChecks())
           .forEach(builder::passCheck);
-      boolean expected = builder.passedChecks() / builder.allChecks() >= CONFIDENCE_THRESHOLD;
+      boolean expected = (double) builder.passedChecks() / builder.allChecks() >= threshold;
       assertEquals(
           expected,
           UsesGithubForDevelopment.usesGitHubForDevelopment(
-              builder.repository(), CONFIDENCE_THRESHOLD));
+              builder.repository(), threshold));
       i++;
     }
   }

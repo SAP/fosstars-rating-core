@@ -108,6 +108,6 @@ public class UsesGithubForDevelopment extends CachedSingleFeatureGitHubDataProvi
         .map(check -> check.test(repository) ? 1 : 0)
         .reduce(0, Integer::sum);
 
-    return points / CHECKS.size() >= threshold;
+    return (double) points / CHECKS.size() >= threshold;
   }
 }
