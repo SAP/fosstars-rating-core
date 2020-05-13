@@ -3,17 +3,16 @@
 ```
 Here is how the rating was calculated:
   Score:........Security of project
-  Value:........1.56  out of 10.00
+  Value:........4.05  out of 10.00
   Confidence:...9.41  out of 10.00
   Based on:.....7 sub-scores:
       Sub-score:....Unpatched vulnerabilities
       Importance:...High (weight 0.84 out of 1.00)
-      Value:........0.00  out of 10.00
+      Value:........10.00  out of 10.00
       Confidence:...10.00 out of 10.00
       Based on:...1 features:
-          Info about vulnerabilities:...2 vulnerabilities
-      Explanation:..Found 1 unpatched vulnerabilities with high severity which decreased the score on 8.00 (1 * 8.00)
-                    Found 1 unpatched vulnerabilities with medium severity which decreased the score on 4.00 (1 * 4.00)
+          Info about vulnerabilities:...0 vulnerabilities
+      Explanation:..No unpatched vulnerabilities found which is good
 
       Sub-score:....Project activity
       Description:..The score is based on number of commits and contributors.
@@ -32,24 +31,40 @@ Here is how the rating was calculated:
       Importance:...Medium (weight 0.63 out of 1.00)
       Value:........0.67  out of 10.00
       Confidence:...9.33  out of 10.00
-      Based on:.....3 sub-scores:
+      Based on:.....6 sub-scores:
+          Sub-score:....How a project uses FindSecBugs
+          Importance:...High (weight 1.00 out of 1.00)
+          Value:........N/A  
+          Confidence:...10.00 out of 10.00
+          Based on:...2 features:
+              A set of programming languages:...
+              Does it use FindSecBugs?..........No
+
           Sub-score:....If a project uses nohttp tool
           Importance:...High (weight 1.00 out of 1.00)
           Value:........0.00  out of 10.00
           Confidence:...10.00 out of 10.00
           Based on:...2 features:
-              A set of package managers:.......
-              If a project uses nohttp tool:...false
+              A set of package managers:...
+              Does it use nohttp?..........No
 
           Sub-score:....How a project addresses issues reported by LGTM
           Importance:...High (weight 1.00 out of 1.00)
           Value:........2.00  out of 10.00
           Confidence:...10.00 out of 10.00
           Based on:...2 features:
-              If a project uses LGTM:..............true
+              Does it use LGTM?....................Yes
               The worst LGTM grade of a project:...E
 
-          Sub-score:....How a project scans its dependencies for vulnerabilities
+          Sub-score:....How a project uses fuzzing
+          Importance:...High (weight 1.00 out of 1.00)
+          Value:........N/A  
+          Confidence:...10.00 out of 10.00
+          Based on:...2 features:
+              A set of programming languages:..............................
+              If an open-source project is included to OSS-Fuzz project:...No
+
+          Sub-score:....Dependency testing
           Importance:...High (weight 1.00 out of 1.00)
           Value:........0.00  out of 10.00
           Confidence:...8.00  out of 10.00
@@ -57,8 +72,18 @@ Here is how the rating was calculated:
               A set of package managers:..............................
               A set of programming languages:.........................
               Does it scan for vulnerable dependencies?...............unknown
-              Does it use GitHub as the main development platform?....false
-              If a project uses Dependabot:...........................false
+              Does it use Dependabot?.................................No
+              Does it use GitHub as the main development platform?....No
+
+          Sub-score:....Memory-safety testing
+          Importance:...High (weight 1.00 out of 1.00)
+          Value:........N/A  
+          Confidence:...10.00 out of 10.00
+          Based on:...4 features:
+              A set of programming languages:............
+              Does it use AddressSanitizer?..............No
+              Does it use MemorySanitizer?...............No
+              Does it use UndefinedBehaviorSanitizer?....No
 
 
       Sub-score:....Community commitment
@@ -66,9 +91,9 @@ Here is how the rating was calculated:
       Value:........7.00  out of 10.00
       Confidence:...10.00 out of 10.00
       Based on:...3 features:
-          Does it belong to Apache?........true
-          Does it belong to Eclipse?.......false
-          Is it supported by a company?....false
+          Does it belong to Apache?........Yes
+          Does it belong to Eclipse?.......No
+          Is it supported by a company?....No
 
       Sub-score:....Security awareness
       Description:..The score checks if a project has a security policy and a security team.
@@ -79,9 +104,9 @@ Here is how the rating was calculated:
       Value:........0.00  out of 10.00
       Confidence:...6.67  out of 10.00
       Based on:...3 features:
-          Does it have a security policy?.........false
+          Does it have a security policy?.........No
           Does it have a security team?...........unknown
-          Does it use verified signed commits?....false
+          Does it use verified signed commits?....No
 
       Sub-score:....Project popularity
       Description:..The score is based on number of stars and watchers.
@@ -98,13 +123,13 @@ Here is how the rating was calculated:
 
       Sub-score:....Vulnerability lifetime
       Importance:...Low (weight 0.23 out of 1.00)
-      Value:........5.92  out of 10.00
+      Value:........10.00  out of 10.00
       Confidence:...10.00 out of 10.00
       Based on:...2 features:
-          Info about vulnerabilities:...2 vulnerabilities
+          Info about vulnerabilities:...0 vulnerabilities
           When a project started:.......Fri Mar 27 16:41:54 CET 2009
 
-Rating: 1.56 out of 10.00 -> BAD
+Rating: 4.05 out of 10.00 -> BAD
 Confidence: 9.41 out of 10.00
 
 ```

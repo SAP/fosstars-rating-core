@@ -3,12 +3,12 @@
 ```
 Here is how the rating was calculated:
   Score:........Security of project
-  Value:........4.81  out of 10.00
-  Confidence:...9.41  out of 10.00
+  Value:........4.72  out of 10.00
+  Confidence:...9.43  out of 10.00
   Based on:.....7 sub-scores:
       Sub-score:....Unpatched vulnerabilities
       Importance:...High (weight 0.84 out of 1.00)
-      Value:........10.00 out of 10.00
+      Value:........10.00  out of 10.00
       Confidence:...10.00 out of 10.00
       Based on:...1 features:
           Info about vulnerabilities:...0 vulnerabilities
@@ -24,40 +24,66 @@ Here is how the rating was calculated:
       Value:........3.18  out of 10.00
       Confidence:...10.00 out of 10.00
       Based on:...2 features:
-          Number of commits in the last three months:........17
+          Number of commits in the last three months:........16
           Number of contributors in the last three months:...4
 
       Sub-score:....Security testing
       Importance:...Medium (weight 0.63 out of 1.00)
-      Value:........2.00  out of 10.00
-      Confidence:...9.33  out of 10.00
-      Based on:.....3 sub-scores:
+      Value:........1.50  out of 10.00
+      Confidence:...9.50  out of 10.00
+      Based on:.....6 sub-scores:
+          Sub-score:....How a project uses FindSecBugs
+          Importance:...High (weight 1.00 out of 1.00)
+          Value:........0.00  out of 10.00
+          Confidence:...10.00 out of 10.00
+          Based on:...2 features:
+              A set of programming languages:...JAVASCRIPT, OTHER, JAVA
+              Does it use FindSecBugs?..........No
+
           Sub-score:....If a project uses nohttp tool
           Importance:...High (weight 1.00 out of 1.00)
           Value:........0.00  out of 10.00
           Confidence:...10.00 out of 10.00
           Based on:...2 features:
-              A set of package managers:.......MAVEN
-              If a project uses nohttp tool:...false
+              A set of package managers:...MAVEN
+              Does it use nohttp?..........No
 
           Sub-score:....How a project addresses issues reported by LGTM
           Importance:...High (weight 1.00 out of 1.00)
           Value:........6.00  out of 10.00
           Confidence:...10.00 out of 10.00
           Based on:...2 features:
-              If a project uses LGTM:..............true
+              Does it use LGTM?....................Yes
               The worst LGTM grade of a project:...C
 
-          Sub-score:....How a project scans its dependencies for vulnerabilities
+          Sub-score:....How a project uses fuzzing
+          Importance:...High (weight 1.00 out of 1.00)
+          Value:........N/A  
+          Confidence:...10.00 out of 10.00
+          Based on:...2 features:
+              A set of programming languages:..............................JAVASCRIPT, OTHER, JAVA
+              If an open-source project is included to OSS-Fuzz project:...No
+
+          Sub-score:....Dependency testing
           Importance:...High (weight 1.00 out of 1.00)
           Value:........0.00  out of 10.00
           Confidence:...8.00  out of 10.00
           Based on:...5 features:
               A set of package managers:..............................MAVEN
-              A set of programming languages:.........................JAVA, JAVASCRIPT, OTHER
+              A set of programming languages:.........................JAVASCRIPT, OTHER, JAVA
               Does it scan for vulnerable dependencies?...............unknown
-              Does it use GitHub as the main development platform?....false
-              If a project uses Dependabot:...........................false
+              Does it use Dependabot?.................................No
+              Does it use GitHub as the main development platform?....No
+
+          Sub-score:....Memory-safety testing
+          Importance:...High (weight 1.00 out of 1.00)
+          Value:........N/A  
+          Confidence:...10.00 out of 10.00
+          Based on:...4 features:
+              A set of programming languages:............JAVASCRIPT, OTHER, JAVA
+              Does it use AddressSanitizer?..............No
+              Does it use MemorySanitizer?...............No
+              Does it use UndefinedBehaviorSanitizer?....No
 
 
       Sub-score:....Community commitment
@@ -65,9 +91,9 @@ Here is how the rating was calculated:
       Value:........7.00  out of 10.00
       Confidence:...10.00 out of 10.00
       Based on:...3 features:
-          Does it belong to Apache?........false
-          Does it belong to Eclipse?.......true
-          Is it supported by a company?....false
+          Does it belong to Apache?........No
+          Does it belong to Eclipse?.......Yes
+          Is it supported by a company?....No
 
       Sub-score:....Security awareness
       Description:..The score checks if a project has a security policy and a security team.
@@ -78,9 +104,9 @@ Here is how the rating was calculated:
       Value:........0.00  out of 10.00
       Confidence:...6.67  out of 10.00
       Based on:...3 features:
-          Does it have a security policy?.........false
+          Does it have a security policy?.........No
           Does it have a security team?...........unknown
-          Does it use verified signed commits?....false
+          Does it use verified signed commits?....No
 
       Sub-score:....Project popularity
       Description:..The score is based on number of stars and watchers.
@@ -97,13 +123,13 @@ Here is how the rating was calculated:
 
       Sub-score:....Vulnerability lifetime
       Importance:...Low (weight 0.23 out of 1.00)
-      Value:........10.00 out of 10.00
+      Value:........10.00  out of 10.00
       Confidence:...10.00 out of 10.00
       Based on:...2 features:
           Info about vulnerabilities:...0 vulnerabilities
           When a project started:.......Mon Jan 10 20:26:24 CET 2011
 
-Rating: 4.81 out of 10.00 -> BAD
-Confidence: 9.41 out of 10.00
+Rating: 4.72 out of 10.00 -> BAD
+Confidence: 9.43 out of 10.00
 
 ```

@@ -3,18 +3,18 @@
 ```
 Here is how the rating was calculated:
   Score:........Security of project
-  Value:........1.42  out of 10.00
-  Confidence:...9.41  out of 10.00
+  Value:........1.31  out of 10.00
+  Confidence:...9.46  out of 10.00
   Based on:.....7 sub-scores:
       Sub-score:....Unpatched vulnerabilities
       Importance:...High (weight 0.84 out of 1.00)
       Value:........0.00  out of 10.00
       Confidence:...10.00 out of 10.00
       Based on:...1 features:
-          Info about vulnerabilities:...9 vulnerabilities
+          Info about vulnerabilities:...14 vulnerabilities
       Explanation:..Found 2 unpatched vulnerabilities with high severity which decreased the score on 16.00 (2 * 8.00)
-                    Found 5 unpatched vulnerabilities with medium severity which decreased the score on 20.00 (5 * 4.00)
-                    Found 2 unpatched vulnerabilities with low severity which decreased the score on 2.00 (2 * 1.00)
+                    Found 4 unpatched vulnerabilities with medium severity which decreased the score on 16.00 (4 * 4.00)
+                    Found 1 unpatched vulnerabilities with low severity which decreased the score on 1.00 (1 * 1.00)
 
       Sub-score:....Project activity
       Description:..The score is based on number of commits and contributors.
@@ -31,35 +31,61 @@ Here is how the rating was calculated:
 
       Sub-score:....Security testing
       Importance:...Medium (weight 0.63 out of 1.00)
-      Value:........1.33  out of 10.00
-      Confidence:...9.33  out of 10.00
-      Based on:.....3 sub-scores:
+      Value:........0.67  out of 10.00
+      Confidence:...9.67  out of 10.00
+      Based on:.....6 sub-scores:
+          Sub-score:....How a project uses FindSecBugs
+          Importance:...High (weight 1.00 out of 1.00)
+          Value:........0.00  out of 10.00
+          Confidence:...10.00 out of 10.00
+          Based on:...2 features:
+              A set of programming languages:...C_SHARP, PYTHON, JAVASCRIPT, PHP, OTHER, C, JAVA
+              Does it use FindSecBugs?..........No
+
           Sub-score:....If a project uses nohttp tool
           Importance:...High (weight 1.00 out of 1.00)
           Value:........0.00  out of 10.00
           Confidence:...10.00 out of 10.00
           Based on:...2 features:
-              A set of package managers:.......MAVEN
-              If a project uses nohttp tool:...false
+              A set of package managers:...MAVEN
+              Does it use nohttp?..........No
 
           Sub-score:....How a project addresses issues reported by LGTM
           Importance:...High (weight 1.00 out of 1.00)
           Value:........4.00  out of 10.00
           Confidence:...10.00 out of 10.00
           Based on:...2 features:
-              If a project uses LGTM:..............true
+              Does it use LGTM?....................Yes
               The worst LGTM grade of a project:...D
 
-          Sub-score:....How a project scans its dependencies for vulnerabilities
+          Sub-score:....How a project uses fuzzing
+          Importance:...High (weight 1.00 out of 1.00)
+          Value:........0.00  out of 10.00
+          Confidence:...10.00 out of 10.00
+          Based on:...2 features:
+              A set of programming languages:..............................C_SHARP, PYTHON, JAVASCRIPT, PHP, OTHER, C, JAVA
+              If an open-source project is included to OSS-Fuzz project:...No
+
+          Sub-score:....Dependency testing
           Importance:...High (weight 1.00 out of 1.00)
           Value:........0.00  out of 10.00
           Confidence:...8.00  out of 10.00
           Based on:...5 features:
               A set of package managers:..............................MAVEN
-              A set of programming languages:.........................PYTHON, JAVA, PHP, C_SHARP, C, JAVASCRIPT, OTHER
+              A set of programming languages:.........................C_SHARP, PYTHON, JAVASCRIPT, PHP, OTHER, C, JAVA
               Does it scan for vulnerable dependencies?...............unknown
-              Does it use GitHub as the main development platform?....false
-              If a project uses Dependabot:...........................false
+              Does it use Dependabot?.................................No
+              Does it use GitHub as the main development platform?....No
+
+          Sub-score:....Memory-safety testing
+          Importance:...High (weight 1.00 out of 1.00)
+          Value:........0.00  out of 10.00
+          Confidence:...10.00 out of 10.00
+          Based on:...4 features:
+              A set of programming languages:............C_SHARP, PYTHON, JAVASCRIPT, PHP, OTHER, C, JAVA
+              Does it use AddressSanitizer?..............No
+              Does it use MemorySanitizer?...............No
+              Does it use UndefinedBehaviorSanitizer?....No
 
 
       Sub-score:....Community commitment
@@ -67,9 +93,9 @@ Here is how the rating was calculated:
       Value:........7.00  out of 10.00
       Confidence:...10.00 out of 10.00
       Based on:...3 features:
-          Does it belong to Apache?........true
-          Does it belong to Eclipse?.......false
-          Is it supported by a company?....false
+          Does it belong to Apache?........Yes
+          Does it belong to Eclipse?.......No
+          Is it supported by a company?....No
 
       Sub-score:....Security awareness
       Description:..The score checks if a project has a security policy and a security team.
@@ -80,9 +106,9 @@ Here is how the rating was calculated:
       Value:........0.00  out of 10.00
       Confidence:...6.67  out of 10.00
       Based on:...3 features:
-          Does it have a security policy?.........false
+          Does it have a security policy?.........No
           Does it have a security team?...........unknown
-          Does it use verified signed commits?....false
+          Does it use verified signed commits?....No
 
       Sub-score:....Project popularity
       Description:..The score is based on number of stars and watchers.
@@ -91,21 +117,21 @@ Here is how the rating was calculated:
                     Here is how a number of watchers contributes to the score:
                     0 -> 0.00 (min), 450 -> 1.50, 750 -> 2.50, 3000 -> 10.00 (max)
       Importance:...Medium (weight 0.31 out of 1.00)
-      Value:........1.93  out of 10.00
+      Value:........1.92  out of 10.00
       Confidence:...10.00 out of 10.00
       Based on:...2 features:
-          Number of stars for a GitHub repository:......1313
-          Number of watchers for a GitHub repository:...184
+          Number of stars for a GitHub repository:......1314
+          Number of watchers for a GitHub repository:...183
 
       Sub-score:....Vulnerability lifetime
       Importance:...Low (weight 0.23 out of 1.00)
       Value:........0.00  out of 10.00
       Confidence:...10.00 out of 10.00
       Based on:...2 features:
-          Info about vulnerabilities:...9 vulnerabilities
+          Info about vulnerabilities:...14 vulnerabilities
           When a project started:.......Wed Aug 31 00:00:51 CEST 2011
 
-Rating: 1.42 out of 10.00 -> BAD
-Confidence: 9.41 out of 10.00
+Rating: 1.31 out of 10.00 -> BAD
+Confidence: 9.46 out of 10.00
 
 ```
