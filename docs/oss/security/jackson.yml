@@ -1,0 +1,16 @@
+# this is a configuration for generating a report for Jackson projects
+cache: .fosstars/project_rating_cache.json
+reports:
+  - type: markdown
+    where: docs/oss/security
+    source: docs/oss/security/github_projects.json
+  - type: json
+    where: docs/oss/security/github_projects.json
+finder:
+  organizations:
+    - name: FasterXML
+      stars: 100
+      exclude:
+        - docs
+        - test
+        - benchmark
