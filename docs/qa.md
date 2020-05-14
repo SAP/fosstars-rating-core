@@ -1,19 +1,34 @@
 # Quality assurance
 
-This page defines quality requirements and a verification procedure for a [ratings](ratings.md).
+This page defines quality requirements and a verification procedure for [scores and ratings](ratings.md).
 The purpose of a verification procedure is to make sure that a defined rating
 provides expected and adequate results.
 
 ## Test vectors
 
-Given `N` features `f[i]`, let's define a **test vector** as a pair `(v, e)` of the following elements:
+Tests vectors may be defined for:
+
+*  A rating.
+*  A score that consumes features (feature-based score).
+*  A score that consumes other scores (score-based score).
+
+Given `N` features `f[i]`, let's define a **test vector for a feature-based score**
+as a pair `(v, e)` of the following elements:
 
 *  `v` is a vector `(v[1], ... , v[N])` where `v[i]` contains a value of feature `f[i]`.
-*  `e` is an interval `[a, b]` for a rating where `0 <= a <= b <= 10` and `abs(a - b) != 0`.
+*  `e` is an interval `[a, b]` of an expected score value
+    where `0 <= a <= b <= 10` and `abs(a - b) != 0`.
+
+Given `N` scores `s[i]`, let's define a **test vector for a score-based score**
+as a pair `(v, e)` of the following elements:
+
+*  `v` is a vector `(v[1], ... , v[N])` where `v[i]` contains a value of score `s[i]`.
+*  `e` is an interval `[a, b]` of an expected score value
+    where `0 <= a <= b <= 10` and `abs(a - b) != 0`.
+
+## Defining test vectors
 
 A set of test vectors defines **quality requirements** for a rating.
-
-## Defining a set of test vectors
 
 There are two main strategies for defining test vectors:
 
@@ -35,7 +50,7 @@ Define `K` test vectors `real_test_vector[j]` where `j = 1..K`:
 
 Notes:
 
-*  It's good to select open-source projects which have diverse feature values.
+*  It's good to select open-source projects that have diverse feature values.
 *  It's good if the interval `e` from test vectors cover the whole `[0, 10]` interval.
 
    In other words, `union(real_test_vector[j].e)` should be close to `[0, 10]` where `j = 1..K`.
@@ -58,12 +73,13 @@ Notes:
 
 ## Verification procedure
 
-An implementation of a rating must pass all tests defined by test vectors.
+An implementation of a rating of a score must pass all tests defined by test vectors.
 
 Let's say an implementation of a rating is defined as function `rating(v)`.
-The function takes a vector `v` which contains values of features, and returns a rating score.
+The function takes a vector `v` that contains values of features, and returns a rating score.
 
-Then, the following verification procedure can be applied to make sure that the function `rating(v)` behaves as expected:
+Then, the following verification procedure can be applied to make sure that the function `rating(v)`
+behaves as expected:
 
 ```
 verify(test_vectors, rating) {
@@ -77,10 +93,12 @@ verify(test_vectors, rating) {
 }
 ```
 
+This procedure may be also applied to a score.
+
 ## Implementation
 
 The verification procedure defined above is implemented in
-[com.sap.sgs.phosphor.fosstars.model.qa](../src/main/java/com/sap/sgs/phosphor/fosstars/model/qa) package.
+[com.sap.sgs.phosphor.fosstars.model.qa](https://github.com/SAP/fosstars-rating-core/tree/master/src/main/java/com/sap/sgs/phosphor/fosstars/model/qa) package.
 
 ---
 
