@@ -1,0 +1,49 @@
+@startuml
+
+component rating [
+Rating
+]
+
+component score [
+Score
+]
+
+component score_1 [
+Score 1
+]
+
+component score_2 [
+Score 2
+]
+
+component feature_1 [
+Feature 1
+]
+
+component feature_2 [
+Feature 2
+]
+
+component feature_3 [
+Feature 3
+]
+
+component feature_4 [
+Feature 4
+]
+
+component feature_5 [
+Feature 5
+]
+
+rating <-- score
+score <-- score_1
+score <-- score_2
+score_1 <-- feature_1
+score_1 <-- feature_2
+score_1 <-- feature_3
+score_2 <-- feature_3
+score_2 <-- feature_4
+score_2 <-- feature_5
+
+@enduml

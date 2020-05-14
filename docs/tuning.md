@@ -1,10 +1,10 @@
 # Tuning
 
-Each score has a weight that defines how important the score is,
+A weight for a score defines how important the score is,
 and how much the score contributes to a rating.
 
 To produce meaningful and expected results defined by the [quality requirements](qa.md),
-an implementation of a rating has to be configured with proper weights.
+an implementation of a rating has to be configured with right weights.
 
 This page describes several ways how the weights can be assigned to meet the quality requirements.
 
@@ -17,17 +17,17 @@ But the more complex a rating becomes, the harder it's to configure weights to m
 ## Automated weights adjustment
 
 Let's consider an implementation of a rating as a function `calculate_rating(v, w)`
-which takes two parameters:
+that takes two parameters:
 
 *  `v` is a vector of values for features `f[i]` where `i = 1..N`.
 *  `w` is a vector of weights for scores `s[j]` where `j = 1..M`.
 
-The function `calculate_rating(v, w)` returns a rating score which is a float number in the interval `[0, 10]`.
+The function `calculate_rating(v, w)` returns a rating score that is a float number in the interval `[0, 10]`.
 
 A set of [test vectors](qa.md) `t[k]` defines constrains `t[k].e.a <= calculate_rating(t[k].v, w) <= t[k].e.b`
 where `k = 1..L`.
 
-Let's define a function `fit_expected_interval(r, e)` which shows how well `r` fits to the interval `e`.
+Let's define a function `fit_expected_interval(r, e)` that shows how well `r` fits to the interval `e`.
 The function returns a non-negative number. The less the returned values is,
 the better the rating `r` fits to the specified interval `e`.
 
@@ -41,7 +41,7 @@ def fit_expected_interval(r, e) {
 ```
 
 Next, let's define a function `fit_test_vectors(calculate_rating, t, w)`
-which shows how well the `calculate_rating(v, w)` function produces rating values for the specified weights `w`.
+that shows how well the `calculate_rating(v, w)` function produces rating values for the specified weights `w`.
 The function returns a non-negative float number. The less the number is, the better the produced ratings are.
 
 Such a function may be defined as the following:
@@ -56,7 +56,7 @@ fit_test_vectors(calculate_rating, t, w) {
 }
 ```
 
-Then, we need to find such a vector of weights `w*` which minimizes the function `fit_test_vectors(calculate_rating, t, w)`
+Then, we need to find such a vector of weights `w*` that minimizes the function `fit_test_vectors(calculate_rating, t, w)`
 for the specified function `calculate_rating(v, w)` and constrains defined by the test vectors:
 
 ```
@@ -67,7 +67,7 @@ t[k].e.a <= calculate_rating(t[k].v, w) <= t[k].e.b , where k = 1..L
 fit_test_vectors(calculate_rating, t, w) -> min
 ```
 
-There may be multiple ways to find such a vector `w*` which minimizes the function `fit_test_vectors`.
+There may be multiple ways to find such a vector `w*` that minimizes the function `fit_test_vectors`.
 For example:
 
 *  Classic and stochastic gradient descent if the function is differentiable.
@@ -82,13 +82,10 @@ The two approaches described above may be combined:
 
 ## Implementation
 
-The [com.sap.sgs.phosphor.fosstars.model.tuning](../src/main/java/com/sap/sgs/phosphor/fosstars/model/tuning)
-package contains the optimization procedure described above:
-
-*  [CMAESWeightsOptimization](../src/main/java/com/sap/sgs/phosphor/fosstars/model/tuning/CMAESWeightsOptimization.java)
-   class uses [CMA-ES algorithm](https://en.wikipedia.org/wiki/CMA-ES).
-*  [MonteCarloWeightsOptimization](../src/main/java/com/sap/sgs/phosphor/fosstars/model/tuning/MonteCarloWeightsOptimization.java)
-   class uses [Monte Carlo method](https://en.wikipedia.org/wiki/Monte_Carlo_method).
+The [com.sap.sgs.phosphor.fosstars.model.tuning](https://github.com/SAP/fosstars-rating-core/tree/master/src/main/java/com/sap/sgs/phosphor/fosstars/model/tuning)
+package contains the optimization procedure described above.
+[TuningWithCMAES](https://github.com/SAP/fosstars-rating-core/blob/master/src/main/java/com/sap/sgs/phosphor/fosstars/model/tuning/TuningWithCMAES.java)
+class uses [CMA-ES algorithm](https://en.wikipedia.org/wiki/CMA-ES).
 
 ---
 

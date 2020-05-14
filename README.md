@@ -1,7 +1,7 @@
 # Ratings for open-source projects
 
 This is a framework for defining and calculating ratings for open-source projects.
-See more details in [docs](docs).
+See [docs](https://sap.github.io/fosstars-rating-core/) for more details.
 
 ## Security rating for open-source projects
 
@@ -12,20 +12,10 @@ Sometimes answering this question is not easy.
 The security rating for open-source projects helps answering this question.
 First, it gathers various data about an open-source project.
 Then, it calculates a security rating for it.
-The rating helps to assess the security risk which comes with this open-source project.
+The rating helps to assess the security risk that comes with this open-source project.
 
-Such a rating can be based on multiple factors such as:
-
-1.  **Data which can be automatically collected**.
-    For example, known vulnerabilities, statistics from code repositories,
-    statistics from artifact repositories, data from mailing lists, etc.
-1.  **Data which can be manually entered by users**.
-    For example, results of security testing and review,
-    companies which committed to support the project, etc.
-1.  **User's and expert's opinion**.
-    When developers and security experts evaluate security of open-source projects,
-    they should be able to share their results and opinions,
-    so that other users can benefit from this information.
+More details about the security rating
+can be found in the [docs](https://sap.github.io/fosstars-rating-core/oss_security_rating.html).
 
 ## Requirements
 
@@ -44,13 +34,13 @@ mvn clean install
 
 ## Open-source security rating calculator
 
-There is a command line tool which takes a URL to a project on GitHub, fetches data about it,
-and calculates a security rating.
+The project offers a command line tool that takes a URL to a project on GitHub,
+gathers data about it, and calculates a security rating.
 
 The tool can be run with a command like the following:
 
 ```
-java -jar target/fosstars-github-rating-calc.jar --token ${TOKEN} --url https://github.com/apache/poi --no-questions
+java -jar target/fosstars-github-rating-calc.jar --token ${TOKEN} --url https://github.com/apache/beam --no-questions
 ```
 
 The `TOKEN` variable contains a token for accessing the GitHub API.
@@ -60,109 +50,130 @@ You can create a personal token in the
 The output is going to look like the following:
 
 ```
-[+] Project: https://github.com/apache/poi
+[+] Okay, we have a GitHub token, let's try to use it
+[+] Project: https://github.com/apache/beam
 [+] Let's get info about the project and calculate a security rating
-[+] Counting how many commits have been done in the last three months ...
-[+] Counting how many people contributed to the project in the last three months ...
-[+] Counting how many stars the project has ...
-[+] Counting how many watchers the project has ...
-[+] Figuring out when the project started ...
 [+] Figuring out if the project has a security team ...
-[+] Figuring out if the project is supported by a company ...
-[+] Figuring out if the project has a security policy ...
-[+] Figuring out if any security review has been done for the project ...
-[+] Figuring out if the project has any unpatched vulnerability ...
-[+] Looking for vulnerabilities in NVD ...
-[+] Figuring out if the project belongs to the Apache Software Foundation ...
-[+] Figuring out if the project belongs to the Eclipse Software Foundation ...
 [+] Figuring out if the project uses OWASP Dependency Check ...
-[+] Figuring out if the project uses verified signed commits ...
 [+] Here is what we know about the project:
 [+]    If an open-source project belongs to Eclipse Foundation: false
-[+]    If a project uses verified signed commits: unknown
-[+]    If an open-source project is regularly scanned for vulnerable dependencies: false
-[+]    If an open-source project has a security team: true
-[+]    If a project uses LGTM: true
-[+]    Number of watchers for a GitHub repository: 77
-[+]    If an open-source project has a security policy: false
-[+]    Info about vulnerabilities in open-source project: 8 vulnerabilities
-[+]    Number of stars for a GitHub repository: 927
-[+]    Number of contributors in the last three months: 5
-[+]    When a project started: Thu Jan 31 03:22:28 CET 2002
-[+]    Security reviews for an open-source project: 0 security reviews
-[+]    The worst LGTM grade of a project: A
-[+]    Number of commits in the last three months: 139
+[+]    If a project uses Dependabot: false
+[+]    If a project uses GitHub as the main development platform: false
+[+]    If an open-source project uses AddressSanitizer: false
+[+]    If an open-source project uses FindSecBugs: false
+[+]    Info about vulnerabilities in open-source project: 1 vulnerability
+[+]    Number of stars for a GitHub repository: 3948
+[+]    Number of contributors in the last three months: 89
+[+]    Number of commits in the last three months: 1377
 [+]    If an open-source project belongs to Apache Foundation: true
+[+]    If a project uses signed commits: false
+[+]    If an open-source project is regularly scanned for vulnerable dependencies: unknown
+[+]    If an open-source project has a security team: unknown
+[+]    If an open-source project uses MemorySanitizer: false
+[+]    If a project uses nohttp tool: false
+[+]    If a project uses LGTM: true
+[+]    Number of watchers for a GitHub repository: 256
+[+]    A set of programming languages: OTHER, JAVA, PYTHON, RUBY, JAVASCRIPT
+[+]    If an open-source project has a security policy: false
+[+]    If an open-source project is included to OSS-Fuzz project: false
+[+]    If an open-source project uses UndefinedBehaviorSanitizer: false
+[+]    When a project started: 2014-12-13T19:56:14.000+0100
+[+]    A set of package managers: GRADLE
+[+]    The worst LGTM grade of a project: B
 [+]    If an open-source project is supported by a company: false
-[+]
 [+] Here is how the rating was calculated:
 [+]   Score:........Security of project
-[+]   Value:........4.42  out of 10.00
-[+]   Confidence:...9.64  out of 10.00
+[+]   Value:........6.24  out of 10.00
+[+]   Confidence:...9.43  out of 10.00
 [+]   Based on:.....7 sub-scores:
-[+]       Sub-score:....Security testing
-[+]       Importance:...High (weight 0.95 out of 1.00)
-[+]       Value:........5.00  out of 10.00
+[+]       Sub-score:....Unpatched vulnerabilities
+[+]       Importance:...High (weight 0.84 out of 1.00)
+[+]       Value:........10.00  out of 10.00
 [+]       Confidence:...10.00 out of 10.00
-[+]       Based on:.....2 sub-scores:
-[+]           Sub-score:....How a project scans its dependencies for vulnerabilities
-[+]           Importance:...High (weight 1.00 out of 1.00)
-[+]           Value:........0.00  out of 10.00
-[+]           Confidence:...10.00 out of 10.00
-[+]           Based on:...1 features:
-[+]               Does it scan for vulnerable dependencies?....false
-[+]
-[+]           Sub-score:....How a project addresses issues reported by LGTM
-[+]           Importance:...High (weight 1.00 out of 1.00)
-[+]           Value:........10.00 out of 10.00
-[+]           Confidence:...10.00 out of 10.00
-[+]           Based on:...2 features:
-[+]               If a project uses LGTM:..............true
-[+]               The worst LGTM grade of a project:...A
-[+]
+[+]       Based on:...1 features:
+[+]           Info about vulnerabilities:...1 vulnerability
+[+]       Explanation:..No unpatched vulnerabilities found which is good
 [+]
 [+]       Sub-score:....Project activity
 [+]       Description:..The score is based on number of commits and contributors.
-[+]                     Here is how a number of commits contributes to the score (up to 5.10):
+[+]                     Here is how the number of commits contributes to the score (up to 5.10):
 [+]                     0 -> 0.10, 200 -> 2.55, 310 -> 4.59
-[+]                     Here is how a number of contributors contributes to the score (up to 5.10):
+[+]                     Here is how the number of contributors contributes to the score (up to 5.10):
 [+]                     0 -> 0.10, 5 -> 2.55, 10 -> 4.59
-[+]       Importance:...High (weight 0.91 out of 1.00)
-[+]       Value:........4.81  out of 10.00
+[+]       Importance:...Medium (weight 0.63 out of 1.00)
+[+]       Value:........10.00  out of 10.00
 [+]       Confidence:...10.00 out of 10.00
 [+]       Based on:...2 features:
-[+]           Number of commits in the last three months:........139
-[+]           Number of contributors in the last three months:...5
+[+]           Number of commits in the last three months:........1377
+[+]           Number of contributors in the last three months:...89
 [+]
-[+]       Sub-score:....Project popularity
-[+]       Description:..The score is based on number of stars and watchers.
-[+]                     Here is how a number of stars contributes to the score:
-[+]                     0 -> 0.00 (min), 2500 -> 2.50, 5000 -> 5.00, 10000 -> 10.00 (max)
-[+]                     Here is how a number of watchers contributes to the score:
-[+]                     0 -> 0.00 (min), 450 -> 1.50, 750 -> 2.50, 3000 -> 10.00 (max)
-[+]       Importance:...High (weight 0.84 out of 1.00)
-[+]       Value:........1.18  out of 10.00
-[+]       Confidence:...10.00 out of 10.00
-[+]       Based on:...2 features:
-[+]           Number of stars for a GitHub repository:......927
-[+]           Number of watchers for a GitHub repository:...77
+[+]       Sub-score:....Security testing
+[+]       Importance:...Medium (weight 0.63 out of 1.00)
+[+]       Value:........2.00  out of 10.00
+[+]       Confidence:...9.50  out of 10.00
+[+]       Based on:.....6 sub-scores:
+[+]           Sub-score:....How a project uses FindSecBugs
+[+]           Importance:...High (weight 1.00 out of 1.00)
+[+]           Value:........0.00  out of 10.00
+[+]           Confidence:...10.00 out of 10.00
+[+]           Based on:...2 features:
+[+]               A set of programming languages:...OTHER, JAVA, PYTHON, RUBY, JAVASCRIPT
+[+]               Does it use FindSecBugs?..........No
+[+]
+[+]           Sub-score:....If a project uses nohttp tool
+[+]           Importance:...High (weight 1.00 out of 1.00)
+[+]           Value:........0.00  out of 10.00
+[+]           Confidence:...10.00 out of 10.00
+[+]           Based on:...2 features:
+[+]               A set of package managers:...GRADLE
+[+]               Does it use nohttp?..........No
+[+]
+[+]           Sub-score:....How a project addresses issues reported by LGTM
+[+]           Importance:...High (weight 1.00 out of 1.00)
+[+]           Value:........8.00  out of 10.00
+[+]           Confidence:...10.00 out of 10.00
+[+]           Based on:...2 features:
+[+]               Does it use LGTM?....................Yes
+[+]               The worst LGTM grade of a project:...B
+[+]
+[+]           Sub-score:....How a project uses fuzzing
+[+]           Importance:...High (weight 1.00 out of 1.00)
+[+]           Value:........N/A
+[+]           Confidence:...10.00 out of 10.00
+[+]           Based on:...2 features:
+[+]               A set of programming languages:..............................OTHER, JAVA, PYTHON, RUBY, JAVASCRIPT
+[+]               If an open-source project is included to OSS-Fuzz project:...No
+[+]
+[+]           Sub-score:....Dependency testing
+[+]           Importance:...High (weight 1.00 out of 1.00)
+[+]           Value:........0.00  out of 10.00
+[+]           Confidence:...8.00  out of 10.00
+[+]           Based on:...5 features:
+[+]               A set of package managers:..............................GRADLE
+[+]               A set of programming languages:.........................OTHER, JAVA, PYTHON, RUBY, JAVASCRIPT
+[+]               Does it scan for vulnerable dependencies?...............unknown
+[+]               Does it use Dependabot?.................................No
+[+]               Does it use GitHub as the main development platform?....No
+[+]
+[+]           Sub-score:....Memory-safety testing
+[+]           Importance:...High (weight 1.00 out of 1.00)
+[+]           Value:........N/A
+[+]           Confidence:...10.00 out of 10.00
+[+]           Based on:...4 features:
+[+]               A set of programming languages:............OTHER, JAVA, PYTHON, RUBY, JAVASCRIPT
+[+]               Does it use AddressSanitizer?..............No
+[+]               Does it use MemorySanitizer?...............No
+[+]               Does it use UndefinedBehaviorSanitizer?....No
+[+]
 [+]
 [+]       Sub-score:....Community commitment
-[+]       Importance:...High (weight 0.73 out of 1.00)
+[+]       Importance:...Medium (weight 0.55 out of 1.00)
 [+]       Value:........7.00  out of 10.00
 [+]       Confidence:...10.00 out of 10.00
 [+]       Based on:...3 features:
-[+]           Does it belong to Apache?........true
-[+]           Does it belong to Eclipse?.......false
-[+]           Is it supported by a company?....false
-[+]
-[+]       Sub-score:....Vulnerability lifetime
-[+]       Importance:...Medium (weight 0.59 out of 1.00)
-[+]       Value:........0.00  out of 10.00
-[+]       Confidence:...10.00 out of 10.00
-[+]       Based on:...2 features:
-[+]           Info about vulnerabilities:...8 vulnerabilities
-[+]           When a project started:.......Thu Jan 31 03:22:28 CET 2002
+[+]           Does it belong to Apache?........Yes
+[+]           Does it belong to Eclipse?.......No
+[+]           Is it supported by a company?....No
 [+]
 [+]       Sub-score:....Security awareness
 [+]       Description:..The score checks if a project has a security policy and a security team.
@@ -170,23 +181,36 @@ The output is going to look like the following:
 [+]                     If the project has a security team, then the score adds 5.00.
 [+]                     If the project uses verified signed commits, then the score adds 2.00.
 [+]       Importance:...Medium (weight 0.54 out of 1.00)
-[+]       Value:........5.00  out of 10.00
+[+]       Value:........0.00  out of 10.00
 [+]       Confidence:...6.67  out of 10.00
 [+]       Based on:...3 features:
-[+]           Does it have a security policy?.........false
-[+]           Does it have a security team?...........true
-[+]           Does it use verified signed commits?....unknown
+[+]           Does it have a security policy?.........No
+[+]           Does it have a security team?...........unknown
+[+]           Does it use verified signed commits?....No
 [+]
-[+]       Sub-score:....Unpatched vulnerabilities
-[+]       Importance:...Medium (weight 0.40 out of 1.00)
-[+]       Value:........10.00 out of 10.00
+[+]       Sub-score:....Project popularity
+[+]       Description:..The score is based on number of stars and watchers.
+[+]                     Here is how a number of stars contributes to the score:
+[+]                     0 -> 0.00 (min), 2500 -> 2.50, 5000 -> 5.00, 10000 -> 10.00 (max)
+[+]                     Here is how a number of watchers contributes to the score:
+[+]                     0 -> 0.00 (min), 450 -> 1.50, 750 -> 2.50, 3000 -> 10.00 (max)
+[+]       Importance:...Medium (weight 0.31 out of 1.00)
+[+]       Value:........4.80  out of 10.00
 [+]       Confidence:...10.00 out of 10.00
-[+]       Based on:...1 features:
-[+]           Info about vulnerabilities:...8 vulnerabilities
-[+]       Explanation:..No unpatched vulnerabilities found which is good
+[+]       Based on:...2 features:
+[+]           Number of stars for a GitHub repository:......3948
+[+]           Number of watchers for a GitHub repository:...256
 [+]
-[+] Rating: 4.42 out of 10.00 -> BAD
-[+] Confidence: 9.64 out of 10.00
+[+]       Sub-score:....Vulnerability lifetime
+[+]       Importance:...Low (weight 0.23 out of 1.00)
+[+]       Value:........8.50  out of 10.00
+[+]       Confidence:...10.00 out of 10.00
+[+]       Based on:...2 features:
+[+]           Info about vulnerabilities:...1 vulnerability
+[+]           When a project started:.......Sat Dec 13 19:56:14 CET 2014
+[+]
+[+] Rating: 6.24 out of 10.00 -> MODERATE
+[+] Confidence: 9.43 out of 10.00
 [+] Bye!
 ```
 
