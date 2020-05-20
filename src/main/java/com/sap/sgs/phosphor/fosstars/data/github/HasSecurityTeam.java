@@ -40,7 +40,7 @@ public class HasSecurityTeam extends CachedSingleFeatureGitHubDataProvider {
   protected Value fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out if the project has a security team ...");
     if (securityTeam.existsFor(project.url())) {
-      HAS_SECURITY_TEAM.value(true);
+      return HAS_SECURITY_TEAM.value(true);
     }
     return HAS_SECURITY_TEAM.unknown();
   }
