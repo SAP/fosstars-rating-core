@@ -2,14 +2,11 @@ package com.sap.sgs.phosphor.fosstars.model.rating.example;
 
 import static com.sap.sgs.phosphor.fosstars.model.score.example.ExampleScores.SECURITY_SCORE_EXAMPLE;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.sgs.phosphor.fosstars.model.Label;
 import com.sap.sgs.phosphor.fosstars.model.Parameter;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Tunable;
-import com.sap.sgs.phosphor.fosstars.model.Version;
 import com.sap.sgs.phosphor.fosstars.model.rating.AbstractRating;
 import com.sap.sgs.phosphor.fosstars.model.score.example.SecurityScoreExample;
 import java.util.List;
@@ -43,9 +40,8 @@ public class SecurityRatingExample extends AbstractRating implements Tunable {
   /**
    * Initializes a security rating with SecurityScoreExample.
    */
-  @JsonCreator
-  SecurityRatingExample(@JsonProperty("version") Version version) {
-    super("Security rating (example)", SECURITY_SCORE_EXAMPLE, version);
+  SecurityRatingExample() {
+    super("Security rating (example)", SECURITY_SCORE_EXAMPLE);
   }
 
   @Override

@@ -7,7 +7,6 @@ import com.sap.sgs.phosphor.fosstars.model.Rating;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
-import com.sap.sgs.phosphor.fosstars.model.Version;
 import com.sap.sgs.phosphor.fosstars.model.Visitor;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
@@ -30,24 +29,16 @@ public abstract class AbstractRating implements Rating {
   private final Score score;
 
   /**
-   * The rating's version.
-   */
-  private final Version version;
-
-  /**
    * Initializes a rating.
    *
    * @param name A name of the rating.
    * @param score A score which the rating is based on.
-   * @param version A version of the rating.
    */
-  public AbstractRating(String name, Score score, Version version) {
+  public AbstractRating(String name, Score score) {
     Objects.requireNonNull(name, "Name can't be null!");
     Objects.requireNonNull(score, "Score can't be null!");
-    Objects.requireNonNull(version, "Version can't be null!");
     this.name = name;
     this.score = score;
-    this.version = version;
   }
 
   @Override
@@ -81,12 +72,6 @@ public abstract class AbstractRating implements Rating {
   }
 
   @Override
-  @JsonGetter("version")
-  public final Version version() {
-    return version;
-  }
-
-  @Override
   @JsonGetter("name")
   public final String name() {
     return name;
@@ -112,12 +97,12 @@ public abstract class AbstractRating implements Rating {
       return false;
     }
     AbstractRating that = (AbstractRating) o;
-    return Objects.equals(score, that.score) && version == that.version;
+    return Objects.equals(score, that.score);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(score, version);
+    return Objects.hash(score);
   }
 
 }

@@ -1,6 +1,5 @@
 package com.sap.sgs.phosphor.fosstars.model.rating.example;
 
-import com.sap.sgs.phosphor.fosstars.model.Version;
 import com.sap.sgs.phosphor.fosstars.model.qa.RatingVerifier;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.sgs.phosphor.fosstars.model.qa.VerificationFailedException;
@@ -41,7 +40,7 @@ public class SecurityRatingExampleTuningWithCMAES extends TuningWithCMAES {
    *         If verification for the {@link SecurityRatingExample} failed.
    */
   public static void main(String... args) throws IOException, VerificationFailedException {
-    SecurityRatingExample rating = new SecurityRatingExample(Version.SECURITY_RATING_EXAMPLE_1_1);
+    SecurityRatingExample rating = new SecurityRatingExample();
     SecurityRatingExampleVerification verification = new SecurityRatingExampleVerification(rating);
     new SecurityRatingExampleTuningWithCMAES(rating, verification.vectors(), PATH).run();
   }

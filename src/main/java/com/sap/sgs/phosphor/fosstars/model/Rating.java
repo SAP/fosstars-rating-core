@@ -25,11 +25,6 @@ public interface Rating {
   String name();
 
   /**
-   * Returns a version of the rating.
-   */
-  Version version();
-
-  /**
    * Returns a score which the rating is based on.
    */
   Score score();
