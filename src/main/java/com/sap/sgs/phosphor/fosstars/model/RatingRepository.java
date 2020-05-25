@@ -1,6 +1,5 @@
 package com.sap.sgs.phosphor.fosstars.model;
 
-import static com.sap.sgs.phosphor.fosstars.model.Version.OSS_SECURITY_RATING_1_0;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.sgs.phosphor.fosstars.model.other.MakeImmutable;
@@ -13,7 +12,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import org.apache.logging.log4j.LogManager;
@@ -56,7 +55,7 @@ public class RatingRepository {
   /**
    * A mapping from a version to a rating.
    */
-  private final Map<Version, Rating> ratings = new EnumMap<>(Version.class);
+  private final Map<Class, Rating> ratings = new HashMap<>();
 
   /**
    * This constructor loads all available ratings.
@@ -70,36 +69,8 @@ public class RatingRepository {
       OssSecurityScore score = load(
           "com/sap/sgs/phosphor/fosstars/model/score/oss/OssSecurityScore_1_0.json",
           OssSecurityScore.class);
-      return new OssSecurityRating(score, OSS_SECURITY_RATING_1_0);
+      return new OssSecurityRating(score);
     });
-  }
-
-  /**
-   * Looks for a rating with a specified version.
-   *
-   * @param version The version to look for.
-   * @return A rating of the specified version.
-   */
-  public Rating rating(Version version) {
-    return ratings.get(version);
-  }
-
-  /**
-   * Looks for a specific type of rating with the specified version.
-   *
-   * @param version The version to search for.
-   * @param clazz The type of rating.
-   * @return A rating of the specified type and with the specified version.
-   * @throws IllegalArgumentException If such a rating was not found.
-   */
-  public <T extends Rating> T rating(Version version, Class<T> clazz) {
-    Objects.requireNonNull(version, "Version is null!");
-    Objects.requireNonNull(clazz, "Clazz is null");
-    Rating rating = rating(version);
-    if (rating.getClass() != clazz) {
-      throw new IllegalArgumentException("Classes don't match!");
-    }
-    return clazz.cast(rating);
   }
 
   /**
@@ -112,26 +83,13 @@ public class RatingRepository {
   public <T extends Rating> T rating(Class<T> clazz) {
     Objects.requireNonNull(clazz, "You just gave me a null instead of class!");
 
-    Rating currentRating = null;
-    Version currentVersion = null;
-    for (Map.Entry<Version, Rating> entry : ratings.entrySet()) {
-      Version version = entry.getKey();
-      Rating rating = entry.getValue();
-      if (clazz != rating.getClass()) {
-        continue;
-      }
-      if (currentVersion == null || version.ordinal() > currentVersion.ordinal()) {
-        currentRating = rating;
-        currentVersion = version;
-      }
+    Rating rating = ratings.get(clazz);
+    if (rating == null) {
+      throw new IllegalArgumentException(
+          String.format("Oh no! Could not find %s", clazz.getCanonicalName()));
     }
 
-    if (currentRating == null) {
-      throw new IllegalArgumentException(String.format(
-          "Looks like we don't have the rating %s", clazz.getCanonicalName()));
-    }
-
-    return clazz.cast(currentRating);
+    return clazz.cast(rating);
   }
 
   /**
@@ -154,11 +112,8 @@ public class RatingRepository {
    * @param rating The rating to be registered.
    */
   private void register(Rating rating) {
-    if (rating.getClass() != rating.version().clazz) {
-      throw new IllegalArgumentException("Hey! Classes should match!");
-    }
     rating.accept(new MakeImmutable());
-    ratings.put(rating.version(), rating);
+    ratings.put(rating.getClass(), rating);
   }
 
   /**

@@ -1,6 +1,5 @@
 package com.sap.sgs.phosphor.fosstars.model.rating.example;
 
-import static com.sap.sgs.phosphor.fosstars.model.Version.SECURITY_RATING_EXAMPLE_1_1;
 import static com.sap.sgs.phosphor.fosstars.model.feature.example.ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.example.ExampleFeatures.NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.example.ExampleFeatures.SECURITY_REVIEW_DONE_EXAMPLE;
@@ -10,6 +9,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Parameter;
 import com.sap.sgs.phosphor.fosstars.model.Rating;
@@ -22,6 +22,7 @@ import com.sap.sgs.phosphor.fosstars.model.other.MakeImmutable;
 import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.sgs.phosphor.fosstars.model.value.IntegerValue;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.Test;
@@ -29,36 +30,39 @@ import org.junit.Test;
 public class SecurityRatingExampleTest {
 
   @Test
-  public void calculate() {
+  public void testSerializeAndDeserialize() throws IOException  {
+    ObjectMapper mapper = new ObjectMapper();
+    SecurityRatingExample rating = new SecurityRatingExample();
+    SecurityRatingExample clone = mapper.readValue(
+        mapper.writeValueAsBytes(rating), SecurityRatingExample.class);
+    assertEquals(rating, clone);
+  }
+
+  @Test
+  public void testCalculate() {
     Set<Value> values = new HashSet<>();
     values.add(new IntegerValue(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 7));
     values.add(new IntegerValue(NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, 2));
     values.add(new BooleanValue(SECURITY_REVIEW_DONE_EXAMPLE, true));
     values.add(new BooleanValue(STATIC_CODE_ANALYSIS_DONE_EXAMPLE, false));
 
-    Rating rating = RatingRepository.INSTANCE.rating(SECURITY_RATING_EXAMPLE_1_1);
+    Rating rating = RatingRepository.INSTANCE.rating(SecurityRatingExample.class);
     RatingValue ratingValue = rating.calculate(values);
     assertTrue(Score.INTERVAL.contains(ratingValue.score()));
     assertEquals(SecurityRatingExample.SecurityLabelExample.OKAY, ratingValue.label());
   }
 
   @Test
-  public void version() {
-    Rating rating = RatingRepository.INSTANCE.rating(SECURITY_RATING_EXAMPLE_1_1);
-    assertEquals(SECURITY_RATING_EXAMPLE_1_1, rating.version());
-  }
-
-  @Test
-  public void equalsAndHashCode() {
-    SecurityRatingExample one = new SecurityRatingExample(SECURITY_RATING_EXAMPLE_1_1);
-    SecurityRatingExample two = new SecurityRatingExample(SECURITY_RATING_EXAMPLE_1_1);
+  public void testEqualsAndHashCode() {
+    SecurityRatingExample one = new SecurityRatingExample();
+    SecurityRatingExample two = new SecurityRatingExample();
 
     assertEquals(one, two);
     assertEquals(one.hashCode(), two.hashCode());
   }
 
   @Test
-  public void allFeatures() {
+  public void testAllFeatures() {
     Rating rating = RatingRepository.INSTANCE.rating(SecurityRatingExample.class);
     Set<Feature> features = rating.allFeatures();
     assertNotNull(features);
@@ -70,7 +74,7 @@ public class SecurityRatingExampleTest {
   }
 
   @Test
-  public void count() {
+  public void testCount() {
     Rating rating = RatingRepository.INSTANCE.rating(SecurityRatingExample.class);
     assertNotNull(rating);
     Counter counter = new Counter();
@@ -82,8 +86,8 @@ public class SecurityRatingExampleTest {
   }
 
   @Test
-  public void makeImmutableWithVisitor() {
-    SecurityRatingExample r = new SecurityRatingExample(SECURITY_RATING_EXAMPLE_1_1);
+  public void testMakeImmutableWithVisitor() {
+    SecurityRatingExample r = new SecurityRatingExample();
 
     // first, check that the underlying score is mutable
     assertFalse(r.score().isImmutable());

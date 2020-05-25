@@ -1,6 +1,5 @@
 {
   "type" : "SecurityRatingExample",
-  "version" : "SECURITY_RATING_EXAMPLE_1_1",
   "name" : "Security rating (example)",
   "score" : {
     "type" : "SecurityScoreExample",

@@ -8,7 +8,7 @@
     lines="9"/>
   <suppress checks="AbbreviationAsWordInName"
     files="SecurityRatingExampleTuningWithCMAES.java"
-    lines="13"/>
+    lines="12"/>
   <suppress checks="AbbreviationAsWordInName"
     files="TuningWithCMAES.java"
     lines="28,81"/>
