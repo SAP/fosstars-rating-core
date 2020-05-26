@@ -418,7 +418,7 @@ elements:
     feature:
       type: "PositiveIntegerFeature"
       name: "Number of watchers for a GitHub repository"
-    number: 500
+    number: 50
   - type: "IntegerValue"
     feature:
       type: "PositiveIntegerFeature"
@@ -438,22 +438,22 @@ elements:
     feature:
       type: "BooleanFeature"
       name: "If an open-source project is supported by a company"
-    flag: true
+    flag: false
   - type: "LgtmGradeValue"
     feature:
       type: "LgtmGradeFeature"
       name: "The worst LGTM grade of a project"
-    value: "A+"
+    value: "C"
   - type: "IntegerValue"
     feature:
       type: "PositiveIntegerFeature"
       name: "Number of stars for a GitHub repository"
-    number: 15000
+    number: 1000
   - type: "IntegerValue"
     feature:
       type: "PositiveIntegerFeature"
       name: "Number of commits in the last three months"
-    number: 1000
+    number: 10
   - type: "VulnerabilitiesValue"
     vulnerabilities:
       entries:
@@ -518,10 +518,10 @@ elements:
         - "MAVEN"
   expectedScore:
     type: "DoubleInterval"
-    from: 6.0
+    from: 4.0
     openLeft: false
     negativeInfinity: false
-    to: 9.0
+    to: 5.0
     openRight: false
     positiveInfinity: false
   expectedLabel:
