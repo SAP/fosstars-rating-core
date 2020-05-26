@@ -1,10 +1,10 @@
 package com.sap.sgs.phosphor.fosstars.model;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.sgs.phosphor.fosstars.model.other.MakeImmutable;
 import com.sap.sgs.phosphor.fosstars.model.rating.example.SecurityRatingExample;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating;
+import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating.Thresholds;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.OssSecurityScore;
 import java.io.File;
 import java.io.IOException;
@@ -69,7 +69,10 @@ public class RatingRepository {
       OssSecurityScore score = load(
           "com/sap/sgs/phosphor/fosstars/model/score/oss/OssSecurityScore_1_0.json",
           OssSecurityScore.class);
-      return new OssSecurityRating(score);
+      Thresholds thresholds = load(
+          "com/sap/sgs/phosphor/fosstars/model/rating/oss/OssSecurityRatingThresholds.json",
+          Thresholds.class);
+      return new OssSecurityRating(score, thresholds);
     });
   }
 
@@ -111,7 +114,8 @@ public class RatingRepository {
    *
    * @param rating The rating to be registered.
    */
-  private void register(Rating rating) {
+  public void register(Rating rating) {
+    Objects.requireNonNull(rating, "Oh no! The rating is null");
     rating.accept(new MakeImmutable());
     ratings.put(rating.getClass(), rating);
   }
