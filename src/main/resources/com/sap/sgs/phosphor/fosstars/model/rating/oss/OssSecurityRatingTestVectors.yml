@@ -114,10 +114,6 @@ elements:
       name: "Number of contributors in the last three months"
   - type: "UnknownValue"
     feature:
-      type: "DateFeature"
-      name: "When a project started"
-  - type: "UnknownValue"
-    feature:
       type: "LgtmGradeFeature"
       name: "The worst LGTM grade of a project"
   - type: "UnknownValue"
@@ -156,11 +152,6 @@ elements:
 #
 - type: "StandardTestVector"
   values:
-  - type: "DateValue"
-    feature:
-      type: "DateFeature"
-      name: "When a project started"
-    date: "2015-03-21T23:00:00.000+0000"
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
@@ -270,11 +261,6 @@ elements:
       type: "BooleanFeature"
       name: "If an open-source project has a security policy"
     flag: true
-  - type: "DateValue"
-    feature:
-      type: "DateFeature"
-      name: "When a project started"
-    date: "2015-03-21T23:00:00.000+0000"
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
@@ -409,11 +395,6 @@ elements:
       type: "BooleanFeature"
       name: "If an open-source project has a security policy"
     flag: false
-  - type: "DateValue"
-    feature:
-      type: "DateFeature"
-      name: "When a project started"
-    date: "2015-03-21T23:00:00.000+0000"
   - type: "IntegerValue"
     feature:
       type: "PositiveIntegerFeature"

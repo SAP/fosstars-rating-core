@@ -70,15 +70,6 @@ elements:
     confidence: 10.0
     usedValues: []
     explanation: []
-  - type: "ScoreValue"
-    score:
-      type: "VulnerabilityLifetimeScore"
-      name: "How fast vulnerabilities are patched"
-    value: 0.0
-    weight: 1.0
-    confidence: 10.0
-    usedValues: []
-    explanation: []
   expectedScore:
     type: "DoubleInterval"
     from: 0.0
@@ -153,15 +144,6 @@ elements:
     explanation: []
   - type: "ScoreValue"
     score:
-      type: "VulnerabilityLifetimeScore"
-      name: "How fast vulnerabilities are patched"
-    value: 0.0
-    weight: 1.0
-    confidence: 10.0
-    usedValues: []
-    explanation: []
-  - type: "ScoreValue"
-    score:
       type: "ProjectPopularityScore"
       name: "Open-source project popularity score"
     value: 5.0
@@ -174,7 +156,7 @@ elements:
     from: 1.0
     openLeft: false
     negativeInfinity: false
-    to: 2.0
+    to: 2.2
     openRight: false
     positiveInfinity: false
   expectedLabel: null
@@ -227,15 +209,6 @@ elements:
     score:
       type: "ProjectActivityScore"
       name: "Open-source project activity score"
-    value: 5.0
-    weight: 1.0
-    confidence: 10.0
-    usedValues: []
-    explanation: []
-  - type: "ScoreValue"
-    score:
-      type: "VulnerabilityLifetimeScore"
-      name: "How fast vulnerabilities are patched"
     value: 5.0
     weight: 1.0
     confidence: 10.0
@@ -333,15 +306,6 @@ elements:
     explanation: []
   - type: "ScoreValue"
     score:
-      type: "VulnerabilityLifetimeScore"
-      name: "How fast vulnerabilities are patched"
-    value: 0.0
-    weight: 1.0
-    confidence: 10.0
-    usedValues: []
-    explanation: []
-  - type: "ScoreValue"
-    score:
       type: "ProjectPopularityScore"
       name: "Open-source project popularity score"
     value: 10.0
@@ -351,10 +315,10 @@ elements:
     explanation: []
   expectedScore:
     type: "DoubleInterval"
-    from: 2.0
+    from: 3.0
     openLeft: false
     negativeInfinity: false
-    to: 4.0
+    to: 4.5
     openRight: false
     positiveInfinity: false
   expectedLabel: null
@@ -398,15 +362,6 @@ elements:
     score:
       type: "ProjectActivityScore"
       name: "Open-source project activity score"
-    value: 5.0
-    weight: 1.0
-    confidence: 10.0
-    usedValues: []
-    explanation: []
-  - type: "ScoreValue"
-    score:
-      type: "VulnerabilityLifetimeScore"
-      name: "How fast vulnerabilities are patched"
     value: 5.0
     weight: 1.0
     confidence: 10.0
@@ -513,15 +468,6 @@ elements:
     explanation: []
   - type: "ScoreValue"
     score:
-      type: "VulnerabilityLifetimeScore"
-      name: "How fast vulnerabilities are patched"
-    value: 8.0
-    weight: 1.0
-    confidence: 10.0
-    usedValues: []
-    explanation: []
-  - type: "ScoreValue"
-    score:
       type: "ProjectPopularityScore"
       name: "Open-source project popularity score"
     value: 5.0
@@ -594,15 +540,6 @@ elements:
     explanation: []
   - type: "ScoreValue"
     score:
-      type: "VulnerabilityLifetimeScore"
-      name: "How fast vulnerabilities are patched"
-    value: 10.0
-    weight: 1.0
-    confidence: 10.0
-    usedValues: []
-    explanation: []
-  - type: "ScoreValue"
-    score:
       type: "CommunityCommitmentScore"
       name: "How well open-source community commits to support an open-source project"
     value: 5.0
@@ -669,15 +606,6 @@ elements:
       type: "ProjectPopularityScore"
       name: "Open-source project popularity score"
     value: 7.0
-    weight: 1.0
-    confidence: 10.0
-    usedValues: []
-    explanation: []
-  - type: "ScoreValue"
-    score:
-      type: "VulnerabilityLifetimeScore"
-      name: "How fast vulnerabilities are patched"
-    value: 10.0
     weight: 1.0
     confidence: 10.0
     usedValues: []
@@ -774,15 +702,6 @@ elements:
     explanation: []
   - type: "ScoreValue"
     score:
-      type: "VulnerabilityLifetimeScore"
-      name: "How fast vulnerabilities are patched"
-    value: 10.0
-    weight: 1.0
-    confidence: 10.0
-    usedValues: []
-    explanation: []
-  - type: "ScoreValue"
-    score:
       type: "ProjectActivityScore"
       name: "Open-source project activity score"
     value: 7.0
@@ -857,15 +776,6 @@ elements:
     score:
       type: "ProjectActivityScore"
       name: "Open-source project activity score"
-    value: 10.0
-    weight: 1.0
-    confidence: 10.0
-    usedValues: []
-    explanation: []
-  - type: "ScoreValue"
-    score:
-      type: "VulnerabilityLifetimeScore"
-      name: "How fast vulnerabilities are patched"
     value: 10.0
     weight: 1.0
     confidence: 10.0

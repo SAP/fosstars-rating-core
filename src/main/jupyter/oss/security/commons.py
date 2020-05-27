@@ -22,7 +22,7 @@ def load_test_vectors_from_yaml(file, features):
     rows = []
     with open(file, 'r') as f:
         raw_data = yaml.load(f)
-        for raw in raw_data:
+        for raw in raw_data['elements']:
             data = {}
             data['alias'] = raw['alias']
             for value in raw['values']:

@@ -29,8 +29,7 @@ public class OssSecurityScore extends WeightedCompositeScore {
         new CommunityCommitmentScore(),
         new ProjectSecurityAwarenessScore(),
         new ProjectSecurityTestingScore(),
-        new UnpatchedVulnerabilitiesScore(),
-        new VulnerabilityLifetimeScore());
+        new UnpatchedVulnerabilitiesScore());
   }
 
   /**

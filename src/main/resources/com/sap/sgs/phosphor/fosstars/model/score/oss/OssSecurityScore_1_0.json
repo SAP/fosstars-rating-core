@@ -14,9 +14,6 @@
     "type" : "ProjectSecurityAwarenessScore",
     "name" : "How well open-source community is aware about security"
   }, {
-    "type" : "VulnerabilityLifetimeScore",
-    "name" : "How fast vulnerabilities are patched"
-  }, {
     "type" : "ProjectSecurityTestingScore",
     "name" : "How well security testing is done for an open-source project",
     "subScores" : [ {
@@ -51,10 +48,6 @@
       "com.sap.sgs.phosphor.fosstars.model.score.oss.UnpatchedVulnerabilitiesScore" : {
         "type" : "MutableWeight",
         "value" : 0.8362090433439393
-      },
-      "com.sap.sgs.phosphor.fosstars.model.score.oss.VulnerabilityLifetimeScore" : {
-        "type" : "MutableWeight",
-        "value" : 0.22939855566110368
       },
       "com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectPopularityScore" : {
         "type" : "MutableWeight",
