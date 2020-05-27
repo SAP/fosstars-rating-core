@@ -23,6 +23,12 @@ import org.apache.commons.lang3.StringUtils;
 public class UnpatchedVulnerabilities extends CachedSingleFeatureGitHubDataProvider {
 
   /**
+   * The flag shows if the provider should look for unpatched vulnerabilities in NVD.
+   * This is an unstable experimental feature.
+   */
+  private static boolean ANALYZE_NVD = Boolean.getBoolean("lookForUnpatchedIssuesInNVD");
+
+  /**
    * A feature that hold info about unpatched vulnerabilities.
    */
   private static final Feature<Vulnerabilities> UNPATCHED_VULNERABILITIES
@@ -63,7 +69,10 @@ public class UnpatchedVulnerabilities extends CachedSingleFeatureGitHubDataProvi
 
     Vulnerabilities vulnerabilities = new Vulnerabilities();
     vulnerabilities.add(knownUnpatchedVulnerabilities.getFor(project.url()));
-    vulnerabilities.add(vulnerabilitiesFromNvdFor(project));
+
+    if (ANALYZE_NVD) {
+      vulnerabilities.add(vulnerabilitiesFromNvdFor(project));
+    }
 
     return UNPATCHED_VULNERABILITIES.value(vulnerabilities);
   }
@@ -96,6 +105,18 @@ public class UnpatchedVulnerabilities extends CachedSingleFeatureGitHubDataProvi
    * @return True if the entry looks like an unpatched vulnerability, false otherwise.
    */
   private static boolean isUnpatched(NvdEntry entry, GitHubProject project) {
+    /*
+     * This method is currently unreliable. It produces a lot of false-positives.
+     *
+     * Here are some ideas to make it better.
+     * 1. Ignore entries that don't contains configurations and CPE matches.
+     * 2. Take into account versions in a CPE match string.
+     * 3. Take into account start versions in a CPE match string.
+     * 4. Take into account the operator field in configurations.
+     *
+     * In general, the data in NVD may not be always correct. The NVD team may need to be contacted
+     * to address issues in NVD entries.
+     */
     if (entry.getConfigurations() == null || entry.getConfigurations().getNodes() == null) {
       return false;
     }
