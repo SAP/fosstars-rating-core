@@ -35,12 +35,9 @@ public class UsesGithubForDevelopmentTest extends TestGitHubDataFetcherHolder {
         passed -> when(repository.getDescription())
           .thenReturn(passed ? "This is the main repository" : "This is a mirror"),
         passed -> when(repository.hasIssues()).thenReturn(passed),
-        passed -> when(repository.hasPages()).thenReturn(passed),
         passed -> when(repository.hasWiki()).thenReturn(passed),
         passed -> when(repository.isAllowMergeCommit()).thenReturn(passed),
-        passed -> when(repository.isArchived()).thenReturn(!passed),
-        passed -> when(repository.getSvnUrl())
-            .thenReturn(passed ? null : "svn://other.com/org/project")
+        passed -> when(repository.isArchived()).thenReturn(!passed)
     );
 
     RepositoryMockBuilder() {
@@ -73,14 +70,14 @@ public class UsesGithubForDevelopmentTest extends TestGitHubDataFetcherHolder {
   }
 
   @Test
-  public void testVariousChecks() {
+  public void testVariousChecks() throws IOException {
     Random random = new Random();
     random.setSeed(0);
 
     RepositoryMockBuilder builder = new RepositoryMockBuilder();
 
     int i = 0;
-    final double threshold = 0.4;
+    final double threshold = 0.6;
     while (i < builder.allChecks()) {
       builder.init();
       random.ints(i, 0, builder.allChecks())
@@ -95,7 +92,7 @@ public class UsesGithubForDevelopmentTest extends TestGitHubDataFetcherHolder {
   }
 
   @Test
-  public void testAllPassedChecks() {
+  public void testAllPassedChecks() throws IOException {
     RepositoryMockBuilder builder = new RepositoryMockBuilder();
     for (int i = 0; i < builder.allChecks(); i++) {
       builder.passCheck(i);
@@ -107,7 +104,7 @@ public class UsesGithubForDevelopmentTest extends TestGitHubDataFetcherHolder {
   }
 
   @Test
-  public void testAllFailedChecks() {
+  public void testAllFailedChecks() throws IOException {
     RepositoryMockBuilder builder = new RepositoryMockBuilder();
     assertFalse(
         UsesGithubForDevelopment.usesGitHubForDevelopment(

@@ -7,6 +7,8 @@ import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
@@ -22,15 +24,12 @@ public class UsesGithubForDevelopment extends CachedSingleFeatureGitHubDataProvi
    * This threshold shows how many checks have to be passed to say that a project uses GitHub
    * for development.
    */
-  static final double CONFIDENCE_THRESHOLD = 0.7;
+  static final double CONFIDENCE_THRESHOLD = 0.6;
 
   /**
    * A list of checks to figure out if a project uses GitHub for development.
    */
   private static final List<Predicate<GHRepository>> CHECKS = Arrays.asList(
-
-      // check if the repository doesn't have an explicit link to the original repository
-      repository -> StringUtils.isEmpty(repository.getMirrorUrl()),
 
       // check if the description mentions "mirror"
       repository -> !repository.getDescription().toLowerCase().contains("mirror"),
@@ -38,11 +37,8 @@ public class UsesGithubForDevelopment extends CachedSingleFeatureGitHubDataProvi
       // if GitHub issues are enabled, then it's likely that the project uses GitHub
       GHRepository::hasIssues,
 
-      // if GitHub pages are enabled, then it's likely that the project uses GitHub
-      GHRepository::hasPages,
-
-      // if GitHub Wiki is enabled, then it's likely that the project uses GitHub
-      GHRepository::hasWiki,
+      // if GitHub Wiki or Pages are enabled, then it's likely that the project uses GitHub
+      repository -> repository.hasWiki() || repository.hasPages(),
 
       // if one of the three options for pull requests is enabled, then it looks like
       // that the project uses pull requests
@@ -50,10 +46,7 @@ public class UsesGithubForDevelopment extends CachedSingleFeatureGitHubDataProvi
           || repository.isAllowRebaseMerge() || repository.isAllowSquashMerge(),
 
       // check if repository is not archived
-      repository ->  !repository.isArchived(),
-
-      // check if the project doesn't have an explicit link to an SVN repository
-      repository ->  StringUtils.isEmpty(repository.getSvnUrl())
+      repository ->  !repository.isArchived()
   );
   
   /**
@@ -71,7 +64,7 @@ public class UsesGithubForDevelopment extends CachedSingleFeatureGitHubDataProvi
   }
 
   @Override
-  protected Value fetchValueFor(GitHubProject project) throws IOException {
+  protected Value fetchValueFor(GitHubProject project) {
     logger.info("Figuring out if the project uses GitHub as the main development platform ...");
     return usesGithubForDevelopment(project);
   }
@@ -100,14 +93,38 @@ public class UsesGithubForDevelopment extends CachedSingleFeatureGitHubDataProvi
    * then the method concludes that the projects uses GitHub for development.
    * 
    * @param repository The project's repository.
+   * @param threshold value to be checked against.
    * @return True if it looks like that the project uses GitHub, false otherwise.
-   *
+   * @throws IOException if something goes wrong.
    */
-  static boolean usesGitHubForDevelopment(GHRepository repository, double threshold) {
+  static boolean usesGitHubForDevelopment(GHRepository repository, double threshold) 
+      throws IOException {
+    // check if the repository doesn't have an explicit link to the original repository
+    // or an explicit link to an SVN repository and the link does not contain github.com
+    if (notGitHubUrl(repository.getMirrorUrl()) || notGitHubUrl(repository.getSvnUrl())) {
+      return false;
+    }
+
     int points = CHECKS.stream()
         .map(check -> check.test(repository) ? 1 : 0)
         .reduce(0, Integer::sum);
 
     return (double) points / CHECKS.size() >= threshold;
+  }
+
+  /**
+   * Check if the URL is not a GitHub URL.
+   * 
+   * @param url Input string.
+   * @return true if the URL is not GitHub URL. Otherwise false.
+   * @throws IOException if something goes wrong.
+   */
+  private static boolean notGitHubUrl(String input) throws IOException {
+    try {
+      return !StringUtils.isEmpty(input) 
+          && !new URI(input).getHost().equalsIgnoreCase("github.com");
+    } catch (URISyntaxException e) {
+      throw new IOException(String.format("Error while parsing url %s", input), e);
+    }
   }
 }
