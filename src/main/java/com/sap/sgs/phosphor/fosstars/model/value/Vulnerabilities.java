@@ -4,16 +4,18 @@ import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
 
 /**
  * A collection of vulnerabilities.
  */
-public class Vulnerabilities {
+public class Vulnerabilities implements Iterable<Vulnerability> {
 
   /**
    * A set of vulnerabilities.
@@ -46,6 +48,14 @@ public class Vulnerabilities {
   @JsonGetter("entries")
   public Set<Vulnerability> entries() {
     return Collections.unmodifiableSet(entries);
+  }
+
+  /**
+   * Returns true if the collection is empty, false otherwise.
+   */
+  @JsonIgnore
+  public boolean isEmpty() {
+    return entries.isEmpty();
   }
 
   /**
@@ -87,5 +97,10 @@ public class Vulnerabilities {
   public String toString() {
     int n = entries.size();
     return String.format("%d %s", n, n == 1 ? "vulnerability" : "vulnerabilities");
+  }
+
+  @Override
+  public Iterator<Vulnerability> iterator() {
+    return entries.iterator();
   }
 }

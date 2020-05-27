@@ -16,7 +16,6 @@ import com.sap.sgs.phosphor.fosstars.data.github.NumberOfStars;
 import com.sap.sgs.phosphor.fosstars.data.github.NumberOfWatchers;
 import com.sap.sgs.phosphor.fosstars.data.github.PackageManagement;
 import com.sap.sgs.phosphor.fosstars.data.github.ProgrammingLanguages;
-import com.sap.sgs.phosphor.fosstars.data.github.ProjectStarted;
 import com.sap.sgs.phosphor.fosstars.data.github.ScansForVulnerableDependencies;
 import com.sap.sgs.phosphor.fosstars.data.github.UsesDependabot;
 import com.sap.sgs.phosphor.fosstars.data.github.UsesFindSecBugs;
@@ -116,7 +115,6 @@ class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
         new NumberOfContributors(fetcher),
         new NumberOfStars(fetcher),
         new NumberOfWatchers(fetcher),
-        new ProjectStarted(fetcher),
         new HasSecurityTeam(fetcher),
         new HasCompanySupport(fetcher),
         new HasSecurityPolicy(fetcher),

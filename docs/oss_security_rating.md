@@ -31,7 +31,6 @@ Implementations of the features can be found in
 1.  Number of contributors in the last three months.
 1.  Number of commits in the last three months.
 1.  Number of watchers for a GitHub repository.
-1.  When a project started.
 1.  Programming languages that are used in a project.
 1.  Package managers that are used in a project.
 
@@ -69,9 +68,6 @@ Implementations for all the scores can be found in the [com.sap.sgs.phosphor.fos
         1.  If an open-source project uses UndefinedBehaviorSanitizer.
 1.  **Unpatched vulnerabilities score** based on the following features:
     1.  Info about vulnerabilities in open-source project.
-1.  **Vulnerability lifetime score** based on the following features:
-    1.  Info about vulnerabilities in open-source project.
-    1.  When a project started.
 1.  **Security awareness score** based on the following features:
     1.  If an open-source project has a security team.
     1.  If an open-source project has a security policy.
