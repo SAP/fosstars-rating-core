@@ -24,7 +24,7 @@ public class UsesGithubForDevelopment extends CachedSingleFeatureGitHubDataProvi
    * This threshold shows how many checks have to be passed to say that a project uses GitHub
    * for development.
    */
-  static final double CONFIDENCE_THRESHOLD = 0.6;
+  private static final double CONFIDENCE_THRESHOLD = 0.6;
 
   /**
    * A list of checks to figure out if a project uses GitHub for development.
@@ -32,7 +32,10 @@ public class UsesGithubForDevelopment extends CachedSingleFeatureGitHubDataProvi
   private static final List<Predicate<GHRepository>> CHECKS = Arrays.asList(
 
       // check if the description mentions "mirror"
-      repository -> !repository.getDescription().toLowerCase().contains("mirror"),
+      repository -> {
+        String description = repository.getDescription();
+        return StringUtils.isEmpty(description) || !description.toLowerCase().contains("mirror");
+      },
 
       // if GitHub issues are enabled, then it's likely that the project uses GitHub
       GHRepository::hasIssues,
