@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * The data providers checks if a project uses sanitizers. It gathers the following features:
@@ -32,6 +34,12 @@ import java.util.Set;
 public class UsesSanitizers extends GitHubCachingDataProvider {
 
   /**
+   * A regex for searching sanitizers.
+   */
+  private static final Pattern PATTERN
+      = Pattern.compile("-fsanitize=\\s*((address|memory|undefined)[\\s,]*)*");
+
+  /**
    * A compiler option that defines sanitizers.
    */
   private static final String SANITIZER_OPTION = "-fsanitize=";
@@ -40,14 +48,14 @@ public class UsesSanitizers extends GitHubCachingDataProvider {
    * A list of well-known file names of build configs.
    */
   private static final String[] BUILD_CONFIGS = {
-      ".travis.yml", "Configure", "CMakeLists.txt"
+      ".travis.yml", "Configure", "CMakeLists.txt", "Makefile"
   };
 
   /**
    * A list of well-known files extensions of build configs.
    */
   private static final String[] BUILD_CONFIG_SUFFIXES = {
-      ".ac", ".cmake"
+      ".ac", ".cmake", ".bazel"
   };
 
   /**
@@ -88,15 +96,15 @@ public class UsesSanitizers extends GitHubCachingDataProvider {
 
       List<String> sanitizers = lookForSanitizers(content.get());
       for (String sanitizer : sanitizers) {
-        if (sanitizer.equals("address")) {
+        if (sanitizer.contains("address")) {
           values.update(USES_ADDRESS_SANITIZER.value(true));
         }
 
-        if (sanitizer.equals("memory")) {
+        if (sanitizer.contains("memory")) {
           values.update(USES_MEMORY_SANITIZER.value(true));
         }
 
-        if (sanitizer.equals("undefined")) {
+        if (sanitizer.contains("undefined")) {
           values.update(USES_UNDEFINED_BEHAVIOR_SANITIZER.value(true));
         }
       }
@@ -139,7 +147,10 @@ public class UsesSanitizers extends GitHubCachingDataProvider {
     try (BufferedReader reader = new BufferedReader(new StringReader(content))) {
       String line;
       while ((line = reader.readLine()) != null) {
-        options.addAll(parse(line));
+        Matcher matcher = PATTERN.matcher(line);
+        if (matcher.find()) {
+          options.addAll(parseOptions(matcher.group(0).trim()));
+        }
       }
     }
 
@@ -152,39 +163,25 @@ public class UsesSanitizers extends GitHubCachingDataProvider {
    * @param line The string to be parsed.
    * @return A list of options that enable sanitizers.
    */
-  static List<String> parse(String line) {
+  static List<String> parseOptions(String line) {
     List<String> options = new ArrayList<>();
 
     line = line.trim();
-
-    int index = line.indexOf(SANITIZER_OPTION);
-    if (index < 0) {
+    if (!line.startsWith(SANITIZER_OPTION)) {
       return options;
     }
-    line = line.substring(index);
 
-    String[] elements = line.split(SANITIZER_OPTION);
-    for (String element : elements) {
-      element = element.trim();
-      if (element.isEmpty()) {
+    line = line.substring(SANITIZER_OPTION.length());
+
+    // tokenize by a comma that may be surrounded by whitespaces
+    String[] values = line.split("\\s*,\\s*");
+    for (String value : values) {
+      value = value.trim();
+      if (value.isEmpty()) {
         continue;
       }
 
-      // tokenize by a comma that may be surrounded by whitespaces
-      String[] values = element.split("\\s*,\\s*");
-      for (String value : values) {
-        value = value.trim();
-        if (value.isEmpty()) {
-          continue;
-        }
-
-        int spacePosition = value.indexOf(" ");
-        if (spacePosition >= 0) {
-          value = value.substring(0, spacePosition);
-        }
-
-        options.add(value);
-      }
+      options.add(value);
     }
 
     return options;
