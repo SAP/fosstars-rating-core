@@ -6,6 +6,7 @@ import com.sap.sgs.phosphor.fosstars.model.rating.example.SecurityRatingExample;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating.Thresholds;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.OssSecurityScore;
+import com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectSecurityTestingScore;
 import com.sap.sgs.phosphor.fosstars.model.weight.ScoreWeights;
 import java.io.File;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -69,12 +71,24 @@ public class RatingRepository {
     register(() -> {
       OssSecurityScore ossSecurityScore = new OssSecurityScore();
       ossSecurityScore.weights().update(
-          load("com/sap/sgs/phosphor/fosstars/model/score/oss/OssSecurityScoreWeights.json",
-              ScoreWeights.class));
+          loadScoreWeights("com/sap/sgs/phosphor/fosstars/model/score/oss/"
+              + "OssSecurityScoreWeights.json"));
+
+      Optional<ProjectSecurityTestingScore> projectSecurityTestingScore =
+          ossSecurityScore.subScore(ProjectSecurityTestingScore.class);
+      if (!projectSecurityTestingScore.isPresent()) {
+        throw new IllegalStateException(
+            "Oh no! Could not find the project security testing score!");
+      }
+
+      projectSecurityTestingScore.get().weights().update(
+          loadScoreWeights("com/sap/sgs/phosphor/fosstars/model/score/oss/"
+              + "ProjectSecurityTestingScoreWeights.json"));
 
       Thresholds thresholds = load(
           "com/sap/sgs/phosphor/fosstars/model/rating/oss/OssSecurityRatingThresholds.json",
           Thresholds.class);
+
       return new OssSecurityRating(ossSecurityScore, thresholds);
     });
   }
@@ -198,6 +212,17 @@ public class RatingRepository {
       }
     }
 
-    throw new IOException(String.format("Could not load a rating from %s", file));
+    throw new IOException(String.format("Could not load %s from %s", clazz.getSimpleName(), file));
+  }
+
+  /**
+   * Load score weights from a file.
+   *
+   * @param path A path to the file.
+   * @return The loaded weights.
+   * @throws IOException If something went wrong.
+   */
+  private static ScoreWeights loadScoreWeights(String path) throws IOException {
+    return load(path, ScoreWeights.class);
   }
 }

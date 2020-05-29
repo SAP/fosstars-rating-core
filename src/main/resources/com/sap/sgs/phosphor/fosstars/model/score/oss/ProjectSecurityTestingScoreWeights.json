@@ -1,0 +1,28 @@
+{
+  "values" : {
+    "com.sap.sgs.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore" : {
+      "type" : "ImmutableWeight",
+      "value" : 1.0
+    },
+    "com.sap.sgs.phosphor.fosstars.model.score.oss.FindSecBugsScore" : {
+      "type" : "ImmutableWeight",
+      "value" : 1.0
+    },
+    "com.sap.sgs.phosphor.fosstars.model.score.oss.LgtmScore" : {
+      "type" : "ImmutableWeight",
+      "value" : 1.0
+    },
+    "com.sap.sgs.phosphor.fosstars.model.score.oss.DependencyScanScore" : {
+      "type" : "ImmutableWeight",
+      "value" : 1.0
+    },
+    "com.sap.sgs.phosphor.fosstars.model.score.oss.NoHttpToolScore" : {
+      "type" : "ImmutableWeight",
+      "value" : 0.5
+    },
+    "com.sap.sgs.phosphor.fosstars.model.score.oss.FuzzingScore" : {
+      "type" : "ImmutableWeight",
+      "value" : 1.0
+    }
+  }
+}

@@ -2,7 +2,7 @@ package com.sap.sgs.phosphor.fosstars.model.score.oss;
 
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
-import com.sap.sgs.phosphor.fosstars.model.score.AverageCompositeScore;
+import com.sap.sgs.phosphor.fosstars.model.score.WeightedCompositeScore;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -19,7 +19,7 @@ import java.io.InputStream;
  * There is plenty room for improvements.
  * The score can take into account a lot of other information.
  */
-public class ProjectSecurityTestingScore extends AverageCompositeScore {
+public class ProjectSecurityTestingScore extends WeightedCompositeScore {
 
   /**
    * Initializes a new score.
