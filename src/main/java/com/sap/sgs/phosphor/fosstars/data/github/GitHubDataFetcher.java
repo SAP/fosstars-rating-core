@@ -14,9 +14,11 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import org.apache.commons.collections4.map.LRUMap;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
@@ -375,6 +377,7 @@ public class GitHubDataFetcher {
       total = total.add(info.repositorySize());
     }
 
+    Set<URL> toBeRemoved = new HashSet<>();
     for (Map.Entry<URL, LocalRepositoryInfo> entry : localRepositoriesInfo.entrySet()) {
       URL url = entry.getKey();
       LocalRepositoryInfo info = entry.getValue();
@@ -386,9 +389,10 @@ public class GitHubDataFetcher {
           LOGGER.error(
               () -> String.format("Could not delete a local repository: %s", info.path()), e);
         }
-        localRepositoriesInfo.remove(url);
+        toBeRemoved.add(url);
       }
     }
+    toBeRemoved.forEach(localRepositoriesInfo::remove);
   }
 
   /**
