@@ -53,10 +53,9 @@ public class TuningWithCMAES extends AbstractTuning {
    *
    * @param object An object to be tuned.
    * @param verifier A verifier.
-   * @param path A path where a serialized score should be stored to.
    */
-  public TuningWithCMAES(Tunable object, Verifier verifier, String path) {
-    super(object, verifier, path);
+  public TuningWithCMAES(Tunable object, Verifier verifier) {
+    super(object, verifier);
     fitnessFunction = new FitnessFunction(verifier, object.parameters());
   }
 

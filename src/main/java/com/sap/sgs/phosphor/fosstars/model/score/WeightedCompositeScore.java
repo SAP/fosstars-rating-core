@@ -86,8 +86,11 @@ public class WeightedCompositeScore extends AbstractScore implements Tunable {
     return new HashSet<>(subScores);
   }
 
+  /**
+   * Returns weights of the sub-scores.
+   */
   @JsonGetter("weights")
-  ScoreWeights weights() {
+  public ScoreWeights weights() {
     return weights;
   }
 

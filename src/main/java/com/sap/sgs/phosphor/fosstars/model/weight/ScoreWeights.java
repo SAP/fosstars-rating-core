@@ -12,6 +12,8 @@ import com.sap.sgs.phosphor.fosstars.model.Tunable;
 import com.sap.sgs.phosphor.fosstars.model.Weight;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,6 +42,8 @@ public class ScoreWeights implements Tunable {
     YAML_OBJECT_MAPPER = new ObjectMapper(YAML_FACTORY);
     YAML_OBJECT_MAPPER.findAndRegisterModules();
   }
+
+  private static final ObjectMapper JSON_OBJECT_MAPPER = new ObjectMapper();
 
   /**
    * The default weight for sub-scores.
@@ -119,6 +123,24 @@ public class ScoreWeights implements Tunable {
   }
 
   /**
+   * Update the weights.
+   *
+   * @param weights The new weights.
+   */
+  public void update(ScoreWeights weights) {
+    Objects.requireNonNull(weights, "Oh no! Weights is null!");
+    for (Map.Entry<Class<? extends  Score>, Weight> entry : weights.values.entrySet()) {
+      Class<? extends Score> scoreClass = entry.getKey();
+      if (!this.values.containsKey(scoreClass)) {
+        throw new IllegalArgumentException(
+            String.format("Oh no! Could not find %s", scoreClass.getCanonicalName()));
+      }
+      Weight weight = entry.getValue();
+      set(scoreClass, weight);
+    }
+  }
+
+  /**
    * This method exists to make Jackson happy.
    */
   @JsonGetter("values")
@@ -181,5 +203,17 @@ public class ScoreWeights implements Tunable {
    */
   public static ScoreWeights loadWeightsFromYaml(InputStream is) throws IOException {
     return YAML_OBJECT_MAPPER.readValue(is, ScoreWeights.class);
+  }
+
+  /**
+   * Stores the weights to a JSON file.
+   *
+   * @param file The file.
+   * @throws IOException If something went wrong.
+   */
+  public void storeToJson(String file) throws IOException {
+    Files.write(
+        Paths.get(file),
+        JSON_OBJECT_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsBytes(this));
   }
 }

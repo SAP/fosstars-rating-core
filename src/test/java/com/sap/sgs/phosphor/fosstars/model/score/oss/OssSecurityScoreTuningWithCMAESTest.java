@@ -29,7 +29,6 @@ import static com.sap.sgs.phosphor.fosstars.model.qa.TestVectorBuilder.newTestVe
 import static com.sap.sgs.phosphor.fosstars.model.value.Language.JAVA;
 import static com.sap.sgs.phosphor.fosstars.model.value.Language.OTHER;
 import static com.sap.sgs.phosphor.fosstars.model.value.PackageManager.MAVEN;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
 import com.sap.sgs.phosphor.fosstars.model.Score;
@@ -40,8 +39,6 @@ import com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.sgs.phosphor.fosstars.model.value.PackageManagers;
 import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Date;
 import org.junit.Test;
 
@@ -155,19 +152,7 @@ public class OssSecurityScoreTuningWithCMAESTest {
         = new OssSecurityScore.Verification(score, SIMPLE_TEST_VECTORS);
     assertNotNull(verification);
 
-    Path path = Files.createTempFile("fosstars", "oss_security_score");
-    try {
-      new OssSecurityScoreTuningWithCMAES(score, SIMPLE_TEST_VECTORS, path.toString()).run();
-      byte[] content = Files.readAllBytes(path);
-
-      // smoke test
-      assertNotNull(content);
-      assertNotEquals(0, content.length);
-    } finally {
-      Files.delete(path);
-    }
-
+    new OssSecurityScoreTuningWithCMAES(score, SIMPLE_TEST_VECTORS).run();
     verification.run();
   }
-
 }

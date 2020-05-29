@@ -7,8 +7,6 @@ import com.sap.sgs.phosphor.fosstars.model.qa.TestVectorResult;
 import com.sap.sgs.phosphor.fosstars.model.qa.VerificationFailedException;
 import com.sap.sgs.phosphor.fosstars.model.qa.Verifier;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 import org.apache.logging.log4j.LogManager;
@@ -40,21 +38,14 @@ public abstract class AbstractTuning {
   final Verifier verifier;
 
   /**
-   * A path where a serialized tuned object should be stored to.
-   */
-  protected final String path;
-
-  /**
    * Initialize a new tuner.
    *
    * @param object An object to be tuned.
    * @param verifier A verifier to be used during tuning.
-   * @param path A path where a serialized tuned object should be stored to.
    */
-  AbstractTuning(Tunable object, Verifier verifier, String path) {
+  AbstractTuning(Tunable object, Verifier verifier) {
     this.object = Objects.requireNonNull(object, "Object can't be null!");
     this.verifier = Objects.requireNonNull(verifier, "Verifier can't be null!");
-    this.path = Objects.requireNonNull(path, "Path can't be null!");
   }
 
   /**
@@ -89,9 +80,6 @@ public abstract class AbstractTuning {
 
     if (success) {
       logger.info("Gut gemacht, all test vectors passed!");
-      Files.write(
-          Paths.get(path),
-          MAPPER.writerWithDefaultPrettyPrinter().writeValueAsBytes(object));
     } else {
       logger.warn("{} test vector{} failed!",
           results.size(), results.size() == 1 ? "" : "s");
