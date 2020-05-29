@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.sgs.phosphor.fosstars.model.Interval;
 import com.sap.sgs.phosphor.fosstars.model.Label;
+import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import java.util.Collections;
 import java.util.Objects;
@@ -13,32 +14,12 @@ import java.util.Set;
 /**
  * A standard test vector for a rating or a score. The class is immutable.
  */
-public class StandardTestVector implements TestVector {
+public class StandardTestVector extends AbstractTestVector {
 
   /**
    * A set of feature values.
    */
   private final Set<Value> values;
-
-  /**
-   * An interval for an expected score.
-   */
-  private final Interval expectedScore;
-
-  /**
-   * If it's set to true, then a not-applicable score value is expected.
-   */
-  private final boolean expectedNotApplicableScore;
-
-  /**
-   * An expected label.
-   */
-  private final Label expectedLabel;
-
-  /**
-   * An alias of the test vector.
-   */
-  private final String alias;
 
   /**
    * Initializes a new {@link StandardTestVector}.
@@ -74,23 +55,15 @@ public class StandardTestVector implements TestVector {
           value = "expectedNotApplicableScore",
           defaultValue = "false") boolean expectedNotApplicableScore) {
 
+    super(expectedScore, expectedLabel, alias, expectedNotApplicableScore);
+
     Objects.requireNonNull(values, "Hey! Values can't be null!");
-    Objects.requireNonNull(alias, "Hey! alias can't be null!");
 
     if (values.isEmpty()) {
       throw new IllegalArgumentException("Hey! Values can't be empty");
     }
 
-    if (expectedScore == null && !expectedNotApplicableScore) {
-      throw new IllegalArgumentException(
-          "Hey! Expected score can't be null unless a not-applicable value is expected!");
-    }
-
     this.values = values;
-    this.expectedScore = expectedScore;
-    this.expectedLabel = expectedLabel;
-    this.alias = alias;
-    this.expectedNotApplicableScore = expectedNotApplicableScore;
   }
 
   @Override
@@ -100,32 +73,8 @@ public class StandardTestVector implements TestVector {
   }
 
   @Override
-  @JsonGetter("expectedScore")
-  public final Interval expectedScore() {
-    return expectedScore;
-  }
-
-  @Override
-  @JsonGetter("expectedNotApplicableScore")
-  public boolean expectsNotApplicableScore() {
-    return expectedNotApplicableScore;
-  }
-
-  @Override
-  public boolean hasLabel() {
-    return expectedLabel != NO_LABEL;
-  }
-
-  @Override
-  @JsonGetter("expectedLabel")
-  public final Label expectedLabel() {
-    return expectedLabel;
-  }
-
-  @Override
-  @JsonGetter("alias")
-  public final String alias() {
-    return alias;
+  public Set<Value> valuesFor(Score score) {
+    return values();
   }
 
   @Override
@@ -136,16 +85,15 @@ public class StandardTestVector implements TestVector {
     if (o instanceof StandardTestVector == false) {
       return false;
     }
-    StandardTestVector vector = (StandardTestVector) o;
-    return Objects.equals(values, vector.values)
-        && Objects.equals(expectedScore, vector.expectedScore)
-        && Objects.equals(expectedLabel, vector.expectedLabel)
-        && Objects.equals(alias, vector.alias);
+    if (!super.equals(o)) {
+      return false;
+    }
+    StandardTestVector that = (StandardTestVector) o;
+    return Objects.equals(values, that.values);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(values, expectedScore, expectedLabel, alias);
+    return Objects.hash(super.hashCode(), values);
   }
-
 }

@@ -2,6 +2,7 @@ package com.sap.sgs.phosphor.fosstars.model.qa;
 
 import com.sap.sgs.phosphor.fosstars.model.Interval;
 import com.sap.sgs.phosphor.fosstars.model.Label;
+import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import java.util.Objects;
@@ -29,7 +30,7 @@ public class TestVectorWithDefaults implements TestVector {
    * @param vector A test vector to be wrapped.
    * @param defaults A set of default values.
    */
-  public TestVectorWithDefaults(TestVector vector, Set<Value> defaults) {
+  TestVectorWithDefaults(TestVector vector, Set<Value> defaults) {
     Objects.requireNonNull(vector, "Hey! Vector can't be null!");
     Objects.requireNonNull(defaults, "Hey! Defaults can't be null!");
     this.vector = vector;
@@ -52,6 +53,11 @@ public class TestVectorWithDefaults implements TestVector {
       }
     }
     return values.toSet();
+  }
+
+  @Override
+  public Set<Value> valuesFor(Score score) {
+    return vector.valuesFor(score);
   }
 
   @Override
