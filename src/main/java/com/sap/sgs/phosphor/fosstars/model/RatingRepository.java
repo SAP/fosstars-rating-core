@@ -6,6 +6,7 @@ import com.sap.sgs.phosphor.fosstars.model.rating.example.SecurityRatingExample;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating.Thresholds;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.OssSecurityScore;
+import com.sap.sgs.phosphor.fosstars.model.weight.ScoreWeights;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -62,17 +63,19 @@ public class RatingRepository {
    */
   private RatingRepository() {
     register(() -> load(
-        "com/sap/sgs/phosphor/fosstars/model/rating/example/SecurityRatingExample_1_1.json",
+        "com/sap/sgs/phosphor/fosstars/model/rating/example/SecurityRatingExample.json",
         SecurityRatingExample.class));
 
     register(() -> {
-      OssSecurityScore score = load(
-          "com/sap/sgs/phosphor/fosstars/model/score/oss/OssSecurityScore_1_0.json",
-          OssSecurityScore.class);
+      OssSecurityScore ossSecurityScore = new OssSecurityScore();
+      ossSecurityScore.weights().update(
+          load("com/sap/sgs/phosphor/fosstars/model/score/oss/OssSecurityScoreWeights.json",
+              ScoreWeights.class));
+
       Thresholds thresholds = load(
           "com/sap/sgs/phosphor/fosstars/model/rating/oss/OssSecurityRatingThresholds.json",
           Thresholds.class);
-      return new OssSecurityRating(score, thresholds);
+      return new OssSecurityRating(ossSecurityScore, thresholds);
     });
   }
 
