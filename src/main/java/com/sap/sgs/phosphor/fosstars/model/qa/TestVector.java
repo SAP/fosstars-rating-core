@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.sap.sgs.phosphor.fosstars.model.Interval;
 import com.sap.sgs.phosphor.fosstars.model.Label;
+import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import java.util.Set;
 
@@ -14,7 +15,8 @@ import java.util.Set;
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = StandardTestVector.class)
+    @JsonSubTypes.Type(value = StandardTestVector.class),
+    @JsonSubTypes.Type(value = ScoreTestVector.class)
 })
 public interface TestVector {
 
@@ -24,9 +26,17 @@ public interface TestVector {
   Label NO_LABEL = null;
 
   /**
-   * Returns feature values.
+   * Returns the values.
    */
   Set<Value> values();
+
+  /**
+   * Returns the values resolved for a specified score.
+   *
+   * @param score The score.
+   * @return The values.
+   */
+  Set<Value> valuesFor(Score score);
 
   /**
    * Returns an expected score.

@@ -74,7 +74,7 @@ public class TestVectors implements Iterable<TestVector> {
    */
   public TestVectors(
       @JsonProperty("elements") List<TestVector> vectors,
-      @JsonProperty(value = "defaults") Set<Value> defaults) {
+      @JsonProperty("defaults") Set<Value> defaults) {
 
     Objects.requireNonNull(vectors, "Hey! Vectors can't be null!");
     Objects.requireNonNull(defaults, "Hey! Defaults can't be null!");
@@ -123,6 +123,7 @@ public class TestVectors implements Iterable<TestVector> {
   /**
    * Returns a size of the collection.
    */
+  @JsonIgnore
   public int size() {
     return elements.size();
   }
