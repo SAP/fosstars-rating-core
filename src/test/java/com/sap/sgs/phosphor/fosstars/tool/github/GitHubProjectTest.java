@@ -31,4 +31,20 @@ public class GitHubProjectTest {
     assertEquals(project, clone);
     assertEquals(project.hashCode(), clone.hashCode());
   }
+
+  @Test
+  public void parseFromUrl() throws IOException {
+    GitHubProject parsed = GitHubProject.parse("http://github.com/SAP/fosstars-rating-core");
+    assertEquals(parsed.name(), "fosstars-rating-core");
+    assertEquals(parsed.organization().name(), "SAP");
+    assertEquals(parsed.path(), "SAP/fosstars-rating-core");
+  }
+
+  @Test
+  public void parseFromUrlEndsWithDotGit() throws IOException {
+    GitHubProject parsed = GitHubProject.parse("http://github.com/SAP/fosstars-rating-core.git");
+    assertEquals(parsed.name(), "fosstars-rating-core");
+    assertEquals(parsed.organization().name(), "SAP");
+    assertEquals(parsed.path(), "SAP/fosstars-rating-core");
+  }
 }
