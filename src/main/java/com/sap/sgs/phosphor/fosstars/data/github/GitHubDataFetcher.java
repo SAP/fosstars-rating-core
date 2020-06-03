@@ -12,9 +12,12 @@ import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -27,13 +30,15 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHFileNotFoundException;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
+import org.kohsuke.github.HttpException;
 
 /**
- * Helper class for GitHub data providers which pulls the data from a GitHub repository.
- * Also, the class caches the fetched data for a certain amount of time.
+ * Helper class for GitHub data providers which pulls the data from a GitHub repository. Also, the
+ * class caches the fetched data for a certain amount of time.
  */
 public class GitHubDataFetcher {
 
@@ -92,6 +97,11 @@ public class GitHubDataFetcher {
    * A limited capacity cache to store the repository of a {@link GitHubProject}.
    */
   private final GitHubDataCache<GHRepository> repositoryCache = new GitHubDataCache<>();
+
+  /**
+   * A limited capacity cache to store all the commits of a {@link GitHubProject}.
+   */
+  private final GitHubDataCache<List<GHCommit>> githubCommitsCache = new GitHubDataCache<>();
 
   /**
    * A cache of local repositories.
@@ -165,9 +175,45 @@ public class GitHubDataFetcher {
   }
 
   /**
-   * Gets the GitHub project repository. This repository will then be stored in a cache
-   * ({@link LRUMap}).
-   * 
+   * Returns the cache with GitHub commits.
+   */
+  public GitHubDataCache<List<GHCommit>> githubCommitsCache() {
+    return githubCommitsCache;
+  }
+
+  /**
+   * Returns a list of commits for a GitHub project using GitHub API.
+   *
+   * @param project The project.
+   * @param duration A time frame.
+   * @return The list of commits
+   * @throws IOException If something went wrong.
+   */
+  public List<GHCommit> githubCommitsFor(GitHubProject project, Duration duration)
+      throws IOException {
+
+    Optional<List<GHCommit>> cachedCommits = githubCommitsCache.get(project);
+    if (cachedCommits.isPresent()) {
+      return cachedCommits.get();
+    }
+
+    try {
+      Date date = Date.from(Instant.now().minus(duration));
+      List<GHCommit> commits = new ArrayList<>();
+      for (GHCommit commit : repositoryFor(project).queryCommits().since(date).list()) {
+        commits.add(commit);
+      }
+      return commits;
+    } catch (HttpException e) {
+      LOGGER.error(String.format("Could not fetch commits from %s", project.url()), e);
+      return Collections.emptyList();
+    }
+  }
+
+  /**
+   * Gets the GitHub project repository.
+   * This repository will then be stored in a cache ({@link LRUMap}).
+   *
    * @param project of type {@link GitHubProject}, which holds the project information.
    * @return {@link GHRepository} with the project information.
    * @throws IOException occurred during REST call to GitHub API.

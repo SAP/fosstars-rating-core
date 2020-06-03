@@ -18,7 +18,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_A
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_DEPENDABOT;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_FIND_SEC_BUGS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GITHUB_FOR_DEVELOPMENT;
-import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM_CHECKS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_MEMORY_SANITIZER;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_NOHTTP;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SIGNED_COMMITS;
@@ -65,7 +65,7 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(UnknownValue.of(VULNERABILITIES))
           .set(UnknownValue.of(PROJECT_START_DATE))
           .set(UnknownValue.of(USES_SIGNED_COMMITS))
-          .set(UnknownValue.of(USES_LGTM))
+          .set(UnknownValue.of(USES_LGTM_CHECKS))
           .set(UnknownValue.of(WORST_LGTM_GRADE))
           .set(UnknownValue.of(USES_NOHTTP))
           .set(UnknownValue.of(USES_DEPENDABOT))
@@ -96,7 +96,7 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(VULNERABILITIES.value(NO_VULNERABILITIES))
           .set(PROJECT_START_DATE.value(FIVE_YEARS_AGO))
           .set(USES_SIGNED_COMMITS.value(false))
-          .set(USES_LGTM.value(false))
+          .set(USES_LGTM_CHECKS.value(false))
           .set(WORST_LGTM_GRADE.unknown())
           .set(USES_NOHTTP.value(false))
           .set(USES_DEPENDABOT.value(false))
@@ -127,7 +127,7 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(VULNERABILITIES.value(NO_VULNERABILITIES))
           .set(PROJECT_START_DATE.value(FIVE_YEARS_AGO))
           .set(USES_SIGNED_COMMITS.value(true))
-          .set(USES_LGTM.value(true))
+          .set(USES_LGTM_CHECKS.value(true))
           .set(WORST_LGTM_GRADE.value(LgtmGrade.A_PLUS))
           .set(USES_NOHTTP.value(true))
           .set(USES_DEPENDABOT.value(true))

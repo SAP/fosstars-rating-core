@@ -1,11 +1,11 @@
 package com.sap.sgs.phosphor.fosstars.model.score.oss;
 
-import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM_CHECKS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.findValue;
 
-import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.sgs.phosphor.fosstars.model.score.FeatureBasedScore;
@@ -16,26 +16,32 @@ import java.io.InputStream;
 import java.util.EnumMap;
 
 /**
- * The score shows if and how a project addresses issues reported by LGTM.
- * The score is based on the following features
+ * The score shows if and how a project addresses issues reported by LGTM. The score is based on the
+ * following features
  * <ul>
- *   <li>{@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#USES_LGTM}</li>
- *   <li>{@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#WORST_LGTM_GRADE}</li>
+ * <li>{@link OssFeatures#USES_LGTM_CHECKS}</li>
+ * <li>{@link OssFeatures#WORST_LGTM_GRADE}</li>
  * </ul>
  */
 public class LgtmScore extends FeatureBasedScore {
 
-  private static final double LGTM_USAGE_POINTS = 2.0;
+  /**
+   * Defines how the score value is increased if a project uses LGTM checks for commits.
+   */
+  private static final double LGTM_CHECKS_POINTS = 4.0;
 
+  /**
+   * Defines how LGTM grades contribute to the score value.
+   */
   private static final EnumMap<LgtmGrade, Double> GRADE_TO_POINTS = new EnumMap<>(LgtmGrade.class);
 
   static {
-    GRADE_TO_POINTS.put(LgtmGrade.A_PLUS, 8.0);
-    GRADE_TO_POINTS.put(LgtmGrade.A, 8.0);
-    GRADE_TO_POINTS.put(LgtmGrade.B, 6.0);
-    GRADE_TO_POINTS.put(LgtmGrade.C, 4.0);
+    GRADE_TO_POINTS.put(LgtmGrade.A_PLUS, 6.0);
+    GRADE_TO_POINTS.put(LgtmGrade.A, 5.0);
+    GRADE_TO_POINTS.put(LgtmGrade.B, 4.0);
+    GRADE_TO_POINTS.put(LgtmGrade.C, 3.0);
     GRADE_TO_POINTS.put(LgtmGrade.D, 2.0);
-    GRADE_TO_POINTS.put(LgtmGrade.E, 0.0);
+    GRADE_TO_POINTS.put(LgtmGrade.E, 1.0);
   }
 
   /**
@@ -43,44 +49,32 @@ public class LgtmScore extends FeatureBasedScore {
    */
   LgtmScore() {
     super("How a project addresses issues reported by LGTM",
-        USES_LGTM, WORST_LGTM_GRADE);
+        USES_LGTM_CHECKS, WORST_LGTM_GRADE);
   }
 
   @Override
   public ScoreValue calculate(Value... values) {
-    Value<Boolean> usesLgtm = findValue(values, USES_LGTM,
-        "Hey! You have to tell me if the project uses LGTM!");
+    Value<Boolean> usesLgtmChecks = findValue(values, USES_LGTM_CHECKS,
+        "Hey! You have to tell me if the project uses LGTM checks!");
     Value<LgtmGrade> worstLgtmGrade = findValue(values, WORST_LGTM_GRADE,
         "Hey! You have to tell me the worst LGTM grade for the project!");
 
-    if (usesLgtm.isUnknown() && !worstLgtmGrade.isUnknown()) {
-      throw new IllegalArgumentException(
-          "Hey! It's unknown if the project uses LGTM but then you gave me the worst grade!");
-    }
+    ScoreValue scoreValue = scoreValue(MIN, usesLgtmChecks, worstLgtmGrade);
 
-    ScoreValue scoreValue = new ScoreValue(this);
-
-    usesLgtm.processIfKnown(uses -> {
+    usesLgtmChecks.processIfKnown(uses -> {
       if (uses) {
-        scoreValue.increase(LGTM_USAGE_POINTS);
-      } else if (!worstLgtmGrade.isUnknown()) {
-        throw new IllegalArgumentException(
-            "Hey! You told me that LGTM is not used but then provided the worst grade!");
+        scoreValue.increase(LGTM_CHECKS_POINTS);
       }
     });
 
     worstLgtmGrade.processIfKnown(grade -> scoreValue.increase(GRADE_TO_POINTS.get(grade)));
 
-    scoreValue.confidence(Confidence.make(usesLgtm, worstLgtmGrade));
-    scoreValue.usedValues(usesLgtm, worstLgtmGrade);
-
     return scoreValue;
   }
 
   /**
-   * This class implements a verification procedure for {@link LgtmScore}.
-   * The class loads test vectors, and provides methods to verify a {@link LgtmScore}
-   * against those test vectors.
+   * This class implements a verification procedure for {@link LgtmScore}. The class loads test
+   * vectors, and provides methods to verify a {@link LgtmScore} against those test vectors.
    */
   public static class Verification extends ScoreVerification {
 

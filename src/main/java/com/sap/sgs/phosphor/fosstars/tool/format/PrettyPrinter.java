@@ -136,7 +136,7 @@ public class PrettyPrinter implements Formatter {
         OssFeatures.USES_DEPENDABOT,
         "Does it use Dependabot?");
     FEATURE_TO_NAME.put(
-        OssFeatures.USES_LGTM,
+        OssFeatures.USES_LGTM_CHECKS,
         "Does it use LGTM?");
   }
 

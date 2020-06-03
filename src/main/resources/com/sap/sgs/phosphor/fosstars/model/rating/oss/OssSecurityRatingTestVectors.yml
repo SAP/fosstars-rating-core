@@ -91,7 +91,7 @@ elements:
   - type: "UnknownValue"
     feature:
       type: "BooleanFeature"
-      name: "If a project uses LGTM"
+      name: "If a project uses LGTM checks for commits"
   - type: "UnknownValue"
     feature:
       type: "PositiveIntegerFeature"
@@ -175,7 +175,7 @@ elements:
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
-      name: "If a project uses LGTM"
+      name: "If a project uses LGTM checks for commits"
     flag: false
   - type: "IntegerValue"
     feature:
@@ -279,7 +279,7 @@ elements:
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
-      name: "If a project uses LGTM"
+      name: "If a project uses LGTM checks for commits"
     flag: true
   - type: "BooleanValue"
     feature:
@@ -408,7 +408,7 @@ elements:
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
-      name: "If a project uses LGTM"
+      name: "If a project uses LGTM checks for commits"
     flag: true
   - type: "BooleanValue"
     feature:

@@ -10,7 +10,7 @@ elements:
   - type: "UnknownValue"
     feature:
       type: "BooleanFeature"
-      name: "If a project uses LGTM"
+      name: "If a project uses LGTM checks for commits"
   expectedScore:
     type: "DoubleInterval"
     from: 0.0
@@ -30,7 +30,7 @@ elements:
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
-      name: "If a project uses LGTM"
+      name: "If a project uses LGTM checks for commits"
     flag: false
   expectedScore:
     type: "DoubleInterval"
@@ -52,14 +52,14 @@ elements:
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
-      name: "If a project uses LGTM"
+      name: "If a project uses LGTM checks for commits"
     flag: true
   expectedScore:
     type: "DoubleInterval"
-    from: 1.0
+    from: 4.0
     openLeft: false
     negativeInfinity: false
-    to: 3.0
+    to: 6.0
     openRight: false
     positiveInfinity: false
   expectedLabel: null
@@ -74,14 +74,14 @@ elements:
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
-      name: "If a project uses LGTM"
+      name: "If a project uses LGTM checks for commits"
     flag: true
   expectedScore:
     type: "DoubleInterval"
-    from: 3.0
+    from: 5.0
     openLeft: false
     negativeInfinity: false
-    to: 5.0
+    to: 7.0
     openRight: false
     positiveInfinity: false
   expectedLabel: null
@@ -96,7 +96,7 @@ elements:
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
-      name: "If a project uses LGTM"
+      name: "If a project uses LGTM checks for commits"
     flag: true
   expectedScore:
     type: "DoubleInterval"
@@ -118,7 +118,7 @@ elements:
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
-      name: "If a project uses LGTM"
+      name: "If a project uses LGTM checks for commits"
     flag: true
   expectedScore:
     type: "DoubleInterval"
@@ -140,7 +140,7 @@ elements:
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
-      name: "If a project uses LGTM"
+      name: "If a project uses LGTM checks for commits"
     flag: true
   expectedScore:
     type: "DoubleInterval"
@@ -157,7 +157,7 @@ elements:
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
-      name: "If a project uses LGTM"
+      name: "If a project uses LGTM checks for commits"
     flag: true
   - type: "LgtmGradeValue"
     feature:
