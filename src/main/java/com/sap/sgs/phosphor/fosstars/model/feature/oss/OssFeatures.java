@@ -174,9 +174,10 @@ public class OssFeatures {
       = new DateFeature("When first commit was done");
 
   /**
-   * Shows if an open-source project uses <a href="https://lgtm.com">LGTM</a> for static analysis.
+   * Shows if an open-source project uses <a href="https://lgtm.com">LGTM</a> checks for commits.
    */
-  public static final Feature<Boolean> USES_LGTM = new BooleanFeature("If a project uses LGTM");
+  public static final Feature<Boolean> USES_LGTM_CHECKS
+      = new BooleanFeature("If a project uses LGTM checks for commits");
 
   /**
    * Holds the worst grade assigned by <a href="https://lgtm.com">LGTM</a>.

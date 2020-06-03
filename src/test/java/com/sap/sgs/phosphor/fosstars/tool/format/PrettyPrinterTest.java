@@ -19,7 +19,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_A
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_DEPENDABOT;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_FIND_SEC_BUGS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GITHUB_FOR_DEVELOPMENT;
-import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM_CHECKS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_MEMORY_SANITIZER;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_NOHTTP;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SIGNED_COMMITS;
@@ -69,7 +69,7 @@ public class PrettyPrinterTest {
         PROJECT_START_DATE.value(new Date()),
         FIRST_COMMIT_DATE.value(new Date()),
         USES_SIGNED_COMMITS.value(false),
-        USES_LGTM.value(true),
+        USES_LGTM_CHECKS.value(true),
         WORST_LGTM_GRADE.value(LgtmGrade.A),
         USES_GITHUB_FOR_DEVELOPMENT.value(false),
         USES_NOHTTP.value(false),
@@ -123,7 +123,7 @@ public class PrettyPrinterTest {
         PROJECT_START_DATE.value(new Date()),
         FIRST_COMMIT_DATE.value(new Date()),
         USES_SIGNED_COMMITS.value(false),
-        USES_LGTM.value(true),
+        USES_LGTM_CHECKS.value(true),
         WORST_LGTM_GRADE.value(LgtmGrade.A),
         USES_GITHUB_FOR_DEVELOPMENT.value(false),
         USES_NOHTTP.value(true),
