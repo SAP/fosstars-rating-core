@@ -194,7 +194,11 @@ public class GitHubProject implements Project {
       throw new IllegalArgumentException(
           String.format("The URL doesn't seem to be correct: %s", urlString));
     }
-    return new GitHubProject(new GitHubOrganization(parts[1]), parts[2]);
+    String name = parts[2];
+    if (name.endsWith(".git")) {
+      name = name.substring(0, name.length() - 4);
+    }
+    return new GitHubProject(new GitHubOrganization(parts[1]), name);
   }
 
   /**
