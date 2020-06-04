@@ -26,6 +26,9 @@ import org.apache.logging.log4j.Logger;
  */
 public abstract class AbstractScore implements Score {
 
+  /**
+   * No description.
+   */
   static final String EMPTY_DESCRIPTION = "";
 
   /**
@@ -50,7 +53,7 @@ public abstract class AbstractScore implements Score {
    *
    * @param name A name of the score.
    */
-  AbstractScore(String name) {
+  public AbstractScore(String name) {
     this(name, EMPTY_DESCRIPTION);
   }
 
@@ -60,7 +63,7 @@ public abstract class AbstractScore implements Score {
    * @param name A name of the score.
    * @param description A description of the score (may be empty).
    */
-  AbstractScore(String name, String description) {
+  public AbstractScore(String name, String description) {
     Objects.requireNonNull(name, "Hey! Score name can't be null!");
     Objects.requireNonNull(description, "Hey! Score description can't be null!");
     if (name.isEmpty()) {
@@ -213,17 +216,26 @@ public abstract class AbstractScore implements Score {
   }
 
   /**
-   * The method tries to get a value for a specified score. First, the method checks
-   * if the set of values already contains a value for the specified score. If yes, the method
-   * just returns the existing value. Otherwise, the method tries to calculate a value
-   * of the specified score.
+   * The method calculates a value for a specified score if the value is not available.
+   *
+   * @see #calculateIfNecessary(Score, ValueSet)
+   */
+  protected static ScoreValue calculateIfNecessary(Score score, Value... values) {
+    return calculateIfNecessary(score, ValueHashSet.from(values));
+  }
+
+  /**
+   * The method calculates a value for a specified score if the value is not available.
+   * First, the method checks if the set of values already contains a value for the specified score.
+   * If yes, the method just returns the existing value.
+   * Otherwise, the method tries to calculate a value of the specified score.
    *
    * @param score The score.
    * @param values The set of values.
    * @return A value of the specified score.
    * @throws IllegalArgumentException If a value for the score is not a {@link ScoreValue}.
    */
-  static ScoreValue calculateIfNecessary(Score score, ValueHashSet values) {
+  protected static ScoreValue calculateIfNecessary(Score score, ValueSet values) {
     Optional<Value> something = values.of(score);
 
     // if the set of values doesn't contain a value for the specified score, then calculate it
@@ -239,5 +251,51 @@ public abstract class AbstractScore implements Score {
 
     throw new IllegalArgumentException(String.format(
         "Hey! I expected a ScoreValue for a score but got %s!", value.getClass()));
+  }
+
+  /**
+   * Checks if all values are unknown.
+   *
+   * @param values The values to be checked.
+   * @return True if all values are unknown, false otherwise.
+   * @throws IllegalArgumentException If values are empty.
+   */
+  protected static boolean allUnknown(Value... values) {
+    Objects.requireNonNull(values, "Oh no! Values is null!");
+
+    if (values.length == 0) {
+      throw new IllegalStateException("Oh no! Values is empty!");
+    }
+
+    for (Value value : values) {
+      if (!value.isUnknown()) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * Checks if all values are N/A.
+   *
+   * @param values The values to be checked.
+   * @return True if all values are N/A, false otherwise.
+   * @throws IllegalArgumentException If values are empty.
+   */
+  protected static boolean allNotApplicable(Value... values) {
+    Objects.requireNonNull(values, "Oh no! Values is null!");
+
+    if (values.length == 0) {
+      throw new IllegalStateException("Oh no! Values is empty!");
+    }
+
+    for (Value value : values) {
+      if (!value.isNotApplicable()) {
+        return false;
+      }
+    }
+
+    return true;
   }
 }

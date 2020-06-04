@@ -10,6 +10,7 @@ import static org.junit.Assert.assertTrue;
 
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade;
+import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import org.junit.Test;
 
 public class LgtmScoreTest {
@@ -25,22 +26,21 @@ public class LgtmScoreTest {
   }
 
   @Test
-  public void calculate() {
+  public void testCalculate() {
     LgtmScore score = new LgtmScore();
-    assertScore(
-        Score.INTERVAL, score,
-        setOf(USES_LGTM_CHECKS.unknown(), WORST_LGTM_GRADE.unknown()));
+    ScoreValue scoreValue = score.calculate(USES_LGTM_CHECKS.unknown(), WORST_LGTM_GRADE.unknown());
+    assertTrue(scoreValue.isUnknown());
     assertScore(Score.INTERVAL, score,
         setOf(USES_LGTM_CHECKS.value(true), WORST_LGTM_GRADE.value(LgtmGrade.A_PLUS)));
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void calculateWithoutUsesLgtmValue() {
+  public void testCalculateWithoutUsesLgtmValue() {
     new LgtmScore().calculate(WORST_LGTM_GRADE.unknown());
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void calculateWithoutUsesWorseLgtmGradeValue() {
+  public void testCalculateWithoutUsesWorseLgtmGradeValue() {
     new LgtmScore().calculate(USES_LGTM_CHECKS.unknown());
   }
 }
