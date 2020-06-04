@@ -40,6 +40,10 @@ public class FindSecBugsScore extends FeatureBasedScore {
 
     ScoreValue scoreValue = scoreValue(MIN, languages, usesFindSecBugs);
 
+    if (allUnknown(languages, usesFindSecBugs)) {
+      return scoreValue.makeUnknown();
+    }
+
     boolean applicable = languages.isUnknown() || languages.get().containsAnyOf(JAVA);
     if (!applicable) {
       return scoreValue.makeNotApplicable();

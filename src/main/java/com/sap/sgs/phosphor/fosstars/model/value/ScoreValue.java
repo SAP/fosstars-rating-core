@@ -72,14 +72,11 @@ public class ScoreValue implements Value<Double>, Confidence {
    *
    * @param score The score.
    * @param value The score value.
+   * @param weight The weight.
    * @param confidence The confidence.
    * @param usedValues A list of values which were used to produce the score value.
    */
-  public ScoreValue(
-      Score score,
-      double value,
-      double weight,
-      double confidence,
+  public ScoreValue(Score score, double value, double weight, double confidence,
       List<Value> usedValues) {
 
     this(score, value, weight, confidence, usedValues, Collections.emptyList(), false, false);
@@ -90,9 +87,12 @@ public class ScoreValue implements Value<Double>, Confidence {
    *
    * @param score The score.
    * @param value The score value.
+   * @param weight The weight.
    * @param confidence The confidence.
    * @param usedValues A list of values which were used to produce the score value.
    * @param explanation A list of explanation which explain how the score value was calculated.
+   * @param isUnknown A flag that indicates that the value is unknown.
+   * @param isNotApplicable A flag that indicates that the value is N/A.
    */
   @JsonCreator
   public ScoreValue(
@@ -310,6 +310,16 @@ public class ScoreValue implements Value<Double>, Confidence {
    */
   public ScoreValue makeNotApplicable() {
     isNotApplicable = true;
+    return this;
+  }
+
+  /**
+   * Mark the value as unknown.
+   *
+   * @return The same score value.
+   */
+  public ScoreValue makeUnknown() {
+    isUnknown = true;
     return this;
   }
 

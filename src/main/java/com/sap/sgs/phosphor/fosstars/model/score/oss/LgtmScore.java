@@ -61,6 +61,10 @@ public class LgtmScore extends FeatureBasedScore {
 
     ScoreValue scoreValue = scoreValue(MIN, usesLgtmChecks, worstLgtmGrade);
 
+    if (allUnknown(usesLgtmChecks, worstLgtmGrade)) {
+      return scoreValue.makeUnknown();
+    }
+
     usesLgtmChecks.processIfKnown(uses -> {
       if (uses) {
         scoreValue.increase(LGTM_CHECKS_POINTS);

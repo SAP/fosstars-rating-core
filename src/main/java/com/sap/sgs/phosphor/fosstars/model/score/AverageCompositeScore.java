@@ -55,7 +55,7 @@ public class AverageCompositeScore extends AbstractScore {
   }
 
   /**
-   * The score doesn't use any feature directory
+   * The score doesn't use any feature directly
    * so that this method returns an empty set.
    *
    * @return An empty set of features.
