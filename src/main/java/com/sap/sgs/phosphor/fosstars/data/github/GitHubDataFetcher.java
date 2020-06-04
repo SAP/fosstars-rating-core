@@ -79,9 +79,14 @@ public class GitHubDataFetcher {
   private static final boolean SCAN_UNTIL_REMOVABLE = true;
 
   /**
+   * Lock to synchronize access to localRepositoriesInfo.
+   */
+  private static final Object LOCAL_REPOSITORIES_INFO_LOCK = new Object();
+
+  /**
    * An interface to the GitHub API.
    */
-  private final GitHub github;
+  private GitHub github;
 
   /**
    * A limited capacity cache to store the repository of a {@link GitHubProject}.
@@ -122,8 +127,16 @@ public class GitHubDataFetcher {
   /**
    * Returns the interface to the GitHub API.
    */
-  public GitHub github() {
+  public synchronized GitHub github() {
     return github;
+  }
+
+  /**
+   * Set the interface to the GitHub API.
+   */
+  public synchronized void set(GitHub github) {
+    Objects.requireNonNull(github, "Hey! An interface to GitHub can not be null!");
+    this.github = github;
   }
 
   /**
@@ -210,50 +223,52 @@ public class GitHubDataFetcher {
   private LocalRepository loadLocalRepositoryFor(GitHubProject project) throws IOException {
     Objects.requireNonNull(project, "On no! Project is null!");
 
-    LocalRepositoryInfo info = localRepositoriesInfo.get(project.url());
-    if (info == null) {
-      Path repositoryPath = base
-          .resolve(project.organization().name())
-          .resolve(project.name());
+    synchronized (LOCAL_REPOSITORIES_INFO_LOCK) {
+      LocalRepositoryInfo info = localRepositoriesInfo.get(project.url());
+      if (info == null) {
+        Path repositoryPath = base
+            .resolve(project.organization().name())
+            .resolve(project.name());
 
-      info = new LocalRepositoryInfo(
-          repositoryPath, Date.from(Instant.now()), project.url());
+        info = new LocalRepositoryInfo(
+            repositoryPath, Date.from(Instant.now()), project.url());
+      }
+
+      if (Files.isRegularFile(info.path())) {
+        LOGGER.warn("{} is a file but it should be a directory, let's remove it", info.path());
+        Files.delete(info.path());
+      }
+
+      Optional<Repository> repository = openRepository(info.path());
+      if (!repository.isPresent()) {
+        Files.deleteIfExists(info.path());
+        clone(project, info.path());
+        repository = openRepository(info.path());
+      }
+
+      if (!repository.isPresent()) {
+        throw new IOException("Could not fetch project's repository!");
+      }
+
+      LocalRepository localRepository = new LocalRepository(info, repository.get());
+
+      if (shouldUpdate(localRepository)) {
+        LOGGER.info("Pulling updates from {} ...", project.url());
+        localRepository.pull();
+      }
+
+      info.updated(Date.from(Instant.now()));
+      localRepositoriesInfo.put(project.url(), info);
+      storeLocalRepositoriesInfo();
+
+      return localRepository;
     }
-
-    if (Files.isRegularFile(info.path())) {
-      LOGGER.warn("{} is a file but it should be a directory, let's remove it", info.path());
-      Files.delete(info.path());
-    }
-
-    Optional<Repository> repository = openRepository(info.path());
-    if (!repository.isPresent()) {
-      Files.deleteIfExists(info.path());
-      clone(project, info.path());
-      repository = openRepository(info.path());
-    }
-
-    if (!repository.isPresent()) {
-      throw new IOException("Could not fetch project's repository!");
-    }
-
-    LocalRepository localRepository = new LocalRepository(info, repository.get());
-
-    if (shouldUpdate(localRepository)) {
-      LOGGER.info("Pulling updates from {} ...", project.url());
-      localRepository.pull();
-    }
-
-    info.updated(Date.from(Instant.now()));
-    localRepositoriesInfo.put(project.url(), info);
-    storeLocalRepositoriesInfo();
-
-    return localRepository;
   }
 
   /**
    * Sets how often new updates should be pulled to a local repository by default.
    */
-  public void pullAfter(Duration duration) {
+  public synchronized void pullAfter(Duration duration) {
     Objects.requireNonNull(duration, "Oh no! Duration is null!");
     pullInterval = duration;
   }
@@ -261,7 +276,7 @@ public class GitHubDataFetcher {
   /**
    * Returns true if a repository should be updated, false otherwise.
    */
-  protected boolean shouldUpdate(LocalRepository repository) {
+  protected synchronized boolean shouldUpdate(LocalRepository repository) {
     Objects.requireNonNull(repository, "Oh no! Repository is null!");
     Instant nextUpdate = repository.info().updated().toInstant().plus(pullInterval);
     return nextUpdate.isBefore(Instant.now());
@@ -334,17 +349,19 @@ public class GitHubDataFetcher {
    * @throws IOException If something went wrong.
    */
   protected Map<URL, LocalRepositoryInfo> loadLocalRepositoriesInfo() throws IOException {
-    Path path = base.resolve(DEFAULT_LOCAL_REPOSITORIES_INFO_FILE);
+    synchronized (LOCAL_REPOSITORIES_INFO_LOCK) {
+      Path path = base.resolve(DEFAULT_LOCAL_REPOSITORIES_INFO_FILE);
 
-    if (!Files.exists(path)) {
-      return new HashMap<>();
+      if (!Files.exists(path)) {
+        return new HashMap<>();
+      }
+
+      if (!Files.isRegularFile(path)) {
+        throw new IOException(String.format("Hey! %s is not a file!", path));
+      }
+
+      return MAPPER.readValue(Files.newInputStream(path), LOCAL_REPOSITORIES_TYPE_REF);
     }
-
-    if (!Files.isRegularFile(path)) {
-      throw new IOException(String.format("Hey! %s is not a file!", path));
-    }
-
-    return MAPPER.readValue(Files.newInputStream(path), LOCAL_REPOSITORIES_TYPE_REF);
   }
 
   /**
@@ -353,9 +370,11 @@ public class GitHubDataFetcher {
    * @throws IOException If something went wrong.
    */
   protected void storeLocalRepositoriesInfo() throws IOException {
-    Files.write(
-        base.resolve(DEFAULT_LOCAL_REPOSITORIES_INFO_FILE),
-        MAPPER.writeValueAsBytes(localRepositoriesInfo));
+    synchronized (LOCAL_REPOSITORIES_INFO_LOCK) {
+      Files.write(
+          base.resolve(DEFAULT_LOCAL_REPOSITORIES_INFO_FILE),
+          MAPPER.writeValueAsBytes(localRepositoriesInfo));
+    }
   }
 
   /**
@@ -368,31 +387,33 @@ public class GitHubDataFetcher {
 
     LOGGER.info("Cleaning up local repositories ...");
 
-    BigInteger total = BigInteger.valueOf(0L);
-    for (Map.Entry<URL, LocalRepositoryInfo> entry : localRepositoriesInfo.entrySet()) {
-      LocalRepositoryInfo info = entry.getValue();
-      if (!Files.exists(info.path())) {
-        continue;
-      }
-      total = total.add(info.repositorySize());
-    }
-
-    Set<URL> toBeRemoved = new HashSet<>();
-    for (Map.Entry<URL, LocalRepositoryInfo> entry : localRepositoriesInfo.entrySet()) {
-      URL url = entry.getKey();
-      LocalRepositoryInfo info = entry.getValue();
-
-      if (strategy.shouldBeDeleted(url, info, total)) {
-        try {
-          FileUtils.deleteDirectory(info.path().toFile());
-        } catch (IOException e) {
-          LOGGER.error(
-              () -> String.format("Could not delete a local repository: %s", info.path()), e);
+    synchronized (LOCAL_REPOSITORIES_INFO_LOCK) {
+      BigInteger total = BigInteger.valueOf(0L);
+      for (Map.Entry<URL, LocalRepositoryInfo> entry : localRepositoriesInfo.entrySet()) {
+        LocalRepositoryInfo info = entry.getValue();
+        if (!Files.exists(info.path())) {
+          continue;
         }
-        toBeRemoved.add(url);
+        total = total.add(info.repositorySize());
       }
+
+      Set<URL> toBeRemoved = new HashSet<>();
+      for (Map.Entry<URL, LocalRepositoryInfo> entry : localRepositoriesInfo.entrySet()) {
+        URL url = entry.getKey();
+        LocalRepositoryInfo info = entry.getValue();
+
+        if (strategy.shouldBeDeleted(url, info, total)) {
+          try {
+            FileUtils.deleteDirectory(info.path().toFile());
+          } catch (IOException e) {
+            LOGGER.error(
+                () -> String.format("Could not delete a local repository: %s", info.path()), e);
+          }
+          toBeRemoved.add(url);
+        }
+      }
+      toBeRemoved.forEach(localRepositoriesInfo::remove);
     }
-    toBeRemoved.forEach(localRepositoriesInfo::remove);
   }
 
   /**
