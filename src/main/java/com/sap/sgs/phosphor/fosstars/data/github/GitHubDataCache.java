@@ -2,7 +2,9 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 
 import com.sap.sgs.phosphor.fosstars.data.Cache;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
+import java.util.Collections;
 import java.util.Date;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import org.apache.commons.collections4.map.LRUMap;
@@ -30,13 +32,13 @@ public class GitHubDataCache<T> implements Cache<GitHubProject, T> {
   /**
    * A map of cache entries.
    */
-  private final LRUMap<GitHubProject, GitHubData<T>> entries;
+  private final Map<GitHubProject, GitHubData<T>> entries;
 
   /**
    * The default constructor.
    */
   public GitHubDataCache() {
-    this.entries = new LRUMap<>(CACHE_CAPACITY, SCAN_UNTIL_REMOVABLE);
+    this.entries = Collections.synchronizedMap(new LRUMap<>(CACHE_CAPACITY, SCAN_UNTIL_REMOVABLE));
   }
 
   @Override
@@ -71,7 +73,7 @@ public class GitHubDataCache<T> implements Cache<GitHubProject, T> {
    * Returns the maximum size of the cache.
    */
   public int maxSize() {
-    return entries.maxSize();
+    return CACHE_CAPACITY;
   }
 
   @Override
