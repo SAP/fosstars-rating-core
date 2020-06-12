@@ -15,6 +15,10 @@ elements:
     feature:
       type: "BooleanFeature"
       name: "If an open-source project has a security team"
+  - type: "UnknownValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project has a bug bounty program"
   expectedScore:
     type: "DoubleInterval"
     from: 0.0
@@ -24,7 +28,7 @@ elements:
     openRight: false
     positiveInfinity: false
   expectedLabel: null
-  alias: "test_vector_0"
+  alias: "all_unknown"
 - type: "StandardTestVector"
   values:
   - type: "BooleanValue"
@@ -41,6 +45,11 @@ elements:
     feature:
       type: "BooleanFeature"
       name: "If an open-source project has a security policy"
+    flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project has a bug bounty program"
     flag: false
   expectedScore:
     type: "DoubleInterval"
@@ -51,7 +60,7 @@ elements:
     openRight: false
     positiveInfinity: false
   expectedLabel: null
-  alias: "test_vector_1"
+  alias: "all_false"
 - type: "StandardTestVector"
   values:
   - type: "BooleanValue"
@@ -69,6 +78,11 @@ elements:
       type: "BooleanFeature"
       name: "If an open-source project has a security team"
     flag: true
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project has a bug bounty program"
+    flag: false
   expectedScore:
     type: "DoubleInterval"
     from: 6.0
@@ -96,6 +110,11 @@ elements:
       type: "BooleanFeature"
       name: "If a project uses signed commits"
     flag: true
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project has a bug bounty program"
+    flag: false
   expectedScore:
     type: "DoubleInterval"
     from: 5.0
@@ -122,6 +141,11 @@ elements:
     feature:
       type: "BooleanFeature"
       name: "If an open-source project has a security policy"
+    flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project has a bug bounty program"
     flag: false
   expectedScore:
     type: "DoubleInterval"
@@ -150,12 +174,17 @@ elements:
       type: "BooleanFeature"
       name: "If an open-source project has a security team"
     flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project has a bug bounty program"
+    flag: false
   expectedScore:
     type: "DoubleInterval"
-    from: 3.0
+    from: 1.0
     openLeft: false
     negativeInfinity: false
-    to: 5.0
+    to: 3.0
     openRight: false
     positiveInfinity: false
   expectedLabel: null
@@ -177,12 +206,17 @@ elements:
       type: "BooleanFeature"
       name: "If a project uses signed commits"
     flag: true
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project has a bug bounty program"
+    flag: false
   expectedScore:
     type: "DoubleInterval"
-    from: 2.0
+    from: 1.0
     openLeft: false
     negativeInfinity: false
-    to: 4.0
+    to: 3.0
     openRight: false
     positiveInfinity: false
   expectedLabel: null
@@ -204,12 +238,17 @@ elements:
       type: "BooleanFeature"
       name: "If a project uses signed commits"
     flag: true
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project has a bug bounty program"
+    flag: false
   expectedScore:
     type: "DoubleInterval"
-    from: 5.0
+    from: 4.0
     openLeft: false
     negativeInfinity: false
-    to: 7.0
+    to: 6.0
     openRight: false
     positiveInfinity: false
   expectedLabel: null
@@ -231,6 +270,43 @@ elements:
       type: "BooleanFeature"
       name: "If a project uses signed commits"
     flag: true
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project has a bug bounty program"
+    flag: false
+  expectedScore:
+    type: "DoubleInterval"
+    from: 7.0
+    openLeft: false
+    negativeInfinity: false
+    to: 10.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_8"
+- type: "StandardTestVector"
+  values:
+    - type: "BooleanValue"
+      feature:
+        type: "BooleanFeature"
+        name: "If an open-source project has a security policy"
+      flag: true
+    - type: "BooleanValue"
+      feature:
+        type: "BooleanFeature"
+        name: "If an open-source project has a security team"
+      flag: true
+    - type: "BooleanValue"
+      feature:
+        type: "BooleanFeature"
+        name: "If a project uses signed commits"
+      flag: false
+    - type: "BooleanValue"
+      feature:
+        type: "BooleanFeature"
+        name: "If a project has a bug bounty program"
+      flag: true
   expectedScore:
     type: "DoubleInterval"
     from: 9.0
@@ -240,4 +316,36 @@ elements:
     openRight: false
     positiveInfinity: false
   expectedLabel: null
-  alias: "test_vector_8"
+  alias: "test_vector_9"
+- type: "StandardTestVector"
+  values:
+    - type: "BooleanValue"
+      feature:
+        type: "BooleanFeature"
+        name: "If an open-source project has a security policy"
+      flag: true
+    - type: "BooleanValue"
+      feature:
+        type: "BooleanFeature"
+        name: "If an open-source project has a security team"
+      flag: true
+    - type: "BooleanValue"
+      feature:
+        type: "BooleanFeature"
+        name: "If a project uses signed commits"
+      flag: true
+    - type: "BooleanValue"
+      feature:
+        type: "BooleanFeature"
+        name: "If a project has a bug bounty program"
+      flag: true
+  expectedScore:
+    type: "DoubleInterval"
+    from: 9.0
+    openLeft: false
+    negativeInfinity: false
+    to: 10.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "all_true"

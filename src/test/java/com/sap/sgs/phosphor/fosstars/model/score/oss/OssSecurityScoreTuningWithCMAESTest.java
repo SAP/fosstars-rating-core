@@ -1,6 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.model.score.oss;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.FUZZED_IN_OSS_FUZZ;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_BUG_BOUNTY_PROGRAM;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_TEAM;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.IS_APACHE;
@@ -61,6 +62,7 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(UnknownValue.of(IS_ECLIPSE))
           .set(UnknownValue.of(HAS_SECURITY_POLICY))
           .set(UnknownValue.of(HAS_SECURITY_TEAM))
+          .set(UnknownValue.of(HAS_BUG_BOUNTY_PROGRAM))
           .set(UnknownValue.of(SCANS_FOR_VULNERABLE_DEPENDENCIES))
           .set(UnknownValue.of(VULNERABILITIES))
           .set(UnknownValue.of(PROJECT_START_DATE))
@@ -92,6 +94,7 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(IS_ECLIPSE.value(false))
           .set(HAS_SECURITY_POLICY.value(false))
           .set(HAS_SECURITY_TEAM.value(false))
+          .set(HAS_BUG_BOUNTY_PROGRAM.value(false))
           .set(SCANS_FOR_VULNERABLE_DEPENDENCIES.value(false))
           .set(VULNERABILITIES.value(NO_VULNERABILITIES))
           .set(PROJECT_START_DATE.value(FIVE_YEARS_AGO))
@@ -123,6 +126,7 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(IS_ECLIPSE.value(false))
           .set(HAS_SECURITY_POLICY.value(true))
           .set(HAS_SECURITY_TEAM.value(true))
+          .set(HAS_BUG_BOUNTY_PROGRAM.value(true))
           .set(SCANS_FOR_VULNERABLE_DEPENDENCIES.value(true))
           .set(VULNERABILITIES.value(NO_VULNERABILITIES))
           .set(PROJECT_START_DATE.value(FIVE_YEARS_AGO))

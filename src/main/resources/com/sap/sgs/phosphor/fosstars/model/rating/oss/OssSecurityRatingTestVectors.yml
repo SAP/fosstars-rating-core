@@ -51,6 +51,11 @@ defaults:
     type: "BooleanFeature"
     name: "If an open-source project is included to OSS-Fuzz project"
   flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If a project has a bug bounty program"
+  flag: false
 
 # test vectors
 elements:
