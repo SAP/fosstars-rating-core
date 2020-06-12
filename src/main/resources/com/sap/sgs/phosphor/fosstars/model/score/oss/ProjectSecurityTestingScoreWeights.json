@@ -4,11 +4,7 @@
       "type" : "ImmutableWeight",
       "value" : 1.0
     },
-    "com.sap.sgs.phosphor.fosstars.model.score.oss.FindSecBugsScore" : {
-      "type" : "ImmutableWeight",
-      "value" : 1.0
-    },
-    "com.sap.sgs.phosphor.fosstars.model.score.oss.LgtmScore" : {
+    "com.sap.sgs.phosphor.fosstars.model.score.oss.StaticAnalysisScore" : {
       "type" : "ImmutableWeight",
       "value" : 1.0
     },

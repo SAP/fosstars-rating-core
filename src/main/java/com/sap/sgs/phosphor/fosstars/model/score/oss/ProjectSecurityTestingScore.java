@@ -10,10 +10,9 @@ import java.io.InputStream;
  * The security testing score uses the following sub-scores:
  * <ul>
  *  <li>{@link DependencyScanScore}</li>
- *  <li>{@link LgtmScore}</li>
  *  <li>{@link NoHttpToolScore}</li>
  *  <li>{@link MemorySafetyTestingScore}</li>
- *  <li>{@link FindSecBugsScore}</li>
+ *  <li>{@link StaticAnalysisScore}</li>
  *  <li>{@link FuzzingScore}</li>
  * </ul>
  * There is plenty room for improvements.
@@ -27,10 +26,9 @@ public class ProjectSecurityTestingScore extends WeightedCompositeScore {
   ProjectSecurityTestingScore() {
     super("How well security testing is done for an open-source project",
         new DependencyScanScore(),
-        new LgtmScore(),
         new NoHttpToolScore(),
         new MemorySafetyTestingScore(),
-        new FindSecBugsScore(),
+        new StaticAnalysisScore(),
         new FuzzingScore());
   }
 
@@ -48,8 +46,7 @@ public class ProjectSecurityTestingScore extends WeightedCompositeScore {
     private static final String TEST_VECTORS_YAML = "ProjectSecurityTestingScoreTestVectors.yml";
 
     /**
-     * Initializes a {@link Verification}
-     * for a {@link ProjectSecurityTestingScore}.
+     * Initializes a {@link Verification} for a {@link ProjectSecurityTestingScore}.
      *
      * @param score A score to be verified.
      * @param vectors A list of test vectors.
