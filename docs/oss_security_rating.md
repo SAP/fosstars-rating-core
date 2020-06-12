@@ -43,12 +43,13 @@ Here is a list of sub-scores that are currently used in the open-source security
 Implementations for all the scores can be found in the [com.sap.sgs.phosphor.fosstars.model.score.oss](https://github.com/SAP/fosstars-rating-core/blob/master/src/main/java/com/sap/sgs/phosphor/fosstars/model/score/oss) package.
 
 1.  **Security testing score** based on the following sub-scores:
-    1.  How a project addresses issues reported by LGTM. It's based on the following features:
-        1.  If a project uses LGTM.
-        1.  The worst LGTM grade of a project.
-    1.  How a project uses FindSecBugs. It's based on the following features:
-        1.  Programming languages that are used in a project.
-        1.  If an open-source project uses FindSecBugs.
+    1.  How a project uses static analysis for security testing. It's based on the following sub-scores:
+        1.  How a project addresses issues reported by LGTM. It's based on the following features:
+            1.  If a project uses LGTM.
+            1.  The worst LGTM grade of a project.
+        1.  How a project uses FindSecBugs. It's based on the following features:
+            1.  Programming languages that are used in a project.
+            1.  If an open-source project uses FindSecBugs.
     1.  If a project uses nohttp tool. It's based on the following features:
         1.  Package managers that are used in a project.
         1.  If a project uses nohttp tool.

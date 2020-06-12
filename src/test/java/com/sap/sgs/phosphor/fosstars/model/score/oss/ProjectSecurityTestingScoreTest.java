@@ -25,33 +25,30 @@ public class ProjectSecurityTestingScoreTest {
         Score.INTERVAL,
         PROJECT_SECURITY_TESTING,
         setOf(
-            PROJECT_SECURITY_TESTING.score(LgtmScore.class).value(Score.MIN),
+            PROJECT_SECURITY_TESTING.score(StaticAnalysisScore.class).value(Score.MIN),
             PROJECT_SECURITY_TESTING.score(DependencyScanScore.class).value(Score.MIN),
             PROJECT_SECURITY_TESTING.score(NoHttpToolScore.class).value(Score.MIN),
             PROJECT_SECURITY_TESTING.score(MemorySafetyTestingScore.class).value(Score.MIN),
-            PROJECT_SECURITY_TESTING.score(FindSecBugsScore.class).value(Score.MIN),
             PROJECT_SECURITY_TESTING.score(FuzzingScore.class).value(Score.MIN)));
 
     assertScore(
         Score.INTERVAL,
         PROJECT_SECURITY_TESTING,
         setOf(
-            PROJECT_SECURITY_TESTING.score(LgtmScore.class).value(Score.MAX),
+            PROJECT_SECURITY_TESTING.score(StaticAnalysisScore.class).value(Score.MAX),
             PROJECT_SECURITY_TESTING.score(DependencyScanScore.class).value(Score.MAX),
             PROJECT_SECURITY_TESTING.score(NoHttpToolScore.class).value(Score.MAX),
             PROJECT_SECURITY_TESTING.score(MemorySafetyTestingScore.class).value(Score.MAX),
-            PROJECT_SECURITY_TESTING.score(FindSecBugsScore.class).value(Score.MAX),
             PROJECT_SECURITY_TESTING.score(FuzzingScore.class).value(Score.MAX)));
   }
 
   @Test
   public void explanation() {
     ScoreValue value = PROJECT_SECURITY_TESTING.calculate(
-        PROJECT_SECURITY_TESTING.score(LgtmScore.class).value(Score.MAX / 3),
+        PROJECT_SECURITY_TESTING.score(StaticAnalysisScore.class).value(Score.MAX / 3),
         PROJECT_SECURITY_TESTING.score(DependencyScanScore.class).value(Score.MAX / 5),
         PROJECT_SECURITY_TESTING.score(NoHttpToolScore.class).value(Score.MAX / 2),
         PROJECT_SECURITY_TESTING.score(MemorySafetyTestingScore.class).value(Score.MAX / 4),
-        PROJECT_SECURITY_TESTING.score(FindSecBugsScore.class).value(Score.MAX / 7),
         PROJECT_SECURITY_TESTING.score(FuzzingScore.class).value(Score.MIN / 2));
 
     assertTrue(value.score().description().isEmpty());
