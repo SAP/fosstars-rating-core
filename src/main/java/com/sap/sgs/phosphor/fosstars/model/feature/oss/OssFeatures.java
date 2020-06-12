@@ -204,4 +204,10 @@ public class OssFeatures {
    */
   public static final Feature<Boolean> USES_NOHTTP =
       new BooleanFeature("If a project uses nohttp tool");
+
+  /**
+   * Shows if an open-source project has a bug bounty program.
+   */
+  public static final Feature<Boolean> HAS_BUG_BOUNTY_PROGRAM
+      = new BooleanFeature("If a project has a bug bounty program");
 }
