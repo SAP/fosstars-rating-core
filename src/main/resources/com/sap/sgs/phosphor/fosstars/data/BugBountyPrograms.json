@@ -1,0 +1,41 @@
+{
+  "bugBountyPrograms": {
+    "https://hackerone.com/curl": [ "https://github.com/curl/curl" ],
+    "https://hackerone.com/kubernetes": [ "https://github.com/kubernetes/kubernetes" ],
+    "https://hackerone.com/nodejs": [ "https://github.com/nodejs/node" ],
+    "https://hackerone.com/ibb-data": [
+      "https://github.com/glennrp/libpng",
+      "https://github.com/ImageMagick/ImageMagick",
+      "https://github.com/the-tcpdump-group",
+      "https://git.videolan.org/?p=ffmpeg.git",
+      "https://git.libav.org/?p=libav.git;a=summary",
+      "http://hg.code.sf.net/p/graphicsmagick/code"
+    ],
+    "https://hackerone.com/ruby": [ "https://github.com/ruby/ruby" ],
+    "https://hackerone.com/ibb-apache": [ "https://github.com/apache/httpd" ],
+    "https://hackerone.com/apachenifi": [ "https://github.com/apache/nifi" ],
+    "https://hackerone.com/ibb-openssl": [ "https://github.com/openssl/openssl" ],
+    "https://hackerone.com/ibb-nginx": [ "https://github.com/nginx/nginx" ],
+    "https://hackerone.com/ibb-python": [ "https://github.com/python/cpython" ],
+    "https://hackerone.com/ibb-php": [ "https://github.com/php/php-src" ],
+    "https://hackerone.com/ibb-squid-cache": [ "https://github.com/squid-cache/squid" ],
+    "https://bugcrowd.com/squareopensource": [
+      "https://github.com/square/git-fastclone",
+      "https://github.com/square/go-jose",
+      "https://github.com/square/js-jose",
+      "https://github.com/square/keywhiz",
+      "https://github.com/square/keywhiz-fs",
+      "https://github.com/square/keysync",
+      "https://github.com/square/okhttp",
+      "https://github.com/square/okio",
+      "https://github.com/square/pam_krb_cache",
+      "https://github.com/square/ghostunnel",
+      "https://github.com/square/rails-auth",
+      "https://github.com/square/retrofit",
+      "https://github.com/square/squalor",
+      "https://github.com/square/sudo_pair",
+      "https://github.com/square/valet",
+      "https://github.com/square/wire"
+    ]
+  }
+}
