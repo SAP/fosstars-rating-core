@@ -2,9 +2,7 @@ package com.sap.sgs.phosphor.fosstars.data.json;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.Collections;
 import java.util.Map;
@@ -82,47 +80,7 @@ public class SecurityTeamStorage extends AbstractJsonStorage {
    * @throws IOException If something went wrong.
    */
   public static SecurityTeamStorage load() throws IOException {
-    return load(RESOURCE_PATH);
-  }
-
-  /**
-   * Loads info about security teams from a specified file.
-   *
-   * @return An instance of {@link SecurityTeamStorage}.
-   * @throws IOException If something went wrong.
-   */
-  public static SecurityTeamStorage load(String path) throws IOException {
-    File file = new File(path);
-    SecurityTeamStorage storage;
-    if (file.exists()) {
-      storage = MAPPER.readValue(file, SecurityTeamStorage.class);
-    } else {
-      storage = loadFromResource(path);
-    }
-    if (storage == null) {
-      throw new IOException(String.format(
-          "Could not load info security teams from %s", path));
-    }
-    return storage;
-  }
-
-  /**
-   * Tries to load info about security teams from a specified file.
-   *
-   * @param path A path to the resource.
-   * @return An instance of {@link SecurityTeamStorage}.
-   * @throws IOException If something went wrong.
-   */
-  private static SecurityTeamStorage loadFromResource(String path) throws IOException {
-    InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
-    if (is != null) {
-      try {
-        return MAPPER.readValue(is, SecurityTeamStorage.class);
-      } finally {
-        is.close();
-      }
-    }
-    throw new IOException(String.format("Resource '%s' not found!", path));
+    return load(RESOURCE_PATH, SecurityTeamStorage.class);
   }
 
   /**

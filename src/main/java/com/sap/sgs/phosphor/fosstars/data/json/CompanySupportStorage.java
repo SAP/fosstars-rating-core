@@ -2,9 +2,7 @@ package com.sap.sgs.phosphor.fosstars.data.json;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.Collections;
 import java.util.List;
@@ -91,46 +89,6 @@ public class CompanySupportStorage extends AbstractJsonStorage {
    * @throws IOException If something went wrong.
    */
   public static CompanySupportStorage load() throws IOException {
-    return load(RESOURCE_PATH);
-  }
-
-  /**
-   * Loads info about company support from a specified file.
-   *
-   * @return An instance of {@link CompanySupportStorage}.
-   * @throws IOException If something went wrong.
-   */
-  public static CompanySupportStorage load(String path) throws IOException {
-    File file = new File(path);
-    CompanySupportStorage storage;
-    if (file.exists()) {
-      storage = MAPPER.readValue(file, CompanySupportStorage.class);
-    } else {
-      storage = loadFromResource(path);
-    }
-    if (storage == null) {
-      throw new IOException(String.format(
-          "Could not load info about companies from %s", path));
-    }
-    return storage;
-  }
-
-  /**
-   * Tries to load info about company support from a specified file.
-   *
-   * @param path A path to the resource.
-   * @return An instance of {@link CompanySupportStorage}.
-   * @throws IOException If something went wrong.
-   */
-  private static CompanySupportStorage loadFromResource(String path) throws IOException {
-    InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
-    if (is != null) {
-      try {
-        return MAPPER.readValue(is, CompanySupportStorage.class);
-      } finally {
-        is.close();
-      }
-    }
-    throw new IOException(String.format("Resource '%s' not found!", path));
+    return load(RESOURCE_PATH, CompanySupportStorage.class);
   }
 }

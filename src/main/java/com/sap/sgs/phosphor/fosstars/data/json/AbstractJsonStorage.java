@@ -1,6 +1,9 @@
 package com.sap.sgs.phosphor.fosstars.data.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -31,6 +34,53 @@ class AbstractJsonStorage {
     if (!"https".equalsIgnoreCase(u.getProtocol())) {
       throw new IllegalArgumentException("Only HTTPS schema supported!");
     }
+  }
+
+  /**
+   * Loads an instance of a specified class from a JSON resource or file.
+   *
+   * @param path A path to the resource or file.
+   * @param clazz The class.
+   * @return The loaded object.
+   * @throws IOException If something went wrong.
+   */
+  static <T> T load(String path, Class<T> clazz) throws IOException {
+    File file = new File(path);
+    T storage;
+
+    if (file.exists()) {
+      storage = MAPPER.readValue(file, clazz);
+    } else {
+      storage = loadFromResource(path, clazz);
+    }
+
+    if (storage == null) {
+      throw new IOException(String.format(
+          "Could not load info bug bounty programs from %s", path));
+    }
+
+    return storage;
+  }
+
+  /**
+   * Tries to load an instance of a specified class from a JSON resource.
+   *
+   * @param path A path to the resource.
+   * @param clazz The class.
+   * @return The loaded object.
+   * @throws IOException If something went wrong.
+   */
+  static <T> T loadFromResource(String path, Class<T> clazz) throws IOException {
+    InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
+    if (is != null) {
+      try {
+        return MAPPER.readValue(is, clazz);
+      } finally {
+        is.close();
+      }
+    }
+
+    throw new IOException(String.format("Resource '%s' not found!", path));
   }
 
 }
