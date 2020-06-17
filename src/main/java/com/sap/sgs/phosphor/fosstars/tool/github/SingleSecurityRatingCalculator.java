@@ -3,6 +3,7 @@ package com.sap.sgs.phosphor.fosstars.tool.github;
 import com.sap.sgs.phosphor.fosstars.data.DataProvider;
 import com.sap.sgs.phosphor.fosstars.data.github.FuzzedInOssFuzz;
 import com.sap.sgs.phosphor.fosstars.data.github.GitHubDataFetcher;
+import com.sap.sgs.phosphor.fosstars.data.github.HasBugBountyProgram;
 import com.sap.sgs.phosphor.fosstars.data.github.HasCompanySupport;
 import com.sap.sgs.phosphor.fosstars.data.github.HasSecurityPolicy;
 import com.sap.sgs.phosphor.fosstars.data.github.HasSecurityTeam;
@@ -118,6 +119,7 @@ class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
         new HasSecurityTeam(fetcher),
         new HasCompanySupport(fetcher),
         new HasSecurityPolicy(fetcher),
+        new HasBugBountyProgram(fetcher),
         new InfoAboutVulnerabilities(fetcher, nvd),
         new IsApache(fetcher),
         new IsEclipse(fetcher),
