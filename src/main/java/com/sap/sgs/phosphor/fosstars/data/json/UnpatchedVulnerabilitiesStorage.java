@@ -10,9 +10,7 @@ import com.sap.sgs.phosphor.fosstars.model.value.Reference;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerability;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.Resolution;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -123,25 +121,14 @@ public class UnpatchedVulnerabilitiesStorage extends AbstractJsonStorage {
   }
 
   /**
-   * Loads a custom list of unpatched vulnerabilities form a JSON file.
+   * Loads a list of unpatched vulnerabilities from  a JSON file or resource.
    *
-   * @param path A path to the file.
+   * @param path A path to the file or resource.
    * @return An instance of {@link UnpatchedVulnerabilitiesStorage}.
    * @throws IOException If something went wrong.
    */
   public static UnpatchedVulnerabilitiesStorage load(String path) throws IOException {
-    File file = new File(path);
-    UnpatchedVulnerabilitiesStorage storage;
-    if (file.exists()) {
-      storage = MAPPER.readValue(file, UnpatchedVulnerabilitiesStorage.class);
-    } else {
-      storage = loadFromResource(path);
-    }
-    if (storage == null) {
-      throw new IOException(String.format(
-          "Could not load unpatched vulnerabilities from %s", path));
-    }
-    return check(storage);
+    return load(path, UnpatchedVulnerabilitiesStorage.class);
   }
 
   /**
@@ -152,25 +139,6 @@ public class UnpatchedVulnerabilitiesStorage extends AbstractJsonStorage {
    */
   public void store(String path) throws IOException {
     Files.write(Paths.get(path), MAPPER.writerWithDefaultPrettyPrinter().writeValueAsBytes(this));
-  }
-
-  /**
-   * Tries to load {@link UnpatchedVulnerabilitiesStorage} from a resource.
-   *
-   * @param path A path to the resource.
-   * @return An instance of {@link UnpatchedVulnerabilitiesStorage}.
-   * @throws IOException If something went wrong.
-   */
-  private static UnpatchedVulnerabilitiesStorage loadFromResource(String path) throws IOException {
-    InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
-    if (is != null) {
-      try {
-        return MAPPER.readValue(is, UnpatchedVulnerabilitiesStorage.class);
-      } finally {
-        is.close();
-      }
-    }
-    throw new IOException(String.format("Resource '%s' not found!", path));
   }
 
   /**

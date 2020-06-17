@@ -2,9 +2,7 @@ package com.sap.sgs.phosphor.fosstars.data.json;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
@@ -72,50 +70,6 @@ public class BugBountyProgramStorage extends AbstractJsonStorage {
    * @throws IOException If something went wrong.
    */
   public static BugBountyProgramStorage load() throws IOException {
-    return load(RESOURCE_PATH);
-  }
-
-  /**
-   * Loads info about bug bounty programs from a specified file.
-   *
-   * @return An instance of {@link BugBountyProgramStorage}.
-   * @throws IOException If something went wrong.
-   */
-  public static BugBountyProgramStorage load(String path) throws IOException {
-    File file = new File(path);
-    BugBountyProgramStorage storage;
-
-    if (file.exists()) {
-      storage = MAPPER.readValue(file, BugBountyProgramStorage.class);
-    } else {
-      storage = loadFromResource(path);
-    }
-
-    if (storage == null) {
-      throw new IOException(String.format(
-          "Could not load info bug bounty programs from %s", path));
-    }
-
-    return storage;
-  }
-
-  /**
-   * Tries to load info about bug bounty programs from a specified file.
-   *
-   * @param path A path to the resource.
-   * @return An instance of {@link BugBountyProgramStorage}.
-   * @throws IOException If something went wrong.
-   */
-  private static BugBountyProgramStorage loadFromResource(String path) throws IOException {
-    InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
-    if (is != null) {
-      try {
-        return MAPPER.readValue(is, BugBountyProgramStorage.class);
-      } finally {
-        is.close();
-      }
-    }
-
-    throw new IOException(String.format("Resource '%s' not found!", path));
+    return load(RESOURCE_PATH, BugBountyProgramStorage.class);
   }
 }
