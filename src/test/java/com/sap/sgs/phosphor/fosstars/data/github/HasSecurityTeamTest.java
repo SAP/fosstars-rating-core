@@ -2,6 +2,7 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_TEAM;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -32,7 +33,7 @@ public class HasSecurityTeamTest extends TestGitHubDataFetcherHolder {
     provider.set(new GitHubProjectValueCache());
     Value<Boolean> value = check(provider, project);
     assertNotNull(value);
-    assertTrue(value.isUnknown());
+    assertFalse(value.get());
   }
 
   private static Value<Boolean> check(HasSecurityTeam provider, GitHubProject project) 
