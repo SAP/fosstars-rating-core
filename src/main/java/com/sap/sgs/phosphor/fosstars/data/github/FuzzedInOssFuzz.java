@@ -40,6 +40,8 @@ public class FuzzedInOssFuzz extends CachedSingleFeatureGitHubDataProvider {
 
   @Override
   protected Value<Boolean> fetchValueFor(GitHubProject project) throws IOException {
+    logger.info("Figuring out if the project is fuzzed in OSS-Fuzz ...");
+
     LocalRepository ossFuzzRepository = fetcher.localRepositoryFor(OSS_FUZZ_PROJECT);
 
     List<Path> dockerFiles = Files.walk(ossFuzzRepository.info().path())

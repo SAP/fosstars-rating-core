@@ -68,7 +68,7 @@ public class UsesGithubForDevelopment extends CachedSingleFeatureGitHubDataProvi
 
   @Override
   protected Value fetchValueFor(GitHubProject project) {
-    logger.info("Figuring out if the project uses GitHub as the main development platform ...");
+    logger.info("Figuring out if the project uses GitHub for development ...");
     return usesGithubForDevelopment(project);
   }
 

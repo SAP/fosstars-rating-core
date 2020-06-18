@@ -53,6 +53,8 @@ public class InfoAboutVulnerabilities extends CachedSingleFeatureGitHubDataProvi
 
   @Override
   protected Value fetchValueFor(GitHubProject project) throws IOException {
+    logger.info("Looking for vulnerabilities in the project ...");
+
     Vulnerabilities allVulnerabilities = new Vulnerabilities();
     for (DataProvider<GitHubProject> provider : providers) {
       ValueSet subset = new ValueHashSet();
