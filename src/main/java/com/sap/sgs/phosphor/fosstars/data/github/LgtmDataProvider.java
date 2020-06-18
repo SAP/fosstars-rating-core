@@ -15,7 +15,6 @@ import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
-import java.time.Duration;
 import java.util.Set;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -37,9 +36,9 @@ import org.kohsuke.github.GHCommit;
 public class LgtmDataProvider extends GitHubCachingDataProvider {
 
   /**
-   * Three months.
+   * The number of latest commits to be checked.
    */
-  private static final Duration THREE_MONTHS = Duration.ofDays(90);
+  private static final int COMMITS_TO_BE_CHECKED = 20;
 
   /**
    * For parsing JSON.
@@ -62,6 +61,7 @@ public class LgtmDataProvider extends GitHubCachingDataProvider {
 
   @Override
   protected ValueSet fetchValuesFor(GitHubProject project) throws IOException {
+    logger.info("Figuring out how the project uses LGTM ...");
     return ValueHashSet.from(usesLgtmChecks(project), worstLgtmGrade(project));
   }
 
@@ -95,7 +95,7 @@ public class LgtmDataProvider extends GitHubCachingDataProvider {
    * @return A value of the {@link OssFeatures#USES_LGTM_CHECKS} feature.
    */
   private Value<Boolean> usesLgtmChecks(GitHubProject project) throws IOException {
-    for (GHCommit commit : fetcher.githubCommitsFor(project, THREE_MONTHS)) {
+    for (GHCommit commit : fetcher.githubCommitsFor(project, COMMITS_TO_BE_CHECKED)) {
       if (hasLgtmChecks(commit)) {
         return USES_LGTM_CHECKS.value(true);
       }

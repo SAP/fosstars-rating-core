@@ -6,6 +6,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
@@ -16,13 +17,13 @@ import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collections;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.junit.Test;
 import org.kohsuke.github.GHCheckRun;
 import org.kohsuke.github.GHCommit;
+import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.PagedIterable;
 import org.kohsuke.github.PagedIterator;
 
@@ -47,17 +48,27 @@ public class LgtmDataProviderTest extends TestGitHubDataFetcherHolder {
     GHCheckRun checkRun = mock(GHCheckRun.class);
     when(checkRun.getName()).thenReturn("LGTM analysis");
 
-    PagedIterator<GHCheckRun> iterator = mock(PagedIterator.class);
-    when(iterator.hasNext()).thenReturn(true, false);
-    when(iterator.next()).thenReturn(checkRun);
+    PagedIterator<GHCheckRun> checkRunPagedIterator = mock(PagedIterator.class);
+    when(checkRunPagedIterator.hasNext()).thenReturn(true, false);
+    when(checkRunPagedIterator.next()).thenReturn(checkRun);
 
-    PagedIterable<GHCheckRun> pagedIterable = mock(PagedIterable.class);
-    when(pagedIterable.iterator()).thenReturn(iterator);
+    PagedIterable<GHCheckRun> checkRunPagedIterable = mock(PagedIterable.class);
+    when(checkRunPagedIterable.iterator()).thenReturn(checkRunPagedIterator);
 
     GHCommit commit = mock(GHCommit.class);
-    when(commit.getCheckRuns()).thenReturn(pagedIterable);
+    when(commit.getCheckRuns()).thenReturn(checkRunPagedIterable);
 
-    fetcher.githubCommitsCache().put(project, Collections.singletonList(commit));
+    GHRepository repository = mock(GHRepository.class);
+    when(fetcher.github().getRepository(anyString())).thenReturn(repository);
+
+    PagedIterator<GHCommit> commitPagedIterator = mock(PagedIterator.class);
+    when(commitPagedIterator.hasNext()).thenReturn(true, false);
+    when(commitPagedIterator.next()).thenReturn(commit);
+
+    PagedIterable<GHCommit> commitPagedIterable = mock(PagedIterable.class);
+    when(commitPagedIterable.iterator()).thenReturn(commitPagedIterator);
+
+    when(repository.listCommits()).thenReturn(commitPagedIterable);
 
     try (InputStream content = getClass().getResourceAsStream("LgtmProjectInfoReply.json")) {
       when(entity.getContent()).thenReturn(content);
@@ -97,17 +108,26 @@ public class LgtmDataProviderTest extends TestGitHubDataFetcherHolder {
 
     GitHubProject project = new GitHubProject("org", "project");
 
-    PagedIterator<GHCheckRun> iterator = mock(PagedIterator.class);
-    when(iterator.hasNext()).thenReturn(false);
+    PagedIterator<GHCheckRun> checkRunPagedIterator = mock(PagedIterator.class);
+    when(checkRunPagedIterator.hasNext()).thenReturn(false);
 
-    PagedIterable<GHCheckRun> pagedIterable = mock(PagedIterable.class);
-    when(pagedIterable.iterator()).thenReturn(iterator);
+    PagedIterable<GHCheckRun> checkRunPagedIterable = mock(PagedIterable.class);
+    when(checkRunPagedIterable.iterator()).thenReturn(checkRunPagedIterator);
 
     GHCommit commit = mock(GHCommit.class);
-    when(commit.getCheckRuns()).thenReturn(pagedIterable);
+    when(commit.getCheckRuns()).thenReturn(checkRunPagedIterable);
 
-    fetcher.githubCommitsCache().put(project, Collections.singletonList(commit));
+    GHRepository repository = mock(GHRepository.class);
+    when(fetcher.github().getRepository(anyString())).thenReturn(repository);
 
+    PagedIterator<GHCommit> commitPagedIterator = mock(PagedIterator.class);
+    when(commitPagedIterator.hasNext()).thenReturn(true, false);
+    when(commitPagedIterator.next()).thenReturn(commit);
+
+    PagedIterable<GHCommit> commitPagedIterable = mock(PagedIterable.class);
+    when(commitPagedIterable.iterator()).thenReturn(commitPagedIterator);
+
+    when(repository.listCommits()).thenReturn(commitPagedIterable);
 
     try (InputStream content =
         getClass().getResourceAsStream("LgtmProjectDoesNotExistReply.json")) {
