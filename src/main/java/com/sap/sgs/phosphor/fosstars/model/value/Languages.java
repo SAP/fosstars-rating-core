@@ -5,10 +5,10 @@ import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 /**
@@ -46,7 +46,7 @@ public class Languages implements Iterable<Language> {
   @JsonCreator
   public Languages(@JsonProperty("elements") Set<Language> languages) {
     Objects.requireNonNull(languages, "Languages can't be null!");
-    this.elements = new HashSet<>(languages);
+    this.elements = new TreeSet<>(languages);
   }
 
   /**
@@ -98,7 +98,7 @@ public class Languages implements Iterable<Language> {
    */
   @JsonGetter("elements")
   public Set<Language> get() {
-    return new HashSet<>(elements);
+    return new TreeSet<>(elements);
   }
 
   @Override
