@@ -1,15 +1,16 @@
 package com.sap.sgs.phosphor.fosstars.model.value;
 
+import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 /**
@@ -48,7 +49,7 @@ public class PackageManagers implements Iterable<PackageManager> {
       @JsonProperty("packageManagers") Set<PackageManager> packageManagers) {
 
     Objects.requireNonNull(packageManagers, "Package managers can't be null!");
-    this.packageManagers = packageManagers;
+    this.packageManagers = new TreeSet<>(packageManagers);
   }
 
   /**
@@ -57,8 +58,7 @@ public class PackageManagers implements Iterable<PackageManager> {
    * @param packageManagers A number of package managers.
    */
   public PackageManagers(PackageManager... packageManagers) {
-    this(EnumSet.noneOf(PackageManager.class));
-    this.packageManagers.addAll(Arrays.asList(packageManagers));
+    this(setOf(packageManagers));
   }
 
   /**
@@ -80,7 +80,7 @@ public class PackageManagers implements Iterable<PackageManager> {
    */
   @JsonGetter("packageManagers")
   private Set<PackageManager> packageManagers() {
-    return packageManagers;
+    return new TreeSet<>(packageManagers);
   }
 
   /**
