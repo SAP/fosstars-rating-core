@@ -44,6 +44,8 @@ public class ScansForVulnerableDependencies extends CachedSingleFeatureGitHubDat
 
   @Override
   protected Value fetchValueFor(GitHubProject project) throws IOException {
+    logger.info("Figuring out if the project scans its dependencies for vulnerabilities ...");
+
     for (CachedSingleFeatureGitHubDataProvider provider : providers) {
       Value<Boolean> value = provider.fetchValueFor(project);
       if (value.orElse(FALSE)) {

@@ -41,7 +41,7 @@ public class UsesNoHttpTool extends CachedSingleFeatureGitHubDataProvider {
 
   @Override
   protected Value fetchValueFor(GitHubProject project) throws IOException {
-    logger.info("Figuring out if the project uses NoHTTP ...");
+    logger.info("Figuring out if the project uses nohttp ...");
 
     GHRepository repository = fetcher.repositoryFor(project);
     return USES_NOHTTP.value(checkMaven(repository) || checkGradle(repository));
