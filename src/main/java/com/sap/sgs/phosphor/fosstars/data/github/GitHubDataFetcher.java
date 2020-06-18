@@ -99,11 +99,6 @@ public class GitHubDataFetcher {
   private final GitHubDataCache<GHRepository> repositoryCache = new GitHubDataCache<>();
 
   /**
-   * A limited capacity cache to store all the commits of a {@link GitHubProject}.
-   */
-  private final GitHubDataCache<List<GHCommit>> githubCommitsCache = new GitHubDataCache<>();
-
-  /**
    * A cache of local repositories.
    */
   final LRUMap<GitHubProject, LocalRepository> localRepositories
@@ -175,34 +170,29 @@ public class GitHubDataFetcher {
   }
 
   /**
-   * Returns the cache with GitHub commits.
-   */
-  public GitHubDataCache<List<GHCommit>> githubCommitsCache() {
-    return githubCommitsCache;
-  }
-
-  /**
-   * Returns a list of commits for a GitHub project using GitHub API.
+   * Returns a number of latest commits.
    *
    * @param project The project.
-   * @param duration A time frame.
-   * @return The list of commits
+   * @param n The number of commits.
+   * @return The list of commits.
    * @throws IOException If something went wrong.
    */
-  public List<GHCommit> githubCommitsFor(GitHubProject project, Duration duration)
-      throws IOException {
-
-    Optional<List<GHCommit>> cachedCommits = githubCommitsCache.get(project);
-    if (cachedCommits.isPresent()) {
-      return cachedCommits.get();
+  public List<GHCommit> githubCommitsFor(GitHubProject project, int n) throws IOException {
+    Objects.requireNonNull(project, "Oh no! The project is null!");
+    if (n <= 0) {
+      throw new IllegalArgumentException("Oh no! The number of commit is not positive!");
     }
 
     try {
-      Date date = Date.from(Instant.now().minus(duration));
       List<GHCommit> commits = new ArrayList<>();
-      for (GHCommit commit : repositoryFor(project).queryCommits().since(date).list()) {
+      for (GHCommit commit : repositoryFor(project).listCommits()) {
         commits.add(commit);
+        n--;
+        if (n == 0) {
+          break;
+        }
       }
+
       return commits;
     } catch (HttpException e) {
       LOGGER.error(String.format("Could not fetch commits from %s", project.url()), e);
@@ -224,7 +214,7 @@ public class GitHubDataFetcher {
       return cachedRepository.get();
     }
 
-    GHRepository repository = github.getRepository(project.path());
+    GHRepository repository = github().getRepository(project.path());
     if (repository == null) {
       throw new IOException(String.format("Could not fetch repository %s (null)", project.url()));
     }
