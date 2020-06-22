@@ -28,7 +28,8 @@ public class HasSecurityPolicy extends CachedSingleFeatureGitHubDataProvider {
   private static final String[] POLICY_LOCATIONS = {
       "SECURITY.md",
       "docs/SECURITY.md",
-      ".github/SECURITY.md"
+      ".github/SECURITY.md",
+      ".github/SECURITY.rst"
   };
 
   /**
