@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 import org.apache.commons.lang3.StringUtils;
+import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GHRepository;
 
 /**
@@ -73,7 +74,7 @@ public class UsesGithubForDevelopment extends CachedSingleFeatureGitHubDataProvi
   }
 
   /**
-   * Checks if a project uses GitHub as a main development platform.
+   * Checks if a project uses GitHub for development.
    *
    * @param project The project to be checked.
    * @return A value of {@link OssFeatures#USES_GITHUB_FOR_DEVELOPMENT}.
@@ -91,21 +92,30 @@ public class UsesGithubForDevelopment extends CachedSingleFeatureGitHubDataProvi
   }
 
   /**
-   * The method checks if it looks like that a project uses GitHub as a main development platform.
+   * The method checks if it looks like that a project uses GitHub for development.
    * The method runs a number of checks for the project. If most of the checks pass,
    * then the method concludes that the projects uses GitHub for development.
    * 
    * @param repository The project's repository.
    * @param threshold value to be checked against.
    * @return True if it looks like that the project uses GitHub, false otherwise.
-   * @throws IOException if something goes wrong.
+   * @throws IOException If something goes wrong.
    */
   static boolean usesGitHubForDevelopment(GHRepository repository, double threshold) 
       throws IOException {
+
     // check if the repository doesn't have an explicit link to the original repository
     // or an explicit link to an SVN repository and the link does not contain github.com
     if (notGitHubUrl(repository.getMirrorUrl()) || notGitHubUrl(repository.getSvnUrl())) {
       return false;
+    }
+
+    // The .github directory contains various settings for the features provider by GitHub
+    // if a project's repository has this directory, that means that the project takes advantage
+    // of some GitHub features
+    // therefore, it's likely that the project uses GitHub for development
+    if (hasGitHubDirectory(repository)) {
+      return true;
     }
 
     int points = CHECKS.stream()
@@ -116,11 +126,11 @@ public class UsesGithubForDevelopment extends CachedSingleFeatureGitHubDataProvi
   }
 
   /**
-   * Check if the URL is not a GitHub URL.
+   * Check if a string is not a URL to GitHub.
    * 
-   * @param url Input string.
-   * @return true if the URL is not GitHub URL. Otherwise false.
-   * @throws IOException if something goes wrong.
+   * @param input The string to be checked.
+   * @return True if the string is not a URL to GitHub, false otherwise.
+   * @throws IOException If something goes wrong.
    */
   private static boolean notGitHubUrl(String input) throws IOException {
     try {
@@ -128,6 +138,21 @@ public class UsesGithubForDevelopment extends CachedSingleFeatureGitHubDataProvi
           && !new URI(input).getHost().equalsIgnoreCase("github.com");
     } catch (URISyntaxException e) {
       throw new IOException(String.format("Error while parsing url %s", input), e);
+    }
+  }
+
+  /**
+   * Check if a repository has a not-empty .github directory.
+   *
+   * @param repository The repository to be checked.
+   * @return True if the repository has the directory, false otherwise.
+   */
+  private static boolean hasGitHubDirectory(GHRepository repository) {
+    try {
+      List<GHContent> contents = repository.getDirectoryContent(".github");
+      return contents != null && !contents.isEmpty();
+    } catch (IOException e) {
+      return false;
     }
   }
 }
