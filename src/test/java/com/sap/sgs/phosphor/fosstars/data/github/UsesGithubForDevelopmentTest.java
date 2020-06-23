@@ -14,12 +14,14 @@ import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectValueCache;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.function.Consumer;
 import org.junit.Test;
+import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GHRepository;
 
 public class UsesGithubForDevelopmentTest extends TestGitHubDataFetcherHolder {
@@ -129,5 +131,53 @@ public class UsesGithubForDevelopmentTest extends TestGitHubDataFetcherHolder {
     assertTrue(values.has(USES_GITHUB_FOR_DEVELOPMENT));
     assertTrue(values.of(USES_GITHUB_FOR_DEVELOPMENT).isPresent());
     assertTrue(values.of(USES_GITHUB_FOR_DEVELOPMENT).get().isUnknown());
+  }
+
+  @Test
+  public void testWithGithubDirectory() throws IOException {
+    UsesGithubForDevelopment provider = new UsesGithubForDevelopment(fetcher);
+    provider = spy(provider);
+    when(provider.cache()).thenReturn(new GitHubProjectValueCache());
+
+    GHRepository repository = mock(GHRepository.class);
+    when(repository.getDirectoryContent(".github"))
+        .thenReturn(Collections.singletonList(mock(GHContent.class)));
+
+    GitHubProject project = new GitHubProject("org", "test");
+    when(fetcher.github().getRepository(any())).thenReturn(repository);
+
+    ValueHashSet values = new ValueHashSet();
+    assertEquals(0, values.size());
+
+    provider.update(project, values);
+
+    assertEquals(1, values.size());
+    assertTrue(values.has(USES_GITHUB_FOR_DEVELOPMENT));
+    assertTrue(values.of(USES_GITHUB_FOR_DEVELOPMENT).isPresent());
+    assertEquals(Boolean.TRUE, values.of(USES_GITHUB_FOR_DEVELOPMENT).get().get());
+  }
+
+  @Test
+  public void testWithoutGithubDirectory() throws IOException {
+    UsesGithubForDevelopment provider = new UsesGithubForDevelopment(fetcher);
+    provider = spy(provider);
+    when(provider.cache()).thenReturn(new GitHubProjectValueCache());
+
+    GHRepository repository = mock(GHRepository.class);
+    when(repository.getDirectoryContent(".github"))
+        .thenThrow(new IOException("no directory found"));
+
+    GitHubProject project = new GitHubProject("org", "test");
+    when(fetcher.github().getRepository(any())).thenReturn(repository);
+
+    ValueHashSet values = new ValueHashSet();
+    assertEquals(0, values.size());
+
+    provider.update(project, values);
+
+    assertEquals(1, values.size());
+    assertTrue(values.has(USES_GITHUB_FOR_DEVELOPMENT));
+    assertTrue(values.of(USES_GITHUB_FOR_DEVELOPMENT).isPresent());
+    assertEquals(Boolean.FALSE, values.of(USES_GITHUB_FOR_DEVELOPMENT).get().get());
   }
 }
