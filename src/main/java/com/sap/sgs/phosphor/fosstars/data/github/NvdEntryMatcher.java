@@ -16,7 +16,7 @@ import com.sap.sgs.phosphor.fosstars.nvd.data.Vendor;
 import com.sap.sgs.phosphor.fosstars.nvd.data.VendorData;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.net.URI;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -64,7 +64,7 @@ public class NvdEntryMatcher implements Matcher {
   /**
    * A black list of words, which should not be present when checking reference URLs.
    */
-  private static final List<String> STOP_WORDS = Arrays.asList("wiki");
+  private static final List<String> STOP_WORDS = Collections.singletonList("wiki");
 
   /**
    * Creates a new matcher for a project.
@@ -117,30 +117,30 @@ public class NvdEntryMatcher implements Matcher {
   }
 
   /**
-   * Checks if one of the {@link Configurations} matches the project. Also checks if any
+   * Checks if {@link Configurations} matche the project. Also checks if any
    * {@link ReferenceLink} from {@link CVE} refers to the project.
    * 
-   * @param configurations of type {@link Configurations}.
-   * @param cve of type {@link CVE}.
-   * @param project of type {@link GitHubProject}.
-   * @return True if one of the configurations or the references matches the project details, false
-   *         otherwise.
+   * @param configurations The configuration to be checked.
+   * @param cve The CVE to be checked.
+   * @param project The project to be checked.
+   * @return True if the configurations or the references match the project, false otherwise.
    */
   private static boolean match(Configurations configurations, CVE cve, GitHubProject project) {
     if (configurations == null || configurations.getNodes() == null) {
       return false;
     }
 
-    boolean referenceMatch = match(cve, project); 
+    boolean referenceMatch = matchReferences(cve, project);
     return parseNodes(configurations.getNodes(), referenceMatch, project);
   }
 
   /**
-   * Returns true if one of the entries in an Affects element match the project, false otherwise.
+   * Checks if one of the entries in an {@link Affects} element matches a project.
    * 
-   * @param affects of type {@link Affects}.
-   * @param project of type {@link GitHubProject}.
-   * @return True if one of the affects matches the project details, false otherwise.
+   * @param affects The {@link Affects} element to be checked.
+   * @param project The project.
+   * @return Returns true if one of the entries in the {@link Affects} element matches the project,
+   *         false otherwise.
    */
   private static boolean match(Affects affects, GitHubProject project) {
     if (affects == null) {
@@ -162,10 +162,10 @@ public class NvdEntryMatcher implements Matcher {
   }
 
   /**
-   * Checks if vendor data from an NVD entry matches to the project's owner and name.
+   * Checks if vendor data from an NVD entry matches a project.
    *
    * @param vendorData The vendor data.
-   * @param project of type {@link GitHubProject}.
+   * @param project The project to be checked.
    * @return True if the vendor data matches the project, false otherwise.
    */
   private static boolean match(VendorData vendorData, GitHubProject project) {
@@ -183,23 +183,22 @@ public class NvdEntryMatcher implements Matcher {
   }
 
   /**
-   * Checks if product data from an NVD entry matches to the project's name.
+   * Checks if product data from an NVD entry matches to a project.
    *
    * @param productData The product data.
-   * @param project of type {@link GitHubProject}.
-   * @return True if the product data matches to the project's name, false otherwise.
+   * @param project The project.
+   * @return True if the product data matches the project, false otherwise.
    */
   private static boolean match(ProductData productData, GitHubProject project) {
     return match(project.name(), productData.getProductName());
   }
 
   /**
-   * Checks if a string is similar to another. It goes through a series of controlled validations to
-   * confirm this.
-   * 
-   * @param String one.
-   * @param String two.
-   * @return True if the validations part of this method is satisfied. Otherwise False.
+   * Checks if a string is similar to another one.
+   *
+   * @param one First string.
+   * @param two Second string.
+   * @return True if the strings are similar, false otherwise.
    */
   private static boolean match(String one, String two) {
     if (one.equalsIgnoreCase(two)) {
@@ -208,18 +207,27 @@ public class NvdEntryMatcher implements Matcher {
 
     return jaroWinklerSimilarityCheck(one, two) && longestCommonSubsequenceCheck(one, two);
   }
+
+  /**
+   * Checks if a {@link URI} matches a project.
+   *
+   * @param referenceUrl The {@link URI}.
+   * @param project The project.
+   * @return True if the input URL matches the project's URL, false otherwise.
+   */
+  static boolean match(URI referenceUrl, GitHubProject project) {
+    return checkUrlHost(referenceUrl.getHost(), project)
+        && checkUrlPath(referenceUrl.getPath(), project);
+  }
   
   /**
-   * Checks if one of the references contain the project's URL.
+   * Checks if one of the references in a {@link CVE} contains refers to a project.
    * 
-   * @param cve The list of type {@link CVE}.
-   * @param project of type {@link GitHubProject}.
-   * @return True if the project's URL is found, false otherwise.
-   * @see The method needs to be enhanced in
-   *      <a href="https://github.com/SAP/fosstars-rating-core/issues/243">Improve Reference
-   *      check</a>
+   * @param cve The {@link CVE} to be checked.
+   * @param project The project.
+   * @return True if a reference to the project is found, false otherwise.
    */
-  private static boolean match(CVE cve, GitHubProject project) {
+  private static boolean matchReferences(CVE cve, GitHubProject project) {
     if (cve == null) {
       return false;
     }
@@ -240,24 +248,11 @@ public class NvdEntryMatcher implements Matcher {
   }
 
   /**
-   * Checks if the referenceUrl of type {@link URI} matches with the project's URL.
+   * Checks if two strings are similar by looking for the longest common sub-sequence.
    * 
-   * @param referenceUrl of type {@link URI}.
-   * @param project of type {@link GitHubProject}.
-   * @return True if the input URL matches the project's URL. Otherwise false.
-   */
-  static boolean match(URI referenceUrl, GitHubProject project) {
-    return checkUrlHost(referenceUrl.getHost(), project)
-        && checkUrlPath(referenceUrl.getPath(), project);
-  }
-
-  /**
-   * Find the Longest Common Subsequence found between two strings. Then, check if the subsequence
-   * score is greater than a certain threshold of the first string.
-   * 
-   * @param String one.
-   * @param String two.
-   * @return True if the subsequence score is greater than the threshold, Otherwise False.
+   * @param one First string.
+   * @param two Second string.
+   * @return True if the strings are similar, false otherwise.
    * @see <a href="https://www.geeksforgeeks.org/longest-common-subsequence-dp-4/">Longest Common
    *      Subsequence Problem</a>
    */
@@ -266,12 +261,11 @@ public class NvdEntryMatcher implements Matcher {
   }
 
   /**
-   * Find the Jaro Winkler Similarity score between two strings. The, check if the score is greater
-   * than a certain threshold.
+   * Checks if two strings are similar by calculating Jaro Winkler Similarity score.
    * 
-   * @param String one.
-   * @param String two.
-   * @return True if the score is greater than the threshold, Otherwise False.
+   * @param one First string.
+   * @param two Second string.
+   * @return True if the strings are similar, false otherwise.
    * @see <a href="https://www.geeksforgeeks.org/jaro-and-jaro-winkler-similarity/">Jaro Winkler
    *      Similarity</a>
    */
@@ -280,38 +274,38 @@ public class NvdEntryMatcher implements Matcher {
   }
 
   /**
-   * Checks if one of the cpeXXUri contains the project's and organization's names. If the check is
-   * a success, it returns true immediately. If it could not match then check if the list of
-   * references contains any information.
+   * Checks if a {@link CpeMatch} matches a project.
    * 
-   * @param cpeMatch of type {@link CpeMatch}.
+   * @param cpeMatch The {@link CpeMatch} to be checked.
    * @param referenceMatch Indicates if there is a reference URL similar to project URL.
-   * @param project of type {@link GitHubProject}.
-   * @return True if one of the cpeXXUri contains the project's name. Otherwise False.
+   * @param project The project.
+   * @return True if the {@link CpeMatch} matches the project, false otherwise.
    */
   private static boolean projectCheck(CpeMatch cpeMatch, boolean referenceMatch,
       GitHubProject project) {
+
     CpeUri cpeUri = cpeMatch.getCpeUri();
 
     boolean productMatch = match(cpeUri.getProduct(), project.name());
     boolean vendorMatch = match(cpeUri.getVendor(), project.organization().name());
 
-    // Check if product's name matches the project's name. Otherwise at least one reference URL
-    // matches with the project's URL only if there is a vendor match.
+    // check if product's name matches the project's name,
+    // or at least one reference URL matches with the project's URL
+    // and vendor matches with the organization as well
     return productMatch || (referenceMatch && vendorMatch);
   }
 
   /**
-   * This is a recursive method to parse through the list of nodes to find a match to the project's
-   * and organization's names.
+   * Checks if one of the nodes matches with a project.
    * 
-   * @param nodes List of type {@link Node}.
+   * @param nodes The nodes to be checked.
    * @param referenceMatch Indicates if there is a reference URL similar to project URL.
-   * @param project of type {@link GitHubProject}.
-   * @return True if there was a match. Otherwise False.
+   * @param project The project.
+   * @return True a matching node is found, false otherwise.
    */
   private static boolean parseNodes(List<Node> nodes, boolean referenceMatch,
       GitHubProject project) {
+
     if (nodes == null) {
       return false;
     }
@@ -335,27 +329,27 @@ public class NvdEntryMatcher implements Matcher {
         return true;
       }
     }
+
     return false;
   }
 
   /**
-   * Checks if the input host matches with project's URL host.
+   * Checks if a host name matches with project's URL host.
    * 
-   * @param host The host of the URL.
-   * @param project of type {@link GitHubProject}.
-   * @return True if the input host matches the project's URL host. Otherwise false.
+   * @param host The host name.
+   * @param project The project.
+   * @return True if the host name matches with the project, false otherwise.
    */
   private static boolean checkUrlHost(String host, GitHubProject project) {
     return host.equals(project.url().getHost());
   }
 
   /**
-   * Matches the reference URL with the project's URL. The URL must not contain the pre-defined stop
-   * words.
-   * 
-   * @param path The path of the URL.
-   * @param project of type {@link GitHubProject}.
-   * @return True if the project URL matches with the reference URL. Otherwise False.
+   * Checks if a path matches with project's URL path.
+   *
+   * @param path The path to be checked.
+   * @param project The project.
+   * @return True if the path matches with the project, false otherwise.
    */
   private static boolean checkUrlPath(String path, GitHubProject project) {
     String delimiter = "/";
@@ -364,27 +358,26 @@ public class NvdEntryMatcher implements Matcher {
   }
 
   /**
-   * Matches the split contents of the URL path. Each predefined position of the split path must
-   * match with its respective counterpart. The path must not contain the pre-defined stop words.
-   * 
-   * @param path The split path of the URL.
-   * @param project of type {@link GitHubProject}.
-   * @return True if the reference path matches with the project path. Otherwise False.
+   * Checks if a path matches with project's URL path.
+   *
+   * @param path The path to be checked.
+   * @param project The project.
+   * @return True if the path matches with the project, false otherwise.
    */
   private static boolean checkSplitPath(String[] path, GitHubProject project) {
     return path.length > 2 
         && path[0].equals(project.organization().name())
         && path[1].equals(project.name()) 
-        && checkStopWords(path[2]);
+        && notStopWord(path[2]);
   }
 
   /**
-   * Check if the input word is a stop word.
+   * Check if a string is not a stop word.
    * 
-   * @param word The input string.
-   * @return True if the input string is not a stop word. Otherwise false.
+   * @param word The string.
+   * @return True if the string is not a stop word, false otherwise.
    */
-  private static boolean checkStopWords(String word) {
+  private static boolean notStopWord(String word) {
     return word != null && !STOP_WORDS.contains(word); 
   }
 }
