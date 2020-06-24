@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * CPE match string or range.
@@ -69,5 +70,15 @@ public class CpeMatch {
   @JsonProperty("cpe23Uri")
   public String getCpe23Uri() {
     return cpe23Uri;
+  }
+
+  /**
+   * Get the {@link CpeUri} instance. It will check which CPE URI format is applicable and returns
+   * the appropriate instance.
+   * 
+   * @return instance of a type {@link CpeUri}.
+   */
+  public CpeUri getCpeUri() {
+    return !StringUtils.isEmpty(cpe23Uri) ? new Cpe23Uri(cpe23Uri) : new Cpe22Uri(cpe22Uri);
   }
 }
