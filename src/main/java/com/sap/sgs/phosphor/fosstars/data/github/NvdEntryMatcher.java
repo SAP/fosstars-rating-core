@@ -117,7 +117,7 @@ public class NvdEntryMatcher implements Matcher {
   }
 
   /**
-   * Checks if {@link Configurations} matche the project. Also checks if any
+   * Checks if {@link Configurations} match the project. Also checks if any
    * {@link ReferenceLink} from {@link CVE} refers to the project.
    * 
    * @param configurations The configuration to be checked.
