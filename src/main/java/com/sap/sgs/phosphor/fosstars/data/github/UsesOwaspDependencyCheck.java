@@ -10,10 +10,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Optional;
+import org.apache.maven.model.BuildBase;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Plugin;
+import org.apache.maven.model.PluginManagement;
+import org.apache.maven.model.Profile;
 import org.apache.maven.model.ReportPlugin;
+import org.apache.maven.model.Reporting;
 
 /**
  * This data provider checks if an open-source project uses OWASP Dependency Check Maven plugin to
@@ -67,19 +72,95 @@ public class UsesOwaspDependencyCheck extends CachedSingleFeatureGitHubDataProvi
       model = readModel(is);
     }
 
-    if (model.getBuild() != null) {
-      for (Plugin plugin : model.getBuild().getPlugins()) {
-        if (isDependencyCheck(plugin)) {
+    // first, check if the plugin is used in the build section
+    BuildBase build = model.getBuild();
+    if (hasDependencyCheckIn(build)) {
+      return true;
+    }
+
+    // next, check if the plugin is used in the reporting section
+    Reporting reporting = model.getReporting();
+    if (hasDependencyCheckIn(reporting)) {
+      return true;
+    }
+
+    // finally, check if the plugin is used in one of the profiles
+    if (model.getProfiles() != null) {
+      for (Profile profile : model.getProfiles()) {
+        build = profile.getBuild();
+        if (hasDependencyCheckIn(build)) {
+          return true;
+        }
+
+        reporting = profile.getReporting();
+        if (hasDependencyCheckIn(reporting)) {
           return true;
         }
       }
     }
 
-    if (model.getReporting() != null) {
-      for (ReportPlugin plugin : model.getReporting().getPlugins()) {
-        if (isDependencyCheck(plugin)) {
-          return true;
-        }
+    return false;
+  }
+
+  /**
+   * Checks if OWASP Dependency Check plugin is used in the build section of POM file.
+   *
+   * @param build The build section of POM file.
+   * @return True if the plugin was found, false otherwise.
+   */
+  private static boolean hasDependencyCheckIn(BuildBase build) {
+    if (build == null) {
+      return false;
+    }
+
+    List<Plugin> plugins = build.getPlugins();
+    if (hasDependencyCheckIn(plugins)) {
+      return true;
+    }
+
+    PluginManagement pluginManagement = build.getPluginManagement();
+    if (pluginManagement == null) {
+      return false;
+    }
+
+    plugins = pluginManagement.getPlugins();
+    return hasDependencyCheckIn(plugins);
+  }
+
+  /**
+   * Check if one of the provider plugins is OWASP Dependency Check plugin.
+   *
+   * @param plugins The plugins to be checked.
+   * @return True is OWASP Dependency Check plugin was found, false otherwise.
+   */
+  private static boolean hasDependencyCheckIn(List<Plugin> plugins) {
+    if (plugins == null) {
+      return false;
+    }
+
+    for (Plugin plugin : plugins) {
+      if (isDependencyCheck(plugin)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Checks if the reporting section of POM file includes OWASP Dependency Check plugin.
+   *
+   * @param reporting The reporting section to be checked.
+   * @return True if the plugin was found, false otherwise.
+   */
+  private static boolean hasDependencyCheckIn(Reporting reporting) {
+    if (reporting == null) {
+      return false;
+    }
+
+    for (ReportPlugin plugin : reporting.getPlugins()) {
+      if (isDependencyCheck(plugin)) {
+        return true;
       }
     }
 

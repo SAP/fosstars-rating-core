@@ -1,0 +1,20 @@
+<project>
+  <build>
+    <plugins></plugins>
+
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.owasp</groupId>
+          <artifactId>dependency-check-maven</artifactId>
+          <version>5.0.0-M2</version>
+          <configuration>
+            <format>ALL</format>
+            <skipSystemScope>true</skipSystemScope>
+            <skipProvidedScope>true</skipProvidedScope>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+</project>
