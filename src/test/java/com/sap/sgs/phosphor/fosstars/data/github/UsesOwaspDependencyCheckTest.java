@@ -28,9 +28,36 @@ public class UsesOwaspDependencyCheckTest extends TestGitHubDataFetcherHolder {
   }
 
   @Test
+  public void testMavenWithOwaspDependencyCheckInBuildPluginManagement() throws IOException {
+    try (InputStream is = getClass()
+        .getResourceAsStream("MavenWithOwaspDependencyCheckInBuildPluginManagement.xml")) {
+
+      checkValue(createProvider(is, "pom.xml"), true);
+    }
+  }
+
+  @Test
+  public void testMavenWithOwaspDependencyCheckInProfilesBuild() throws IOException {
+    try (InputStream is = getClass()
+        .getResourceAsStream("MavenWithOwaspDependencyCheckInProfilesBuild.xml")) {
+
+      checkValue(createProvider(is, "pom.xml"), true);
+    }
+  }
+
+  @Test
+  public void testMavenWithOwaspDependencyCheckInProfilesReporting() throws IOException {
+    try (InputStream is = getClass()
+        .getResourceAsStream("MavenWithOwaspDependencyCheckInProfilesReporting.xml")) {
+
+      checkValue(createProvider(is, "pom.xml"), true);
+    }
+  }
+
+  @Test
   public void testMavenWithOwaspDependencyCheckInReporting() throws IOException {
     try (InputStream is = getClass()
-        .getResourceAsStream("MavenWithOwaspDependencyCheckInReporting.xml")) {
+        .getResourceAsStream("MavenWithOwaspDependencyCheckInProfilesReporting.xml")) {
 
       checkValue(createProvider(is, "pom.xml"), true);
     }
