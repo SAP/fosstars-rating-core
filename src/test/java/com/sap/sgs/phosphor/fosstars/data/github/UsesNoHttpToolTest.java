@@ -21,29 +21,38 @@ import org.kohsuke.github.GHRepository;
 public class UsesNoHttpToolTest extends TestGitHubDataFetcherHolder {
 
   @Test
-  public void testMavenWithNoHTTP() throws IOException {
-    try (InputStream is = getClass().getResourceAsStream("MavenCheckStyleWithNoHTTP.xml")) {
+  public void testMavenWithNoHttp() throws IOException {
+    try (InputStream is = getClass().getResourceAsStream("MavenCheckStyleWithNoHttp.xml")) {
+      checkValue(createProvider(is, "pom.xml"), true);
+    }
+  }
+
+  @Test
+  public void testMavenWithNoHttpInProfilesBuild() throws IOException {
+    try (InputStream is = getClass()
+        .getResourceAsStream("MavenCheckStyleWithNoHttpInProfilesBuild.xml")) {
+
       checkValue(createProvider(is, "pom.xml"), true);
     }
   }
 
   @Test
   public void testMavenWithoutNoHTTP() throws IOException {
-    try (InputStream is = getClass().getResourceAsStream("MavenCheckStyleWithoutNoHTTP.xml")) {
+    try (InputStream is = getClass().getResourceAsStream("MavenCheckStyleWithoutNoHttp.xml")) {
       checkValue(createProvider(is, "pom.xml"), false);
     }
   }
 
   @Test
   public void testGradleWithNoHTTP() throws IOException {
-    try (InputStream is = getClass().getResourceAsStream("GradleCheckStyleWithNoHTTP.gradle")) {
+    try (InputStream is = getClass().getResourceAsStream("GradleCheckStyleWithNoHttp.gradle")) {
       checkValue(createProvider(is, "build.gradle"), true);
     }
   }
 
   @Test
   public void testGradleWithoutNoHTTP() throws IOException {
-    try (InputStream is = getClass().getResourceAsStream("GradleCheckStyleWithoutNoHTTP.gradle")) {
+    try (InputStream is = getClass().getResourceAsStream("GradleCheckStyleWithoutNoHttp.gradle")) {
       checkValue(createProvider(is, "build.gradle"), false);
     }
   }

@@ -9,9 +9,12 @@ import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
+import org.apache.maven.model.BuildBase;
 import org.apache.maven.model.Dependency;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Plugin;
+import org.apache.maven.model.Profile;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GHFileNotFoundException;
 import org.kohsuke.github.GHRepository;
@@ -67,15 +70,45 @@ public class UsesNoHttpTool extends CachedSingleFeatureGitHubDataProvider {
 
     Model model = readModel(content.read());
 
-    if (model.getBuild() != null) {
-      for (Plugin plugin : model.getBuild().getPlugins()) {
-        if (isNoHttp(plugin)) {
-          return true;
-        }
-      }
+    BuildBase build = model.getBuild();
+    List<Profile> profiles = model.getProfiles();
+
+    return hasNoHttpIn(build) || hasNoHttpIn(profiles);
+  }
+
+  /**
+   * Checks if a build section in POM file runs the nohttp tool.
+   *
+   * @param build The build section to be checked.
+   * @return True if the build section runs the tool, false otherwise.
+   */
+  private static boolean hasNoHttpIn(BuildBase build) {
+    return build != null && build.getPlugins().stream().anyMatch(UsesNoHttpTool::isNoHttp);
+  }
+
+  /**
+   * Checks if one of the profiles in POM file runs the nohttp tool.
+   *
+   * @param profiles The profiles to be checked.
+   * @return True if at least one of the profiles runs the tool, false otherwise.
+   */
+  private static boolean hasNoHttpIn(List<Profile> profiles) {
+    return profiles != null && profiles.stream().anyMatch(UsesNoHttpTool::hasNoHttpIn);
+  }
+
+  /**
+   * Checks if a profile in POM file runs the nohttp tool.
+   *
+   * @param profile The profile to be checked.
+   * @return True if the profile runs the tool, false otherwise.
+   */
+  private static boolean hasNoHttpIn(Profile profile) {
+    if (profile == null) {
+      return false;
     }
 
-    return false;
+    BuildBase build = profile.getBuild();
+    return hasNoHttpIn(build);
   }
 
   /**
