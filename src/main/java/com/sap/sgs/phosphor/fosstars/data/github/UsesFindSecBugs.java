@@ -10,8 +10,10 @@ import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Optional;
+import org.apache.maven.model.BuildBase;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Plugin;
+import org.apache.maven.model.Profile;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
 
 /**
@@ -46,6 +48,7 @@ public class UsesFindSecBugs extends CachedSingleFeatureGitHubDataProvider {
 
   /**
    * Checks if a repository uses FindSecBugs with Maven.
+   *
    * @param repository The repository.
    * @return True if the project uses FindSecBugs, false otherwise.
    * @throws IOException If something went wrong
@@ -60,9 +63,15 @@ public class UsesFindSecBugs extends CachedSingleFeatureGitHubDataProvider {
 
     Model model = readModel(content.get());
 
-    if (model.getBuild() != null) {
-      for (Plugin plugin : model.getBuild().getPlugins()) {
-        if (isFindSecBugs(plugin)) {
+    BuildBase build = model.getBuild();
+    if (hasFindSecBugsIn(build)) {
+      return true;
+    }
+
+    if (model.getProfiles() != null) {
+      for (Profile profile : model.getProfiles()) {
+        build = profile.getBuild();
+        if (hasFindSecBugsIn(build)) {
           return true;
         }
       }
@@ -71,6 +80,22 @@ public class UsesFindSecBugs extends CachedSingleFeatureGitHubDataProvider {
     return false;
   }
 
+  /**
+   * Check if a build section of POM file runs FindSecbugs.
+   *
+   * @param build The build section to be checked.
+   * @return True if the build section runs FindSecBugs, false otherwise.
+   */
+  private static boolean hasFindSecBugsIn(BuildBase build) {
+    return build != null && build.getPlugins().stream().anyMatch(UsesFindSecBugs::isFindSecBugs);
+  }
+
+  /**
+   * Check if a plugin runs FindSecBugs.
+   *
+   * @param plugin The plugin to be checked.
+   * @return True if the plugin runs FindSecBugs, false otherwise.
+   */
   private static boolean isFindSecBugs(Plugin plugin) {
 
     // first, check if the plugin is com.github.spotbugs:spotbugs-maven-plugin
@@ -80,6 +105,7 @@ public class UsesFindSecBugs extends CachedSingleFeatureGitHubDataProvider {
       return false;
     }
 
+    // then, check if the plugin contains a configuration that uses FindSedBugs
     if (plugin.getConfiguration() == null) {
       return false;
     }
