@@ -1,0 +1,11 @@
+<project>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>something-else</artifactId>
+        <version>1.6</version>
+      </plugin>
+    </plugins>
+  </build>
+</project>

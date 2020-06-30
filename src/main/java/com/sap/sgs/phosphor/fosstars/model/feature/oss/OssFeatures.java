@@ -210,4 +210,10 @@ public class OssFeatures {
    */
   public static final Feature<Boolean> HAS_BUG_BOUNTY_PROGRAM
       = new BooleanFeature("If a project has a bug bounty program");
+
+  /**
+   * Shows if an open-source project signs its artifacts (for example, jar files).
+   */
+  public static final Feature<Boolean> SIGNS_ARTIFACTS
+      = new BooleanFeature("If a project signs artifacts");
 }
