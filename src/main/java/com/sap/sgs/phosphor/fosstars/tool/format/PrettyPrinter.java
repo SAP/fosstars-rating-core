@@ -86,6 +86,7 @@ public class PrettyPrinter implements Formatter {
     FEATURE_TO_NAME.put(OssFeatures.USES_DEPENDABOT, "Does it use Dependabot?");
     FEATURE_TO_NAME.put(OssFeatures.USES_LGTM_CHECKS, "Does it use LGTM?");
     FEATURE_TO_NAME.put(OssFeatures.HAS_BUG_BOUNTY_PROGRAM, "Does it have a bug bounty program?");
+    FEATURE_TO_NAME.put(OssFeatures.SIGNS_ARTIFACTS, "Does it sign artifacts?");
   }
 
   @Override

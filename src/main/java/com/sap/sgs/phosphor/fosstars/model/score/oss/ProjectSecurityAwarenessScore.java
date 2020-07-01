@@ -3,6 +3,7 @@ package com.sap.sgs.phosphor.fosstars.model.score.oss;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_BUG_BOUNTY_PROGRAM;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_TEAM;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SIGNS_ARTIFACTS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SIGNED_COMMITS;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.findValue;
 
@@ -42,6 +43,11 @@ public class ProjectSecurityAwarenessScore extends FeatureBasedScore {
   private static final double SIGNED_COMMITS_POINTS = 2.0;
 
   /**
+   * A number of points which are added to a score value if a project signs its artifacts.
+   */
+  private static final double SIGNED_ARTIFICTS_POINTS = 2.0;
+
+  /**
    * A number of points which are added to a score value if a project has a bug bounty program.
    */
   private static final double BUG_BOUNTY_PROGRAM_POINTS = 4.0;
@@ -50,20 +56,22 @@ public class ProjectSecurityAwarenessScore extends FeatureBasedScore {
    * A description of the score.
    */
   private static final String DESCRIPTION = String.format(
-      "The score checks if a project has a security policy and a security team.\n"
+      "The score shows how a project is aware of security.\n"
           + "If the project has a security policy, then the score adds %2.2f.\n"
           + "If the project has a security team, then the score adds %2.2f.\n"
           + "If the project uses verified signed commits, then the score adds %2.2f.\n"
-          + "If the project has a bug bounty program, then the score adds %2.2f.",
+          + "If the project has a bug bounty program, then the score adds %2.2f\n"
+          + "If the project signs its artifacts, then the score adds %2.2f.",
       SECURITY_POLICY_POINTS, SECURITY_TEAM_POINTS, SIGNED_COMMITS_POINTS,
-      BUG_BOUNTY_PROGRAM_POINTS);
+      BUG_BOUNTY_PROGRAM_POINTS, SIGNED_ARTIFICTS_POINTS);
 
   /**
    * Initializes a new {@link ProjectSecurityAwarenessScore}.
    */
   ProjectSecurityAwarenessScore() {
     super("How well open-source community is aware about security", DESCRIPTION,
-        HAS_SECURITY_POLICY, HAS_SECURITY_TEAM, USES_SIGNED_COMMITS, HAS_BUG_BOUNTY_PROGRAM);
+        HAS_SECURITY_POLICY, HAS_SECURITY_TEAM, USES_SIGNED_COMMITS, HAS_BUG_BOUNTY_PROGRAM,
+        SIGNS_ARTIFACTS);
   }
 
   @Override
@@ -76,31 +84,39 @@ public class ProjectSecurityAwarenessScore extends FeatureBasedScore {
         "Hey! You have to tell me if the project uses verified signed commits!");
     Value<Boolean> hasBugBountyProgram = findValue(values, HAS_BUG_BOUNTY_PROGRAM,
         "Hey! You have to tell me if the project has a bug bounty program!");
+    Value<Boolean> signsArtifacts = findValue(values, SIGNS_ARTIFACTS,
+        "Hey! You have to tell me if the project signs its artifacts!");
 
     ScoreValue scoreValue = scoreValue(MIN,
-        securityPolicy, securityTeam, signedCommits, hasBugBountyProgram);
+        securityPolicy, securityTeam, signedCommits, hasBugBountyProgram, signsArtifacts);
 
-    securityPolicy.processIfKnown(exist -> {
-      if (exist) {
+    securityPolicy.processIfKnown(exists -> {
+      if (exists) {
         scoreValue.increase(SECURITY_POLICY_POINTS);
       }
     });
 
-    securityTeam.processIfKnown(exist -> {
-      if (exist) {
+    securityTeam.processIfKnown(exists -> {
+      if (exists) {
         scoreValue.increase(SECURITY_TEAM_POINTS);
       }
     });
 
-    signedCommits.processIfKnown(exist -> {
-      if (exist) {
+    signedCommits.processIfKnown(yes -> {
+      if (yes) {
         scoreValue.increase(SIGNED_COMMITS_POINTS);
       }
     });
 
-    hasBugBountyProgram.processIfKnown(exist -> {
-      if (exist) {
+    hasBugBountyProgram.processIfKnown(exists -> {
+      if (exists) {
         scoreValue.increase(BUG_BOUNTY_PROGRAM_POINTS);
+      }
+    });
+
+    signsArtifacts.processIfKnown(yes -> {
+      if (yes) {
+        scoreValue.increase(SIGNED_ARTIFICTS_POINTS);
       }
     });
 
