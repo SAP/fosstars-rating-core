@@ -3,7 +3,6 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_NOHTTP;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -14,9 +13,8 @@ import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectValueCache;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Optional;
 import org.junit.Test;
-import org.kohsuke.github.GHContent;
-import org.kohsuke.github.GHRepository;
 
 public class UsesNoHttpToolTest extends TestGitHubDataFetcherHolder {
 
@@ -58,14 +56,11 @@ public class UsesNoHttpToolTest extends TestGitHubDataFetcherHolder {
   }
 
   private UsesNoHttpTool createProvider(InputStream is, String filename) throws IOException {
-    GHContent content = mock(GHContent.class);
-    when(content.isFile()).thenReturn(true);
-    when(content.read()).thenReturn(is);
+    final LocalRepository repository = mock(LocalRepository.class);
+    when(repository.read(filename)).thenReturn(Optional.of(is));
 
-    GHRepository repository = mock(GHRepository.class);
-    when(repository.getFileContent(filename)).thenReturn(content);
-
-    when(fetcher.github().getRepository(any())).thenReturn(repository);
+    GitHubProject project = new GitHubProject("org", "test");
+    fetcher.addForTesting(project, repository);
 
     UsesNoHttpTool provider = new UsesNoHttpTool(fetcher);
     provider.set(new GitHubProjectValueCache());
