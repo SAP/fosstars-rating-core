@@ -14,6 +14,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.PACKAGE_MANAGERS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.PROJECT_START_DATE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SIGNS_ARTIFACTS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_ADDRESS_SANITIZER;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_DEPENDABOT;
@@ -46,6 +47,7 @@ import org.junit.Test;
 public class OssSecurityScoreTuningWithCMAESTest {
 
   private static final Vulnerabilities NO_VULNERABILITIES = new Vulnerabilities();
+
   private static final Date FIVE_YEARS_AGO
       = new Date(System.currentTimeMillis() - 5 * 365 * 24 * 60 * 60 * 1000L);
 
@@ -63,6 +65,7 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(UnknownValue.of(HAS_SECURITY_POLICY))
           .set(UnknownValue.of(HAS_SECURITY_TEAM))
           .set(UnknownValue.of(HAS_BUG_BOUNTY_PROGRAM))
+          .set(UnknownValue.of(SIGNS_ARTIFACTS))
           .set(UnknownValue.of(SCANS_FOR_VULNERABLE_DEPENDENCIES))
           .set(UnknownValue.of(VULNERABILITIES))
           .set(UnknownValue.of(PROJECT_START_DATE))
@@ -95,6 +98,7 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(HAS_SECURITY_POLICY.value(false))
           .set(HAS_SECURITY_TEAM.value(false))
           .set(HAS_BUG_BOUNTY_PROGRAM.value(false))
+          .set(SIGNS_ARTIFACTS.value(false))
           .set(SCANS_FOR_VULNERABLE_DEPENDENCIES.value(false))
           .set(VULNERABILITIES.value(NO_VULNERABILITIES))
           .set(PROJECT_START_DATE.value(FIVE_YEARS_AGO))
@@ -127,6 +131,7 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(HAS_SECURITY_POLICY.value(true))
           .set(HAS_SECURITY_TEAM.value(true))
           .set(HAS_BUG_BOUNTY_PROGRAM.value(true))
+          .set(SIGNS_ARTIFACTS.value(true))
           .set(SCANS_FOR_VULNERABLE_DEPENDENCIES.value(true))
           .set(VULNERABILITIES.value(NO_VULNERABILITIES))
           .set(PROJECT_START_DATE.value(FIVE_YEARS_AGO))

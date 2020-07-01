@@ -19,6 +19,10 @@ elements:
     feature:
       type: "BooleanFeature"
       name: "If a project has a bug bounty program"
+  - type: "UnknownValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project signs artifacts"
   expectedScore:
     type: "DoubleInterval"
     from: 0.0
@@ -50,6 +54,11 @@ elements:
     feature:
       type: "BooleanFeature"
       name: "If a project has a bug bounty program"
+    flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project signs artifacts"
     flag: false
   expectedScore:
     type: "DoubleInterval"
@@ -83,6 +92,11 @@ elements:
       type: "BooleanFeature"
       name: "If a project has a bug bounty program"
     flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project signs artifacts"
+    flag: false
   expectedScore:
     type: "DoubleInterval"
     from: 6.0
@@ -114,6 +128,11 @@ elements:
     feature:
       type: "BooleanFeature"
       name: "If a project has a bug bounty program"
+    flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project signs artifacts"
     flag: false
   expectedScore:
     type: "DoubleInterval"
@@ -147,6 +166,11 @@ elements:
       type: "BooleanFeature"
       name: "If a project has a bug bounty program"
     flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project signs artifacts"
+    flag: false
   expectedScore:
     type: "DoubleInterval"
     from: 4.0
@@ -178,6 +202,11 @@ elements:
     feature:
       type: "BooleanFeature"
       name: "If a project has a bug bounty program"
+    flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project signs artifacts"
     flag: false
   expectedScore:
     type: "DoubleInterval"
@@ -211,6 +240,11 @@ elements:
       type: "BooleanFeature"
       name: "If a project has a bug bounty program"
     flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project signs artifacts"
+    flag: false
   expectedScore:
     type: "DoubleInterval"
     from: 1.0
@@ -242,6 +276,11 @@ elements:
     feature:
       type: "BooleanFeature"
       name: "If a project has a bug bounty program"
+    flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project signs artifacts"
     flag: false
   expectedScore:
     type: "DoubleInterval"
@@ -275,6 +314,11 @@ elements:
       type: "BooleanFeature"
       name: "If a project has a bug bounty program"
     flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project signs artifacts"
+    flag: false
   expectedScore:
     type: "DoubleInterval"
     from: 7.0
@@ -307,6 +351,11 @@ elements:
         type: "BooleanFeature"
         name: "If a project has a bug bounty program"
       flag: true
+    - type: "BooleanValue"
+      feature:
+        type: "BooleanFeature"
+        name: "If a project signs artifacts"
+      flag: false
   expectedScore:
     type: "DoubleInterval"
     from: 9.0
@@ -338,6 +387,11 @@ elements:
       feature:
         type: "BooleanFeature"
         name: "If a project has a bug bounty program"
+      flag: true
+    - type: "BooleanValue"
+      feature:
+        type: "BooleanFeature"
+        name: "If a project signs artifacts"
       flag: true
   expectedScore:
     type: "DoubleInterval"
