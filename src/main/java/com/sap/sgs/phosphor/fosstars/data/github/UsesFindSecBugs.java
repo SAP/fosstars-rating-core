@@ -1,8 +1,10 @@
 package com.sap.sgs.phosphor.fosstars.data.github;
 
+import static com.sap.sgs.phosphor.fosstars.maven.MavenUtils.browse;
 import static com.sap.sgs.phosphor.fosstars.maven.MavenUtils.readModel;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_FIND_SEC_BUGS;
 
+import com.sap.sgs.phosphor.fosstars.maven.ModelVisitor;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
@@ -10,10 +12,10 @@ import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Optional;
-import org.apache.maven.model.BuildBase;
+import java.util.Set;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Plugin;
-import org.apache.maven.model.Profile;
+import org.apache.maven.model.ReportPlugin;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
 
 /**
@@ -61,33 +63,10 @@ public class UsesFindSecBugs extends CachedSingleFeatureGitHubDataProvider {
       return false;
     }
 
-    Model model = readModel(content.get());
-
-    BuildBase build = model.getBuild();
-    if (hasFindSecBugsIn(build)) {
-      return true;
+    try (InputStream is = content.get()) {
+      Model model = readModel(is);
+      return browse(model, withVisitor()).result;
     }
-
-    if (model.getProfiles() != null) {
-      for (Profile profile : model.getProfiles()) {
-        build = profile.getBuild();
-        if (hasFindSecBugsIn(build)) {
-          return true;
-        }
-      }
-    }
-
-    return false;
-  }
-
-  /**
-   * Check if a build section of POM file runs FindSecbugs.
-   *
-   * @param build The build section to be checked.
-   * @return True if the build section runs FindSecBugs, false otherwise.
-   */
-  private static boolean hasFindSecBugsIn(BuildBase build) {
-    return build != null && build.getPlugins().stream().anyMatch(UsesFindSecBugs::isFindSecBugs);
   }
 
   /**
@@ -106,14 +85,41 @@ public class UsesFindSecBugs extends CachedSingleFeatureGitHubDataProvider {
     }
 
     // then, check if the plugin contains a configuration that uses FindSedBugs
-    if (plugin.getConfiguration() == null) {
+    Object configuration = plugin.getConfiguration();
+    return isFindSecBugs(configuration);
+  }
+
+  /**
+   * Check if a report plugin runs FindSecBugs.
+   *
+   * @param plugin The plugin to be checked.
+   * @return True if the plugin runs FindSecBugs, false otherwise.
+   */
+  private static boolean isFindSecBugs(ReportPlugin plugin) {
+
+    // first, check if the plugin is com.github.spotbugs:spotbugs-maven-plugin
+    if (!"com.github.spotbugs".equals(plugin.getGroupId())
+        || !"spotbugs-maven-plugin".equals(plugin.getArtifactId())) {
+
       return false;
     }
 
-    if (plugin.getConfiguration() instanceof Xpp3Dom == false) {
+    // then, check if the plugin contains a configuration that uses FindSedBugs
+    Object configuration = plugin.getConfiguration();
+    return isFindSecBugs(configuration);
+  }
+
+  /**
+   * Checks if an object is a configuration of FindSecBugs plugin.
+   *
+   * @param object The object to be checked.
+   * @return True if the object is a configuration of FindSecBugs plugin, false otherwise.
+   */
+  private static boolean isFindSecBugs(Object object) {
+    if (object instanceof Xpp3Dom == false) {
       return false;
     }
-    Xpp3Dom configuration = (Xpp3Dom) plugin.getConfiguration();
+    Xpp3Dom configuration = (Xpp3Dom) object;
 
     return hasFindSecBugs(configuration);
   }
@@ -152,6 +158,38 @@ public class UsesFindSecBugs extends CachedSingleFeatureGitHubDataProvider {
     }
 
     return false;
+  }
+
+  /**
+   * Creates a visitor for searching FindSecBugs in a POM file.
+   */
+  private static Visitor withVisitor() {
+    return new Visitor();
+  }
+
+  /**
+   * A visitor for searching FindSecBugs in a POM file.
+   */
+  private static class Visitor implements ModelVisitor {
+
+    /**
+     * A visitor for searching OWASP Dependency Check in a POM file.
+     */
+    private boolean result = false;
+
+    @Override
+    public void accept(Plugin plugin, Set<Location> locations) {
+      if (isFindSecBugs(plugin)) {
+        result = true;
+      }
+    }
+
+    @Override
+    public void accept(ReportPlugin plugin, Set<Location> locations) {
+      if (isFindSecBugs(plugin)) {
+        result = true;
+      }
+    }
   }
 
 }
