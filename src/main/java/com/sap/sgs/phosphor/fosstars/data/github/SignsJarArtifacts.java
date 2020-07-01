@@ -1,8 +1,11 @@
 package com.sap.sgs.phosphor.fosstars.data.github;
 
+import static com.sap.sgs.phosphor.fosstars.maven.MavenUtils.browse;
 import static com.sap.sgs.phosphor.fosstars.maven.MavenUtils.readModel;
+import static com.sap.sgs.phosphor.fosstars.maven.ModelVisitor.Location.BUILD;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SIGNS_ARTIFACTS;
 
+import com.sap.sgs.phosphor.fosstars.maven.AbstractModelVisitor;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
@@ -10,7 +13,7 @@ import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Optional;
-import org.apache.maven.model.Build;
+import java.util.Set;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Plugin;
 
@@ -58,10 +61,10 @@ public class SignsJarArtifacts extends CachedSingleFeatureGitHubDataProvider {
       return false;
     }
 
-    Model model = readModel(content.get());
-    Build build = model.getBuild();
-
-    return build != null && build.getPlugins().stream().anyMatch(SignsJarArtifacts::isMavenGpg);
+    try (InputStream is = content.get()) {
+      Model model = readModel(is);
+      return browse(model, withVisitor()).result;
+    }
   }
 
   /**
@@ -74,6 +77,32 @@ public class SignsJarArtifacts extends CachedSingleFeatureGitHubDataProvider {
     return plugin != null
         && "org.apache.maven.plugins".equals(plugin.getGroupId())
         && "maven-gpg-plugin".equals(plugin.getArtifactId());
+  }
+
+  /**
+   * Creates a new visitor for searching for Maven GPG plugin in a build section of a POM file.
+   */
+  private static Visitor withVisitor() {
+    return new Visitor();
+  }
+
+  /**
+   * A visitor for searching for Maven GPG plugin in a build section of a POM file.
+   */
+  private static class Visitor extends AbstractModelVisitor {
+
+    /**
+     * This flag shows whether Maven GPG plugin was found in a build section of a POM file or not.
+     */
+    private boolean result = false;
+
+    @Override
+    public void accept(Plugin plugin, Set<Location> locations) {
+      if (isMavenGpg(plugin) && locations.contains(BUILD)) {
+        result = true;
+      }
+    }
+
   }
 
 }
