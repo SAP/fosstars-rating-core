@@ -173,7 +173,7 @@ public class UsesFindSecBugs extends CachedSingleFeatureGitHubDataProvider {
   private static class Visitor implements ModelVisitor {
 
     /**
-     * A visitor for searching OWASP Dependency Check in a POM file.
+     * A visitor for searching FindSecBugs in a POM file.
      */
     private boolean result = false;
 
