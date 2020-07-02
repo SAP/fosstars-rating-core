@@ -7,7 +7,56 @@
   <groupId>com.sap.phosphor</groupId>
   <artifactId>fosstars-rating-core</artifactId>
   <version>0.10.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
   <name>Fosstars Rating Core</name>
+  <description>A framework for defining ratings for open-source projects.
+    In particular, the framework offers a security rating for open-source projects
+    that may be used to assess the security risk that comes with open-source components.
+  </description>
+  <url>https://github.com/SAP/fosstars-rating-core</url>
+
+  <licenses>
+    <license>
+      <name>The Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>Artem Smotrakov</name>
+      <email>artem.smotrakov@sap.com</email>
+      <organization>SAP</organization>
+    </developer>
+    <developer>
+      <name>Sourabh Sarvotham Parkala</name>
+      <email>sourabh.sarvotham.parkala@sap.com</email>
+      <organization>SAP</organization>
+    </developer>
+    <developer>
+      <name>Michael Bolz</name>
+      <email>michael.bolz@sap.com</email>
+      <organization>SAP</organization>
+    </developer>
+    <developer>
+      <name>Sachin Pattan</name>
+      <email>sachin.pattan@sap.com</email>
+      <organization>SAP</organization>
+    </developer>
+    <developer>
+      <name>Manjunath Mandya Surendrakumar</name>
+      <email>manjunath.mandya.surendrakumar@sap.com</email>
+      <organization>SAP</organization>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:git://github.com/SAP/fosstars-rating-core.git</connection>
+    <developerConnection>scm:git:ssh://github.com:SAP/fosstars-rating-core.git</developerConnection>
+    <url>http://github.com/SAP/fosstars-rating-core/tree/master</url>
+  </scm>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <version.jackson-databind>2.10.3</version.jackson-databind>
