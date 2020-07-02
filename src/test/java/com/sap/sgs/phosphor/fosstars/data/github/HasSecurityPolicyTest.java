@@ -1,5 +1,6 @@
 package com.sap.sgs.phosphor.fosstars.data.github;
 
+import static com.sap.sgs.phosphor.fosstars.data.github.TestGitHubDataFetcherHolder.TestGitHubDataFetcher.addForTesting;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -26,7 +27,7 @@ public class HasSecurityPolicyTest extends TestGitHubDataFetcherHolder {
 
     GitHubProject project = new GitHubProject("org", "test");
 
-    fetcher.addForTesting(project, repository);
+    addForTesting(project, repository);
 
     HasSecurityPolicy provider = new HasSecurityPolicy(fetcher);
     provider.set(new GitHubProjectValueCache());
@@ -40,7 +41,7 @@ public class HasSecurityPolicyTest extends TestGitHubDataFetcherHolder {
     when(repository.file("SECURITY.md")).thenReturn(Optional.empty());
 
     GitHubProject project = new GitHubProject("org", "test");
-    fetcher.addForTesting(project, repository);
+    addForTesting(project, repository);
 
     HasSecurityPolicy provider = new HasSecurityPolicy(fetcher);
     provider.set(new GitHubProjectValueCache());

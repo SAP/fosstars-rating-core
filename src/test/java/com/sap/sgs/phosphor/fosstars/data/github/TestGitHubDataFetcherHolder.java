@@ -7,14 +7,12 @@ import static org.mockito.Mockito.spy;
 
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -75,19 +73,8 @@ public class TestGitHubDataFetcherHolder {
      * @param project The {@link GitHubProject}.
      * @param repository The {@link LocalRepository}.
      */
-    public void addForTesting(GitHubProject project, LocalRepository repository) {
+    static void addForTesting(GitHubProject project, LocalRepository repository) {
       LOCAL_REPOSITORIES.put(project, repository);
-    }
-
-    /**
-     * Returns the current list of local repositories stored in the base folder.
-     *
-     * @return Map of local repositories available.
-     * @throws IOException if something goes wrong.
-     */
-    public Map<URL, LocalRepositoryInfo> getLocalRespositoriesInfoForTesting() throws IOException {
-      loadLocalRepositoriesInfo();
-      return LOCAL_REPOSITORIES_INFO;
     }
     
     /**
@@ -96,7 +83,7 @@ public class TestGitHubDataFetcherHolder {
      * @param project The {@link GitHubProject}.
      * @param projectDir The local {@link Path} for the {@link GitHubProject}.
      */
-    public void addRepositoryInfoForTesting(GitHubProject project, Path projectDir) {
+    static void addRepositoryInfoForTesting(GitHubProject project, Path projectDir) {
       LOCAL_REPOSITORIES.remove(project);
       LOCAL_REPOSITORIES_INFO.put(project.url(),
           new LocalRepositoryInfo(projectDir, Date.from(Instant.now()), project.url()));

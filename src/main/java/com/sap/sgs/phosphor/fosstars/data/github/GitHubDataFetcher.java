@@ -385,8 +385,8 @@ public class GitHubDataFetcher {
         throw new IOException(String.format("Hey! %s is not a file!", path));
       }
 
-      LOCAL_REPOSITORIES_INFO
-          .putAll(MAPPER.readValue(Files.newInputStream(path), LOCAL_REPOSITORIES_TYPE_REF));
+      LOCAL_REPOSITORIES_INFO.putAll(
+          MAPPER.readValue(Files.newInputStream(path), LOCAL_REPOSITORIES_TYPE_REF));
     }
   }
 
@@ -395,7 +395,7 @@ public class GitHubDataFetcher {
    *
    * @throws IOException If something went wrong.
    */
-  protected static void storeLocalRepositoriesInfo() throws IOException {
+  private static void storeLocalRepositoriesInfo() throws IOException {
     synchronized (LOCAL_REPOSITORIES_INFO) {
       Files.write(
           DEFAULT_PATH_LOCAL_REPOSITORIES_INFO_FILE,

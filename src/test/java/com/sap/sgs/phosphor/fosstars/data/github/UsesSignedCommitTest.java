@@ -1,5 +1,6 @@
 package com.sap.sgs.phosphor.fosstars.data.github;
 
+import static com.sap.sgs.phosphor.fosstars.data.github.TestGitHubDataFetcherHolder.TestGitHubDataFetcher.addForTesting;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SIGNED_COMMITS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -44,7 +45,7 @@ public class UsesSignedCommitTest extends TestGitHubDataFetcherHolder {
     when(repository.commitsWithin(any())).thenReturn(commits);
 
     GitHubProject project = new GitHubProject("org", "test");
-    fetcher.addForTesting(project, repository);
+    addForTesting(project, repository);
 
     ValueHashSet values = new ValueHashSet();
     assertEquals(0, values.size());
@@ -67,7 +68,7 @@ public class UsesSignedCommitTest extends TestGitHubDataFetcherHolder {
     when(repository.commitsWithin(any())).thenThrow(new IOException());
 
     GitHubProject project = new GitHubProject("org", "test");
-    fetcher.addForTesting(project, repository);
+    addForTesting(project, repository);
 
     ValueHashSet values = new ValueHashSet();
     assertEquals(0, values.size());
