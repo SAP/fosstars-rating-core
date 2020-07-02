@@ -185,7 +185,7 @@ public class GitHubDataFetcherTest extends TestGitHubDataFetcherHolder  {
   }
 
   @Test
-  public void testMultiThreadLocalRepoInfoTest() throws IOException, InterruptedException {
+  public void testMultiThreadAccessToLocalRepoInfo() throws IOException, InterruptedException {
     ExecutorService executorService = Executors.newFixedThreadPool(10);
 
     GitHubProject project = new GitHubProject("test", "project");
