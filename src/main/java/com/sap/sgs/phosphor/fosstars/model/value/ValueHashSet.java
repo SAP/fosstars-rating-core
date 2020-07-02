@@ -78,7 +78,9 @@ public class ValueHashSet implements ValueSet {
   }
 
   /**
-   * Returns an empty {@link ValueHashSet}.
+   * Create an empty value set.
+   *
+   * @return An empty {@link ValueHashSet}.
    */
   public static ValueHashSet empty() {
     return new ValueHashSet();
@@ -147,6 +149,8 @@ public class ValueHashSet implements ValueSet {
 
   /**
    * Converts a value set to a regular {@link Set}.
+   *
+   * @return A set with values.
    */
   public Set<Value> toSet() {
     return new HashSet<>(featureToValue.values());

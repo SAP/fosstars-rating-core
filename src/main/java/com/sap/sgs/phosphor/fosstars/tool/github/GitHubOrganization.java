@@ -27,6 +27,8 @@ public class GitHubOrganization {
 
   /**
    * Returns organization's name.
+   *
+   * @return A name of the organization.
    */
   @JsonGetter("name")
   public String name() {

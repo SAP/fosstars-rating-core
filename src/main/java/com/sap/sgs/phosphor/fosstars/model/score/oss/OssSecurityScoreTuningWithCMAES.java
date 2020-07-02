@@ -6,8 +6,14 @@ import com.sap.sgs.phosphor.fosstars.model.qa.VerificationFailedException;
 import com.sap.sgs.phosphor.fosstars.model.tuning.TuningWithCMAES;
 import java.io.IOException;
 
+/**
+ * This class tunes weights in the open-source security rating to make it pass the test vectors.
+ */
 public class OssSecurityScoreTuningWithCMAES extends TuningWithCMAES {
 
+  /**
+   * A path to weights for the open-source security rating.
+   */
   private static final String PATH =
       "src/main/resources/com/sap/sgs/phosphor/fosstars/model/score/oss/"
           + "OssSecurityScoreWeights.json";

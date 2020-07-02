@@ -17,9 +17,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * The score analyses unpatched vulnerabilities in an open-source project.
+ * <p>The score analyses unpatched vulnerabilities in an open-source project.
  * For each unpatched vulnerability, the score functions applies a penalty to the overall score.
- * The penalty depends on severity of a particular vulnerability.
+ * The penalty depends on severity of a particular vulnerability.</p>
  */
 public class UnpatchedVulnerabilitiesScore extends FeatureBasedScore {
 

@@ -47,6 +47,7 @@ public interface RatingCalculator {
    * Calculates ratings for multiple projects.
    *
    * @param projects The projects.
+   * @return The same calculator.
    * @throws IOException If something went wrong.
    */
   RatingCalculator calculateFor(List<GitHubProject> projects) throws IOException;

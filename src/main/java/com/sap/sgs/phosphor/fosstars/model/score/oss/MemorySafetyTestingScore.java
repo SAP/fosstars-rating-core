@@ -21,14 +21,13 @@ import java.io.InputStream;
  * <p>The score shows how an open-source project tests for memory-corruption issues such as
  * buffer overflows, use-after-free and so on.</p>
  *
- * <p>The score is based on the following features:
+ * <p>The score is based on the following features.</p>
  * <ul>
  *   <li>{@link OssFeatures#LANGUAGES}</li>
  *   <li>{@link OssFeatures#USES_ADDRESS_SANITIZER}</li>
  *   <li>{@link OssFeatures#USES_MEMORY_SANITIZER}</li>
  *   <li>{@link OssFeatures#USES_UNDEFINED_BEHAVIOR_SANITIZER}</li>
  * </ul>
- * </p>
  */
 public class MemorySafetyTestingScore extends FeatureBasedScore {
 

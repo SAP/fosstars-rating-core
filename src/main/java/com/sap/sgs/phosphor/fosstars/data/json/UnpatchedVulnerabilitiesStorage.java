@@ -164,6 +164,9 @@ public class UnpatchedVulnerabilitiesStorage extends AbstractJsonStorage {
   /**
    * The main method is here for demo purposes.
    * It can be also used to add unpatched vulnerabilities to the storage.
+   *
+   * @param args Command line arguments.
+   * @throws IOException If something went wrong.
    */
   public static void main(String... args) throws IOException {
     UnpatchedVulnerabilitiesStorage storage = UnpatchedVulnerabilitiesStorage.load();

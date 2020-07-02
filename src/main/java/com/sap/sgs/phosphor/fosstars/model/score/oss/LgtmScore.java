@@ -16,11 +16,11 @@ import java.io.InputStream;
 import java.util.EnumMap;
 
 /**
- * The score shows if and how a project addresses issues reported by LGTM. The score is based on the
- * following features
+ * <p>The score shows if and how a project addresses issues reported by LGTM.
+ * The score is based on the following features.</p>
  * <ul>
- * <li>{@link OssFeatures#USES_LGTM_CHECKS}</li>
- * <li>{@link OssFeatures#WORST_LGTM_GRADE}</li>
+ *   <li>{@link OssFeatures#USES_LGTM_CHECKS}</li>
+ *   <li>{@link OssFeatures#WORST_LGTM_GRADE}</li>
  * </ul>
  */
 public class LgtmScore extends FeatureBasedScore {

@@ -15,14 +15,14 @@ import java.io.InputStream;
 import java.util.function.Function;
 
 /**
- * The project popularity score is currently based on two features:
+ * <p>The project popularity score is currently based on two features.</p>
  * <ul>
- *   <li>number of stars on GitHub</li>
- *   <li>number of watchers on GitHub</li>
+ *   <li>Number of stars on GitHub</li>
+ *   <li>Number of watchers on GitHub</li>
  * </ul>
- * First, it calculates a stars sub-score. Next, it calculates a watchers sub-score.
+ * <p>First, it calculates a stars sub-score. Next, it calculates a watchers sub-score.
  * It uses linear functions to transform the numbers to sub-scores.
- * Then, the sub-scores are added to each other.
+ * Then, the sub-scores are added to each other.</p>
  */
 public class ProjectPopularityScore extends FeatureBasedScore {
 
@@ -48,6 +48,9 @@ public class ProjectPopularityScore extends FeatureBasedScore {
    */
   private static final double WATCHERS_SCORE_FACTOR = MAX / BEST_WATCHERS_AMOUNT;
 
+  /**
+   * A description of the score.
+   */
   private static final String DESCRIPTION;
 
   static {
@@ -79,6 +82,9 @@ public class ProjectPopularityScore extends FeatureBasedScore {
     DESCRIPTION = sb.toString();
   }
 
+  /**
+   * Initializes a new score.
+   */
   ProjectPopularityScore() {
     super("Open-source project popularity score", DESCRIPTION,
         NUMBER_OF_GITHUB_STARS, NUMBER_OF_WATCHERS_ON_GITHUB);

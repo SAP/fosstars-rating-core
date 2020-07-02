@@ -40,22 +40,30 @@ import com.sap.sgs.phosphor.fosstars.model.value.VulnerabilitiesValue;
 public interface Value<T> {
 
   /**
-   * Returns a feature which the value is for.
+   * Get a feature which the value is for.
+   *
+   * @return A feature which the value is for.
    */
   Feature feature();
 
   /**
-   * Returns true if the value is unknown, false otherwise.
+   * Tells if the value is unknown.
+   *
+   * @return True if the value is unknown, false otherwise.
    */
   boolean isUnknown();
 
   /**
-   * Returns true if the value is not applicable in the current context, false otherwise.
+   * Tells if the value is N/A.
+   *
+   * @return True if the value is not applicable in the current context, false otherwise.
    */
   boolean isNotApplicable();
 
   /**
-   * Returns the value.
+   * Get the value.
+   *
+   * @return The value.
    */
   T get();
 

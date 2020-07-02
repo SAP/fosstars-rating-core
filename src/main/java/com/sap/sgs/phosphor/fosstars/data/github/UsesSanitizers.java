@@ -114,7 +114,9 @@ public class UsesSanitizers extends GitHubCachingDataProvider {
   }
 
   /**
-   * Returns true if a file looks like a build config, false otherwise.
+   * Checks if a file looks like a build config.
+   *
+   * @return True if a file looks like a build config, false otherwise.
    */
   static boolean maybeBuildConfig(Path path) {
     String filename = path.getFileName().toString();

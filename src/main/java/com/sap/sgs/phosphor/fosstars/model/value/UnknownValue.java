@@ -18,7 +18,11 @@ public final class UnknownValue<T> implements Value<T> {
   private final Feature feature;
 
   /**
-   * This factory method returns an unknown values of the specified feature.
+   * This factory method returns an unknown values of a specified feature.
+   *
+   * @param feature The feature.
+   * @param <T> Value type.
+   * @return An unknown value for the specified feature.
    */
   public static <T> UnknownValue<T> of(Feature<T> feature) {
     return new UnknownValue<>(feature);

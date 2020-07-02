@@ -269,7 +269,9 @@ public class TuningWithCMAES extends AbstractTuning {
     }
 
     /**
-     * Returns the number of weights which may be adjusted.
+     * Get the number of weights which may be adjusted.
+     *
+     * @return The number of weights which may be adjusted.
      */
     int numberOfWeights() {
       return parameters.size();

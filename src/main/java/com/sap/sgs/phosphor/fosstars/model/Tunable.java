@@ -8,7 +8,9 @@ import java.util.List;
 public interface Tunable {
 
   /**
-   * Returns a list of parameters which may be tuned.
+   * Get a list of parameters of the tunable object.
+   *
+   * @return A list of parameters which may be tuned.
    */
   List<? extends Parameter> parameters();
 

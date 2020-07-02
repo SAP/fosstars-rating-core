@@ -59,7 +59,9 @@ class GitHubProjectCache {
   }
 
   /**
-   * Returns a map with cache entries. The method is used for serialization.
+   * Return a map with cache entries. The method is used for serialization.
+   *
+   * @return The map.
    */
   @JsonGetter("cache")
   private Map<String, GitHubProject> cache() {
@@ -82,6 +84,8 @@ class GitHubProjectCache {
 
   /**
    * Returns a size of the cache.
+   *
+   * @return A size of the cache.
    */
   int size() {
     return cache.size();

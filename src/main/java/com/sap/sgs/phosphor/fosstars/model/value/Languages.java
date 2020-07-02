@@ -32,7 +32,9 @@ public class Languages implements Iterable<Language> {
   }
 
   /**
-   * Returns an empty set of languages.
+   * Creates an empty set of languages.
+   *
+   * @return An empty set of languages.
    */
   public static Languages empty() {
     return new Languages();
@@ -59,7 +61,9 @@ public class Languages implements Iterable<Language> {
   }
 
   /**
-   * Returns a number of languages in the set.
+   * Get a size of the set.
+   *
+   * @return A number of languages in the set.
    */
   public int size() {
     return elements.size();
@@ -94,7 +98,9 @@ public class Languages implements Iterable<Language> {
   }
 
   /**
-   * Returns the languages.
+   * Get a set of languages.
+   *
+   * @return The languages.
    */
   @JsonGetter("elements")
   public Set<Language> get() {

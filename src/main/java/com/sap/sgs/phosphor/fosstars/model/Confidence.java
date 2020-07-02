@@ -25,7 +25,9 @@ public interface Confidence {
   Interval INTERVAL = DoubleInterval.init().from(MIN).to(MAX).closed().make();
 
   /**
-   * Return a level of confidence.
+   * Get a level of confidence.
+   *
+   * @return A level of confidence.
    */
   double confidence();
 

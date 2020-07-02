@@ -10,7 +10,7 @@ import java.util.Objects;
  */
 public class DoubleInterval implements Interval {
 
-  public static final double PRECISION = 0.0001;
+  static final double PRECISION = 0.0001;
 
   private final double from;
   private final boolean openLeft;
@@ -46,31 +46,61 @@ public class DoubleInterval implements Interval {
     this.positiveInfinity = positiveInfinity;
   }
 
+  /**
+   * Get a left boundary of the interval.
+   *
+   * @return The left boundary.
+   */
   @JsonGetter("from")
   private double from() {
     return from;
   }
 
+  /**
+   * Tells if the interval includes its left boundary.
+   *
+   * @return True if the left boundary is not included to the interval, false otherwise.
+   */
   @JsonGetter("openLeft")
   private boolean openLeft() {
     return openLeft;
   }
 
+  /**
+   * Tells if the left boundary is the negative infinity.
+   *
+   * @return True if the left boundary is the negative infinity, false otherwise.
+   */
   @JsonGetter("negativeInfinity")
   private boolean negativeInfinity() {
     return negativeInfinity;
   }
 
+  /**
+   * Gets the right boundary of the interval.
+   *
+   * @return The right boundary.
+   */
   @JsonGetter("to")
   private double to() {
     return to;
   }
 
+  /**
+   * Tells if the right boundary is included to the interval.
+   *
+   * @return True if the right boundary is not included to the interval, false otherwise.
+   */
   @JsonGetter("openRight")
   private boolean openRight() {
     return openRight;
   }
 
+  /**
+   * Tells if the right boundary is the positive infinity.
+   *
+   * @return True if the right boundary is the negative infinity, false otherwise.
+   */
   @JsonGetter("positiveInfinity")
   private boolean positiveInfinity() {
     return positiveInfinity;
@@ -101,6 +131,12 @@ public class DoubleInterval implements Interval {
     return true;
   }
 
+  /**
+   * Checks if the interval contains a number.
+   *
+   * @param x The number to be checked.
+   * @return True if the interval contains the number, false otherwise.
+   */
   @Override
   public boolean contains(int x) {
     return contains((double) x);
@@ -155,7 +191,11 @@ public class DoubleInterval implements Interval {
   }
 
   /**
-   * Check if two double are equal by checking abs(a-b) < delta.
+   * Check if two double numbers are equal.
+   *
+   * @param a The first number.
+   * @param b The seconds number.
+   * @return True if the numbers are equal, false otherwise.
    */
   private static boolean equals(double a, double b) {
     return Math.abs(a - b) < PRECISION;
@@ -168,11 +208,20 @@ public class DoubleInterval implements Interval {
 
   /**
    * Initializes a builder to build an interval.
+   *
+   * @return A new builder.
    */
   public static DoubleIntervalBuilder init() {
     return new DoubleIntervalBuilder();
   }
 
+  /**
+   * Creates a closed interval.
+   *
+   * @param from A left boundary.
+   * @param to A right boundary.
+   * @return A new interval.
+   */
   public static DoubleInterval closed(double from, double to) {
     return new DoubleInterval(from, false, false, to, false, false);
   }
@@ -202,6 +251,9 @@ public class DoubleInterval implements Interval {
 
     /**
      * Set the left boundary.
+     *
+     * @param a The left boundary.
+     * @return The same builder.
      */
     public DoubleIntervalBuilder from(double a) {
       from = a;
@@ -210,6 +262,9 @@ public class DoubleInterval implements Interval {
 
     /**
      * Set the right boundary.
+     *
+     * @param b The right boundary.
+     * @return The same builder.
      */
     public DoubleIntervalBuilder to(double b) {
       to = b;
@@ -218,6 +273,8 @@ public class DoubleInterval implements Interval {
 
     /**
      * Make the left boundary open (not included to the interval).
+     *
+     * @return The same builder.
      */
     public DoubleIntervalBuilder openLeft() {
       openLeft = true;
@@ -226,6 +283,8 @@ public class DoubleInterval implements Interval {
 
     /**
      * Make the right boundary open (not included to the interval).
+     *
+     * @return The same builder.
      */
     public DoubleIntervalBuilder openRight() {
       openRight = true;
@@ -234,6 +293,8 @@ public class DoubleInterval implements Interval {
 
     /**
      * Make the left boundary closed (included to the interval).
+     *
+     * @return The same builder.
      */
     public DoubleIntervalBuilder closedLeft() {
       openLeft = false;
@@ -242,6 +303,8 @@ public class DoubleInterval implements Interval {
 
     /**
      * Make the right boundary closed (included to the interval).
+     *
+     * @return The same builder.
      */
     public DoubleIntervalBuilder closedRight() {
       openRight = false;
@@ -250,6 +313,8 @@ public class DoubleInterval implements Interval {
 
     /**
      * Make both boundaries open (not included to the interval).
+     *
+     * @return The same builder.
      */
     public DoubleIntervalBuilder open() {
       return openLeft().openRight();
@@ -257,6 +322,8 @@ public class DoubleInterval implements Interval {
 
     /**
      * Make both boundaries closed (included to the interval).
+     *
+     * @return The same builder.
      */
     public DoubleIntervalBuilder closed() {
       return closedLeft().closedRight();
@@ -264,6 +331,8 @@ public class DoubleInterval implements Interval {
 
     /**
      * Set the left boundary to a negative infinity.
+     *
+     * @return The same builder.
      */
     public DoubleIntervalBuilder negativeInfinity() {
       negativeInfinity = true;
@@ -273,6 +342,8 @@ public class DoubleInterval implements Interval {
 
     /**
      * Set the right boundary to a positive infinity.
+     *
+     * @return The same builder.
      */
     public DoubleIntervalBuilder positiveInfinity() {
       positiveInfinity = true;
@@ -282,6 +353,8 @@ public class DoubleInterval implements Interval {
 
     /**
      * Creates an instance of DoubleInterval with specified parameters.
+     *
+     * @return An interval.
      */
     public DoubleInterval make() {
       return new DoubleInterval(from, openLeft, negativeInfinity, to, openRight, positiveInfinity);

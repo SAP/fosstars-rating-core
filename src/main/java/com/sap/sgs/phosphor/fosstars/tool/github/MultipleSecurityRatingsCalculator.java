@@ -107,6 +107,8 @@ class MultipleSecurityRatingsCalculator extends AbstractRatingCalculator {
 
   /**
    * Returns a list of projects for which ratings couldn't be calculated.
+   *
+   * @return The list of projects.
    */
   List<GitHubProject> failedProjects() {
     return new ArrayList<>(failedProjects);

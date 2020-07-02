@@ -30,6 +30,11 @@ public enum LgtmGrade {
     this.grade = grade;
   }
 
+  /**
+   * Get the grade as a string.
+   *
+   * @return The LGTM grade as a string.
+   */
   @JsonValue
   public String grade() {
     return grade;

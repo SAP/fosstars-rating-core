@@ -125,8 +125,11 @@ public class UsesFindSecBugs extends CachedSingleFeatureGitHubDataProvider {
   }
 
   /**
-   * Returns true if an element is
-   * the "com.h3xstream.findsecbugs:findsecbugs-plugin" plugin, false otherwise.
+   * Checks if an element is FindSecBugs.
+   *
+   * @param element The element to be checked.
+   * @return True if an element is
+   *         the "com.h3xstream.findsecbugs:findsecbugs-plugin" plugin, false otherwise.
    */
   private static boolean isFindSecBugs(Xpp3Dom element) {
     if (!"plugin".equals(element.getName())) {
@@ -143,7 +146,10 @@ public class UsesFindSecBugs extends CachedSingleFeatureGitHubDataProvider {
   }
 
   /**
-   * Returns true if a configuration contains FindSecBugs plugin, false otherwise.
+   * Checks if a configuration has FindSecBugs.
+   *
+   * @param configuration The configuration to be checked.
+   * @return True if a configuration contains FindSecBugs plugin, false otherwise.
    */
   private static boolean hasFindSecBugs(Xpp3Dom configuration) {
     Xpp3Dom plugins = configuration.getChild("plugins");

@@ -46,7 +46,9 @@ public interface ValueSet {
   Value[] toArray();
 
   /**
-   * Return a number of values in the set.
+   * Get a number of values in the value set.
+   *
+   * @return A number of values in the set.
    */
   int size();
 
@@ -59,7 +61,9 @@ public interface ValueSet {
   Optional<Value> of(Feature feature);
 
   /**
-   * Returns true if the set is empty, false otherwise.
+   * Tells whether the set is empty or not.
+   *
+   * @return True if the set is empty, false otherwise.
    */
   boolean isEmpty();
 }

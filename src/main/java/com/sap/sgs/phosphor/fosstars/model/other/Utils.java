@@ -25,6 +25,7 @@ public class Utils {
    * Converts a number of objects to a set. An exception is thrown if there is any duplicate.
    *
    * @param objects to be added to a set.
+   * @param <T> A type of the objects.
    * @return A set of objects.
    * @throws IllegalArgumentException if specified objects contain duplicates.
    */
@@ -85,7 +86,12 @@ public class Utils {
   }
 
   /**
-   * Looks for a value of the specified feature in a set of values.
+   * Looks for a value of a specified feature in a set of values.
+   *
+   * @param values The set of values.
+   * @param feature The feature.
+   * @param <T> A type of the data in the value.
+   * @return The value if it was found, null otherwise.
    */
   public static <T> Value<T> findValue(Set<Value> values, Feature feature) {
     return findValue(values.toArray(new Value[0]), feature);

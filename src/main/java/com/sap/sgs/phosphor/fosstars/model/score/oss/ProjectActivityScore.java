@@ -19,12 +19,12 @@ import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.analysis.function.Logistic;
 
 /**
- * The project activity score is currently based on two features:
+ * <p>The project activity score is currently based on two features.</p>
  * <ul>
- *  <li>number of commits in the last three months</li>
- *  <li>number of contributors in the last three months</li>
+ *  <li>Number of commits in the last three months.</li>
+ *  <li>Number of contributors in the last three months.</li>
  * </ul>
- * The score uses the logistic function to transform the numbers to a score value.
+ * <p>The score uses the logistic function to transform the numbers to a score value.</p>
  */
 public class ProjectActivityScore extends FeatureBasedScore {
 
@@ -70,7 +70,9 @@ public class ProjectActivityScore extends FeatureBasedScore {
       m -> LOGISTIC_FOR_NUMBER_OF_CONTRIBUTORS.value(m) + MAX_CONTRIBUTORS_SUB_SCORE_SHIFT;
 
   /**
-   * Returns a logistic function y(x) = a / (1 + e ^ k(b - x)).
+   * Returns  logistic function y(x) = a / (1 + e ^ k(b - x)).
+   *
+   * @return The logistic function.
    */
   private static Logistic logistic(double a, double k, double b) {
     return new Logistic(a, b, k, 1, 0, 1);

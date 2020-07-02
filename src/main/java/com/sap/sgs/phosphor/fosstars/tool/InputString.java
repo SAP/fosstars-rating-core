@@ -25,6 +25,8 @@ public class InputString {
 
   /**
    * Asks a user to provide a string.
+   *
+   * @return A string provider by a user.
    */
   public String get() {
     String string;

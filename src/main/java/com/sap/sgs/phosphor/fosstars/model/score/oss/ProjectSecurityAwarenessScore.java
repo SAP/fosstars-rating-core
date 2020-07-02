@@ -16,14 +16,14 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * The security awareness score is currently based on the following features:
+ * <p>The security awareness score is currently based on the following features.</p>
  * <ul>
  *   <li>if a project publishes security advisories</li>
  *   <li>if a project has a security team</li>
  *   <li>if a project uses verified signed commits</li>
  *   <li>if a project has a bug bounty program</li>
  * </ul>
- * A project gets the maximum score if it has both a security policy and a security team.
+ * <p>A project gets the maximum score if it has both a security policy and a security team.</p>
  */
 public class ProjectSecurityAwarenessScore extends FeatureBasedScore {
 

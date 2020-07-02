@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * The security testing score uses the following sub-scores:
+ * <p>The security testing score uses the following sub-scores.</p>
  * <ul>
  *  <li>{@link DependencyScanScore}</li>
  *  <li>{@link NoHttpToolScore}</li>
@@ -15,8 +15,8 @@ import java.io.InputStream;
  *  <li>{@link StaticAnalysisScore}</li>
  *  <li>{@link FuzzingScore}</li>
  * </ul>
- * There is plenty room for improvements.
- * The score can take into account a lot of other information.
+ * <p>There is plenty room for improvements.
+ * The score can take into account a lot of other information.</p>
  */
 public class ProjectSecurityTestingScore extends WeightedCompositeScore {
 

@@ -63,7 +63,9 @@ public class TestVectorResult {
   }
 
   /**
-   * Returns true if the test vector failed, false otherwise.
+   * Checks if the test vector failed.
+   *
+   * @return True if the test vector failed, false otherwise.
    */
   public boolean failed() {
     return status != Status.PASSED;

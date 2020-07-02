@@ -63,14 +63,18 @@ public class GitHubDataCache<T> implements Cache<GitHubProject, T> {
   }
 
   /**
-   * Returns a size of the cache.
+   * Get a size of the cache.
+   *
+   * @return A size of the cache.
    */
   public int size() {
     return entries.size();
   }
 
   /**
-   * Returns the maximum size of the cache.
+   * Get the maximum size of the cache.
+   *
+   * @return The maximum size of the cache.
    */
   public int maxSize() {
     return CACHE_CAPACITY;
@@ -138,7 +142,9 @@ public class GitHubDataCache<T> implements Cache<GitHubProject, T> {
     }
 
     /**
-     * Returns the cached GitHub data.
+     * Get the cached data.
+     *
+     * @return The cached GitHub data.
      */
     private T get() {
       return data;

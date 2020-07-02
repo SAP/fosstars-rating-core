@@ -15,7 +15,9 @@ public class ImmutabilityChecker implements Visitor {
   private boolean isImmutable = true;
 
   /**
-   * Returns true if all checked objects were immutable, false otherwise.
+   * Tells whether all checked objects were immutable or not.
+   *
+   * @return True if all checked objects were immutable, false otherwise.
    */
   public boolean allImmutable() {
     return isImmutable;

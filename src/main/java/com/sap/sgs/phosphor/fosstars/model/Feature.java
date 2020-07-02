@@ -46,7 +46,9 @@ import com.sap.sgs.phosphor.fosstars.model.feature.oss.VulnerabilitiesInProject;
 public interface Feature<T> {
 
   /**
-   * Returns a name of the feature.
+   * Get a name of the feature.
+   *
+   * @return A name of the feature.
    */
   String name();
 
@@ -71,7 +73,9 @@ public interface Feature<T> {
   Value<T> parse(String string);
 
   /**
-   * Returns an unknown value of the feature.
+   * Get an unknown value of the feature.
+   *
+   * @return An unknown value of the feature.
    */
   Value<T> unknown();
 

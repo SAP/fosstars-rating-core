@@ -22,7 +22,9 @@ public abstract class AbstractVerification {
   }
 
   /**
-   * Returns the test vectors.
+   * Get the test vectors.
+   *
+   * @return The test vectors.
    */
   public TestVectors vectors() {
     return vectors;

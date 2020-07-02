@@ -16,14 +16,14 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * The score shows how an open-source project uses static analysis for security testing.
- * It's based on the following sub-scores:
+ * <p>The score shows how an open-source project uses static analysis for security testing.</p>
+ * <p>It's based on the following sub-scores:</p>
  * <ul>
  *   <li>{@link LgtmScore}</li>
  *   <li>{@link FindSecBugsScore}</li>
  * </ul>
- * The above sub-scores may not apply to all projects. The score considers only the sub-scores
- * that is applicable to a particular project.
+ * <p>The above sub-scores may not apply to all projects. The score considers only the sub-scores
+ * that is applicable to a particular project.</p>
  */
 public class StaticAnalysisScore extends AbstractScore {
 

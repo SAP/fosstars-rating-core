@@ -58,7 +58,7 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
   /**
    * A length of line in a project name.
    */
-  static final int NAME_LINE_LENGTH = 42;
+  private static final int NAME_LINE_LENGTH = 42;
 
   /**
    * A date formatter.
@@ -175,8 +175,6 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
     logger.info("Storing a report to {}", path);
     Files.write(path, build(sb.toString(), statistics).getBytes());
   }
-
-
 
   /**
    * Prints out a name of a project.
@@ -317,7 +315,9 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
   }
 
   /**
-   * Returns true if confidence of a rating value is low, false otherwise.
+   * Checks if a rating value is unclear.
+   *
+   * @return True if confidence of a rating value is low, false otherwise.
    */
   private static boolean unclear(RatingValue ratingValue) {
     return ratingValue.scoreValue().confidence() < CONFIDENCE_THRESHOLD;
@@ -467,35 +467,45 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
     }
 
     /**
-     * Returns a percent of projects with a bad rating.
+     * Returns a percent of projects with bad rating.
+     *
+     * @return A percent of projects with bad rating.
      */
     double badRatingsPercent() {
       return (double) badRatings * 100 / total;
     }
 
     /**
-     * Returns a percent of projects with a moderate rating.
+     * Returns a percent of projects with moderate rating.
+     *
+     * @return A percent of projects with moderate rating.
      */
     double moderateRatingsPercent() {
       return (double) moderateRatings * 100 / total;
     }
 
     /**
-     * Returns a percent of projects with a good rating.
+     * Returns a percent of projects with good rating.
+     *
+     * @return A percent of projects with good rating.
      */
     double goodRatingsPercent() {
       return (double) goodRatings * 100 / total;
     }
 
     /**
-     * Returns a percent of projects with an unknown rating.
+     * Returns a percent of projects with unknown rating.
+     *
+     * @return A percent of projects with unknown rating.
      */
     double unknownRatingsPercent() {
       return (double) unknownRatings * 100 / total;
     }
 
     /**
-     * Returns a percent of projects with an unclear rating.
+     * Returns a percent of projects with unclear rating.
+     *
+     * @return A percent of projects with unclear rating.
      */
     double unclearRatingsPercent() {
       return (double) unclearRatings * 100 / total;

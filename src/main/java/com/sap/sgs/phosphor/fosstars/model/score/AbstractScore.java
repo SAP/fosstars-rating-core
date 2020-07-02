@@ -216,8 +216,11 @@ public abstract class AbstractScore implements Score {
   }
 
   /**
-   * The method calculates a value for a specified score if the value is not available.
+   * The method calculates a score value for a specified score if the value is not available.
    *
+   * @param score The score.
+   * @param values The values that should be used to calculate the score value.
+   * @return The calculated score value.
    * @see #calculateIfNecessary(Score, ValueSet)
    */
   protected static ScoreValue calculateIfNecessary(Score score, Value... values) {

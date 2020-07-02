@@ -6,7 +6,9 @@ package com.sap.sgs.phosphor.fosstars.model;
 public interface Parameter {
 
   /**
-   * Returns an interval of valid values of the parameter.
+   * Get boundaries of the parameter.
+   *
+   * @return An interval of valid values of the parameter.
    */
   Interval boundaries();
 
@@ -20,7 +22,9 @@ public interface Parameter {
   Parameter value(double v);
 
   /**
-   * Returns the value of the parameter.
+   * Get the value of the parameter.
+   *
+   * @return The value of the parameter.
    */
   Double value();
 

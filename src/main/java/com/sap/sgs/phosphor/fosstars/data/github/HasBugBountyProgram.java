@@ -22,6 +22,7 @@ public class HasBugBountyProgram extends CachedSingleFeatureGitHubDataProvider {
    * Initializes a data provider.
    *
    * @param fetcher An interface to GitHub.
+   * @throws IOException If something went wrong.
    */
   public HasBugBountyProgram(GitHubDataFetcher fetcher) throws IOException {
     super(fetcher);

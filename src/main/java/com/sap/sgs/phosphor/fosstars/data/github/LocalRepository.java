@@ -63,7 +63,9 @@ public class LocalRepository implements AutoCloseable {
   }
 
   /**
-   * Returns info about the repository.
+   * Get info about the repository.
+   *
+   * @return Info about the repository.
    */
   public LocalRepositoryInfo info() {
     return info;
@@ -120,7 +122,10 @@ public class LocalRepository implements AutoCloseable {
   }
 
   /**
-   * Returns the first commit in the repository.
+   * Get the first commit in the repository.
+   *
+   * @return The first commit in the repository.
+   * @throws IOException If something went wrong.
    */
   @JsonIgnore
   public Optional<Commit> firstCommit() throws IOException {
@@ -153,6 +158,7 @@ public class LocalRepository implements AutoCloseable {
    *
    * @param file The file name.
    * @return A content of the file.
+   * @throws IOException If something went wrong.
    */
   public Optional<String> file(String file) throws IOException {
     Objects.requireNonNull(file, "On no! File name is null!");
@@ -164,6 +170,7 @@ public class LocalRepository implements AutoCloseable {
    *
    * @param file The file name.
    * @return A content of the file.
+   * @throws IOException If something went wrong.
    */
   public Optional<String> file(Path file) throws IOException {
     Objects.requireNonNull(file, "On no! File name is null!");
@@ -180,6 +187,7 @@ public class LocalRepository implements AutoCloseable {
    *
    * @param file The file name.
    * @return A content of the file.
+   * @throws IOException If something went wrong.
    */
   public Optional<InputStream> read(String file) throws IOException {
     Objects.requireNonNull(file, "On no! File name is null!");
@@ -191,6 +199,7 @@ public class LocalRepository implements AutoCloseable {
    *
    * @param file The file name.
    * @return A content of the file.
+   * @throws IOException If something went wrong.
    */
   public Optional<InputStream> read(Path file) throws IOException {
     Objects.requireNonNull(file, "On no! File name is null!");

@@ -27,6 +27,8 @@ public class InputURL {
 
   /**
    * Ask a user to provide a URL.
+   *
+   * @return A URL provided by a user.
    */
   public URL get() {
     String string;

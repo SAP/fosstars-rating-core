@@ -11,6 +11,9 @@ import java.util.Objects;
  */
 public class BooleanValue extends AbstractValue<Boolean> {
 
+  /**
+   * A boolean value.
+   */
   private final Boolean flag;
 
   /**

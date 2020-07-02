@@ -6,7 +6,6 @@ import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVectorResult;
 import com.sap.sgs.phosphor.fosstars.model.qa.VerificationFailedException;
 import com.sap.sgs.phosphor.fosstars.model.qa.Verifier;
-import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import org.apache.logging.log4j.LogManager;
@@ -54,7 +53,7 @@ public abstract class AbstractTuning {
    * @throws VerificationFailedException If some test vectors still fail
    *                                     after the tuning was done.
    */
-  public final void run() throws VerificationFailedException, IOException {
+  public final void run() throws VerificationFailedException {
     runTuning();
 
     boolean success = true;

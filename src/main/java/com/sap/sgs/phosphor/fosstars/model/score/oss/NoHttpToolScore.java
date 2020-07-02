@@ -7,6 +7,7 @@ import static com.sap.sgs.phosphor.fosstars.model.value.PackageManager.GRADLE;
 import static com.sap.sgs.phosphor.fosstars.model.value.PackageManager.MAVEN;
 
 import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.sgs.phosphor.fosstars.model.score.FeatureBasedScore;
@@ -19,12 +20,11 @@ import java.io.InputStream;
  * <p>The score shows if an open-source project uses nohttp tool
  * to catch usage of insecure HTTP protocol.</p>
  *
- * <p>The score is based on the following features:
+ * <p>The score is based on the following features.</p>
  * <ul>
- *   <li>{@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#USES_NOHTTP}</li>
- *   <li>{@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#PACKAGE_MANAGERS}</li>
+ *   <li>{@link OssFeatures#USES_NOHTTP}</li>
+ *   <li>{@link OssFeatures#PACKAGE_MANAGERS}</li>
  * </ul>
- * </p>
  *
  * @see <a href="https://github.com/spring-io/nohttp">nohttp</a>
  */

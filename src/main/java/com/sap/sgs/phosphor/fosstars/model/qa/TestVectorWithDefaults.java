@@ -38,7 +38,9 @@ public class TestVectorWithDefaults implements TestVector {
   }
 
   /**
-   * Returns the original test vector.
+   * Get the original test vector.
+   *
+   * @return The original test vector.
    */
   TestVector originalVector() {
     return vector;

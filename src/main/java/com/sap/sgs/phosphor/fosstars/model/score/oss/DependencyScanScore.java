@@ -39,8 +39,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The scores assesses how well an open-source project scans dependencies for known vulnerabilities.
- * It is based on the following features:
+ * <p>The scores assesses how well an open-source project scans dependencies
+ * for known vulnerabilities. It is based on the following features.</p>
  * <ul>
  *   <li>{@link OssFeatures#SCANS_FOR_VULNERABLE_DEPENDENCIES}</li>
  *   <li>{@link OssFeatures#USES_DEPENDABOT}</li>

@@ -84,25 +84,39 @@ public class ExpiringValue<T> implements Value<T> {
   }
 
   /**
-   * Returns true if the value never expires, false otherwise.
+   * Tells whether the value never expires or not.
+   *
+   * @return True if the value never expires, false otherwise.
    */
   public boolean neverExpires() {
     return expiration == NO_EXPIRATION;
   }
 
   /**
-   * Return true if the value has expired, false otherwise.
+   * Tells whether the value is expired or not.
+   *
+   * @return True if the value has expired, false otherwise.
    */
   public boolean expired() {
     Date now = new Date();
     return now.after(expiration);
   }
 
+  /**
+   * Get the expiration date.
+   *
+   * @return The expiration date.
+   */
   @JsonGetter("expiration")
   public Date expiration() {
     return expiration;
   }
 
+  /**
+   * Get the original feature value.
+   *
+   * @return The original feature value.
+   */
   @JsonGetter("value")
   public Value original() {
     return value;

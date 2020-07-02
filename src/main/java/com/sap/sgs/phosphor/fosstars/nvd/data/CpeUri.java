@@ -6,12 +6,16 @@ package com.sap.sgs.phosphor.fosstars.nvd.data;
 public interface CpeUri {
 
   /**
-   * Gets the vendor from the CPE URI.
+   * Get a vendor.
+   *
+   * @return The vendor from the CPE URI.
    */
-  public String getVendor();
+  String getVendor();
 
   /**
-   * Gets the product from the CPE URI.
+   * Get a product.
+   *
+   * @return The product from the CPE URI.
    */
-  public String getProduct();
+  String getProduct();
 }

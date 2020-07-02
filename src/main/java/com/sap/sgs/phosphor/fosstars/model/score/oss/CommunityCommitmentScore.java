@@ -15,16 +15,16 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * The community commitment score depends on the following features:
+ * <p>The community commitment score depends on the following features.</p>
  * <ul>
- *   <li>if a project is supported by a company</li>
- *   <li>if a project is part of the Apache Software Foundation</li>
- *   <li>if a project is part of the Eclipse Foundation</li>
+ *   <li>If a project is supported by a company</li>
+ *   <li>If a project is part of the Apache Software Foundation</li>
+ *   <li>If a project is part of the Eclipse Foundation</li>
  * </ul>
- * A project gets the maximum score if it's supported by a company
+ * <p>A project gets the maximum score if it's supported by a company
  * and is part of one of the foundations.
  * A project gets the minimum score if it's not supported by a company
- * and doesn't belong to any foundation.
+ * and doesn't belong to any foundation.</p>
  */
 public class CommunityCommitmentScore extends FeatureBasedScore {
 
@@ -78,8 +78,7 @@ public class CommunityCommitmentScore extends FeatureBasedScore {
     private static final String TEST_VECTORS_YAML = "CommunityCommitmentScoreTestVectors.yml";
 
     /**
-     * Initializes a {@link Verification}
-     * for a {@link CommunityCommitmentScore}.
+     * Initializes a {@link Verification} for a {@link CommunityCommitmentScore}.
      *
      * @param score A score to be verified.
      * @param vectors A list of test vectors.

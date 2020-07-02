@@ -45,18 +45,30 @@ public class NvdEntry {
   @JsonProperty("lastModifiedDate")
   private String lastModifiedDate;
 
+  /**
+   * Get CVE.
+   *
+   * @return The CVE.
+   */
   @JsonProperty("cve")
   public CVE getCve() {
     return cve;
   }
 
+  /**
+   * Sets CVE.
+   *
+   * @param cve The CVE.
+   */
   @JsonProperty("cve")
   public void setCve(CVE cve) {
     this.cve = cve;
   }
 
   /**
-   * Defines the set of product configurations for a NVD applicability statement.
+   * Get configurations.
+   *
+   * @return The configurations.
    */
   @JsonProperty("configurations")
   public Configurations getConfigurations() {
@@ -64,13 +76,20 @@ public class NvdEntry {
   }
 
   /**
-   * Impact scores for a vulnerability as found on NVD.
+   * Get impact.
+   *
+   * @return The impact.
    */
   @JsonProperty("impact")
   public Impact getImpact() {
     return impact;
   }
 
+  /**
+   * Get a published date.
+   *
+   * @return The published data as a string.
+   */
   @JsonProperty("publishedDate")
   public String getPublishedDate() {
     return publishedDate;
