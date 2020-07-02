@@ -1,5 +1,6 @@
 package com.sap.sgs.phosphor.fosstars.data.github;
 
+import static com.sap.sgs.phosphor.fosstars.data.github.TestGitHubDataFetcherHolder.TestGitHubDataFetcher.addForTesting;
 import static com.sap.sgs.phosphor.fosstars.data.github.UsesOwaspDependencyCheck.USES_OWASP_DEPENDENCY_CHECK;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -97,7 +98,7 @@ public class UsesOwaspDependencyCheckTest extends TestGitHubDataFetcherHolder {
     when(repository.read(filename)).thenReturn(Optional.of(is));
 
     GitHubProject project = new GitHubProject("org", "test");
-    fetcher.addForTesting(project, repository);
+    addForTesting(project, repository);
 
     UsesOwaspDependencyCheck provider = new UsesOwaspDependencyCheck(fetcher);
     provider.set(new GitHubProjectValueCache());

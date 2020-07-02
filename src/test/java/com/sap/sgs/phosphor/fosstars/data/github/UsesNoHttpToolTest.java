@@ -1,5 +1,6 @@
 package com.sap.sgs.phosphor.fosstars.data.github;
 
+import static com.sap.sgs.phosphor.fosstars.data.github.TestGitHubDataFetcherHolder.TestGitHubDataFetcher.addForTesting;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_NOHTTP;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -60,7 +61,7 @@ public class UsesNoHttpToolTest extends TestGitHubDataFetcherHolder {
     when(repository.read(filename)).thenReturn(Optional.of(is));
 
     GitHubProject project = new GitHubProject("org", "test");
-    fetcher.addForTesting(project, repository);
+    addForTesting(project, repository);
 
     UsesNoHttpTool provider = new UsesNoHttpTool(fetcher);
     provider.set(new GitHubProjectValueCache());

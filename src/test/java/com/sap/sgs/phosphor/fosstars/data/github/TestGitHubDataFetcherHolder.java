@@ -1,18 +1,19 @@
 package com.sap.sgs.phosphor.fosstars.data.github;
 
+import static com.sap.sgs.phosphor.fosstars.data.github.GitHubDataFetcher.REPOSITORIES_BASE_PATH;
+import static com.sap.sgs.phosphor.fosstars.data.github.GitHubDataFetcher.REPOSITORIES_BASE_PATH_PROPERTY;
 import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Instant;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -23,15 +24,14 @@ import org.kohsuke.github.GitHub;
  */
 public class TestGitHubDataFetcherHolder {
 
-  /**
-   * A base directory for {@link GitHubDataFetcher}.
-   */
-  private Path path;
+  static {
+    System.setProperty(REPOSITORIES_BASE_PATH_PROPERTY, ".fosstars/test_repositories");
+  }
 
   /**
    * An instance of {@link GitHubDataFetcher} for tests.
    */
-  protected TestGitHubDateFetcher fetcher;
+  protected TestGitHubDataFetcher fetcher;
 
   /**
    * Initializes a fetcher for each test case.
@@ -40,9 +40,7 @@ public class TestGitHubDataFetcherHolder {
    */
   @Before
   public void init() throws IOException {
-    GitHub github = mock(GitHub.class);
-    path = Files.createTempDirectory(getClass().getName());
-    fetcher = spy(new TestGitHubDateFetcher(github, path));
+    fetcher = spy(new TestGitHubDataFetcher(mock(GitHub.class)));
   }
 
   /**
@@ -53,42 +51,57 @@ public class TestGitHubDataFetcherHolder {
   @After
   public void cleanup() throws IOException {
     List<Path> deletedPaths = new ArrayList<>();
-    fetcher.cleanup(((url, repository, total) -> {
+    fetcher.cleanup((url, repository, total) -> {
       deletedPaths.add(repository.path());
       return true;
-    }));
+    });
 
     for (Path deletedPath : deletedPaths) {
       assertFalse(Files.exists(deletedPath));
     }
 
-    FileUtils.forceDeleteOnExit(path.toFile());
+    FileUtils.forceDeleteOnExit(REPOSITORIES_BASE_PATH.toFile());
   }
 
-  public static class TestGitHubDateFetcher extends GitHubDataFetcher {
+  public static class TestGitHubDataFetcher extends GitHubDataFetcher {
 
-    public TestGitHubDateFetcher(GitHub github, Path base) throws IOException {
-      super(github, base);
+    /**
+     * Test class constructor.
+     */
+    public TestGitHubDataFetcher(GitHub github) throws IOException {
+      super(github);
     }
 
-    public void addForTesting(GitHubProject project, LocalRepository repository) {
-      localRepositories.put(project, repository);
+    /**
+     * Adds {@link GitHubProject} and its associated {@link LocalRepository} details to cache.
+     *
+     * @param project The {@link GitHubProject}.
+     * @param repository The {@link LocalRepository}.
+     */
+    static void addForTesting(GitHubProject project, LocalRepository repository) {
+      LOCAL_REPOSITORIES.put(project, repository);
+    }
+    
+    /**
+     * Add a new project to be considered while loading repository.
+     *  
+     * @param project The {@link GitHubProject}.
+     * @param projectDir The local {@link Path} for the {@link GitHubProject}.
+     */
+    static void addRepositoryInfoForTesting(GitHubProject project, Path projectDir) {
+      LOCAL_REPOSITORIES.remove(project);
+      LOCAL_REPOSITORIES_INFO.put(project.url(),
+          new LocalRepositoryInfo(projectDir, Date.from(Instant.now()), project.url()));
     }
 
-    @Override
-    protected void clone(GitHubProject project, Path base) {
-      // do nothing
-    }
-
-    @Override
-    protected Map<URL, LocalRepositoryInfo> loadLocalRepositoriesInfo() {
-      return new HashMap<>();
-    }
-
-    @Override
-    protected void storeLocalRepositoriesInfo() {
-      // do nothing
+    /**
+     * Returns a resolved valid directory path of the project.
+     *  
+     * @param project of type {@link GitHubProject}.
+     * @return path of type {@link Path}. 
+     */
+    static Path directoryFor(GitHubProject project) {
+      return REPOSITORIES_BASE_PATH.resolve(project.name());
     }
   }
-
 }

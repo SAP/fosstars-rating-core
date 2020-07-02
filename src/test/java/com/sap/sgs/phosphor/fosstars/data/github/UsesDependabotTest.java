@@ -1,5 +1,6 @@
 package com.sap.sgs.phosphor.fosstars.data.github;
 
+import static com.sap.sgs.phosphor.fosstars.data.github.TestGitHubDataFetcherHolder.TestGitHubDataFetcher.addForTesting;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_DEPENDABOT;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -45,7 +46,7 @@ public class UsesDependabotTest extends TestGitHubDataFetcherHolder {
     when(repository.commitsAfter(any())).thenReturn(commits);
 
     GitHubProject project = new GitHubProject("org", "test");
-    fetcher.addForTesting(project, repository);
+    addForTesting(project, repository);
 
     testProvider(true, project, provider);
   }
@@ -60,7 +61,7 @@ public class UsesDependabotTest extends TestGitHubDataFetcherHolder {
         .thenReturn(Optional.of(StringUtils.repeat("x", 1000)));
 
     GitHubProject project = new GitHubProject("org", "test");
-    fetcher.addForTesting(project, repository);
+    addForTesting(project, repository);
 
     testProvider(true, project, provider);
   }
@@ -89,7 +90,7 @@ public class UsesDependabotTest extends TestGitHubDataFetcherHolder {
     when(repository.commitsAfter(any())).thenReturn(commits);
 
     GitHubProject project = new GitHubProject("org", "test");
-    fetcher.addForTesting(project, repository);
+    addForTesting(project, repository);
 
     testProvider(false, project, provider);
   }

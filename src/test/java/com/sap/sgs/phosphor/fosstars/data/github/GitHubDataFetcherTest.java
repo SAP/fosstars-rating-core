@@ -1,8 +1,16 @@
 package com.sap.sgs.phosphor.fosstars.data.github;
 
+import static com.sap.sgs.phosphor.fosstars.data.github.GitHubDataFetcher.LOCAL_REPOSITORIES;
+import static com.sap.sgs.phosphor.fosstars.data.github.GitHubDataFetcher.LOCAL_REPOSITORIES_CACHE_CAPACITY;
+import static com.sap.sgs.phosphor.fosstars.data.github.GitHubDataFetcher.LOCAL_REPOSITORIES_INFO;
+import static com.sap.sgs.phosphor.fosstars.data.github.GitHubDataFetcher.loadLocalRepositoriesInfo;
+import static com.sap.sgs.phosphor.fosstars.data.github.TestGitHubDataFetcherHolder.TestGitHubDataFetcher.addForTesting;
+import static com.sap.sgs.phosphor.fosstars.data.github.TestGitHubDataFetcherHolder.TestGitHubDataFetcher.addRepositoryInfoForTesting;
+import static com.sap.sgs.phosphor.fosstars.data.github.TestGitHubDataFetcherHolder.TestGitHubDataFetcher.directoryFor;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -16,10 +24,19 @@ import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.junit.Test;
 import org.kohsuke.github.GHRepository;
+import org.kohsuke.github.GitHub;
 
 public class GitHubDataFetcherTest extends TestGitHubDataFetcherHolder  {
 
@@ -59,7 +76,7 @@ public class GitHubDataFetcherTest extends TestGitHubDataFetcherHolder  {
   public void testShouldUpdate() throws IOException {
     Date now = Date.from(Instant.now());
     Duration twoDays = Duration.ofDays(2);
-    fetcher.pullAfter(twoDays);
+    GitHubDataFetcher.pullAfter(twoDays);
     Date threeDaysAgo = Date.from(Instant.now().minus(3, ChronoUnit.DAYS));
 
     Path path = Paths.get("test");
@@ -71,12 +88,245 @@ public class GitHubDataFetcherTest extends TestGitHubDataFetcherHolder  {
         new LocalRepositoryInfo(
             path, threeDaysAgo, new URL("https://scm/org/test")),
         repository);
-    assertTrue(fetcher.shouldUpdate(outdatedRepository));
+    assertTrue(GitHubDataFetcher.shouldUpdate(outdatedRepository));
 
     LocalRepository freshRepository = new LocalRepository(
         new LocalRepositoryInfo(
             path, now, new URL("https://scm/org/test")),
         repository);
-    assertFalse(fetcher.shouldUpdate(freshRepository));
+    assertFalse(GitHubDataFetcher.shouldUpdate(freshRepository));
+  }
+
+  @Test
+  public void testUpdateGithubInstance() throws IOException {
+    GitHub github = mock(GitHub.class);
+    GitHubDataFetcher fetcher = new GitHubDataFetcher(github);
+    assertEquals(fetcher.github(), github);
+
+    // create the second GitHub mock bean
+    GitHub anotherGithub = mock(GitHub.class);
+    fetcher = new GitHubDataFetcher(anotherGithub);
+    assertEquals(fetcher.github(), anotherGithub);
+  }
+
+  @Test
+  public void testLoadAndCleanRepository() throws IOException {
+    GitHubProject project = new GitHubProject("test", "project");
+    Path directory = directoryFor(project);
+    try (Repository repository = FileRepositoryBuilder.create(directory.resolve(".git").toFile())) {
+      repository.create();
+      addRepositoryInfoForTesting(project, directory);
+      testLocalRepositoryFor(project, 1);
+      testCleanup(project, 0);
+    }
+  }
+
+  @Test
+  public void testCleanAndLoadRepository() throws IOException {
+    GitHubProject project = new GitHubProject("test", "project");
+    Path directory = directoryFor(project);
+    try (Repository repository = FileRepositoryBuilder.create(directory.resolve(".git").toFile())) {
+      repository.create();
+      testCleanup(project, 0);
+      addRepositoryInfoForTesting(project, directory);
+      testLocalRepositoryFor(project, 1);
+    }
+  }
+
+  @Test
+  public void testMultiThreadReadAndUpdate() throws IOException, InterruptedException {
+    ExecutorService executorService = Executors.newFixedThreadPool(2);
+
+    GitHubProject firstProject = new GitHubProject("test", "one");
+    GitHubProject secondProject = new GitHubProject("test", "two");
+
+    Path firstDir = directoryFor(firstProject);
+    try (Repository repository = FileRepositoryBuilder.create(firstDir.resolve(".git").toFile())) {
+      repository.create();
+    }
+
+    Path secondDir = directoryFor(secondProject);
+    try (Repository repository = FileRepositoryBuilder.create(secondDir.resolve(".git").toFile())) {
+      repository.create();
+    }
+
+    try {
+      addRepositoryInfoForTesting(firstProject, firstDir);
+
+      CountDownLatch latch = new CountDownLatch(1);
+
+      Runnable cleanTask = () -> {
+        try {
+          fetcher.cleanup((url, repo, total) -> true);
+          checkCleanUp(firstProject, 0);
+          latch.countDown();
+        } catch (IOException e) {
+          throw new IllegalStateException(e);
+        }
+      };
+
+      Runnable loadRepoTask = () -> {
+        try {
+          latch.await();
+          addRepositoryInfoForTesting(secondProject, secondDir);
+          GitHubDataFetcher.localRepositoryFor(secondProject);
+        } catch (InterruptedException | IOException e) {
+          throw new IllegalStateException(e);
+        }
+      };
+
+      executorService.execute(cleanTask);
+      executorService.execute(loadRepoTask);
+    } finally {
+      executorService.awaitTermination(4, TimeUnit.SECONDS);
+    }
+
+    checkLocalRepository(secondProject, 1);
+  }
+
+  @Test
+  public void testMultiThreadAccessToLocalRepoInfo() throws IOException, InterruptedException {
+    ExecutorService executorService = Executors.newFixedThreadPool(10);
+
+    GitHubProject project = new GitHubProject("test", "project");
+    Path directory = directoryFor(project);
+
+    try (Repository repository = FileRepositoryBuilder.create(directory.resolve(".git").toFile())) {
+      repository.create();
+
+      addRepositoryInfoForTesting(project, directory);
+
+      int numberOfThreads = 25;
+      CountDownLatch latch = new CountDownLatch(numberOfThreads);
+      for (int i = 0; i < numberOfThreads; i++) {
+        executorService.submit(() -> {
+          try {
+            GitHubDataFetcher.localRepositoryFor(project);
+          } catch (IOException e) {
+            throw new IllegalStateException(e);
+          }
+          latch.countDown();
+        });
+      }
+
+      assertTrue(latch.await(5, TimeUnit.SECONDS));
+    } finally {
+      executorService.shutdown();
+    }
+
+    checkLocalRepository(project, 1);
+  }
+
+  @Test
+  public void testMultiThreadCleanUpTest() throws IOException, InterruptedException {
+    ExecutorService executorService = Executors.newFixedThreadPool(10);
+
+    GitHubProject project = new GitHubProject("test", "project");
+    Path directory = directoryFor(project);
+
+    try (Repository repository = FileRepositoryBuilder.create(directory.resolve(".git").toFile())) {
+      repository.create();
+
+      addRepositoryInfoForTesting(project, directory);
+
+      testLocalRepositoryFor(project, 1);
+
+      int numberOfThreads = 25;
+      CountDownLatch latch = new CountDownLatch(numberOfThreads);
+      for (int i = 0; i < numberOfThreads; i++) {
+        executorService.submit(() -> {
+          try {
+            runCleanupFor(project);
+          } catch (IOException e) {
+            throw new IllegalStateException("Clean up exception");
+          }
+          latch.countDown();
+        });
+      }
+
+      assertTrue(latch.await(5, TimeUnit.SECONDS));
+    } finally {
+      executorService.shutdown();
+    }
+
+    checkCleanUp(project, 0);
+  }
+
+  @Test
+  public void testWithMultipleProjects() throws IOException {
+    GitHubProject firstProject = new GitHubProject("test", "one");
+    Path firstDir = directoryFor(firstProject);
+    try (Repository repository = FileRepositoryBuilder.create(firstDir.resolve(".git").toFile())) {
+      repository.create();
+    }
+    addRepositoryInfoForTesting(firstProject, firstDir);
+    testLocalRepositoryFor(firstProject, 1);
+
+    GitHubProject secondProject = new GitHubProject("test", "two");
+    Path secondDir = directoryFor(secondProject);
+    try (Repository repository = FileRepositoryBuilder.create(secondDir.resolve(".git").toFile())) {
+      repository.create();
+    }
+    addRepositoryInfoForTesting(secondProject, secondDir);
+    testLocalRepositoryFor(secondProject, 2);
+
+    testCleanup(firstProject, 1);
+    testCleanup(secondProject, 0);
+  }
+
+  @Test
+  public void testLocalRepositoriesCapacity() {
+    List<GitHubProject> projects = generateProjectsForSize(LOCAL_REPOSITORIES_CACHE_CAPACITY + 10);
+    projects.forEach(project -> addForTesting(project, mock(LocalRepository.class)));
+    assertEquals(LOCAL_REPOSITORIES_CACHE_CAPACITY, LOCAL_REPOSITORIES.size());
+    assertTrue(checkLocalRepositories(projects, LOCAL_REPOSITORIES));
+  }
+
+  private static List<GitHubProject> generateProjectsForSize(int n) {
+    List<GitHubProject> projects = new ArrayList<>();
+    for (int i = 0; i < n; i++) {
+      projects.add(new GitHubProject("test", String.format("project%s", i)));
+    }
+    return projects;
+  }
+
+  private static boolean checkLocalRepositories(List<GitHubProject> projects,
+      Map<GitHubProject, LocalRepository> localRepositories) {
+    return projects.containsAll(localRepositories.keySet());
+  }
+
+  private void testLocalRepositoryFor(GitHubProject project, int expectedSize) throws IOException {
+    GitHubDataFetcher.localRepositoryFor(project);
+    checkLocalRepository(project, expectedSize);
+  }
+
+  private static void checkLocalRepository(GitHubProject project, int expectedSize)
+      throws IOException {
+
+    LocalRepositoryInfo localRepositoryInfo = localRepositoryInfoFor(project, expectedSize);
+    assertNotNull(localRepositoryInfo);
+    assertEquals(project.url(), localRepositoryInfo.url());
+  }
+
+  private void testCleanup(GitHubProject project, int expectedSize) throws IOException {
+    runCleanupFor(project);
+    checkCleanUp(project, expectedSize);
+  }
+
+  private void runCleanupFor(GitHubProject project) throws IOException {
+    fetcher.cleanup((url, repo, total) -> url.equals(project.url()));
+  }
+
+  private static void checkCleanUp(GitHubProject project, int expectedSize) throws IOException {
+    LocalRepositoryInfo cleanRepositoryInfo = localRepositoryInfoFor(project, expectedSize);
+    assertNull(cleanRepositoryInfo);
+  }
+
+  private static LocalRepositoryInfo localRepositoryInfoFor(GitHubProject project, int expectedSize)
+      throws IOException {
+
+    loadLocalRepositoriesInfo();
+    assertEquals(LOCAL_REPOSITORIES_INFO.size(), expectedSize);
+    return LOCAL_REPOSITORIES_INFO.get(project.url());
   }
 }
