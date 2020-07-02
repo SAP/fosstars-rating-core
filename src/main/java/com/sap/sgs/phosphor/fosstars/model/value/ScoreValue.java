@@ -151,7 +151,9 @@ public class ScoreValue implements Value<Double>, Confidence {
   }
 
   /**
-   * Returns a list of values which were used to calculate the score value.
+   * Get a list of used values.
+   *
+   * @return A list of values which were used to calculate the score value.
    */
   @JsonGetter("usedValues")
   public List<Value> usedValues() {
@@ -171,7 +173,9 @@ public class ScoreValue implements Value<Double>, Confidence {
   }
 
   /**
-   * Returns the weight of the score value.
+   * Get the weight of the score value.
+   *
+   * @return The weight of the score value.
    */
   @JsonGetter("weight")
   public Double weight() {
@@ -191,7 +195,9 @@ public class ScoreValue implements Value<Double>, Confidence {
   }
 
   /**
-   * Returns a list of explanation which explain how the score value was calculated.
+   * Get explanations.
+   *
+   * @return A list of explanation which explain how the score value was calculated.
    */
   @JsonGetter("explanation")
   public List<String> explanation() {
@@ -294,9 +300,6 @@ public class ScoreValue implements Value<Double>, Confidence {
     return this;
   }
 
-  /**
-   * Returns the confidence.
-   */
   @Override
   @JsonGetter("confidence")
   public double confidence() {

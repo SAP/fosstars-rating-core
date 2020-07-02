@@ -14,7 +14,7 @@ import java.util.Optional;
 public interface ValueCache<K> extends Cache<K, ValueSet> {
 
   /**
-   * Returns a value of a feature for a key.
+   * Return a value of a feature for a key.
    *
    * @param key The key.
    * @param feature The feature.

@@ -87,7 +87,9 @@ public class NVD {
   }
 
   /**
-   * Returns true if downloading the data from the NVD failed, false otherwise.
+   * Tells whether downloading date from the NVD failed or not.
+   *
+   * @return True if downloading the data from the NVD failed, false otherwise.
    */
   boolean downloadFailed() {
     try {

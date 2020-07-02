@@ -97,6 +97,7 @@ public class RatingRepository {
    * Returns the latest version of a rating specified by a class.
    *
    * @param clazz The class of the rating.
+   * @param <T> The type of the rating.
    * @return An instance of rating of the specified class.
    * @throws IllegalArgumentException If no rating of the specified class was found.
    */

@@ -33,7 +33,9 @@ public interface Weight extends Parameter {
   Interval INTERVAL = DoubleInterval.init().from(MIN).to(MAX).openLeft().closedRight().make();
 
   /**
-   * Returns the weight's value.
+   * Get the weight's value.
+   *
+   * @return The weight's value.
    */
   Double value();
 
@@ -47,6 +49,7 @@ public interface Weight extends Parameter {
   /**
    * Checks if a weight belongs to the correct interval.
    *
+   * @param value The weight.
    * @return The weight if it's correct.
    * @throws IllegalArgumentException if the weight is not correct.
    */

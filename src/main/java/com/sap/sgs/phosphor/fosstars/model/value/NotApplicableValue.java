@@ -13,6 +13,8 @@ public final class NotApplicableValue<T> extends AbstractValue<T> {
    * This factory method returns a not-applicable value of a specified feature.
    *
    * @param feature The feature.
+   * @param <T> Feature value type.
+   * @return A not-applicable value for the feature.
    */
   public static <T> NotApplicableValue<T> of(Feature<T> feature) {
     return new NotApplicableValue<>(feature);

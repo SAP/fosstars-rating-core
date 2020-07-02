@@ -24,6 +24,8 @@ public class VulnerabilitiesInProject extends AbstractFeature<Vulnerabilities> {
 
   /**
    * Initializes a new feature.
+   *
+   * @param name A name of the feature.
    */
   @JsonCreator
   public VulnerabilitiesInProject(@JsonProperty("name") String name) {

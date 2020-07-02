@@ -34,7 +34,9 @@ public class Reference {
   }
 
   /**
-   * Returns the description for the reference.
+   * Get a description of the reference.
+   *
+   * @return The description for the reference.
    */
   @JsonGetter("description")
   public String description() {
@@ -42,7 +44,9 @@ public class Reference {
   }
 
   /**
-   * Returns the URL to a document which contains information about a vulnerability.
+   * Get a URL to the additional info.
+   *
+   * @return The URL to a document which contains information about a vulnerability.
    */
   @JsonGetter("url")
   public URL url() {

@@ -103,7 +103,7 @@ public class TestVectors implements Iterable<TestVector> {
   }
 
   /**
-   * Returns a test vectors by its index.
+   * Get a test vectors by its index.
    *
    * @param i The index.
    * @return The test vector.
@@ -113,7 +113,9 @@ public class TestVectors implements Iterable<TestVector> {
   }
 
   /**
-   * Returns true if the collection is empty, false otherwise.
+   * Checks if the collection of test vectors is empty.
+   *
+   * @return True if the collection is empty, false otherwise.
    */
   @JsonIgnore
   public boolean isEmpty() {
@@ -121,7 +123,9 @@ public class TestVectors implements Iterable<TestVector> {
   }
 
   /**
-   * Returns a size of the collection.
+   * Get a size of the collection.
+   *
+   * @return A size of the collection.
    */
   @JsonIgnore
   public int size() {

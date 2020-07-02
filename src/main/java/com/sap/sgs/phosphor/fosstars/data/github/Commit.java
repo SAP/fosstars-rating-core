@@ -8,22 +8,30 @@ import java.util.Date;
 public interface Commit {
 
   /**
-   * Returns a date when the commit was done.
+   * Get a date of the commit.
+   *
+   * @return A date when the commit was done.
    */
   Date date();
 
   /**
-   * Returns a name of the committer.
+   * Get a name of the committer.
+   *
+   * @return A name of the committer.
    */
   String committerName();
 
   /**
-   * Returns a name of the author.
+   * Get a name of the author.
+   *
+   * @return A name of the author.
    */
   String authorName();
 
   /**
-   * Returns true if the commit is signed, false otherwise.
+   * Tells whether the commit is signed or not.
+   *
+   * @return True if the commit is signed, false otherwise.
    */
   boolean isSigned();
 }

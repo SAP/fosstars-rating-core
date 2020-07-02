@@ -43,7 +43,9 @@ public class Vulnerabilities implements Iterable<Vulnerability> {
   }
 
   /**
-   * Return the set of vulnerabilities.
+   * Converts to a set.
+   *
+   * @return A set of vulnerabilities.
    */
   @JsonGetter("entries")
   public Set<Vulnerability> entries() {
@@ -51,7 +53,9 @@ public class Vulnerabilities implements Iterable<Vulnerability> {
   }
 
   /**
-   * Returns true if the collection is empty, false otherwise.
+   * Tells whether the collection is empty or not.
+   *
+   * @return True if the collection is empty, false otherwise.
    */
   @JsonIgnore
   public boolean isEmpty() {

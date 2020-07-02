@@ -20,12 +20,16 @@ import java.util.Set;
 public interface Rating {
 
   /**
-   * Returns a name of the rating.
+   * Get a name of the rating.
+   *
+   * @return A name of the rating.
    */
   String name();
 
   /**
-   * Returns a score which the rating is based on.
+   * Get a score that the rating uses.
+   *
+   * @return A score on which the rating is based.
    */
   Score score();
 

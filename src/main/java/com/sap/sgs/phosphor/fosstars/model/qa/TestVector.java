@@ -26,7 +26,9 @@ public interface TestVector {
   Label NO_LABEL = null;
 
   /**
-   * Returns the values.
+   * Get a set of feature values.
+   *
+   * @return The values.
    */
   Set<Value> values();
 
@@ -39,7 +41,9 @@ public interface TestVector {
   Set<Value> valuesFor(Score score);
 
   /**
-   * Returns an expected score.
+   * Returns an expected interval for a score value.
+   *
+   * @return An exptected interval for score value.
    */
   Interval expectedScore();
 
@@ -51,17 +55,23 @@ public interface TestVector {
   boolean hasLabel();
 
   /**
-   * Returns an expected label.
+   * Get an exptected label.
+   *
+   * @return An expected label.
    */
   Label expectedLabel();
 
   /**
-   * Returns an alias.
+   * Get an alias of the test vector.
+   *
+   * @return An alias.
    */
   String alias();
 
   /**
-   * Returns true if a not-applicable score value is expected, false otherwise.
+   * Tells if the test vector expects a N/A value.
+   *
+   * @return True if a not-applicable score value is expected, false otherwise.
    */
   boolean expectsNotApplicableScore();
 

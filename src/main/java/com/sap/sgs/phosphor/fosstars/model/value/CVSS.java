@@ -51,13 +51,17 @@ public class CVSS {
   public CVSS(
       @JsonProperty("version") Version version,
       @JsonProperty("value") Double value) {
+
     Objects.requireNonNull(version, "Hey! CVSS version can't be null!");
+
     this.version = version;
     this.value = check(value);
   }
 
   /**
-   * Returns the score.
+   * Get the CVSS score.
+   *
+   * @return The CVSS score.
    */
   @JsonGetter("value")
   public Double value() {
@@ -65,7 +69,9 @@ public class CVSS {
   }
 
   /**
-   * Returns the version.
+   * Get the CVSS version.
+   *
+   * @return The CVSS version.
    */
   @JsonGetter("version")
   public Version version() {
@@ -73,7 +79,9 @@ public class CVSS {
   }
 
   /**
-   * Return true if the score is unknown, false otherwise.
+   * Tells whether the score is unknown or not.
+   *
+   * @return True if the score is unknown, false otherwise.
    */
   @JsonIgnore
   public boolean isUnknown() {

@@ -82,7 +82,9 @@ public class LgtmDataProvider extends GitHubCachingDataProvider {
   }
 
   /**
-   * Returns an HTTP client.
+   * Creates an HTTP client.
+   *
+   * @return An HTTP client.
    */
   CloseableHttpClient httpClient() {
     return HttpClients.createDefault();

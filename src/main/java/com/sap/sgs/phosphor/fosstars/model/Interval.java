@@ -30,7 +30,9 @@ public interface Interval {
   boolean contains(int n);
 
   /**
-   * Return a mean of the interval.
+   * Calculates a mean of the interval.
+   *
+   * @return A mean of the interval.
    */
   double mean();
 }

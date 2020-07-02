@@ -40,6 +40,9 @@ public class WeightedCompositeScore extends AbstractScore implements Tunable {
 
   /**
    * Makes a score from a list of sub-scores.
+   *
+   * @param name A name of the new score.
+   * @param subScores A number of sub-scores.
    */
   public WeightedCompositeScore(String name, Score... subScores) {
     this(name, setOf(subScores), ScoreWeights.createFor(subScores));
@@ -48,6 +51,11 @@ public class WeightedCompositeScore extends AbstractScore implements Tunable {
   /**
    * Initializes a new score.
    * This constructor is used by Jackson during deserialization.
+   *
+   * @param name A name of the new score.
+   * @param subScores A set of sub-scores.
+   * @param weights Weights for the sub-scores.
+   * @throws IllegalArgumentException If the parameters are invalid.
    */
   @JsonCreator
   public WeightedCompositeScore(
@@ -87,7 +95,9 @@ public class WeightedCompositeScore extends AbstractScore implements Tunable {
   }
 
   /**
-   * Returns weights of the sub-scores.
+   * Get weights of the sub-scores included in the score.
+   *
+   * @return Weights of the sub-scores.
    */
   @JsonGetter("weights")
   public ScoreWeights weights() {
@@ -157,8 +167,7 @@ public class WeightedCompositeScore extends AbstractScore implements Tunable {
   }
 
   /**
-   * The score doesn't use any feature directory
-   * so that this method returns an empty set.
+   * The score doesn't use any feature directory so that this method returns an empty set.
    *
    * @return An empty set of features.
    */

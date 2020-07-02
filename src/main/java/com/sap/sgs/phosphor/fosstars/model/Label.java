@@ -18,12 +18,16 @@ import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 public interface Label {
 
   /**
-   * Return the label's name.
+   * Get the label's name.
+   *
+   * @return The label's name.
    */
   String name();
 
   /**
-   * Returns true if the value is not applicable in the current context, false otherwise.
+   * Tells if the label is not applicable.
+   *
+   * @return True if the value is not applicable in the current context, false otherwise.
    */
   default boolean isNotApplicable() {
     return false;

@@ -25,6 +25,7 @@ public class HasSecurityTeam extends CachedSingleFeatureGitHubDataProvider {
    * Initializes a data provider.
    *
    * @param fetcher An interface to GitHub.
+   * @throws IOException If something went wrong.
    */
   public HasSecurityTeam(GitHubDataFetcher fetcher) throws IOException {
     super(fetcher);

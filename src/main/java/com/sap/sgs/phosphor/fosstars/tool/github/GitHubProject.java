@@ -102,12 +102,19 @@ public class GitHubProject implements Project {
     return url;
   }
 
+  /**
+   * Returns project's path.
+   *
+   * @return Project's path.
+   */
   public String path() {
     return String.format("%s/%s", organization.name(), name);
   }
 
   /**
    * Returns the organization.
+   *
+   * @return The organization.
    */
   @JsonGetter("organization")
   public GitHubOrganization organization() {
@@ -116,6 +123,8 @@ public class GitHubProject implements Project {
 
   /**
    * Returns project's name.
+   *
+   * @return Project's name.
    */
   @JsonGetter("name")
   public String name() {
@@ -124,6 +133,8 @@ public class GitHubProject implements Project {
 
   /**
    * Returns the rating value. The method is used for serialization.
+   *
+   * @return The rating value.
    */
   @JsonGetter("ratingValue")
   private RatingValue getRatingValue() {
@@ -151,6 +162,8 @@ public class GitHubProject implements Project {
 
   /**
    * Returns a date when the rating value was calculated.
+   *
+   * @return The date.
    */
   @JsonGetter("ratingValueDate")
   public Date ratingValueDate() {

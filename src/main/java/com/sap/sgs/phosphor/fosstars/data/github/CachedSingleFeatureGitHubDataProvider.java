@@ -34,7 +34,9 @@ public abstract class CachedSingleFeatureGitHubDataProvider extends GitHubCachin
   }
 
   /**
-   * Returns a feature that the provider can fill out.
+   * Get a feature that the provider can fill out.
+   *
+   * @return A feature that the provider can fill out.
    */
   protected abstract Feature supportedFeature();
 
@@ -43,6 +45,7 @@ public abstract class CachedSingleFeatureGitHubDataProvider extends GitHubCachin
    *
    * @param project The project.
    * @return The value.
+   * @throws IOException If something went wrong.
    */
   protected abstract Value fetchValueFor(GitHubProject project) throws IOException;
 }

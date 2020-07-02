@@ -129,7 +129,7 @@ public class GitHubAdvisories {
    * Does a REST API call to public URL <a link="https://api.github.com/graphql">GitHub GraphQL
    * API</a> to list all the security advisories from GitHub Security Advisory.
    * 
-   * @param githHubToken is the GitHub Token.
+   * @param gitHubToken The GitHub Token.
    * @param jsonEntity is the query which needs to used to call GraphQL API.
    * @return The {@link GitHubAdvisoryEntry} object.
    * @throws IOException #{@link HttpClient} may throw an exception during GraphQL call.
@@ -147,7 +147,7 @@ public class GitHubAdvisories {
   /**
    * Builds a {@link HttpPost} request.
    * 
-   * @param githHubToken is the GitHub Token.
+   * @param gitHubToken is the GitHub Token.
    * @param jsonEntity is the query which needs to used to call GraphQL API.
    * @return The {@link HttpPost} object.
    * @throws UnsupportedEncodingException if something is wrong.
@@ -166,7 +166,9 @@ public class GitHubAdvisories {
   }
 
   /**
-   * Returns an HTTP client.
+   * Creates an HTTP client.
+   *
+   * @return An HTTP client.
    */
   CloseableHttpClient httpClient() {
     return HttpClients.createDefault();
@@ -202,8 +204,7 @@ public class GitHubAdvisories {
    * @return true if there is a next page. Otherwise false.
    */
   private boolean hasNextPage(GitHubAdvisoryEntry entry) {
-    return entry.getData().getSecurityVulnerabilities().getPageInfo().getHasNextPage()
-        .booleanValue();
+    return entry.getData().getSecurityVulnerabilities().getPageInfo().getHasNextPage();
   }
 
   /**
@@ -233,7 +234,8 @@ public class GitHubAdvisories {
 
   /**
    * This is for testing purpose only.
-   * 
+   *
+   * @param args Command line arguments.
    * @throws IOException if something goes wrong.
    */
   public static void main(String... args) throws IOException {

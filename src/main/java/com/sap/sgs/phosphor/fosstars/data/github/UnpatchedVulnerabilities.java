@@ -98,10 +98,10 @@ public class UnpatchedVulnerabilities extends CachedSingleFeatureGitHubDataProvi
   }
 
   /**
-   * Checks if an entry from NVD looks like an unpatched vulnerability
-   * by analyzing configurations.
+   * Checks if an entry from NVD looks like an unpatched vulnerability in a project.
    *
    * @param entry The entry from NVD.
+   * @param project The project.
    * @return True if the entry looks like an unpatched vulnerability, false otherwise.
    */
   private static boolean isUnpatched(NvdEntry entry, GitHubProject project) {
@@ -141,14 +141,22 @@ public class UnpatchedVulnerabilities extends CachedSingleFeatureGitHubDataProvi
   }
 
   /**
-   * Returns true if one of the CPE URIs in a CpeMatch element matches a project, false otherwise.
+   * Checks if a {@link CpeMatch} matches to a project.
+   *
+   * @param cpeMatch The {@link CpeMatch} to be checked.
+   * @param project The project.
+   * @return True if one of the CPE URIs in a CpeMatch element matches a project, false otherwise.
    */
   private static boolean match(CpeMatch cpeMatch, GitHubProject project) {
     return match(cpeMatch.getCpe22Uri(), project) || match(cpeMatch.getCpe23Uri(), project);
   }
 
   /**
-   * Returns true if a string matcher a project, false otherwise.
+   * Checks if a string matcher to a project.
+   *
+   * @param string The string.
+   * @param project The project.
+   * @return True if the string matches to the project, false otherwise.
    */
   private static boolean match(String string, GitHubProject project) {
     return string != null && string.toLowerCase().contains(project.name());

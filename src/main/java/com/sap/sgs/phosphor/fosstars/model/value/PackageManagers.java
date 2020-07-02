@@ -24,7 +24,9 @@ public class PackageManagers implements Iterable<PackageManager> {
   private final Set<PackageManager> packageManagers;
 
   /**
-   * Returns an empty set of package managers.
+   * Creates an empty set of package managers.
+   *
+   * @return An empty set of package managers.
    */
   public static PackageManagers empty() {
     return new PackageManagers();
@@ -34,6 +36,7 @@ public class PackageManagers implements Iterable<PackageManager> {
    * Initializes a set of package managers.
    *
    * @param entries A number of package managers.
+   * @return A new set of package managers.
    */
   public static PackageManagers from(PackageManager... entries) {
     return new PackageManagers(entries);
@@ -62,21 +65,27 @@ public class PackageManagers implements Iterable<PackageManager> {
   }
 
   /**
-   * Returns a number of package managers in the set.
+   * Get a size of the collection.
+   *
+   * @return A number of package managers in the set.
    */
   public int size() {
     return packageManagers.size();
   }
 
   /**
-   * Returns a list of the package managers.
+   * Converts to a list.
+   *
+   * @return A list of the package managers.
    */
   public List<PackageManager> list() {
     return new ArrayList<>(packageManagers);
   }
 
-  /*
+  /**
    * This getter is for serialization with Jackson.
+   *
+   * @return A set of package managers.
    */
   @JsonGetter("packageManagers")
   private Set<PackageManager> packageManagers() {

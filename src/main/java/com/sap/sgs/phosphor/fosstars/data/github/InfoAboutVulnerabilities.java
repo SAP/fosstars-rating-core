@@ -37,6 +37,8 @@ public class InfoAboutVulnerabilities extends CachedSingleFeatureGitHubDataProvi
    * Initializes a data provider.
    *
    * @param fetcher An interface to GitHub.
+   * @param nvd An interface to the NVD.
+   * @throws IOException If something went wrong.
    */
   public InfoAboutVulnerabilities(GitHubDataFetcher fetcher, NVD nvd) throws IOException {
     super(fetcher);

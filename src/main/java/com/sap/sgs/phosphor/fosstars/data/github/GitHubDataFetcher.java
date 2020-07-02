@@ -148,14 +148,18 @@ public class GitHubDataFetcher {
   }
 
   /**
-   * Returns the interface to the GitHub API.
+   * Get an interface to the GitHub API.
+   *
+   * @return The interface to the GitHub API.
    */
   public synchronized GitHub github() {
     return github;
   }
 
   /**
-   * Set the interface to the GitHub API.
+   * Set an interface to the GitHub API.
+   *
+   * @param github The interface to the GitHub API.
    */
   public synchronized void set(GitHub github) {
     Objects.requireNonNull(github, "Hey! An interface to GitHub can not be null!");
@@ -293,6 +297,8 @@ public class GitHubDataFetcher {
 
   /**
    * Sets how often new updates should be pulled to a local repository by default.
+   *
+   * @param duration The interval.
    */
   public static synchronized void pullAfter(Duration duration) {
     Objects.requireNonNull(duration, "Oh no! Duration is null!");
@@ -300,7 +306,10 @@ public class GitHubDataFetcher {
   }
 
   /**
-   * Returns true if a repository should be updated, false otherwise.
+   * Checks if a repository should be updated.
+   *
+   * @param repository The repository.
+   * @return True if the repository should be updated, false otherwise.
    */
   public static synchronized boolean shouldUpdate(LocalRepository repository) {
     Objects.requireNonNull(repository, "Oh no! Repository is null!");
@@ -355,14 +364,18 @@ public class GitHubDataFetcher {
   }
 
   /**
-   * Returns the cache for repositories.
+   * Get the cache of repositories.
+   *
+   * @return The cache of repositories.
    */
   GitHubDataCache<GHRepository> repositoryCache() {
     return repositoryCache;
   }
 
   /**
-   * Returns an expiration date for cache entries.
+   * Get an expiration date for the cache entries.
+   *
+   * @return An expiration date for cache entries.
    */
   public Date expiration() {
     return Date.from(Instant.now().plus(1, ChronoUnit.DAYS)); // tomorrow

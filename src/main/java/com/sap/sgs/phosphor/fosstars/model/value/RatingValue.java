@@ -9,8 +9,8 @@ import com.sap.sgs.phosphor.fosstars.model.Rating;
 import java.util.Objects;
 
 /**
- * The class holds a rating value produced by {@link Rating}.
- * TODO: RatingValue should implement the Value interface.
+ * <p>The class holds a rating value produced by {@link Rating}.</p>
+ * <p>TODO: RatingValue should implement the Value interface.</p>
  */
 public class RatingValue implements Confidence {
 
@@ -40,14 +40,18 @@ public class RatingValue implements Confidence {
   }
 
   /**
-   * Returns the score value.
+   * Get the score value.
+   *
+   * @return The score value.
    */
   public double score() {
     return scoreValue.get();
   }
 
   /**
-   * Returns the confidence.
+   * Get the confidence.
+   *
+   * @return The confidence.
    */
   @Override
   public double confidence() {
@@ -55,7 +59,9 @@ public class RatingValue implements Confidence {
   }
 
   /**
-   * Returns the label.
+   * Get the label.
+   *
+   * @return The label.
    */
   @JsonGetter("label")
   public Label label() {
@@ -63,7 +69,9 @@ public class RatingValue implements Confidence {
   }
 
   /**
-   * Returns the score value.
+   * Get the score value.
+   *
+   * @return The score value.
    */
   @JsonGetter("scoreValue")
   public ScoreValue scoreValue() {

@@ -34,7 +34,9 @@ public interface Cache<K, V> {
   void put(K key, V value, Date expiration);
 
   /**
-   * Returns a number of elements in the cache.
+   * Get a size of the cache.
+   *
+   * @return A number of elements in the cache.
    */
   int size();
 }

@@ -60,7 +60,9 @@ public class LocalRepositoryInfo {
   }
 
   /**
-   * Returns a date when the repository was updated.
+   * Get a date when the repository was updated.
+   *
+   * @return A date when the repository was updated.
    */
   @JsonGetter("updated")
   public Date updated() {
@@ -69,6 +71,8 @@ public class LocalRepositoryInfo {
 
   /**
    * Sets a date when the repository was updated.
+   *
+   * @param date The date to be set.
    */
   public void updated(Date date) {
     Objects.requireNonNull(updated, "Hey! Date can't be null!");
@@ -76,7 +80,9 @@ public class LocalRepositoryInfo {
   }
 
   /**
-   * Returns a path to the repository.
+   * Get a path to the repository.
+   *
+   * @return A path to the repository.
    */
   @JsonGetter("path")
   public Path path() {
@@ -84,7 +90,9 @@ public class LocalRepositoryInfo {
   }
 
   /**
-   * Returns a URL to the repository.
+   * Get a URL to the repository.
+   *
+   * @return A URL to the repository.
    */
   @JsonGetter("url")
   public URL url() {
@@ -92,7 +100,9 @@ public class LocalRepositoryInfo {
   }
 
   /**
-   * Returns a cached repository size if it's available. If not, it calculates the size.
+   * Get a cached size of the repository if it's available. If not, it calculates the size.
+   *
+   * @return A size of the repository.
    */
   @JsonIgnore
   public BigInteger cachedRepositorySize() {
@@ -103,7 +113,9 @@ public class LocalRepositoryInfo {
   }
 
   /**
-   * Returns a size of the repository.
+   * Get a size of the repository.
+   *
+   * @return A size of the repository.
    */
   @JsonIgnore
   public BigInteger repositorySize() {

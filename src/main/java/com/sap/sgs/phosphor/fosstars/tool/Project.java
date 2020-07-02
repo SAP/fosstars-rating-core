@@ -8,7 +8,9 @@ import java.net.URL;
 public interface Project {
 
   /**
-   * Returns a URL of the project's SCM.
+   * Returns a URL of the projects' SCM.
+   *
+   * @return A URL of the project's SCM.
    */
   URL url();
 }

@@ -11,6 +11,9 @@ import java.util.Objects;
  */
 public class DoubleValue extends AbstractValue<Double> {
 
+  /**
+   * A double value.
+   */
   private final double number;
 
   /**

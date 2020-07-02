@@ -26,12 +26,16 @@ public interface DataProvider<T> {
   DataProvider<T> update(T object, ValueSet values) throws IOException;
 
   /**
-   * Returns true if a provider talks to a user via {@link UserCallback}, false otherwise.
+   * Tells whether the provider talks to a user.
+   *
+   * @return True if the provider talks to a user via {@link UserCallback}, false otherwise.
    */
   boolean interactive();
 
   /**
-   * Returns a cache of values that is used by the data provider.
+   * Get a cache of values.
+   *
+   * @return A cache of values that is used by the data provider.
    */
   ValueCache<T> cache();
 

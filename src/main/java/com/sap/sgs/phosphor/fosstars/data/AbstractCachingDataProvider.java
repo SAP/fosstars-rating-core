@@ -82,7 +82,9 @@ public abstract class AbstractCachingDataProvider<T> extends AbstractDataProvide
   protected abstract ValueSet fetchValuesFor(T object) throws IOException;
 
   /**
-   * Returns an expiration date for cache entries.
+   * Get an expiration date for cache entries.
+   *
+   * @return An expiration date for cache entries.
    */
   protected Date expiration() {
     return Date.from(Instant.now().plus(1, ChronoUnit.DAYS)); // tomorrow

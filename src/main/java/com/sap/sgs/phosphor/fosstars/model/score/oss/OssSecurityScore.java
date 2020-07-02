@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * This is a security score for open-source projects.
- * The score takes into account multiple factors including:
+ * <p>This is a security score for open-source projects.
+ * The score takes into account multiple factors including:</p>
  * <ul>
  *   <li>Information about vulnerabilities</li>
  *   <li>Security testing</li>
