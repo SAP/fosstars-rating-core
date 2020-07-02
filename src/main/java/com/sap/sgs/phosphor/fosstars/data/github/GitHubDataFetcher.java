@@ -37,9 +37,13 @@ import org.kohsuke.github.GitHub;
 import org.kohsuke.github.HttpException;
 
 /**
+ * <p>
  * Helper class for GitHub data providers which pulls the data from a GitHub repository. Also, the
  * class caches the fetched data for a certain amount of time.
- * <p>The class is thread-safe.</p>
+ * </p>
+ * <p>
+ * The class is thread-safe.
+ * </p>
  */
 public class GitHubDataFetcher {
 
@@ -67,17 +71,18 @@ public class GitHubDataFetcher {
   /**
    * The default base directory.
    */
-  private static final String DEFAULT_DIRECTORY = ".fosstars/repositories";
+  static final Path DEFAULT_DIRECTORY = Paths.get(".fosstars/repositories");
 
   /**
    * The default file for info about local repositories.
    */
-  private static final String DEFAULT_LOCAL_REPOSITORIES_INFO_FILE = "local_repositories_info.json";
+  private static final Path DEFAULT_PATH_LOCAL_REPOSITORIES_INFO_FILE
+      = DEFAULT_DIRECTORY.resolve("local_repositories_info.json");
 
   /**
    * Maximum size of the cache for local repositories.
    */
-  private static final int LOCAL_REPOSITORIES_CACHE_CAPACITY = 100;
+  static final int LOCAL_REPOSITORIES_CACHE_CAPACITY = 100;
 
   /**
    * This flag doesn't allow exceeding the maximum cache size.
@@ -85,20 +90,25 @@ public class GitHubDataFetcher {
   private static final boolean SCAN_UNTIL_REMOVABLE = true;
 
   /**
-   * Lock to synchronize access to localRepositoriesInfo.
+   * A synchronized cache of local repositories.
    */
-  private static final Object LOCAL_REPOSITORIES_INFO_LOCK = new Object();
+  static final Map<GitHubProject, LocalRepository> LOCAL_REPOSITORIES
+      = Collections.synchronizedMap(
+        new LRUMap<>(LOCAL_REPOSITORIES_CACHE_CAPACITY, SCAN_UNTIL_REMOVABLE));
 
   /**
-   * A cache of local repositories.
+   * Synchronized map containing info about local repositories.
    */
-  static final LRUMap<GitHubProject, LocalRepository> LOCAL_REPOSITORIES
-      = new LRUMap<>(LOCAL_REPOSITORIES_CACHE_CAPACITY, SCAN_UNTIL_REMOVABLE);
+  static final Map<URL, LocalRepositoryInfo> LOCAL_REPOSITORIES_INFO
+      = Collections.synchronizedMap(new HashMap<>());
 
-  /**
-   * Info about local repositories.
-   */
-  static final Map<URL, LocalRepositoryInfo> LOCAL_REPOSITORIES_INFO = new HashMap<>();
+  static {
+    try {
+      loadLocalRepositoriesInfo();
+    } catch (IOException e) {
+      throw new ExceptionInInitializerError(e);
+    }
+  }
 
   /**
    * An interface to the GitHub API.
@@ -109,11 +119,6 @@ public class GitHubDataFetcher {
    * A limited capacity cache to store the repository of a {@link GitHubProject}.
    */
   private final GitHubDataCache<GHRepository> repositoryCache = new GitHubDataCache<>();
-
-  /**
-   * A base directory.
-   */
-  private final Path base;
 
   /**
    * Defines how often new updates should be pulled to a local repository.
@@ -127,7 +132,17 @@ public class GitHubDataFetcher {
    * @throws IOException If something went wrong.
    */
   public GitHubDataFetcher(GitHub github) throws IOException {
-    this(github, Paths.get(DEFAULT_DIRECTORY));
+    Objects.requireNonNull(github, "Hey! An interface to GitHub can not be null!");
+
+    if (!Files.exists(DEFAULT_DIRECTORY)) {
+      Files.createDirectories(DEFAULT_DIRECTORY);
+    }
+
+    if (!Files.isDirectory(DEFAULT_DIRECTORY)) {
+      throw new IOException(String.format("Hey! %s is not a directory!", DEFAULT_DIRECTORY));
+    }
+
+    this.github = github;
   }
 
   /**
@@ -143,31 +158,6 @@ public class GitHubDataFetcher {
   public synchronized void set(GitHub github) {
     Objects.requireNonNull(github, "Hey! An interface to GitHub can not be null!");
     this.github = github;
-  }
-
-  /**
-   * Initializes a new data fetcher.
-   *
-   * @param github An interface to the GitHub API.
-   * @param base A base directory.
-   * @throws IOException If something went wrong.
-   */
-  public GitHubDataFetcher(GitHub github, Path base) throws IOException {
-    Objects.requireNonNull(github, "Hey! An interface to GitHub can not be null!");
-    Objects.requireNonNull(base, "Hey! Base directory can not be null!");
-
-    if (!Files.exists(base)) {
-      Files.createDirectories(base);
-    }
-
-    if (!Files.isDirectory(base)) {
-      throw new IOException(String.format("Hey! %s is not a directory!", base));
-    }
-
-    this.base = base;
-    this.github = github;
-
-    loadLocalRepositoriesInfo();
   }
 
   /**
@@ -240,15 +230,14 @@ public class GitHubDataFetcher {
    */
   public LocalRepository localRepositoryFor(GitHubProject project) throws IOException {
     Objects.requireNonNull(project, "On no! Project is null!");
-    synchronized (LOCAL_REPOSITORIES_INFO_LOCK) {
-      LocalRepository repository = LOCAL_REPOSITORIES.get(project);
-      if (repository == null) {
-        repository = loadLocalRepositoryFor(project);
-        LOCAL_REPOSITORIES.put(project, repository);
-      }
+    LocalRepository repository = LOCAL_REPOSITORIES.get(project);
 
-      return repository;
+    if (repository == null) {
+      repository = loadLocalRepositoryFor(project);
+      LOCAL_REPOSITORIES.put(project, repository);
     }
+
+    return repository;
   }
 
   /**
@@ -261,41 +250,44 @@ public class GitHubDataFetcher {
   private LocalRepository loadLocalRepositoryFor(GitHubProject project) throws IOException {
     Objects.requireNonNull(project, "On no! Project is null!");
 
-    LocalRepositoryInfo info = LOCAL_REPOSITORIES_INFO.get(project.url());
-    if (info == null) {
-      Path repositoryPath = base.resolve(project.organization().name()).resolve(project.name());
+    synchronized (LOCAL_REPOSITORIES_INFO) {
+      LocalRepositoryInfo info = LOCAL_REPOSITORIES_INFO.get(project.url());
+      if (info == null) {
+        Path repositoryPath =
+            DEFAULT_DIRECTORY.resolve(project.organization().name()).resolve(project.name());
 
-      info = new LocalRepositoryInfo(repositoryPath, Date.from(Instant.now()), project.url());
+        info = new LocalRepositoryInfo(repositoryPath, Date.from(Instant.now()), project.url());
+      }
+
+      if (Files.isRegularFile(info.path())) {
+        LOGGER.warn("{} is a file but it should be a directory, let's remove it", info.path());
+        Files.delete(info.path());
+      }
+
+      Optional<Repository> repository = openRepository(info.path());
+      if (!repository.isPresent()) {
+        Files.deleteIfExists(info.path());
+        clone(project, info.path());
+        repository = openRepository(info.path());
+      }
+
+      if (!repository.isPresent()) {
+        throw new IOException("Could not fetch project's repository!");
+      }
+
+      LocalRepository localRepository = new LocalRepository(info, repository.get());
+
+      if (shouldUpdate(localRepository)) {
+        LOGGER.info("Pulling updates from {} ...", project.url());
+        localRepository.pull();
+      }
+
+      info.updated(Date.from(Instant.now()));
+      LOCAL_REPOSITORIES_INFO.put(project.url(), info);
+      storeLocalRepositoriesInfo();
+
+      return localRepository;
     }
-
-    if (Files.isRegularFile(info.path())) {
-      LOGGER.warn("{} is a file but it should be a directory, let's remove it", info.path());
-      Files.delete(info.path());
-    }
-
-    Optional<Repository> repository = openRepository(info.path());
-    if (!repository.isPresent()) {
-      Files.deleteIfExists(info.path());
-      clone(project, info.path());
-      repository = openRepository(info.path());
-    }
-
-    if (!repository.isPresent()) {
-      throw new IOException("Could not fetch project's repository!");
-    }
-
-    LocalRepository localRepository = new LocalRepository(info, repository.get());
-
-    if (shouldUpdate(localRepository)) {
-      LOGGER.info("Pulling updates from {} ...", project.url());
-      localRepository.pull();
-    }
-
-    info.updated(Date.from(Instant.now()));
-    LOCAL_REPOSITORIES_INFO.put(project.url(), info);
-    storeLocalRepositoriesInfo();
-
-    return localRepository;
   }
 
   /**
@@ -381,14 +373,15 @@ public class GitHubDataFetcher {
    * @return The info about local repositories.
    * @throws IOException If something went wrong.
    */
-  protected void loadLocalRepositoriesInfo() throws IOException {
-    synchronized (LOCAL_REPOSITORIES_INFO_LOCK) {
-      Path path = base.resolve(DEFAULT_LOCAL_REPOSITORIES_INFO_FILE);
-
+  static void loadLocalRepositoriesInfo() throws IOException {
+    Path path = DEFAULT_PATH_LOCAL_REPOSITORIES_INFO_FILE;
+    synchronized (LOCAL_REPOSITORIES_INFO) {
       if (!Files.exists(path)) {
         LOCAL_REPOSITORIES_INFO.clear();
         return;
-      } else if (!Files.isRegularFile(path)) {
+      }
+
+      if (!Files.isRegularFile(path)) {
         throw new IOException(String.format("Hey! %s is not a file!", path));
       }
 
@@ -402,10 +395,10 @@ public class GitHubDataFetcher {
    *
    * @throws IOException If something went wrong.
    */
-  protected void storeLocalRepositoriesInfo() throws IOException {
-    synchronized (LOCAL_REPOSITORIES_INFO_LOCK) {
+  protected static void storeLocalRepositoriesInfo() throws IOException {
+    synchronized (LOCAL_REPOSITORIES_INFO) {
       Files.write(
-          base.resolve(DEFAULT_LOCAL_REPOSITORIES_INFO_FILE),
+          DEFAULT_PATH_LOCAL_REPOSITORIES_INFO_FILE,
           MAPPER.writeValueAsBytes(LOCAL_REPOSITORIES_INFO));
     }
   }
@@ -421,7 +414,7 @@ public class GitHubDataFetcher {
 
     LOGGER.info("Cleaning up local repositories ...");
 
-    synchronized (LOCAL_REPOSITORIES_INFO_LOCK) {
+    synchronized (LOCAL_REPOSITORIES_INFO) {
       BigInteger total = BigInteger.valueOf(0L);
       for (Map.Entry<URL, LocalRepositoryInfo> entry : LOCAL_REPOSITORIES_INFO.entrySet()) {
         LocalRepositoryInfo info = entry.getValue();

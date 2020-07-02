@@ -1,5 +1,6 @@
 package com.sap.sgs.phosphor.fosstars.data.github;
 
+import static com.sap.sgs.phosphor.fosstars.data.github.GitHubDataFetcher.DEFAULT_DIRECTORY;
 import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -25,11 +26,6 @@ import org.kohsuke.github.GitHub;
 public class TestGitHubDataFetcherHolder {
 
   /**
-   * A base directory for {@link GitHubDataFetcher}.
-   */
-  protected Path path;
-
-  /**
    * An instance of {@link GitHubDataFetcher} for tests.
    */
   protected TestGitHubDataFetcher fetcher;
@@ -42,8 +38,7 @@ public class TestGitHubDataFetcherHolder {
   @Before
   public void init() throws IOException {
     GitHub github = mock(GitHub.class);
-    path = Files.createTempDirectory(getClass().getName());
-    fetcher = spy(new TestGitHubDataFetcher(github, path));
+    fetcher = spy(new TestGitHubDataFetcher(github));
   }
 
   /**
@@ -63,7 +58,7 @@ public class TestGitHubDataFetcherHolder {
       assertFalse(Files.exists(deletedPath));
     }
 
-    FileUtils.forceDeleteOnExit(path.toFile());
+    FileUtils.forceDeleteOnExit(DEFAULT_DIRECTORY.toFile());
   }
 
   public static class TestGitHubDataFetcher extends GitHubDataFetcher {
@@ -71,8 +66,8 @@ public class TestGitHubDataFetcherHolder {
     /**
      * Test class constructor.
      */
-    public TestGitHubDataFetcher(GitHub github, Path base) throws IOException {
-      super(github, base);
+    public TestGitHubDataFetcher(GitHub github) throws IOException {
+      super(github);
     }
 
     /**
@@ -91,6 +86,7 @@ public class TestGitHubDataFetcherHolder {
      * @throws IOException if something goes wrong.
      */
     public Map<URL, LocalRepositoryInfo> getLocalRespositoriesInfoForTesting() throws IOException {
+      loadLocalRepositoriesInfo();
       return LOCAL_REPOSITORIES_INFO;
     }
     
@@ -98,7 +94,7 @@ public class TestGitHubDataFetcherHolder {
      * Add new project to be considered while loading repository.
      *  
      * @param project The {@link GitHubProject}.
-     * @param projectDir The local {@link Path} of for the {@link GitHubProject}.
+     * @param projectDir The local {@link Path} for the {@link GitHubProject}.
      */
     public void addRepositoryInfoForTesting(GitHubProject project, Path projectDir) {
       LOCAL_REPOSITORIES.remove(project);
@@ -109,6 +105,16 @@ public class TestGitHubDataFetcherHolder {
     @Override
     protected void clone(GitHubProject project, Path base) {
       // do nothing
+    }
+
+    /**
+     * Returns a resolved valid directory path of the project.
+     *  
+     * @param project of type {@link GitHubProject}.
+     * @return path of type {@link Path}. 
+     */
+    static Path directoryFor(GitHubProject project) {
+      return DEFAULT_DIRECTORY.resolve(project.name());
     }
   }
 }
