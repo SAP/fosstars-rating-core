@@ -50,7 +50,7 @@ public class WeightedCompositeScore extends AbstractScore implements Tunable {
    * This constructor is used by Jackson during deserialization.
    */
   @JsonCreator
-  WeightedCompositeScore(
+  public WeightedCompositeScore(
       @JsonProperty("name") String name,
       @JsonProperty("subScores") Set<Score> subScores,
       @JsonProperty("weights") ScoreWeights weights) {
@@ -129,12 +129,14 @@ public class WeightedCompositeScore extends AbstractScore implements Tunable {
     for (Score subScore : subScores) {
       ScoreValue subScoreValue = calculateIfNecessary(subScore, valueSet);
       scoreValue.usedValues(subScoreValue);
+      Weight weight = weights.of(subScore).orElseThrow(IllegalStateException::new);
+      subScoreValue.weight(weight.value());
+
       if (subScoreValue.isNotApplicable()) {
         continue;
       }
+
       allNotApplicable = false;
-      Weight weight = weights.of(subScore).orElseThrow(IllegalStateException::new);
-      subScoreValue.weight(weight.value());
       scoreSum += weight.value() * subScoreValue.get();
       confidenceSum += weight.value() * subScoreValue.confidence();
       weightSum += weight.value();
