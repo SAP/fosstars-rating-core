@@ -276,8 +276,8 @@ public class WeightedCompositeScoreTest {
   @Test
   public void testWithOneNotApplicable() {
     WeightedScoreImpl score = new WeightedScoreImpl(
-        new FirstScore().returnsNotApplicable(),
-        new SecondScore()
+        setOf(new FirstScore().returnsNotApplicable(), new SecondScore()),
+        WeightedScoreImpl.initWeights()
     );
 
     ScoreValue scoreValue = score.calculate(
@@ -294,20 +294,23 @@ public class WeightedCompositeScoreTest {
     assertEquals(2, usedValues.size());
 
     assertTrue(usedValues.get(0) instanceof ScoreValue);
-    assertTrue(usedValues.get(0).isNotApplicable());
+    ScoreValue subScoreValue = (ScoreValue) usedValues.get(0);
+    assertTrue(subScoreValue.isNotApplicable());
+    assertEquals(WeightedScoreImpl.FIRST_WEIGHT, subScoreValue.weight(), PRECISION);
 
     assertTrue(usedValues.get(1) instanceof ScoreValue);
-    ScoreValue subScoreValue = (ScoreValue) usedValues.get(1);
+    subScoreValue = (ScoreValue) usedValues.get(1);
     assertFalse(subScoreValue.isNotApplicable());
     assertEquals(SecondScore.VALUE, subScoreValue.get(), PRECISION);
     assertEquals(Confidence.MAX, subScoreValue.confidence(), PRECISION);
+    assertEquals(WeightedScoreImpl.SECOND_WEIGHT, subScoreValue.weight(), PRECISION);
   }
 
   @Test
   public void testWithAllNotApplicable() {
     WeightedScoreImpl score = new WeightedScoreImpl(
-        new FirstScore().returnsNotApplicable(),
-        new SecondScore().returnsNotApplicable()
+        setOf(new FirstScore().returnsNotApplicable(), new SecondScore().returnsNotApplicable()),
+        WeightedScoreImpl.initWeights()
     );
 
     ScoreValue scoreValue = score.calculate(
@@ -322,7 +325,8 @@ public class WeightedCompositeScoreTest {
   public void testSerializationAndDeserialization() throws IOException {
     ObjectMapper mapper = new ObjectMapper();
     WeightedScoreImpl score = new WeightedScoreImpl(
-        SECURITY_TESTING_SCORE_EXAMPLE, PROJECT_ACTIVITY_SCORE_EXAMPLE);
+        setOf(SECURITY_TESTING_SCORE_EXAMPLE, PROJECT_ACTIVITY_SCORE_EXAMPLE),
+        ScoreWeights.createFor(SECURITY_TESTING_SCORE_EXAMPLE, PROJECT_ACTIVITY_SCORE_EXAMPLE));
     score.weights().set(SECURITY_TESTING_SCORE_EXAMPLE, new MutableWeight(0.1));
     score.weights().set(PROJECT_ACTIVITY_SCORE_EXAMPLE, new MutableWeight(0.7));
     WeightedScoreImpl clone = mapper.readValue(
@@ -408,18 +412,15 @@ public class WeightedCompositeScoreTest {
     private static final FirstScore FIRST_SCORE = new FirstScore();
     private static final SecondScore SECOND_SCORE = new SecondScore();
 
-    WeightedScoreImpl(Score... scores) {
-      super(NAME, scores);
+    WeightedScoreImpl(Set<Score> scores, ScoreWeights weights) {
+      super(NAME, scores, weights);
     }
 
     WeightedScoreImpl() {
-      super(
-          NAME,
-          setOf(FIRST_SCORE, SECOND_SCORE),
-          initWeights());
+      super(NAME, setOf(FIRST_SCORE, SECOND_SCORE), initWeights());
     }
 
-    private static ScoreWeights initWeights() {
+    static ScoreWeights initWeights() {
       ScoreWeights weights = ScoreWeights.createFor(FIRST_SCORE, SECOND_SCORE);
       weights.set(FIRST_SCORE, new MutableWeight(FIRST_WEIGHT));
       weights.set(SECOND_SCORE, new MutableWeight(SECOND_WEIGHT));
