@@ -489,7 +489,7 @@ elements:
     feature:
       type: "BooleanFeature"
       name: "If an open-source project is regularly scanned for vulnerable dependencies"
-    flag: false
+    flag: true
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
@@ -512,7 +512,7 @@ elements:
     from: 4.0
     openLeft: false
     negativeInfinity: false
-    to: 5.0
+    to: 6.0
     openRight: false
     positiveInfinity: false
   expectedLabel:
