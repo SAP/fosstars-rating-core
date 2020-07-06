@@ -3,7 +3,7 @@
 ```
 Here is how the rating was calculated:
   Score:........Security of project
-  Value:........5.60  out of 10.00
+  Value:........5.85  out of 10.00
   Confidence:...10.00 out of 10.00
   Based on:.....6 sub-scores:
       Sub-score:....Unpatched vulnerabilities
@@ -21,11 +21,11 @@ Here is how the rating was calculated:
                     Here is how the number of contributors contributes to the score (up to 5.10):
                     0 -> 0.10, 5 -> 2.55, 10 -> 4.59
       Importance:...Medium (weight 0.63 out of 1.00)
-      Value:........6.80  out of 10.00
+      Value:........8.14  out of 10.00
       Confidence:...10.00 out of 10.00
       Based on:...2 features:
-          Number of commits in the last three months:........224
-          Number of contributors in the last three months:...5
+          Number of commits in the last three months:........237
+          Number of contributors in the last three months:...7
 
       Sub-score:....Security testing
       Importance:...Medium (weight 0.63 out of 1.00)
@@ -102,18 +102,20 @@ Here is how the rating was calculated:
           Is it supported by a company?....No
 
       Sub-score:....Security awareness
-      Description:..The score checks if a project has a security policy and a security team.
+      Description:..The score shows how a project is aware of security.
                     If the project has a security policy, then the score adds 3.00.
                     If the project has a security team, then the score adds 5.00.
                     If the project uses verified signed commits, then the score adds 2.00.
-                    If the project has a bug bounty program, then the score adds 4.00.
+                    If the project has a bug bounty program, then the score adds 4.00
+                    If the project signs its artifacts, then the score adds 2.00.
       Importance:...Medium (weight 0.54 out of 1.00)
       Value:........5.00  out of 10.00
       Confidence:...10.00 out of 10.00
-      Based on:...4 features:
+      Based on:...5 features:
           Does it have a bug bounty program?......No
           Does it have a security policy?.........No
           Does it have a security team?...........Yes
+          Does it sign artifacts?.................No
           Does it use verified signed commits?....No
 
       Sub-score:....Project popularity
@@ -126,10 +128,10 @@ Here is how the rating was calculated:
       Value:........0.25  out of 10.00
       Confidence:...10.00 out of 10.00
       Based on:...2 features:
-          Number of stars for a GitHub repository:......167
+          Number of stars for a GitHub repository:......169
           Number of watchers for a GitHub repository:...24
 
-Rating: 5.60 out of 10.00 -> GOOD
+Rating: 5.85 out of 10.00 -> GOOD
 Confidence: 10.00 out of 10.00
 
 ```

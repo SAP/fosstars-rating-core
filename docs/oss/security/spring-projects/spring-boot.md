@@ -24,7 +24,7 @@ Here is how the rating was calculated:
       Value:........9.79  out of 10.00
       Confidence:...10.00 out of 10.00
       Based on:...2 features:
-          Number of commits in the last three months:........1499
+          Number of commits in the last three months:........1476
           Number of contributors in the last three months:...7
 
       Sub-score:....Security testing
@@ -102,18 +102,20 @@ Here is how the rating was calculated:
           Is it supported by a company?....Yes
 
       Sub-score:....Security awareness
-      Description:..The score checks if a project has a security policy and a security team.
+      Description:..The score shows how a project is aware of security.
                     If the project has a security policy, then the score adds 3.00.
                     If the project has a security team, then the score adds 5.00.
                     If the project uses verified signed commits, then the score adds 2.00.
-                    If the project has a bug bounty program, then the score adds 4.00.
+                    If the project has a bug bounty program, then the score adds 4.00
+                    If the project signs its artifacts, then the score adds 2.00.
       Importance:...Medium (weight 0.54 out of 1.00)
       Value:........5.00  out of 10.00
       Confidence:...10.00 out of 10.00
-      Based on:...4 features:
+      Based on:...5 features:
           Does it have a bug bounty program?......No
           Does it have a security policy?.........No
           Does it have a security team?...........Yes
+          Does it sign artifacts?.................No
           Does it use verified signed commits?....No
 
       Sub-score:....Project popularity
@@ -126,8 +128,8 @@ Here is how the rating was calculated:
       Value:........10.00  out of 10.00
       Confidence:...10.00 out of 10.00
       Based on:...2 features:
-          Number of stars for a GitHub repository:......48575
-          Number of watchers for a GitHub repository:...3415
+          Number of stars for a GitHub repository:......48953
+          Number of watchers for a GitHub repository:...3426
 
 Rating: 7.43 out of 10.00 -> GOOD
 Confidence: 9.64 out of 10.00

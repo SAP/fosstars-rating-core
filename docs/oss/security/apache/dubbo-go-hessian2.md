@@ -1,9 +1,9 @@
-# apache/skywalking-ui
+# apache/dubbo-go-hessian2
 
 ```
 Here is how the rating was calculated:
   Score:........Security of project
-  Value:........5.11  out of 10.00
+  Value:........5.27  out of 10.00
   Confidence:...10.00 out of 10.00
   Based on:.....6 sub-scores:
       Sub-score:....Unpatched vulnerabilities
@@ -21,36 +21,36 @@ Here is how the rating was calculated:
                     Here is how the number of contributors contributes to the score (up to 5.10):
                     0 -> 0.10, 5 -> 2.55, 10 -> 4.59
       Importance:...Medium (weight 0.63 out of 1.00)
-      Value:........0.00  out of 10.00
+      Value:........5.38  out of 10.00
       Confidence:...10.00 out of 10.00
       Based on:...2 features:
-          Number of commits in the last three months:........0
-          Number of contributors in the last three months:...0
+          Number of commits in the last three months:........62
+          Number of contributors in the last three months:...8
 
       Sub-score:....Security testing
       Importance:...Medium (weight 0.63 out of 1.00)
-      Value:........4.40  out of 10.00
+      Value:........0.00  out of 10.00
       Confidence:...10.00 out of 10.00
       Based on:.....5 sub-scores:
           Sub-score:....How a project uses static analysis for security testing
           Importance:...High (weight 1.00 out of 1.00)
-          Value:........5.00  out of 10.00
+          Value:........0.00  out of 10.00
           Confidence:...10.00 out of 10.00
           Based on:.....2 sub-scores:
               Sub-score:....How a project addresses issues reported by LGTM
               Importance:...High (weight 1.00 out of 1.00)
-              Value:........5.00  out of 10.00
-              Confidence:...10.00 out of 10.00
+              Value:........0.00  out of 10.00
+              Confidence:...5.00  out of 10.00
               Based on:...2 features:
                   Does it use LGTM?....................No
-                  The worst LGTM grade of a project:...A
+                  The worst LGTM grade of a project:...unknown
 
               Sub-score:....How a project uses FindSecBugs
               Importance:...High (weight 1.00 out of 1.00)
-              Value:........N/A  
+              Value:........0.00  out of 10.00
               Confidence:...10.00 out of 10.00
               Based on:...2 features:
-                  A set of programming languages:...JAVASCRIPT, OTHER
+                  A set of programming languages:...JAVA, OTHER
                   Does it use FindSecBugs?..........No
 
 
@@ -59,16 +59,16 @@ Here is how the rating was calculated:
           Value:........N/A  
           Confidence:...10.00 out of 10.00
           Based on:...2 features:
-              A set of programming languages:..............................JAVASCRIPT, OTHER
+              A set of programming languages:..............................JAVA, OTHER
               If an open-source project is included to OSS-Fuzz project:...No
 
           Sub-score:....Dependency testing
           Importance:...High (weight 1.00 out of 1.00)
-          Value:........6.00  out of 10.00
+          Value:........0.00  out of 10.00
           Confidence:...10.00 out of 10.00
           Based on:...5 features:
-              A set of package managers:..............................NPM, YARN
-              A set of programming languages:.........................JAVASCRIPT, OTHER
+              A set of package managers:..............................
+              A set of programming languages:.........................JAVA, OTHER
               Does it scan for vulnerable dependencies?...............No
               Does it use Dependabot?.................................No
               Does it use GitHub as the main development platform?....Yes
@@ -78,7 +78,7 @@ Here is how the rating was calculated:
           Value:........N/A  
           Confidence:...10.00 out of 10.00
           Based on:...4 features:
-              A set of programming languages:............JAVASCRIPT, OTHER
+              A set of programming languages:............JAVA, OTHER
               Does it use AddressSanitizer?..............No
               Does it use MemorySanitizer?...............No
               Does it use UndefinedBehaviorSanitizer?....No
@@ -88,7 +88,7 @@ Here is how the rating was calculated:
           Value:........0.00  out of 10.00
           Confidence:...10.00 out of 10.00
           Based on:...2 features:
-              A set of package managers:...NPM, YARN
+              A set of package managers:...
               Does it use nohttp?..........No
 
 
@@ -125,13 +125,13 @@ Here is how the rating was calculated:
                     Here is how a number of watchers contributes to the score:
                     0 -> 0.00 (min), 450 -> 1.50, 750 -> 2.50, 3000 -> 10.00 (max)
       Importance:...Medium (weight 0.31 out of 1.00)
-      Value:........0.46  out of 10.00
+      Value:........0.23  out of 10.00
       Confidence:...10.00 out of 10.00
       Based on:...2 features:
-          Number of stars for a GitHub repository:......264
-          Number of watchers for a GitHub repository:...58
+          Number of stars for a GitHub repository:......108
+          Number of watchers for a GitHub repository:...36
 
-Rating: 5.11 out of 10.00 -> MODERATE
+Rating: 5.27 out of 10.00 -> MODERATE
 Confidence: 10.00 out of 10.00
 
 ```

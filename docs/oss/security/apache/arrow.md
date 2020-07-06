@@ -3,7 +3,7 @@
 ```
 Here is how the rating was calculated:
   Score:........Security of project
-  Value:........7.40  out of 10.00
+  Value:........7.06  out of 10.00
   Confidence:...9.80  out of 10.00
   Based on:.....6 sub-scores:
       Sub-score:....Unpatched vulnerabilities
@@ -11,7 +11,7 @@ Here is how the rating was calculated:
       Value:........10.00  out of 10.00
       Confidence:...10.00 out of 10.00
       Based on:...1 features:
-          Info about vulnerabilities:...7 vulnerabilities
+          Info about vulnerabilities:...3 vulnerabilities
       Explanation:..No unpatched vulnerabilities found which is good
 
       Sub-score:....Project activity
@@ -24,12 +24,12 @@ Here is how the rating was calculated:
       Value:........10.00  out of 10.00
       Confidence:...10.00 out of 10.00
       Based on:...2 features:
-          Number of commits in the last three months:........720
-          Number of contributors in the last three months:...24
+          Number of commits in the last three months:........563
+          Number of contributors in the last three months:...23
 
       Sub-score:....Security testing
       Importance:...Medium (weight 0.63 out of 1.00)
-      Value:........4.11  out of 10.00
+      Value:........2.22  out of 10.00
       Confidence:...8.89  out of 10.00
       Based on:.....5 sub-scores:
           Sub-score:....How a project uses static analysis for security testing
@@ -75,13 +75,13 @@ Here is how the rating was calculated:
 
           Sub-score:....Memory-safety testing
           Importance:...High (weight 1.00 out of 1.00)
-          Value:........8.50  out of 10.00
+          Value:........0.00  out of 10.00
           Confidence:...10.00 out of 10.00
           Based on:...4 features:
               A set of programming languages:............C, CPP, JAVA, C_SHARP, RUBY, PYTHON, JAVASCRIPT, OTHER
-              Does it use AddressSanitizer?..............Yes
+              Does it use AddressSanitizer?..............No
               Does it use MemorySanitizer?...............No
-              Does it use UndefinedBehaviorSanitizer?....Yes
+              Does it use UndefinedBehaviorSanitizer?....No
 
           Sub-score:....If a project uses nohttp tool
           Importance:...Medium (weight 0.50 out of 1.00)
@@ -102,18 +102,20 @@ Here is how the rating was calculated:
           Is it supported by a company?....No
 
       Sub-score:....Security awareness
-      Description:..The score checks if a project has a security policy and a security team.
+      Description:..The score shows how a project is aware of security.
                     If the project has a security policy, then the score adds 3.00.
                     If the project has a security team, then the score adds 5.00.
                     If the project uses verified signed commits, then the score adds 2.00.
-                    If the project has a bug bounty program, then the score adds 4.00.
+                    If the project has a bug bounty program, then the score adds 4.00
+                    If the project signs its artifacts, then the score adds 2.00.
       Importance:...Medium (weight 0.54 out of 1.00)
       Value:........5.00  out of 10.00
       Confidence:...10.00 out of 10.00
-      Based on:...4 features:
+      Based on:...5 features:
           Does it have a bug bounty program?......No
           Does it have a security policy?.........No
           Does it have a security team?...........Yes
+          Does it sign artifacts?.................No
           Does it use verified signed commits?....No
 
       Sub-score:....Project popularity
@@ -123,13 +125,13 @@ Here is how the rating was calculated:
                     Here is how a number of watchers contributes to the score:
                     0 -> 0.00 (min), 450 -> 1.50, 750 -> 2.50, 3000 -> 10.00 (max)
       Importance:...Medium (weight 0.31 out of 1.00)
-      Value:........6.60  out of 10.00
+      Value:........6.66  out of 10.00
       Confidence:...10.00 out of 10.00
       Based on:...2 features:
-          Number of stars for a GitHub repository:......5602
+          Number of stars for a GitHub repository:......5663
           Number of watchers for a GitHub repository:...299
 
-Rating: 7.40 out of 10.00 -> GOOD
+Rating: 7.06 out of 10.00 -> GOOD
 Confidence: 9.80 out of 10.00
 
 ```

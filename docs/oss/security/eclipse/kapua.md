@@ -3,7 +3,7 @@
 ```
 Here is how the rating was calculated:
   Score:........Security of project
-  Value:........6.65  out of 10.00
+  Value:........7.08  out of 10.00
   Confidence:...10.00 out of 10.00
   Based on:.....6 sub-scores:
       Sub-score:....Unpatched vulnerabilities
@@ -21,15 +21,15 @@ Here is how the rating was calculated:
                     Here is how the number of contributors contributes to the score (up to 5.10):
                     0 -> 0.10, 5 -> 2.55, 10 -> 4.59
       Importance:...Medium (weight 0.63 out of 1.00)
-      Value:........8.22  out of 10.00
+      Value:........7.28  out of 10.00
       Confidence:...10.00 out of 10.00
       Based on:...2 features:
-          Number of commits in the last three months:........203
+          Number of commits in the last three months:........165
           Number of contributors in the last three months:...10
 
       Sub-score:....Security testing
       Importance:...Medium (weight 0.63 out of 1.00)
-      Value:........4.80  out of 10.00
+      Value:........6.40  out of 10.00
       Confidence:...10.00 out of 10.00
       Based on:.....5 sub-scores:
           Sub-score:....How a project uses static analysis for security testing
@@ -50,7 +50,7 @@ Here is how the rating was calculated:
               Value:........0.00  out of 10.00
               Confidence:...10.00 out of 10.00
               Based on:...2 features:
-                  A set of programming languages:...JAVA, RUBY, JAVASCRIPT, OTHER
+                  A set of programming languages:...JAVA, JAVASCRIPT, OTHER
                   Does it use FindSecBugs?..........No
 
 
@@ -59,17 +59,17 @@ Here is how the rating was calculated:
           Value:........N/A  
           Confidence:...10.00 out of 10.00
           Based on:...2 features:
-              A set of programming languages:..............................JAVA, RUBY, JAVASCRIPT, OTHER
+              A set of programming languages:..............................JAVA, JAVASCRIPT, OTHER
               If an open-source project is included to OSS-Fuzz project:...No
 
           Sub-score:....Dependency testing
           Importance:...High (weight 1.00 out of 1.00)
-          Value:........6.00  out of 10.00
+          Value:........10.00  out of 10.00
           Confidence:...10.00 out of 10.00
           Based on:...5 features:
               A set of package managers:..............................MAVEN
-              A set of programming languages:.........................JAVA, RUBY, JAVASCRIPT, OTHER
-              Does it scan for vulnerable dependencies?...............No
+              A set of programming languages:.........................JAVA, JAVASCRIPT, OTHER
+              Does it scan for vulnerable dependencies?...............Yes
               Does it use Dependabot?.................................No
               Does it use GitHub as the main development platform?....Yes
 
@@ -78,7 +78,7 @@ Here is how the rating was calculated:
           Value:........N/A  
           Confidence:...10.00 out of 10.00
           Based on:...4 features:
-              A set of programming languages:............JAVA, RUBY, JAVASCRIPT, OTHER
+              A set of programming languages:............JAVA, JAVASCRIPT, OTHER
               Does it use AddressSanitizer?..............No
               Does it use MemorySanitizer?...............No
               Does it use UndefinedBehaviorSanitizer?....No
@@ -102,18 +102,20 @@ Here is how the rating was calculated:
           Is it supported by a company?....No
 
       Sub-score:....Security awareness
-      Description:..The score checks if a project has a security policy and a security team.
+      Description:..The score shows how a project is aware of security.
                     If the project has a security policy, then the score adds 3.00.
                     If the project has a security team, then the score adds 5.00.
                     If the project uses verified signed commits, then the score adds 2.00.
-                    If the project has a bug bounty program, then the score adds 4.00.
+                    If the project has a bug bounty program, then the score adds 4.00
+                    If the project signs its artifacts, then the score adds 2.00.
       Importance:...Medium (weight 0.54 out of 1.00)
-      Value:........5.00  out of 10.00
+      Value:........7.00  out of 10.00
       Confidence:...10.00 out of 10.00
-      Based on:...4 features:
+      Based on:...5 features:
           Does it have a bug bounty program?......No
           Does it have a security policy?.........No
           Does it have a security team?...........Yes
+          Does it sign artifacts?.................Yes
           Does it use verified signed commits?....No
 
       Sub-score:....Project popularity
@@ -126,10 +128,10 @@ Here is how the rating was calculated:
       Value:........0.29  out of 10.00
       Confidence:...10.00 out of 10.00
       Based on:...2 features:
-          Number of stars for a GitHub repository:......154
+          Number of stars for a GitHub repository:......158
           Number of watchers for a GitHub repository:...40
 
-Rating: 6.65 out of 10.00 -> GOOD
+Rating: 7.08 out of 10.00 -> GOOD
 Confidence: 10.00 out of 10.00
 
 ```

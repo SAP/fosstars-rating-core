@@ -71,7 +71,7 @@ Here is how the rating was calculated:
               A set of programming languages:.........................JAVA, RUBY, PYTHON, JAVASCRIPT, OTHER
               Does it scan for vulnerable dependencies?...............No
               Does it use Dependabot?.................................No
-              Does it use GitHub as the main development platform?....No
+              Does it use GitHub as the main development platform?....Yes
 
           Sub-score:....Memory-safety testing
           Importance:...High (weight 1.00 out of 1.00)
@@ -102,18 +102,20 @@ Here is how the rating was calculated:
           Is it supported by a company?....No
 
       Sub-score:....Security awareness
-      Description:..The score checks if a project has a security policy and a security team.
+      Description:..The score shows how a project is aware of security.
                     If the project has a security policy, then the score adds 3.00.
                     If the project has a security team, then the score adds 5.00.
                     If the project uses verified signed commits, then the score adds 2.00.
-                    If the project has a bug bounty program, then the score adds 4.00.
+                    If the project has a bug bounty program, then the score adds 4.00
+                    If the project signs its artifacts, then the score adds 2.00.
       Importance:...Medium (weight 0.54 out of 1.00)
       Value:........7.00  out of 10.00
       Confidence:...10.00 out of 10.00
-      Based on:...4 features:
+      Based on:...5 features:
           Does it have a bug bounty program?......No
           Does it have a security policy?.........No
           Does it have a security team?...........Yes
+          Does it sign artifacts?.................No
           Does it use verified signed commits?....Yes
 
       Sub-score:....Project popularity
@@ -126,10 +128,10 @@ Here is how the rating was calculated:
       Value:........1.18  out of 10.00
       Confidence:...10.00 out of 10.00
       Based on:...2 features:
-          Number of stars for a GitHub repository:......626
+          Number of stars for a GitHub repository:......625
           Number of watchers for a GitHub repository:...165
 
-Rating: 4.69 out of 10.00 -> MODERATE
+Rating: 4.69 out of 10.00 -> BAD
 Confidence: 9.64 out of 10.00
 
 ```
