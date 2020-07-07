@@ -8,7 +8,6 @@ import static com.sap.sgs.phosphor.fosstars.model.value.Language.C;
 import static com.sap.sgs.phosphor.fosstars.model.value.Language.CPP;
 
 import com.sap.sgs.phosphor.fosstars.model.Value;
-import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.sgs.phosphor.fosstars.model.score.FeatureBasedScore;
@@ -23,10 +22,18 @@ import java.io.InputStream;
  *
  * <p>The score is based on the following features.</p>
  * <ul>
- *   <li>{@link OssFeatures#LANGUAGES}</li>
- *   <li>{@link OssFeatures#USES_ADDRESS_SANITIZER}</li>
- *   <li>{@link OssFeatures#USES_MEMORY_SANITIZER}</li>
- *   <li>{@link OssFeatures#USES_UNDEFINED_BEHAVIOR_SANITIZER}</li>
+ *   <li>{@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#LANGUAGES}
+ *   </li>
+ *   <li>
+ *     {@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#USES_ADDRESS_SANITIZER}
+ *   </li>
+ *   <li>
+ *     {@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#USES_MEMORY_SANITIZER}
+ *   </li>
+ *   <li>
+ *     {@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures
+ *     #USES_UNDEFINED_BEHAVIOR_SANITIZER}
+ *   </li>
  * </ul>
  */
 public class MemorySafetyTestingScore extends FeatureBasedScore {
