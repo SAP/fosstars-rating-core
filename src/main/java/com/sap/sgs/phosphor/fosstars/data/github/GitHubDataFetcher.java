@@ -99,7 +99,7 @@ public class GitHubDataFetcher {
   /**
    * A synchronized cache of local repositories.
    */
-  static final Map<GitHubProject, LocalRepository> LOCAL_REPOSITORIES
+  static final Map<URL, LocalRepository> LOCAL_REPOSITORIES
       = Collections.synchronizedMap(
           new LRUMap<>(LOCAL_REPOSITORIES_CACHE_CAPACITY, SCAN_UNTIL_REMOVABLE));
 
@@ -236,11 +236,11 @@ public class GitHubDataFetcher {
    */
   public static LocalRepository localRepositoryFor(GitHubProject project) throws IOException {
     Objects.requireNonNull(project, "On no! Project is null!");
-    LocalRepository repository = LOCAL_REPOSITORIES.get(project);
+    LocalRepository repository = LOCAL_REPOSITORIES.get(project.url());
 
     if (repository == null) {
       repository = loadLocalRepositoryFor(project);
-      LOCAL_REPOSITORIES.put(project, repository);
+      LOCAL_REPOSITORIES.put(project.url(), repository);
     }
 
     return repository;
@@ -455,6 +455,7 @@ public class GitHubDataFetcher {
         }
       }
 
+      toBeRemoved.forEach(LOCAL_REPOSITORIES::remove);
       toBeRemoved.forEach(LOCAL_REPOSITORIES_INFO::remove);
       storeLocalRepositoriesInfo();
     }
