@@ -79,7 +79,7 @@ public class TestGitHubDataFetcherHolder {
      * @param repository The {@link LocalRepository}.
      */
     static void addForTesting(GitHubProject project, LocalRepository repository) {
-      LOCAL_REPOSITORIES.put(project, repository);
+      LOCAL_REPOSITORIES.put(project.url(), repository);
     }
     
     /**
@@ -89,7 +89,7 @@ public class TestGitHubDataFetcherHolder {
      * @param projectDir The local {@link Path} for the {@link GitHubProject}.
      */
     static void addRepositoryInfoForTesting(GitHubProject project, Path projectDir) {
-      LOCAL_REPOSITORIES.remove(project);
+      LOCAL_REPOSITORIES.remove(project.url());
       LOCAL_REPOSITORIES_INFO.put(project.url(),
           new LocalRepositoryInfo(projectDir, Date.from(Instant.now()), project.url()));
     }

@@ -28,10 +28,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.junit.Test;
@@ -290,9 +292,13 @@ public class GitHubDataFetcherTest extends TestGitHubDataFetcherHolder  {
     return projects;
   }
 
-  private static boolean checkLocalRepositories(List<GitHubProject> projects,
-      Map<GitHubProject, LocalRepository> localRepositories) {
-    return projects.containsAll(localRepositories.keySet());
+  private static boolean checkLocalRepositories(
+      List<GitHubProject> projects, Map<URL, LocalRepository> localRepositories) {
+
+    Set<URL> projectUrls = projects.stream().map(GitHubProject::url).collect(Collectors.toSet());
+    assertEquals(projects.size(), projectUrls.size());
+
+    return projectUrls.containsAll(localRepositories.keySet());
   }
 
   private void testLocalRepositoryFor(GitHubProject project, int expectedSize) throws IOException {
@@ -320,6 +326,7 @@ public class GitHubDataFetcherTest extends TestGitHubDataFetcherHolder  {
   private static void checkCleanUp(GitHubProject project, int expectedSize) throws IOException {
     LocalRepositoryInfo cleanRepositoryInfo = localRepositoryInfoFor(project, expectedSize);
     assertNull(cleanRepositoryInfo);
+    assertFalse(LOCAL_REPOSITORIES.containsKey(project.url()));
   }
 
   private static LocalRepositoryInfo localRepositoryInfoFor(GitHubProject project, int expectedSize)
