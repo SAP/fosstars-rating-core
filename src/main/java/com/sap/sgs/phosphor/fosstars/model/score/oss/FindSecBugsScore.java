@@ -6,7 +6,6 @@ import static com.sap.sgs.phosphor.fosstars.model.value.Language.JAVA;
 import static java.lang.Boolean.FALSE;
 
 import com.sap.sgs.phosphor.fosstars.model.Value;
-import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.sgs.phosphor.fosstars.model.score.FeatureBasedScore;
@@ -20,8 +19,8 @@ import java.io.InputStream;
  *
  * <p>The score is based on the following features.</p>
  * <ul>
- *   <li>{@link OssFeatures#LANGUAGES}</li>
- *   <li>{@link OssFeatures#USES_FIND_SEC_BUGS}</li>
+ *   <li>{@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#LANGUAGES}</li>
+ *   <li>{@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#USES_FIND_SEC_BUGS}</li>
  * </ul>
  */
 public class FindSecBugsScore extends FeatureBasedScore {

@@ -5,7 +5,6 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.findValue;
 
 import com.sap.sgs.phosphor.fosstars.model.Value;
-import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.sgs.phosphor.fosstars.model.score.FeatureBasedScore;
@@ -19,8 +18,8 @@ import java.util.EnumMap;
  * <p>The score shows if and how a project addresses issues reported by LGTM.
  * The score is based on the following features.</p>
  * <ul>
- *   <li>{@link OssFeatures#USES_LGTM_CHECKS}</li>
- *   <li>{@link OssFeatures#WORST_LGTM_GRADE}</li>
+ *  <li>{@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#USES_LGTM_CHECKS}</li>
+ *  <li>{@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#WORST_LGTM_GRADE}</li>
  * </ul>
  */
 public class LgtmScore extends FeatureBasedScore {

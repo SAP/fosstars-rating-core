@@ -6,11 +6,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
 import java.util.Objects;
 
 /**
- * This is a value for the {@link OssFeatures#VULNERABILITIES} feature.
+ * This is a value for the
+ * {@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#VULNERABILITIES} feature.
  */
 public class VulnerabilitiesValue extends AbstractValue<Vulnerabilities> {
 

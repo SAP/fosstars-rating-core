@@ -25,7 +25,6 @@ import static com.sap.sgs.phosphor.fosstars.model.value.PackageManager.YARN;
 
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
-import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.sgs.phosphor.fosstars.model.score.FeatureBasedScore;
@@ -42,11 +41,23 @@ import java.util.Map;
  * <p>The scores assesses how well an open-source project scans dependencies
  * for known vulnerabilities. It is based on the following features.</p>
  * <ul>
- *   <li>{@link OssFeatures#SCANS_FOR_VULNERABLE_DEPENDENCIES}</li>
- *   <li>{@link OssFeatures#USES_DEPENDABOT}</li>
- *   <li>{@link OssFeatures#USES_GITHUB_FOR_DEVELOPMENT}</li>
- *   <li>{@link OssFeatures#LANGUAGES}</li>
- *   <li>{@link OssFeatures#PACKAGE_MANAGERS}</li>
+ *   <li>
+ *     {@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures
+ *     #SCANS_FOR_VULNERABLE_DEPENDENCIES}
+ *   </li>
+ *   <li>
+ *     {@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#USES_DEPENDABOT}
+ *   </li>
+ *   <li>
+ *     {@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures
+ *     #USES_GITHUB_FOR_DEVELOPMENT}
+ *   </li>
+ *   <li>
+ *     {@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#LANGUAGES}
+ *   </li>
+ *   <li>
+ *     {@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#PACKAGE_MANAGERS}
+ *   </li>
  * </ul>
  */
 public class DependencyScanScore extends FeatureBasedScore {
