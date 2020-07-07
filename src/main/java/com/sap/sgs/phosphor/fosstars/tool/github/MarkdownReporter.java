@@ -49,12 +49,6 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
    */
   private static final String PROJECT_LINE_TEMPLATE
       = "| %NAME% | %STARS% | %SCORE% | %LABEL% | %CONFIDENCE% | %DATE% |";
-
-  /**
-   * If confidence is lower than this value, then it's considered low.
-   */
-  private static final double CONFIDENCE_THRESHOLD = 7.0;
-
   /**
    * A length of line in a project name.
    */
@@ -70,21 +64,6 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
    * This string is printed out if something is unknown.
    */
   static final String UNKNOWN = "Unknown";
-
-  /**
-   * This string is printed out if something is unclear, for example, rating.
-   */
-  static final String UNCLEAR = "Unclear";
-
-  /**
-   * This string is printed out if something is low, for example, confidence.
-   */
-  static final String LOW = "Low";
-
-  /**
-   * This string is printed out if something is high, for example, confidence.
-   */
-  static final String HIGH = "High";
 
   /**
    * An output directory.
@@ -289,12 +268,7 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
       return UNKNOWN;
     }
 
-    RatingValue ratingValue = something.get();
-    if (unclear(ratingValue)) {
-      return LOW;
-    }
-
-    return HIGH;
+    return String.format("%2.2f", something.get().confidence());
   }
 
   /**
@@ -306,21 +280,7 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
       return UNKNOWN;
     }
 
-    RatingValue ratingValue = something.get();
-    if (unclear(ratingValue)) {
-      return UNCLEAR;
-    }
-
-    return ratingValue.label().name();
-  }
-
-  /**
-   * Checks if a rating value is unclear.
-   *
-   * @return True if confidence of a rating value is low, false otherwise.
-   */
-  private static boolean unclear(RatingValue ratingValue) {
-    return ratingValue.scoreValue().confidence() < CONFIDENCE_THRESHOLD;
+    return something.get().label().name();
   }
 
   /**
@@ -333,10 +293,6 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
     }
 
     RatingValue ratingValue = something.get();
-    if (unclear(ratingValue)) {
-      return UNCLEAR;
-    }
-
     ScoreValue scoreValue = ratingValue.scoreValue();
     return PrettyPrinter.tellMeActualValueOf(scoreValue);
   }
@@ -439,11 +395,6 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
 
       RatingValue ratingValue = project.ratingValue().get();
 
-      if (unclear(ratingValue)) {
-        unclearRatings++;
-        return;
-      }
-
       if (ratingValue.label() instanceof SecurityLabel == false) {
         unknownRatings++;
         return;
@@ -459,6 +410,9 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
           break;
         case GOOD:
           goodRatings++;
+          break;
+        case UNCLEAR:
+          unknownRatings++;
           break;
         default:
           throw new IllegalArgumentException(

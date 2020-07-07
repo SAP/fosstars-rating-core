@@ -5,11 +5,12 @@ import static com.sap.sgs.phosphor.fosstars.model.score.example.ExampleScores.SE
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sap.sgs.phosphor.fosstars.model.Label;
 import com.sap.sgs.phosphor.fosstars.model.Parameter;
-import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Tunable;
 import com.sap.sgs.phosphor.fosstars.model.rating.AbstractRating;
 import com.sap.sgs.phosphor.fosstars.model.score.example.SecurityScoreExample;
+import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * This is a sample implementation of a security rating. Only for demo purposes.
@@ -53,8 +54,10 @@ public class SecurityRatingExample extends AbstractRating implements Tunable {
    * Implements a mapping from a score to a label.
    */
   @Override
-  protected SecurityLabelExample label(double score) {
-    Score.check(score);
+  protected SecurityLabelExample label(ScoreValue scoreValue) {
+    Objects.requireNonNull(scoreValue, "Oh no! Score value is null!");
+
+    double score = scoreValue.get();
 
     if (score < 3.0) {
       return SecurityLabelExample.AWFUL;

@@ -3,6 +3,7 @@ package com.sap.sgs.phosphor.fosstars.model.rating.oss;
 import static com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel.BAD;
 import static com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel.GOOD;
 import static com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel.MODERATE;
+import static com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel.UNCLEAR;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -19,6 +20,7 @@ import com.sap.sgs.phosphor.fosstars.model.other.Utils;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating.Thresholds;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.OssSecurityScore;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
+import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.util.Set;
 import org.junit.Test;
 
@@ -30,7 +32,7 @@ public class OssSecurityRatingTest {
     Set<Value> values = Utils.allUnknown(rating.allFeatures());
     RatingValue ratingValue = rating.calculate(values);
     assertTrue(Score.INTERVAL.contains(ratingValue.score()));
-    assertEquals(BAD, ratingValue.label());
+    assertEquals(UNCLEAR, ratingValue.label());
   }
 
   @Test
@@ -71,9 +73,10 @@ public class OssSecurityRatingTest {
   @Test
   public void testLabels() {
     OssSecurityScore score = mock(OssSecurityScore.class);
-    OssSecurityRating rating = new OssSecurityRating(score, new Thresholds(1.0, 9.0));
-    assertEquals(BAD, rating.label(0.5));
-    assertEquals(MODERATE, rating.label(1.5));
-    assertEquals(GOOD, rating.label(9.5));
+    OssSecurityRating rating = new OssSecurityRating(score, new Thresholds(1.0, 9.0, 7.0));
+    assertEquals(BAD, rating.label(new ScoreValue(score).set(0.5).confidence(8.0)));
+    assertEquals(MODERATE, rating.label(new ScoreValue(score).set(1.5).confidence(7.1)));
+    assertEquals(GOOD, rating.label(new ScoreValue(score).set(9.5).confidence(9.0)));
+    assertEquals(UNCLEAR, rating.label(new ScoreValue(score).set(4.5).confidence(6.0)));
   }
 }

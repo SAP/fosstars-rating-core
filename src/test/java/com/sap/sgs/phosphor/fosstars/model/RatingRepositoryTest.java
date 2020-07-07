@@ -9,6 +9,7 @@ import com.sap.sgs.phosphor.fosstars.model.other.ImmutabilityChecker;
 import com.sap.sgs.phosphor.fosstars.model.rating.AbstractRating;
 import com.sap.sgs.phosphor.fosstars.model.rating.example.SecurityRatingExample;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating;
+import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import org.junit.Test;
 
 public class RatingRepositoryTest {
@@ -43,7 +44,7 @@ public class RatingRepositoryTest {
     }
 
     @Override
-    public Label label(double score) {
+    public Label label(ScoreValue scoreValue) {
       return null;
     }
   }

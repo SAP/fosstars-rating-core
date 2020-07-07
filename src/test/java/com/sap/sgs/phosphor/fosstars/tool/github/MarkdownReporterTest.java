@@ -3,6 +3,7 @@ package com.sap.sgs.phosphor.fosstars.tool.github;
 import static com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel.BAD;
 import static com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel.GOOD;
 import static com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel.MODERATE;
+import static com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel.UNCLEAR;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -54,7 +55,7 @@ public class MarkdownReporterTest {
       projectWithLowConfidence.set(
           new RatingValue(
               new ScoreValue(rating.score()).set(Score.MIN).confidence(1.0),
-              BAD));
+              UNCLEAR));
 
       List<GitHubProject> projects = Arrays.asList(
           goodProject, moderateProject, badProject, projectWithLowConfidence
@@ -75,7 +76,6 @@ public class MarkdownReporterTest {
         assertTrue(report.contains(label.name()));
       }
       assertTrue(report.contains(MarkdownReporter.UNKNOWN));
-      assertTrue(report.contains(MarkdownReporter.UNCLEAR));
       assertTrue(report.contains("org/good"));
       assertTrue(report.contains("org/bad"));
       assertTrue(report.contains("org/moderate"));
@@ -85,8 +85,6 @@ public class MarkdownReporterTest {
       assertEquals(1, linesWith("100%", report));
       assertEquals(4, linesWith("25.0%", report));
       assertEquals(1, linesWith("0.0%", report));
-      assertEquals(1, linesWith(MarkdownReporter.LOW, report));
-      assertEquals(3, linesWith(MarkdownReporter.HIGH, report));
     } finally {
       FileUtils.forceDeleteOnExit(outputDirectory.toFile());
     }
