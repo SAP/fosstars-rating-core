@@ -156,7 +156,7 @@ elements:
     positiveInfinity: false
   expectedLabel:
   - "OssSecurityRating$SecurityLabel"
-  - "BAD"
+  - "UNCLEAR"
   alias: "all_unknown"
 
 #

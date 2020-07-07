@@ -62,7 +62,8 @@ public class MultipleSecurityRatingsCalculatorTest extends TestGitHubDataFetcher
   }
 
   private static void check(RatingValue ratingValue) {
-    assertEquals(SecurityLabel.BAD, ratingValue.label());
+    assertEquals(SecurityLabel.UNCLEAR, ratingValue.label());
+    assertTrue(DoubleInterval.closed(0, 3).contains(ratingValue.scoreValue().confidence()));
     assertTrue(DoubleInterval.closed(0, 3).contains(ratingValue.scoreValue().get()));
   }
 }

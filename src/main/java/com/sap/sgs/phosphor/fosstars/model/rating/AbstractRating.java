@@ -60,10 +60,16 @@ public abstract class AbstractRating implements Rating {
     if (scoreValue.isNotApplicable()) {
       return new RatingValue(scoreValue, Label.NOT_APPLICABLE);
     }
-    return new RatingValue(scoreValue, label(scoreValue.get()));
+    return new RatingValue(scoreValue, label(scoreValue));
   }
 
-  protected abstract Label label(double score);
+  /**
+   * Assign a label for to a score value.
+   *
+   * @param scoreValue The score value.
+   * @return The label.
+   */
+  protected abstract Label label(ScoreValue scoreValue);
 
   @Override
   @JsonGetter("score")

@@ -45,7 +45,8 @@ public class SingleSecurityRatingCalculatorTest extends TestGitHubDataFetcherHol
 
     assertTrue(apacheNiFi.ratingValue().isPresent());
     RatingValue ratingValue = apacheNiFi.ratingValue().get();
-    assertEquals(SecurityLabel.BAD, ratingValue.label());
+    assertEquals(SecurityLabel.UNCLEAR, ratingValue.label());
+    assertTrue(DoubleInterval.closed(0, 3).contains(ratingValue.scoreValue().confidence()));
     assertTrue(DoubleInterval.closed(0, 3).contains(ratingValue.scoreValue().get()));
   }
 

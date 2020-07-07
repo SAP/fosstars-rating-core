@@ -2,10 +2,12 @@ package com.sap.sgs.phosphor.fosstars.model.rating.oss;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Label;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.rating.AbstractRating;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.OssSecurityScore;
+import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.util.Objects;
 
 /**
@@ -19,7 +21,7 @@ public class OssSecurityRating extends AbstractRating {
    */
   public enum SecurityLabel implements Label {
 
-    BAD, MODERATE, GOOD
+    BAD, MODERATE, GOOD, UNCLEAR
   }
 
   /**
@@ -55,12 +57,15 @@ public class OssSecurityRating extends AbstractRating {
     return (OssSecurityScore) super.score();
   }
 
-  /**
-   * Implements a mapping from a score to a label.
-   */
   @Override
-  protected SecurityLabel label(double score) {
-    Score.check(score);
+  protected SecurityLabel label(ScoreValue scoreValue) {
+    Objects.requireNonNull(scoreValue, "Oh no! Score value is null!");
+
+    if (scoreValue.confidence() < thresholds.unclear) {
+      return SecurityLabel.UNCLEAR;
+    }
+
+    double score = scoreValue.get();
 
     if (score < thresholds.moderate) {
       return SecurityLabel.BAD;
@@ -81,30 +86,39 @@ public class OssSecurityRating extends AbstractRating {
     /**
      * The default thresholds.
      */
-    public static final Thresholds DEFAULT = new Thresholds(5.0, 8.0);
+    public static final Thresholds DEFAULT = new Thresholds(5.0, 8.0, 8.0);
 
     /**
-     * A threshold for the moderate label.
+     * A threshold for the moderate label (score value).
      */
     private final double moderate;
 
     /**
-     * A threshold for the good label.
+     * A threshold for the good label (score value).
      */
     private final double good;
+
+    /**
+     * A threshold for the unclear label (confidence).
+     */
+    private final double unclear;
 
     /**
      * Initialize thresholds.
      *
      * @param moderate A threshold for the moderate label.
      * @param good A threshold for the good label.
+     * @param unclear A threshold for the unclear label.
      */
     @JsonCreator
     public Thresholds(
-        @JsonProperty("moderate") double moderate, @JsonProperty("good") double good) {
+        @JsonProperty("moderate") double moderate,
+        @JsonProperty("good") double good,
+        @JsonProperty("unclear") double unclear) {
 
       Score.check(moderate);
       Score.check(good);
+      Confidence.check(unclear);
 
       if (moderate >= good) {
         throw new IllegalArgumentException(
@@ -113,6 +127,7 @@ public class OssSecurityRating extends AbstractRating {
 
       this.moderate = moderate;
       this.good = good;
+      this.unclear = unclear;
     }
   }
 
