@@ -1,6 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.data.interactive;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
+import static com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.Builder.newVulnerability;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -10,7 +11,6 @@ import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
-import com.sap.sgs.phosphor.fosstars.model.value.Vulnerability;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import org.junit.Test;
 
@@ -23,8 +23,8 @@ public class AskAboutUnpatchedVulnerabilitiesTest {
 
     testProvider(
         new Vulnerabilities(
-            new Vulnerability(firstIssueId),
-            new Vulnerability(secondIssueId)),
+            newVulnerability(firstIssueId).make(),
+            newVulnerability(secondIssueId).make()),
         new AskAboutUnpatchedVulnerabilities(),
         new TestUserCallback("yes", firstIssueId, "yes", secondIssueId, "no"));
   }

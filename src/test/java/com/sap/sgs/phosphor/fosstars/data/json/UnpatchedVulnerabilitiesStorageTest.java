@@ -1,12 +1,11 @@
 package com.sap.sgs.phosphor.fosstars.data.json;
 
+import static com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.Builder.newVulnerability;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import com.sap.sgs.phosphor.fosstars.model.value.CVSS;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
-import com.sap.sgs.phosphor.fosstars.model.value.Vulnerability;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.Resolution;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -29,12 +28,11 @@ public class UnpatchedVulnerabilitiesStorageTest {
   public void store() throws IOException {
     UnpatchedVulnerabilitiesStorage storage = UnpatchedVulnerabilitiesStorage.load();
     String projectUrl = "https://github.com/holy/moly";
-    storage.add(projectUrl, new Vulnerability(
-        "https://bugtracker/1",
-        Vulnerability.NO_DESCRIPTION,
-        CVSS.UNKNOWN,
-        Vulnerability.NO_REFERENCES,
-        Resolution.UNPATCHED));
+    storage.add(
+        projectUrl,
+        newVulnerability("https://bugtracker/1")
+            .set(Resolution.UNPATCHED)
+            .make());
     Path tmp = Files.createTempFile(
         UnpatchedVulnerabilitiesStorageTest.class.getCanonicalName(), "test");
     String filename = tmp.toString();
@@ -43,7 +41,7 @@ public class UnpatchedVulnerabilitiesStorageTest {
       storage = UnpatchedVulnerabilitiesStorage.load(filename);
       Vulnerabilities vulnerabilities = storage.getFor(projectUrl);
       assertEquals(1, vulnerabilities.entries().size());
-      assertTrue(vulnerabilities.entries().contains(new Vulnerability("https://bugtracker/1")));
+      assertTrue(vulnerabilities.entries().contains(newVulnerability("https://bugtracker/1").make()));
     } finally {
       Files.delete(tmp);
     }

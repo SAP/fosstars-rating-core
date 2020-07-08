@@ -2,7 +2,7 @@ package com.sap.sgs.phosphor.fosstars.data.github.experimental;
 
 import static com.sap.sgs.phosphor.fosstars.maven.MavenUtils.readModel;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.date;
-import static com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.UNKNOWN_INTRODUCED_DATE;
+import static com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.Builder.newVulnerability;
 
 import com.sap.sgs.phosphor.fosstars.data.github.CachedSingleFeatureGitHubDataProvider;
 import com.sap.sgs.phosphor.fosstars.data.github.GitHubDataFetcher;
@@ -13,7 +13,6 @@ import com.sap.sgs.phosphor.fosstars.data.github.experimental.graphql.data.Node;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.feature.oss.VulnerabilitiesInProject;
-import com.sap.sgs.phosphor.fosstars.model.value.CVSS;
 import com.sap.sgs.phosphor.fosstars.model.value.PackageManager;
 import com.sap.sgs.phosphor.fosstars.model.value.Reference;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
@@ -24,7 +23,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.apache.maven.model.Model;
@@ -137,15 +135,14 @@ public class VulnerabilitiesFromGitHubAdvisories extends CachedSingleFeatureGitH
     Advisory advisory = node.getAdvisory();
 
     String id = advisory.getGhsaId();
-    String description = advisory.getDescription();
-    CVSS cvss = CVSS.UNKNOWN;
-    List<Reference> references = referencesFrom(advisory.getReferences());
-
     Resolution resolution =
         node.getFirstPatchedVersion() != null ? Resolution.PATCHED : Resolution.UNPATCHED;
 
-    Date fixed = date(advisory.getPublishedAt());
-    return new Vulnerability(id, description, cvss, references, resolution, UNKNOWN_INTRODUCED_DATE,
-        fixed);
+    return newVulnerability(id)
+        .description(advisory.getDescription())
+        .set(resolution)
+        .set(referencesFrom(advisory.getReferences()))
+        .fixed(date(advisory.getPublishedAt()))
+        .make();
   }
 }
