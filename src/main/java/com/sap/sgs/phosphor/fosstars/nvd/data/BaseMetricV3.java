@@ -23,4 +23,9 @@ public class BaseMetricV3 {
 
   @JsonProperty("impactScore")
   private Double impactScore;
+
+  @JsonProperty("cvssV3")
+  public CVSSv3 getCVSSv3() {
+    return cvssV3;
+  }
 }

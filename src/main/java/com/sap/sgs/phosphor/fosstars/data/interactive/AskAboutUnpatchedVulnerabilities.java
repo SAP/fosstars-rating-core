@@ -1,19 +1,13 @@
 package com.sap.sgs.phosphor.fosstars.data.interactive;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
-import static com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.NO_DESCRIPTION;
-import static com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.NO_REFERENCES;
-import static com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.UNKNOWN_FIXED_DATE;
-import static com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.UNKNOWN_INTRODUCED_DATE;
+import static com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.Builder.newVulnerability;
 import static com.sap.sgs.phosphor.fosstars.tool.YesNoQuestion.Answer.YES;
 
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
-import com.sap.sgs.phosphor.fosstars.model.value.CVSS;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
-import com.sap.sgs.phosphor.fosstars.model.value.Vulnerability;
-import com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.Resolution;
 import com.sap.sgs.phosphor.fosstars.tool.InputURL;
 import com.sap.sgs.phosphor.fosstars.tool.YesNoQuestion;
 import com.sap.sgs.phosphor.fosstars.tool.YesNoQuestion.Answer;
@@ -37,10 +31,7 @@ public class AskAboutUnpatchedVulnerabilities<T> extends AbstractInteractiveData
         callback.say("[+] This is awesome! Or, no?..");
         callback.say("[?] Please give me a URL for the vulnerability");
         String id = new InputURL(callback).get().toString();
-        Vulnerability vulnerability = new Vulnerability(
-            id, NO_DESCRIPTION, CVSS.UNKNOWN, NO_REFERENCES, Resolution.UNPATCHED,
-            UNKNOWN_INTRODUCED_DATE, UNKNOWN_FIXED_DATE);
-        unpatchedVulnerabilities.add(vulnerability);
+        unpatchedVulnerabilities.add(newVulnerability(id).make());
         answer = new YesNoQuestion(callback, "One more?").ask();
       } while (answer == YES);
     }

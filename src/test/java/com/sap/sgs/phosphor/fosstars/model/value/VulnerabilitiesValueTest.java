@@ -1,5 +1,6 @@
 package com.sap.sgs.phosphor.fosstars.model.value;
 
+import static com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.Builder.newVulnerability;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -14,8 +15,10 @@ public class VulnerabilitiesValueTest {
   public void serialization() throws IOException {
     ObjectMapper mapper = new ObjectMapper();
     VulnerabilitiesValue vulnerabilityValue =
-        new VulnerabilitiesValue(new Vulnerabilities(new Vulnerability("https://bugtracker/1"),
-            new Vulnerability("https://bugtracker/2")));
+        new VulnerabilitiesValue(
+            new Vulnerabilities(
+                newVulnerability("https://bugtracker/1").make(),
+                newVulnerability("https://bugtracker/2").make()));
     byte[] bytes = mapper.writeValueAsBytes(vulnerabilityValue);
     assertNotNull(bytes);
     assertTrue(bytes.length > 0);

@@ -1,12 +1,10 @@
 package com.sap.sgs.phosphor.fosstars.data.json;
 
-import static com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.UNKNOWN_FIXED_DATE;
-import static com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.UNKNOWN_INTRODUCED_DATE;
+import static com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.Builder.newVulnerability;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.sgs.phosphor.fosstars.model.value.CVSS;
-import com.sap.sgs.phosphor.fosstars.model.value.Reference;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerability;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.Resolution;
@@ -170,42 +168,14 @@ public class UnpatchedVulnerabilitiesStorage extends AbstractJsonStorage {
    */
   public static void main(String... args) throws IOException {
     UnpatchedVulnerabilitiesStorage storage = UnpatchedVulnerabilitiesStorage.load();
+
     storage.add(
         "https://github.com/odata4j/odata4j",
-        new Vulnerability(
-            "https://nvd.nist.gov/vuln/detail/CVE-2014-0171",
-            "XML external entity (XXE) vulnerability",
-            CVSS.v2(5.0),
-            Collections.emptyList(),
-            Resolution.UNPATCHED,
-            UNKNOWN_INTRODUCED_DATE,
-            UNKNOWN_FIXED_DATE));
-    storage.add(
-        "https://github.com/odata4j/odata4j",
-        new Vulnerability(
-            "https://nvd.nist.gov/vuln/detail/CVE-2016-11023",
-            "SQL injection (ExecuteCountQueryCommand)",
-            CVSS.v3(9.8),
-            Collections.singletonList(
-                new Reference(
-                    "Public disclosure",
-                    new URL("https://groups.google.com/d/msg/odata4j-discuss/_lBwwXP30g0/Av6zkZMdBwAJ"))),
-            Resolution.UNPATCHED,
-            UNKNOWN_INTRODUCED_DATE,
-            UNKNOWN_FIXED_DATE));
-    storage.add(
-        "https://github.com/odata4j/odata4j",
-        new Vulnerability(
-            "https://nvd.nist.gov/vuln/detail/CVE-2016-11024",
-            "SQL injection (ExecuteJPQLQueryCommand)",
-            CVSS.v3(9.8),
-            Collections.singletonList(
-                new Reference(
-                    "Public disclosure",
-                    new URL("https://groups.google.com/d/msg/odata4j-discuss/_lBwwXP30g0/Av6zkZMdBwAJ"))),
-            Resolution.UNPATCHED,
-            UNKNOWN_INTRODUCED_DATE,
-            UNKNOWN_FIXED_DATE));
+        newVulnerability("https://nvd.nist.gov/vuln/detail/CVE-2014-0171")
+            .set(CVSS.v2(5.0))
+            .set(Resolution.UNPATCHED)
+            .make());
+
     storage.store("src/main/resources/" + RESOURCE_PATH);
   }
 

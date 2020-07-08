@@ -142,6 +142,11 @@ public class CVSSv3 {
     return version;
   }
 
+  @JsonProperty("baseScore")
+  public double getBaseScore() {
+    return baseScore;
+  }
+
   public enum AttackComplexityType {
 
     HIGH("HIGH"),

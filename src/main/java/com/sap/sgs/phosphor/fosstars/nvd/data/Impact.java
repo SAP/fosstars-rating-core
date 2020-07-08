@@ -24,4 +24,9 @@ public class Impact {
   public BaseMetricV2 getBaseMetricV2() {
     return baseMetricV2;
   }
+
+  @JsonProperty("baseMetricV3")
+  public BaseMetricV3 getBaseMetricV3() {
+    return baseMetricV3;
+  }
 }

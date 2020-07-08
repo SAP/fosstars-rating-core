@@ -34,6 +34,9 @@
     files="BaseMetricV2.java"
     lines="52"/>
   <suppress checks="AbbreviationAsWordInName"
+    files="BaseMetricV3.java"
+    lines="28"/>
+  <suppress checks="AbbreviationAsWordInName"
     files="TestNVD.java"
     lines="9"/>
   <suppress checks="AbbreviationAsWordInName"
