@@ -66,9 +66,11 @@ public abstract class AbstractScore implements Score {
   public AbstractScore(String name, String description) {
     Objects.requireNonNull(name, "Hey! Score name can't be null!");
     Objects.requireNonNull(description, "Hey! Score description can't be null!");
+
     if (name.isEmpty()) {
       throw new IllegalArgumentException("Hey! Score name can't be empty!");
     }
+
     this.name = name;
     this.description = description;
   }
@@ -131,7 +133,7 @@ public abstract class AbstractScore implements Score {
       return false;
     }
     AbstractScore that = (AbstractScore) o;
-    return Objects.equals(name, that.name) && Objects.equals(description, this.description);
+    return Objects.equals(name, that.name) && Objects.equals(description, that.description);
   }
 
   @Override
