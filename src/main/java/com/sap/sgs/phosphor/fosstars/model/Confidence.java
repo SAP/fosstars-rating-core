@@ -1,6 +1,9 @@
 package com.sap.sgs.phosphor.fosstars.model;
 
 import com.sap.sgs.phosphor.fosstars.model.math.DoubleInterval;
+import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -66,28 +69,60 @@ public interface Confidence {
   }
 
   /**
-   * Calculates a confidence level based on a number of unknown feature values.
+   * Calculates a confidence level based on a number of values.
+   * The methods takes into account the following:
+   * <ul>
+   *   <li>number of unknown values</li>
+   *   <li>score values with their confidences and weights</li>
+   *   <li>values with confidences</li>
+   * </ul>
    *
    * @param values The features values.
    * @return The confidence level.
    */
-  static double make(Value... values) {
+  static double make(List<Value> values) {
     Objects.requireNonNull(values, "Hey! Values can't be null!");
-    if (values.length == 0) {
+
+    if (values.size() == 0) {
       throw new IllegalArgumentException("Hey! Values can't be empty!");
     }
-    int unknown = 0;
+
+    double weightSum = 0.0;
+    double weightedConfidenceSum = 0.0;
+
     for (Value value : values) {
       if (value.isUnknown()) {
-        unknown++;
+
+        // if value is unknown, then confidence is min and weight is 1.0
+        weightSum += 1.0;
+      } else if (value instanceof ScoreValue) {
+        ScoreValue scoreValue = (ScoreValue) value;
+        weightSum += scoreValue.weight();
+        weightedConfidenceSum += scoreValue.weight() * scoreValue.confidence();
+      } else if (value instanceof Confidence) {
+        weightedConfidenceSum += ((Confidence) value).confidence();
+        weightSum += 1.0;
+      } else {
+
+        // if it's a regular value, then confidence is max and weight is 1.0 as well
+        weightedConfidenceSum += MAX;
+        weightSum += 1.0;
       }
     }
 
-    if (unknown == 0) {
-      return MAX;
-    }
+    return adjust(weightedConfidenceSum / weightSum);
+  }
 
-    return MAX * (values.length - unknown) / values.length;
+  /**
+   * Calculates a confidence level based on a number of values.
+   *
+   * @param values The values.
+   * @return The confidence level
+   * @see #make(List)
+   */
+  static double make(Value... values) {
+    Objects.requireNonNull(values, "Hey! Values can't be null!");
+    return make(Arrays.asList(values));
   }
 
 }

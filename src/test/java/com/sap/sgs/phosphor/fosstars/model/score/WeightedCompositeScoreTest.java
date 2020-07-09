@@ -382,7 +382,7 @@ public class WeightedCompositeScoreTest {
 
     @Override
     public ScoreValue calculateImpl(Value... values) {
-      return scoreValue(VALUE, values);
+      return scoreValue(VALUE, values).confidence(Confidence.MAX);
     }
   }
 
@@ -398,7 +398,7 @@ public class WeightedCompositeScoreTest {
 
     @Override
     public ScoreValue calculateImpl(Value... values) {
-      return scoreValue(VALUE, values);
+      return scoreValue(VALUE, values).confidence(Confidence.MAX);
     }
   }
 
