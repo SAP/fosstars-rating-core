@@ -51,6 +51,16 @@ public class TestVectorBuilder {
   }
 
   /**
+   * Creates a new test vector builder.
+   *
+   * @param alias An alias for the test vector.
+   * @return A new builder.
+   */
+  public static TestVectorBuilder newTestVector(String alias) {
+    return newTestVector().alias(alias);
+  }
+
+  /**
    * Private constructor. Please use the {@link #newTestVector()} method to create an instance.
    */
   private TestVectorBuilder() {
