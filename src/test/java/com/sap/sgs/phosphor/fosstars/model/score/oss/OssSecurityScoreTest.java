@@ -99,10 +99,10 @@ public class OssSecurityScoreTest {
         USES_DEPENDABOT.value(true),
         USES_GITHUB_FOR_DEVELOPMENT.value(true),
         LANGUAGES.value(Languages.of(JAVA)),
-        USES_ADDRESS_SANITIZER.unknown(),
-        USES_MEMORY_SANITIZER.unknown(),
-        USES_UNDEFINED_BEHAVIOR_SANITIZER.unknown(),
-        FUZZED_IN_OSS_FUZZ.unknown(),
+        USES_ADDRESS_SANITIZER.value(false),
+        USES_MEMORY_SANITIZER.value(false),
+        USES_UNDEFINED_BEHAVIOR_SANITIZER.value(false),
+        FUZZED_IN_OSS_FUZZ.value(false),
         USES_FIND_SEC_BUGS.value(true),
         PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)));
     ScoreValue scoreValue = score.calculate(values);

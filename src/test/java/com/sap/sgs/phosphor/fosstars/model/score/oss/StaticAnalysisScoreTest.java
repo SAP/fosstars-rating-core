@@ -64,8 +64,12 @@ public class StaticAnalysisScoreTest {
   public void testCalculateWithAllNotApplicable() {
     StaticAnalysisScore score = new StaticAnalysisScore();
 
-    ScoreValue lgtmScoreValue = new ScoreValue(new LgtmScore()).makeNotApplicable();
-    ScoreValue findSecBugsScoreValue = new ScoreValue(new FindSecBugsScore()).makeNotApplicable();
+    ScoreValue lgtmScoreValue = new ScoreValue(new LgtmScore())
+        .makeNotApplicable()
+        .confidence(Confidence.MAX);
+    ScoreValue findSecBugsScoreValue = new ScoreValue(new FindSecBugsScore())
+        .makeNotApplicable()
+        .confidence(Confidence.MAX);
 
     ScoreValue scoreValue = score.calculate(lgtmScoreValue, findSecBugsScoreValue);
     assertFalse(scoreValue.isUnknown());
@@ -81,8 +85,12 @@ public class StaticAnalysisScoreTest {
   public void testCalculateWithSubScoreValues() {
     StaticAnalysisScore score = new StaticAnalysisScore();
 
-    ScoreValue lgtmScoreValue = new ScoreValue(new LgtmScore()).set(MIN);
-    ScoreValue findSecBugsScoreValue = new ScoreValue(new FindSecBugsScore()).set(MIN);
+    ScoreValue lgtmScoreValue = new ScoreValue(new LgtmScore())
+        .set(MIN)
+        .confidence(Confidence.MAX);
+    ScoreValue findSecBugsScoreValue = new ScoreValue(new FindSecBugsScore())
+        .set(MIN)
+        .confidence(Confidence.MAX);
 
     ScoreValue scoreValue = score.calculate(lgtmScoreValue, findSecBugsScoreValue);
     assertFalse(scoreValue.isUnknown());
@@ -101,8 +109,12 @@ public class StaticAnalysisScoreTest {
 
     final double value = 5.5;
 
-    ScoreValue lgtmScoreValue = new ScoreValue(new LgtmScore()).set(value);
-    ScoreValue findSecBugsScoreValue = new ScoreValue(new FindSecBugsScore()).makeNotApplicable();
+    ScoreValue lgtmScoreValue = new ScoreValue(new LgtmScore())
+        .set(value)
+        .confidence(Confidence.MAX);
+    ScoreValue findSecBugsScoreValue = new ScoreValue(new FindSecBugsScore())
+        .makeNotApplicable()
+        .confidence(Confidence.MAX);
 
     ScoreValue scoreValue = score.calculate(lgtmScoreValue, findSecBugsScoreValue);
     assertFalse(scoreValue.isUnknown());

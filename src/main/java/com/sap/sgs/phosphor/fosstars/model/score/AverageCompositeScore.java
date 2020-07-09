@@ -5,6 +5,7 @@ import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
@@ -42,15 +43,17 @@ public class AverageCompositeScore extends AbstractScore {
    * @param subScores A set of sub-scores.
    */
   @JsonCreator
-  AverageCompositeScore(
+  public AverageCompositeScore(
       @JsonProperty("name") String name,
       @JsonProperty("subScores") Set<Score> subScores) {
 
     super(name);
     Objects.requireNonNull(subScores, "Sub-scores can't be null!");
+
     if (subScores.isEmpty()) {
       throw new IllegalArgumentException("Sub-scores can't be empty!");
     }
+
     this.subScores = new HashSet<>(subScores);
   }
 
@@ -82,7 +85,6 @@ public class AverageCompositeScore extends AbstractScore {
     ScoreValue scoreValue = new ScoreValue(this);
 
     double subScoreSum = 0.0;
-    double confidenceSum = 0.0;
     int numberOfSubScores = 0;
     for (Score subScore : subScores) {
       ScoreValue subScoreValue = calculateIfNecessary(subScore, valueSet);
@@ -92,7 +94,6 @@ public class AverageCompositeScore extends AbstractScore {
       }
       numberOfSubScores++;
       subScoreSum += subScoreValue.get();
-      confidenceSum += subScoreValue.confidence();
     }
 
     if (numberOfSubScores == 0) {
@@ -100,7 +101,7 @@ public class AverageCompositeScore extends AbstractScore {
     }
 
     scoreValue.set(subScoreSum / numberOfSubScores);
-    scoreValue.confidence(confidenceSum / numberOfSubScores);
+    scoreValue.confidence(Confidence.make(scoreValue.usedValues()));
 
     return scoreValue;
   }

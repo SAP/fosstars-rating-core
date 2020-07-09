@@ -49,6 +49,16 @@ public class WeightedCompositeScore extends AbstractScore implements Tunable {
   }
 
   /**
+   * Makes a score from a set of sub-scores.
+   *
+   * @param name A name of the new score.
+   * @param subScores A number of sub-scores.
+   */
+  public WeightedCompositeScore(String name, Set<Score> subScores) {
+    this(name, subScores, ScoreWeights.createFor(subScores));
+  }
+
+  /**
    * Initializes a new score.
    * This constructor is used by Jackson during deserialization.
    *
@@ -84,7 +94,7 @@ public class WeightedCompositeScore extends AbstractScore implements Tunable {
       }
     }
 
-    this.subScores = subScores;
+    this.subScores = new HashSet<>(subScores);
     this.weights = weights;
   }
 
@@ -132,7 +142,6 @@ public class WeightedCompositeScore extends AbstractScore implements Tunable {
 
     double weightSum = 0.0;
     double scoreSum = 0.0;
-    double confidenceSum = 0.0;
 
     ScoreValue scoreValue = new ScoreValue(this);
     boolean allNotApplicable = true;
@@ -148,7 +157,6 @@ public class WeightedCompositeScore extends AbstractScore implements Tunable {
 
       allNotApplicable = false;
       scoreSum += weight.value() * subScoreValue.get();
-      confidenceSum += weight.value() * subScoreValue.confidence();
       weightSum += weight.value();
     }
 
@@ -161,7 +169,7 @@ public class WeightedCompositeScore extends AbstractScore implements Tunable {
     }
 
     scoreValue.set(Score.adjust(scoreSum / weightSum));
-    scoreValue.confidence(Confidence.adjust(confidenceSum / weightSum));
+    scoreValue.confidence(Confidence.make(scoreValue.usedValues()));
 
     return scoreValue;
   }

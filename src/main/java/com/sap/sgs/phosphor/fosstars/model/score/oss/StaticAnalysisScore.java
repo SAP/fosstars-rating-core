@@ -2,6 +2,7 @@ package com.sap.sgs.phosphor.fosstars.model.score.oss;
 
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
 
+import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
@@ -81,6 +82,7 @@ public class StaticAnalysisScore extends AbstractScore {
 
     scoreValue.increase(lgtmScoreValue.orElse(MIN));
     scoreValue.increase(findSecBugsScoreValue.orElse(MIN));
+    scoreValue.confidence(Confidence.make(lgtmScoreValue, findSecBugsScoreValue));
 
     return scoreValue;
   }
