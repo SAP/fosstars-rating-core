@@ -1,35 +1,51 @@
 package com.sap.sgs.phosphor.fosstars.model.score.oss;
 
+import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.sgs.phosphor.fosstars.model.score.WeightedCompositeScore;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * <p>This is a security score for open-source projects.
- * The score takes into account multiple factors including:</p>
+ * The score is based on the following sub-scores:</p>
  * <ul>
- *   <li>Information about vulnerabilities</li>
- *   <li>Security testing</li>
- *   <li>Security awareness of the community</li>
- *   <li>Project activity</li>
- *   <li>and so on.</li>
+ *   <li>{@link ProjectSecurityTestingScore}</li>
+ *   <li>{@link ProjectActivityScore}</li>
+ *   <li>{@link ProjectPopularityScore}</li>
+ *   <li>{@link CommunityCommitmentScore}</li>
+ *   <li>{@link ProjectSecurityAwarenessScore}</li>
+ *   <li>{@link UnpatchedVulnerabilitiesScore}</li>
+ *   <li>{@link VulnerabilityDiscoveryAndSecurityTestingScore}</li>
  * </ul>
  */
 public class OssSecurityScore extends WeightedCompositeScore {
 
   /**
+   * A set of sub-scores.
+   */
+  private static final Set<Score> SUB_SCORES = new HashSet<>();
+
+  static {
+    ProjectSecurityTestingScore securityTestingScore = new ProjectSecurityTestingScore();
+
+    SUB_SCORES.add(securityTestingScore);
+    SUB_SCORES.add(new ProjectActivityScore());
+    SUB_SCORES.add(new ProjectPopularityScore());
+    SUB_SCORES.add(new CommunityCommitmentScore());
+    SUB_SCORES.add(new ProjectSecurityAwarenessScore());
+    SUB_SCORES.add(new UnpatchedVulnerabilitiesScore());
+    SUB_SCORES.add(new VulnerabilityDiscoveryAndSecurityTestingScore(securityTestingScore));
+  }
+
+  /**
    * Initializes a new open-source security score.
    */
   public OssSecurityScore() {
-    super("Security score for open-source projects",
-        new ProjectActivityScore(),
-        new ProjectPopularityScore(),
-        new CommunityCommitmentScore(),
-        new ProjectSecurityAwarenessScore(),
-        new ProjectSecurityTestingScore(),
-        new UnpatchedVulnerabilitiesScore());
+    super("Security score for open-source projects", SUB_SCORES);
   }
 
   /**

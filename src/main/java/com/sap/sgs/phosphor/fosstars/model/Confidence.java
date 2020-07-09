@@ -92,7 +92,6 @@ public interface Confidence {
 
     for (Value value : values) {
       if (value.isUnknown()) {
-
         // if value is unknown, then confidence is min and weight is 1.0
         weightSum += 1.0;
       } else if (value instanceof ScoreValue) {
@@ -103,7 +102,6 @@ public interface Confidence {
         weightedConfidenceSum += ((Confidence) value).confidence();
         weightSum += 1.0;
       } else {
-
         // if it's a regular value, then confidence is max and weight is 1.0 as well
         weightedConfidenceSum += MAX;
         weightSum += 1.0;

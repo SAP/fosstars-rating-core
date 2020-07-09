@@ -9,6 +9,7 @@ elements:
       com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectActivityScore: 0.0
       com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectPopularityScore: 0.0
       com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectSecurityAwarenessScore: 0.0
+      com.sap.sgs.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore: 0.0
     expectedScore:
       type: "DoubleInterval"
       from: 0.0
@@ -28,6 +29,7 @@ elements:
       com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectActivityScore: 5.0
       com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectPopularityScore: 5.0
       com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectSecurityAwarenessScore: 0.0
+      com.sap.sgs.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore: 0.0
     expectedScore:
       type: "DoubleInterval"
       from: 1.0
@@ -47,6 +49,7 @@ elements:
       com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectActivityScore: 5.0
       com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectPopularityScore: 5.0
       com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectSecurityAwarenessScore: 5.0
+      com.sap.sgs.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore: 5.0
     expectedScore:
       type: "DoubleInterval"
       from: 3.0
@@ -66,6 +69,7 @@ elements:
       com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectActivityScore: 10.0
       com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectPopularityScore: 10.0
       com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectSecurityAwarenessScore: 0.0
+      com.sap.sgs.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore: 2.0
     expectedScore:
       type: "DoubleInterval"
       from: 3.0
@@ -85,6 +89,7 @@ elements:
       com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectActivityScore: 5.0
       com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectPopularityScore: 5.0
       com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectSecurityAwarenessScore: 0.0
+      com.sap.sgs.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore: 2.0
     expectedScore:
       type: "DoubleInterval"
       from: 4.0
@@ -104,6 +109,7 @@ elements:
       com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectActivityScore: 5.0
       com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectPopularityScore: 5.0
       com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectSecurityAwarenessScore: 8.0
+      com.sap.sgs.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore: 9.0
     expectedScore:
       type: "DoubleInterval"
       from: 6.0
@@ -123,12 +129,13 @@ elements:
       com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectActivityScore: 5.0
       com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectPopularityScore: 5.0
       com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectSecurityAwarenessScore: 10.0
+      com.sap.sgs.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore: 10.0
     expectedScore:
       type: "DoubleInterval"
-      from: 7.0
+      from: 8.0
       openLeft: false
       negativeInfinity: false
-      to: 8.0
+      to: 9.0
       openRight: false
       positiveInfinity: false
     expectedLabel: null
@@ -142,12 +149,13 @@ elements:
       com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectActivityScore: 7.0
       com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectPopularityScore: 7.0
       com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectSecurityAwarenessScore: 0.0
+      com.sap.sgs.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore: 0.0
     expectedScore:
       type: "DoubleInterval"
-      from: 5.0
+      from: 4.0
       openLeft: false
       negativeInfinity: false
-      to: 6.0
+      to: 5.0
       openRight: false
       positiveInfinity: false
     expectedLabel: null
@@ -161,6 +169,7 @@ elements:
       com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectActivityScore: 7.0
       com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectPopularityScore: 7.0
       com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectSecurityAwarenessScore: 10.0
+      com.sap.sgs.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore: 9.0
     expectedScore:
       type: "DoubleInterval"
       from: 8.0
@@ -180,6 +189,7 @@ elements:
       com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectActivityScore: 10.0
       com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectPopularityScore: 10.0
       com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectSecurityAwarenessScore: 10.0
+      com.sap.sgs.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore: 10.0
     expectedScore:
       type: "DoubleInterval"
       from: 9.9

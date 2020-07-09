@@ -22,6 +22,7 @@ import com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectSecurityAwarenessSco
 import com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectSecurityTestingScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.StaticAnalysisScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.UnpatchedVulnerabilitiesScore;
+import com.sap.sgs.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.VulnerabilityLifetimeScore;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.util.Set;
@@ -56,7 +57,8 @@ import java.util.Set;
     @JsonSubTypes.Type(value = MemorySafetyTestingScore.class),
     @JsonSubTypes.Type(value = FindSecBugsScore.class),
     @JsonSubTypes.Type(value = FuzzingScore.class),
-    @JsonSubTypes.Type(value = StaticAnalysisScore.class)
+    @JsonSubTypes.Type(value = StaticAnalysisScore.class),
+    @JsonSubTypes.Type(value = VulnerabilityDiscoveryAndSecurityTestingScore.class)
 })
 public interface Score extends Feature<Double> {
 

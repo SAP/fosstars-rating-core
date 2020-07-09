@@ -1,7 +1,5 @@
 package com.sap.sgs.phosphor.fosstars.tool.format;
 
-import com.sap.sgs.phosphor.fosstars.data.github.UsesFindSecBugs;
-import com.sap.sgs.phosphor.fosstars.data.github.UsesNoHttpTool;
 import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Score;
@@ -10,13 +8,17 @@ import com.sap.sgs.phosphor.fosstars.model.Weight;
 import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.CommunityCommitmentScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.DependencyScanScore;
+import com.sap.sgs.phosphor.fosstars.model.score.oss.FuzzingScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore;
+import com.sap.sgs.phosphor.fosstars.model.score.oss.NoHttpToolScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.OssSecurityScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectActivityScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectPopularityScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectSecurityAwarenessScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectSecurityTestingScore;
+import com.sap.sgs.phosphor.fosstars.model.score.oss.StaticAnalysisScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.UnpatchedVulnerabilitiesScore;
+import com.sap.sgs.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.VulnerabilityLifetimeScore;
 import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
@@ -25,9 +27,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 /**
@@ -55,9 +59,12 @@ public class PrettyPrinter implements Formatter {
     FEATURE_CLASS_TO_NAME.put(UnpatchedVulnerabilitiesScore.class, "Unpatched vulnerabilities");
     FEATURE_CLASS_TO_NAME.put(VulnerabilityLifetimeScore.class, "Vulnerability lifetime");
     FEATURE_CLASS_TO_NAME.put(MemorySafetyTestingScore.class, "Memory-safety testing");
-    FEATURE_CLASS_TO_NAME.put(UsesFindSecBugs.class, "Uses FindSecBugs");
-    FEATURE_CLASS_TO_NAME.put(UsesNoHttpTool.class, "Uses nohttp");
     FEATURE_CLASS_TO_NAME.put(DependencyScanScore.class, "Dependency testing");
+    FEATURE_CLASS_TO_NAME.put(FuzzingScore.class, "Fuzzing");
+    FEATURE_CLASS_TO_NAME.put(StaticAnalysisScore.class, "Static analysis");
+    FEATURE_CLASS_TO_NAME.put(NoHttpToolScore.class, "nohttp tool");
+    FEATURE_CLASS_TO_NAME.put(VulnerabilityDiscoveryAndSecurityTestingScore.class,
+        "Vulnerability discovery and security testing");
   }
 
   /**
@@ -93,7 +100,7 @@ public class PrettyPrinter implements Formatter {
   public String print(RatingValue ratingValue) {
     StringBuilder sb = new StringBuilder();
     sb.append(String.format("Here is how the rating was calculated:%n"));
-    sb.append(print(ratingValue.scoreValue(), INDENT_STEP, true));
+    sb.append(print(ratingValue.scoreValue(), INDENT_STEP, true, new HashSet<>()));
     sb.append(String.format("Rating: %2.2f out of %2.2f -> %s%n",
         ratingValue.score(), Score.MAX, ratingValue.label()));
     sb.append(String.format("Confidence: %2.2f out of %2.2f%n",
@@ -108,7 +115,9 @@ public class PrettyPrinter implements Formatter {
    * @param indent The indent.
    * @return A string to be displayed.
    */
-  private String print(ScoreValue scoreValue, String indent, boolean isMainScore) {
+  private String print(
+      ScoreValue scoreValue, String indent, boolean isMainScore, Set<Score> printedScores) {
+
     StringBuilder sb = new StringBuilder();
 
     if (!isMainScore) {
@@ -138,6 +147,10 @@ public class PrettyPrinter implements Formatter {
         append(String.format("%.2f", scoreValue.confidence()), ' ', 4),
         Confidence.MAX));
 
+    if (printedScores.contains(scoreValue.score())) {
+      return sb.toString();
+    }
+
     List<ScoreValue> subScoreValues = new ArrayList<>();
     List<Value> featureValues = new ArrayList<>();
     for (Value usedValue : scoreValue.usedValues()) {
@@ -156,7 +169,8 @@ public class PrettyPrinter implements Formatter {
       sb.append(String.format(
           "%sBased on:.....%d sub-scores:%n", indent, subScoreValues.size()));
       for (ScoreValue usedValue : subScoreValues) {
-        sb.append(print(usedValue, indent + INDENT_STEP + INDENT_STEP, false));
+        sb.append(
+            print(usedValue, indent + INDENT_STEP + INDENT_STEP, false, printedScores));
         sb.append("\n");
       }
     }
@@ -201,6 +215,8 @@ public class PrettyPrinter implements Formatter {
       }
     }
 
+    printedScores.add(scoreValue.score());
+
     return sb.toString();
   }
 
@@ -218,7 +234,7 @@ public class PrettyPrinter implements Formatter {
     if (scoreValue.isUnknown()) {
       return "unknown";
     }
-    return String.format("%2.2f  out of %2.2f", scoreValue.get(), Score.MAX);
+    return String.format("%2.2f out of %2.2f", scoreValue.get(), Score.MAX);
   }
 
   /**
