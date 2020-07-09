@@ -15,7 +15,7 @@ public class NotApplicableValueTest {
 
   @Test
   public void isUnknown() {
-    assertTrue(NotApplicableValue.of(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE).isUnknown());
+    assertFalse(NotApplicableValue.of(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE).isUnknown());
   }
 
   @Test

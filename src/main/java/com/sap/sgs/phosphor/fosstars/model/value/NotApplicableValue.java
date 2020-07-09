@@ -32,7 +32,7 @@ public final class NotApplicableValue<T> extends AbstractValue<T> {
   @Override
   @JsonIgnore
   public final boolean isUnknown() {
-    return true;
+    return false;
   }
 
   @Override
