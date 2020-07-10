@@ -269,29 +269,42 @@ public class GitHubDataFetcher {
         Files.delete(info.path());
       }
 
-      Optional<Repository> repository = openRepository(info.path());
-      if (!repository.isPresent()) {
+      try {
+        Optional<Repository> repository = openRepository(info.path());
+        if (!repository.isPresent()) {
+          Files.deleteIfExists(info.path());
+          clone(project, info.path());
+          repository = openRepository(info.path());
+        }
+
+        if (!repository.isPresent()) {
+          throw new IOException("Could not fetch project's repository!");
+        }
+
+        LocalRepository localRepository = new LocalRepository(info, repository.get());
+
+        if (shouldUpdate(localRepository)) {
+          LOGGER.info("Pulling updates from {} ...", project.url());
+          localRepository.reset();
+          localRepository.pull();
+        }
+
+        info.updated(Date.from(Instant.now()));
+        LOCAL_REPOSITORIES_INFO.put(project.url(), info);
+        return localRepository;
+      } catch (IOException e) {
+
+        // if something went wrong, then clean up info and cache,
+        // and remove the local repository if it exists
+        LOCAL_REPOSITORIES_INFO.remove(project.url());
+        LOCAL_REPOSITORIES.remove(project.url());
         Files.deleteIfExists(info.path());
-        clone(project, info.path());
-        repository = openRepository(info.path());
+
+        // then, re-throw the original exception
+        throw e;
+      } finally {
+        storeLocalRepositoriesInfo();
       }
-
-      if (!repository.isPresent()) {
-        throw new IOException("Could not fetch project's repository!");
-      }
-
-      LocalRepository localRepository = new LocalRepository(info, repository.get());
-
-      if (shouldUpdate(localRepository)) {
-        LOGGER.info("Pulling updates from {} ...", project.url());
-        localRepository.pull();
-      }
-
-      info.updated(Date.from(Instant.now()));
-      LOCAL_REPOSITORIES_INFO.put(project.url(), info);
-      storeLocalRepositoriesInfo();
-
-      return localRepository;
     }
   }
 
