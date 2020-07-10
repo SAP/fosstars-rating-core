@@ -92,10 +92,10 @@ elements:
       com.sap.sgs.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore: 2.0
     expectedScore:
       type: "DoubleInterval"
-      from: 4.0
+      from: 3.0
       openLeft: false
       negativeInfinity: false
-      to: 5.0
+      to: 4.0
       openRight: false
       positiveInfinity: false
     expectedLabel: null
@@ -152,10 +152,10 @@ elements:
       com.sap.sgs.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore: 0.0
     expectedScore:
       type: "DoubleInterval"
-      from: 4.0
+      from: 3.0
       openLeft: false
       negativeInfinity: false
-      to: 5.0
+      to: 4.0
       openRight: false
       positiveInfinity: false
     expectedLabel: null

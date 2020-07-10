@@ -404,7 +404,7 @@ elements:
     feature:
       type: "BooleanFeature"
       name: "If an open-source project has a security policy"
-    flag: false
+    flag: true
   - type: "IntegerValue"
     feature:
       type: "PositiveIntegerFeature"
@@ -509,7 +509,7 @@ elements:
         - "MAVEN"
   expectedScore:
     type: "DoubleInterval"
-    from: 4.0
+    from: 4.8
     openLeft: false
     negativeInfinity: false
     to: 6.0
