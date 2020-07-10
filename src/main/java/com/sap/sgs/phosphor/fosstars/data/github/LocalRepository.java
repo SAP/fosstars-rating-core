@@ -18,6 +18,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import org.apache.commons.io.IOUtils;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.ResetCommand.ResetType;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -136,6 +137,19 @@ public class LocalRepository implements AutoCloseable {
     }
 
     return Optional.of(commits.get(commits.size() - 1));
+  }
+
+  /**
+   * Resets the repository in a hard way by calling "git reset --hard".
+   *
+   * @throws IOException If something went wrong.
+   */
+  public void reset() throws IOException {
+    try (Git git = new Git(repository)) {
+      git.reset().setMode(ResetType.HARD).call();
+    } catch (GitAPIException e) {
+      throw new IOException("Could not reset the repository!", e);
+    }
   }
 
   /**
