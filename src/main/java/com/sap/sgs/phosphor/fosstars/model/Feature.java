@@ -2,6 +2,7 @@ package com.sap.sgs.phosphor.fosstars.model;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.sap.sgs.phosphor.fosstars.model.feature.AvailabilityFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.BooleanFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.BoundedIntegerFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.DateFeature;
@@ -42,6 +43,7 @@ import com.sap.sgs.phosphor.fosstars.model.feature.oss.VulnerabilitiesInProject;
     @JsonSubTypes.Type(value = LgtmGradeFeature.class),
     @JsonSubTypes.Type(value = LanguagesFeature.class),
     @JsonSubTypes.Type(value = PackageManagersFeature.class),
+    @JsonSubTypes.Type(value = AvailabilityFeature.class)
 })
 public interface Feature<T> {
 

@@ -1,13 +1,16 @@
 package com.sap.sgs.phosphor.fosstars.model.feature.oss;
 
 import com.sap.sgs.phosphor.fosstars.model.Feature;
+import com.sap.sgs.phosphor.fosstars.model.feature.AvailabilityFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.BooleanFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.DateFeature;
+import com.sap.sgs.phosphor.fosstars.model.feature.DoubleFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.LgtmGradeFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.PositiveIntegerFeature;
 import com.sap.sgs.phosphor.fosstars.model.value.Languages;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.sgs.phosphor.fosstars.model.value.PackageManagers;
+import com.sap.sgs.phosphor.fosstars.model.value.Status;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
 import java.util.Date;
 
@@ -216,4 +219,19 @@ public class OssFeatures {
    */
   public static final Feature<Boolean> SIGNS_ARTIFACTS
       = new BooleanFeature("If a project signs artifacts");
+
+  /**
+   * If OWASP Dependency plugin is used to scan the project. It is either used as a mandatory step,
+   * optional step or not used at all.
+   */
+  public static final Feature<Status> OWASP_DEPENDENCY_CHECK_SCAN_AVAILABILITY =
+      new AvailabilityFeature("OWASP Dependency Check scan mode");
+
+  /**
+   * Check if configuration to fail the build exists in OWASP Dependency. Identify the CVSS
+   * threshold score to fail the build on finding vulnerabilities greater than the threshold.
+   */
+  public static final Feature<Double> OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD =
+      new DoubleFeature(
+          "OWASP Dependency check CVSS Threshold score used to fail the build");
 }
