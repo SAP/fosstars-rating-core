@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * A set of feature values. The set contains only unique features.
@@ -66,4 +67,20 @@ public interface ValueSet {
    * @return True if the set is empty, false otherwise.
    */
   boolean isEmpty();
+
+  /**
+   * Checks if the set of values contains all the features.
+   *
+   * @param features A number of features.
+   * @return True if the set contains all the specified features, false otherwise.
+   */
+  boolean containsAll(Feature... features);
+
+  /**
+   * Checks if the set of values contains all the features.
+   *
+   * @param features A Set of features.
+   * @return True if the set contains all the specified features, false otherwise.
+   */
+  boolean containsAll(Set<Feature> features);
 }
