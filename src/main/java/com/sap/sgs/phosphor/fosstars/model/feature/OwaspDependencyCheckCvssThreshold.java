@@ -9,9 +9,9 @@ import com.sap.sgs.phosphor.fosstars.model.value.CVSS;
  * 10.0]. But we consider an out of bound value 11.0. If the cvss threshold is out of bound, it
  * would not be considered during score calculation.
  * 
- * @see <a
- *      href="https://jeremylong.github.io/DependencyCheck/dependency-check-maven/configuration.html ">OWASP
- *      Dependency Check configuration</a>
+ * @see 
+ * <a href="https://jeremylong.github.io/DependencyCheck/dependency-check-maven/configuration.html"
+ * >OWASP Dependency Check configuration</a>
  */
 public class OwaspDependencyCheckCvssThreshold extends BoundedDoubleFeature {
 
