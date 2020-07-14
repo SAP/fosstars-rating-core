@@ -1,87 +1,79 @@
 package com.sap.sgs.phosphor.fosstars.model.score.oss;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD;
-import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.OWASP_DEPENDENCY_CHECK_SCAN_AVAILABILITY;
-import static com.sap.sgs.phosphor.fosstars.model.value.Status.MANDATORY;
-import static com.sap.sgs.phosphor.fosstars.model.value.Status.NOTFOUND;
-import static com.sap.sgs.phosphor.fosstars.model.value.Status.OPTIONAL;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.OWASP_DEPENDENCY_CHECK_USAGE;
+import static com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsage.MANDATORY;
+import static com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsage.NOT_USED;
+import static com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsage.OPTIONAL;
 
-import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.feature.OwaspDependencyCheckCvssThreshold;
 import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.sgs.phosphor.fosstars.model.score.FeatureBasedScore;
+import com.sap.sgs.phosphor.fosstars.model.value.CVSS;
+import com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsage;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
-import com.sap.sgs.phosphor.fosstars.model.value.Status;
 import java.io.IOException;
 import java.io.InputStream;
 import org.apache.commons.lang3.Range;
 
 /**
- * The scores assesses how well an open-source project uses OWASP dependency check to scan
+ * The scores assesses how well an open-source project uses OWASP Dependency Check to scan
  * dependencies for known vulnerabilities. It is based on the following features:
  * <ul>
- *   <li>{@link OssFeatures#OWASP_DEPENDENCY_CHECK_SCAN_AVAILABILITY}</li>
+ *   <li>{@link OssFeatures#OWASP_DEPENDENCY_CHECK_USAGE}</li>
  *   <li>{@link OssFeatures#OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD}</li>
  * </ul>
  */
 public class OwaspDependencyScanScore extends FeatureBasedScore {
-  
+
   /**
-   * The maximum CVSS score.
-   * 
-   * @see <a href="https://nvd.nist.gov/vuln-metrics/cvss">CVSS</a> 
+   * The basic step score that is alloted in each step. 
    */
-  private static final double MAX_CVSS_SCORE = 10.0;
-  
-  /**
-   * The minimum CVSS score.
-   * 
-   * @see <a href="https://nvd.nist.gov/vuln-metrics/cvss">CVSS</a> 
-   */
-  private static final double MIN_CVSS_SCORE = 0.0;
-  
+  private static final double STEP_SCORE = 3.0;
+
   /**
    * Initializes a new {@link OwaspDependencyScanScore}.
    */
   OwaspDependencyScanScore() {
-    super("How a project uses Owasp Dependency to scan dependencies for vulnerabilities",
-        OWASP_DEPENDENCY_CHECK_SCAN_AVAILABILITY,
+    super("How a project uses Owasp Dependency Check to scan dependencies for vulnerabilities",
+        OWASP_DEPENDENCY_CHECK_USAGE,
         OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD);
   }
 
   @Override
   public ScoreValue calculate(Value... values) {
-    Value<Status> availabilityValue =
-        find(OWASP_DEPENDENCY_CHECK_SCAN_AVAILABILITY, values);
+    Value<OwaspDependencyCheckUsage> usageValue =
+        find(OWASP_DEPENDENCY_CHECK_USAGE, values);
     Value<Double> cvssScore =
         find(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD, values);
 
-    ScoreValue scoreValue = scoreValue(Score.MIN, availabilityValue, cvssScore);
+    ScoreValue scoreValue = scoreValue(MIN, usageValue, cvssScore);
 
-    // If the project does not use OWASP Dependency scans.
-    Status availability = availabilityValue.orElse(NOTFOUND);
-    if (availability.equals(NOTFOUND)) {
+    // if the project does not use OWASP Dependency Check
+    OwaspDependencyCheckUsage usage = usageValue.orElse(NOT_USED);
+    if (usage.equals(NOT_USED)) {
       return scoreValue;
     }
 
-    // If the project uses OWASP Dependency scans to identify vulnerable dependencies, then we are
+    // if the project uses OWASP Dependency scans to identify vulnerable dependencies, then we are
     // happy.
-    if (availability.equals(MANDATORY)) {
-      scoreValue.set(7);
-    } else if (availability.equals(OPTIONAL)) {
-      scoreValue.set(3);
+    if (usage.equals(MANDATORY)) {
+      scoreValue.set(MAX - STEP_SCORE);
+    } else if (usage.equals(OPTIONAL)) {
+      scoreValue.set(STEP_SCORE);
     }
 
-    // If the project fails build based on certain CVSS threshold. If CVSS of a vulnerability is
+    // if the project fails build based on certain CVSS threshold. If CVSS of a vulnerability is
     // greater than threshold, then the build fails. Lower the threshold score means most
     // vulnerabilities are considered, then we are happy.
-    double failThreshold = cvssScore.orElse(11.0);
-    if (failThreshold == MIN_CVSS_SCORE) {
-      scoreValue.increase(3);
+    double failThreshold = cvssScore.orElse(OwaspDependencyCheckCvssThreshold.OUT_OF_BOUND);
+    if (failThreshold == CVSS.MIN) {
+      scoreValue.increase(STEP_SCORE);
     } else if (inBetween(failThreshold)) {
-      scoreValue.increase(MAX_CVSS_SCORE / (3 * failThreshold));
+      scoreValue.increase(CVSS.MAX / (STEP_SCORE * failThreshold));
     }
 
     return scoreValue;
@@ -94,7 +86,7 @@ public class OwaspDependencyScanScore extends FeatureBasedScore {
    * @return True if the number lies within the range, false otherwise.
    */
   public static boolean inBetween(double number) {
-    return Range.between(MIN_CVSS_SCORE + 1, MAX_CVSS_SCORE).contains(number);
+    return Range.between(CVSS.MIN + 1, CVSS.MAX).contains(number);
   }
 
   /**

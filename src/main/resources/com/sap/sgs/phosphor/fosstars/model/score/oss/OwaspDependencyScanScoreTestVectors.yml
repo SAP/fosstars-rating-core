@@ -11,12 +11,14 @@ elements:
   values:
   - type: "UnknownValue"
     feature:
-      type: "AvailabilityFeature"
-      name: "OWASP Dependency Check scan mode"
+      type: "OwaspDependencyCheckUsageFeature"
+      name: "How OWASP Dependency Check is used"
   - type: "UnknownValue"
     feature:
-      type: "DoubleFeature"
-      name: "OWASP Dependency check CVSS Threshold score used to fail the build"
+      type: "BoundedDoubleFeature"
+      name: "A CVSS threshold for OWASP Dependency Check to fail the build"
+      from: 0.0
+      to: 10.0
   expectedScore:
     type: "DoubleInterval"
     from: 0.0
@@ -31,15 +33,17 @@ elements:
 # very bad project
 - type: "StandardTestVector"
   values:
-  - type: "AvailabilityValue"
+  - type: "OwaspDependencyCheckUsageValue"
     feature:
-      type: "AvailabilityFeature"
-      name: "OWASP Dependency Check scan mode"
-    availability: "NOTFOUND"   
+      type: "OwaspDependencyCheckUsageFeature"
+      name: "How OWASP Dependency Check is used"
+    value: "NOT_USED"   
   - type: "DoubleValue"
     feature:
-      type: "DoubleFeature"
-      name: "OWASP Dependency check CVSS Threshold score used to fail the build"
+      type: "BoundedDoubleFeature"
+      name: "A CVSS threshold for OWASP Dependency Check to fail the build"
+      from: 0.0
+      to: 10.0
     number: 11.0
   expectedScore:
     type: "DoubleInterval"
@@ -55,15 +59,17 @@ elements:
 # moderate project
 - type: "StandardTestVector"
   values:
-  - type: "AvailabilityValue"
+  - type: "OwaspDependencyCheckUsageValue"
     feature:
-      type: "AvailabilityFeature"
-      name: "OWASP Dependency Check scan mode"
-    availability: "OPTIONAL"   
+      type: "OwaspDependencyCheckUsageFeature"
+      name: "How OWASP Dependency Check is used"
+    value: "OPTIONAL"   
   - type: "DoubleValue"
     feature:
-      type: "DoubleFeature"
-      name: "OWASP Dependency check CVSS Threshold score used to fail the build"
+      type: "BoundedDoubleFeature"
+      name: "A CVSS threshold for OWASP Dependency Check to fail the build"
+      from: 0.0
+      to: 10.0
     number: 3.0
   expectedScore:
     type: "DoubleInterval"
@@ -79,15 +85,17 @@ elements:
 # good project
 - type: "StandardTestVector"
   values:
-  - type: "AvailabilityValue"
+  - type: "OwaspDependencyCheckUsageValue"
     feature:
-      type: "AvailabilityFeature"
-      name: "OWASP Dependency Check scan mode"
-    availability: "MANDATORY"   
+      type: "OwaspDependencyCheckUsageFeature"
+      name: "How OWASP Dependency Check is used"
+    value: "MANDATORY"   
   - type: "DoubleValue"
     feature:
-      type: "DoubleFeature"
-      name: "OWASP Dependency check CVSS Threshold score used to fail the build"
+      type: "BoundedDoubleFeature"
+      name: "A CVSS threshold for OWASP Dependency Check to fail the build"
+      from: 0.0
+      to: 10.0
     number: 3.0
   expectedScore:
     type: "DoubleInterval"
@@ -103,15 +111,17 @@ elements:
 # very good project
 - type: "StandardTestVector"
   values:
-  - type: "AvailabilityValue"
+  - type: "OwaspDependencyCheckUsageValue"
     feature:
-      type: "AvailabilityFeature"
-      name: "OWASP Dependency Check scan mode"
-    availability: "MANDATORY"   
+      type: "OwaspDependencyCheckUsageFeature"
+      name: "How OWASP Dependency Check is used"
+    value: "MANDATORY"   
   - type: "DoubleValue"
     feature:
-      type: "DoubleFeature"
-      name: "OWASP Dependency check CVSS Threshold score used to fail the build"
+      type: "BoundedDoubleFeature"
+      name: "A CVSS threshold for OWASP Dependency Check to fail the build"
+      from: 0.0
+      to: 10.0
     number: 1.0
   expectedScore:
     type: "DoubleInterval"
@@ -127,15 +137,17 @@ elements:
 # very good project
 - type: "StandardTestVector"
   values:
-  - type: "AvailabilityValue"
+  - type: "OwaspDependencyCheckUsageValue"
     feature:
-      type: "AvailabilityFeature"
-      name: "OWASP Dependency Check scan mode"
-    availability: "MANDATORY"   
+      type: "OwaspDependencyCheckUsageFeature"
+      name: "How OWASP Dependency Check is used"
+    value: "MANDATORY"   
   - type: "DoubleValue"
     feature:
-      type: "DoubleFeature"
-      name: "OWASP Dependency check CVSS Threshold score used to fail the build"
+      type: "BoundedDoubleFeature"
+      name: "A CVSS threshold for OWASP Dependency Check to fail the build"
+      from: 0.0
+      to: 10.0
     number: 0.0
   expectedScore:
     type: "DoubleInterval"

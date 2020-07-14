@@ -2,7 +2,6 @@ package com.sap.sgs.phosphor.fosstars.model;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.sap.sgs.phosphor.fosstars.model.value.AvailabilityValue;
 import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.sgs.phosphor.fosstars.model.value.DateValue;
 import com.sap.sgs.phosphor.fosstars.model.value.DoubleValue;
@@ -12,6 +11,7 @@ import com.sap.sgs.phosphor.fosstars.model.value.IntegerValue;
 import com.sap.sgs.phosphor.fosstars.model.value.LanguagesValue;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGradeValue;
 import com.sap.sgs.phosphor.fosstars.model.value.NotApplicableValue;
+import com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsageValue;
 import com.sap.sgs.phosphor.fosstars.model.value.PackageManagersValue;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.sgs.phosphor.fosstars.model.value.UnknownValue;
@@ -37,7 +37,7 @@ import com.sap.sgs.phosphor.fosstars.model.value.VulnerabilitiesValue;
     @JsonSubTypes.Type(value = LgtmGradeValue.class),
     @JsonSubTypes.Type(value = LanguagesValue.class),
     @JsonSubTypes.Type(value = PackageManagersValue.class),
-    @JsonSubTypes.Type(value = AvailabilityValue.class)
+    @JsonSubTypes.Type(value = OwaspDependencyCheckUsageValue.class)
 })
 public interface Value<T> {
 
