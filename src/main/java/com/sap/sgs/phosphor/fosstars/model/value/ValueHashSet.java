@@ -78,18 +78,6 @@ public class ValueHashSet implements ValueSet {
   }
 
   /**
-   * Initializes a {@link ValueHashSet} with a number of {@link ValueSet}.
-   *
-   * @param valueSets The sets of values.
-   */
-  public ValueHashSet(ValueSet... valueSets) {
-    Objects.requireNonNull(valueSets, "Values can't be null!");
-    for (ValueSet valueSet : valueSets) {
-      update(valueSet);
-    }
-  }
-
-  /**
    * Create an empty value set.
    *
    * @return An empty {@link ValueHashSet}.
@@ -202,12 +190,6 @@ public class ValueHashSet implements ValueSet {
   @Override
   public int hashCode() {
     return Objects.hashCode(featureToValue);
-  }
-
-  @Override
-  public boolean containsAll(Feature... features) {
-    Objects.requireNonNull(features, "Oh no! Features is null");
-    return featureToValue.keySet().containsAll(Arrays.asList(features));
   }
 
   @Override

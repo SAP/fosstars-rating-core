@@ -14,12 +14,12 @@ public class BoundedDoubleFeature extends AbstractFeature<Double> {
   /**
    * Left boundary.
    */
-  private final double from;
+  protected final double from;
 
   /**
    * Right boundary.
    */
-  private final double to;
+  protected final double to;
 
   /**
    * Initializes a new feature.
@@ -35,11 +35,12 @@ public class BoundedDoubleFeature extends AbstractFeature<Double> {
       @JsonProperty("to") double to) {
 
     super(name);
-    if (from == to) {
+    int compare = Double.compare(from, to);
+    if (compare == 0) {
       throw new IllegalArgumentException("The interval can't be just a point!");
     }
-    if (from > to) {
-      throw new IllegalArgumentException("The right boundary is greater than the left one!");
+    if (compare > 0) {
+      throw new IllegalArgumentException("The right boundary is lesser than the left one!");
     }
     this.from = from;
     this.to = to;
@@ -67,7 +68,9 @@ public class BoundedDoubleFeature extends AbstractFeature<Double> {
       return false;
     }
     BoundedDoubleFeature that = (BoundedDoubleFeature) o;
-    return from == that.from && to == that.to;
+
+    return Double.compare(from, that.from) == 0
+        && Double.compare(to, that.to) == 0;
   }
 
   @Override
@@ -81,8 +84,8 @@ public class BoundedDoubleFeature extends AbstractFeature<Double> {
    * @param n The double to be checked.
    * @return n after the check. Otherwise throws an {@link IllegalArgumentException}.
    */
-  protected Double check(Double n) {
-    if (n < from || n > to) {
+  private Double check(Double n) {
+    if (Double.compare(n, from) < 0 || Double.compare(n, to) > 0) {
       throw new IllegalArgumentException(
           String.format("Feature value has to be in [%d, %d] but %d given!", from, to, n));
     }

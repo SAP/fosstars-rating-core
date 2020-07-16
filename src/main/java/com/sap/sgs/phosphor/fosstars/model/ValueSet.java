@@ -71,14 +71,6 @@ public interface ValueSet {
   /**
    * Checks if the set of values contains all the features.
    *
-   * @param features A number of features.
-   * @return True if the set contains all the specified features, false otherwise.
-   */
-  boolean containsAll(Feature... features);
-
-  /**
-   * Checks if the set of values contains all the features.
-   *
    * @param features A Set of features.
    * @return True if the set contains all the specified features, false otherwise.
    */

@@ -1,7 +1,6 @@
 package com.sap.sgs.phosphor.fosstars.data.github;
 
 import static com.sap.sgs.phosphor.fosstars.data.github.TestGitHubDataFetcherHolder.TestGitHubDataFetcher.addForTesting;
-import static com.sap.sgs.phosphor.fosstars.data.github.UsesOwaspDependencyScan.OWASP_FEATURES;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.OWASP_DEPENDENCY_CHECK_USAGE;
 import static com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsage.MANDATORY;
@@ -22,6 +21,7 @@ import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectValueCache;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Optional;
+import java.util.Set;
 import org.junit.Test;
 
 public class UsesOwaspDependencyScanTest extends TestGitHubDataFetcherHolder {
@@ -33,7 +33,6 @@ public class UsesOwaspDependencyScanTest extends TestGitHubDataFetcherHolder {
 
       ValueSet values = values(createProvider(is, "pom.xml"));
       checkUsageStatus(MANDATORY, values, OWASP_DEPENDENCY_CHECK_USAGE);
-      checkDoubleValue(11.0, values, OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD);
     }
   }
 
@@ -44,7 +43,6 @@ public class UsesOwaspDependencyScanTest extends TestGitHubDataFetcherHolder {
 
       ValueSet values = values(createProvider(is, "pom.xml"));
       checkUsageStatus(MANDATORY, values, OWASP_DEPENDENCY_CHECK_USAGE);
-      checkDoubleValue(11.0, values, OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD);
     }
   }
 
@@ -66,7 +64,6 @@ public class UsesOwaspDependencyScanTest extends TestGitHubDataFetcherHolder {
 
       ValueSet values = values(createProvider(is, "pom.xml"));
       checkUsageStatus(OPTIONAL, values, OWASP_DEPENDENCY_CHECK_USAGE);
-      checkDoubleValue(11.0, values, OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD);
     }
   }
 
@@ -77,7 +74,6 @@ public class UsesOwaspDependencyScanTest extends TestGitHubDataFetcherHolder {
 
       ValueSet values = values(createProvider(is, "pom.xml"));
       checkUsageStatus(MANDATORY, values, OWASP_DEPENDENCY_CHECK_USAGE);
-      checkDoubleValue(11.0, values, OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD);
     }
   }
 
@@ -88,7 +84,6 @@ public class UsesOwaspDependencyScanTest extends TestGitHubDataFetcherHolder {
 
       ValueSet values = values(createProvider(is, "pom.xml"));
       checkUsageStatus(NOT_USED, values, OWASP_DEPENDENCY_CHECK_USAGE);
-      checkDoubleValue(11.0, values, OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD);
     }
   }
   
@@ -126,8 +121,9 @@ public class UsesOwaspDependencyScanTest extends TestGitHubDataFetcherHolder {
     ValueSet values = new ValueHashSet();
     provider.update(project, values);
 
-    assertEquals(OWASP_FEATURES.size(), values.size());
-    assertTrue(values.containsAll(OWASP_FEATURES));
+    Set<Feature> features = provider.supportedFeatures();
+    assertEquals(features.size(), values.size());
+    assertTrue(values.containsAll(features));
     return values;
   }
 

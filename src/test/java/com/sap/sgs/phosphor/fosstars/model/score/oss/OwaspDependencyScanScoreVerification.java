@@ -10,5 +10,4 @@ public class OwaspDependencyScanScoreVerification {
   public void verify() throws IOException, VerificationFailedException {
     OwaspDependencyScanScore.Verification.createFor(new OwaspDependencyScanScore()).run();
   }
-
 }

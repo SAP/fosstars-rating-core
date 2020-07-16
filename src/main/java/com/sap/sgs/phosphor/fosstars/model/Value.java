@@ -11,6 +11,7 @@ import com.sap.sgs.phosphor.fosstars.model.value.IntegerValue;
 import com.sap.sgs.phosphor.fosstars.model.value.LanguagesValue;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGradeValue;
 import com.sap.sgs.phosphor.fosstars.model.value.NotApplicableValue;
+import com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckCvssThresholdValue;
 import com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsageValue;
 import com.sap.sgs.phosphor.fosstars.model.value.PackageManagersValue;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
@@ -37,7 +38,8 @@ import com.sap.sgs.phosphor.fosstars.model.value.VulnerabilitiesValue;
     @JsonSubTypes.Type(value = LgtmGradeValue.class),
     @JsonSubTypes.Type(value = LanguagesValue.class),
     @JsonSubTypes.Type(value = PackageManagersValue.class),
-    @JsonSubTypes.Type(value = OwaspDependencyCheckUsageValue.class)
+    @JsonSubTypes.Type(value = OwaspDependencyCheckUsageValue.class),
+    @JsonSubTypes.Type(value = OwaspDependencyCheckCvssThresholdValue.class)
 })
 public interface Value<T> {
 

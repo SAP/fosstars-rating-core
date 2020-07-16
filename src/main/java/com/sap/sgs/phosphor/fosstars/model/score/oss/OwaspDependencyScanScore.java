@@ -7,17 +7,16 @@ import static com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsag
 import static com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsage.OPTIONAL;
 
 import com.sap.sgs.phosphor.fosstars.model.Value;
-import com.sap.sgs.phosphor.fosstars.model.feature.OwaspDependencyCheckCvssThreshold;
 import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.sgs.phosphor.fosstars.model.score.FeatureBasedScore;
 import com.sap.sgs.phosphor.fosstars.model.value.CVSS;
+import com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckCvssThresholdValue;
 import com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsage;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.io.IOException;
 import java.io.InputStream;
-import org.apache.commons.lang3.Range;
 
 /**
  * The scores assesses how well an open-source project uses OWASP Dependency Check to scan
@@ -38,17 +37,15 @@ public class OwaspDependencyScanScore extends FeatureBasedScore {
    * Initializes a new {@link OwaspDependencyScanScore}.
    */
   OwaspDependencyScanScore() {
-    super("How a project uses Owasp Dependency Check to scan dependencies for vulnerabilities",
+    super("How a project uses OWASP Dependency Check to scan dependencies for vulnerabilities",
         OWASP_DEPENDENCY_CHECK_USAGE,
         OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD);
   }
 
   @Override
   public ScoreValue calculate(Value... values) {
-    Value<OwaspDependencyCheckUsage> usageValue =
-        find(OWASP_DEPENDENCY_CHECK_USAGE, values);
-    Value<Double> cvssScore =
-        find(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD, values);
+    Value<Double> cvssScore = find(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD, values);
+    Value<OwaspDependencyCheckUsage> usageValue = find(OWASP_DEPENDENCY_CHECK_USAGE, values);
 
     ScoreValue scoreValue = scoreValue(MIN, usageValue, cvssScore);
 
@@ -57,8 +54,12 @@ public class OwaspDependencyScanScore extends FeatureBasedScore {
     if (usage.equals(NOT_USED)) {
       return scoreValue;
     }
+    
+    if (cvssScore instanceof OwaspDependencyCheckCvssThresholdValue == false) {
+      throw new IllegalArgumentException("CVSS score is not of appropriate type");
+    }
 
-    // if the project uses OWASP Dependency scans to identify vulnerable dependencies, then we are
+    // if the project uses OWASP Dependency Check to identify vulnerable dependencies, then we are
     // happy.
     if (usage.equals(MANDATORY)) {
       scoreValue.set(MAX - STEP_SCORE);
@@ -69,24 +70,13 @@ public class OwaspDependencyScanScore extends FeatureBasedScore {
     // if the project fails build based on certain CVSS threshold. If CVSS of a vulnerability is
     // greater than threshold, then the build fails. Lower the threshold score means most
     // vulnerabilities are considered, then we are happy.
-    double failThreshold = cvssScore.orElse(OwaspDependencyCheckCvssThreshold.OUT_OF_BOUND);
-    if (failThreshold == CVSS.MIN) {
-      scoreValue.increase(STEP_SCORE);
-    } else if (inBetween(failThreshold)) {
-      scoreValue.increase(CVSS.MAX / (STEP_SCORE * failThreshold));
+    OwaspDependencyCheckCvssThresholdValue value =
+        (OwaspDependencyCheckCvssThresholdValue) cvssScore;
+    if (value.specified()) {
+      scoreValue.increase(STEP_SCORE * (CVSS.MAX - value.get()) / CVSS.MAX);
     }
 
     return scoreValue;
-  }
-
-  /**
-   * Checks if the input number is in between the given range. The minimum score is greater than 0.
-   * 
-   * @param number The input to be checked.
-   * @return True if the number lies within the range, false otherwise.
-   */
-  public static boolean inBetween(double number) {
-    return Range.between(CVSS.MIN + 1, CVSS.MAX).contains(number);
   }
 
   /**

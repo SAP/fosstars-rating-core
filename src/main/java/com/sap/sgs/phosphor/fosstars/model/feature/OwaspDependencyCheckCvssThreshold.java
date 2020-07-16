@@ -1,41 +1,48 @@
 package com.sap.sgs.phosphor.fosstars.model.feature;
 
+import static com.sap.sgs.phosphor.fosstars.model.value.CVSS.MAX;
+import static com.sap.sgs.phosphor.fosstars.model.value.CVSS.MIN;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sap.sgs.phosphor.fosstars.model.value.CVSS;
+import com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckCvssThresholdValue;
 
 /**
- * A feature which holds a {@link BoundedDoubleFeature} value. Specific to CVSS margin values [0.0,
- * 10.0]. But we consider an out of bound value 11.0. If the cvss threshold is out of bound, it
- * would not be considered during score calculation.
+ * <p>A feature which holds a {@link DoubleFeature} value. Specific to CVSS margin values 
+ * [0.0, 10.0]. But we consider a {@link #JUNK_VALUE} if not in the specific range. If the 
+ * CVSS threshold is out of range, it would not be considered during score calculation.</p>
  * 
- * @see 
- * <a href="https://jeremylong.github.io/DependencyCheck/dependency-check-maven/configuration.html"
- * >OWASP Dependency Check configuration</a>
+ * @see <a href=
+ *      "https://jeremylong.github.io/DependencyCheck/dependency-check-maven/configuration.html">
+ *      OWASP Dependency Check configuration</a>
  */
 public class OwaspDependencyCheckCvssThreshold extends BoundedDoubleFeature {
 
   /**
-   * The default out of bound CVSS score. The number is greater than 10.0
+   * A junk value, x < 0.0 or x > 10.0.
    */
-  public static final double OUT_OF_BOUND = 11.0;
+  private static final double JUNK_VALUE = 11.0;
 
   /**
    * Initializes a feature.
-   *
-   * @param name The feature name.
    */
   @JsonCreator
-  public OwaspDependencyCheckCvssThreshold(@JsonProperty("name") String name) {
-    super(name, CVSS.MIN, CVSS.MAX);
+  public OwaspDependencyCheckCvssThreshold() {
+    super("A CVSS threshold for OWASP Dependency Check to fail the build", MIN, MAX);
   }
 
   @Override
-  protected Double check(Double n) {
-    if (n < CVSS.MIN || n > CVSS.MAX) {
-      return OUT_OF_BOUND;
-    }
+  public OwaspDependencyCheckCvssThresholdValue value(Double n) {
+    return new OwaspDependencyCheckCvssThresholdValue(this, n, true);
+  }
 
-    return n;
+  /**
+   * An instance of {@link OwaspDependencyCheckCvssThresholdValue} if n is not in the given range of
+   * [0.0, 10.0].
+   * 
+   * @return New instance of {@link OwaspDependencyCheckCvssThresholdValue} with a
+   *         {@link #JUNK_VALUE}.
+   */
+  public OwaspDependencyCheckCvssThresholdValue notSpecifiedValue() {
+    return new OwaspDependencyCheckCvssThresholdValue(this, JUNK_VALUE, false);
   }
 }
