@@ -2,7 +2,7 @@
   "values" : {
     "com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectSecurityAwarenessScore" : {
       "type" : "MutableWeight",
-      "value" : 0.7
+      "value" : 0.9
     },
     "com.sap.sgs.phosphor.fosstars.model.score.oss.UnpatchedVulnerabilitiesScore" : {
       "type" : "MutableWeight",
@@ -26,7 +26,7 @@
     },
     "com.sap.sgs.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore" : {
       "type" : "MutableWeight",
-      "value" : 0.7
+      "value" : 0.6
     }
   }
 }
