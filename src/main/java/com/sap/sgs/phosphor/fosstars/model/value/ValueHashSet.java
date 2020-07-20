@@ -192,6 +192,12 @@ public class ValueHashSet implements ValueSet {
     return Objects.hashCode(featureToValue);
   }
 
+  @Override
+  public boolean containsAll(Set<Feature> features) {
+    Objects.requireNonNull(features, "Oh no! Features is null");
+    return featureToValue.keySet().containsAll(features);
+  }
+
   /**
    * The default serialized for {@link ValueHashSet}.
    */

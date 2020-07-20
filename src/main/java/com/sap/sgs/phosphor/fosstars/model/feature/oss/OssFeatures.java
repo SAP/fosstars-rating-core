@@ -4,6 +4,8 @@ import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.feature.BooleanFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.DateFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.LgtmGradeFeature;
+import com.sap.sgs.phosphor.fosstars.model.feature.OwaspDependencyCheckCvssThreshold;
+import com.sap.sgs.phosphor.fosstars.model.feature.OwaspDependencyCheckUsageFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.PositiveIntegerFeature;
 import com.sap.sgs.phosphor.fosstars.model.value.Languages;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade;
@@ -216,4 +218,21 @@ public class OssFeatures {
    */
   public static final Feature<Boolean> SIGNS_ARTIFACTS
       = new BooleanFeature("If a project signs artifacts");
+
+  /**
+   * Shows if OWASP Dependency Check is used to scan a project. It is either used as a mandatory
+   * step, optional step or not used at all.
+   */
+  public static final OwaspDependencyCheckUsageFeature OWASP_DEPENDENCY_CHECK_USAGE =
+      new OwaspDependencyCheckUsageFeature();
+
+  /**
+   * Shows if OWASP Dependency Check is configured to fail the build if vulnerabilities are found.
+   * The feature contains a threshold for CVSS score that is used by the tool.
+   *
+   * @see <a href="https://jeremylong.github.io/DependencyCheck/">OWASP Dependency Check
+   *      documentation</a>
+   */
+  public static final OwaspDependencyCheckCvssThreshold OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD =
+      new OwaspDependencyCheckCvssThreshold();
 }

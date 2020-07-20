@@ -1,0 +1,129 @@
+---
+
+# default values for test vectors
+defaults: []
+
+# test vectors
+elements:
+
+# all unknown
+- type: "StandardTestVector"
+  values:
+  - type: "UnknownValue"
+    feature:
+      type: "OwaspDependencyCheckUsageFeature"
+      name: "How OWASP Dependency Check is used"
+  - type: "UnknownValue"
+    feature:
+      type: "OwaspDependencyCheckCvssThreshold"
+      name: "A CVSS threshold for OWASP Dependency Check to fail the build"
+  expectedScore:
+    type: "DoubleInterval"
+    from: 0.0
+    openLeft: false
+    negativeInfinity: false
+    to: 1.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "all_unknown"
+
+# very bad project
+- type: "StandardTestVector"
+  values:
+  - type: "OwaspDependencyCheckUsageValue"
+    feature:
+      type: "OwaspDependencyCheckUsageFeature"
+      name: "How OWASP Dependency Check is used"
+    value: "NOT_USED"   
+  - type: "OwaspDependencyCheckCvssThresholdValue"
+    feature:
+      type: "OwaspDependencyCheckCvssThreshold"
+      name: "A CVSS threshold for OWASP Dependency Check to fail the build"
+    number: 11.0
+    specified: false
+  expectedScore:
+    type: "DoubleInterval"
+    from: 0.0
+    openLeft: false
+    negativeInfinity: false
+    to: 1.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "very_bad"
+
+# moderate project
+- type: "StandardTestVector"
+  values:
+  - type: "OwaspDependencyCheckUsageValue"
+    feature:
+      type: "OwaspDependencyCheckUsageFeature"
+      name: "How OWASP Dependency Check is used"
+    value: "OPTIONAL"   
+  - type: "OwaspDependencyCheckCvssThresholdValue"
+    feature:
+      type: "OwaspDependencyCheckCvssThreshold"
+      name: "A CVSS threshold for OWASP Dependency Check to fail the build"
+    number: 3.0
+    specified: true
+  expectedScore:
+    type: "DoubleInterval"
+    from: 3.0
+    openLeft: false
+    negativeInfinity: false
+    to: 6.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "moderate"
+
+# good project
+- type: "StandardTestVector"
+  values:
+  - type: "OwaspDependencyCheckUsageValue"
+    feature:
+      type: "OwaspDependencyCheckUsageFeature"
+      name: "How OWASP Dependency Check is used"
+    value: "MANDATORY"   
+  - type: "OwaspDependencyCheckCvssThresholdValue"
+    feature:
+      type: "OwaspDependencyCheckCvssThreshold"
+      name: "A CVSS threshold for OWASP Dependency Check to fail the build"
+    number: 4.0
+    specified: true
+  expectedScore:
+    type: "DoubleInterval"
+    from: 7.0
+    openLeft: false
+    negativeInfinity: false
+    to: 9.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "good"
+
+# very good project
+- type: "StandardTestVector"
+  values:
+  - type: "OwaspDependencyCheckUsageValue"
+    feature:
+      type: "OwaspDependencyCheckUsageFeature"
+      name: "How OWASP Dependency Check is used"
+    value: "MANDATORY"   
+  - type: "OwaspDependencyCheckCvssThresholdValue"
+    feature:
+      type: "OwaspDependencyCheckCvssThreshold"
+      name: "A CVSS threshold for OWASP Dependency Check to fail the build"
+    number: 1.0
+    specified: true
+  expectedScore:
+    type: "DoubleInterval"
+    from: 9.0
+    openLeft: false
+    negativeInfinity: false
+    to: 10.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "very_good"

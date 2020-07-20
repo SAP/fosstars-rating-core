@@ -3,10 +3,13 @@ package com.sap.sgs.phosphor.fosstars.model;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.sap.sgs.phosphor.fosstars.model.feature.BooleanFeature;
+import com.sap.sgs.phosphor.fosstars.model.feature.BoundedDoubleFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.BoundedIntegerFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.DateFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.DoubleFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.LgtmGradeFeature;
+import com.sap.sgs.phosphor.fosstars.model.feature.OwaspDependencyCheckCvssThreshold;
+import com.sap.sgs.phosphor.fosstars.model.feature.OwaspDependencyCheckUsageFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.PositiveIntegerFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.example.NumberOfCommitsLastMonthExample;
 import com.sap.sgs.phosphor.fosstars.model.feature.example.NumberOfContributorsLastMonthExample;
@@ -42,6 +45,9 @@ import com.sap.sgs.phosphor.fosstars.model.feature.oss.VulnerabilitiesInProject;
     @JsonSubTypes.Type(value = LgtmGradeFeature.class),
     @JsonSubTypes.Type(value = LanguagesFeature.class),
     @JsonSubTypes.Type(value = PackageManagersFeature.class),
+    @JsonSubTypes.Type(value = BoundedDoubleFeature.class),
+    @JsonSubTypes.Type(value = OwaspDependencyCheckUsageFeature.class),
+    @JsonSubTypes.Type(value = OwaspDependencyCheckCvssThreshold.class)
 })
 public interface Feature<T> {
 

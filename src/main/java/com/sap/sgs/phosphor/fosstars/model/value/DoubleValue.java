@@ -14,7 +14,7 @@ public class DoubleValue extends AbstractValue<Double> {
   /**
    * A double value.
    */
-  private final double number;
+  protected final double number;
 
   /**
    * Initializes a {@link DoubleValue} of a specified feature.
