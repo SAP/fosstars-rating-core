@@ -17,6 +17,7 @@ import com.sap.sgs.phosphor.fosstars.maven.ModelVisitor.Location;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
+import com.sap.sgs.phosphor.fosstars.model.value.CVSS;
 import com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsage;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
@@ -127,6 +128,7 @@ public class UsesOwaspDependencyScan extends GitHubCachingDataProvider {
    * @return {@link OwaspDependencyCheckUsage} based on where the plugin is found.
    */
   private static OwaspDependencyCheckUsage usage(boolean foundMandatory, boolean foundOptional) {
+    // TODO: move the method to the Visitor
     if (foundMandatory) {
       return MANDATORY;
     } else if (foundOptional) {
@@ -193,7 +195,7 @@ public class UsesOwaspDependencyScan extends GitHubCachingDataProvider {
    * <ul>
    *    <li>if 'number', then parse the value.</li>
    *    <li>if 'boolean' is true, then return 0.0, otherwise null.</li>
-   *    <li>if not a parseable type, an exception is thrown.</li>
+   *    <li>if the type can be parsed, an exception is thrown.</li>
    * </ul>
    * 
    * @param value the value to be parsed.
@@ -271,6 +273,7 @@ public class UsesOwaspDependencyScan extends GitHubCachingDataProvider {
 
     @Override
     public void accept(Plugin plugin, Set<Location> locations) {
+      // TODO: foundOptional should not be considered
       if (foundMandatory || foundOptional) {
         return;
       }
@@ -287,6 +290,8 @@ public class UsesOwaspDependencyScan extends GitHubCachingDataProvider {
 
     @Override
     public void accept(ReportPlugin plugin, Set<Location> locations) {
+      // TODO: the method looks similar to the one above
+      //       can we do anything?
       if (foundMandatory || foundOptional) {
         return;
       }

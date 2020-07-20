@@ -7,9 +7,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckCvssThresholdValue;
 
 /**
- * <p>A feature which holds a {@link DoubleFeature} value. Specific to CVSS margin values 
- * [0.0, 10.0]. But we consider a {@link #JUNK_VALUE} if not in the specific range. If the 
- * CVSS threshold is out of range, it would not be considered during score calculation.</p>
+ * <p>The feature holds a CVSS threshold for OWASP Dependency Check to fail the build.</p>
  * 
  * @see <a href=
  *      "https://jeremylong.github.io/DependencyCheck/dependency-check-maven/configuration.html">
@@ -20,6 +18,8 @@ public class OwaspDependencyCheckCvssThreshold extends BoundedDoubleFeature {
   /**
    * A junk value, x < 0.0 or x > 10.0.
    */
+  // TODO: this constant will need to be removed,
+  //       and the feature/value need to check in n belongs to [0. 10]
   private static final double JUNK_VALUE = 11.0;
 
   /**
@@ -36,11 +36,10 @@ public class OwaspDependencyCheckCvssThreshold extends BoundedDoubleFeature {
   }
 
   /**
-   * An instance of {@link OwaspDependencyCheckCvssThresholdValue} if n is not in the given range of
-   * [0.0, 10.0].
+   * Creates an instance of {@link OwaspDependencyCheckCvssThresholdValue} that shows that
+   * no threshold specified.
    * 
-   * @return New instance of {@link OwaspDependencyCheckCvssThresholdValue} with a
-   *         {@link #JUNK_VALUE}.
+   * @return An instance of {@link OwaspDependencyCheckCvssThresholdValue}.
    */
   public OwaspDependencyCheckCvssThresholdValue notSpecifiedValue() {
     return new OwaspDependencyCheckCvssThresholdValue(this, JUNK_VALUE, false);

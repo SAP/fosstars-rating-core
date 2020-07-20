@@ -21,7 +21,7 @@ public class OwaspDependencyCheckUsageFeature extends AbstractFeature<OwaspDepen
   /**
    * Creates a value of the features.
    *
-   * @param value of type {@link OwaspDependencyCheckUsage}.
+   * @param value An element of {@link OwaspDependencyCheckUsage}.
    * @return A value of the feature.
    */
   public OwaspDependencyCheckUsageValue value(OwaspDependencyCheckUsage value) {

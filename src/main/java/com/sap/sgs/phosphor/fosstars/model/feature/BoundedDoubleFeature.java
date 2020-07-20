@@ -82,12 +82,12 @@ public class BoundedDoubleFeature extends AbstractFeature<Double> {
    * Checks if an double belongs to the interval.
    *
    * @param n The double to be checked.
-   * @return n after the check. Otherwise throws an {@link IllegalArgumentException}.
+   * @return The same value if is't valid, otherwise throws an {@link IllegalArgumentException}.
    */
   private Double check(Double n) {
     if (Double.compare(n, from) < 0 || Double.compare(n, to) > 0) {
       throw new IllegalArgumentException(
-          String.format("Feature value has to be in [%d, %d] but %d given!", from, to, n));
+          String.format("Feature value has to be in [%2.2f, %2.2f] but %2.2f given!", from, to, n));
     }
 
     return n;

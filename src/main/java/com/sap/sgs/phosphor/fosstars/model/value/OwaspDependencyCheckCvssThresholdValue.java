@@ -6,12 +6,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 
 /**
- * A value of a feature which indicates the CVSS threshold used in OWASP Dependency Check.
+ * This feature value contains a CVSS threshold used in OWASP Dependency Check.
  */
 public class OwaspDependencyCheckCvssThresholdValue extends DoubleValue {
 
   /**
-   * If a valid CVSS threshold is specified or not. 
+   * Shows if a valid CVSS threshold is specified or not.
    */
   private final boolean specified;
 
@@ -27,6 +27,7 @@ public class OwaspDependencyCheckCvssThresholdValue extends DoubleValue {
       @JsonProperty("feature") Feature<Double> feature,
       @JsonProperty("number") Double number,
       @JsonProperty("specified") boolean specified) {
+
     super(feature, number);
     this.specified = specified; 
   }
@@ -48,6 +49,6 @@ public class OwaspDependencyCheckCvssThresholdValue extends DoubleValue {
       return number;
     }
 
-    throw new IllegalArgumentException("The value has to be within range [0.0, 10.0]!!!");
+    throw new IllegalArgumentException("On no! The value is not specified!");
   }
 }

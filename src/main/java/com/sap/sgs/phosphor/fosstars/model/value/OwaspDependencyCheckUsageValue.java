@@ -7,9 +7,8 @@ import com.sap.sgs.phosphor.fosstars.model.Feature;
 import java.util.Objects;
 
 /**
- * A value of a feature which indicates the usage status of any entity. This feature will
- * indicate how the entity is used in the project. Usage status mandatory, optional or not
- * found.
+ * The value for
+ * {@link com.sap.sgs.phosphor.fosstars.model.feature.OwaspDependencyCheckUsageFeature}.
  */
 public class OwaspDependencyCheckUsageValue extends AbstractValue<OwaspDependencyCheckUsage> {
 
@@ -28,7 +27,9 @@ public class OwaspDependencyCheckUsageValue extends AbstractValue<OwaspDependenc
   public OwaspDependencyCheckUsageValue(
       @JsonProperty("feature") Feature<OwaspDependencyCheckUsage> feature,
       @JsonProperty("value") OwaspDependencyCheckUsage value) {
+
     super(feature);
+    Objects.requireNonNull(value, "Oh no! Value is null!");
     this.value = value;
   }
 

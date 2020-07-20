@@ -9,7 +9,6 @@ import com.sap.sgs.phosphor.fosstars.model.feature.OwaspDependencyCheckUsageFeat
 import com.sap.sgs.phosphor.fosstars.model.feature.PositiveIntegerFeature;
 import com.sap.sgs.phosphor.fosstars.model.value.Languages;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade;
-import com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsage;
 import com.sap.sgs.phosphor.fosstars.model.value.PackageManagers;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
 import java.util.Date;

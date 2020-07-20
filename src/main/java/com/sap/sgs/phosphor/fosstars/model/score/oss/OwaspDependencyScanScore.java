@@ -2,9 +2,7 @@ package com.sap.sgs.phosphor.fosstars.model.score.oss;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.OWASP_DEPENDENCY_CHECK_USAGE;
-import static com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsage.MANDATORY;
 import static com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsage.NOT_USED;
-import static com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsage.OPTIONAL;
 
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
@@ -44,34 +42,33 @@ public class OwaspDependencyScanScore extends FeatureBasedScore {
 
   @Override
   public ScoreValue calculate(Value... values) {
-    Value<Double> cvssScore = find(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD, values);
+    Value<Double> thresholdValue = find(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD, values);
     Value<OwaspDependencyCheckUsage> usageValue = find(OWASP_DEPENDENCY_CHECK_USAGE, values);
 
-    ScoreValue scoreValue = scoreValue(MIN, usageValue, cvssScore);
+    if (thresholdValue instanceof OwaspDependencyCheckCvssThresholdValue == false) {
+      throw new IllegalArgumentException("Expected OwaspDependencyCheckCvssThresholdValue!");
+    }
 
-    // if the project does not use OWASP Dependency Check
+    ScoreValue scoreValue = scoreValue(MIN, usageValue, thresholdValue);
+
     OwaspDependencyCheckUsage usage = usageValue.orElse(NOT_USED);
-    if (usage.equals(NOT_USED)) {
-      return scoreValue;
-    }
-    
-    if (cvssScore instanceof OwaspDependencyCheckCvssThresholdValue == false) {
-      throw new IllegalArgumentException("CVSS score is not of appropriate type");
-    }
-
-    // if the project uses OWASP Dependency Check to identify vulnerable dependencies, then we are
-    // happy.
-    if (usage.equals(MANDATORY)) {
-      scoreValue.set(MAX - STEP_SCORE);
-    } else if (usage.equals(OPTIONAL)) {
-      scoreValue.set(STEP_SCORE);
+    switch (usage) {
+      case NOT_USED:
+        return scoreValue;
+      case MANDATORY:
+        scoreValue.set(MAX - STEP_SCORE);
+        break;
+      case OPTIONAL:
+        scoreValue.set(STEP_SCORE);
+        break;
+      default:
+        throw new IllegalArgumentException("Unexpected usage!");
     }
 
-    // if the project fails build based on certain CVSS threshold. If CVSS of a vulnerability is
-    // greater than threshold, then the build fails. Lower the threshold score means most
-    // vulnerabilities are considered, then we are happy.
     OwaspDependencyCheckCvssThresholdValue value =
-        (OwaspDependencyCheckCvssThresholdValue) cvssScore;
+        (OwaspDependencyCheckCvssThresholdValue) thresholdValue;
+
+    // the lower the threshold, the better
     if (value.specified()) {
       scoreValue.increase(STEP_SCORE * (CVSS.MAX - value.get()) / CVSS.MAX);
     }
