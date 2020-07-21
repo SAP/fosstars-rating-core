@@ -24,6 +24,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.kohsuke.github.GHCheckRun;
 import org.kohsuke.github.GHCommit;
+import org.kohsuke.github.GHException;
 
 /**
  * The data provider gathers info about how a project uses static analysis with LGTM.
@@ -143,11 +144,16 @@ public class LgtmDataProvider extends GitHubCachingDataProvider {
    * @return True if the commit has LGTM checks, false otherwise.
    * @throws IOException If something went wrong.
    */
-  private static boolean hasLgtmChecks(GHCommit commit) throws IOException {
-    for (GHCheckRun checkRun : commit.getCheckRuns()) {
-      if (checkRun.getName().startsWith("LGTM analysis")) {
-        return true;
+  private boolean hasLgtmChecks(GHCommit commit) throws IOException {
+    try {
+      for (GHCheckRun checkRun : commit.getCheckRuns()) {
+        if (checkRun.getName().startsWith("LGTM analysis")) {
+          return true;
+        }
       }
+    } catch (GHException e) {
+      logger.warn("Oops! Something went wrong: {}", e.getMessage());
+      logger.debug("Here is what happened: ", e);
     }
 
     return false;
