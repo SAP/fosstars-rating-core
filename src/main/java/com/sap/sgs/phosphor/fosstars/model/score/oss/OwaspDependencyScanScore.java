@@ -27,7 +27,7 @@ import java.io.InputStream;
 public class OwaspDependencyScanScore extends FeatureBasedScore {
 
   /**
-   * The basic step score that is alloted in each step. 
+   * The basic step score that is allotted in each step.
    */
   private static final double STEP_SCORE = 3.0;
 
@@ -45,10 +45,6 @@ public class OwaspDependencyScanScore extends FeatureBasedScore {
     Value<Double> thresholdValue = find(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD, values);
     Value<OwaspDependencyCheckUsage> usageValue = find(OWASP_DEPENDENCY_CHECK_USAGE, values);
 
-    if (thresholdValue instanceof OwaspDependencyCheckCvssThresholdValue == false) {
-      throw new IllegalArgumentException("Expected OwaspDependencyCheckCvssThresholdValue!");
-    }
-
     ScoreValue scoreValue = scoreValue(MIN, usageValue, thresholdValue);
 
     OwaspDependencyCheckUsage usage = usageValue.orElse(NOT_USED);
@@ -63,6 +59,14 @@ public class OwaspDependencyScanScore extends FeatureBasedScore {
         break;
       default:
         throw new IllegalArgumentException("Unexpected usage!");
+    }
+
+    if (thresholdValue.isUnknown()) {
+      return scoreValue;
+    }
+
+    if (thresholdValue instanceof OwaspDependencyCheckCvssThresholdValue == false) {
+      throw new IllegalArgumentException("Expected OwaspDependencyCheckCvssThresholdValue!");
     }
 
     OwaspDependencyCheckCvssThresholdValue value =
