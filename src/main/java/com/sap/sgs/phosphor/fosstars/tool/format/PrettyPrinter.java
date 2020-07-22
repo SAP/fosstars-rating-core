@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import org.apache.commons.text.WordUtils;
 
 /**
  * The class print a pretty rating value.
@@ -43,6 +44,11 @@ public class PrettyPrinter implements Formatter {
    * An indent step.
    */
   private static final String INDENT_STEP = "  ";
+
+  /**
+   * A length of lines for wrapping descriptions.
+   */
+  private static final int DESCRIPTION_WRAP_LENGTH = 50;
 
   /**
    * Maps a class of feature to its shorter name which should be used in output.
@@ -127,7 +133,9 @@ public class PrettyPrinter implements Formatter {
     }
 
     if (!scoreValue.score().description().isEmpty()) {
-      String[] lines = scoreValue.score().description().split("\n");
+      String[] lines = WordUtils
+          .wrap(scoreValue.score().description(), DESCRIPTION_WRAP_LENGTH)
+          .split("\n");
       sb.append(String.format("%sDescription:..%s%n", indent, lines[0]));
       for (int i = 1; i < lines.length; i++) {
         sb.append(String.format("%s              %s%n", indent, lines[i]));
