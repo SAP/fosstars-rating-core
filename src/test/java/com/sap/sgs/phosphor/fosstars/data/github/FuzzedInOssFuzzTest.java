@@ -11,7 +11,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Date;
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.api.Git;
@@ -30,7 +29,7 @@ public class FuzzedInOssFuzzTest extends TestGitHubDataFetcherHolder {
 
       repository.create();
 
-      Path projectDirectory = Paths.get("projects").resolve("project");
+      Path projectDirectory = directory.resolve("projects").resolve("project");
       Files.createDirectories(projectDirectory);
 
       Path dockerFilePath = new File(repository.getDirectory().getParent(), "Dockerfile").toPath();
