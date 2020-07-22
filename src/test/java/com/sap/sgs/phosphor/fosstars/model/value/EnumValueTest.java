@@ -6,46 +6,22 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.sgs.phosphor.fosstars.model.Value;
-import com.sap.sgs.phosphor.fosstars.model.feature.AbstractFeature;
+import com.sap.sgs.phosphor.fosstars.model.feature.EnumFeature;
 import java.io.IOException;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class EnumValueTest {
 
   private enum TestEnum {
-
-    A, B, C;
-
-    @JsonCreator
-    public static TestEnum parse(String string) {
-      return TestEnum.valueOf(string);
-    }
-  }
-
-  private static class EnumFeatureImpl extends AbstractFeature<TestEnum> {
-
-    EnumFeatureImpl(String name) {
-      super(name);
-    }
-
-    @Override
-    public EnumValue<TestEnum> value(TestEnum object) {
-      return new EnumValue<>(this, object);
-    }
-
-    @Override
-    public Value<TestEnum> parse(String string) {
-      throw new UnsupportedOperationException();
-    }
+    A, B, C
   }
 
   @Test
   public void smokeTest() {
-    EnumValue value = new EnumFeatureImpl("feature").value(TestEnum.B);
+    EnumFeature<TestEnum> feature = new EnumFeature<>(TestEnum.class, "feature");
+    EnumValue<TestEnum> value = feature.value(TestEnum.B);
     assertNotNull(value);
     assertFalse(value.isUnknown());
     assertEquals(TestEnum.B, value.get());
@@ -53,16 +29,17 @@ public class EnumValueTest {
 
   @Test
   public void testUnknown() {
-    Value value = new EnumFeatureImpl("test").unknown();
+    Value value = new EnumFeature<>(TestEnum.class, "test").unknown();
+    assertNotNull(value);
     assertTrue(value.isUnknown());
   }
 
   @Test
-  public void equalsAndHashCode() {
-    final Value a = new EnumFeatureImpl("feature").value(TestEnum.A);
-    final Value b = new EnumFeatureImpl("feature").value(TestEnum.B);
-    final Value aa = new EnumFeatureImpl("feature").value(TestEnum.A);
-    final Value unknown = new EnumFeatureImpl("test").unknown();
+  public void testEqualsAndHashCode() {
+    final EnumValue<TestEnum> a = new EnumFeature<>(TestEnum.class, "feature").value(TestEnum.A);
+    final EnumValue<TestEnum> b = new EnumFeature<>(TestEnum.class, "feature").value(TestEnum.B);
+    final EnumValue<TestEnum> aa = new EnumFeature<>(TestEnum.class, "feature").value(TestEnum.A);
+    final Value unknown = new EnumFeature<>(TestEnum.class, "test").unknown();
 
     assertEquals(a, a);
     assertEquals(a, aa);
@@ -79,16 +56,10 @@ public class EnumValueTest {
   }
 
   @Test
-  @Ignore
-  /*
-   * This test fails with "Cannot deserialize Class java.lang.Enum (of type enum) as a Bean".
-   * It looks like a problem with Jackson Databind, maybe it is related to
-   * https://github.com/FasterXML/jackson-databind/issues/2605
-   */
-  public void serializeAndDeserialize() throws IOException {
+  public void testSerializeAndDeserialize() throws IOException {
     ObjectMapper mapper = new ObjectMapper();
 
-    EnumFeatureImpl feature = new EnumFeatureImpl("feature");
+    EnumFeature<TestEnum> feature = new EnumFeature<>(TestEnum.class, "feature");
     EnumValue a = feature.value(TestEnum.A);
     byte[] bytes = mapper.writeValueAsBytes(a);
     assertNotNull(bytes);
