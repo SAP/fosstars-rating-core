@@ -7,6 +7,7 @@ import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Visitor;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -50,13 +51,18 @@ public abstract class FeatureBasedScore extends AbstractScore {
    */
   public FeatureBasedScore(String name, String description, Set<Feature> features) {
     super(name, description);
-    this.features = Collections.unmodifiableSet(features);
+    for (Feature feature : features) {
+      if (feature instanceof Score) {
+        throw new IllegalArgumentException("Hey! I cannot work with scores!");
+      }
+    }
+    this.features = new HashSet<>(features);
   }
 
   @Override
   @JsonIgnore
   public final Set<Feature> features() {
-    return features;
+    return new HashSet<>(features);
   }
 
   @Override
