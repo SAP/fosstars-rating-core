@@ -7,6 +7,7 @@ import com.sap.sgs.phosphor.fosstars.model.feature.BoundedDoubleFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.BoundedIntegerFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.DateFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.DoubleFeature;
+import com.sap.sgs.phosphor.fosstars.model.feature.EnumFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.LgtmGradeFeature;
 import com.sap.sgs.phosphor.fosstars.model.feature.OwaspDependencyCheckCvssThreshold;
 import com.sap.sgs.phosphor.fosstars.model.feature.OwaspDependencyCheckUsageFeature;
@@ -36,7 +37,9 @@ import com.sap.sgs.phosphor.fosstars.model.feature.oss.VulnerabilitiesInProject;
     @JsonSubTypes.Type(value = DoubleFeature.class),
     @JsonSubTypes.Type(value = BooleanFeature.class),
     @JsonSubTypes.Type(value = BoundedIntegerFeature.class),
+    @JsonSubTypes.Type(value = BoundedDoubleFeature.class),
     @JsonSubTypes.Type(value = DateFeature.class),
+    @JsonSubTypes.Type(value = EnumFeature.class),
     @JsonSubTypes.Type(value = VulnerabilitiesInProject.class),
     @JsonSubTypes.Type(value = SecurityReviewDoneExample.class),
     @JsonSubTypes.Type(value = StaticCodeAnalysisDoneExample.class),
@@ -45,7 +48,6 @@ import com.sap.sgs.phosphor.fosstars.model.feature.oss.VulnerabilitiesInProject;
     @JsonSubTypes.Type(value = LgtmGradeFeature.class),
     @JsonSubTypes.Type(value = LanguagesFeature.class),
     @JsonSubTypes.Type(value = PackageManagersFeature.class),
-    @JsonSubTypes.Type(value = BoundedDoubleFeature.class),
     @JsonSubTypes.Type(value = OwaspDependencyCheckUsageFeature.class),
     @JsonSubTypes.Type(value = OwaspDependencyCheckCvssThreshold.class)
 })
