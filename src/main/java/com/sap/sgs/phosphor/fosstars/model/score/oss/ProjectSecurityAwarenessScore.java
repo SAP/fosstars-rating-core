@@ -18,10 +18,21 @@ import java.io.InputStream;
 /**
  * <p>The security awareness score is currently based on the following features.</p>
  * <ul>
- *   <li>if a project publishes security advisories</li>
- *   <li>if a project has a security team</li>
- *   <li>if a project uses verified signed commits</li>
- *   <li>if a project has a bug bounty program</li>
+ *   <li>
+ *     {@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#HAS_SECURITY_POLICY}
+ *   </li>
+ *   <li>
+ *     {@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#HAS_SECURITY_TEAM}
+ *   </li>
+ *   <li>
+ *     {@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#USES_SIGNED_COMMITS}
+ *   </li>
+ *   <li>
+ *     {@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#HAS_BUG_BOUNTY_PROGRAM}
+ *   </li>
+ *   <li>
+ *     {@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#SIGNS_ARTIFACTS}
+ *   </li>
  * </ul>
  * <p>A project gets the maximum score if it has both a security policy and a security team.</p>
  */
@@ -45,7 +56,7 @@ public class ProjectSecurityAwarenessScore extends FeatureBasedScore {
   /**
    * A number of points which are added to a score value if a project signs its artifacts.
    */
-  private static final double SIGNED_ARTIFICTS_POINTS = 2.0;
+  private static final double SIGNED_ARTIFACTS_POINTS = 2.0;
 
   /**
    * A number of points which are added to a score value if a project has a bug bounty program.
@@ -56,14 +67,14 @@ public class ProjectSecurityAwarenessScore extends FeatureBasedScore {
    * A description of the score.
    */
   private static final String DESCRIPTION = String.format(
-      "The score shows how a project is aware of security.\n"
-          + "If the project has a security policy, then the score adds %2.2f.\n"
-          + "If the project has a security team, then the score adds %2.2f.\n"
-          + "If the project uses verified signed commits, then the score adds %2.2f.\n"
-          + "If the project has a bug bounty program, then the score adds %2.2f\n"
+      "The score shows how a project is aware of security. "
+          + "If the project has a security policy, then the score adds %2.2f. "
+          + "If the project has a security team, then the score adds %2.2f. "
+          + "If the project uses verified signed commits, then the score adds %2.2f. "
+          + "If the project has a bug bounty program, then the score adds %2.2f. "
           + "If the project signs its artifacts, then the score adds %2.2f.",
       SECURITY_POLICY_POINTS, SECURITY_TEAM_POINTS, SIGNED_COMMITS_POINTS,
-      BUG_BOUNTY_PROGRAM_POINTS, SIGNED_ARTIFICTS_POINTS);
+      BUG_BOUNTY_PROGRAM_POINTS, SIGNED_ARTIFACTS_POINTS);
 
   /**
    * Initializes a new {@link ProjectSecurityAwarenessScore}.
@@ -116,7 +127,7 @@ public class ProjectSecurityAwarenessScore extends FeatureBasedScore {
 
     signsArtifacts.processIfKnown(yes -> {
       if (yes) {
-        scoreValue.increase(SIGNED_ARTIFICTS_POINTS);
+        scoreValue.increase(SIGNED_ARTIFACTS_POINTS);
       }
     });
 
