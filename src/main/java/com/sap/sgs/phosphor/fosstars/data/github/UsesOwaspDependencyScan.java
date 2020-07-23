@@ -3,6 +3,7 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 import static com.sap.sgs.phosphor.fosstars.maven.MavenUtils.browse;
 import static com.sap.sgs.phosphor.fosstars.maven.MavenUtils.readModel;
 import static com.sap.sgs.phosphor.fosstars.maven.ModelVisitor.Location.BUILD;
+import static com.sap.sgs.phosphor.fosstars.maven.ModelVisitor.Location.MANAGEMENT;
 import static com.sap.sgs.phosphor.fosstars.maven.ModelVisitor.Location.PROFILE;
 import static com.sap.sgs.phosphor.fosstars.maven.ModelVisitor.Location.REPORTING;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD;
@@ -17,7 +18,9 @@ import com.sap.sgs.phosphor.fosstars.maven.ModelVisitor.Location;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
+import com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckCvssThresholdValue;
 import com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsage;
+import com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsageValue;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
@@ -30,6 +33,7 @@ import org.apache.maven.model.Model;
 import org.apache.maven.model.Plugin;
 import org.apache.maven.model.ReportPlugin;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
+import sun.plugin.PluginURLJarFileCallBack;
 
 /**
  * This data provider checks if an open-source project uses OWASP Dependency Check to scan
@@ -82,11 +86,12 @@ public class UsesOwaspDependencyScan extends GitHubCachingDataProvider {
   }
 
   /**
-   * Checks if a project uses OWASP Dependency Check Maven plugin.
+   * Checks if a project uses OWASP Dependency Check Maven plugin,
+   * and updates a value set if the plugin is found.
    *
    * @param repository The project's repository.
-   * @param values set of type {@link ValueSet}.
-   * @throws IOException if something goes wrong.
+   * @param values A {@link ValueSet} to be updated.
+   * @throws IOException If something goes wrong.
    */
   private static void checkMaven(LocalRepository repository, ValueSet values) throws IOException {
     Optional<InputStream> content = repository.read("pom.xml");
@@ -97,14 +102,13 @@ public class UsesOwaspDependencyScan extends GitHubCachingDataProvider {
 
         Visitor visitor = browse(model, withVisitor());
 
-        values.update(OWASP_DEPENDENCY_CHECK_USAGE
-            .value(usage(visitor.foundMandatory, visitor.foundOptional)));
+        OwaspDependencyCheckUsageValue usage = OWASP_DEPENDENCY_CHECK_USAGE.value(visitor.usage());
 
-        if (visitor.score == null) {
-          values.update(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.notSpecifiedValue());
-        } else {
-          values.update(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.value(visitor.score));
-        }
+        OwaspDependencyCheckCvssThresholdValue threshold = visitor.threshold()
+            .map(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD::value)
+            .orElse(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.notSpecifiedValue());
+
+        values.update(usage, threshold);
       }
     }
   }
@@ -120,43 +124,6 @@ public class UsesOwaspDependencyScan extends GitHubCachingDataProvider {
   }
 
   /**
-   * Get {@link OwaspDependencyCheckUsage} based on where the plugin is found. 
-   *
-   * @param foundMandatory if the plugin is run as a mandatory check.
-   * @param foundOptional if the plugin is run as an optional check.
-   * @return {@link OwaspDependencyCheckUsage} based on where the plugin is found.
-   */
-  private static OwaspDependencyCheckUsage usage(boolean foundMandatory, boolean foundOptional) {
-    // TODO: move the method to the Visitor
-    if (foundMandatory) {
-      return MANDATORY;
-    } else if (foundOptional) {
-      return OPTIONAL;
-    }
-    return NOT_USED;
-  }
-
-  /**
-   * Check if a plugin is OWASP Dependency Check plugin.
-   *
-   * @param plugin The plugin to be checked.
-   * @return True if the plugin is OWASP Dependency Check plugin, false otherwise.
-   */
-  private static boolean isDependencyCheck(Plugin plugin) {
-    return isDependencyCheck(plugin.getGroupId(), plugin.getArtifactId());
-  }
-
-  /**
-   * Check if a report plugin is OWASP Dependency Check plugin.
-   *
-   * @param plugin The report plugin to be checked.
-   * @return True if the report plugin is OWASP Dependency Check plugin, false otherwise.
-   */
-  private static boolean isDependencyCheck(ReportPlugin plugin) {
-    return isDependencyCheck(plugin.getGroupId(), plugin.getArtifactId());
-  }
-
-  /**
    * Check if groupId and artifactId matches with OWASP Dependency GA.
    *
    * @param groupId to be checked.
@@ -168,15 +135,13 @@ public class UsesOwaspDependencyScan extends GitHubCachingDataProvider {
   }
 
   /**
-   * Check if plugin configurations have an attribute which can fail the build on finding
-   * vulnerabilities above a given CVSS score. Hence, look for possible CVSS score value which
-   * indicates when to fail the build.
+   * Check if a plugin configuration has an attribute that specifies a CVSS threshold,
+   * so that the plugin fails the build if vulnerabilities with higher CVSS score are found.
    *
    * @param configuration The plugin configuration to be checked.
-   * @return The CVSS score which indicates how the build should fail. Otherwise null.
+   * @return The CVSS threshold if found, otherwise null.
    */
   private static Double cvssScoreFrom(Object configuration) {
-    // The OWASP Dependency Check plugin is found and checking configurations.
     for (String name : FAIL_BUILD_CONFIGURATIONS.keySet()) {
       Optional<String> content = parameter(name, configuration);
 
@@ -192,14 +157,14 @@ public class UsesOwaspDependencyScan extends GitHubCachingDataProvider {
   /**
    * Parse the value depending on the given type. The type can be 'boolean' or 'number'. 
    * <ul>
-   *    <li>if 'number', then parse the value.</li>
-   *    <li>if 'boolean' is true, then return 0.0, otherwise null.</li>
-   *    <li>if the type can be parsed, an exception is thrown.</li>
+   *    <li>If the type is 'number', then parse the value.</li>
+   *    <li>If the type is 'boolean' and the value is true, then return 0.0, otherwise null.</li>
+   *    <li>If the type is unknown, an exception is thrown.</li>
    * </ul>
    * 
-   * @param value the value to be parsed.
-   * @param type the type of the string value.
-   * @return the parsed value.
+   * @param value The value to be parsed.
+   * @param type The type of the string value.
+   * @return The parsed value.
    */
   private static Double parseScore(String value, String type) {
     switch (type) {
@@ -239,8 +204,7 @@ public class UsesOwaspDependencyScan extends GitHubCachingDataProvider {
    * @return True if the plugin will be executed as a mandatory step, false otherwise.
    */
   private static boolean mandatoryCheckFor(Set<Location> locations) {
-    return (locations.contains(BUILD) || locations.contains(REPORTING))  
-        && !locations.contains(PROFILE);
+    return locations.size() == 1 && (locations.contains(BUILD) || locations.contains(REPORTING));
   }
 
   /**
@@ -272,37 +236,64 @@ public class UsesOwaspDependencyScan extends GitHubCachingDataProvider {
 
     @Override
     public void accept(Plugin plugin, Set<Location> locations) {
-      // TODO: foundOptional should not be considered
-      if (foundMandatory || foundOptional) {
-        return;
-      }
-      
-      if (isDependencyCheck(plugin)) {
-        if (mandatoryCheckFor(locations)) {
-          foundMandatory = true;
-        } else {
-          foundOptional = true;
-        }
-        score = cvssScoreFrom(plugin.getConfiguration());
-      }
+      accept(plugin.getGroupId(), plugin.getArtifactId(), plugin.getConfiguration(), locations);
     }
 
     @Override
     public void accept(ReportPlugin plugin, Set<Location> locations) {
-      // TODO: the method looks similar to the one above
-      //       can we do anything?
-      if (foundMandatory || foundOptional) {
+      accept(plugin.getGroupId(), plugin.getArtifactId(), plugin.getConfiguration(), locations);
+    }
+
+    /**
+     * Check if a plugin is OWASP Dependency Check plugin.
+     *
+     * @param groupId A group id of the plugins.
+     * @param artifactId An artifact id of the plugin.
+     * @param configuration A configuration of the plugin.
+     * @param locations Locations of the plugin.
+     */
+    private void accept(
+        String groupId, String artifactId, Object configuration, Set<Location> locations) {
+
+      if (foundMandatory) {
         return;
       }
-      
-      if (isDependencyCheck(plugin)) {
+
+      if (isDependencyCheck(groupId, artifactId)) {
         if (mandatoryCheckFor(locations)) {
           foundMandatory = true;
         } else {
           foundOptional = true;
         }
-        score = cvssScoreFrom(plugin.getConfiguration());
+
+        score = cvssScoreFrom(configuration);
       }
+    }
+
+    /**
+     * Get {@link OwaspDependencyCheckUsage} based on where the plugin is found.
+     *
+     * @return {@link OwaspDependencyCheckUsage} based on where the plugin is found.
+     */
+    OwaspDependencyCheckUsage usage() {
+      if (foundMandatory) {
+        return MANDATORY;
+      }
+
+      if (foundOptional) {
+        return OPTIONAL;
+      }
+
+      return NOT_USED;
+    }
+
+    /**
+     * Get a CVSS threshold if found.
+     *
+     * @return The threshold.
+     */
+    Optional<Double> threshold() {
+      return Optional.ofNullable(score);
     }
   }
 }
