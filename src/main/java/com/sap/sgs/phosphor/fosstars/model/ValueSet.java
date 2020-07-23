@@ -24,12 +24,12 @@ public interface ValueSet {
   boolean has(Feature feature);
 
   /**
-   * Updates a value in the set.
+   * Updates values in the set.
    *
-   * @param value A value to be updated.
+   * @param values Values to be updated.
    * @return This ValueSet,
    */
-  ValueSet update(Value value);
+  ValueSet update(Value... values);
 
   /**
    * Updates a number of values in the set.

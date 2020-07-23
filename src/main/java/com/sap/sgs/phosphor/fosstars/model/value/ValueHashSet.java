@@ -121,9 +121,11 @@ public class ValueHashSet implements ValueSet {
   }
 
   @Override
-  public ValueSet update(Value value) {
-    Objects.requireNonNull(value, "Oh no! Value is null!");
-    featureToValue.put(value.feature(), value);
+  public ValueSet update(Value... values) {
+    Objects.requireNonNull(values, "Oh no! Values is null!");
+    for (Value value : values) {
+      featureToValue.put(value.feature(), value);
+    }
     return this;
   }
 
