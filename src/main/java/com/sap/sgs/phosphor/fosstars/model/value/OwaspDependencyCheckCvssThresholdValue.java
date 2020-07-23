@@ -3,7 +3,8 @@ package com.sap.sgs.phosphor.fosstars.model.value;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sap.sgs.phosphor.fosstars.model.Feature;
+import com.sap.sgs.phosphor.fosstars.model.feature.OwaspDependencyCheckCvssThreshold;
+import java.util.Objects;
 
 /**
  * This feature value contains a CVSS threshold used in OWASP Dependency Check.
@@ -19,21 +20,22 @@ public class OwaspDependencyCheckCvssThresholdValue extends DoubleValue {
    * Initializes a {@link OwaspDependencyCheckCvssThresholdValue} of a specified feature.
    *
    * @param feature The feature.
-   * @param number The value.
-   * @param specified if the appropriate value is specified.
+   * @param cvss A CVSS score.
+   * @param specified Tells if the CVSS score is specified.
    */
   @JsonCreator
   public OwaspDependencyCheckCvssThresholdValue(
-      @JsonProperty("feature") Feature<Double> feature,
-      @JsonProperty("number") Double number,
+      @JsonProperty("feature") OwaspDependencyCheckCvssThreshold feature,
+      @JsonProperty("number") Double cvss,
       @JsonProperty("specified") boolean specified) {
 
-    super(feature, number);
+    super(feature, cvss);
+    CVSS.check(cvss);
     this.specified = specified; 
   }
 
   /**
-   * Returns if a valid CVSS threshold is specified or not.
+   * Checks if a valid CVSS threshold is specified or not.
    *  
    * @return True if a valid threshold is set, false otherwise.
    */
@@ -42,6 +44,12 @@ public class OwaspDependencyCheckCvssThresholdValue extends DoubleValue {
     return specified;
   }
 
+  /**
+   * Get the CVSS score if it's specified.
+   *
+   * @return The CVSS score.
+   * @throws IllegalStateException If the CVSS score is not specified.
+   */
   @Override
   @JsonGetter("number")
   public Double get() {
@@ -49,6 +57,26 @@ public class OwaspDependencyCheckCvssThresholdValue extends DoubleValue {
       return number;
     }
 
-    throw new IllegalArgumentException("On no! The value is not specified!");
+    throw new IllegalStateException("On no! The value is not specified!");
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o instanceof OwaspDependencyCheckCvssThresholdValue == false) {
+      return false;
+    }
+    if (!super.equals(o)) {
+      return false;
+    }
+    OwaspDependencyCheckCvssThresholdValue value = (OwaspDependencyCheckCvssThresholdValue) o;
+    return specified == value.specified;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), specified);
   }
 }

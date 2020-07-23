@@ -28,6 +28,7 @@ public class DoubleValue extends AbstractValue<Double> {
       @JsonProperty("number") Double number) {
 
     super(feature);
+    Objects.requireNonNull(number, "Oh no! Number is null!");
     this.number = number;
   }
 

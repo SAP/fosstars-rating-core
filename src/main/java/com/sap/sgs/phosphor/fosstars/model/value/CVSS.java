@@ -132,14 +132,16 @@ public class CVSS {
    * @return The score value if it's valid or null.
    * @throws IllegalArgumentException If the score value is invalid.
    */
-  private static Double check(Double value) {
+  public static Double check(Double value) {
     if (value == null) {
       return null;
     }
-    if (value < MIN || value > MAX) {
+
+    if (Double.compare(value, MIN) < 0 || Double.compare(value, MAX) > 0) {
       throw new IllegalArgumentException(String.format(
-          "What the heck? %s doesn't look like a CVSS score!", value));
+          "What the heck? %f doesn't look like a CVSS score!", value));
     }
+
     return value;
   }
 

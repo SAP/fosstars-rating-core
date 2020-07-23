@@ -16,13 +16,6 @@ import com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckCvssThresho
 public class OwaspDependencyCheckCvssThreshold extends BoundedDoubleFeature {
 
   /**
-   * A junk value, x < 0.0 or x > 10.0.
-   */
-  // TODO: this constant will need to be removed,
-  //       and the feature/value need to check in n belongs to [0. 10]
-  private static final double JUNK_VALUE = 11.0;
-
-  /**
    * Initializes a feature.
    */
   @JsonCreator
@@ -42,6 +35,9 @@ public class OwaspDependencyCheckCvssThreshold extends BoundedDoubleFeature {
    * @return An instance of {@link OwaspDependencyCheckCvssThresholdValue}.
    */
   public OwaspDependencyCheckCvssThresholdValue notSpecifiedValue() {
-    return new OwaspDependencyCheckCvssThresholdValue(this, JUNK_VALUE, false);
+    // it doesn't matter what CVSS score value is used here because the created value throws
+    // and exception if the get() method is called
+    // therefore, it just uses MIN value
+    return new OwaspDependencyCheckCvssThresholdValue(this, MIN, false);
   }
 }
