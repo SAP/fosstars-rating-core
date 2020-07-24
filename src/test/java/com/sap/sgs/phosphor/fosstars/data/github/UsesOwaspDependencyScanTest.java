@@ -7,6 +7,7 @@ import static com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsag
 import static com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsage.NOT_USED;
 import static com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsage.OPTIONAL;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -14,6 +15,7 @@ import static org.mockito.Mockito.when;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
+import com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckCvssThresholdValue;
 import com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsage;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
@@ -26,13 +28,16 @@ import org.junit.Test;
 
 public class UsesOwaspDependencyScanTest extends TestGitHubDataFetcherHolder {
 
+  private static final Double NOT_SPECIFIED = null;
+
   @Test
   public void testMavenWithOwaspDependencyCheckInBuild() throws IOException {
     try (InputStream is = getClass()
         .getResourceAsStream("MavenWithOwaspDependencyCheckInBuild.xml")) {
 
       ValueSet values = values(createProvider(is, "pom.xml"));
-      checkUsageStatus(MANDATORY, values, OWASP_DEPENDENCY_CHECK_USAGE);
+      checkUsage(MANDATORY, values);
+      checkThreshold(NOT_SPECIFIED, values);
     }
   }
 
@@ -42,7 +47,8 @@ public class UsesOwaspDependencyScanTest extends TestGitHubDataFetcherHolder {
         .getResourceAsStream("MavenWithOwaspDependencyCheckInBuildPluginManagement.xml")) {
 
       ValueSet values = values(createProvider(is, "pom.xml"));
-      checkUsageStatus(MANDATORY, values, OWASP_DEPENDENCY_CHECK_USAGE);
+      checkUsage(OPTIONAL, values);
+      checkThreshold(NOT_SPECIFIED, values);
     }
   }
 
@@ -52,8 +58,8 @@ public class UsesOwaspDependencyScanTest extends TestGitHubDataFetcherHolder {
         getClass().getResourceAsStream("MavenWithOwaspDependencyCheckInProfilesBuild.xml")) {
 
       ValueSet values = values(createProvider(is, "pom.xml"));
-      checkUsageStatus(OPTIONAL, values, OWASP_DEPENDENCY_CHECK_USAGE);
-      checkDoubleValue(7.0, values, OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD);
+      checkUsage(OPTIONAL, values);
+      checkThreshold(7.0, values);
     }
   }
 
@@ -63,7 +69,8 @@ public class UsesOwaspDependencyScanTest extends TestGitHubDataFetcherHolder {
         getClass().getResourceAsStream("MavenWithOwaspDependencyCheckInProfilesReporting.xml")) {
 
       ValueSet values = values(createProvider(is, "pom.xml"));
-      checkUsageStatus(OPTIONAL, values, OWASP_DEPENDENCY_CHECK_USAGE);
+      checkUsage(OPTIONAL, values);
+      checkThreshold(0.0, values);
     }
   }
 
@@ -73,7 +80,8 @@ public class UsesOwaspDependencyScanTest extends TestGitHubDataFetcherHolder {
         getClass().getResourceAsStream("MavenWithOwaspDependencyCheckInReporting.xml")) {
 
       ValueSet values = values(createProvider(is, "pom.xml"));
-      checkUsageStatus(MANDATORY, values, OWASP_DEPENDENCY_CHECK_USAGE);
+      checkUsage(MANDATORY, values);
+      checkThreshold(1.3, values);
     }
   }
 
@@ -83,7 +91,8 @@ public class UsesOwaspDependencyScanTest extends TestGitHubDataFetcherHolder {
         .getResourceAsStream("MavenWithoutOwaspDependencyCheck.xml")) {
 
       ValueSet values = values(createProvider(is, "pom.xml"));
-      checkUsageStatus(NOT_USED, values, OWASP_DEPENDENCY_CHECK_USAGE);
+      checkUsage(NOT_USED, values);
+      checkThreshold(NOT_SPECIFIED, values);
     }
   }
   
@@ -93,8 +102,8 @@ public class UsesOwaspDependencyScanTest extends TestGitHubDataFetcherHolder {
         .getResourceAsStream("MavenWithOwaspDependencyCheckInBuildAndProfile.xml")) {
 
       ValueSet values = values(createProvider(is, "pom.xml"));
-      checkUsageStatus(MANDATORY, values, OWASP_DEPENDENCY_CHECK_USAGE);
-      checkDoubleValue(6.0, values, OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD);
+      checkUsage(MANDATORY, values);
+      checkThreshold(6.0, values);
     }
   }
 
@@ -127,16 +136,25 @@ public class UsesOwaspDependencyScanTest extends TestGitHubDataFetcherHolder {
     return values;
   }
 
-  private static void checkUsageStatus(OwaspDependencyCheckUsage expected, ValueSet values,
-      Feature feature) {
-    assertTrue(values.of(feature).isPresent());
-    Value<Boolean> value = values.of(feature).get();
-    assertEquals(expected, value.get());
+  private static void checkUsage(OwaspDependencyCheckUsage expected, ValueSet values) {
+    Optional<Value> value = values.of(OWASP_DEPENDENCY_CHECK_USAGE);
+    assertTrue(value.isPresent());
+    Value usage = value.get();
+    assertEquals(expected, usage.get());
   }
 
-  private static void checkDoubleValue(Double expected, ValueSet values, Feature feature) {
-    assertTrue(values.of(feature).isPresent());
-    Value<Double> value = values.of(feature).get();
-    assertEquals(expected, value.get());
+  private static void checkThreshold(Double expected, ValueSet values) {
+    Optional<Value> value = values.of(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD);
+    assertTrue(value.isPresent());
+    Value n = value.get();
+    assertTrue(n instanceof OwaspDependencyCheckCvssThresholdValue);
+    OwaspDependencyCheckCvssThresholdValue threshold = (OwaspDependencyCheckCvssThresholdValue) n;
+
+    if (expected == null) {
+      assertFalse(threshold.specified());
+    } else {
+      assertTrue(threshold.specified());
+      assertEquals(expected, threshold.get());
+    }
   }
 }

@@ -12,6 +12,7 @@
             <format>ALL</format>
             <skipSystemScope>true</skipSystemScope>
             <skipProvidedScope>true</skipProvidedScope>
+            <failBuildOnAnyVulnerability>false</failBuildOnAnyVulnerability>
           </configuration>
         </plugin>
       </plugins>

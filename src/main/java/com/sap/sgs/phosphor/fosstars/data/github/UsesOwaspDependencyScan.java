@@ -3,8 +3,6 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 import static com.sap.sgs.phosphor.fosstars.maven.MavenUtils.browse;
 import static com.sap.sgs.phosphor.fosstars.maven.MavenUtils.readModel;
 import static com.sap.sgs.phosphor.fosstars.maven.ModelVisitor.Location.BUILD;
-import static com.sap.sgs.phosphor.fosstars.maven.ModelVisitor.Location.MANAGEMENT;
-import static com.sap.sgs.phosphor.fosstars.maven.ModelVisitor.Location.PROFILE;
 import static com.sap.sgs.phosphor.fosstars.maven.ModelVisitor.Location.REPORTING;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.OWASP_DEPENDENCY_CHECK_USAGE;
@@ -33,7 +31,6 @@ import org.apache.maven.model.Model;
 import org.apache.maven.model.Plugin;
 import org.apache.maven.model.ReportPlugin;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
-import sun.plugin.PluginURLJarFileCallBack;
 
 /**
  * This data provider checks if an open-source project uses OWASP Dependency Check to scan
