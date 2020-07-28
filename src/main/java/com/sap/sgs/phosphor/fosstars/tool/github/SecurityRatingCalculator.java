@@ -109,25 +109,33 @@ public class SecurityRatingCalculator {
   static void run(String... args) throws IOException {
     Options options = new Options();
     options.addOption("h", "help", false,
-        "print this message");
+        "Print this message.");
     options.addOption("n", "no-questions", false,
-        "don't ask a user if a feature can't be automatically gathered");
+        "Don't ask a user if a feature can't be automatically gathered.");
     options.addOption(Option.builder("t")
         .longOpt("token")
         .hasArg()
-        .desc("access token")
+        .desc("An access token for the GitHub API.")
         .build());
+
     OptionGroup group = new OptionGroup();
     group.addOption(Option.builder("u")
         .required()
         .hasArg()
         .longOpt("url")
-        .desc("repository URL")
+        .desc("A URL to project's SCM")
+        .build());
+    group.addOption(Option.builder("g")
+        .required()
+        .hasArg()
+        .longOpt("gav")
+        .desc("GAV coordinates of a jar artifact in the format 'G:A:V' or 'G:A' "
+            + "where G is a group id, A is an artifact if, and V is an optional version.")
         .build());
     group.addOption(Option.builder("c")
         .longOpt("config")
         .hasArg()
-        .desc("path to a config")
+        .desc("A path to a config file.")
         .build());
     options.addOptionGroup(group);
 
@@ -146,9 +154,11 @@ public class SecurityRatingCalculator {
       return;
     }
 
-    if (!commandLine.hasOption("url") && !commandLine.hasOption("config")) {
+    if (!commandLine.hasOption("url") && !commandLine.hasOption("config")
+        && !commandLine.hasOption("gav")) {
+
       throw new IllegalArgumentException(
-          "You have to give me either --url or --config option but not both!");
+          "You have to give me either --url, --gav or --config option!");
     }
 
     UserCallback callback = commandLine.hasOption("no-questions")
@@ -171,6 +181,10 @@ public class SecurityRatingCalculator {
         processUrl(commandLine.getOptionValue("url"), fetcher, token, callback);
       }
 
+      if (commandLine.hasOption("gav")) {
+        processGav(commandLine.getOptionValue("gav"), fetcher, token, callback);
+      }
+
       if (commandLine.hasOption("config")) {
         processConfig(commandLine.getOptionValue("config"), fetcher, token, callback);
       }
@@ -180,7 +194,7 @@ public class SecurityRatingCalculator {
   }
 
   /**
-   * Calculate a rating for a single project.
+   * Calculate a rating for a single project identified by a URL to its SCM.
    *
    * @param url A URL of the project repository.
    * @param fetcher An interface for accessing the GitHub.
@@ -188,8 +202,9 @@ public class SecurityRatingCalculator {
    * @param callback An interface for interacting with a user.
    * @throws IOException If something went wrong.
    */
-  private static void processUrl(String url, GitHubDataFetcher fetcher, String githubToken,
-      UserCallback callback) throws IOException {
+  private static void processUrl(
+      String url, GitHubDataFetcher fetcher, String githubToken, UserCallback callback)
+      throws IOException {
 
     GitHubProject project = GitHubProject.parse(url);
 
@@ -209,6 +224,22 @@ public class SecurityRatingCalculator {
   }
 
   /**
+   * Calculate a rating for a single project identified by GAV coordinates.
+   *
+   * @param url A URL of the project repository.
+   * @param fetcher An interface for accessing the GitHub.
+   * @param githubToken A token for accessing the GitHub APIs.
+   * @param callback An interface for interacting with a user.
+   * @throws IOException If something went wrong.
+   */
+  private static void processGav(
+      String url, GitHubDataFetcher fetcher, String githubToken, UserCallback callback)
+      throws IOException {
+
+    throw new UnsupportedOperationException("I can't work with GAVs yet!");
+  }
+
+  /**
    * Calculate a rating for projects specified in a config.
    *
    * @param filename A path to the config.
@@ -217,8 +248,9 @@ public class SecurityRatingCalculator {
    * @param callback An interface for interacting with a user.
    * @throws IOException If something went wrong.
    */
-  private static void processConfig(String filename, GitHubDataFetcher fetcher, String githubToken,
-      UserCallback callback) throws IOException {
+  private static void processConfig(
+      String filename, GitHubDataFetcher fetcher, String githubToken, UserCallback callback)
+      throws IOException {
 
     LOGGER.info("Loading config from {}", filename);
     Config config = config(filename);
