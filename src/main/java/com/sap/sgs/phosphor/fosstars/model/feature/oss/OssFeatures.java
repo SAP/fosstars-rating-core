@@ -114,8 +114,8 @@ public class OssFeatures {
       = new BooleanFeature("If an open-source project uses UndefinedBehaviorSanitizer");
 
   /**
-   * Shows if an open-source project is added to <a href="https://github.com/google/oss-fuzz">OSS-Fuzz</a> project
-   * to be regularly fuzzed.
+   * Shows if an open-source project is added to
+   * <a href="https://github.com/google/oss-fuzz">OSS-Fuzz</a> project to be regularly fuzzed.
    */
   public static final Feature<Boolean> FUZZED_IN_OSS_FUZZ
       = new BooleanFeature("If an open-source project is included to OSS-Fuzz project");
@@ -123,8 +123,8 @@ public class OssFeatures {
   /**
    * Provides information about vulnerabilities.
    */
-  public static final Feature<Vulnerabilities> VULNERABILITIES = new VulnerabilitiesInProject(
-      "Info about vulnerabilities in open-source project");
+  public static final Feature<Vulnerabilities> VULNERABILITIES
+      = new VulnerabilitiesInProject("Info about vulnerabilities in open-source project");
 
   /**
    * Shows if an open-source project scans for known vulnerabilities in its dependencies.
@@ -150,14 +150,16 @@ public class OssFeatures {
 
   /**
    * Shows how many GitHub users watch an open-source project.
-   * See https://developer.github.com/v3/activity/watching/
+   *
+   * @see <a href="https://developer.github.com/v3/activity/watching/">Watching</a>
    */
   public static final Feature<Integer> NUMBER_OF_WATCHERS_ON_GITHUB
       = new PositiveIntegerFeature("Number of watchers for a GitHub repository");
 
   /**
    * Show how many collaborators an open-source project has on GitHub.
-   * See <a href="https://developer.github.com/v3/repos/collaborators">https://developer.github.com/v3/repos/collaborators/</a>.
+   *
+   * @see <a href="https://developer.github.com/v3/repos/collaborators">Collaborators</a>
    */
   public static final Feature<Integer> NUMBER_OF_COLLABORATORS
       = new PositiveIntegerFeature("Number of collaborators for a GitHub repository");
@@ -184,28 +186,28 @@ public class OssFeatures {
   /**
    * Holds the worst grade assigned by <a href="https://lgtm.com">LGTM</a>.
    */
-  public static final Feature<LgtmGrade> WORST_LGTM_GRADE = new LgtmGradeFeature(
-      "The worst LGTM grade of a project");
+  public static final Feature<LgtmGrade> WORST_LGTM_GRADE
+      = new LgtmGradeFeature("The worst LGTM grade of a project");
 
   /**
    * Shows if an open-source project uses signed commits.
    */
-  public static final Feature<Boolean> USES_SIGNED_COMMITS =
-      new BooleanFeature("If a project uses signed commits");
+  public static final Feature<Boolean> USES_SIGNED_COMMITS
+      = new BooleanFeature("If a project uses signed commits");
   
   /**
    * Shows if an open-source project uses GitHub as a main development platform. More precisely, it
    * means that a repository on GitHub is the main one (not a mirror).
    */
-  public static final Feature<Boolean> USES_GITHUB_FOR_DEVELOPMENT =
-      new BooleanFeature("If a project uses GitHub as the main development platform");
+  public static final Feature<Boolean> USES_GITHUB_FOR_DEVELOPMENT
+      = new BooleanFeature("If a project uses GitHub as the main development platform");
 
   /**
    * Shows if an open-source project uses <a href="https://github.com/spring-io/nohttp">nohttp</a>
    * tool to make sure that plain HTTP is not used.
    */
-  public static final Feature<Boolean> USES_NOHTTP =
-      new BooleanFeature("If a project uses nohttp tool");
+  public static final Feature<Boolean> USES_NOHTTP
+      = new BooleanFeature("If a project uses nohttp tool");
 
   /**
    * Shows if an open-source project has a bug bounty program.
@@ -223,16 +225,41 @@ public class OssFeatures {
    * Shows if OWASP Dependency Check is used to scan a project. It is either used as a mandatory
    * step, optional step or not used at all.
    */
-  public static final OwaspDependencyCheckUsageFeature OWASP_DEPENDENCY_CHECK_USAGE =
-      new OwaspDependencyCheckUsageFeature();
+  public static final OwaspDependencyCheckUsageFeature OWASP_DEPENDENCY_CHECK_USAGE
+      = new OwaspDependencyCheckUsageFeature();
 
   /**
    * Shows if OWASP Dependency Check is configured to fail the build if vulnerabilities are found.
    * The feature contains a threshold for CVSS score that is used by the tool.
    *
-   * @see <a href="https://jeremylong.github.io/DependencyCheck/">OWASP Dependency Check
-   *      documentation</a>
+   * @see <a href="https://jeremylong.github.io/DependencyCheck/">
+   *   OWASP Dependency Check documentation</a>
    */
-  public static final OwaspDependencyCheckCvssThreshold OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD =
-      new OwaspDependencyCheckCvssThreshold();
+  public static final OwaspDependencyCheckCvssThreshold OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD
+      = new OwaspDependencyCheckCvssThreshold();
+
+  /**
+   * Shows if an open-source project uses OWASP Enterprise Security API (ESAPI).
+   *
+   * @see <a href="https://owasp.org/www-project-enterprise-security-api/">
+   *   OWASP Enterprise Security API (ESAPI)</a>
+   */
+  public static final BooleanFeature USES_OWASP_ESAPI
+      = new BooleanFeature("If a project uses OWASP Enterprise Security API (ESAPI)");
+
+  /**
+   * Shows if an open-source project uses OWASP Java HTML Sanitizer.
+   *
+   * @see <a href="https://github.com/OWASP/java-html-sanitizer">OWASP Java HTML Sanitizer</a>
+   */
+  public static final BooleanFeature USES_OWASP_JAVA_HTML_SANITIZER
+      = new BooleanFeature("If a project uses OWASP Java HTML Sanitizer");
+
+  /**
+   * Shows if an open-source project uses OWASP Java Encoder.
+   *
+   * @see <a href="https://github.com/OWASP/owasp-java-encoder">OWASP Java Encoder</a>
+   */
+  public static final BooleanFeature USES_OWASP_JAVA_ENCODER
+      = new BooleanFeature("If a project uses OWASP Java Encoder");
 }
