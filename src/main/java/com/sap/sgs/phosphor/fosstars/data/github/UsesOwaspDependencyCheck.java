@@ -3,7 +3,7 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 import static com.sap.sgs.phosphor.fosstars.maven.MavenUtils.browse;
 import static com.sap.sgs.phosphor.fosstars.maven.MavenUtils.readModel;
 
-import com.sap.sgs.phosphor.fosstars.maven.ModelVisitor;
+import com.sap.sgs.phosphor.fosstars.maven.AbstractModelVisitor;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.feature.BooleanFeature;
@@ -47,7 +47,7 @@ public class UsesOwaspDependencyCheck extends CachedSingleFeatureGitHubDataProvi
   @Override
   protected Value<Boolean> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out if the project uses OWASP Dependency Check ...");
-    LocalRepository repository = fetcher.localRepositoryFor(project);
+    LocalRepository repository = GitHubDataFetcher.localRepositoryFor(project);
     boolean answer = checkMaven(repository) || checkGradle(repository);
     return USES_OWASP_DEPENDENCY_CHECK.value(answer);
   }
@@ -128,7 +128,7 @@ public class UsesOwaspDependencyCheck extends CachedSingleFeatureGitHubDataProvi
   /**
    * A visitor for searching OWASP Dependency Check in a POM file.
    */
-  private static class Visitor implements ModelVisitor {
+  private static class Visitor extends AbstractModelVisitor {
 
     /**
      * This flag shows whether OWASP Dependency Check tool was found in a POM file or not.

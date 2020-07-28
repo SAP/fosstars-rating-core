@@ -1,6 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.maven;
 
 import static com.sap.sgs.phosphor.fosstars.maven.ModelVisitor.Location.BUILD;
+import static com.sap.sgs.phosphor.fosstars.maven.ModelVisitor.Location.DEPENDENCIES;
 import static com.sap.sgs.phosphor.fosstars.maven.ModelVisitor.Location.MANAGEMENT;
 import static com.sap.sgs.phosphor.fosstars.maven.ModelVisitor.Location.PROFILE;
 import static com.sap.sgs.phosphor.fosstars.maven.ModelVisitor.Location.REPORTING;
@@ -13,6 +14,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Objects;
 import org.apache.maven.model.BuildBase;
+import org.apache.maven.model.Dependency;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Plugin;
 import org.apache.maven.model.PluginManagement;
@@ -56,6 +58,7 @@ public class MavenUtils {
     visitBuild(model.getBuild(), visitor, EnumSet.noneOf(Location.class));
     visitReporting(model.getReporting(), visitor, EnumSet.noneOf(Location.class));
     visitProfiles(model.getProfiles(), visitor, EnumSet.noneOf(Location.class));
+    visitDependenciesIn(model, visitor, EnumSet.noneOf(Location.class));
 
     return visitor;
   }
@@ -163,6 +166,69 @@ public class MavenUtils {
     }
 
     reporting.getPlugins().forEach(plugin -> visitor.accept(plugin, in(locations, REPORTING)));
+  }
+
+  /**
+   * Visit dependencies in a model.
+   *
+   * @param model The model to be processed.
+   * @param visitor The visitor to be applied.
+   * @param locations A set of locations.
+   */
+  private static void visitDependenciesIn(
+      Model model, ModelVisitor visitor, EnumSet<Location> locations) {
+
+    if (model == null || model.getDependencies() == null) {
+      return;
+    }
+
+    visit(model.getDependencies(), visitor, in(locations, DEPENDENCIES));
+    visitDependenciesIn(model.getProfiles(), visitor, in(locations, DEPENDENCIES));
+  }
+
+  /**
+   * Visit dependencies in profiles.
+   *
+   * @param profiles The profiles.
+   * @param visitor The visitor to be applied.
+   * @param locations A set of locations.
+   */
+  private static void visitDependenciesIn(
+      List<Profile> profiles, ModelVisitor visitor, EnumSet<Location> locations) {
+
+    if (profiles != null) {
+      profiles.forEach(profile -> visitDependenciesIn(profile, visitor, locations));
+    }
+  }
+
+  /**
+   * Visit dependencies in a profile.
+   *
+   * @param profile The profile.
+   * @param visitor The visitor to be applied.
+   * @param locations A set of locations.
+   */
+  private static void visitDependenciesIn(
+      Profile profile, ModelVisitor visitor, EnumSet<Location> locations) {
+
+    if (profile != null) {
+      visit(profile.getDependencies(), visitor, in(locations, PROFILE));
+    }
+  }
+
+  /**
+   * Visit dependencies.
+   *
+   * @param dependencies The dependencies to visit.
+   * @param visitor The visitor to be applied.
+   * @param locations A set of locations.
+   */
+  private static void visit(
+      List<Dependency> dependencies, ModelVisitor visitor, EnumSet<Location> locations) {
+
+    if (dependencies != null) {
+      dependencies.forEach(dependency -> visitor.accept(dependency, locations));
+    }
   }
 
   /**

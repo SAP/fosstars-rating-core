@@ -11,7 +11,7 @@ import static com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsag
 import static com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsage.NOT_USED;
 import static com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsage.OPTIONAL;
 
-import com.sap.sgs.phosphor.fosstars.maven.ModelVisitor;
+import com.sap.sgs.phosphor.fosstars.maven.AbstractModelVisitor;
 import com.sap.sgs.phosphor.fosstars.maven.ModelVisitor.Location;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
@@ -214,7 +214,7 @@ public class UsesOwaspDependencyScan extends GitHubCachingDataProvider {
   /**
    * A visitor for searching OWASP Dependency Check in a POM file.
    */
-  private static class Visitor implements ModelVisitor {
+  private static class Visitor extends AbstractModelVisitor {
 
     /**
      * If the plugin is run as a mandatory check.

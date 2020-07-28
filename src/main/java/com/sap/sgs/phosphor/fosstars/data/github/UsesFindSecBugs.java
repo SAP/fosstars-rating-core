@@ -4,7 +4,7 @@ import static com.sap.sgs.phosphor.fosstars.maven.MavenUtils.browse;
 import static com.sap.sgs.phosphor.fosstars.maven.MavenUtils.readModel;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_FIND_SEC_BUGS;
 
-import com.sap.sgs.phosphor.fosstars.maven.ModelVisitor;
+import com.sap.sgs.phosphor.fosstars.maven.AbstractModelVisitor;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
@@ -43,7 +43,7 @@ public class UsesFindSecBugs extends CachedSingleFeatureGitHubDataProvider {
   @Override
   protected Value fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out if the project uses FindSecBugs ...");
-    LocalRepository repository = fetcher.localRepositoryFor(project);
+    LocalRepository repository = GitHubDataFetcher.localRepositoryFor(project);
     boolean answer = checkMaven(repository);
     return USES_FIND_SEC_BUGS.value(answer);
   }
@@ -176,7 +176,7 @@ public class UsesFindSecBugs extends CachedSingleFeatureGitHubDataProvider {
   /**
    * A visitor for searching FindSecBugs in a POM file.
    */
-  private static class Visitor implements ModelVisitor {
+  private static class Visitor extends AbstractModelVisitor {
 
     /**
      * A visitor for searching FindSecBugs in a POM file.
