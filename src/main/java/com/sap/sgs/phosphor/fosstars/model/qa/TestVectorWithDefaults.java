@@ -49,17 +49,28 @@ public class TestVectorWithDefaults implements TestVector {
   @Override
   public Set<Value> values() {
     ValueHashSet values = new ValueHashSet(vector.values());
+    return extendedWithDefaults(values);
+  }
+
+  @Override
+  public Set<Value> valuesFor(Score score) {
+    ValueHashSet values = new ValueHashSet(vector.valuesFor(score));
+    return extendedWithDefaults(values);
+  }
+
+  /**
+   * Extend a value set with the default values if necessary.
+   *
+   * @param values The value set to be extended.
+   * @return An extended set of values.
+   */
+  private Set<Value> extendedWithDefaults(ValueHashSet values) {
     for (Value defaultValue : defaults) {
       if (!values.has(defaultValue.feature())) {
         values.update(defaultValue);
       }
     }
     return values.toSet();
-  }
-
-  @Override
-  public Set<Value> valuesFor(Score score) {
-    return vector.valuesFor(score);
   }
 
   @Override
