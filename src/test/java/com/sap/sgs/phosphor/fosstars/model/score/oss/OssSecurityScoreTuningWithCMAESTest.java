@@ -23,6 +23,9 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_G
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM_CHECKS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_MEMORY_SANITIZER;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_NOHTTP;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_OWASP_ESAPI;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_OWASP_JAVA_ENCODER;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_OWASP_JAVA_HTML_SANITIZER;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SIGNED_COMMITS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_UNDEFINED_BEHAVIOR_SANITIZER;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
@@ -75,6 +78,9 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(UnknownValue.of(USES_NOHTTP))
           .set(UnknownValue.of(USES_DEPENDABOT))
           .set(UnknownValue.of(USES_GITHUB_FOR_DEVELOPMENT))
+          .set(UnknownValue.of(USES_OWASP_ESAPI))
+          .set(UnknownValue.of(USES_OWASP_JAVA_ENCODER))
+          .set(UnknownValue.of(USES_OWASP_JAVA_HTML_SANITIZER))
           .set(UnknownValue.of(LANGUAGES))
           .set(UnknownValue.of(PACKAGE_MANAGERS))
           .set(UnknownValue.of(USES_ADDRESS_SANITIZER))
@@ -108,6 +114,9 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(USES_NOHTTP.value(false))
           .set(USES_DEPENDABOT.value(false))
           .set(USES_GITHUB_FOR_DEVELOPMENT.value(false))
+          .set(USES_OWASP_ESAPI.value(false))
+          .set(USES_OWASP_JAVA_ENCODER.value(false))
+          .set(USES_OWASP_JAVA_HTML_SANITIZER.value(false))
           .set(LANGUAGES.value(Languages.of(OTHER)))
           .set(PACKAGE_MANAGERS.unknown())
           .set(USES_ADDRESS_SANITIZER.value(false))
@@ -140,6 +149,9 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(WORST_LGTM_GRADE.value(LgtmGrade.A_PLUS))
           .set(USES_NOHTTP.value(true))
           .set(USES_DEPENDABOT.value(true))
+          .set(USES_OWASP_ESAPI.value(true))
+          .set(USES_OWASP_JAVA_ENCODER.value(true))
+          .set(USES_OWASP_JAVA_HTML_SANITIZER.value(true))
           .set(USES_GITHUB_FOR_DEVELOPMENT.value(true))
           .set(LANGUAGES.value(Languages.of(JAVA)))
           .set(PACKAGE_MANAGERS.value(new PackageManagers(MAVEN)))

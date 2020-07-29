@@ -23,6 +23,9 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_G
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM_CHECKS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_MEMORY_SANITIZER;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_NOHTTP;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_OWASP_ESAPI;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_OWASP_JAVA_ENCODER;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_OWASP_JAVA_HTML_SANITIZER;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SIGNED_COMMITS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_UNDEFINED_BEHAVIOR_SANITIZER;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
@@ -102,6 +105,9 @@ public class OssSecurityScoreTest {
         USES_ADDRESS_SANITIZER.value(false),
         USES_MEMORY_SANITIZER.value(false),
         USES_UNDEFINED_BEHAVIOR_SANITIZER.value(false),
+        USES_OWASP_ESAPI.value(false),
+        USES_OWASP_JAVA_ENCODER.value(false),
+        USES_OWASP_JAVA_HTML_SANITIZER.value(false),
         FUZZED_IN_OSS_FUZZ.value(false),
         USES_FIND_SEC_BUGS.value(true),
         PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)));

@@ -15,6 +15,7 @@ import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -192,6 +193,23 @@ public abstract class AbstractScore implements Score {
         Weight.MAX,
         Confidence.make(usedValues),
         Arrays.asList(usedValues));
+  }
+
+  /**
+   * Initializes a score value for the score.
+   * The method adjusts the specified score value so that it fits to the valid range [0, 10].
+   *
+   * @param value The score value.
+   * @param usedValues The values which were used to produce the score value.
+   * @return A new {@link ScoreValue}.
+   */
+  protected ScoreValue scoreValue(double value, List<Value> usedValues) {
+    return new ScoreValue(
+        this,
+        Score.adjust(value),
+        Weight.MAX,
+        Confidence.make(usedValues),
+        usedValues);
   }
 
   /**

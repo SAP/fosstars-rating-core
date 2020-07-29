@@ -1,5 +1,61 @@
 ---
-defaults: []
+defaults:
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If a project uses Dependabot"
+  flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If an open-source project uses FindSecBugs"
+  flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If an open-source project uses MemorySanitizer"
+  flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If an open-source project uses UndefinedBehaviorSanitizer"
+  flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If an open-source project uses AddressSanitizer"
+  flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If an open-source project is included to OSS-Fuzz project"
+  flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If a project uses LGTM checks for commits"
+  flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If a project uses nohttp tool"
+  flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If a project uses OWASP Enterprise Security API (ESAPI)"
+  flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If a project uses OWASP Java HTML Sanitizer"
+  flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If a project uses OWASP Java Encoder"
+  flag: false
+
 elements:
 - type: "StandardTestVector"
   values:
@@ -97,6 +153,21 @@ elements:
       type: "BooleanFeature"
       name: "If a project signs artifacts"
     flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If an open-source project uses MemorySanitizer"
+    flag: true
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If an open-source project uses UndefinedBehaviorSanitizer"
+    flag: true
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If an open-source project uses AddressSanitizer"
+    flag: true
   expectedScore:
     type: "DoubleInterval"
     from: 6.0
@@ -134,6 +205,16 @@ elements:
       type: "BooleanFeature"
       name: "If a project signs artifacts"
     flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses Dependabot"
+    flag: true
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If an open-source project uses FindSecBugs"
+    flag: true
   expectedScore:
     type: "DoubleInterval"
     from: 5.0
@@ -171,6 +252,16 @@ elements:
       type: "BooleanFeature"
       name: "If a project signs artifacts"
     flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If an open-source project is included to OSS-Fuzz project"
+    flag: true
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses LGTM checks for commits"
+    flag: true
   expectedScore:
     type: "DoubleInterval"
     from: 4.0
@@ -245,6 +336,11 @@ elements:
       type: "BooleanFeature"
       name: "If a project signs artifacts"
     flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses nohttp tool"
+    flag: true
   expectedScore:
     type: "DoubleInterval"
     from: 1.0
@@ -282,6 +378,16 @@ elements:
       type: "BooleanFeature"
       name: "If a project signs artifacts"
     flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses OWASP Enterprise Security API (ESAPI)"
+    flag: true
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses OWASP Java HTML Sanitizer"
+    flag: true
   expectedScore:
     type: "DoubleInterval"
     from: 4.0
@@ -319,6 +425,16 @@ elements:
       type: "BooleanFeature"
       name: "If a project signs artifacts"
     flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses OWASP Java HTML Sanitizer"
+    flag: true
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses OWASP Java Encoder"
+    flag: true
   expectedScore:
     type: "DoubleInterval"
     from: 7.0

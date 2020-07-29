@@ -61,6 +61,21 @@ defaults:
     type: "BooleanFeature"
     name: "If a project signs artifacts"
   flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If a project uses OWASP Enterprise Security API (ESAPI)"
+  flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If a project uses OWASP Java HTML Sanitizer"
+  flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If a project uses OWASP Java Encoder"
+  flag: false
 
 # test vectors
 elements:
@@ -384,6 +399,11 @@ elements:
     feature:
       type: "BooleanFeature"
       name: "If an open-source project uses FindSecBugs"
+    flag: true
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses OWASP Java Encoder"
     flag: true
   expectedScore:
     type: "DoubleInterval"
