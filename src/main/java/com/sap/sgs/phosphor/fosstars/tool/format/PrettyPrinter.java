@@ -96,6 +96,10 @@ public class PrettyPrinter implements Formatter {
         "Does it use UndefinedBehaviorSanitizer?");
     FEATURE_TO_NAME.put(OssFeatures.USES_NOHTTP, "Does it use nohttp?");
     FEATURE_TO_NAME.put(OssFeatures.USES_FIND_SEC_BUGS, "Does it use FindSecBugs?");
+    FEATURE_TO_NAME.put(OssFeatures.USES_OWASP_ESAPI, "Does it use OWASP ESAPI?");
+    FEATURE_TO_NAME.put(OssFeatures.USES_OWASP_JAVA_ENCODER, "Does it use OWASP Java Encoder?");
+    FEATURE_TO_NAME.put(OssFeatures.USES_OWASP_JAVA_HTML_SANITIZER,
+        "Does it use OWASP Java HTML Sanitizer??");
     FEATURE_TO_NAME.put(OssFeatures.USES_DEPENDABOT, "Does it use Dependabot?");
     FEATURE_TO_NAME.put(OssFeatures.USES_LGTM_CHECKS, "Does it use LGTM?");
     FEATURE_TO_NAME.put(OssFeatures.HAS_BUG_BOUNTY_PROGRAM, "Does it have a bug bounty program?");
