@@ -24,6 +24,9 @@ Implementations of the features can be found in
 1.  The worst LGTM grade of a project.
 1.  If an open-source project is included to OSS-Fuzz project.
 1.  If a project uses nohttp tool.
+1.  If a project uses OWASP Enterprise Security API (ESAPI).
+1.  If a project uses OWASP Java HTML Sanitizer.
+1.  If a project uses OWASP Java Encoder.
 1.  If an open-source project is supported by a company.
 1.  If an open-source project belongs to Eclipse Foundation.
 1.  If an open-source project belongs to Apache Foundation.
@@ -77,6 +80,17 @@ Implementations for all the scores can be found in the [com.sap.sgs.phosphor.fos
     1.  If a project uses signed commits.
     1.  If an open-source project has a bug bounty program.
     1.  If an open-source project signs its artifacts.
+    1.  If a project uses Dependabot.
+    1.  If an open-source project uses FindSecBugs.
+    1.  If an open-source project uses AddressSanitizer.
+    1.  If an open-source project uses MemorySanitizer.
+    1.  If an open-source project uses UndefinedBehaviorSanitizer.
+    1.  If a project uses LGTM.
+    1.  If an open-source project is included to OSS-Fuzz project.
+    1.  If a project uses nohttp tool.
+    1.  If a project uses OWASP Enterprise Security API (ESAPI).
+    1.  If a project uses OWASP Java HTML Sanitizer.
+    1.  If a project uses OWASP Java Encoder.
 1.  **Project activity score** based on the following features:
     1.  Number of commits last three months.
     1.  Number of contributors last three months.
