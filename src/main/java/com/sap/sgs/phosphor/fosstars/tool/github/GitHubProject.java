@@ -215,6 +215,16 @@ public class GitHubProject implements Project {
   }
 
   /**
+   * Checks if a URL points to GitHub.
+   *
+   * @param url The URL to be checked.
+   * @return True if the URL points to GitHub, false otherwise.
+   */
+  public static boolean isOnGitHub(String url) {
+    return url != null && url.startsWith("https://github.com/");
+  }
+
+  /**
    * Constructs a URL of a project.
    *
    * @param organization An organization which owns the project.

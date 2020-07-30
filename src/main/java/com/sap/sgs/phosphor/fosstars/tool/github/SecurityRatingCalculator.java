@@ -1,5 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.tool.github;
 
+import static com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject.isOnGitHub;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
@@ -226,17 +229,42 @@ public class SecurityRatingCalculator {
   /**
    * Calculate a rating for a single project identified by GAV coordinates.
    *
-   * @param url A URL of the project repository.
+   * @param gav The GAV coordinates.
    * @param fetcher An interface for accessing the GitHub.
    * @param githubToken A token for accessing the GitHub APIs.
    * @param callback An interface for interacting with a user.
    * @throws IOException If something went wrong.
    */
   private static void processGav(
-      String url, GitHubDataFetcher fetcher, String githubToken, UserCallback callback)
+      String gav, GitHubDataFetcher fetcher, String githubToken, UserCallback callback)
       throws IOException {
 
-    throw new UnsupportedOperationException("I can't work with GAVs yet!");
+    MavenScmFinder finder = new MavenScmFinder();
+
+    Optional<String> scm = finder.findScmFor(gav);
+    if (!scm.isPresent()) {
+      throw new IOException("Oh no! Could not find a URL to SCM!");
+    }
+
+    String url = scm.get();
+    LOGGER.info("SCM is {}", url);
+
+    if (!isOnGitHub(url)) {
+      LOGGER.info("But unfortunately I can work only with projects that stay on GitHub ...");
+      LOGGER.info("Let me try to find a mirror on GitHub ...");
+
+      Optional<GitHubProject> mirror = finder.tryToFindGitHubProjectFor(gav);
+      if (!mirror.isPresent()) {
+        throw new IOException("Oh no! I could not find a mirror on GitHub!");
+      }
+
+      url = mirror.get().url().toString();
+
+      LOGGER.info("Yup, that seems to be a corresponding project on GitHub:");
+      LOGGER.info("  {}", url);
+    }
+
+    processUrl(url, fetcher, githubToken, callback);
   }
 
   /**
@@ -526,7 +554,7 @@ public class SecurityRatingCalculator {
             .build();
         return github;
       } catch (IOException e) {
-        LOGGER.warn("Something went wrong: {}", e);
+        LOGGER.warn("Something went wrong: {}", e.getMessage());
         suppressed.add(e);
       }
     } else {
