@@ -1,6 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.tool.github;
 
 import static com.sap.sgs.phosphor.fosstars.maven.MavenUtils.readModel;
+import static com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject.isOnGitHub;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -56,7 +57,7 @@ public class MavenScmFinder {
    * @return A URL to SCM.
    * @throws IOException If something went wrong.
    */
-  public Optional<String> scmOf(String gav) throws IOException {
+  public Optional<String> findScmFor(String gav) throws IOException {
     Objects.requireNonNull(gav, "Oh no! GAV is null");
 
     String[] parts = gav.trim().split(":");
@@ -79,24 +80,34 @@ public class MavenScmFinder {
 
   /**
    * Takes GAV coordinates to an artifact and looks for a corresponding GitHub project
-   * that contains the source code.
+   * (maybe a mirror) that contains the source code.
    *
    * @param gav The GAV coordinates.
    * @return A project on GitHub.
    * @throws IOException If something went wrong.
    */
-  public Optional<GitHubProject> githubProjectOf(String gav) throws IOException {
-    Optional<String> scm = scmOf(gav);
+  public Optional<GitHubProject> findGithubProjectFor(String gav) throws IOException {
+    Optional<String> scm = findScmFor(gav);
     if (!scm.isPresent()) {
       return Optional.empty();
     }
 
     String url = scm.get();
 
-    if (url.startsWith("https://github.com")) {
+    if (isOnGitHub(url)) {
       return Optional.of(GitHubProject.parse(url));
     }
 
+    return tryToFindGitHubProjectFor(gav);
+  }
+
+  /**
+   * Takes GAV coordinates and tries to guess a possible GitHub project.
+   *
+   * @param gav The GAV coordinates.
+   * @return A project on GitHub if it exists.
+   */
+  public Optional<GitHubProject> tryToFindGitHubProjectFor(String gav) {
     Optional<GitHubProject> project = guessGitHubProjectFor(gav);
     if (project.isPresent() && looksLikeValid(project.get())) {
       return project;
@@ -232,12 +243,14 @@ public class MavenScmFinder {
    */
   private static Model loadPomFor(String groupId, String artifactId, String version)
       throws IOException {
+
     String path = PATH_TEMPLATE
         .replace("{GROUP}", groupId.replace(".", "/"))
         .replace("{ARTIFACT}", artifactId)
         .replace("{VERSION}", version);
     String urlString = MAVEN_DOWNLOAD_REQUEST_TEMPLATE.replace("{PATH}", path);
     String content = IOUtils.toString(new URL(urlString), CHARSET);
+
     return readModel(IOUtils.toInputStream(content));
   }
 
@@ -249,7 +262,7 @@ public class MavenScmFinder {
    */
   public static void main(String... args) throws IOException {
     String gav = args.length > 0 ? args[0] : "org.apache.commons:commons-text";
-    Optional<GitHubProject> project = new MavenScmFinder().githubProjectOf(gav);
+    Optional<GitHubProject> project = new MavenScmFinder().findGithubProjectFor(gav);
     System.out.println(
         project.isPresent() ? String.format("GitHub URL = %s", project.get()) : "No SCM found!");
   }

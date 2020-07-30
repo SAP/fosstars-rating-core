@@ -58,7 +58,8 @@ class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
   public SingleSecurityRatingCalculator calculateFor(GitHubProject project) throws IOException {
     Objects.requireNonNull(project, "Oh no! Project can't be null!");
 
-    logger.info("Project: {}", project.url());
+    logger.info("Let's gather info and calculate a security rating for:");
+    logger.info("  {}", project.url());
 
     try {
       fetcher.repositoryFor(project);
@@ -67,8 +68,6 @@ class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
       logger.warn("Let's skip the project ...");
       return this;
     }
-
-    logger.info("Let's get info about the project and calculate a security rating");
 
     OssSecurityRating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
 
