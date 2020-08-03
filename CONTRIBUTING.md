@@ -23,23 +23,12 @@ If you're considering anything more than correcting a typo or fixing a minor bug
 please open an issue and discuss the proposal with us
 before submitting a pull request.
 
-# Sign the Contributor License Agreement
+## Developer Certificate of Origin (DCO)
 
-You'll need to sign the Contributor License Agreement (CLA). When you create a pull request,
-the CLA Assistant is going to ask you to sign the CLA.
-
-If employees of a company contribute code, in addition to the individual agreement above,
-there needs to be one company agreement submitted. This is mainly for the protection of the contributing employees.
-
-A company representative authorized to do so needs to download, fill,
-and print the [Corporate Contributor License Agreement](SAP_CCLA.pdf) form. Then either:
-
-    * Scan it and e-mail it to opensource@sap.com
-    * Fax it to: +49 6227 78-45813
-    * Send it by traditional letter to: OSPO Core, Dietmar-Hopp-Allee 16, 69190 Walldorf, Germany
-
-The form contains a list of employees who are authorized to contribute on behalf of your company.
-When this list changes, please let us know.
+Due to legal reasons, contributors will be asked to accept a DCO before they
+submit the first pull request to this projects, this happens in an automated
+fashion during the submission process. SAP uses
+[the standard DCO text of the Linux Foundation](https://developercertificate.org/).
 
 # Add JUnit test cases
 

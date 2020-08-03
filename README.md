@@ -1,3 +1,5 @@
+[![REUSE status](https://api.reuse.software/badge/github.com/SAP/fosstars-rating-core)](https://api.reuse.software/info/github.com/SAP/fosstars-rating-core)
+
 # Ratings for open-source projects
 
 This is a framework for defining and calculating ratings for open-source projects.
@@ -238,8 +240,3 @@ If you have a question, please also ask it via GitHub issues.
 We welcome ideas for improvements and pull requests.
 Please follow [this guideline](CONTRIBUTING.md) if you'd like to contribute to the project.
 
-## License
-
-Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
-This file is licensed under the Apache License Version 2.0
-except as noted otherwise in [the LICENSE file](LICENSE).
