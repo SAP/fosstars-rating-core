@@ -1,3 +1,5 @@
+![Java CI](https://github.com/SAP/fosstars-rating-core/workflows/Java%20CI/badge.svg)
+[![Language grade: Java](https://img.shields.io/lgtm/grade/java/g/SAP/fosstars-rating-core.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/SAP/fosstars-rating-core/context:java)
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP/fosstars-rating-core)](https://api.reuse.software/info/github.com/SAP/fosstars-rating-core)
 
 # Ratings for open-source projects
