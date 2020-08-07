@@ -58,7 +58,7 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
    * A date formatter.
    */
   private static final SimpleDateFormat DATE_FORMAT
-      = new SimpleDateFormat("MMM d, YYYY", Locale.US);
+      = new SimpleDateFormat("MMM d, yyyy", Locale.US);
 
   /**
    * This string is printed out if something is unknown.
