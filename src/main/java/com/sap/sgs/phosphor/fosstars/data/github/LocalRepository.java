@@ -226,6 +226,23 @@ public class LocalRepository implements AutoCloseable {
   }
 
   /**
+   * Read lines in a file.
+   *
+   * @param file A path to the file.
+   * @return A list of lines in the file if it exists.
+   * @throws IOException If something went wrong.
+   */
+  public Optional<List<String>> readLinesOf(Path file) throws IOException {
+    Objects.requireNonNull(file, "On no! File name is null!");
+    Path path = info.path().resolve(file);
+    if (!Files.isRegularFile(path)) {
+      return Optional.empty();
+    }
+
+    return Optional.of(IOUtils.readLines(Files.newInputStream(path)));
+  }
+
+  /**
    * Looks for files in the repository.
    *
    * @param criteria Defines which files should be returned.

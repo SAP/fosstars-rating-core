@@ -9,12 +9,14 @@ import static com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsag
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
+import com.sap.sgs.phosphor.fosstars.model.value.CVSS;
 import com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckCvssThresholdValue;
 import com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsage;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
@@ -22,8 +24,12 @@ import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectValueCache;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Paths;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
 public class UsesOwaspDependencyScanTest extends TestGitHubDataFetcherHolder {
@@ -107,11 +113,89 @@ public class UsesOwaspDependencyScanTest extends TestGitHubDataFetcherHolder {
     }
   }
 
+  @Test
+  public void testGradleWithMandatoryOwaspDependencyCheck() throws IOException {
+    try (InputStream is = getClass()
+        .getResourceAsStream("GradleWithOwaspDependencyCheck.gradle")) {
+
+      ValueSet values = values(createProvider(is, "build.gradle"));
+      checkUsage(MANDATORY, values);
+      checkThreshold(NOT_SPECIFIED, values);
+    }
+  }
+
+  @Test
+  public void testGradleWithOptionalOwaspDependencyCheck() throws IOException {
+    try (InputStream is = getClass()
+        .getResourceAsStream("GradleWithOwaspDependencyCheck.gradle")) {
+
+      ValueSet values = values(createProvider(is, "other/build.gradle"));
+      checkUsage(OPTIONAL, values);
+      checkThreshold(NOT_SPECIFIED, values);
+    }
+  }
+
+  @Test
+  public void testGradleWithoutOwaspDependencyCheck() throws IOException {
+    try (InputStream is = getClass()
+        .getResourceAsStream("GradleWithoutOwaspDependencyCheck.gradle")) {
+
+      ValueSet values = values(createProvider(is, "build.gradle"));
+      checkUsage(NOT_USED, values);
+      checkThreshold(NOT_SPECIFIED, values);
+    }
+  }
+
+  @Test
+  public void testGradleWithMandatoryOwaspDependencyCheckWithFailBuildOnCvss() throws IOException {
+    try (InputStream is = getClass()
+        .getResourceAsStream("GradleWithOwaspDependencyCheckWithFailBuildOnCvss.gradle")) {
+
+      ValueSet values = values(createProvider(is, "build.gradle"));
+      checkUsage(MANDATORY, values);
+      checkThreshold(5.3, values);
+    }
+  }
+
+  @Test
+  public void testGradleWithMandatoryOwaspDependencyCheckWithFailBuildOnAnyIssueTrue()
+      throws IOException {
+
+    try (InputStream is = getClass()
+        .getResourceAsStream("GradleWithOwaspDependencyCheckWithFailBuildOnAnyIssueTrue.gradle")) {
+
+      ValueSet values = values(createProvider(is, "build.gradle"));
+      checkUsage(MANDATORY, values);
+      checkThreshold(CVSS.MIN, values);
+    }
+  }
+
+  @Test
+  public void testGradleWithMandatoryOwaspDependencyCheckWithBuildOnAnyIssueFalse()
+      throws IOException {
+
+    try (InputStream is = getClass()
+        .getResourceAsStream("GradleWithOwaspDependencyCheckWithFailBuildOnAnyIssueFalse.gradle")) {
+
+      ValueSet values = values(createProvider(is, "build.gradle"));
+      checkUsage(MANDATORY, values);
+      checkThreshold(NOT_SPECIFIED, values);
+    }
+  }
+
   private UsesOwaspDependencyScan createProvider(InputStream is, String filename)
       throws IOException {
 
     final LocalRepository repository = mock(LocalRepository.class);
-    when(repository.read(filename)).thenReturn(Optional.of(is));
+
+    List<String> content = IOUtils.readLines(is);
+
+    when(repository.read(filename))
+        .thenReturn(Optional.of(IOUtils.toInputStream(String.join("\n", content))));
+    when(repository.readLinesOf(Paths.get(filename)))
+        .thenReturn(Optional.of(content));
+    when(repository.files(any()))
+        .thenReturn(Collections.singletonList(Paths.get(filename)));
 
     GitHubProject project = new GitHubProject("org", "test");
     addForTesting(project, repository);
@@ -122,9 +206,7 @@ public class UsesOwaspDependencyScanTest extends TestGitHubDataFetcherHolder {
     return provider;
   }
 
-  private static ValueSet values(UsesOwaspDependencyScan provider)
-      throws IOException {
-
+  private static ValueSet values(UsesOwaspDependencyScan provider) throws IOException {
     GitHubProject project = new GitHubProject("org", "test");
 
     ValueSet values = new ValueHashSet();
