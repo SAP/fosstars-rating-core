@@ -1,0 +1,6 @@
+apply plugin: 'org.owasp.dependencycheck'
+
+dependencyCheck {
+    failBuildOnCVSS = 5.3
+    failOnError = true
+}

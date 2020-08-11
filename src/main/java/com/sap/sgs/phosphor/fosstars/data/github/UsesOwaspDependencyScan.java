@@ -23,7 +23,9 @@ import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -76,10 +78,32 @@ public class UsesOwaspDependencyScan extends GitHubCachingDataProvider {
     LocalRepository repository = GitHubDataFetcher.localRepositoryFor(project);
 
     ValueSet values = new ValueHashSet();
+
     checkMaven(repository, values);
+    if (found(values)) {
+      return values;
+    }
+
     checkGradle(repository, values);
+    if (found(values)) {
+      return values;
+    }
+
+    values.update(OWASP_DEPENDENCY_CHECK_USAGE.value(NOT_USED));
+    values.update(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.notSpecifiedValue());
 
     return values;
+  }
+
+  /**
+   * Checks if a value set contains the features for OWASP Dependency Check.
+   *
+   * @param values The value set to be checked.
+   * @return True if the value set contains the feature, false otherwise.
+   */
+  private static boolean found(ValueSet values) {
+    return values.has(OWASP_DEPENDENCY_CHECK_USAGE)
+        && values.has(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD);
   }
 
   /**
@@ -111,13 +135,97 @@ public class UsesOwaspDependencyScan extends GitHubCachingDataProvider {
   }
 
   /**
-   * Checks if a project uses OWASP Dependency Check Gradle plugin.
+   * Checks if a project uses OWASP Dependency Check Gradle plugin,
+   * and updates a value set with corresponding feature values.
    *
    * @param repository The project's repository.
-   * @param values set of type {@link ValueSet}.
+   * @param values A {@link ValueSet} to be updated.
    */
-  private static void checkGradle(LocalRepository repository, ValueSet values) {
-    // Nothing to be done.
+  private static void checkGradle(LocalRepository repository, ValueSet values) throws IOException {
+    for (Path gradleFile : repository.files(path -> path.getFileName().endsWith(".gradle"))) {
+      Optional<List<String>> something = repository.readLinesOf(gradleFile);
+      if (!something.isPresent()) {
+        return;
+      }
+      List<String> file = something.get();
+
+      if (foundOwaspDependencyCheckInGradle(file)) {
+        boolean isMainFile = "build.gradle".equals(gradleFile.toString());
+
+        OwaspDependencyCheckUsageValue usage
+            = OWASP_DEPENDENCY_CHECK_USAGE.value(isMainFile ? MANDATORY : OPTIONAL);
+
+        OwaspDependencyCheckCvssThresholdValue threshold = lookForThresholdInGradle(file)
+            .map(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD::value)
+            .orElse(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.notSpecifiedValue());
+
+        values.update(usage, threshold);
+
+        if (usage.get() == MANDATORY) {
+          break;
+        }
+      }
+    }
+  }
+
+  /**
+   * Searches for a threshold for OWASP Dependency Check in a Gradle file.
+   *
+   * @param content The content of the file.
+   * @return The threshold if found.
+   */
+  private static Optional<Double> lookForThresholdInGradle(List<String> content) {
+    boolean foundDependencyCheckConfig = false;
+    for (String line : content) {
+      line = line.trim();
+
+      if (line.contains("dependencyCheck")) {
+        foundDependencyCheckConfig = true;
+        continue;
+      }
+
+      if (!foundDependencyCheckConfig) {
+        continue;
+      }
+
+      if ("}".equals(line)) {
+        break;
+      }
+
+      // check for Dependency Check parameters
+      for (Map.Entry<String, String> entry : FAIL_BUILD_CONFIGURATIONS.entrySet()) {
+        String[] parts = line.split("=");
+        if (parts.length != 2) {
+          continue;
+        }
+
+        String name = entry.getKey();
+        if (!parts[0].trim().equals(name)) {
+          continue;
+        }
+
+        String value = parts[1].trim();
+        String type = entry.getValue();
+        Double score = parseScore(value, type);
+
+        // stop once one of the parameters is found
+        return Optional.ofNullable(score);
+      }
+    }
+
+    return Optional.empty();
+  }
+
+  /**
+   * Checks if a Gradle file calls OWASP Dependency Check.
+   *
+   * @param content The content of the file.
+   * @return True if the file calls the tool, false otherwise.
+   */
+  private static boolean foundOwaspDependencyCheckInGradle(List<String> content) {
+    return content.stream()
+        .filter(line -> line.contains("apply plugin:"))
+        .anyMatch(line -> line.contains("org.owasp.dependencycheck"));
   }
 
   /**
