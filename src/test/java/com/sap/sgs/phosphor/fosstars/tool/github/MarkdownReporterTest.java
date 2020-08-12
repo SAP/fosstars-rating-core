@@ -80,8 +80,8 @@ public class MarkdownReporterTest {
       assertTrue(report.contains("org/bad"));
       assertTrue(report.contains("org/moderate"));
       assertTrue(report.contains("10.0"));
-      assertTrue(report.contains("0.00"));
-      assertTrue(report.contains("5.00"));
+      assertTrue(report.contains("0.0"));
+      assertTrue(report.contains("5.0"));
       assertEquals(1, linesWith("100%", report));
       assertEquals(4, linesWith("25.0%", report));
       assertEquals(1, linesWith("0.0%", report));

@@ -8,7 +8,9 @@ import com.sap.sgs.phosphor.fosstars.model.Weight;
 import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.CommunityCommitmentScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.DependencyScanScore;
+import com.sap.sgs.phosphor.fosstars.model.score.oss.FindSecBugsScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.FuzzingScore;
+import com.sap.sgs.phosphor.fosstars.model.score.oss.LgtmScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.NoHttpToolScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.OssSecurityScore;
@@ -23,6 +25,7 @@ import com.sap.sgs.phosphor.fosstars.model.score.oss.VulnerabilityLifetimeScore;
 import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -51,9 +54,20 @@ public class PrettyPrinter implements Formatter {
   private static final int DESCRIPTION_WRAP_LENGTH = 50;
 
   /**
+   * A formatter for doubles.
+   */
+  private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.#");
+
+  static {
+    DECIMAL_FORMAT.setMinimumFractionDigits(1);
+    DECIMAL_FORMAT.setMaximumFractionDigits(2);
+  }
+
+  /**
    * Maps a class of feature to its shorter name which should be used in output.
    */
-  private static final Map<Class, String> FEATURE_CLASS_TO_NAME = new HashMap<>();
+  private static final Map<Class<? extends Feature>, String> FEATURE_CLASS_TO_NAME
+      = new HashMap<>();
 
   static {
     FEATURE_CLASS_TO_NAME.put(OssSecurityScore.class, "Security of project");
@@ -69,6 +83,8 @@ public class PrettyPrinter implements Formatter {
     FEATURE_CLASS_TO_NAME.put(FuzzingScore.class, "Fuzzing");
     FEATURE_CLASS_TO_NAME.put(StaticAnalysisScore.class, "Static analysis");
     FEATURE_CLASS_TO_NAME.put(NoHttpToolScore.class, "nohttp tool");
+    FEATURE_CLASS_TO_NAME.put(LgtmScore.class, "LGTM score");
+    FEATURE_CLASS_TO_NAME.put(FindSecBugsScore.class, "FindSecBugs score");
     FEATURE_CLASS_TO_NAME.put(VulnerabilityDiscoveryAndSecurityTestingScore.class,
         "Vulnerability discovery and security testing");
   }
@@ -99,11 +115,13 @@ public class PrettyPrinter implements Formatter {
     FEATURE_TO_NAME.put(OssFeatures.USES_OWASP_ESAPI, "Does it use OWASP ESAPI?");
     FEATURE_TO_NAME.put(OssFeatures.USES_OWASP_JAVA_ENCODER, "Does it use OWASP Java Encoder?");
     FEATURE_TO_NAME.put(OssFeatures.USES_OWASP_JAVA_HTML_SANITIZER,
-        "Does it use OWASP Java HTML Sanitizer??");
+        "Does it use OWASP Java HTML Sanitizer?");
     FEATURE_TO_NAME.put(OssFeatures.USES_DEPENDABOT, "Does it use Dependabot?");
-    FEATURE_TO_NAME.put(OssFeatures.USES_LGTM_CHECKS, "Does it use LGTM?");
+    FEATURE_TO_NAME.put(OssFeatures.USES_LGTM_CHECKS, "Does it use LGTM checks?");
     FEATURE_TO_NAME.put(OssFeatures.HAS_BUG_BOUNTY_PROGRAM, "Does it have a bug bounty program?");
     FEATURE_TO_NAME.put(OssFeatures.SIGNS_ARTIFACTS, "Does it sign artifacts?");
+    FEATURE_TO_NAME.put(OssFeatures.WORST_LGTM_GRADE, "The worst LGTM grade of the project");
+    FEATURE_TO_NAME.put(OssFeatures.FUZZED_IN_OSS_FUZZ, "Is it included to OSS-Fuzz?");
   }
 
   @Override
@@ -111,10 +129,11 @@ public class PrettyPrinter implements Formatter {
     StringBuilder sb = new StringBuilder();
     sb.append(String.format("Here is how the rating was calculated:%n"));
     sb.append(print(ratingValue.scoreValue(), INDENT_STEP, true, new HashSet<>()));
-    sb.append(String.format("Rating: %2.2f out of %2.2f -> %s%n",
-        ratingValue.score(), Score.MAX, ratingValue.label()));
-    sb.append(String.format("Confidence: %2.2f out of %2.2f%n",
-        ratingValue.confidence(), Confidence.MAX));
+    sb.append(String.format("Rating:     %s -> %s%n",
+        tellMeActualValueOf(ratingValue.scoreValue()), ratingValue.label()));
+    sb.append(String.format("Confidence: %s (%s)%n",
+        confidenceLabel(ratingValue.confidence()),
+        printValueAndMax(ratingValue.confidence(), Confidence.MAX)));
     return sb.toString();
   }
 
@@ -123,6 +142,8 @@ public class PrettyPrinter implements Formatter {
    *
    * @param scoreValue The score value to be printed.
    * @param indent The indent.
+   * @param isMainScore Tells if the score is a top-level score in the rating.
+   * @param printedScores A set of scores that have been already printed out.
    * @return A string to be displayed.
    */
   private String print(
@@ -147,17 +168,19 @@ public class PrettyPrinter implements Formatter {
     }
 
     if (!isMainScore) {
-      sb.append(String.format("%sImportance:...%s (weight %2.2f out of %2.2f)%n",
-          indent, importance(scoreValue.weight()), scoreValue.weight(), Weight.MAX));
+      sb.append(String.format("%sImportance:...%s (weight %s)%n",
+          indent,
+          importanceLabel(scoreValue.weight()),
+          printValueAndMax(scoreValue.weight(), Weight.MAX)));
     }
 
     sb.append(String.format("%sValue:........%s%n",
         indent,
         append(String.format("%s", tellMeActualValueOf(scoreValue)), ' ', 4)));
-    sb.append(String.format("%sConfidence:...%s out of %2.2f%n",
+    sb.append(String.format("%sConfidence:...%s (%s)%n",
         indent,
-        append(String.format("%.2f", scoreValue.confidence()), ' ', 4),
-        Confidence.MAX));
+        confidenceLabel(scoreValue.confidence()),
+        printValueAndMax(scoreValue.confidence(), Confidence.MAX)));
 
     if (printedScores.contains(scoreValue.score())) {
       return sb.toString();
@@ -174,7 +197,6 @@ public class PrettyPrinter implements Formatter {
     }
 
     if (!subScoreValues.isEmpty()) {
-
       // sort the sub-score values by their importance
       subScoreValues.sort(Collections.reverseOrder(Comparator.comparingDouble(ScoreValue::weight)));
 
@@ -243,10 +265,24 @@ public class PrettyPrinter implements Formatter {
     if (scoreValue.isNotApplicable()) {
       return "N/A";
     }
+
     if (scoreValue.isUnknown()) {
       return "unknown";
     }
-    return String.format("%2.2f out of %2.2f", scoreValue.get(), Score.MAX);
+
+    return printValueAndMax(scoreValue.get(), Score.MAX);
+  }
+
+  /**
+   * Prints out a number with its max value.
+   *
+   * @param value The number.
+   * @param max The max value.
+   * @return A formatted string with the number and max value.
+   */
+  public static String printValueAndMax(double value, double max) {
+    return String.format("%-4s out of %4s",
+        DECIMAL_FORMAT.format(value), DECIMAL_FORMAT.format(max));
   }
 
   /**
@@ -275,7 +311,7 @@ public class PrettyPrinter implements Formatter {
    * @return A name of the feature.
    */
   static String nameOf(Feature feature) {
-    for (Map.Entry<Class, String> entry : FEATURE_CLASS_TO_NAME.entrySet()) {
+    for (Map.Entry<Class<? extends Feature>, String> entry : FEATURE_CLASS_TO_NAME.entrySet()) {
       if (feature.getClass() == entry.getKey()) {
         return entry.getValue();
       }
@@ -294,7 +330,7 @@ public class PrettyPrinter implements Formatter {
    * @param weight The weight.
    * @return A human-readable label.
    */
-  private static String importance(double weight) {
+  private static String importanceLabel(double weight) {
     if (weight < 0.3) {
       return "Low";
     }
@@ -302,6 +338,16 @@ public class PrettyPrinter implements Formatter {
       return "Medium";
     }
     return "High";
+  }
+
+  /**
+   * Returns a human-readable label for a confidence.
+   *
+   * @param confidence The confidence.
+   * @return A human-readable label.
+   */
+  private static String confidenceLabel(double confidence) {
+    return confidence >= 9.0 ? "High" : "Low";
   }
 
 }
