@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigInteger;
 import java.net.URL;
 import java.nio.file.Files;
@@ -410,11 +411,11 @@ public class GitHubDataFetcher {
             String.format("Hey! %s is not a file!", LOCAL_REPOSITORIES_INFO_FILE));
       }
 
-      LOCAL_REPOSITORIES_INFO.clear();
-      LOCAL_REPOSITORIES_INFO.putAll(
-          MAPPER.readValue(
-              Files.newInputStream(
-                  LOCAL_REPOSITORIES_INFO_FILE), LOCAL_REPOSITORIES_TYPE_REF));
+      try (InputStream is = Files.newInputStream(LOCAL_REPOSITORIES_INFO_FILE)) {
+        LOCAL_REPOSITORIES_INFO.clear();
+        LOCAL_REPOSITORIES_INFO.putAll(
+            MAPPER.readValue(is, LOCAL_REPOSITORIES_TYPE_REF));
+      }
     }
   }
 
