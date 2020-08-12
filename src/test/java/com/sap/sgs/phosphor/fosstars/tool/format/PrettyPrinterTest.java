@@ -32,9 +32,8 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_U
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
+import static com.sap.sgs.phosphor.fosstars.model.score.example.ExampleScores.SECURITY_SCORE_EXAMPLE;
 import static com.sap.sgs.phosphor.fosstars.model.value.Language.C;
-import static com.sap.sgs.phosphor.fosstars.model.value.Language.JAVA;
-import static com.sap.sgs.phosphor.fosstars.model.value.PackageManager.GRADLE;
 import static com.sap.sgs.phosphor.fosstars.model.value.PackageManager.MAVEN;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -49,6 +48,7 @@ import com.sap.sgs.phosphor.fosstars.model.value.Languages;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.sgs.phosphor.fosstars.model.value.PackageManagers;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
+import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
 import java.util.Date;
 import java.util.Set;
@@ -56,43 +56,45 @@ import org.junit.Test;
 
 public class PrettyPrinterTest {
 
+  private static final OssSecurityRating RATING
+      = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
+
+  private static final Set<Value> TEST_VALUES = setOf(
+      SUPPORTED_BY_COMPANY.value(false),
+      IS_APACHE.value(true),
+      IS_ECLIPSE.value(false),
+      NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(50),
+      NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(3),
+      NUMBER_OF_GITHUB_STARS.value(10),
+      NUMBER_OF_WATCHERS_ON_GITHUB.value(5),
+      HAS_SECURITY_TEAM.value(false),
+      HAS_SECURITY_POLICY.value(false),
+      HAS_BUG_BOUNTY_PROGRAM.value(false),
+      SIGNS_ARTIFACTS.value(false),
+      SCANS_FOR_VULNERABLE_DEPENDENCIES.value(false),
+      VULNERABILITIES.value(new Vulnerabilities()),
+      PROJECT_START_DATE.value(new Date()),
+      FIRST_COMMIT_DATE.value(new Date()),
+      USES_SIGNED_COMMITS.value(false),
+      USES_LGTM_CHECKS.value(true),
+      WORST_LGTM_GRADE.value(LgtmGrade.A),
+      USES_GITHUB_FOR_DEVELOPMENT.value(false),
+      USES_NOHTTP.value(false),
+      USES_DEPENDABOT.value(false),
+      USES_ADDRESS_SANITIZER.value(false),
+      USES_MEMORY_SANITIZER.value(false),
+      USES_UNDEFINED_BEHAVIOR_SANITIZER.value(false),
+      FUZZED_IN_OSS_FUZZ.value(false),
+      LANGUAGES.value(Languages.of(C)),
+      USES_FIND_SEC_BUGS.value(false),
+      USES_OWASP_ESAPI.value(false),
+      USES_OWASP_JAVA_ENCODER.value(false),
+      USES_OWASP_JAVA_HTML_SANITIZER.value(false),
+      PACKAGE_MANAGERS.value(new PackageManagers(MAVEN)));
+
   @Test
   public void testPrint() {
-    OssSecurityRating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
-    Set<Value> values = setOf(
-        SUPPORTED_BY_COMPANY.value(false),
-        IS_APACHE.value(true),
-        IS_ECLIPSE.value(false),
-        NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(50),
-        NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(3),
-        NUMBER_OF_GITHUB_STARS.value(10),
-        NUMBER_OF_WATCHERS_ON_GITHUB.value(5),
-        HAS_SECURITY_TEAM.value(false),
-        HAS_SECURITY_POLICY.value(false),
-        HAS_BUG_BOUNTY_PROGRAM.value(false),
-        SIGNS_ARTIFACTS.value(false),
-        SCANS_FOR_VULNERABLE_DEPENDENCIES.value(false),
-        VULNERABILITIES.value(new Vulnerabilities()),
-        PROJECT_START_DATE.value(new Date()),
-        FIRST_COMMIT_DATE.value(new Date()),
-        USES_SIGNED_COMMITS.value(false),
-        USES_LGTM_CHECKS.value(true),
-        WORST_LGTM_GRADE.value(LgtmGrade.A),
-        USES_GITHUB_FOR_DEVELOPMENT.value(false),
-        USES_NOHTTP.value(false),
-        USES_DEPENDABOT.value(false),
-        USES_ADDRESS_SANITIZER.value(false),
-        USES_MEMORY_SANITIZER.value(false),
-        USES_UNDEFINED_BEHAVIOR_SANITIZER.value(false),
-        FUZZED_IN_OSS_FUZZ.value(false),
-        LANGUAGES.value(Languages.of(C)),
-        USES_FIND_SEC_BUGS.value(false),
-        USES_OWASP_ESAPI.value(false),
-        USES_OWASP_JAVA_ENCODER.value(false),
-        USES_OWASP_JAVA_HTML_SANITIZER.value(false),
-        PACKAGE_MANAGERS.value(new PackageManagers(MAVEN)));
-    
-    RatingValue ratingValue = rating.calculate(values);
+    RatingValue ratingValue = RATING.calculate(TEST_VALUES);
 
     PrettyPrinter printer = new PrettyPrinter();
     String text = printer.print(ratingValue);
@@ -103,7 +105,7 @@ public class PrettyPrinterTest {
     for (Value value : ratingValue.scoreValue().usedValues()) {
       assertTrue(text.contains(PrettyPrinter.nameOf(value.feature())));
     }
-    for (Feature feature : rating.allFeatures()) {
+    for (Feature feature : RATING.allFeatures()) {
       assertTrue(String.format("'%s' feature should be there!", feature.name()),
           text.contains(PrettyPrinter.nameOf(feature)));
     }
@@ -117,46 +119,36 @@ public class PrettyPrinterTest {
 
   @Test
   public void testConsistency() {
-    OssSecurityRating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
-    Set<Value> values = setOf(
-        SUPPORTED_BY_COMPANY.value(false),
-        IS_APACHE.value(true),
-        IS_ECLIPSE.value(false),
-        NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(50),
-        NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(3),
-        NUMBER_OF_GITHUB_STARS.value(10),
-        NUMBER_OF_WATCHERS_ON_GITHUB.value(5),
-        HAS_SECURITY_TEAM.value(false),
-        HAS_SECURITY_POLICY.value(false),
-        HAS_BUG_BOUNTY_PROGRAM.value(true),
-        SIGNS_ARTIFACTS.value(true),
-        SCANS_FOR_VULNERABLE_DEPENDENCIES.value(false),
-        VULNERABILITIES.value(new Vulnerabilities()),
-        PROJECT_START_DATE.value(new Date()),
-        FIRST_COMMIT_DATE.value(new Date()),
-        USES_SIGNED_COMMITS.value(false),
-        USES_LGTM_CHECKS.value(true),
-        WORST_LGTM_GRADE.value(LgtmGrade.A),
-        USES_GITHUB_FOR_DEVELOPMENT.value(false),
-        USES_NOHTTP.value(true),
-        USES_DEPENDABOT.value(true),
-        USES_ADDRESS_SANITIZER.value(false),
-        USES_MEMORY_SANITIZER.value(false),
-        USES_UNDEFINED_BEHAVIOR_SANITIZER.value(false),
-        FUZZED_IN_OSS_FUZZ.value(false),
-        LANGUAGES.value(Languages.of(JAVA)),
-        USES_FIND_SEC_BUGS.value(true),
-        USES_OWASP_ESAPI.value(true),
-        USES_OWASP_JAVA_ENCODER.value(true),
-        USES_OWASP_JAVA_HTML_SANITIZER.value(true),
-        PACKAGE_MANAGERS.value(new PackageManagers(GRADLE)));
-
-    RatingValue ratingValue = rating.calculate(values);
+    RatingValue ratingValue = RATING.calculate(TEST_VALUES);
 
     PrettyPrinter printer = new PrettyPrinter();
     String text = printer.print(ratingValue);
     for (int i = 0; i < 100; i++) {
       assertEquals(text, printer.print(ratingValue));
     }
+  }
+
+  @Test
+  public void testTellMeActualValueOf() {
+    assertEquals(
+        "10.0 out of 10.0",
+        PrettyPrinter.tellMeActualValueOf(new ScoreValue(SECURITY_SCORE_EXAMPLE).set(10)));
+    assertEquals(
+        "1.23 out of 10.0",
+        PrettyPrinter.tellMeActualValueOf(new ScoreValue(SECURITY_SCORE_EXAMPLE).set(1.23)));
+  }
+
+  @Test
+  public void testFormatValueAndMax() {
+    assertEquals("0.0  out of 10.0",
+        PrettyPrinter.printValueAndMax(0.0, 10.0));
+    assertEquals("1.23 out of 10.0",
+        PrettyPrinter.printValueAndMax(1.23, 10.0));
+    assertEquals("1.23 out of 10.0",
+        PrettyPrinter.printValueAndMax(1.23345, 10.0));
+    assertEquals("10.0 out of 10.0",
+        PrettyPrinter.printValueAndMax(10.0, 10.0));
+    assertEquals("9.0  out of 10.0",
+        PrettyPrinter.printValueAndMax(9.0, 10.0));
   }
 }
