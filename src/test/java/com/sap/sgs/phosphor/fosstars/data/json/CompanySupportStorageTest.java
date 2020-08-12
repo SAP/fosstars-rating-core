@@ -7,6 +7,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 import org.junit.Test;
 
@@ -18,6 +19,16 @@ public class CompanySupportStorageTest {
     assertNotNull(storage);
     assertTrue(storage.supports("https://github.com/spring-projects/spring-security-oauth"));
     assertTrue(storage.supports("https://github.com/spring-projects/spring-security-oauth/"));
+  }
+
+  @Test
+  public void testGoogleLighthouse() throws IOException {
+    CompanySupportStorage storage = CompanySupportStorage.load();
+    assertNotNull(storage);
+    assertTrue(storage.supports("https://github.com/GoogleChrome/lighthouse"));
+    assertTrue(storage.supports("https://github.com/GoogleChrome/LightHouse"));
+    assertTrue(storage.supports("https://github.com/googlechrome/lighthouse"));
+    assertTrue(storage.supports(new URL("https://github.com/GoogleChrome/lighthouse")));
   }
 
   @Test
