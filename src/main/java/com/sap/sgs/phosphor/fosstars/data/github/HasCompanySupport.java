@@ -30,12 +30,12 @@ public class HasCompanySupport extends CachedSingleFeatureGitHubDataProvider {
   }
 
   @Override
-  protected Feature supportedFeature() {
+  protected Feature<Boolean> supportedFeature() {
     return SUPPORTED_BY_COMPANY;
   }
 
   @Override
-  protected Value fetchValueFor(GitHubProject project) throws IOException {
+  protected Value<Boolean> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out if the project is supported by a company ...");
     return SUPPORTED_BY_COMPANY.value(company.supports(project.url()));
   }
