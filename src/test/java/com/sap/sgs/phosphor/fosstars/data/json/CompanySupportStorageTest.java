@@ -1,19 +1,23 @@
 package com.sap.sgs.phosphor.fosstars.data.json;
 
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
+import java.util.List;
 import org.junit.Test;
 
-public class HasCompanySupportStorageTest {
+public class CompanySupportStorageTest {
 
   @Test
   public void testSpringSecurityOauth() throws IOException {
     CompanySupportStorage storage = CompanySupportStorage.load();
     assertNotNull(storage);
     assertTrue(storage.supports("https://github.com/spring-projects/spring-security-oauth"));
+    assertTrue(storage.supports("https://github.com/spring-projects/spring-security-oauth/"));
   }
 
   @Test
@@ -28,6 +32,14 @@ public class HasCompanySupportStorageTest {
     CompanySupportStorage storage = CompanySupportStorage.load();
     assertNotNull(storage);
     assertTrue(storage.supports("http://github.com/spring-projects/spring-security-oauth"));
+  }
+
+  @Test
+  public void testCompanies() throws IOException {
+    CompanySupportStorage storage = CompanySupportStorage.load();
+    List<String> companies = storage.companies("https://github.com/openjdk");
+    assertThat(companies, hasItem("Oracle"));
+    assertThat(companies, hasItem("SAP"));
   }
 
 }
