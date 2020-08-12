@@ -22,3 +22,5 @@ finder:
       name: gson
     - organization: qos-ch
       name: slf4j
+    - organization: GoogleChrome
+      name: lighthouse
