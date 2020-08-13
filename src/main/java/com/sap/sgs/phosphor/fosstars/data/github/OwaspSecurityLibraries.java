@@ -14,6 +14,9 @@ import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import org.apache.maven.model.Dependency;
@@ -38,6 +41,12 @@ import org.apache.maven.model.Model;
 public class OwaspSecurityLibraries extends GitHubCachingDataProvider {
 
   /**
+   * A set of supported scopes for dependencies.
+   */
+  private static final Set<String> SUPPORTED_GRADLE_SCOPES
+      = setOf("implementation", "compile", "runtime");
+
+  /**
    * Initializes a data provider.
    *
    * @param fetcher An interface to GitHub.
@@ -56,13 +65,45 @@ public class OwaspSecurityLibraries extends GitHubCachingDataProvider {
     logger.info("Figuring out if the project uses OWASP security libraries ...");
 
     LocalRepository repository = GitHubDataFetcher.localRepositoryFor(project);
+
     ValueSet values = new ValueHashSet();
+
     checkMaven(repository, values);
+    if (found(values)) {
+      return values;
+    }
+
     checkGradle(repository, values);
+    if (found(values)) {
+      return values;
+    }
+
+    values.update(USES_OWASP_ESAPI.value(false));
+    values.update(USES_OWASP_JAVA_ENCODER.value(false));
+    values.update(USES_OWASP_JAVA_HTML_SANITIZER.value(false));
 
     return values;
   }
 
+  /**
+   * Checks if a value set contains the features for OWASP security tools.
+   *
+   * @param values The value set to be checked.
+   * @return True if the value set contains the features, false otherwise.
+   */
+  private static boolean found(ValueSet values) {
+    return values.has(USES_OWASP_ESAPI)
+        && values.has(USES_OWASP_JAVA_ENCODER)
+        && values.has(USES_OWASP_JAVA_HTML_SANITIZER);
+  }
+
+  /**
+   * Looks for the feature in a Maven project.
+   *
+   * @param repository Project's repository.
+   * @param values A value set to be updated with the features.
+   * @throws IOException If something went wrong.
+   */
   private static void checkMaven(LocalRepository repository, ValueSet values) throws IOException {
     Optional<InputStream> content = repository.read("pom.xml");
 
@@ -78,8 +119,111 @@ public class OwaspSecurityLibraries extends GitHubCachingDataProvider {
     }
   }
 
-  private static void checkGradle(LocalRepository repository, ValueSet values) {
-    // TODO: implement
+  /**
+   * Looks for the feature in a Gradle project.
+   *
+   * @param repository Project's repository.
+   * @param values A value set to be updated with the features.
+   * @throws IOException If something went wrong.
+   */
+  private static void checkGradle(LocalRepository repository, ValueSet values) throws IOException {
+    for (Path gradleFile : repository.files(path -> path.getFileName().endsWith(".gradle"))) {
+      Optional<List<String>> something = repository.readLinesOf(gradleFile);
+      if (!something.isPresent()) {
+        return;
+      }
+      List<String> file = something.get();
+
+      if (foundOwaspEsapiInGradle(file)) {
+        values.update(USES_OWASP_ESAPI.value(true));
+      }
+
+      if (foundOwaspJavaEncoderInGradle(file)) {
+        values.update(USES_OWASP_JAVA_ENCODER.value(true));
+      }
+
+      if (foundOwaspJavaHtmlSanitizerInGradle(file)) {
+        values.update(USES_OWASP_JAVA_HTML_SANITIZER.value(true));
+      }
+    }
+  }
+
+  /**
+   * Check if OWASP ESAPI is used in a Gradle file.
+   *
+   * @param file The content of the file.
+   * @return True if the library is found, false otherwise.
+   */
+  private static boolean foundOwaspEsapiInGradle(List<String> file) {
+    return hasDependencyInGradle(file, "org.owasp.esapi:esapi");
+  }
+
+  /**
+   * Check if OWASP Java Encoder is used in a Gradle file.
+   *
+   * @param file The content of the file.
+   * @return True if the library is found, false otherwise.
+   */
+  private static boolean foundOwaspJavaEncoderInGradle(List<String> file) {
+    return hasDependencyInGradle(file,
+        "org.owasp.encoder:encoder", "org.owasp.encoder:encoder-jsp");
+  }
+
+  /**
+   * Check if OWASP Java HTML Sanitizer is used in a Gradle file.
+   *
+   * @param file The content of the file.
+   * @return True if the library is found, false otherwise.
+   */
+  private static boolean foundOwaspJavaHtmlSanitizerInGradle(List<String> file) {
+    return hasDependencyInGradle(file,
+        "com.googlecode.owasp-java-html-sanitizer:owasp-java-html-sanitizer");
+  }
+
+  /**
+   * Check if a gradle file contains one of the specified dependencies.
+   *
+   * @param content The content of the file.
+   * @param groupAndArtifactIds The dependencies to be checked.
+   * @return True if one of the dependencies is found, false otherwise.
+   */
+  private static boolean hasDependencyInGradle(
+      List<String> content, String... groupAndArtifactIds) {
+
+    boolean foundDependenciesSection = false;
+    for (String line : content) {
+      line = line.trim();
+
+      if ("dependencies {".equals(line)) {
+        foundDependenciesSection = true;
+        continue;
+      }
+
+      if (!foundDependenciesSection) {
+        continue;
+      }
+
+      if ("}".equals(line)) {
+        break;
+      }
+
+      String[] parts = line.split("\\s+");
+      if (parts.length < 2) {
+        continue;
+      }
+
+      String scope = parts[0];
+      if (!SUPPORTED_GRADLE_SCOPES.contains(scope)) {
+        continue;
+      }
+
+      String gav = parts[1];
+      if (Arrays.stream(groupAndArtifactIds).anyMatch(gav::contains)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   /**

@@ -1,0 +1,15 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
+dependencies {
+    compile 'org.owasp.esapi:esapi:2.1.0'
+    implementation "com.googlecode.owasp-java-html-sanitizer:owasp-java-html-sanitizer:1.2.3"
+    runtime "org.owasp.encoder:encoder"
+}
+
+task test() {
+
+}
