@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.sgs.phosphor.fosstars.tool.Project;
 import com.sap.sgs.phosphor.fosstars.tool.Reporter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -80,7 +81,9 @@ abstract class AbstractReporter<T extends Project> implements Reporter<T> {
       logger.warn("Oh no! I could not load extra projects from {}", extraSourceFileName);
       return Collections.emptyList();
     }
-    return MAPPER.readValue(Files.newInputStream(path), LIST_OF_GITHUB_PROJECTS_TYPE);
+    try (InputStream is = Files.newInputStream(path)) {
+      return MAPPER.readValue(is, LIST_OF_GITHUB_PROJECTS_TYPE);
+    }
   }
 
 }

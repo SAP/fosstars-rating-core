@@ -143,7 +143,9 @@ class GitHubProjectCache {
    * @throws IOException If something went wrong.
    */
   static GitHubProjectCache load(Path filename) throws IOException {
-    return load(Files.newInputStream(filename));
+    try (InputStream is = Files.newInputStream(filename)) {
+      return load(is);
+    }
   }
 
   /**

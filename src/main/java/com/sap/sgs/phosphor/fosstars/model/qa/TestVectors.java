@@ -192,7 +192,9 @@ public class TestVectors implements Iterable<TestVector> {
    */
   public static TestVectors loadFromYaml(Path filename) throws IOException {
     Objects.requireNonNull(filename, "Filename can't be null!");
-    return loadFromYaml(Files.newInputStream(filename));
+    try (InputStream is = Files.newInputStream(filename)) {
+      return loadFromYaml(is);
+    }
   }
 
   /**
