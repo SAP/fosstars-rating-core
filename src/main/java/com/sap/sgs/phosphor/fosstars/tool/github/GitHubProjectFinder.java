@@ -283,7 +283,9 @@ public class GitHubProjectFinder {
      * @throws IOException If something went wrong.
      */
     Config parse(String filename) throws IOException {
-      return parse(Files.newInputStream(Paths.get(filename)));
+      try (InputStream is = Files.newInputStream(Paths.get(filename))) {
+        return parse(is);
+      }
     }
 
     /**

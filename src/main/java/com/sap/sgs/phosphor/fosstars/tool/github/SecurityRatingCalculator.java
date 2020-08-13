@@ -395,7 +395,9 @@ public class SecurityRatingCalculator {
    * @throws IOException If something went wrong.
    */
   private static Config config(String filename) throws IOException {
-    return config(Files.newInputStream(Paths.get(filename)));
+    try (InputStream is = Files.newInputStream(Paths.get(filename))) {
+      return config(is);
+    }
   }
 
   /**
