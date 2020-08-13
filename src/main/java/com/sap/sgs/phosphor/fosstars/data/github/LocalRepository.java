@@ -193,7 +193,9 @@ public class LocalRepository implements AutoCloseable {
       return Optional.empty();
     }
 
-    return Optional.of(IOUtils.toString(Files.newInputStream(path)));
+    try (InputStream is = Files.newInputStream(path)) {
+      return Optional.of(IOUtils.toString(is));
+    }
   }
 
   /**
@@ -239,7 +241,9 @@ public class LocalRepository implements AutoCloseable {
       return Optional.empty();
     }
 
-    return Optional.of(IOUtils.readLines(Files.newInputStream(path)));
+    try (InputStream is = Files.newInputStream(path)) {
+      return Optional.of(IOUtils.readLines(is));
+    }
   }
 
   /**
