@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.apache.commons.io.IOUtils;
 
 /**
@@ -35,7 +36,7 @@ public class FuzzedInOssFuzz extends CachedSingleFeatureGitHubDataProvider {
   }
 
   @Override
-  protected Feature supportedFeature() {
+  protected Feature<Boolean> supportedFeature() {
     return FUZZED_IN_OSS_FUZZ;
   }
 
@@ -43,19 +44,21 @@ public class FuzzedInOssFuzz extends CachedSingleFeatureGitHubDataProvider {
   protected Value<Boolean> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out if the project is fuzzed in OSS-Fuzz ...");
 
-    LocalRepository ossFuzzRepository = fetcher.localRepositoryFor(OSS_FUZZ_PROJECT);
+    LocalRepository ossFuzzRepository = GitHubDataFetcher.localRepositoryFor(OSS_FUZZ_PROJECT);
 
-    List<Path> dockerFiles = Files.walk(ossFuzzRepository.info().path())
-        .filter(Files::isRegularFile)
-        .filter(path -> "Dockerfile".equals(path.getFileName().toString()))
-        .collect(Collectors.toList());
+    try (Stream<Path> paths = Files.walk(ossFuzzRepository.info().path())) {
+      List<Path> dockerFiles = paths
+          .filter(Files::isRegularFile)
+          .filter(path -> "Dockerfile".equals(path.getFileName().toString()))
+          .collect(Collectors.toList());
 
-    String url = project.url().toString();
-    for (Path dockerFile : dockerFiles) {
-      try (InputStream is = Files.newInputStream(dockerFile)) {
-        String content = IOUtils.toString(is);
-        if (content.contains(url)) {
-          return FUZZED_IN_OSS_FUZZ.value(true);
+      String url = project.url().toString();
+      for (Path dockerFile : dockerFiles) {
+        try (InputStream is = Files.newInputStream(dockerFile)) {
+          String content = IOUtils.toString(is);
+          if (content.contains(url)) {
+            return FUZZED_IN_OSS_FUZZ.value(true);
+          }
         }
       }
     }
