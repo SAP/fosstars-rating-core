@@ -16,6 +16,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.apache.commons.io.IOUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.ResetCommand.ResetType;
@@ -255,9 +256,10 @@ public class LocalRepository implements AutoCloseable {
    */
   public List<Path> files(Predicate<Path> criteria) throws IOException {
     Objects.requireNonNull(criteria, "Oh no! Search criteria is null!");
-    return Files.walk(info().path())
-        .filter(criteria)
-        .collect(Collectors.toList());
+
+    try (Stream<Path> paths = Files.walk(info().path())) {
+      return paths.filter(criteria).collect(Collectors.toList());
+    }
   }
 
   @Override
