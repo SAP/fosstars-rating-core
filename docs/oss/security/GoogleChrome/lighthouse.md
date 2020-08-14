@@ -4,7 +4,7 @@
 Here is how the rating was calculated:
   Score:........Security of project
   Value:........4.82 out of 10.0
-  Confidence:...High (9.65 out of 10.0)
+  Confidence:...High (10.0 out of 10.0)
   Based on:.....7 sub-scores:
       Sub-score:....Security testing
       Importance:...High (weight 1.0  out of  1.0)
@@ -84,7 +84,7 @@ Here is how the rating was calculated:
                     the score adds 1.00.
       Importance:...High (weight 0.9  out of  1.0)
       Value:........0.0  out of 10.0
-      Confidence:...Low (8.12 out of 10.0)
+      Confidence:...High (10.0 out of 10.0)
       Based on:...16 features:
           Does it have a bug bounty program?.........No
           Does it have a security policy?............No
@@ -95,9 +95,9 @@ Here is how the rating was calculated:
           Does it use FindSecBugs?...................No
           Does it use LGTM checks?...................No
           Does it use MemorySanitizer?...............No
-          Does it use OWASP ESAPI?...................unknown
-          Does it use OWASP Java Encoder?............unknown
-          Does it use OWASP Java HTML Sanitizer?.....unknown
+          Does it use OWASP ESAPI?...................No
+          Does it use OWASP Java Encoder?............No
+          Does it use OWASP Java HTML Sanitizer?.....No
           Does it use UndefinedBehaviorSanitizer?....No
           Does it use nohttp?........................No
           Does it use verified signed commits?.......No
@@ -144,10 +144,10 @@ Here is how the rating was calculated:
                     5.10):
                     0 -> 0.10, 5 -> 2.55, 10 -> 4.59
       Importance:...Medium (weight 0.5  out of  1.0)
-      Value:........2.65 out of 10.0
+      Value:........2.69 out of 10.0
       Confidence:...High (10.0 out of 10.0)
       Based on:...2 features:
-          Number of commits in the last three months:........143
+          Number of commits in the last three months:........145
           Number of contributors in the last three months:...1
 
       Sub-score:....Community commitment
@@ -175,10 +175,10 @@ Here is how the rating was calculated:
       Value:........10.0 out of 10.0
       Confidence:...High (10.0 out of 10.0)
       Based on:...2 features:
-          Number of stars for a GitHub repository:......20460
-          Number of watchers for a GitHub repository:...512
+          Number of stars for a GitHub repository:......20468
+          Number of watchers for a GitHub repository:...513
 
 Rating:     4.82 out of 10.0 -> MODERATE
-Confidence: High (9.65 out of 10.0)
+Confidence: High (10.0 out of 10.0)
 
 ```
