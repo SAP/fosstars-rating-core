@@ -64,37 +64,19 @@ public class OwaspSecurityLibraries extends GitHubCachingDataProvider {
   protected ValueSet fetchValuesFor(GitHubProject project) throws IOException {
     logger.info("Figuring out if the project uses OWASP security libraries ...");
 
-    LocalRepository repository = GitHubDataFetcher.localRepositoryFor(project);
-
     ValueSet values = new ValueHashSet();
 
-    checkMaven(repository, values);
-    if (found(values)) {
-      return values;
-    }
-
-    checkGradle(repository, values);
-    if (found(values)) {
-      return values;
-    }
-
+    // set default values
     values.update(USES_OWASP_ESAPI.value(false));
     values.update(USES_OWASP_JAVA_ENCODER.value(false));
     values.update(USES_OWASP_JAVA_HTML_SANITIZER.value(false));
 
-    return values;
-  }
+    LocalRepository repository = GitHubDataFetcher.localRepositoryFor(project);
 
-  /**
-   * Checks if a value set contains the features for OWASP security tools.
-   *
-   * @param values The value set to be checked.
-   * @return True if the value set contains the features, false otherwise.
-   */
-  private static boolean found(ValueSet values) {
-    return values.has(USES_OWASP_ESAPI)
-        && values.has(USES_OWASP_JAVA_ENCODER)
-        && values.has(USES_OWASP_JAVA_HTML_SANITIZER);
+    checkMaven(repository, values);
+    checkGradle(repository, values);
+
+    return values;
   }
 
   /**
@@ -112,9 +94,18 @@ public class OwaspSecurityLibraries extends GitHubCachingDataProvider {
         Model model = readModel(is);
 
         Visitor visitor = browse(model, withVisitor());
-        values.update(USES_OWASP_ESAPI.value(visitor.foundOwaspEsapi));
-        values.update(USES_OWASP_JAVA_ENCODER.value(visitor.foundOwaspJavaEncoder));
-        values.update(USES_OWASP_JAVA_HTML_SANITIZER.value(visitor.foundOwaspJavaHtmlSanitizer));
+
+        if (visitor.foundOwaspEsapi) {
+          values.update(USES_OWASP_ESAPI.value(true));
+        }
+
+        if (visitor.foundOwaspJavaEncoder) {
+          values.update(USES_OWASP_JAVA_ENCODER.value(true));
+        }
+
+        if (visitor.foundOwaspJavaHtmlSanitizer) {
+          values.update(USES_OWASP_JAVA_HTML_SANITIZER.value(true));
+        }
       }
     }
   }
