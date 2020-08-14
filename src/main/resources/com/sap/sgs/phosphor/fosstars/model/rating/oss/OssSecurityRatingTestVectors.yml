@@ -509,7 +509,7 @@ elements:
     feature:
       type: "BooleanFeature"
       name: "If an open-source project is regularly scanned for vulnerable dependencies"
-    flag: true
+    flag: false
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
@@ -529,10 +529,10 @@ elements:
         - "MAVEN"
   expectedScore:
     type: "DoubleInterval"
-    from: 4.0
+    from: 3.0
     openLeft: false
     negativeInfinity: false
-    to: 6.0
+    to: 5.0
     openRight: false
     positiveInfinity: false
   expectedLabel:

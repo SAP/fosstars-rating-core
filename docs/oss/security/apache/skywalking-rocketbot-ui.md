@@ -3,48 +3,48 @@
 ```
 Here is how the rating was calculated:
   Score:........Security of project
-  Value:........3.95 out of 10.00
-  Confidence:...9.50  out of 10.00
+  Value:........3.95 out of 10.0
+  Confidence:...High (9.85 out of 10.0)
   Based on:.....7 sub-scores:
       Sub-score:....Security testing
-      Importance:...High (weight 1.00 out of 1.00)
-      Value:........2.40 out of 10.00
-      Confidence:...9.44  out of 10.00
+      Importance:...High (weight 1.0  out of  1.0)
+      Value:........2.4  out of 10.0
+      Confidence:...High (9.44 out of 10.0)
       Based on:.....5 sub-scores:
           Sub-score:....Static analysis
-          Importance:...High (weight 1.00 out of 1.00)
-          Value:........0.00 out of 10.00
-          Confidence:...7.50  out of 10.00
+          Importance:...High (weight 1.0  out of  1.0)
+          Value:........0.0  out of 10.0
+          Confidence:...Low (7.5  out of 10.0)
           Based on:.....2 sub-scores:
-              Sub-score:....How a project addresses issues reported by LGTM
-              Importance:...High (weight 1.00 out of 1.00)
-              Value:........0.00 out of 10.00
-              Confidence:...5.00  out of 10.00
+              Sub-score:....LGTM score
+              Importance:...High (weight 1.0  out of  1.0)
+              Value:........0.0  out of 10.0
+              Confidence:...Low (5.0  out of 10.0)
               Based on:...2 features:
-                  Does it use LGTM?....................No
-                  The worst LGTM grade of a project:...unknown
+                  Does it use LGTM checks?...............No
+                  The worst LGTM grade of the project:...unknown
 
-              Sub-score:....How a project uses FindSecBugs
-              Importance:...High (weight 1.00 out of 1.00)
+              Sub-score:....FindSecBugs score
+              Importance:...High (weight 1.0  out of  1.0)
               Value:........N/A  
-              Confidence:...10.00 out of 10.00
+              Confidence:...High (10.0 out of 10.0)
               Based on:...2 features:
                   A set of programming languages:...JAVASCRIPT, OTHER
                   Does it use FindSecBugs?..........No
 
 
           Sub-score:....Fuzzing
-          Importance:...High (weight 1.00 out of 1.00)
+          Importance:...High (weight 1.0  out of  1.0)
           Value:........N/A  
-          Confidence:...10.00 out of 10.00
+          Confidence:...High (10.0 out of 10.0)
           Based on:...2 features:
-              A set of programming languages:..............................JAVASCRIPT, OTHER
-              If an open-source project is included to OSS-Fuzz project:...No
+              A set of programming languages:...JAVASCRIPT, OTHER
+              Is it included to OSS-Fuzz?.......No
 
           Sub-score:....Dependency testing
-          Importance:...High (weight 1.00 out of 1.00)
-          Value:........6.00 out of 10.00
-          Confidence:...10.00 out of 10.00
+          Importance:...High (weight 1.0  out of  1.0)
+          Value:........6.0  out of 10.0
+          Confidence:...High (10.0 out of 10.0)
           Based on:...5 features:
               A set of package managers:..............................NPM, YARN
               A set of programming languages:.........................JAVASCRIPT, OTHER
@@ -53,9 +53,9 @@ Here is how the rating was calculated:
               Does it use GitHub as the main development platform?....Yes
 
           Sub-score:....Memory-safety testing
-          Importance:...High (weight 1.00 out of 1.00)
+          Importance:...High (weight 1.0  out of  1.0)
           Value:........N/A  
-          Confidence:...10.00 out of 10.00
+          Confidence:...High (10.0 out of 10.0)
           Based on:...4 features:
               A set of programming languages:............JAVASCRIPT, OTHER
               Does it use AddressSanitizer?..............No
@@ -63,9 +63,9 @@ Here is how the rating was calculated:
               Does it use UndefinedBehaviorSanitizer?....No
 
           Sub-score:....nohttp tool
-          Importance:...Medium (weight 0.50 out of 1.00)
-          Value:........0.00 out of 10.00
-          Confidence:...10.00 out of 10.00
+          Importance:...Medium (weight 0.5  out of  1.0)
+          Value:........0.0  out of 10.0
+          Confidence:...High (10.0 out of 10.0)
           Based on:...2 features:
               A set of package managers:...NPM, YARN
               Does it use nohttp?..........No
@@ -82,31 +82,31 @@ Here is how the rating was calculated:
                     signs its artifacts, then the score adds 0.50. If
                     the project uses a security tool or library, then
                     the score adds 1.00.
-      Importance:...High (weight 0.90 out of 1.00)
-      Value:........3.00 out of 10.00
-      Confidence:...8.13  out of 10.00
+      Importance:...High (weight 0.9  out of  1.0)
+      Value:........3.0  out of 10.0
+      Confidence:...High (10.0 out of 10.0)
       Based on:...16 features:
-          Does it have a bug bounty program?...........................No
-          Does it have a security policy?..............................No
-          Does it have a security team?................................Yes
-          Does it sign artifacts?......................................No
-          Does it use AddressSanitizer?................................No
-          Does it use Dependabot?......................................No
-          Does it use FindSecBugs?.....................................No
-          Does it use LGTM?............................................No
-          Does it use MemorySanitizer?.................................No
-          Does it use OWASP ESAPI?.....................................unknown
-          Does it use OWASP Java Encoder?..............................unknown
-          Does it use OWASP Java HTML Sanitizer??......................unknown
-          Does it use UndefinedBehaviorSanitizer?......................No
-          Does it use nohttp?..........................................No
-          Does it use verified signed commits?.........................No
-          If an open-source project is included to OSS-Fuzz project:...No
+          Does it have a bug bounty program?.........No
+          Does it have a security policy?............No
+          Does it have a security team?..............Yes
+          Does it sign artifacts?....................No
+          Does it use AddressSanitizer?..............No
+          Does it use Dependabot?....................No
+          Does it use FindSecBugs?...................No
+          Does it use LGTM checks?...................No
+          Does it use MemorySanitizer?...............No
+          Does it use OWASP ESAPI?...................No
+          Does it use OWASP Java Encoder?............No
+          Does it use OWASP Java HTML Sanitizer?.....No
+          Does it use UndefinedBehaviorSanitizer?....No
+          Does it use nohttp?........................No
+          Does it use verified signed commits?.......No
+          Is it included to OSS-Fuzz?................No
 
       Sub-score:....Unpatched vulnerabilities
-      Importance:...High (weight 0.80 out of 1.00)
-      Value:........10.00 out of 10.00
-      Confidence:...10.00 out of 10.00
+      Importance:...High (weight 0.8  out of  1.0)
+      Value:........10.0 out of 10.0
+      Confidence:...High (10.0 out of 10.0)
       Based on:...1 features:
           Info about vulnerabilities:...0 vulnerabilities
       Explanation:..No unpatched vulnerabilities found which is good
@@ -120,14 +120,14 @@ Here is how the rating was calculated:
                     high. If testing is bad, and there are no recent
                     vulnerabilities, then the score value is low. If
                     there are vulnerabilities, then the score is min.
-      Importance:...Medium (weight 0.60 out of 1.00)
-      Value:........2.00 out of 10.00
-      Confidence:...9.72  out of 10.00
+      Importance:...Medium (weight 0.6  out of  1.0)
+      Value:........2.0  out of 10.0
+      Confidence:...High (9.72 out of 10.0)
       Based on:.....1 sub-scores:
           Sub-score:....Security testing
-          Importance:...High (weight 1.00 out of 1.00)
-          Value:........2.40 out of 10.00
-          Confidence:...9.44  out of 10.00
+          Importance:...High (weight 1.0  out of  1.0)
+          Value:........2.4  out of 10.0
+          Confidence:...High (9.44 out of 10.0)
 
       Based on:...1 features:
           Info about vulnerabilities:...0 vulnerabilities
@@ -143,17 +143,17 @@ Here is how the rating was calculated:
                     contributors contributes to the score (up to
                     5.10):
                     0 -> 0.10, 5 -> 2.55, 10 -> 4.59
-      Importance:...Medium (weight 0.50 out of 1.00)
-      Value:........1.59 out of 10.00
-      Confidence:...10.00 out of 10.00
+      Importance:...Medium (weight 0.5  out of  1.0)
+      Value:........1.57 out of 10.0
+      Confidence:...High (10.0 out of 10.0)
       Based on:...2 features:
-          Number of commits in the last three months:........33
+          Number of commits in the last three months:........28
           Number of contributors in the last three months:...1
 
       Sub-score:....Community commitment
-      Importance:...Medium (weight 0.50 out of 1.00)
-      Value:........7.00 out of 10.00
-      Confidence:...10.00 out of 10.00
+      Importance:...Medium (weight 0.5  out of  1.0)
+      Value:........7.0  out of 10.0
+      Confidence:...High (10.0 out of 10.0)
       Based on:...3 features:
           Does it belong to Apache?........Yes
           Does it belong to Eclipse?.......No
@@ -171,14 +171,14 @@ Here is how the rating was calculated:
                     score:
                     0 -> 0.00 (min), 450 -> 1.50, 750 -> 2.50,
                     3000 -> 10.00 (max)
-      Importance:...Medium (weight 0.50 out of 1.00)
-      Value:........0.77 out of 10.00
-      Confidence:...10.00 out of 10.00
+      Importance:...Medium (weight 0.5  out of  1.0)
+      Value:........0.78 out of 10.0
+      Confidence:...High (10.0 out of 10.0)
       Based on:...2 features:
-          Number of stars for a GitHub repository:......581
-          Number of watchers for a GitHub repository:...58
+          Number of stars for a GitHub repository:......588
+          Number of watchers for a GitHub repository:...59
 
-Rating: 3.95 out of 10.00 -> BAD
-Confidence: 9.50 out of 10.00
+Rating:     3.95 out of 10.0 -> BAD
+Confidence: High (9.85 out of 10.0)
 
 ```
