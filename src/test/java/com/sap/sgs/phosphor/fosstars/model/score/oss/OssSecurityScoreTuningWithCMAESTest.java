@@ -11,9 +11,10 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_GITHUB_STARS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_WATCHERS_ON_GITHUB;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.OWASP_DEPENDENCY_CHECK_USAGE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.PACKAGE_MANAGERS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.PROJECT_START_DATE;
-import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SIGNS_ARTIFACTS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_ADDRESS_SANITIZER;
@@ -33,6 +34,8 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_
 import static com.sap.sgs.phosphor.fosstars.model.qa.TestVectorBuilder.newTestVector;
 import static com.sap.sgs.phosphor.fosstars.model.value.Language.JAVA;
 import static com.sap.sgs.phosphor.fosstars.model.value.Language.OTHER;
+import static com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsage.MANDATORY;
+import static com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsage.NOT_USED;
 import static com.sap.sgs.phosphor.fosstars.model.value.PackageManager.MAVEN;
 import static org.junit.Assert.assertNotNull;
 
@@ -69,7 +72,6 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(UnknownValue.of(HAS_SECURITY_TEAM))
           .set(UnknownValue.of(HAS_BUG_BOUNTY_PROGRAM))
           .set(UnknownValue.of(SIGNS_ARTIFACTS))
-          .set(UnknownValue.of(SCANS_FOR_VULNERABLE_DEPENDENCIES))
           .set(UnknownValue.of(VULNERABILITIES))
           .set(UnknownValue.of(PROJECT_START_DATE))
           .set(UnknownValue.of(USES_SIGNED_COMMITS))
@@ -88,6 +90,8 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(UnknownValue.of(USES_UNDEFINED_BEHAVIOR_SANITIZER))
           .set(UnknownValue.of(FUZZED_IN_OSS_FUZZ))
           .set(UnknownValue.of(USES_FIND_SEC_BUGS))
+          .set(UnknownValue.of(OWASP_DEPENDENCY_CHECK_USAGE))
+          .set(UnknownValue.of(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD))
           .expectedScore(DoubleInterval.closed(Score.MIN, 0.1))
           .alias("one")
           .make(),
@@ -105,7 +109,6 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(HAS_SECURITY_TEAM.value(false))
           .set(HAS_BUG_BOUNTY_PROGRAM.value(false))
           .set(SIGNS_ARTIFACTS.value(false))
-          .set(SCANS_FOR_VULNERABLE_DEPENDENCIES.value(false))
           .set(VULNERABILITIES.value(NO_VULNERABILITIES))
           .set(PROJECT_START_DATE.value(FIVE_YEARS_AGO))
           .set(USES_SIGNED_COMMITS.value(false))
@@ -124,6 +127,8 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(USES_UNDEFINED_BEHAVIOR_SANITIZER.value(false))
           .set(FUZZED_IN_OSS_FUZZ.value(false))
           .set(USES_FIND_SEC_BUGS.value(false))
+          .set(OWASP_DEPENDENCY_CHECK_USAGE.value(NOT_USED))
+          .set(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.notSpecifiedValue())
           .expectedScore(DoubleInterval.closed(1.0, 4.0))
           .alias("two")
           .make(),
@@ -141,7 +146,6 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(HAS_SECURITY_TEAM.value(true))
           .set(HAS_BUG_BOUNTY_PROGRAM.value(true))
           .set(SIGNS_ARTIFACTS.value(true))
-          .set(SCANS_FOR_VULNERABLE_DEPENDENCIES.value(true))
           .set(VULNERABILITIES.value(NO_VULNERABILITIES))
           .set(PROJECT_START_DATE.value(FIVE_YEARS_AGO))
           .set(USES_SIGNED_COMMITS.value(true))
@@ -160,6 +164,8 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(USES_UNDEFINED_BEHAVIOR_SANITIZER.value(true))
           .set(FUZZED_IN_OSS_FUZZ.value(true))
           .set(USES_FIND_SEC_BUGS.value(true))
+          .set(OWASP_DEPENDENCY_CHECK_USAGE.value(MANDATORY))
+          .set(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.value(0.0))
           .expectedScore(DoubleInterval.init().from(9.0).to(Score.MAX).make())
           .alias("three")
           .make()

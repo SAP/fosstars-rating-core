@@ -26,6 +26,17 @@ defaults:
   languages:
     elements:
     - "JAVA"
+- type: "OwaspDependencyCheckUsageValue"
+  feature:
+    type: "OwaspDependencyCheckUsageFeature"
+    name: "How OWASP Dependency Check is used"
+  value: "NOT_USED"
+- type: "OwaspDependencyCheckCvssThresholdValue"
+  feature:
+    type: "OwaspDependencyCheckCvssThreshold"
+    name: "A CVSS threshold for OWASP Dependency Check to fail the build"
+  number: 10.0
+  specified: false
 - type: "BooleanValue"
   feature:
     type: "BooleanFeature"
@@ -279,6 +290,7 @@ elements:
   - "OssSecurityRating$SecurityLabel"
   - "BAD"
   alias: "bad"
+
 - type: "StandardTestVector"
   values:
   - type: "BooleanValue"
@@ -405,9 +417,20 @@ elements:
       type: "BooleanFeature"
       name: "If a project uses OWASP Java Encoder"
     flag: true
+  - type: "OwaspDependencyCheckUsageValue"
+    feature:
+      type: "OwaspDependencyCheckUsageFeature"
+      name: "How OWASP Dependency Check is used"
+    value: "MANDATORY"
+  - type: "OwaspDependencyCheckCvssThresholdValue"
+    feature:
+      type: "OwaspDependencyCheckCvssThreshold"
+      name: "A CVSS threshold for OWASP Dependency Check to fail the build"
+    number: 7.0
+    specified: false
   expectedScore:
     type: "DoubleInterval"
-    from: 9.0
+    from: 7.0
     openLeft: false
     negativeInfinity: false
     to: 10.0

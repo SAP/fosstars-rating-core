@@ -40,7 +40,7 @@ elements:
     feature:
       type: "OwaspDependencyCheckCvssThreshold"
       name: "A CVSS threshold for OWASP Dependency Check to fail the build"
-    number: 11.0
+    number: 10.0
     specified: false
   expectedScore:
     type: "DoubleInterval"

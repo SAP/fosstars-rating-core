@@ -7,6 +7,7 @@ import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.Weight;
 import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.CommunityCommitmentScore;
+import com.sap.sgs.phosphor.fosstars.model.score.oss.DependabotScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.DependencyScanScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.FindSecBugsScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.FuzzingScore;
@@ -14,6 +15,7 @@ import com.sap.sgs.phosphor.fosstars.model.score.oss.LgtmScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.NoHttpToolScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.OssSecurityScore;
+import com.sap.sgs.phosphor.fosstars.model.score.oss.OwaspDependencyScanScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectActivityScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectPopularityScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.ProjectSecurityAwarenessScore;
@@ -23,6 +25,7 @@ import com.sap.sgs.phosphor.fosstars.model.score.oss.UnpatchedVulnerabilitiesSco
 import com.sap.sgs.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.VulnerabilityLifetimeScore;
 import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
+import com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckCvssThresholdValue;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.text.DecimalFormat;
@@ -79,6 +82,8 @@ public class PrettyPrinter implements Formatter {
     FEATURE_CLASS_TO_NAME.put(UnpatchedVulnerabilitiesScore.class, "Unpatched vulnerabilities");
     FEATURE_CLASS_TO_NAME.put(VulnerabilityLifetimeScore.class, "Vulnerability lifetime");
     FEATURE_CLASS_TO_NAME.put(MemorySafetyTestingScore.class, "Memory-safety testing");
+    FEATURE_CLASS_TO_NAME.put(DependabotScore.class, "Dependabot score");
+    FEATURE_CLASS_TO_NAME.put(OwaspDependencyScanScore.class, "OWASP Dependency Check score");
     FEATURE_CLASS_TO_NAME.put(DependencyScanScore.class, "Dependency testing");
     FEATURE_CLASS_TO_NAME.put(FuzzingScore.class, "Fuzzing");
     FEATURE_CLASS_TO_NAME.put(StaticAnalysisScore.class, "Static analysis");
@@ -222,6 +227,10 @@ public class PrettyPrinter implements Formatter {
         } else if (usedValue instanceof BooleanValue) {
           BooleanValue booleanValue = (BooleanValue) usedValue;
           nameToValue.put(name, booleanValue.get() ? "Yes" : "No");
+        } else if (usedValue instanceof OwaspDependencyCheckCvssThresholdValue) {
+          OwaspDependencyCheckCvssThresholdValue threshold
+              = (OwaspDependencyCheckCvssThresholdValue) usedValue;
+          nameToValue.put(name, threshold.specified() ? threshold.get() : "Not specified");
         } else {
           nameToValue.put(name, usedValue.get());
         }

@@ -11,6 +11,14 @@ elements:
   values:
   - type: "UnknownValue"
     feature:
+      type: "OwaspDependencyCheckUsageFeature"
+      name: "How OWASP Dependency Check is used"
+  - type: "UnknownValue"
+    feature:
+      type: "OwaspDependencyCheckCvssThreshold"
+      name: "A CVSS threshold for OWASP Dependency Check to fail the build"
+  - type: "UnknownValue"
+    feature:
       type: "BooleanFeature"
       name: "If a project uses Dependabot"
   - type: "UnknownValue"
@@ -25,10 +33,6 @@ elements:
     feature:
       type: "LanguagesFeature"
       name: "A set of programming languages"
-  - type: "UnknownValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project is regularly scanned for vulnerable dependencies"
   expectedScore:
     type: "DoubleInterval"
     from: 0.0
@@ -43,11 +47,17 @@ elements:
 # very bad project
 - type: "StandardTestVector"
   values:
-  - type: "BooleanValue"
+  - type: "OwaspDependencyCheckUsageValue"
     feature:
-      type: "BooleanFeature"
-      name: "If an open-source project is regularly scanned for vulnerable dependencies"
-    flag: false
+      type: "OwaspDependencyCheckUsageFeature"
+      name: "How OWASP Dependency Check is used"
+    value: "NOT_USED"
+  - type: "OwaspDependencyCheckCvssThresholdValue"
+    feature:
+      type: "OwaspDependencyCheckCvssThreshold"
+      name: "A CVSS threshold for OWASP Dependency Check to fail the build"
+    number: 10.0
+    specified: false
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
@@ -83,14 +93,20 @@ elements:
   expectedLabel: null
   alias: "very_bad"
 
-  # okay project
+# okay project
 - type: "StandardTestVector"
   values:
-    - type: "BooleanValue"
+    - type: "OwaspDependencyCheckUsageValue"
       feature:
-        type: "BooleanFeature"
-        name: "If an open-source project is regularly scanned for vulnerable dependencies"
-      flag: false
+        type: "OwaspDependencyCheckUsageFeature"
+        name: "How OWASP Dependency Check is used"
+      value: "NOT_USED"
+    - type: "OwaspDependencyCheckCvssThresholdValue"
+      feature:
+        type: "OwaspDependencyCheckCvssThreshold"
+        name: "A CVSS threshold for OWASP Dependency Check to fail the build"
+      number: 10.0
+      specified: false
     - type: "BooleanValue"
       feature:
         type: "BooleanFeature"
@@ -117,28 +133,34 @@ elements:
         - "JAVA"
   expectedScore:
     type: "DoubleInterval"
-    from: 6.0
+    from: 5.0
     openLeft: false
     negativeInfinity: false
-    to: 9.0
+    to: 8.0
     openRight: false
     positiveInfinity: false
   expectedLabel: null
   alias: "okay"
 
-# very good project
+# very good project with owasp dependency check
 - type: "StandardTestVector"
   values:
-  - type: "BooleanValue"
+  - type: "OwaspDependencyCheckUsageValue"
     feature:
-      type: "BooleanFeature"
-      name: "If an open-source project is regularly scanned for vulnerable dependencies"
-    flag: true
+      type: "OwaspDependencyCheckUsageFeature"
+      name: "How OWASP Dependency Check is used"
+    value: "MANDATORY"
+  - type: "OwaspDependencyCheckCvssThresholdValue"
+    feature:
+      type: "OwaspDependencyCheckCvssThreshold"
+      name: "A CVSS threshold for OWASP Dependency Check to fail the build"
+    number: 3.0
+    specified: true
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
       name: "If a project uses Dependabot"
-    flag: true
+    flag: false
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
@@ -167,4 +189,53 @@ elements:
     openRight: false
     positiveInfinity: false
   expectedLabel: null
-  alias: "very_good"
+  alias: "very_good_owasp"
+
+# very good project with dependabot
+- type: "StandardTestVector"
+  values:
+    - type: "OwaspDependencyCheckUsageValue"
+      feature:
+        type: "OwaspDependencyCheckUsageFeature"
+        name: "How OWASP Dependency Check is used"
+      value: "NOT_USED"
+    - type: "OwaspDependencyCheckCvssThresholdValue"
+      feature:
+        type: "OwaspDependencyCheckCvssThreshold"
+        name: "A CVSS threshold for OWASP Dependency Check to fail the build"
+      number: 10.0
+      specified: false
+    - type: "BooleanValue"
+      feature:
+        type: "BooleanFeature"
+        name: "If a project uses Dependabot"
+      flag: true
+    - type: "BooleanValue"
+      feature:
+        type: "BooleanFeature"
+        name: "If a project uses GitHub as the main development platform"
+      flag: true
+    - type: "PackageManagersValue"
+      feature:
+        type: "PackageManagersFeature"
+        name: "A set of package managers"
+      packageManagers:
+        packageManagers:
+          - "MAVEN"
+    - type: "LanguagesValue"
+      feature:
+        type: "LanguagesFeature"
+        name: "A set of programming languages"
+      languages:
+        elements:
+          - "JAVA"
+  expectedScore:
+    type: "DoubleInterval"
+    from: 9.0
+    openLeft: false
+    negativeInfinity: false
+    to: 10.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "very_good_dependabot"

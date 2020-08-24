@@ -18,12 +18,12 @@ import com.sap.sgs.phosphor.fosstars.data.github.NumberOfWatchers;
 import com.sap.sgs.phosphor.fosstars.data.github.OwaspSecurityLibraries;
 import com.sap.sgs.phosphor.fosstars.data.github.PackageManagement;
 import com.sap.sgs.phosphor.fosstars.data.github.ProgrammingLanguages;
-import com.sap.sgs.phosphor.fosstars.data.github.ScansForVulnerableDependencies;
 import com.sap.sgs.phosphor.fosstars.data.github.SignsJarArtifacts;
 import com.sap.sgs.phosphor.fosstars.data.github.UsesDependabot;
 import com.sap.sgs.phosphor.fosstars.data.github.UsesFindSecBugs;
 import com.sap.sgs.phosphor.fosstars.data.github.UsesGithubForDevelopment;
 import com.sap.sgs.phosphor.fosstars.data.github.UsesNoHttpTool;
+import com.sap.sgs.phosphor.fosstars.data.github.UsesOwaspDependencyCheck;
 import com.sap.sgs.phosphor.fosstars.data.github.UsesSanitizers;
 import com.sap.sgs.phosphor.fosstars.data.github.UsesSignedCommits;
 import com.sap.sgs.phosphor.fosstars.data.interactive.AskAboutSecurityTeam;
@@ -131,7 +131,7 @@ class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
         new PackageManagement(fetcher),
         new UsesNoHttpTool(fetcher),
         new UsesGithubForDevelopment(fetcher),
-        new ScansForVulnerableDependencies(fetcher),
+        new UsesOwaspDependencyCheck(fetcher),
         new UsesSanitizers(fetcher),
         new UsesFindSecBugs(fetcher),
         new FuzzedInOssFuzz(fetcher),
