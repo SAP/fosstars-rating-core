@@ -14,7 +14,6 @@ Implementations of the features can be found in
 1.  If an open-source project has a security policy.
 1.  If an open-source project has a bug bounty program.
 1.  If an open-source project signs its artifacts.
-1.  If an open-source project is regularly scanned for vulnerable dependencies.
 1.  If a project uses Dependabot.
 1.  If an open-source project uses FindSecBugs.
 1.  If an open-source project uses AddressSanitizer.
@@ -38,6 +37,8 @@ Implementations of the features can be found in
 1.  Number of watchers for a GitHub repository.
 1.  Programming languages that are used in a project.
 1.  Package managers that are used in a project.
+1.  If and how a project uses OWASP Dependency Check.
+1.  If and how a project sets a CVSS threshold for OWASP Dependency Check to fail the build.
 
 ## Scores
 
@@ -61,12 +62,15 @@ Implementations for all the scores can be found in the [com.sap.sgs.phosphor.fos
     1.  How a project uses fuzzing. It's based on the following features:
         1.  Programming languages that are used in a project.
         1.  If an open-source project is included to OSS-Fuzz project.
-    1.  Dependency testing. It's based on the following features:
-        1.  Programming languages that are used in a project.
-        1.  Package managers that are used in a project.
-        1.  If an open-source project is regularly scanned for vulnerable dependencies.
-        1.  If a project uses Dependabot.
-        1.  If a project uses GitHub as the main development platform.
+    1.  Dependency testing. It's based on the following sub-scores:
+        1.  Dependabot score based on the following features:
+            1.  Programming languages that are used in a project.
+            1.  Package managers that are used in a project.
+            1.  If a project uses Dependabot.
+            1.  If a project uses GitHub as the main development platform.
+        1.  OWASP Dependency Check score based on the following features:
+            1.  If and how a project uses OWASP Dependency Check.
+            1.  If and how a project sets a CVSS threshold for OWASP Dependency Check to fail the build.
     1.  Memory-safety testing. It's based on the following features:
         1.  Programming languages that are used in a project.
         1.  If an open-source project uses AddressSanitizer.
@@ -91,6 +95,7 @@ Implementations for all the scores can be found in the [com.sap.sgs.phosphor.fos
     1.  If a project uses OWASP Enterprise Security API (ESAPI).
     1.  If a project uses OWASP Java HTML Sanitizer.
     1.  If a project uses OWASP Java Encoder.
+    1.  If and how a project uses OWASP Dependency Check.
 1.  **Project activity score** based on the following features:
     1.  Number of commits last three months.
     1.  Number of contributors last three months.
