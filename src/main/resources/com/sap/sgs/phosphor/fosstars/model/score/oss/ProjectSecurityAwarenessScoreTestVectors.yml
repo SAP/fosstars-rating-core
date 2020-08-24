@@ -55,6 +55,11 @@ defaults:
     type: "BooleanFeature"
     name: "If a project uses OWASP Java Encoder"
   flag: false
+- type: "OwaspDependencyCheckUsageValue"
+  feature:
+    type: "OwaspDependencyCheckUsageFeature"
+    name: "How OWASP Dependency Check is used"
+  value: "NOT_USED"
 
 elements:
 - type: "StandardTestVector"

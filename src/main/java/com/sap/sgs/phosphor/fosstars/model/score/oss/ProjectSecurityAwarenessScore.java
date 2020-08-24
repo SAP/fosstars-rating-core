@@ -4,6 +4,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.FUZZED
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_BUG_BOUNTY_PROGRAM;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_TEAM;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.OWASP_DEPENDENCY_CHECK_USAGE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SIGNS_ARTIFACTS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_ADDRESS_SANITIZER;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_DEPENDABOT;
@@ -16,12 +17,14 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_O
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_OWASP_JAVA_HTML_SANITIZER;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SIGNED_COMMITS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_UNDEFINED_BEHAVIOR_SANITIZER;
+import static com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsage.NOT_USED;
 
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.sgs.phosphor.fosstars.model.score.FeatureBasedScore;
+import com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsage;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.io.IOException;
 import java.io.InputStream;
@@ -87,6 +90,10 @@ import org.apache.commons.lang3.ArrayUtils;
  *     {@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures
  *     #USES_UNDEFINED_BEHAVIOR_SANITIZER}
  *   </li>
+ *   <li>
+ *      {@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures
+ *      #OWASP_DEPENDENCY_CHECK_USAGE}
+ *   </li>
  * </ul>
  * <p>A project gets the maximum score if it has both a security policy and a security team.</p>
  */
@@ -145,7 +152,8 @@ public class ProjectSecurityAwarenessScore extends FeatureBasedScore {
       USES_DEPENDABOT,
       USES_NOHTTP, USES_LGTM_CHECKS, USES_FIND_SEC_BUGS,
       USES_OWASP_ESAPI, USES_OWASP_JAVA_ENCODER, USES_OWASP_JAVA_HTML_SANITIZER,
-      USES_ADDRESS_SANITIZER, USES_MEMORY_SANITIZER, USES_UNDEFINED_BEHAVIOR_SANITIZER
+      USES_ADDRESS_SANITIZER, USES_MEMORY_SANITIZER, USES_UNDEFINED_BEHAVIOR_SANITIZER,
+      OWASP_DEPENDENCY_CHECK_USAGE
   };
 
   /**
@@ -230,6 +238,11 @@ public class ProjectSecurityAwarenessScore extends FeatureBasedScore {
     Object object = value.get();
     if (object instanceof Boolean) {
       return (Boolean) object;
+    }
+
+    if (object instanceof OwaspDependencyCheckUsage) {
+      OwaspDependencyCheckUsage usage = (OwaspDependencyCheckUsage) object;
+      return usage != NOT_USED;
     }
 
     throw new IllegalArgumentException(
