@@ -44,22 +44,6 @@ public class OwaspDependencyCheckCvssThresholdValue extends DoubleValue {
     return specified;
   }
 
-  /**
-   * Get the CVSS score if it's specified.
-   *
-   * @return The CVSS score.
-   * @throws IllegalStateException If the CVSS score is not specified.
-   */
-  @Override
-  @JsonGetter("number")
-  public Double get() {
-    if (specified) {
-      return number;
-    }
-
-    throw new IllegalStateException("On no! The value is not specified!");
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {

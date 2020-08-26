@@ -37,12 +37,6 @@ public class OwaspDependencyCheckCvssThresholdValueTest {
     assertFalse(value.specified());
   }
 
-  @Test(expected = IllegalStateException.class)
-  public void testGettingNotSpecifiedValue() {
-    OwaspDependencyCheckCvssThresholdValue value = FEATURE.notSpecifiedValue();
-    value.get();
-  }
-
   @Test
   public void testEqualsAndHashCode() {
     OwaspDependencyCheckCvssThresholdValue one
