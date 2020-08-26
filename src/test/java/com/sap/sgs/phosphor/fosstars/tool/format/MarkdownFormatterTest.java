@@ -33,16 +33,12 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_U
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
-import static com.sap.sgs.phosphor.fosstars.model.score.example.ExampleScores.SECURITY_SCORE_EXAMPLE;
 import static com.sap.sgs.phosphor.fosstars.model.value.Language.C;
 import static com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsage.NOT_USED;
 import static com.sap.sgs.phosphor.fosstars.model.value.PackageManager.MAVEN;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
-import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating;
@@ -50,13 +46,12 @@ import com.sap.sgs.phosphor.fosstars.model.value.Languages;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.sgs.phosphor.fosstars.model.value.PackageManagers;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
-import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
 import java.util.Date;
 import java.util.Set;
 import org.junit.Test;
 
-public class PrettyPrinterTest {
+public class MarkdownFormatterTest {
 
   private static final OssSecurityRating RATING
       = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
@@ -99,59 +94,11 @@ public class PrettyPrinterTest {
   public void testPrint() {
     RatingValue ratingValue = RATING.calculate(TEST_VALUES);
 
-    PrettyPrinter printer = new PrettyPrinter();
-    String text = printer.print(ratingValue);
+    MarkdownFormatter formatter = new MarkdownFormatter();
+    String text = formatter.print(ratingValue);
 
     assertNotNull(text);
     assertFalse(text.isEmpty());
     System.out.println(text);
-    for (Value value : ratingValue.scoreValue().usedValues()) {
-      assertTrue(text.contains(CommonFormatter.nameOf(value.feature())));
-    }
-    for (Feature feature : RATING.allFeatures()) {
-      assertTrue(String.format("'%s' feature should be there!", feature.name()),
-          text.contains(CommonFormatter.nameOf(feature)));
-    }
-    assertTrue(text.contains("Value"));
-    assertTrue(text.contains("Confidence"));
-    assertTrue(text.contains("Importance"));
-    assertTrue(text.contains("Based on"));
-    assertTrue(text.contains("Description"));
-    assertTrue(text.contains("Explanation"));
-  }
-
-  @Test
-  public void testConsistency() {
-    RatingValue ratingValue = RATING.calculate(TEST_VALUES);
-
-    PrettyPrinter printer = new PrettyPrinter();
-    String text = printer.print(ratingValue);
-    for (int i = 0; i < 100; i++) {
-      assertEquals(text, printer.print(ratingValue));
-    }
-  }
-
-  @Test
-  public void testTellMeActualValueOf() {
-    assertEquals(
-        "10.0 out of 10.0",
-        PrettyPrinter.tellMeActualValueOf(new ScoreValue(SECURITY_SCORE_EXAMPLE).set(10)));
-    assertEquals(
-        "1.23 out of 10.0",
-        PrettyPrinter.tellMeActualValueOf(new ScoreValue(SECURITY_SCORE_EXAMPLE).set(1.23)));
-  }
-
-  @Test
-  public void testFormatValueAndMax() {
-    assertEquals("0.0  out of 10.0",
-        PrettyPrinter.printValueAndMax(0.0, 10.0));
-    assertEquals("1.23 out of 10.0",
-        PrettyPrinter.printValueAndMax(1.23, 10.0));
-    assertEquals("1.23 out of 10.0",
-        PrettyPrinter.printValueAndMax(1.23345, 10.0));
-    assertEquals("10.0 out of 10.0",
-        PrettyPrinter.printValueAndMax(10.0, 10.0));
-    assertEquals("9.0  out of 10.0",
-        PrettyPrinter.printValueAndMax(9.0, 10.0));
   }
 }

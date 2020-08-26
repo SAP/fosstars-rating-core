@@ -6,10 +6,14 @@ import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
+import com.sap.sgs.phosphor.fosstars.tool.format.Formatter;
+import com.sap.sgs.phosphor.fosstars.tool.format.MarkdownFormatter;
 import com.sap.sgs.phosphor.fosstars.tool.format.PrettyPrinter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UncheckedIOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -37,12 +41,22 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
   /**
    * A formatter for rating values.
    */
-  private static final  PrettyPrinter PRETTY_PRINTER = new PrettyPrinter();
+  private static final Formatter FORMATTER = new MarkdownFormatter();
 
   /**
    * A file where a report is going to be stored.
    */
   static final String REPORT_FILENAME = "README.md";
+
+  /**
+   * A resource with a template for the report.
+   */
+  private static final String RESOURCE = "MarkdownProjectDetailsTemplate.md";
+
+  /**
+   * A template for the report.
+   */
+  private static final String TEMPLATE = loadFrom(RESOURCE);
 
   /**
    * A template for a table row in the report.
@@ -106,11 +120,6 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
     }
     allProjects.sort(Collections.reverseOrder(Comparator.comparingInt(stars::get)));
 
-    String projectDetailsTemplate;
-    try (InputStream is = getClass().getResourceAsStream("MarkdownProjectDetailsTemplate.md")) {
-      projectDetailsTemplate = IOUtils.toString(is, "UTF-8");
-    }
-
     StringBuilder sb = new StringBuilder();
     Statistics statistics = new Statistics();
     for (GitHubProject project : allProjects) {
@@ -122,7 +131,9 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
         Files.createDirectories(organizationDirectory);
       }
 
-      String details = projectDetailsTemplate
+      String details = TEMPLATE
+          .replace("%PROJECT_URL%", project.url().toString())
+          .replace("%UPDATED_DATE%", DATE_FORMAT.format(project.ratingValueDate()))
           .replace("%PROJECT_NAME%", projectPath)
           .replace("%DETAILS%", detailsOf(project));
 
@@ -246,7 +257,7 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
     if (!project.ratingValue().isPresent()) {
       return UNKNOWN;
     }
-    return PRETTY_PRINTER.print(project.ratingValue().get());
+    return FORMATTER.print(project.ratingValue().get());
   }
 
   /**
@@ -463,6 +474,20 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
      */
     double unclearRatingsPercent() {
       return (double) unclearRatings * 100 / total;
+    }
+  }
+
+  /**
+   * Loads a resource.
+   *
+   * @param name A name of the resource.
+   * @return The content of the resource.
+   */
+  private static String loadFrom(String name) {
+    try (InputStream is = MarkdownReporter.class.getResourceAsStream(name)) {
+      return IOUtils.toString(is, StandardCharsets.UTF_8);
+    } catch (IOException e) {
+      throw new UncheckedIOException("Holy moly! Could not load template!", e);
     }
   }
 
