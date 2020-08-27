@@ -9,7 +9,7 @@ See [docs](https://sap.github.io/fosstars-rating-core/) for more details.
 
 ## Security rating for open-source projects
 
-Using open-source software helps a lot but it also may bring new security issues
+Open-source software helps a lot but it also may bring new security issues
 and therefore increase security risks.
 Is it safe to use a particular open-source component?
 Sometimes answering this question is not easy.
@@ -30,20 +30,35 @@ can be found in the [docs](https://sap.github.io/fosstars-rating-core/oss_securi
 
 ## Download and installation
 
-The project can be built and installed with the following command:
+The [jars](https://mvnrepository.com/artifact/com.sap.oss.phosphor/fosstars-rating-core) are available on the Maven Central repository:
+
+```
+<dependency>
+    <groupId>com.sap.oss.phosphor</groupId>
+    <artifactId>fosstars-rating-core</artifactId>
+    <version>0.13.0</version>
+</dependency>
+
+```
+
+Or, the project can be built and installed with the following command:
 
 ```
 mvn clean install
 ```
 
-## Open-source security rating calculator
+## Command line tool for calculating security ratings
 
-The project offers a command line tool that takes a URL to a project on GitHub,
+There is a command line tool that takes a URL to a project on GitHub,
 gathers data about it, and calculates a security rating.
 
-The tool can be run with a command like the following:
+The tool can be run with commands like the following:
 
 ```
+git clone git@github.com:SAP/fosstars-rating-core.git
+cd fosstars-rating-core
+mvn package -DskipTests
+TOKEN=xyz # use your personal token, see below
 java -jar target/fosstars-github-rating-calc.jar --token ${TOKEN} --url https://github.com/apache/beam --no-questions
 ```
 
@@ -68,15 +83,15 @@ The output is going to look like the following:
 [+]    If an open-source project uses FindSecBugs: false
 [+]    If a project signs artifacts: false
 [+]    Info about vulnerabilities in open-source project: 1 vulnerability
-[+]    Number of stars for a GitHub repository: 4172
-[+]    Number of contributors in the last three months: 91
-[+]    Number of commits in the last three months: 1390
+[+]    Number of stars for a GitHub repository: 4199
+[+]    Number of contributors in the last three months: 93
+[+]    Number of commits in the last three months: 1388
 [+]    If an open-source project belongs to Apache Foundation: true
 [+]    If a project uses OWASP Enterprise Security API (ESAPI): false
 [+]    If a project uses signed commits: false
-[+]    If an open-source project is regularly scanned for vulnerable dependencies: false
 [+]    If an open-source project has a security team: true
 [+]    If an open-source project uses MemorySanitizer: false
+[+]    How OWASP Dependency Check is used: NOT_USED
 [+]    If a project uses nohttp tool: false
 [+]    If a project has a bug bounty program: false
 [+]    Number of watchers for a GitHub repository: 257
@@ -84,29 +99,54 @@ The output is going to look like the following:
 [+]    If an open-source project has a security policy: false
 [+]    If an open-source project is included to OSS-Fuzz project: false
 [+]    If a project uses OWASP Java HTML Sanitizer: false
+[+]    A CVSS threshold for OWASP Dependency Check to fail the build: 0.0
 [+]    If an open-source project uses UndefinedBehaviorSanitizer: false
-[+]    The worst LGTM grade of a project: B
 [+]    A set of package managers: GRADLE
+[+]    The worst LGTM grade of a project: B
 [+]    If an open-source project is supported by a company: false
 [+] Here is how the rating was calculated:
 [+]   Score:........Security of project
 [+]   Value:........4.71 out of 10.0
-[+]   Confidence:...High (10.0 out of 10.0)
+[+]   Confidence:...Max (10.0 out of 10.0)
 [+]   Based on:.....7 sub-scores:
 [+]       Sub-score:....Security testing
 [+]       Importance:...High (weight 1.0  out of  1.0)
 [+]       Value:........0.89 out of 10.0
-[+]       Confidence:...High (10.0 out of 10.0)
+[+]       Confidence:...Max (10.0 out of 10.0)
 [+]       Based on:.....5 sub-scores:
+[+]           Sub-score:....Dependency testing
+[+]           Importance:...High (weight 1.0  out of  1.0)
+[+]           Value:........0.0  out of 10.0
+[+]           Confidence:...Max (10.0 out of 10.0)
+[+]           Based on:.....2 sub-scores:
+[+]               Sub-score:....Dependabot score
+[+]               Importance:...High (weight 1.0  out of  1.0)
+[+]               Value:........0.0  out of 10.0
+[+]               Confidence:...Max (10.0 out of 10.0)
+[+]               Based on:...4 features:
+[+]                   A set of package managers:..............................GRADLE
+[+]                   A set of programming languages:.........................C, JAVA, PYTHON, JAVASCRIPT, OTHER
+[+]                   Does it use Dependabot?.................................No
+[+]                   Does it use GitHub as the main development platform?....Yes
+[+] 
+[+]               Sub-score:....OWASP Dependency Check score
+[+]               Importance:...High (weight 1.0  out of  1.0)
+[+]               Value:........0.0  out of 10.0
+[+]               Confidence:...Max (10.0 out of 10.0)
+[+]               Based on:...2 features:
+[+]                   How is OWASP Dependency Check used?..................Not used
+[+]                   What is the threshold for OWASP Dependency Check?....Not specified
+[+] 
+[+] 
 [+]           Sub-score:....Static analysis
 [+]           Importance:...High (weight 1.0  out of  1.0)
 [+]           Value:........4.0  out of 10.0
-[+]           Confidence:...High (10.0 out of 10.0)
+[+]           Confidence:...Max (10.0 out of 10.0)
 [+]           Based on:.....2 sub-scores:
 [+]               Sub-score:....LGTM score
 [+]               Importance:...High (weight 1.0  out of  1.0)
 [+]               Value:........4.0  out of 10.0
-[+]               Confidence:...High (10.0 out of 10.0)
+[+]               Confidence:...Max (10.0 out of 10.0)
 [+]               Based on:...2 features:
 [+]                   Does it use LGTM checks?...............No
 [+]                   The worst LGTM grade of the project:...B
@@ -114,7 +154,7 @@ The output is going to look like the following:
 [+]               Sub-score:....FindSecBugs score
 [+]               Importance:...High (weight 1.0  out of  1.0)
 [+]               Value:........0.0  out of 10.0
-[+]               Confidence:...High (10.0 out of 10.0)
+[+]               Confidence:...Max (10.0 out of 10.0)
 [+]               Based on:...2 features:
 [+]                   A set of programming languages:...C, JAVA, PYTHON, JAVASCRIPT, OTHER
 [+]                   Does it use FindSecBugs?..........No
@@ -123,26 +163,15 @@ The output is going to look like the following:
 [+]           Sub-score:....Fuzzing
 [+]           Importance:...High (weight 1.0  out of  1.0)
 [+]           Value:........0.0  out of 10.0
-[+]           Confidence:...High (10.0 out of 10.0)
+[+]           Confidence:...Max (10.0 out of 10.0)
 [+]           Based on:...2 features:
 [+]               A set of programming languages:...C, JAVA, PYTHON, JAVASCRIPT, OTHER
 [+]               Is it included to OSS-Fuzz?.......No
 [+] 
-[+]           Sub-score:....Dependency testing
-[+]           Importance:...High (weight 1.0  out of  1.0)
-[+]           Value:........0.0  out of 10.0
-[+]           Confidence:...High (10.0 out of 10.0)
-[+]           Based on:...5 features:
-[+]               A set of package managers:..............................GRADLE
-[+]               A set of programming languages:.........................C, JAVA, PYTHON, JAVASCRIPT, OTHER
-[+]               Does it scan for vulnerable dependencies?...............No
-[+]               Does it use Dependabot?.................................No
-[+]               Does it use GitHub as the main development platform?....Yes
-[+] 
 [+]           Sub-score:....Memory-safety testing
 [+]           Importance:...High (weight 1.0  out of  1.0)
 [+]           Value:........0.0  out of 10.0
-[+]           Confidence:...High (10.0 out of 10.0)
+[+]           Confidence:...Max (10.0 out of 10.0)
 [+]           Based on:...4 features:
 [+]               A set of programming languages:............C, JAVA, PYTHON, JAVASCRIPT, OTHER
 [+]               Does it use AddressSanitizer?..............No
@@ -152,7 +181,7 @@ The output is going to look like the following:
 [+]           Sub-score:....nohttp tool
 [+]           Importance:...Medium (weight 0.5  out of  1.0)
 [+]           Value:........0.0  out of 10.0
-[+]           Confidence:...High (10.0 out of 10.0)
+[+]           Confidence:...Max (10.0 out of 10.0)
 [+]           Based on:...2 features:
 [+]               A set of package managers:...GRADLE
 [+]               Does it use nohttp?..........No
@@ -171,8 +200,8 @@ The output is going to look like the following:
 [+]                     the score adds 1.00.
 [+]       Importance:...High (weight 0.9  out of  1.0)
 [+]       Value:........3.0  out of 10.0
-[+]       Confidence:...High (10.0 out of 10.0)
-[+]       Based on:...16 features:
+[+]       Confidence:...Max (10.0 out of 10.0)
+[+]       Based on:...17 features:
 [+]           Does it have a bug bounty program?.........No
 [+]           Does it have a security policy?............No
 [+]           Does it have a security team?..............Yes
@@ -188,12 +217,13 @@ The output is going to look like the following:
 [+]           Does it use UndefinedBehaviorSanitizer?....No
 [+]           Does it use nohttp?........................No
 [+]           Does it use verified signed commits?.......No
+[+]           How is OWASP Dependency Check used?........Not used
 [+]           Is it included to OSS-Fuzz?................No
 [+] 
 [+]       Sub-score:....Unpatched vulnerabilities
 [+]       Importance:...High (weight 0.8  out of  1.0)
 [+]       Value:........10.0 out of 10.0
-[+]       Confidence:...High (10.0 out of 10.0)
+[+]       Confidence:...Max (10.0 out of 10.0)
 [+]       Based on:...1 features:
 [+]           Info about vulnerabilities:...1 vulnerability
 [+]       Explanation:..No unpatched vulnerabilities found which is good
@@ -209,12 +239,12 @@ The output is going to look like the following:
 [+]                     there are vulnerabilities, then the score is min.
 [+]       Importance:...Medium (weight 0.6  out of  1.0)
 [+]       Value:........0.0  out of 10.0
-[+]       Confidence:...High (10.0 out of 10.0)
+[+]       Confidence:...Max (10.0 out of 10.0)
 [+]       Based on:.....1 sub-scores:
 [+]           Sub-score:....Security testing
 [+]           Importance:...High (weight 1.0  out of  1.0)
 [+]           Value:........0.89 out of 10.0
-[+]           Confidence:...High (10.0 out of 10.0)
+[+]           Confidence:...Max (10.0 out of 10.0)
 [+] 
 [+]       Based on:...1 features:
 [+]           Info about vulnerabilities:...1 vulnerability
@@ -232,15 +262,15 @@ The output is going to look like the following:
 [+]                     0 -> 0.10, 5 -> 2.55, 10 -> 4.59
 [+]       Importance:...Medium (weight 0.5  out of  1.0)
 [+]       Value:........10.0 out of 10.0
-[+]       Confidence:...High (10.0 out of 10.0)
+[+]       Confidence:...Max (10.0 out of 10.0)
 [+]       Based on:...2 features:
-[+]           Number of commits in the last three months:........1390
-[+]           Number of contributors in the last three months:...91
+[+]           Number of commits in the last three months:........1388
+[+]           Number of contributors in the last three months:...93
 [+] 
 [+]       Sub-score:....Community commitment
 [+]       Importance:...Medium (weight 0.5  out of  1.0)
 [+]       Value:........7.0  out of 10.0
-[+]       Confidence:...High (10.0 out of 10.0)
+[+]       Confidence:...Max (10.0 out of 10.0)
 [+]       Based on:...3 features:
 [+]           Does it belong to Apache?........Yes
 [+]           Does it belong to Eclipse?.......No
@@ -259,14 +289,14 @@ The output is going to look like the following:
 [+]                     0 -> 0.00 (min), 450 -> 1.50, 750 -> 2.50,
 [+]                     3000 -> 10.00 (max)
 [+]       Importance:...Medium (weight 0.5  out of  1.0)
-[+]       Value:........5.03 out of 10.0
-[+]       Confidence:...High (10.0 out of 10.0)
+[+]       Value:........5.06 out of 10.0
+[+]       Confidence:...Max (10.0 out of 10.0)
 [+]       Based on:...2 features:
-[+]           Number of stars for a GitHub repository:......4172
+[+]           Number of stars for a GitHub repository:......4199
 [+]           Number of watchers for a GitHub repository:...257
 [+] 
 [+] Rating:     4.71 out of 10.0 -> GOOD
-[+] Confidence: High (10.0 out of 10.0)
+[+] Confidence: Max (10.0 out of 10.0)
 [+] Bye!
 ```
 
@@ -277,7 +307,7 @@ and may ask the user a couple of questions.
 
 Please see [GitHub issues](https://github.com/SAP/fosstars-rating-core/issues).
 
-## How to obtain support
+## Support
 
 Please create a new [GitHub issue](https://github.com/SAP/fosstars-rating-core/issues)
 if you found a bug, or you'd like to propose an enhancement.
@@ -286,8 +316,8 @@ If you think you found a security issue, please follow [this guideline](SECURITY
 We currently don't have a support channel.
 If you have a question, please also ask it via GitHub issues.
 
-# Contributing to the project
+# Contributing
 
-We welcome ideas for improvements and pull requests.
+We appreciate feedback, ideas for improvements and, of course, pull requests.
+
 Please follow [this guideline](CONTRIBUTING.md) if you'd like to contribute to the project.
-
