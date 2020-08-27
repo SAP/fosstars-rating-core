@@ -14,6 +14,7 @@ import static com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsag
 import com.sap.sgs.phosphor.fosstars.maven.AbstractModelVisitor;
 import com.sap.sgs.phosphor.fosstars.maven.ModelVisitor.Location;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
+import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckCvssThresholdValue;
@@ -96,14 +97,13 @@ public class UsesOwaspDependencyCheck extends GitHubCachingDataProvider {
   }
 
   /**
-   * Checks if a value set contains the features for OWASP Dependency Check.
+   * Checks if a value set contains features that mean that OWASP Dependency Check was found.
    *
    * @param values The value set to be checked.
-   * @return True if the value set contains the feature, false otherwise.
+   * @return True if OWASP Dependency Check was found, false otherwise.
    */
   private static boolean found(ValueSet values) {
-    return values.has(OWASP_DEPENDENCY_CHECK_USAGE)
-        && values.has(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD);
+    return values.of(OWASP_DEPENDENCY_CHECK_USAGE).map(Value::get).orElse(NOT_USED) != NOT_USED;
   }
 
   /**
