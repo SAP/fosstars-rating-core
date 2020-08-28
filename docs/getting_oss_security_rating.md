@@ -1,71 +1,42 @@
-![Java CI](https://github.com/SAP/fosstars-rating-core/workflows/Java%20CI/badge.svg)
-[![Language grade: Java](https://img.shields.io/lgtm/grade/java/g/SAP/fosstars-rating-core.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/SAP/fosstars-rating-core/context:java)
-[![REUSE status](https://api.reuse.software/badge/github.com/SAP/fosstars-rating-core)](https://api.reuse.software/info/github.com/SAP/fosstars-rating-core)
+# Getting the security ratings
 
-# Ratings for open-source projects
-
-This is a framework for defining and calculating ratings for open-source projects.
-See [docs](https://sap.github.io/fosstars-rating-core/) for more details.
-
-## Security rating for open-source projects
-
-Open-source software helps a lot, but it also may bring new security issues
-and therefore increase security risks.
-Is it safe to use a particular open-source component?
-Sometimes answering this question is not easy.
-The security rating for open-source projects helps to answer this question.
-First, it gathers various data about an open-source project.
-Then, it calculates a security rating for it.
-The rating helps to assess the security risk that comes with this open-source project.
-
-More details about the security rating
-can be found in the [docs](https://sap.github.io/fosstars-rating-core/oss_security_rating.html).
-
-## Requirements
-
-*  Java 8+
-*  Maven 3.6.0+
-*  Python 3.6.8+
-*  Jupyter Notebook 4.4.0+
-
-## Download and installation
-
-The [jars](https://mvnrepository.com/artifact/com.sap.oss.phosphor/fosstars-rating-core) are available on the Maven Central repository:
-
-```
-<dependency>
-    <groupId>com.sap.oss.phosphor</groupId>
-    <artifactId>fosstars-rating-core</artifactId>
-    <version>0.13.0</version>
-</dependency>
-
-```
-
-Or, the project can be built and installed with the following command:
-
-```
-mvn clean install
-```
+The page describes how a security rating may be calculated for an open-source project.
 
 ## Command line tool for calculating security ratings
 
-There is a command line tool that takes a URL to a project on GitHub,
-gathers data about it, and calculates a security rating.
+There is a command line tool for gathering data about an open-source project and calculating
+the security rating. Currently, there is not an installer for the tool (should we create one?),
+and the tool should be built locally from the sources.
 
-The tool can be run with commands like the following:
+The following commands download the sources and build the command line tool with Maven:
 
 ```
 git clone git@github.com:SAP/fosstars-rating-core.git
 cd fosstars-rating-core
 mvn package -DskipTests
-TOKEN=xyz # use your personal token, see below
+```
+
+To calculate the security rating for an open-source project,
+the command line tool needs a URL to its source code management system (SCM).
+Currently, the tool works best with projects what stay on GitHub.
+
+### Calculating the security rating by providing a URL to the source code
+
+A URL to SCM can be passed to the tool by using `--url` command line parameter.
+For example, here is how a security rating may be calculated for Apache Beam:
+
+```
 java -jar target/fosstars-github-rating-calc.jar --token ${TOKEN} --url https://github.com/apache/beam --no-questions
 ```
 
-The `TOKEN` variable contains a token for accessing the GitHub API.
+The environment variable `TOKEN` contains a token for accessing the GitHub API.
 You can create a personal token in the
 [settings/tokens](https://github.com/settings/tokens) tab in your profile on GitHub.
+It's okay to run the tool without the token, but the result will be a bit less precise.
 
+The tool will try to gather info about the project.
+In particular, it will try to download the source code,
+make a number of requests to GitHub and other services, fetch data from NVD and so on.
 The output is going to look like the following:
 
 ```
@@ -300,24 +271,29 @@ The output is going to look like the following:
 [+] Bye!
 ```
 
+The tool prints out the gathered data, the structure of the overall security score, used sub-scores,
+their weights and so on. This info may be useful if one would like to understand how the tool
+calculated the rating. It may also give an idea for possible improvements that can improve the rating.
+
 If no `--no-questions` option is specified, the tool becomes a bit interactive,
-and may ask the user a couple of questions.
+and may ask the user a couple of questions about the project.
 
-## Known issues
+### Calculating the security rating by providing GAV coordinates
 
-Please see [GitHub issues](https://github.com/SAP/fosstars-rating-core/issues).
+The command line tool also accepts GAV coordinates of Maven artifacts (group id, artifact id and version).
+If the coordinates are provided,
+then the tool will try to figure out which open-source project produces the artifact.
+In particular, it will try to find a URL to the project's SCM.
+If the URL is found, the tool will use it to calculate the security rating.
+Otherwise, the tool exits with an error.
 
-## Support
+The tool has a command line option `--gav`, that accepts either GAV coordinates or just group id and artifact id.
+Below is an example of getting a rating for Apache Commons Text by passing its group and artifact ids:
 
-Please create a new [GitHub issue](https://github.com/SAP/fosstars-rating-core/issues)
-if you found a bug, or you'd like to propose an enhancement.
-If you think you found a security issue, please follow [this guideline](SECURITY.md).
+```
+java -jar target/fosstars-github-rating-calc.jar --token ${TOKEN} --gav org.apache.commons:commons-text --no-questions
+```
 
-We currently don't have a support channel.
-If you have a question, please also ask it via GitHub issues.
+---
 
-# Contributing
-
-We appreciate feedback, ideas for improvements and, of course, pull requests.
-
-Please follow [this guideline](CONTRIBUTING.md) if you'd like to contribute to the project.
+Next: [Alternatives](alternatives.md)

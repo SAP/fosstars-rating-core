@@ -69,4 +69,4 @@ in this [report](oss/security).
 
 ---
 
-Next: [Alternatives](alternatives.md)
+Next: [Getting the security ratings](getting_oss_security_rating.md)
