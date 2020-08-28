@@ -294,6 +294,12 @@ Below is an example of getting a rating for Apache Commons Text by passing its g
 java -jar target/fosstars-github-rating-calc.jar --token ${TOKEN} --gav org.apache.commons:commons-text --no-questions
 ```
 
+## Further ideas
+
+1.  Add a Maven plugin that looks for dependencies in an application and calculate security ratings for them.
+1.  Add a GitHub App that looks for dependencies in a repository, calculates security ratings for them,
+    and report them via GitHub issues or comments in pull requests.
+
 ---
 
 Next: [Alternatives](alternatives.md)
