@@ -294,11 +294,88 @@ Below is an example of getting a rating for Apache Commons Text by passing its g
 java -jar target/fosstars-github-rating-calc.jar --token ${TOKEN} --gav org.apache.commons:commons-text --no-questions
 ```
 
+### Building a report for multiple projects
+
+The tool can calculate ratings for multiple projects and generate a report.
+To do that, the tool needs a configuration file that describes which projects should be included
+to the report, and which format should be used for the report.
+
+Here is an example of such a configuration file:
+
+```
+# this is a configuration for generating a report for a number of open-source projects
+
+# a cache to store fetched data about the projects
+cache: .fosstars/project_rating_cache.json
+
+# the following sections lists projects for which the ratings should be calculated
+finder:
+
+  # search for projects in FasterXML organisation on GitHub
+  organizations:
+    - name: FasterXML
+
+      # consider projects with at least the specified number of stars
+      stars: 5000
+
+      # skip projects that contains the following words in its names
+      exclude:
+        - docs
+        - test
+        - benchmark
+
+  # include the following projects
+  repositories:
+    - organization: netty
+      name: netty
+    - organization: openssl
+      name: openssl
+    - organization: curl
+      name: curl
+    - organization: google
+      name: guava
+    - organization: google
+      name: gson
+
+# the following section describes which reports should be generated.
+reports:
+
+  # first, store the gathered data and calculated ratings in a JSON file
+  # then, the file will be used to generate other reports
+  - type: json
+    where: fosstars/github_projects.json
+
+  # generate a report in Markdown format
+  # first, it will read gathered data and calculated ratings from the specified JSON file
+  # then, it will build the report and store it in the specified directory
+  - type: markdown
+    source: fosstars/github_projects.json
+    where: fosstars/report
+```
+
+The config gives the following instructions to the tool:
+
+*  Calculate security ratings for Netty, OpenSSL, Guava, Gson, curl 
+   and projects from FasterXML organisation which have at least 5K stars.
+*  Store gathered data and calculated ratings in a JSON file.
+*  Create a report in Markdown format.
+*  Store the results in the specified directories.
+
+Here is how the tool may be run with the config above:
+
+```
+java -jar target/fosstars-github-rating-calc.jar --token ${TOKEN} --config conf.yml --no-questions
+```
+
+The Markdown report is going to be available in `fosstars/report` directory.
+
 ## Further ideas
 
+1.  Add an installer for the command line tool.
 1.  Add a Maven plugin that looks for dependencies in an application and calculate security ratings for them.
 1.  Add a GitHub App that looks for dependencies in a repository, calculates security ratings for them,
     and report them via GitHub issues or comments in pull requests.
+1.  Offer a GitHub action that regularly generates reports.
 
 ---
 
