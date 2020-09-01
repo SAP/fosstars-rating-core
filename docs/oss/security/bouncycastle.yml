@@ -1,4 +1,4 @@
-# this is a configuration for generating a report for Spring projects
+# this is a configuration for generating a report for Bouncy Castle projects
 cache: .fosstars/project_rating_cache.json
 reports:
   - type: markdown
@@ -8,7 +8,7 @@ reports:
     where: docs/oss/security/github_projects.json
 finder:
   organizations:
-    - name: spring-projects
+    - name: bcgit
       stars: 1000
       exclude:
         - example

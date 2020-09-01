@@ -16,10 +16,6 @@ finder:
       name: openssl
     - organization: curl
       name: curl
-    - organization: google
-      name: guava
-    - organization: google
-      name: gson
     - organization: qos-ch
       name: slf4j
     - organization: GoogleChrome
