@@ -1,4 +1,4 @@
-# this is a configuration for generating a report for FasterXML projects
+# this is a configuration for generating a report for Google projects
 cache: .fosstars/project_rating_cache.json
 reports:
   - type: markdown
@@ -8,9 +8,15 @@ reports:
     where: docs/oss/security/github_projects.json
 finder:
   organizations:
-    - name: FasterXML
-      stars: 1000
+    - name: google
+      stars: 10000
       exclude:
-        - docs
+        - icons
+        - design
+        - styleguide
+        - eng-practices
+        - fonts
+        - WebFundamentals
         - test
         - benchmark
+        - fuzz

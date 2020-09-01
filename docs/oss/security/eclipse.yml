@@ -1,4 +1,4 @@
-# this is a configuration for generating a report for Eclipse
+# this is a configuration for generating a report for Eclipse projects
 cache: .fosstars/project_rating_cache.json
 reports:
   - type: markdown
@@ -9,7 +9,7 @@ reports:
 finder:
   organizations:
     - name: eclipse
-      stars: 100
+      stars: 1000
       exclude:
         - incubator
         - website
