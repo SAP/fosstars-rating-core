@@ -2,11 +2,11 @@
 
 https://github.com/curl/curl
 
-Last updated on Aug 25, 2020
+Last updated on Aug 31, 2020
 
 **Rating**: GOOD
 
-**Score**: 5.53, where max score value is 10.0
+**Score**: 5.66, where max score value is 10.0
 
 **Confidence**: Max (10.0, where max confidence value is 10.0)
 
@@ -20,7 +20,7 @@ The rating is based on **security score for open-source projects**.
 
 The score uses the following sub-scores:
 
-1.  **[Security testing](#security-testing)**: 5.44, confidence is 10.0 (max), importance is 1.0 (high)
+1.  **[Security testing](#security-testing)**: 3.56, confidence is 10.0 (max), importance is 1.0 (high)
     1.  **[Dependency testing](#dependency-testing)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
         1.  **[Dependabot score](#dependabot-score)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
         1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
@@ -28,12 +28,12 @@ The score uses the following sub-scores:
         1.  **[LGTM score](#lgtm-score)**: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
         1.  **[FindSecBugs score](#findsecbugs-score)**: N/A, confidence is 10.0 (max), importance is 1.0 (high)
     1.  **[Fuzzing](#fuzzing)**: 10.0, confidence is 10.0 (max), importance is 1.0 (high)
-    1.  **[Memory-safety testing](#memory-safety-testing)**: 8.5, confidence is 10.0 (max), importance is 1.0 (high)
+    1.  **[Memory-safety testing](#memory-safety-testing)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
     1.  **[nohttp tool](#nohttp-tool)**: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
-1.  **[Security awareness](#security-awareness)**: 9.0, confidence is 10.0 (max), importance is 0.9 (high)
+1.  **[Security awareness](#security-awareness)**: 7.0, confidence is 10.0 (max), importance is 0.9 (high)
 1.  **[Unpatched vulnerabilities](#unpatched-vulnerabilities)**: 10.0, confidence is 10.0 (max), importance is 0.8 (high)
 1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: 0.0, confidence is 10.0 (max), importance is 0.6 (medium)
-    1.  **[Security testing](#security-testing)**: 5.44, confidence is 10.0 (max), importance is 1.0 (high)
+    1.  **[Security testing](#security-testing)**: 3.56, confidence is 10.0 (max), importance is 1.0 (high)
         1.  **[Dependency testing](#dependency-testing)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
             1.  **[Dependabot score](#dependabot-score)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
             1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
@@ -41,9 +41,9 @@ The score uses the following sub-scores:
             1.  **[LGTM score](#lgtm-score)**: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
             1.  **[FindSecBugs score](#findsecbugs-score)**: N/A, confidence is 10.0 (max), importance is 1.0 (high)
         1.  **[Fuzzing](#fuzzing)**: 10.0, confidence is 10.0 (max), importance is 1.0 (high)
-        1.  **[Memory-safety testing](#memory-safety-testing)**: 8.5, confidence is 10.0 (max), importance is 1.0 (high)
+        1.  **[Memory-safety testing](#memory-safety-testing)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
         1.  **[nohttp tool](#nohttp-tool)**: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
-1.  **[Project activity](#project-activity)**: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
+1.  **[Project activity](#project-activity)**: 8.65, confidence is 10.0 (max), importance is 0.5 (medium)
 1.  **[Community commitment](#community-commitment)**: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
 1.  **[Project popularity](#project-popularity)**: 10.0, confidence is 10.0 (max), importance is 0.5 (medium)
 
@@ -54,7 +54,7 @@ Below are the details about all the used sub-scores.
 
 ### Security testing
 
-Score: 5.44, confidence is 10.0 (max), importance is 1.0 (high)
+Score: 3.56, confidence is 10.0 (max), importance is 1.0 (high)
 
 
 
@@ -69,13 +69,13 @@ The sub-score uses the following sub-scores:
     1.  **[LGTM score](#lgtm-score)**: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
     1.  **[FindSecBugs score](#findsecbugs-score)**: N/A, confidence is 10.0 (max), importance is 1.0 (high)
 1.  **[Fuzzing](#fuzzing)**: 10.0, confidence is 10.0 (max), importance is 1.0 (high)
-1.  **[Memory-safety testing](#memory-safety-testing)**: 8.5, confidence is 10.0 (max), importance is 1.0 (high)
+1.  **[Memory-safety testing](#memory-safety-testing)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
 1.  **[nohttp tool](#nohttp-tool)**: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
 
 
 ### Security awareness
 
-Score: 9.0, confidence is 10.0 (max), importance is 0.9 (high)
+Score: 7.0, confidence is 10.0 (max), importance is 0.9 (high)
 
 The score shows how a project is aware of security. If the project has a security policy, then the score adds 2.00. If the project has a security team, then the score adds 3.00. If the project uses verified signed commits, then the score adds 0.50. If the project has a bug bounty program, then the score adds 4.00. If the project signs its artifacts, then the score adds 0.50. If the project uses a security tool or library, then the score adds 1.00.
 
@@ -87,7 +87,7 @@ The sub-score uses 17 features:
 1.  Does it have a security policy? Yes
 1.  Does it have a security team? No
 1.  Does it sign artifacts? No
-1.  Does it use AddressSanitizer? Yes
+1.  Does it use AddressSanitizer? No
 1.  Does it use Dependabot? No
 1.  Does it use FindSecBugs? No
 1.  Does it use LGTM checks? No
@@ -95,7 +95,7 @@ The sub-score uses 17 features:
 1.  Does it use OWASP ESAPI? No
 1.  Does it use OWASP Java Encoder? No
 1.  Does it use OWASP Java HTML Sanitizer? No
-1.  Does it use UndefinedBehaviorSanitizer? Yes
+1.  Does it use UndefinedBehaviorSanitizer? No
 1.  Does it use nohttp? No
 1.  Does it use verified signed commits? No
 1.  How is OWASP Dependency Check used? Not used
@@ -123,7 +123,7 @@ The scores checks how security testing is done and how many vulnerabilities were
 
 The sub-score uses the following sub-score:
 
-1.  **[Security testing](#security-testing)**: 5.44, confidence is 10.0 (max), importance is 1.0 (high)
+1.  **[Security testing](#security-testing)**: 3.56, confidence is 10.0 (max), importance is 1.0 (high)
     1.  **[Dependency testing](#dependency-testing)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
         1.  **[Dependabot score](#dependabot-score)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
         1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
@@ -131,7 +131,7 @@ The sub-score uses the following sub-score:
         1.  **[LGTM score](#lgtm-score)**: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
         1.  **[FindSecBugs score](#findsecbugs-score)**: N/A, confidence is 10.0 (max), importance is 1.0 (high)
     1.  **[Fuzzing](#fuzzing)**: 10.0, confidence is 10.0 (max), importance is 1.0 (high)
-    1.  **[Memory-safety testing](#memory-safety-testing)**: 8.5, confidence is 10.0 (max), importance is 1.0 (high)
+    1.  **[Memory-safety testing](#memory-safety-testing)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
     1.  **[nohttp tool](#nohttp-tool)**: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
 
 The sub-score uses 1 feature:
@@ -140,7 +140,7 @@ The sub-score uses 1 feature:
 
 ### Project activity
 
-Score: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
+Score: 8.65, confidence is 10.0 (max), importance is 0.5 (medium)
 
 The score is based on number of commits and contributors.
 Here is how the number of commits contributes to the score (up to 5.10):
@@ -152,8 +152,8 @@ Here is how the number of contributors contributes to the score (up to 5.10):
 
 The sub-score uses 2 features:
 
-1.  Number of commits in the last three months: 0
-1.  Number of contributors in the last three months: 0
+1.  Number of commits in the last three months: 220
+1.  Number of contributors in the last three months: 10
 
 ### Community commitment
 
@@ -183,8 +183,8 @@ Here is how a number of watchers contributes to the score:
 
 The sub-score uses 2 features:
 
-1.  Number of stars for a GitHub repository: 17910
-1.  Number of watchers for a GitHub repository: 705
+1.  Number of stars for a GitHub repository: 17967
+1.  Number of watchers for a GitHub repository: 707
 
 ### Dependency testing
 
@@ -229,7 +229,7 @@ The sub-score uses 2 features:
 
 ### Memory-safety testing
 
-Score: 8.5, confidence is 10.0 (max), importance is 1.0 (high)
+Score: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
 
 
 
@@ -238,9 +238,9 @@ Score: 8.5, confidence is 10.0 (max), importance is 1.0 (high)
 The sub-score uses 4 features:
 
 1.  A set of programming languages: C, CPP, PYTHON, OTHER
-1.  Does it use AddressSanitizer? Yes
+1.  Does it use AddressSanitizer? No
 1.  Does it use MemorySanitizer? No
-1.  Does it use UndefinedBehaviorSanitizer? Yes
+1.  Does it use UndefinedBehaviorSanitizer? No
 
 ### nohttp tool
 
