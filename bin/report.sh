@@ -22,13 +22,13 @@ if [ "${CLEAN}" = "yes" ]; then
   done
 fi
 
-configs="other.yml jackson.yml spring.yml apache.yml eclipse.yml"
+configs=$(ls docs/oss/security/*.yml)
 
 echo "" > report.log
 for config in ${configs}
 do
   java -jar target/fosstars-github-rating-calc.jar \
-      --no-questions --token ${TOKEN} --config docs/oss/security/${config} 2>&1 | tee report.log
+      --no-questions --token ${TOKEN} --config ${config} 2>&1 | tee report.log
 done
 
 if grep -i exception report.log > /dev/null 2>&1; then

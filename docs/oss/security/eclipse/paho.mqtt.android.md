@@ -1,184 +1,313 @@
 # eclipse/paho.mqtt.android
 
-```
-Here is how the rating was calculated:
-  Score:........Security of project
-  Value:........4.45 out of 10.0
-  Confidence:...High (10.0 out of 10.0)
-  Based on:.....7 sub-scores:
-      Sub-score:....Security testing
-      Importance:...High (weight 1.0  out of  1.0)
-      Value:........3.6  out of 10.0
-      Confidence:...High (10.0 out of 10.0)
-      Based on:.....5 sub-scores:
-          Sub-score:....Static analysis
-          Importance:...High (weight 1.0  out of  1.0)
-          Value:........3.0  out of 10.0
-          Confidence:...High (10.0 out of 10.0)
-          Based on:.....2 sub-scores:
-              Sub-score:....LGTM score
-              Importance:...High (weight 1.0  out of  1.0)
-              Value:........3.0  out of 10.0
-              Confidence:...High (10.0 out of 10.0)
-              Based on:...2 features:
-                  Does it use LGTM checks?...............No
-                  The worst LGTM grade of the project:...C
+https://github.com/eclipse/paho.mqtt.android
 
-              Sub-score:....FindSecBugs score
-              Importance:...High (weight 1.0  out of  1.0)
-              Value:........0.0  out of 10.0
-              Confidence:...High (10.0 out of 10.0)
-              Based on:...2 features:
-                  A set of programming languages:...JAVA, OTHER
-                  Does it use FindSecBugs?..........No
+Last updated on Aug 31, 2020
+
+**Rating**: MODERATE
+
+**Score**: 4.45, where max score value is 10.0
+
+**Confidence**: Max (10.0, where max confidence value is 10.0)
+
+## Details
+
+The rating is based on **security score for open-source projects**.
 
 
-          Sub-score:....Fuzzing
-          Importance:...High (weight 1.0  out of  1.0)
-          Value:........N/A  
-          Confidence:...High (10.0 out of 10.0)
-          Based on:...2 features:
-              A set of programming languages:...JAVA, OTHER
-              Is it included to OSS-Fuzz?.......No
-
-          Sub-score:....Dependency testing
-          Importance:...High (weight 1.0  out of  1.0)
-          Value:........6.0  out of 10.0
-          Confidence:...High (10.0 out of 10.0)
-          Based on:...5 features:
-              A set of package managers:..............................MAVEN, GRADLE
-              A set of programming languages:.........................JAVA, OTHER
-              Does it scan for vulnerable dependencies?...............No
-              Does it use Dependabot?.................................No
-              Does it use GitHub as the main development platform?....Yes
-
-          Sub-score:....Memory-safety testing
-          Importance:...High (weight 1.0  out of  1.0)
-          Value:........N/A  
-          Confidence:...High (10.0 out of 10.0)
-          Based on:...4 features:
-              A set of programming languages:............JAVA, OTHER
-              Does it use AddressSanitizer?..............No
-              Does it use MemorySanitizer?...............No
-              Does it use UndefinedBehaviorSanitizer?....No
-
-          Sub-score:....nohttp tool
-          Importance:...Medium (weight 0.5  out of  1.0)
-          Value:........0.0  out of 10.0
-          Confidence:...High (10.0 out of 10.0)
-          Based on:...2 features:
-              A set of package managers:...MAVEN, GRADLE
-              Does it use nohttp?..........No
 
 
-      Sub-score:....Security awareness
-      Description:..The score shows how a project is aware of
-                    security. If the project has a security policy,
-                    then the score adds 2.00. If the project has a
-                    security team, then the score adds 3.00. If the
-                    project uses verified signed commits, then the
-                    score adds 0.50. If the project has a bug bounty
-                    program, then the score adds 4.00. If the project
-                    signs its artifacts, then the score adds 0.50. If
-                    the project uses a security tool or library, then
-                    the score adds 1.00.
-      Importance:...High (weight 0.9  out of  1.0)
-      Value:........3.5  out of 10.0
-      Confidence:...High (10.0 out of 10.0)
-      Based on:...16 features:
-          Does it have a bug bounty program?.........No
-          Does it have a security policy?............No
-          Does it have a security team?..............Yes
-          Does it sign artifacts?....................Yes
-          Does it use AddressSanitizer?..............No
-          Does it use Dependabot?....................No
-          Does it use FindSecBugs?...................No
-          Does it use LGTM checks?...................No
-          Does it use MemorySanitizer?...............No
-          Does it use OWASP ESAPI?...................No
-          Does it use OWASP Java Encoder?............No
-          Does it use OWASP Java HTML Sanitizer?.....No
-          Does it use UndefinedBehaviorSanitizer?....No
-          Does it use nohttp?........................No
-          Does it use verified signed commits?.......No
-          Is it included to OSS-Fuzz?................No
 
-      Sub-score:....Unpatched vulnerabilities
-      Importance:...High (weight 0.8  out of  1.0)
-      Value:........10.0 out of 10.0
-      Confidence:...High (10.0 out of 10.0)
-      Based on:...1 features:
-          Info about vulnerabilities:...0 vulnerabilities
-      Explanation:..No unpatched vulnerabilities found which is good
+The score uses the following sub-scores:
 
-      Sub-score:....Vulnerability discovery and security testing
-      Description:..The scores checks how security testing is done and
-                    how many vulnerabilities were recently discovered.
-                    If testing is good, and there are no recent
-                    vulnerabilities, then the score value is max. If
-                    there are vulnerabilities, then the score value is
-                    high. If testing is bad, and there are no recent
-                    vulnerabilities, then the score value is low. If
-                    there are vulnerabilities, then the score is min.
-      Importance:...Medium (weight 0.6  out of  1.0)
-      Value:........2.0  out of 10.0
-      Confidence:...High (10.0 out of 10.0)
-      Based on:.....1 sub-scores:
-          Sub-score:....Security testing
-          Importance:...High (weight 1.0  out of  1.0)
-          Value:........3.6  out of 10.0
-          Confidence:...High (10.0 out of 10.0)
+1.  **[Security testing](#security-testing)**: 3.6, confidence is 10.0 (max), importance is 1.0 (high)
+    1.  **[Dependency testing](#dependency-testing)**: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
+        1.  **[Dependabot score](#dependabot-score)**: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
+        1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
+    1.  **[Static analysis](#static-analysis)**: 3.0, confidence is 10.0 (max), importance is 1.0 (high)
+        1.  **[LGTM score](#lgtm-score)**: 3.0, confidence is 10.0 (max), importance is 1.0 (high)
+        1.  **[FindSecBugs score](#findsecbugs-score)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
+    1.  **[Fuzzing](#fuzzing)**: N/A, confidence is 10.0 (max), importance is 1.0 (high)
+    1.  **[Memory-safety testing](#memory-safety-testing)**: N/A, confidence is 10.0 (max), importance is 1.0 (high)
+    1.  **[nohttp tool](#nohttp-tool)**: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
+1.  **[Security awareness](#security-awareness)**: 3.5, confidence is 10.0 (max), importance is 0.9 (high)
+1.  **[Unpatched vulnerabilities](#unpatched-vulnerabilities)**: 10.0, confidence is 10.0 (max), importance is 0.8 (high)
+1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: 2.0, confidence is 10.0 (max), importance is 0.6 (medium)
+    1.  **[Security testing](#security-testing)**: 3.6, confidence is 10.0 (max), importance is 1.0 (high)
+        1.  **[Dependency testing](#dependency-testing)**: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
+            1.  **[Dependabot score](#dependabot-score)**: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
+            1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
+        1.  **[Static analysis](#static-analysis)**: 3.0, confidence is 10.0 (max), importance is 1.0 (high)
+            1.  **[LGTM score](#lgtm-score)**: 3.0, confidence is 10.0 (max), importance is 1.0 (high)
+            1.  **[FindSecBugs score](#findsecbugs-score)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
+        1.  **[Fuzzing](#fuzzing)**: N/A, confidence is 10.0 (max), importance is 1.0 (high)
+        1.  **[Memory-safety testing](#memory-safety-testing)**: N/A, confidence is 10.0 (max), importance is 1.0 (high)
+        1.  **[nohttp tool](#nohttp-tool)**: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
+1.  **[Project activity](#project-activity)**: 1.51, confidence is 10.0 (max), importance is 0.5 (medium)
+1.  **[Community commitment](#community-commitment)**: 7.0, confidence is 10.0 (max), importance is 0.5 (medium)
+1.  **[Project popularity](#project-popularity)**: 2.34, confidence is 10.0 (max), importance is 0.5 (medium)
 
-      Based on:...1 features:
-          Info about vulnerabilities:...0 vulnerabilities
 
-      Sub-score:....Project activity
-      Description:..The score is based on number of commits and
-                    contributors.
-                    Here is how the number of commits
-                    contributes to the score (up to 5.10):
-                    0 -> 0.10,
-                    200 -> 2.55, 310 -> 4.59
-                    Here is how the number of
-                    contributors contributes to the score (up to
-                    5.10):
-                    0 -> 0.10, 5 -> 2.55, 10 -> 4.59
-      Importance:...Medium (weight 0.5  out of  1.0)
-      Value:........1.51 out of 10.0
-      Confidence:...High (10.0 out of 10.0)
-      Based on:...2 features:
-          Number of commits in the last three months:........1
-          Number of contributors in the last three months:...1
+## Sub-scores
 
-      Sub-score:....Community commitment
-      Importance:...Medium (weight 0.5  out of  1.0)
-      Value:........7.0  out of 10.0
-      Confidence:...High (10.0 out of 10.0)
-      Based on:...3 features:
-          Does it belong to Apache?........No
-          Does it belong to Eclipse?.......Yes
-          Is it supported by a company?....No
+Below are the details about all the used sub-scores.
 
-      Sub-score:....Project popularity
-      Description:..The score is based on number of stars and
-                    watchers.
-                    Here is how a number of stars
-                    contributes to the score:
-                    0 -> 0.00 (min), 2500 ->
-                    2.50, 5000 -> 5.00, 10000 -> 10.00 (max)
-                    Here is
-                    how a number of watchers contributes to the
-                    score:
-                    0 -> 0.00 (min), 450 -> 1.50, 750 -> 2.50,
-                    3000 -> 10.00 (max)
-      Importance:...Medium (weight 0.5  out of  1.0)
-      Value:........2.32 out of 10.0
-      Confidence:...High (10.0 out of 10.0)
-      Based on:...2 features:
-          Number of stars for a GitHub repository:......1923
-          Number of watchers for a GitHub repository:...119
+### Security testing
 
-Rating:     4.45 out of 10.0 -> MODERATE
-Confidence: High (10.0 out of 10.0)
+Score: 3.6, confidence is 10.0 (max), importance is 1.0 (high)
 
-```
+
+
+
+
+The sub-score uses the following sub-scores:
+
+1.  **[Dependency testing](#dependency-testing)**: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
+    1.  **[Dependabot score](#dependabot-score)**: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
+    1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
+1.  **[Static analysis](#static-analysis)**: 3.0, confidence is 10.0 (max), importance is 1.0 (high)
+    1.  **[LGTM score](#lgtm-score)**: 3.0, confidence is 10.0 (max), importance is 1.0 (high)
+    1.  **[FindSecBugs score](#findsecbugs-score)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
+1.  **[Fuzzing](#fuzzing)**: N/A, confidence is 10.0 (max), importance is 1.0 (high)
+1.  **[Memory-safety testing](#memory-safety-testing)**: N/A, confidence is 10.0 (max), importance is 1.0 (high)
+1.  **[nohttp tool](#nohttp-tool)**: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
+
+
+### Security awareness
+
+Score: 3.5, confidence is 10.0 (max), importance is 0.9 (high)
+
+The score shows how a project is aware of security. If the project has a security policy, then the score adds 2.00. If the project has a security team, then the score adds 3.00. If the project uses verified signed commits, then the score adds 0.50. If the project has a bug bounty program, then the score adds 4.00. If the project signs its artifacts, then the score adds 0.50. If the project uses a security tool or library, then the score adds 1.00.
+
+
+
+The sub-score uses 17 features:
+
+1.  Does it have a bug bounty program? No
+1.  Does it have a security policy? No
+1.  Does it have a security team? Yes
+1.  Does it sign artifacts? Yes
+1.  Does it use AddressSanitizer? No
+1.  Does it use Dependabot? No
+1.  Does it use FindSecBugs? No
+1.  Does it use LGTM checks? No
+1.  Does it use MemorySanitizer? No
+1.  Does it use OWASP ESAPI? No
+1.  Does it use OWASP Java Encoder? No
+1.  Does it use OWASP Java HTML Sanitizer? No
+1.  Does it use UndefinedBehaviorSanitizer? No
+1.  Does it use nohttp? No
+1.  Does it use verified signed commits? No
+1.  How is OWASP Dependency Check used? Not used
+1.  Is it included to OSS-Fuzz? No
+
+### Unpatched vulnerabilities
+
+Score: 10.0, confidence is 10.0 (max), importance is 0.8 (high)
+
+
+
+No unpatched vulnerabilities found which is good
+
+The sub-score uses 1 feature:
+
+1.  Info about vulnerabilities: 0 vulnerabilities
+
+### Vulnerability discovery and security testing
+
+Score: 2.0, confidence is 10.0 (max), importance is 0.6 (medium)
+
+The scores checks how security testing is done and how many vulnerabilities were recently discovered. If testing is good, and there are no recent vulnerabilities, then the score value is max. If there are vulnerabilities, then the score value is high. If testing is bad, and there are no recent vulnerabilities, then the score value is low. If there are vulnerabilities, then the score is min.
+
+
+
+The sub-score uses the following sub-score:
+
+1.  **[Security testing](#security-testing)**: 3.6, confidence is 10.0 (max), importance is 1.0 (high)
+    1.  **[Dependency testing](#dependency-testing)**: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
+        1.  **[Dependabot score](#dependabot-score)**: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
+        1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
+    1.  **[Static analysis](#static-analysis)**: 3.0, confidence is 10.0 (max), importance is 1.0 (high)
+        1.  **[LGTM score](#lgtm-score)**: 3.0, confidence is 10.0 (max), importance is 1.0 (high)
+        1.  **[FindSecBugs score](#findsecbugs-score)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
+    1.  **[Fuzzing](#fuzzing)**: N/A, confidence is 10.0 (max), importance is 1.0 (high)
+    1.  **[Memory-safety testing](#memory-safety-testing)**: N/A, confidence is 10.0 (max), importance is 1.0 (high)
+    1.  **[nohttp tool](#nohttp-tool)**: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
+
+The sub-score uses 1 feature:
+
+1.  Info about vulnerabilities: 0 vulnerabilities
+
+### Project activity
+
+Score: 1.51, confidence is 10.0 (max), importance is 0.5 (medium)
+
+The score is based on number of commits and contributors.
+Here is how the number of commits contributes to the score (up to 5.10):
+0 -> 0.10, 200 -> 2.55, 310 -> 4.59
+Here is how the number of contributors contributes to the score (up to 5.10):
+0 -> 0.10, 5 -> 2.55, 10 -> 4.59
+
+
+
+The sub-score uses 2 features:
+
+1.  Number of commits in the last three months: 1
+1.  Number of contributors in the last three months: 1
+
+### Community commitment
+
+Score: 7.0, confidence is 10.0 (max), importance is 0.5 (medium)
+
+
+
+
+
+The sub-score uses 3 features:
+
+1.  Does it belong to Apache? No
+1.  Does it belong to Eclipse? Yes
+1.  Is it supported by a company? No
+
+### Project popularity
+
+Score: 2.34, confidence is 10.0 (max), importance is 0.5 (medium)
+
+The score is based on number of stars and watchers.
+Here is how a number of stars contributes to the score:
+0 -> 0.00 (min), 2500 -> 2.50, 5000 -> 5.00, 10000 -> 10.00 (max)
+Here is how a number of watchers contributes to the score:
+0 -> 0.00 (min), 450 -> 1.50, 750 -> 2.50, 3000 -> 10.00 (max)
+
+
+
+The sub-score uses 2 features:
+
+1.  Number of stars for a GitHub repository: 1944
+1.  Number of watchers for a GitHub repository: 120
+
+### Dependency testing
+
+Score: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
+
+
+
+
+
+The sub-score uses the following sub-scores:
+
+1.  **[Dependabot score](#dependabot-score)**: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
+1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
+
+
+### Static analysis
+
+Score: 3.0, confidence is 10.0 (max), importance is 1.0 (high)
+
+
+
+
+
+The sub-score uses the following sub-scores:
+
+1.  **[LGTM score](#lgtm-score)**: 3.0, confidence is 10.0 (max), importance is 1.0 (high)
+1.  **[FindSecBugs score](#findsecbugs-score)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
+
+
+### Fuzzing
+
+Score: N/A, confidence is 10.0 (max), importance is 1.0 (high)
+
+
+
+
+
+The sub-score uses 2 features:
+
+1.  A set of programming languages: JAVA, OTHER
+1.  Is it included to OSS-Fuzz? No
+
+### Memory-safety testing
+
+Score: N/A, confidence is 10.0 (max), importance is 1.0 (high)
+
+
+
+
+
+The sub-score uses 4 features:
+
+1.  A set of programming languages: JAVA, OTHER
+1.  Does it use AddressSanitizer? No
+1.  Does it use MemorySanitizer? No
+1.  Does it use UndefinedBehaviorSanitizer? No
+
+### nohttp tool
+
+Score: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
+
+
+
+
+
+The sub-score uses 2 features:
+
+1.  A set of package managers: MAVEN, GRADLE
+1.  Does it use nohttp? No
+
+### Dependabot score
+
+Score: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
+
+
+
+
+
+The sub-score uses 4 features:
+
+1.  A set of package managers: MAVEN, GRADLE
+1.  A set of programming languages: JAVA, OTHER
+1.  Does it use Dependabot? No
+1.  Does it use GitHub as the main development platform? Yes
+
+### OWASP Dependency Check score
+
+Score: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
+
+
+
+
+
+The sub-score uses 2 features:
+
+1.  How is OWASP Dependency Check used? Not used
+1.  What is the threshold for OWASP Dependency Check? Not specified
+
+### LGTM score
+
+Score: 3.0, confidence is 10.0 (max), importance is 1.0 (high)
+
+
+
+
+
+The sub-score uses 2 features:
+
+1.  Does it use LGTM checks? No
+1.  The worst LGTM grade of the project: C
+
+### FindSecBugs score
+
+Score: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
+
+
+
+
+
+The sub-score uses 2 features:
+
+1.  A set of programming languages: JAVA, OTHER
+1.  Does it use FindSecBugs? No
+
+
+
