@@ -23,14 +23,20 @@ was used to calculate the security ratings.
 | [EclipseLink](https://github.com/eclipse-ee4j/eclipselink) | [3.28, BAD](report_Sep_1st_2020/eclipse-ee4j/eclipselink.md) | TBD |
 | [zlib](https://github.com/madler/zlib) | [3.07, BAD](report_Sep_1st_2020/madler/zlib.md) | TBD |
 | [Apache Commons FileUpload](https://github.com/apache/commons-fileupload) | [2.59, BAD](report_Sep_1st_2020/apache/commons-fileupload.md) | TBD |
+<<<<<<< HEAD
 | [Apache HttpComponents Client](https://github.com/apache/httpcomponents-client) | [2.76, BAD](report_Sep_1st_2020/apache/httpcomponents-client.md) | TBD |
 | [Apache HttpComponents Core](https://github.com/apache/httpcomponents-core) | [4.01, MODERATE](report_Sep_1st_2020/apache/httpcomponents-core.md) | TBD |
+=======
+| [Apache Http Client](https://github.com/apache/httpcomponents-client) | [2.76, BAD](report_Sep_1st_2020/apache/httpcomponents-client.md) | TBD |
+| [Apache Http Core](https://github.com/apache/httpcomponents-core) | [4.01, MODERATE](report_Sep_1st_2020/apache/httpcomponents-core.md) | TBD |
+>>>>>>> 5a6c4cae... Added docs/oss/security/improvements/README.md
 | [Apache Commons Collections](https://github.com/apache/commons-collections) | [4.52, MODERATE](report_Sep_1st_2020/apache/commons-collections.md) | TBD |
 | [Apache Commons I/O](https://github.com/apache/commons-io) | [5.17, GOOD](report_Sep_1st_2020/apache/commons-io.md) | TBD |
 | [Apache CXF](https://github.com/apache/cxf) | [4.88, GOOD](report_Sep_1st_2020/apache/cxf.md) | TBD |
 
 ## Possible improvements
 
+<<<<<<< HEAD
 ### Netty
 
 1.  Improve the static analysis score by:
@@ -201,3 +207,6 @@ was used to calculate the security ratings.
         LGTM checks,
         [FindSecBugs](https://find-sec-bugs.github.io/)
 1.  Improve the vulnerability discovery and security testing score by improving the score for security testing.
+=======
+TBD
+>>>>>>> 5a6c4cae... Added docs/oss/security/improvements/README.md
