@@ -1,0 +1,46 @@
+# this is a configuration for generating a report for a number of open-source projects
+
+# a cache to store fetched data about the projects
+cache: .fosstars/project_rating_cache.json
+
+# the following sections lists projects for which the ratings should be calculated
+finder:
+  # include the following projects
+  repositories:
+    - organization: apache
+      name: commons-io
+    - organization: apache
+      name: httpcomponents-client
+    - organization: apache
+      name: commons-collections
+    - organization: eclipse-ee4j
+      name: eclipselink
+    - organization: apache
+      name: commons-fileupload
+    - organization: madler
+      name: zlib
+    - organization: apache
+      name: cxf
+    - organization: apache
+      name: httpcomponents-core
+    - organization: netty
+      name: netty
+    - organization: qos-ch
+      name: slf4j
+    - organization: bcgit
+      name: bc-java
+
+# the following section describes which reports should be generated.
+reports:
+
+  # first, store the gathered data and calculated ratings in a JSON file
+  # then, the file will be used to generate other reports
+  - type: json
+    where: github_projects.json
+
+  # generate a report in Markdown format
+  # first, it will read gathered data and calculated ratings from the specified JSON file
+  # then, it will build the report and store it in the specified directory
+  - type: markdown
+    source: github_projects.json
+    where: report
