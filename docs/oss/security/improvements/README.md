@@ -81,6 +81,7 @@ was used to calculate the security ratings.
 ### SLF4J
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 1.  Improve the static analysis score by:
     1.  [Enabling LGTM checks for pull requests](https://lgtm.com/projects/g/qos-ch/slf4j/ci/?mode=list)
     1.  [Fixing issues reported by LGTM](https://lgtm.com/projects/g/qos-ch/slf4j/?mode=list)
@@ -230,6 +231,17 @@ was used to calculate the security ratings.
 =======
 =======
 TBD
+=======
+1.  Improve the static analysis score by:
+    1.  Enabling LGTM checks for pull requests
+    1.  Fixing issues reported by LGTM (currently the project has the grade C which may be improved)
+    1.  Enabling FindSecBugs
+1.  Improve the nohttp score by enabling nohttp
+1.  Improve the security awareness score by:
+    1.  Adding a security policy
+    1.  Enabling nohttp, LGTM checks, FindSecBugs
+1.  Improve the vulnerability discovery and security testing score by improving the score for security testing.
+>>>>>>> 46abfe9d... Added a list of possible improvements for SLF4J
 
 ### Bouncy Castle Java
 
