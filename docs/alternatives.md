@@ -110,6 +110,7 @@ Here are some of them:
 
 1.  [Sonatype](https://www.sonatype.com/appscan)
 1.  [Veracode](https://www.veracode.com/blog/security-news/towards-better-risk-score-open-source-security)
+1.  [OSSGadget](https://github.com/microsoft/OSSGadget) is a collection of tools that can help analyze open source projects. These are intended to make it simple to perform low-level tasks, like locating the source code of a given package, downloading it, performing basic analyses on it, or estimating its health.
 
 ---
 
