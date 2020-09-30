@@ -37,6 +37,7 @@ was used to calculate the security ratings.
 ## Possible improvements
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ### Netty
 
 1.  Improve the static analysis score by:
@@ -57,10 +58,29 @@ was used to calculate the security ratings.
         [LGTM checks](https://lgtm.com/projects/g/netty/netty/ci/),
         [FindSecBugs](https://find-sec-bugs.github.io/)
     1.  Including Netty to [the OSS-Fuzz project](https://github.com/google/oss-fuzz)
+=======
+### Netty
+
+1.  Improve the static analysis score by:
+    1.  Enabling LGTM checks for pull requests
+    1.  Fixing issues reported by LGTM (currently Netty has the grade A, but it may be A+)
+    1.  Enabling FindSecBugs
+1.  Improve the fuzzing score by including Netty to the OSS-Fuzz project
+1.  Improve the memory-safety testing score by:
+    1.  Enabling AddressSanitizer
+    1.  Enabling MemorySanitizer
+    1.  Enabling UndefinedBehaviorSanitizer
+1.  Improve the nohttp score by enabling nohttp
+1.  Improve the security awareness score by:
+    1.  Adding a security policy
+    1.  Enabling nohttp, sanitizers, LGTM checks, FindSecBugs
+    1.  Including Netty to the OSS-Fuzz project
+>>>>>>> 3a9fb28c... Added a list of possible improvements for Netty
 1.  Improve the vulnerability discovery and security testing score by improving the score for security testing.
 
 ### SLF4J
 
+<<<<<<< HEAD
 1.  Improve the static analysis score by:
     1.  [Enabling LGTM checks for pull requests](https://lgtm.com/projects/g/qos-ch/slf4j/ci/?mode=list)
     1.  [Fixing issues reported by LGTM](https://lgtm.com/projects/g/qos-ch/slf4j/?mode=list)
@@ -208,5 +228,43 @@ was used to calculate the security ratings.
         [FindSecBugs](https://find-sec-bugs.github.io/)
 1.  Improve the vulnerability discovery and security testing score by improving the score for security testing.
 =======
+=======
+TBD
+
+### Bouncy Castle Java
+
+TBD
+
+### EclipseLink
+
+TBD
+
+### zlib
+
+TBD
+
+### Apache Commons FileUpload
+
+TBD
+
+### Apache Http Client
+
+TBD
+
+### Apache Http Core
+
+TBD
+
+### Apache Commons Collections
+
+TBD
+
+### Apache Commons I/O
+
+TBD
+
+### Apache CXF
+
+>>>>>>> 3a9fb28c... Added a list of possible improvements for Netty
 TBD
 >>>>>>> 5a6c4cae... Added docs/oss/security/improvements/README.md
