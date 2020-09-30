@@ -31,4 +31,60 @@ was used to calculate the security ratings.
 
 ## Possible improvements
 
+### Netty
+
+1.  Improve the static analysis score by:
+    1.  Enabling LGTM checks for pull requests
+    1.  Fixing issues reported by LGTM (currently Netty has the grade A, but it may be A+)
+    1.  Enabling FindSecBugs
+1.  Improve the fuzzing score by including Netty to the OSS-Fuzz project
+1.  Improve the memory-safety testing score by:
+    1.  Enabling AddressSanitizer
+    1.  Enabling MemorySanitizer
+    1.  Enabling UndefinedBehaviorSanitizer
+1.  Improve the nohttp score by enabling nohttp
+1.  Improve the security awareness score by:
+    1.  Adding a security policy
+    1.  Enabling nohttp, sanitizers, LGTM checks, FindSecBugs
+    1.  Including Netty to the OSS-Fuzz project
+1.  Improve the vulnerability discovery and security testing score by improving the score for security testing.
+
+### SLF4J
+
+TBD
+
+### Bouncy Castle Java
+
+TBD
+
+### EclipseLink
+
+TBD
+
+### zlib
+
+TBD
+
+### Apache Commons FileUpload
+
+TBD
+
+### Apache Http Client
+
+TBD
+
+### Apache Http Core
+
+TBD
+
+### Apache Commons Collections
+
+TBD
+
+### Apache Commons I/O
+
+TBD
+
+### Apache CXF
+
 TBD
