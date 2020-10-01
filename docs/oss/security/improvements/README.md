@@ -103,7 +103,16 @@ was used to calculate the security ratings.
 
 ### Apache Commons FileUpload
 
-TBD
+1.  Improve the static analysis score by:
+    1.  Enabling LGTM checks for pull requests
+    1.  Fixing issues reported by LGTM (currently the project has the grade C which may be improved)
+    1.  Enabling FindSecBugs
+1.  Improve the nohttp score by enabling nohttp
+1.  Improve the security awareness score by:
+    1.  Adding a security policy
+    1.  Enabling nohttp, LGTM checks, FindSecBugs
+1.  Improve the vulnerability discovery and security testing score by improving the score for security testing.
+1.  Fix two unpatched vulnerabilities
 
 ### Apache Http Client
 
