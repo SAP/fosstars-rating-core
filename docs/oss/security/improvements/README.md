@@ -116,7 +116,16 @@ was used to calculate the security ratings.
 
 ### Apache Http Client
 
-TBD
+1.  Improve the static analysis score by:
+    1.  Enabling LGTM checks for pull requests
+    1.  Fixing issues reported by LGTM (currently Netty has the grade A, but it may be A+)
+    1.  Enabling FindSecBugs
+1.  Improve the nohttp score by enabling nohttp
+1.  Improve the security awareness score by:
+    1.  Adding a security policy
+    1.  Enabling nohttp, LGTM checks, FindSecBugs
+1.  Improve the vulnerability discovery and security testing score by improving the score for security testing.
+1.  Fix one unpatched vulnerabilities
 
 ### Apache Http Core
 
