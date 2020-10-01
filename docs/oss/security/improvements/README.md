@@ -344,6 +344,18 @@ TBD
 
 ### Apache CXF
 
+<<<<<<< HEAD
 >>>>>>> 3a9fb28c... Added a list of possible improvements for Netty
 TBD
 >>>>>>> 5a6c4cae... Added docs/oss/security/improvements/README.md
+=======
+1.  Improve the static analysis score by:
+    1.  Enabling LGTM checks for pull requests
+    1.  Fixing issues reported by LGTM (currently the project has the grade D which may be improved)
+    1.  Enabling FindSecBugs
+1.  Improve the nohttp score by enabling nohttp
+1.  Improve the security awareness score by:
+    1.  Adding a security policy
+    1.  Enabling nohttp, LGTM checks, FindSecBugs
+1.  Improve the vulnerability discovery and security testing score by improving the score for security testing.
+>>>>>>> 8326dbd5... Added a list of possible improvements for Apache CXF
