@@ -23,8 +23,8 @@ was used to calculate the security ratings.
 | [EclipseLink](https://github.com/eclipse-ee4j/eclipselink) | [3.28, BAD](report_Sep_1st_2020/eclipse-ee4j/eclipselink.md) | TBD |
 | [zlib](https://github.com/madler/zlib) | [3.07, BAD](report_Sep_1st_2020/madler/zlib.md) | TBD |
 | [Apache Commons FileUpload](https://github.com/apache/commons-fileupload) | [2.59, BAD](report_Sep_1st_2020/apache/commons-fileupload.md) | TBD |
-| [Apache Http Client](https://github.com/apache/httpcomponents-client) | [2.76, BAD](report_Sep_1st_2020/apache/httpcomponents-client.md) | TBD |
-| [Apache Http Core](https://github.com/apache/httpcomponents-core) | [4.01, MODERATE](report_Sep_1st_2020/apache/httpcomponents-core.md) | TBD |
+| [Apache HttpComponents Client](https://github.com/apache/httpcomponents-client) | [2.76, BAD](report_Sep_1st_2020/apache/httpcomponents-client.md) | TBD |
+| [Apache HttpComponents Core](https://github.com/apache/httpcomponents-core) | [4.01, MODERATE](report_Sep_1st_2020/apache/httpcomponents-core.md) | TBD |
 | [Apache Commons Collections](https://github.com/apache/commons-collections) | [4.52, MODERATE](report_Sep_1st_2020/apache/commons-collections.md) | TBD |
 | [Apache Commons I/O](https://github.com/apache/commons-io) | [5.17, GOOD](report_Sep_1st_2020/apache/commons-io.md) | TBD |
 | [Apache CXF](https://github.com/apache/cxf) | [4.88, GOOD](report_Sep_1st_2020/apache/cxf.md) | TBD |
@@ -56,14 +56,15 @@ was used to calculate the security ratings.
 ### SLF4J
 
 1.  Improve the static analysis score by:
-    1.  Enabling LGTM checks for pull requests
-    1.  Fixing issues reported by LGTM (currently the project has the grade C which may be improved)
+    1.  [Enabling LGTM checks for pull requests](https://lgtm.com/projects/g/qos-ch/slf4j/ci/?mode=list)
+    1.  [Fixing issues reported by LGTM](https://lgtm.com/projects/g/qos-ch/slf4j/?mode=list)
+        (currently the project has the grade C which may be improved)
     1.  Enabling [FindSecBugs](https://find-sec-bugs.github.io/)
 1.  Improve the nohttp score by enabling [nohttp](https://github.com/spring-io/nohttp)
 1.  Improve the security awareness score by:
     1.  [Adding a security policy](https://docs.github.com/en/free-pro-team@latest/github/managing-security-vulnerabilities/adding-a-security-policy-to-your-repository)
     1.  Enabling [nohttp](https://github.com/spring-io/nohttp),
-        LGTM checks,
+        [LGTM checks](https://lgtm.com/projects/g/qos-ch/slf4j/ci/?mode=list),
         [FindSecBugs](https://find-sec-bugs.github.io/)
 1.  Improve the vulnerability discovery and security testing score by improving the score for security testing.
 
@@ -71,28 +72,30 @@ was used to calculate the security ratings.
 
 1.  Improve the dependency testing score by enabling Dependabot or OWASP Dependency Check
 1.  Improve the static analysis score by:
-    1.  Enabling LGTM checks for pull requests
-    1.  Fixing issues reported by LGTM (currently the project has the grade C which may be improved)
+    1.  [Enabling LGTM checks for pull requests](https://lgtm.com/projects/g/bcgit/bc-java/ci/)
+    1.  [Fixing issues reported by LGTM](https://lgtm.com/projects/g/bcgit/bc-java/?mode=list)
+        (currently the project has the grade C which may be improved)
     1.  Enabling [FindSecBugs](https://find-sec-bugs.github.io/)
 1.  Improve the nohttp score by enabling [nohttp](https://github.com/spring-io/nohttp)
 1.  Improve the security awareness score by:
     1.  [Adding a security policy](https://docs.github.com/en/free-pro-team@latest/github/managing-security-vulnerabilities/adding-a-security-policy-to-your-repository)
     1.  Enabling [nohttp](https://github.com/spring-io/nohttp),
-        LGTM checks,
+        [LGTM checks](https://lgtm.com/projects/g/bcgit/bc-java/ci/),
         [FindSecBugs](https://find-sec-bugs.github.io/)
 1.  Improve the vulnerability discovery and security testing score by improving the score for security testing.
 
 ### EclipseLink
 
 1.  Improve the static analysis score by:
-    1.  Enabling LGTM checks for pull requests
-    1.  Fixing issues reported by LGTM (currently the project has the grade E which may be improved)
+    1.  [Enabling LGTM checks for pull requests](https://lgtm.com/projects/g/eclipse-ee4j/eclipselink/ci/)
+    1.  [Fixing issues reported by LGTM](https://lgtm.com/projects/g/eclipse-ee4j/eclipselink/?mode=list)
+        (currently the project has the grade E which may be improved)
     1.  Enabling [FindSecBugs](https://find-sec-bugs.github.io/)
 1.  Improve the nohttp score by enabling [nohttp](https://github.com/spring-io/nohttp)
 1.  Improve the security awareness score by:
     1.  [Adding a security policy](https://docs.github.com/en/free-pro-team@latest/github/managing-security-vulnerabilities/adding-a-security-policy-to-your-repository)
     1.  Enabling [nohttp](https://github.com/spring-io/nohttp),
-        LGTM checks,
+        [LGTM checks](https://lgtm.com/projects/g/eclipse-ee4j/eclipselink/ci/),
         [FindSecBugs](https://find-sec-bugs.github.io/),
         Dependabot
 1.  Improve the vulnerability discovery and security testing score by improving the score for security testing.
@@ -117,34 +120,36 @@ was used to calculate the security ratings.
 ### Apache Commons FileUpload
 
 1.  Improve the static analysis score by:
-    1.  Enabling LGTM checks for pull requests
-    1.  Fixing issues reported by LGTM (currently the project has the grade C which may be improved)
+    1.  [Enabling LGTM checks for pull requests](https://lgtm.com/projects/g/apache/commons-fileupload/ci/)
+    1.  [Fixing issues reported by LGTM](https://lgtm.com/projects/g/apache/commons-fileupload/)
+        (currently the project has the grade C which may be improved)
     1.  Enabling [FindSecBugs](https://find-sec-bugs.github.io/)
 1.  Improve the nohttp score by enabling [nohttp](https://github.com/spring-io/nohttp)
 1.  Improve the security awareness score by:
     1.  [Adding a security policy](https://docs.github.com/en/free-pro-team@latest/github/managing-security-vulnerabilities/adding-a-security-policy-to-your-repository)
     1.  Enabling [nohttp](https://github.com/spring-io/nohttp),
-        LGTM checks,
+        [LGTM checks](https://lgtm.com/projects/g/apache/commons-fileupload/ci/),
         [FindSecBugs](https://find-sec-bugs.github.io/)
 1.  Improve the vulnerability discovery and security testing score by improving the score for security testing.
 1.  Fix two unpatched vulnerabilities
 
-### Apache Http Client
+### Apache HttpComponents Client
 
 1.  Improve the static analysis score by:
-    1.  Enabling LGTM checks for pull requests
-    1.  Fixing issues reported by LGTM (currently Netty has the grade A, but it may be A+)
+    1.  [Enabling LGTM checks for pull requests](https://lgtm.com/projects/g/apache/httpcomponents-client/ci/)
+    1.  [Fixing issues reported by LGTM](https://lgtm.com/projects/g/apache/httpcomponents-client/?mode=list)
+        (currently Netty has the grade A, but it may be A+)
     1.  Enabling [FindSecBugs](https://find-sec-bugs.github.io/)
 1.  Improve the nohttp score by enabling [nohttp](https://github.com/spring-io/nohttp)
 1.  Improve the security awareness score by:
     1.  [Adding a security policy](https://docs.github.com/en/free-pro-team@latest/github/managing-security-vulnerabilities/adding-a-security-policy-to-your-repository)
     1.  Enabling [nohttp](https://github.com/spring-io/nohttp),
-        LGTM checks,
+        [LGTM checks](https://lgtm.com/projects/g/apache/httpcomponents-client/ci/),
         [FindSecBugs](https://find-sec-bugs.github.io/)
 1.  Improve the vulnerability discovery and security testing score by improving the score for security testing.
 1.  Fix one unpatched vulnerabilities
 
-### Apache Http Core
+### Apache HttpComponents Core
 
 1.  Improve the static analysis score by:
     1.  Enabling LGTM checks for pull requests
