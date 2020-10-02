@@ -62,20 +62,30 @@ was used to calculate the security ratings.
 ### Netty
 
 1.  Improve the static analysis score by:
-    1.  Enabling LGTM checks for pull requests
-    1.  Fixing issues reported by LGTM (currently Netty has the grade A, but it may be A+)
-    1.  Enabling FindSecBugs
-1.  Improve the fuzzing score by including Netty to the OSS-Fuzz project
-1.  Improve the memory-safety testing score by:
-    1.  Enabling AddressSanitizer
-    1.  Enabling MemorySanitizer
-    1.  Enabling UndefinedBehaviorSanitizer
-1.  Improve the nohttp score by enabling nohttp
+    1.  [Enabling LGTM checks for pull requests](https://lgtm.com/projects/g/netty/netty/ci/)
+    1.  [Fixing issues reported by LGTM](https://lgtm.com/projects/g/netty/netty/?mode=list)
+        (currently Netty has the grade A, but it may be A+)
+    1.  Enabling [FindSecBugs](https://find-sec-bugs.github.io/)
+1.  Improve the fuzzing score by including Netty to [the OSS-Fuzz project](https://github.com/google/oss-fuzz)
+1.  Improve the memory-safety testing score by enabling [sanitizers](https://github.com/google/sanitizers):
+    1.  AddressSanitizer
+    1.  MemorySanitizer
+    1.  UndefinedBehaviorSanitizer
+1.  Improve the nohttp score by enabling [nohttp](https://github.com/spring-io/nohttp)
 1.  Improve the security awareness score by:
+<<<<<<< HEAD
     1.  Adding a security policy
     1.  Enabling nohttp, sanitizers, LGTM checks, FindSecBugs
     1.  Including Netty to the OSS-Fuzz project
 >>>>>>> 3a9fb28c... Added a list of possible improvements for Netty
+=======
+    1.  [Adding a security policy](https://docs.github.com/en/free-pro-team@latest/github/managing-security-vulnerabilities/adding-a-security-policy-to-your-repository)
+    1.  Enabling [nohttp](https://github.com/spring-io/nohttp),
+        [sanitizers](https://github.com/google/sanitizers),
+        [LGTM checks](https://lgtm.com/projects/g/netty/netty/ci/),
+        [FindSecBugs](https://find-sec-bugs.github.io/)
+    1.  Including Netty to [the OSS-Fuzz project](https://github.com/google/oss-fuzz)
+>>>>>>> 7c20708c... More links in docs/oss/security/improvements/README.md
 1.  Improve the vulnerability discovery and security testing score by improving the score for security testing.
 
 ### SLF4J
@@ -235,11 +245,13 @@ TBD
 1.  Improve the static analysis score by:
     1.  Enabling LGTM checks for pull requests
     1.  Fixing issues reported by LGTM (currently the project has the grade C which may be improved)
-    1.  Enabling FindSecBugs
-1.  Improve the nohttp score by enabling nohttp
+    1.  Enabling [FindSecBugs](https://find-sec-bugs.github.io/)
+1.  Improve the nohttp score by enabling [nohttp](https://github.com/spring-io/nohttp)
 1.  Improve the security awareness score by:
-    1.  Adding a security policy
-    1.  Enabling nohttp, LGTM checks, FindSecBugs
+    1.  [Adding a security policy](https://docs.github.com/en/free-pro-team@latest/github/managing-security-vulnerabilities/adding-a-security-policy-to-your-repository)
+    1.  Enabling [nohttp](https://github.com/spring-io/nohttp),
+        LGTM checks,
+        [FindSecBugs](https://find-sec-bugs.github.io/)
 1.  Improve the vulnerability discovery and security testing score by improving the score for security testing.
 >>>>>>> 46abfe9d... Added a list of possible improvements for SLF4J
 
@@ -247,13 +259,15 @@ TBD
 
 1.  Improve the dependency testing score by enabling Dependabot or OWASP Dependency Check
 1.  Improve the static analysis score by:
-        1.  Enabling LGTM checks for pull requests
-        1.  Fixing issues reported by LGTM (currently the project has the grade C which may be improved)
-        1.  Enabling FindSecBugs
-1.  Improve the nohttp score by enabling nohttp
+    1.  Enabling LGTM checks for pull requests
+    1.  Fixing issues reported by LGTM (currently the project has the grade C which may be improved)
+    1.  Enabling [FindSecBugs](https://find-sec-bugs.github.io/)
+1.  Improve the nohttp score by enabling [nohttp](https://github.com/spring-io/nohttp)
 1.  Improve the security awareness score by:
-    1.  Adding a security policy
-    1.  Enabling nohttp, LGTM checks, FindSecBugs
+    1.  [Adding a security policy](https://docs.github.com/en/free-pro-team@latest/github/managing-security-vulnerabilities/adding-a-security-policy-to-your-repository)
+    1.  Enabling [nohttp](https://github.com/spring-io/nohttp),
+        LGTM checks,
+        [FindSecBugs](https://find-sec-bugs.github.io/)
 1.  Improve the vulnerability discovery and security testing score by improving the score for security testing.
 
 ### EclipseLink
@@ -261,11 +275,14 @@ TBD
 1.  Improve the static analysis score by:
     1.  Enabling LGTM checks for pull requests
     1.  Fixing issues reported by LGTM (currently the project has the grade E which may be improved)
-    1.  Enabling FindSecBugs
-1.  Improve the nohttp score by enabling nohttp
+    1.  Enabling [FindSecBugs](https://find-sec-bugs.github.io/)
+1.  Improve the nohttp score by enabling [nohttp](https://github.com/spring-io/nohttp)
 1.  Improve the security awareness score by:
-    1.  Adding a security policy
-    1.  Enabling nohttp, LGTM checks, FindSecBugs, Dependabot
+    1.  [Adding a security policy](https://docs.github.com/en/free-pro-team@latest/github/managing-security-vulnerabilities/adding-a-security-policy-to-your-repository)
+    1.  Enabling [nohttp](https://github.com/spring-io/nohttp),
+        LGTM checks,
+        [FindSecBugs](https://find-sec-bugs.github.io/),
+        Dependabot
 1.  Improve the vulnerability discovery and security testing score by improving the score for security testing.
 
 ### zlib
@@ -273,14 +290,16 @@ TBD
 1.  Improve the static analysis score by:
     1.  Enabling LGTM checks for pull requests
     1.  Fixing issues reported by LGTM (currently the project has the grade B which may be improved)
-1.  Improve the memory-safety testing score by:
-    1.  Enabling AddressSanitizer
-    1.  Enabling MemorySanitizer
-    1.  Enabling UndefinedBehaviorSanitizer
-1.  Improve the nohttp score by enabling nohttp
+1.  Improve the memory-safety testing score by enabling [sanitizers](https://github.com/google/sanitizers):
+    1.  AddressSanitizer
+    1.  MemorySanitizer
+    1.  UndefinedBehaviorSanitizer
+1.  Improve the nohttp score by enabling [nohttp](https://github.com/spring-io/nohttp)
 1.  Improve the security awareness score by:
-    1.  Adding a security policy
-    1.  Enabling nohttp, LGTM checks, sanitizers
+    1.  [Adding a security policy](https://docs.github.com/en/free-pro-team@latest/github/managing-security-vulnerabilities/adding-a-security-policy-to-your-repository)
+    1.  Enabling [nohttp](https://github.com/spring-io/nohttp),
+        LGTM checks,
+        [sanitizers](https://github.com/google/sanitizers)
 1.  Improve the vulnerability discovery and security testing score by improving the score for security testing.
 
 ### Apache Commons FileUpload
@@ -288,11 +307,13 @@ TBD
 1.  Improve the static analysis score by:
     1.  Enabling LGTM checks for pull requests
     1.  Fixing issues reported by LGTM (currently the project has the grade C which may be improved)
-    1.  Enabling FindSecBugs
-1.  Improve the nohttp score by enabling nohttp
+    1.  Enabling [FindSecBugs](https://find-sec-bugs.github.io/)
+1.  Improve the nohttp score by enabling [nohttp](https://github.com/spring-io/nohttp)
 1.  Improve the security awareness score by:
-    1.  Adding a security policy
-    1.  Enabling nohttp, LGTM checks, FindSecBugs
+    1.  [Adding a security policy](https://docs.github.com/en/free-pro-team@latest/github/managing-security-vulnerabilities/adding-a-security-policy-to-your-repository)
+    1.  Enabling [nohttp](https://github.com/spring-io/nohttp),
+        LGTM checks,
+        [FindSecBugs](https://find-sec-bugs.github.io/)
 1.  Improve the vulnerability discovery and security testing score by improving the score for security testing.
 1.  Fix two unpatched vulnerabilities
 
@@ -301,11 +322,13 @@ TBD
 1.  Improve the static analysis score by:
     1.  Enabling LGTM checks for pull requests
     1.  Fixing issues reported by LGTM (currently Netty has the grade A, but it may be A+)
-    1.  Enabling FindSecBugs
-1.  Improve the nohttp score by enabling nohttp
+    1.  Enabling [FindSecBugs](https://find-sec-bugs.github.io/)
+1.  Improve the nohttp score by enabling [nohttp](https://github.com/spring-io/nohttp)
 1.  Improve the security awareness score by:
-    1.  Adding a security policy
-    1.  Enabling nohttp, LGTM checks, FindSecBugs
+    1.  [Adding a security policy](https://docs.github.com/en/free-pro-team@latest/github/managing-security-vulnerabilities/adding-a-security-policy-to-your-repository)
+    1.  Enabling [nohttp](https://github.com/spring-io/nohttp),
+        LGTM checks,
+        [FindSecBugs](https://find-sec-bugs.github.io/)
 1.  Improve the vulnerability discovery and security testing score by improving the score for security testing.
 1.  Fix one unpatched vulnerabilities
 
@@ -313,11 +336,13 @@ TBD
 
 1.  Improve the static analysis score by:
     1.  Enabling LGTM checks for pull requests
-    1.  Enabling FindSecBugs
-1.  Improve the nohttp score by enabling nohttp
+    1.  Enabling [FindSecBugs](https://find-sec-bugs.github.io/)
+1.  Improve the nohttp score by enabling [nohttp](https://github.com/spring-io/nohttp)
 1.  Improve the security awareness score by:
-    1.  Adding a security policy
-    1.  Enabling nohttp, LGTM checks, FindSecBugs
+    1.  [Adding a security policy](https://docs.github.com/en/free-pro-team@latest/github/managing-security-vulnerabilities/adding-a-security-policy-to-your-repository)
+    1.  Enabling [nohttp](https://github.com/spring-io/nohttp),
+        LGTM checks,
+        [FindSecBugs](https://find-sec-bugs.github.io/)
 1.  Improve the vulnerability discovery and security testing score by improving the score for security testing.
 
 ### Apache Commons Collections
@@ -325,11 +350,13 @@ TBD
 1.  Improve the static analysis score by:
     1.  Enabling LGTM checks for pull requests
     1.  Fixing issues reported by LGTM (currently the project has the grade B which may be improved)
-    1.  Enabling FindSecBugs
-1.  Improve the nohttp score by enabling nohttp
+    1.  Enabling [FindSecBugs](https://find-sec-bugs.github.io/)
+1.  Improve the nohttp score by enabling [nohttp](https://github.com/spring-io/nohttp)
 1.  Improve the security awareness score by:
-    1.  Adding a security policy
-    1.  Enabling nohttp, LGTM checks, FindSecBugs
+    1.  [Adding a security policy](https://docs.github.com/en/free-pro-team@latest/github/managing-security-vulnerabilities/adding-a-security-policy-to-your-repository)
+    1.  Enabling [nohttp](https://github.com/spring-io/nohttp),
+        LGTM checks,
+        [FindSecBugs](https://find-sec-bugs.github.io/)
 1.  Improve the vulnerability discovery and security testing score by improving the score for security testing.
 
 ### Apache Commons I/O
@@ -337,9 +364,11 @@ TBD
 1.  Improve the static analysis score by:
     1.  Enabling LGTM checks for pull requests
     1.  Fixing issues reported by LGTM (currently the project has the grade B which may be improved)
-    1.  Enabling FindSecBugs
-1.  Improve the nohttp score by enabling nohttp
-1.  Improve the security awareness score by enabling nohttp, LGTM checks, FindSecBugs
+    1.  Enabling [FindSecBugs](https://find-sec-bugs.github.io/)
+1.  Improve the nohttp score by enabling [nohttp](https://github.com/spring-io/nohttp)
+1.  Improve the security awareness score by enabling [nohttp](https://github.com/spring-io/nohttp),
+    LGTM checks,
+    [FindSecBugs](https://find-sec-bugs.github.io/)
 1.  Improve the vulnerability discovery and security testing score by improving the score for security testing.
 
 ### Apache CXF
@@ -352,10 +381,12 @@ TBD
 1.  Improve the static analysis score by:
     1.  Enabling LGTM checks for pull requests
     1.  Fixing issues reported by LGTM (currently the project has the grade D which may be improved)
-    1.  Enabling FindSecBugs
-1.  Improve the nohttp score by enabling nohttp
+    1.  Enabling [FindSecBugs](https://find-sec-bugs.github.io/)
+1.  Improve the nohttp score by enabling [nohttp](https://github.com/spring-io/nohttp)
 1.  Improve the security awareness score by:
-    1.  Adding a security policy
-    1.  Enabling nohttp, LGTM checks, FindSecBugs
+    1.  [Adding a security policy](https://docs.github.com/en/free-pro-team@latest/github/managing-security-vulnerabilities/adding-a-security-policy-to-your-repository)
+    1.  Enabling [nohttp](https://github.com/spring-io/nohttp),
+        LGTM checks,
+        [FindSecBugs](https://find-sec-bugs.github.io/)
 1.  Improve the vulnerability discovery and security testing score by improving the score for security testing.
 >>>>>>> 8326dbd5... Added a list of possible improvements for Apache CXF
