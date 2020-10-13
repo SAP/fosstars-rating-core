@@ -80,7 +80,7 @@
     <version.nist-data-mirror>1.4.0</version.nist-data-mirror>
     <version.maven-model>3.6.2</version.maven-model>
     <version.httpclient>4.5.10</version.httpclient>
-    <version.junit>4.12</version.junit>
+    <version.junit>4.13.1</version.junit>
     <version.mockito-core>3.2.4</version.mockito-core>
     <version.commons-collections4>4.4</version.commons-collections4>
     <version.org.eclipse.jgit>5.7.0.202003110725-r</version.org.eclipse.jgit>
