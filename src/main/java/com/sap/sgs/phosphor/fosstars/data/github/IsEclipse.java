@@ -13,6 +13,8 @@ import java.io.IOException;
  */
 public class IsEclipse extends CachedSingleFeatureGitHubDataProvider {
 
+  private static final String[] KNOWN_ECLIPSE_ORGANISATIONS = { "eclipse", "eclipse-ee4j" };
+
   /**
    * Initializes a data provider.
    *
@@ -23,13 +25,18 @@ public class IsEclipse extends CachedSingleFeatureGitHubDataProvider {
   }
 
   @Override
-  protected Feature supportedFeature() {
+  protected Feature<Boolean> supportedFeature() {
     return IS_ECLIPSE;
   }
 
   @Override
-  protected Value fetchValueFor(GitHubProject project) throws IOException {
+  protected Value<Boolean> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out if the project belongs to the Eclipse Software Foundation ...");
-    return IS_ECLIPSE.value("eclipse".equalsIgnoreCase(project.organization().name()));
+    for (String organisation : KNOWN_ECLIPSE_ORGANISATIONS) {
+      if (organisation.equalsIgnoreCase(project.organization().name())) {
+        return IS_ECLIPSE.value(true);
+      }
+    }
+    return IS_ECLIPSE.value(false);
   }
 }
