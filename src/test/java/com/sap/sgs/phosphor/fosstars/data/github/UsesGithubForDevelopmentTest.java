@@ -1,5 +1,6 @@
 package com.sap.sgs.phosphor.fosstars.data.github;
 
+import static com.sap.sgs.phosphor.fosstars.data.github.UsesGithubForDevelopment.notGitHubUrl;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GITHUB_FOR_DEVELOPMENT;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -13,6 +14,7 @@ import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectValueCache;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -32,13 +34,14 @@ public class UsesGithubForDevelopmentTest extends TestGitHubDataFetcherHolder {
     Set<Integer> passedChecks;
 
     private final List<Consumer<Boolean>> checks = Arrays.asList(
-        passed -> when(repository.getMirrorUrl())
-          .thenReturn(passed ? null : "https://other.com/org/project"),
         passed -> when(repository.getDescription())
           .thenReturn(passed ? "This is the main repository" : "This is a mirror"),
         passed -> when(repository.hasIssues()).thenReturn(passed),
         passed -> when(repository.hasWiki()).thenReturn(passed),
-        passed -> when(repository.isAllowMergeCommit()).thenReturn(passed),
+        passed -> {
+          when(repository.getMirrorUrl()).thenReturn(passed ? "" : "https://test.com");
+          when(repository.getSvnUrl()).thenReturn(passed ? "" : "https://test.com");
+        },
         passed -> when(repository.isArchived()).thenReturn(!passed)
     );
 
@@ -79,7 +82,7 @@ public class UsesGithubForDevelopmentTest extends TestGitHubDataFetcherHolder {
     RepositoryMockBuilder builder = new RepositoryMockBuilder();
 
     int i = 0;
-    final double threshold = 0.6;
+    final double threshold = 0.5;
     while (i < builder.allChecks()) {
       builder.init();
       random.ints(i, 0, builder.allChecks())
@@ -166,6 +169,7 @@ public class UsesGithubForDevelopmentTest extends TestGitHubDataFetcherHolder {
     GHRepository repository = mock(GHRepository.class);
     when(repository.getDirectoryContent(".github"))
         .thenThrow(new IOException("no directory found"));
+    when(repository.isAllowMergeCommit()).thenReturn(true);
 
     GitHubProject project = new GitHubProject("org", "test");
     when(fetcher.github().getRepository(any())).thenReturn(repository);
@@ -178,6 +182,14 @@ public class UsesGithubForDevelopmentTest extends TestGitHubDataFetcherHolder {
     assertEquals(1, values.size());
     assertTrue(values.has(USES_GITHUB_FOR_DEVELOPMENT));
     assertTrue(values.of(USES_GITHUB_FOR_DEVELOPMENT).isPresent());
-    assertEquals(Boolean.FALSE, values.of(USES_GITHUB_FOR_DEVELOPMENT).get().get());
+    assertEquals(Boolean.TRUE, values.of(USES_GITHUB_FOR_DEVELOPMENT).get().get());
+  }
+
+  @Test
+  public void testNotGitHubUrl() {
+    assertTrue(notGitHubUrl("invalid"));
+    assertTrue(notGitHubUrl(""));
+    assertTrue(notGitHubUrl("https://test.com/test"));
+    assertFalse(notGitHubUrl("https://github.com/apache/nifi"));
   }
 }
