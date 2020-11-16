@@ -178,6 +178,22 @@ public class OssFeatures {
       = new DateFeature("When first commit was done");
 
   /**
+   * Shows if an open-source project runs CodeQL scans.
+   *
+   * @see <a href="https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository">Enabling code scanning for a repository</a>
+   */
+  public static final Feature<Boolean> RUNS_CODEQL_SCANS
+      = new BooleanFeature("If a project uses LGTM checks for commits");
+
+  /**
+   * Shows if an open-source project runs CodeQL checks for commits.
+   *
+   * @see <a href="https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository">Enabling code scanning for a repository</a>
+   */
+  public static final Feature<Boolean> USES_CODEQL_CHECKS
+      = new BooleanFeature("If a project runs CodeQL checks for commits");
+
+  /**
    * Shows if an open-source project uses <a href="https://lgtm.com">LGTM</a> checks for commits.
    */
   public static final Feature<Boolean> USES_LGTM_CHECKS
