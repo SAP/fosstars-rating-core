@@ -33,6 +33,8 @@ import org.kohsuke.github.GHException;
  *   <li>{@link OssFeatures#USES_LGTM_CHECKS}</li>
  *   <li>{@link OssFeatures#WORST_LGTM_GRADE}</li>
  * </ul>
+ *
+ * @see CodeqlDataProvider
  */
 public class LgtmDataProvider extends GitHubCachingDataProvider {
 
