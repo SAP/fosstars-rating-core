@@ -48,7 +48,7 @@ public interface Value<T> {
    *
    * @return A feature which the value is for.
    */
-  Feature feature();
+  Feature<T> feature();
 
   /**
    * Tells if the value is unknown.
@@ -68,6 +68,7 @@ public interface Value<T> {
    * Get the value.
    *
    * @return The value.
+   * @throws IllegalStateException If the value is unknown.
    */
   T get();
 

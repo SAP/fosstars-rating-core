@@ -13,7 +13,7 @@ public class UnknownValueTest {
 
   @Test
   public void testGetFeature() {
-    Value value = new UnknownValue(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE);
+    Value<Integer> value = new UnknownValue<>(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE);
     assertEquals(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, value.feature());
   }
 
@@ -22,7 +22,7 @@ public class UnknownValueTest {
     assertTrue(new UnknownValue<>(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE).isUnknown());
   }
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test(expected = IllegalStateException.class)
   public void testGet() {
     new UnknownValue<>(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE).get();
   }
@@ -30,8 +30,8 @@ public class UnknownValueTest {
   @Test
   public void testSerializationAndDeserialization() throws IOException {
     ObjectMapper mapper = new ObjectMapper();
-    UnknownValue value = UnknownValue.of(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE);
-    UnknownValue clone = mapper.readValue(
+    UnknownValue<Integer> value = UnknownValue.of(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE);
+    UnknownValue<Integer> clone = mapper.readValue(
         mapper.writeValueAsBytes(value), UnknownValue.class);
     assertEquals(value, clone);
     assertEquals(value.hashCode(), clone.hashCode());

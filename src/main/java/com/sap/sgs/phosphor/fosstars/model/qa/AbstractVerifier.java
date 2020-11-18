@@ -84,6 +84,16 @@ public abstract class AbstractVerifier implements Verifier {
           Status.FAILED, "Expected N/A score, but got a real score value");
     }
 
+    // next, check if the test vector expects an unknown score value
+    if (vector.expectsUnknownScore() && scoreValue.isUnknown()) {
+      return new TestVectorResult(vector, index, scoreValue,
+          Status.PASSED, "Ok, score is unknown as expected");
+    }
+    if (vector.expectsUnknownScore() && !scoreValue.isUnknown()) {
+      return new TestVectorResult(vector, index, scoreValue,
+          Status.FAILED, "Expected an unknown score, but got a real score value");
+    }
+
     // now we know that the test vector expects a real score value
     // it means that the vector contains an expected interval
 
@@ -91,6 +101,13 @@ public abstract class AbstractVerifier implements Verifier {
     if (scoreValue.isNotApplicable()) {
       String message = String.format(
           "Expected a score in interval %s got N/A", vector.expectedScore());
+      return new TestVectorResult(vector, index, scoreValue, Status.FAILED, message);
+    }
+
+    // then, check if the score value is unknown
+    if (scoreValue.isUnknown()) {
+      String message = String.format(
+          "Expected a score in interval %s got unknown", vector.expectedScore());
       return new TestVectorResult(vector, index, scoreValue, Status.FAILED, message);
     }
 

@@ -142,6 +142,10 @@ public class ScoreValue implements Value<Double>, Confidence {
   @Override
   @JsonGetter("value")
   public Double get() {
+    if (isUnknown()) {
+      throw new IllegalStateException(
+          "It's an unknown value, get() method is not supposed to be called!");
+    }
     return value;
   }
 
