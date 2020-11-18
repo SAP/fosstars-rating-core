@@ -115,6 +115,15 @@ elements:
         explanation: []
       - type: "ScoreValue"
         score:
+          type: "CodeqlScore"
+          name: "How a project uses CodeQL"
+        value: 7.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: [ ]
+        explanation: [ ]
+      - type: "ScoreValue"
+        score:
           type: "NoHttpToolScore"
           name: "If a project uses nohttp tool"
         value: 0.0
@@ -184,6 +193,15 @@ elements:
         explanation: []
       - type: "ScoreValue"
         score:
+          type: "CodeqlScore"
+          name: "How a project uses CodeQL"
+        value: 7.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: [ ]
+        explanation: [ ]
+      - type: "ScoreValue"
+        score:
           type: "NoHttpToolScore"
           name: "If a project uses nohttp tool"
         value: 6.0
@@ -234,6 +252,15 @@ elements:
   # FindSecBugsScore is N/A
   - type: "StandardTestVector"
     values:
+      - type: "ScoreValue"
+        score:
+          type: "CodeqlScore"
+          name: "How a project uses CodeQL"
+        value: 7.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: [ ]
+        explanation: [ ]
       - type: "ScoreValue"
         score:
           type: "LgtmScore"

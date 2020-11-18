@@ -7,10 +7,6 @@ elements:
     feature:
       type: "LgtmGradeFeature"
       name: "The worst LGTM grade of a project"
-  - type: "UnknownValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses LGTM checks for commits"
   expectedScore:
     type: "DoubleInterval"
     from: 0.0
@@ -24,21 +20,17 @@ elements:
   alias: "all_unknown"
 - type: "StandardTestVector"
   values:
-  - type: "UnknownValue"
+  - type: "LgtmGradeValue"
     feature:
       type: "LgtmGradeFeature"
       name: "The worst LGTM grade of a project"
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses LGTM checks for commits"
-    flag: false
+    value: "E"
   expectedScore:
     type: "DoubleInterval"
     from: 0.0
     openLeft: false
     negativeInfinity: false
-    to: 1.0
+    to: 2.0
     openRight: false
     positiveInfinity: false
   expectedLabel: null
@@ -49,18 +41,13 @@ elements:
     feature:
       type: "LgtmGradeFeature"
       name: "The worst LGTM grade of a project"
-    value: "E"
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses LGTM checks for commits"
-    flag: true
+    value: "D"
   expectedScore:
     type: "DoubleInterval"
-    from: 4.0
+    from: 1.0
     openLeft: false
     negativeInfinity: false
-    to: 6.0
+    to: 3.0
     openRight: false
     positiveInfinity: false
   expectedLabel: null
@@ -71,12 +58,7 @@ elements:
     feature:
       type: "LgtmGradeFeature"
       name: "The worst LGTM grade of a project"
-    value: "D"
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses LGTM checks for commits"
-    flag: true
+    value: "C"
   expectedScore:
     type: "DoubleInterval"
     from: 5.0
@@ -93,18 +75,13 @@ elements:
     feature:
       type: "LgtmGradeFeature"
       name: "The worst LGTM grade of a project"
-    value: "C"
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses LGTM checks for commits"
-    flag: true
+    value: "B"
   expectedScore:
     type: "DoubleInterval"
-    from: 5.0
+    from: 7.0
     openLeft: false
     negativeInfinity: false
-    to: 7.0
+    to: 9.0
     openRight: false
     positiveInfinity: false
   expectedLabel: null
@@ -115,34 +92,7 @@ elements:
     feature:
       type: "LgtmGradeFeature"
       name: "The worst LGTM grade of a project"
-    value: "B"
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses LGTM checks for commits"
-    flag: true
-  expectedScore:
-    type: "DoubleInterval"
-    from: 7.0
-    openLeft: false
-    negativeInfinity: false
-    to: 9.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_5"
-- type: "StandardTestVector"
-  values:
-  - type: "LgtmGradeValue"
-    feature:
-      type: "LgtmGradeFeature"
-      name: "The worst LGTM grade of a project"
     value: "A"
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses LGTM checks for commits"
-    flag: true
   expectedScore:
     type: "DoubleInterval"
     from: 9.0
@@ -152,14 +102,9 @@ elements:
     openRight: false
     positiveInfinity: false
   expectedLabel: null
-  alias: "test_vector_6"
+  alias: "test_vector_5"
 - type: "StandardTestVector"
   values:
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses LGTM checks for commits"
-    flag: true
   - type: "LgtmGradeValue"
     feature:
       type: "LgtmGradeFeature"
@@ -174,4 +119,4 @@ elements:
     openRight: false
     positiveInfinity: false
   expectedLabel: null
-  alias: "test_vector_7"
+  alias: "test_vector_6"

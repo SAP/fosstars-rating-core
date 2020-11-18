@@ -19,8 +19,7 @@ public class LgtmScoreTest {
   public void smokeTest() {
     LgtmScore score = new LgtmScore();
     assertFalse(score.name().isEmpty());
-    assertEquals(2, score.features().size());
-    assertTrue(score.features().contains(USES_LGTM_CHECKS));
+    assertEquals(1, score.features().size());
     assertTrue(score.features().contains(WORST_LGTM_GRADE));
     assertTrue(score.subScores().isEmpty());
   }
@@ -28,15 +27,9 @@ public class LgtmScoreTest {
   @Test
   public void testCalculate() {
     LgtmScore score = new LgtmScore();
-    ScoreValue scoreValue = score.calculate(USES_LGTM_CHECKS.unknown(), WORST_LGTM_GRADE.unknown());
+    ScoreValue scoreValue = score.calculate(WORST_LGTM_GRADE.unknown());
     assertTrue(scoreValue.isUnknown());
-    assertScore(Score.INTERVAL, score,
-        setOf(USES_LGTM_CHECKS.value(true), WORST_LGTM_GRADE.value(LgtmGrade.A_PLUS)));
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testCalculateWithoutUsesLgtmValue() {
-    new LgtmScore().calculate(WORST_LGTM_GRADE.unknown());
+    assertScore(Score.INTERVAL, score, setOf(WORST_LGTM_GRADE.value(LgtmGrade.A_PLUS)));
   }
 
   @Test(expected = IllegalArgumentException.class)

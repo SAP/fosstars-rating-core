@@ -16,9 +16,11 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.OWASP_
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.OWASP_DEPENDENCY_CHECK_USAGE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.PACKAGE_MANAGERS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.PROJECT_START_DATE;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_CODEQL_SCANS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SIGNS_ARTIFACTS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_ADDRESS_SANITIZER;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_CODEQL_CHECKS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_DEPENDABOT;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_FIND_SEC_BUGS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GITHUB_FOR_DEVELOPMENT;
@@ -72,6 +74,8 @@ public class MarkdownFormatterTest {
       PROJECT_START_DATE.value(new Date()),
       FIRST_COMMIT_DATE.value(new Date()),
       USES_SIGNED_COMMITS.value(false),
+      USES_CODEQL_CHECKS.value(false),
+      RUNS_CODEQL_SCANS.value(false),
       USES_LGTM_CHECKS.value(true),
       WORST_LGTM_GRADE.value(LgtmGrade.A),
       USES_GITHUB_FOR_DEVELOPMENT.value(false),

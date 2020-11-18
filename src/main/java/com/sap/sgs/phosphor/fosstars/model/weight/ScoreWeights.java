@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,6 +58,15 @@ public class ScoreWeights implements Tunable {
   private final Map<Class<? extends Score>, Weight> values;
 
   /**
+   * Creates an empty collection of weights.
+   *
+   * @return An empty collection of weights.
+   */
+  public static ScoreWeights empty() {
+    return new ScoreWeights(Collections.emptyMap());
+  }
+
+  /**
    * Creates a collection of weights for a number of scores.
    *
    * @param scores The scores.
@@ -90,7 +100,7 @@ public class ScoreWeights implements Tunable {
   @JsonCreator
   public ScoreWeights(@JsonProperty("values") Map<Class<? extends Score>, Weight> values) {
     Objects.requireNonNull(values, "Weights can't be null!");
-    this.values = values;
+    this.values = new HashMap<>(values);
   }
 
   /**
@@ -127,9 +137,11 @@ public class ScoreWeights implements Tunable {
    *
    * @param score The score.
    * @param weight The weight.
+   * @return The same score weights.
    */
-  public void set(Score score, Weight weight) {
+  public ScoreWeights set(Score score, Weight weight) {
     values.put(score.getClass(), weight);
+    return this;
   }
 
   /**
@@ -137,9 +149,11 @@ public class ScoreWeights implements Tunable {
    *
    * @param score A type of the score.
    * @param weight The weight.
+   * @return The same score weights.
    */
-  public void set(Class<? extends Score> score, Weight weight) {
+  public ScoreWeights set(Class<? extends Score> score, Weight weight) {
     values.put(score, weight);
+    return this;
   }
 
   /**

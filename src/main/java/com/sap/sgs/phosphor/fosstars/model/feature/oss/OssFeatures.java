@@ -183,7 +183,7 @@ public class OssFeatures {
    * @see <a href="https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository">Enabling code scanning for a repository</a>
    */
   public static final Feature<Boolean> RUNS_CODEQL_SCANS
-      = new BooleanFeature("If a project uses LGTM checks for commits");
+      = new BooleanFeature("If a project runs CodeQL scans");
 
   /**
    * Shows if an open-source project runs CodeQL checks for commits.
