@@ -54,7 +54,6 @@ public class StaticAnalysisScoreTest {
 
     assertTrue(scoreValue.isUnknown());
     assertFalse(scoreValue.isNotApplicable());
-    assertEquals(MIN, scoreValue.get(), DELTA);
     assertEquals(Confidence.MIN, scoreValue.confidence(), DELTA);
     assertSame(score, scoreValue.score());
     assertEquals(2, scoreValue.usedValues().size());

@@ -75,4 +75,11 @@ public interface TestVector {
    */
   boolean expectsNotApplicableScore();
 
+  /**
+   * Tells if the test vector expects an unknown value.
+   *
+   * @return True if a not-applicable score value is expected, false otherwise.
+   */
+  boolean expectsUnknownScore();
+
 }

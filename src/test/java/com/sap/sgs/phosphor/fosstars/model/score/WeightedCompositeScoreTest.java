@@ -35,7 +35,7 @@ public class WeightedCompositeScoreTest {
   private static final double PRECISION = 0.001;
 
   @Test
-  public void smokeTest() {
+  public void testBasics() {
     WeightedScoreImpl score = new WeightedScoreImpl();
     assertEquals(WeightedScoreImpl.NAME, score.name());
     assertEquals(2, score.allFeatures().size());
@@ -50,7 +50,7 @@ public class WeightedCompositeScoreTest {
   }
 
   @Test
-  public void calculate() {
+  public void testCalculateWithValidValues() {
     Score score = new WeightedScoreImpl();
 
     Value<Double> firstValue = FirstScore.FEATURE.value(FirstScore.VALUE);
@@ -81,7 +81,7 @@ public class WeightedCompositeScoreTest {
   }
 
   @Test
-  public void equalsAndHashCode() {
+  public void testEqualsAndHashCode() {
     Score one = new WeightedScoreImpl();
     Score two = new WeightedScoreImpl();
     assertEquals(one, two);
@@ -91,7 +91,7 @@ public class WeightedCompositeScoreTest {
   }
 
   @Test
-  public void validValue() {
+  public void testWithValidValue() {
     Score score = new WeightedScoreImpl();
     Value<Double> value = score.value(7.54);
     assertNotNull(value);
@@ -99,17 +99,17 @@ public class WeightedCompositeScoreTest {
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void negativeValue() {
+  public void testWithNegativeValue() {
     new WeightedScoreImpl().value(-3.0);
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void tooBigValue() {
+  public void testWithTooBigValue() {
     new WeightedScoreImpl().value(42.0);
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void zeroWeights() {
+  public void testWithZeroWeights() {
     ScoreWeights weights = ScoreWeights.createFor(
         PROJECT_ACTIVITY_SCORE_EXAMPLE,
         SECURITY_TESTING_SCORE_EXAMPLE);
@@ -124,27 +124,27 @@ public class WeightedCompositeScoreTest {
   }
 
   @Test(expected = NullPointerException.class)
-  public void nullName() {
+  public void testWithNullName() {
     new WeightedCompositeScore(null, new FirstScore());
   }
 
   @Test(expected = NullPointerException.class)
-  public void nullScoreList() {
+  public void testWithNullScoreList() {
     new WeightedCompositeScore("test", (Score[]) null);
   }
 
   @Test(expected = NullPointerException.class)
-  public void nullScoreSet() {
+  public void testWithNullScoreSet() {
     new WeightedCompositeScore("test", null, ScoreWeights.createFor());
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void emptyScoreList() {
-    new WeightedCompositeScore("test", new Score[0]);
+  public void testWithEmptyScoreList() {
+    new WeightedCompositeScore("test");
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void emptyScoreSet() {
+  public void testWithEmptyScoreSet() {
     new WeightedCompositeScore(
         "test",
         new HashSet<>(),
@@ -152,7 +152,7 @@ public class WeightedCompositeScoreTest {
   }
 
   @Test
-  public void allScoresPreCalculated() {
+  public void testWithPreCalculatedSubScores() {
     Score score = new WeightedScoreImpl();
 
     double firstValue = 3.0;
@@ -191,7 +191,7 @@ public class WeightedCompositeScoreTest {
   }
 
   @Test
-  public void oneScorePreCalculated() {
+  public void testWithOnePreCalculatedSubScore() {
     Score score = new WeightedScoreImpl();
 
     final double firstValue = 3.0;
@@ -220,7 +220,7 @@ public class WeightedCompositeScoreTest {
   }
 
   @Test
-  public void parameters() {
+  public void testParameters() {
     WeightedScoreImpl score = new WeightedScoreImpl();
     Set<Score> subScores = score.subScores();
     assertNotNull(subScores);
@@ -241,7 +241,7 @@ public class WeightedCompositeScoreTest {
   }
 
   @Test
-  public void notImmutableByDefault() {
+  public void testThatNotImmutableByDefault() {
     WeightedScoreImpl score = new WeightedScoreImpl();
     assertFalse(score.isImmutable());
     for (Parameter parameter : score.parameters()) {
@@ -253,7 +253,7 @@ public class WeightedCompositeScoreTest {
   }
 
   @Test
-  public void makeImmutable() {
+  public void testMakeImmutable() {
     WeightedScoreImpl score = new WeightedScoreImpl();
     score.makeImmutable();
     assertTrue(score.isImmutable());
@@ -268,13 +268,13 @@ public class WeightedCompositeScoreTest {
   }
 
   @Test
-  public void description() {
+  public void testDescription() {
     assertNotNull(new WeightedScoreImpl().description());
     assertTrue(new WeightedScoreImpl().description().isEmpty());
   }
 
   @Test
-  public void testWithOneNotApplicable() {
+  public void testWithOneNotApplicableSubScore() {
     WeightedScoreImpl score = new WeightedScoreImpl(
         setOf(new FirstScore().returnsNotApplicable(), new SecondScore()),
         WeightedScoreImpl.initWeights()
@@ -307,7 +307,7 @@ public class WeightedCompositeScoreTest {
   }
 
   @Test
-  public void testWithAllNotApplicable() {
+  public void testWithAllNotApplicableSubScores() {
     WeightedScoreImpl score = new WeightedScoreImpl(
         setOf(new FirstScore().returnsNotApplicable(), new SecondScore().returnsNotApplicable()),
         WeightedScoreImpl.initWeights()
@@ -319,6 +319,22 @@ public class WeightedCompositeScoreTest {
 
     assertFalse(scoreValue.isUnknown());
     assertTrue(scoreValue.isNotApplicable());
+    assertEquals(Confidence.MAX, scoreValue.confidence(), PRECISION);
+  }
+
+  @Test
+  public void testWithAllUnknownValues() {
+    WeightedScoreImpl score = new WeightedScoreImpl(
+        setOf(new FirstScore().returnUnknown(), new SecondScore().returnUnknown()),
+        WeightedScoreImpl.initWeights()
+    );
+
+    ScoreValue scoreValue = score.calculate(
+        FirstScore.FEATURE.unknown(), SecondScore.FEATURE.unknown());
+
+    assertTrue(scoreValue.isUnknown());
+    assertFalse(scoreValue.isNotApplicable());
+    assertEquals(Confidence.MIN, scoreValue.confidence(), PRECISION);
   }
 
   @Test
@@ -338,6 +354,7 @@ public class WeightedCompositeScoreTest {
   private abstract static class AbstractTestScore extends FeatureBasedScore {
 
     private boolean returnsNotApplicable = false;
+    private boolean returnUnknown = false;
 
     AbstractTestScore(String name, Feature... features) {
       super(name, features);
@@ -348,13 +365,24 @@ public class WeightedCompositeScoreTest {
       return this;
     }
 
+    AbstractScore returnUnknown() {
+      returnUnknown = true;
+      return this;
+    }
+
     @Override
     public ScoreValue calculate(Value... values) {
-      ScoreValue value = calculateImpl(values);
       if (returnsNotApplicable) {
-        return value.makeNotApplicable();
+        return scoreValue(MIN, values)
+            .confidence(Confidence.make(values))
+            .makeNotApplicable();
       }
-      return value;
+      if (returnUnknown) {
+        return scoreValue(MIN, values)
+            .confidence(Confidence.make(values))
+            .makeUnknown();
+      }
+      return calculateImpl(values);
     }
 
     abstract ScoreValue calculateImpl(Value... values);

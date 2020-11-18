@@ -94,6 +94,11 @@ public class TestVectorWithDefaults implements TestVector {
   }
 
   @Override
+  public boolean expectsUnknownScore() {
+    return vector.expectsUnknownScore();
+  }
+
+  @Override
   public boolean expectsNotApplicableScore() {
     return vector.expectsNotApplicableScore();
   }

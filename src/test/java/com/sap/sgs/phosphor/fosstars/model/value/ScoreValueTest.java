@@ -198,4 +198,9 @@ public class ScoreValueTest {
     assertEquals(3.0, notApplicable.orElse(3.0), ACCURACY);
   }
 
+  @Test(expected = IllegalStateException.class)
+  public void testGetWithUnknownValue() {
+    new ScoreValue(PROJECT_ACTIVITY_SCORE_EXAMPLE).makeUnknown().get();
+  }
+
 }

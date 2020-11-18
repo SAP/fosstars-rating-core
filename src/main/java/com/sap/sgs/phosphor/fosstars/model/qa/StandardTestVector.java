@@ -32,7 +32,7 @@ public class StandardTestVector extends AbstractTestVector {
   public StandardTestVector(
       Set<Value> values, Interval expectedScore, Label expectedLabel, String alias) {
 
-    this(values, expectedScore, expectedLabel, alias, false);
+    this(values, expectedScore, expectedLabel, alias, false, false);
   }
 
   /**
@@ -42,6 +42,8 @@ public class StandardTestVector extends AbstractTestVector {
    * @param expectedScore An interval for an expected score.
    * @param expectedLabel An expected label (can be null).
    * @param alias A alias of the test vector.
+   * @param expectedUnknownScore
+   *        If it's set to true, then an unknown score value is expected.
    * @param expectedNotApplicableScore
    *        If it's set to true, then a not-applicable score value is expected.
    */
@@ -52,10 +54,13 @@ public class StandardTestVector extends AbstractTestVector {
       @JsonProperty("expectedLabel") Label expectedLabel,
       @JsonProperty("alias") String alias,
       @JsonProperty(
+          value = "expectedUnknownScore",
+          defaultValue = "false") boolean expectedUnknownScore,
+      @JsonProperty(
           value = "expectedNotApplicableScore",
           defaultValue = "false") boolean expectedNotApplicableScore) {
 
-    super(expectedScore, expectedLabel, alias, expectedNotApplicableScore);
+    super(expectedScore, expectedLabel, alias, expectedUnknownScore, expectedNotApplicableScore);
 
     Objects.requireNonNull(values, "Hey! Values can't be null!");
 

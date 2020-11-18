@@ -28,7 +28,7 @@ public class ScoreTestVectorTest {
 
     Interval expectedScore = DoubleInterval.init().from(4.0).to(6.4).closed().make();
     ScoreTestVector vector = new ScoreTestVector(
-        values, expectedScore, null, "test", false);
+        values, expectedScore, null, "test", false, false);
 
     vector.values();
   }
@@ -41,7 +41,7 @@ public class ScoreTestVectorTest {
 
     Interval expectedScore = DoubleInterval.init().from(4.0).to(6.4).closed().make();
     ScoreTestVector vector = new ScoreTestVector(
-        values, expectedScore, null, "test", false);
+        values, expectedScore, null, "test", false, false);
 
     Set<Value> set = vector.valuesFor(ExampleScores.SECURITY_SCORE_EXAMPLE);
     assertNotNull(set);
@@ -58,7 +58,7 @@ public class ScoreTestVectorTest {
 
     Interval expectedScore = DoubleInterval.init().from(4.0).to(6.4).closed().make();
     ScoreTestVector vector = new ScoreTestVector(
-        values, expectedScore, null, "test", false);
+        values, expectedScore, null, "test", false, false);
 
     YAMLFactory factory = new YAMLFactory();
     factory.disable(YAMLGenerator.Feature.USE_NATIVE_TYPE_ID);

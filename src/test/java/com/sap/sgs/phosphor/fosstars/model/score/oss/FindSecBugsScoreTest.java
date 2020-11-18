@@ -3,12 +3,14 @@ package com.sap.sgs.phosphor.fosstars.model.score.oss;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.LANGUAGES;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_FIND_SEC_BUGS;
 import static com.sap.sgs.phosphor.fosstars.model.qa.TestVectorBuilder.newTestVector;
+import static com.sap.sgs.phosphor.fosstars.model.value.Language.JAVA;
 import static org.junit.Assert.assertTrue;
 
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.sgs.phosphor.fosstars.model.qa.VerificationFailedException;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.FindSecBugsScore.Verification;
+import com.sap.sgs.phosphor.fosstars.model.value.Languages;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -38,10 +40,10 @@ public class FindSecBugsScoreTest {
   public void testVerification() throws VerificationFailedException, IOException {
     TestVectors vectors = new TestVectors(
         newTestVector()
-            .alias("1")
+            .alias("test")
             .expectedScore(Score.INTERVAL)
-            .set(USES_FIND_SEC_BUGS.unknown())
-            .set(LANGUAGES.unknown())
+            .set(USES_FIND_SEC_BUGS.value(true))
+            .set(LANGUAGES.value(Languages.of(JAVA)))
             .make()
     );
 

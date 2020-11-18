@@ -16,6 +16,11 @@ public abstract class AbstractTestVector implements TestVector {
   final Interval expectedScore;
 
   /**
+   * If it's set to true, then an unknown score value is expected.
+   */
+  final boolean expectedUnknownScore;
+
+  /**
    * If it's set to true, then a not-applicable score value is expected.
    */
   final boolean expectedNotApplicableScore;
@@ -36,22 +41,26 @@ public abstract class AbstractTestVector implements TestVector {
    * @param expectedScore An interval for an expected score.
    * @param expectedLabel An expected label (can be null).
    * @param alias A alias of the test vector.
+   * @param expectedUnknownScore
+   *        If it's set to true, then an unknown score value is expected.
    * @param expectedNotApplicableScore
    *        If it's set to true, then a not-applicable score value is expected.
    */
   AbstractTestVector(Interval expectedScore, Label expectedLabel, String alias,
+      boolean expectedUnknownScore,
       boolean expectedNotApplicableScore) {
 
     Objects.requireNonNull(alias, "Hey! alias can't be null!");
 
-    if (expectedScore == null && !expectedNotApplicableScore) {
-      throw new IllegalArgumentException(
-          "Hey! Expected score can't be null unless a not-applicable value is expected!");
+    if (expectedScore == null && !expectedNotApplicableScore && !expectedUnknownScore) {
+      throw new IllegalArgumentException("Hey! Expected score can't be null "
+          + "unless a not-applicable or unknown value is expected!");
     }
 
     this.expectedScore = expectedScore;
     this.expectedLabel = expectedLabel;
     this.alias = alias;
+    this.expectedUnknownScore = expectedUnknownScore;
     this.expectedNotApplicableScore = expectedNotApplicableScore;
   }
 
@@ -59,6 +68,12 @@ public abstract class AbstractTestVector implements TestVector {
   @JsonGetter("expectedScore")
   public final Interval expectedScore() {
     return expectedScore;
+  }
+
+  @Override
+  @JsonGetter("expectedUnknownScore")
+  public boolean expectsUnknownScore() {
+    return expectedUnknownScore;
   }
 
   @Override
@@ -93,7 +108,8 @@ public abstract class AbstractTestVector implements TestVector {
       return false;
     }
     AbstractTestVector that = (AbstractTestVector) o;
-    return expectedNotApplicableScore == that.expectedNotApplicableScore
+    return expectedUnknownScore == that.expectedUnknownScore
+        && expectedNotApplicableScore == that.expectedNotApplicableScore
         && Objects.equals(expectedScore, that.expectedScore)
         && Objects.equals(expectedLabel, that.expectedLabel)
         && Objects.equals(alias, that.alias);
@@ -101,6 +117,7 @@ public abstract class AbstractTestVector implements TestVector {
 
   @Override
   public int hashCode() {
-    return Objects.hash(expectedScore, expectedNotApplicableScore, expectedLabel, alias);
+    return Objects.hash(
+        expectedScore, expectedUnknownScore, expectedNotApplicableScore, expectedLabel, alias);
   }
 }

@@ -15,7 +15,7 @@ public final class UnknownValue<T> implements Value<T> {
   /**
    * A feature.
    */
-  private final Feature feature;
+  private final Feature<T> feature;
 
   /**
    * This factory method returns an unknown values of a specified feature.
@@ -33,14 +33,14 @@ public final class UnknownValue<T> implements Value<T> {
    *
    * @param feature The feature.
    */
-  public UnknownValue(@JsonProperty("feature") Feature feature) {
+  public UnknownValue(@JsonProperty("feature") Feature<T> feature) {
     Objects.requireNonNull(feature, "Feature can't be null!");
     this.feature = feature;
   }
 
   @Override
   @JsonGetter("feature")
-  public final Feature feature() {
+  public final Feature<T> feature() {
     return feature;
   }
 
@@ -58,7 +58,7 @@ public final class UnknownValue<T> implements Value<T> {
 
   @Override
   public final T get() {
-    throw new UnsupportedOperationException(
+    throw new IllegalStateException(
         "It's an unknown value, get() method is not supposed to be called!");
   }
 

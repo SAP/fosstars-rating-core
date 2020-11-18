@@ -27,6 +27,11 @@ public class TestVectorBuilder {
   private Interval expectedScore;
 
   /**
+   * If it's set to true, then an unknown score value is expected.
+   */
+  private boolean expectUnknownScore = false;
+
+  /**
    * If it's set to true, then a not-applicable score value is expected.
    */
   private boolean expectNotApplicableScore = false;
@@ -75,6 +80,16 @@ public class TestVectorBuilder {
    */
   public TestVectorBuilder expectedScore(Interval interval) {
     expectedScore = interval;
+    return this;
+  }
+
+  /**
+   * Makes a test vector to expect an unknown value.
+   *
+   * @return This instance of TestVectorBuilder.
+   */
+  public TestVectorBuilder expectUnknownScore() {
+    expectUnknownScore = true;
     return this;
   }
 
@@ -161,9 +176,9 @@ public class TestVectorBuilder {
    * @return An instance of TestVector.
    */
   public StandardTestVector make() {
-    if (expectedScore == null && !expectNotApplicableScore) {
-      throw new IllegalArgumentException(
-          "Hey! Expected score can't be null unless a not-applicable value is expected!");
+    if (expectedScore == null && !expectNotApplicableScore && !expectUnknownScore) {
+      throw new IllegalArgumentException("Hey! Expected score can't be null "
+          + "unless a not-applicable or unknown value is expected!");
     }
 
     if (values.isEmpty()) {
@@ -172,7 +187,7 @@ public class TestVectorBuilder {
     }
 
     return new StandardTestVector(Collections.unmodifiableSet(values), expectedScore, expectedLabel,
-        alias, expectNotApplicableScore);
+        alias, expectUnknownScore, expectNotApplicableScore);
   }
 
 }

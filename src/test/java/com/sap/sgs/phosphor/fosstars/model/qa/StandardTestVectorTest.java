@@ -30,6 +30,8 @@ public class StandardTestVectorTest {
 
   private static final boolean NOT_APPLICABLE = true;
 
+  private static final boolean IS_KNOWN = false;
+
   @Test
   public void smoke() {
     Set<Value> values = new HashSet<>();
@@ -76,7 +78,7 @@ public class StandardTestVectorTest {
     Set<Value> values = new HashSet<>();
     values.add(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1));
     new StandardTestVector(
-        values, NO_EXPECTED_SCORE, SecurityLabelExample.OKAY, "test", NOT_APPLICABLE);
+        values, NO_EXPECTED_SCORE, SecurityLabelExample.OKAY, "test", IS_KNOWN, NOT_APPLICABLE);
   }
 
   @Test
@@ -203,7 +205,7 @@ public class StandardTestVectorTest {
     Set<Value> values = new HashSet<>();
     values.add(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1));
     StandardTestVector vector = new StandardTestVector(
-        values, null, SecurityLabelExample.OKAY, "test", true);
+        values, null, SecurityLabelExample.OKAY, "test", false, true);
 
     ObjectMapper mapper = new ObjectMapper();
     byte[] bytes = mapper.writeValueAsBytes(vector);
