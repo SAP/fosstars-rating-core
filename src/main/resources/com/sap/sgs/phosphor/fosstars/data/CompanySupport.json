@@ -1,6 +1,6 @@
 {
   "projects": {
-    "https://github.com/spring-projects": [ "Pivotal" ],
+    "https://github.com/spring-projects": [ "VMware" ],
     "https://github.com/SAP": [ "SAP" ],
     "https://github.com/GoogleChrome": [ "Google" ],
     "https://github.com/aws": [ "Amazon" ],
@@ -20,6 +20,10 @@
     "https://github.com/mozilla": [ "Mozilla" ],
     "https://github.com/zalando": [ "Zalando" ],
     "https://github.com/GoogleCloudPlatform": [ "Google" ],
-    "https://github.com/awslabs": [ "Amazon" ]
+    "https://github.com/awslabs": [ "Amazon" ],
+    "https://github.com/netty": [ "Apple" ],
+    "https://github.com/facebook": [ "Facebook" ],
+    "https://github.com/oracle": [ "Oracle" ],
+    "https://github.com/apple": [ "Apple" ]
   }
 }
