@@ -15,9 +15,11 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.OWASP_
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.OWASP_DEPENDENCY_CHECK_USAGE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.PACKAGE_MANAGERS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.PROJECT_START_DATE;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_CODEQL_SCANS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SIGNS_ARTIFACTS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_ADDRESS_SANITIZER;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_CODEQL_CHECKS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_DEPENDABOT;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_FIND_SEC_BUGS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GITHUB_FOR_DEVELOPMENT;
@@ -75,6 +77,8 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(UnknownValue.of(VULNERABILITIES))
           .set(UnknownValue.of(PROJECT_START_DATE))
           .set(UnknownValue.of(USES_SIGNED_COMMITS))
+          .set(UnknownValue.of(RUNS_CODEQL_SCANS))
+          .set(UnknownValue.of(USES_CODEQL_CHECKS))
           .set(UnknownValue.of(USES_LGTM_CHECKS))
           .set(UnknownValue.of(WORST_LGTM_GRADE))
           .set(UnknownValue.of(USES_NOHTTP))
@@ -112,6 +116,8 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(VULNERABILITIES.value(NO_VULNERABILITIES))
           .set(PROJECT_START_DATE.value(FIVE_YEARS_AGO))
           .set(USES_SIGNED_COMMITS.value(false))
+          .set(RUNS_CODEQL_SCANS.value(false))
+          .set(USES_CODEQL_CHECKS.value(false))
           .set(USES_LGTM_CHECKS.value(false))
           .set(WORST_LGTM_GRADE.unknown())
           .set(USES_NOHTTP.value(false))
@@ -149,6 +155,8 @@ public class OssSecurityScoreTuningWithCMAESTest {
           .set(VULNERABILITIES.value(NO_VULNERABILITIES))
           .set(PROJECT_START_DATE.value(FIVE_YEARS_AGO))
           .set(USES_SIGNED_COMMITS.value(true))
+          .set(RUNS_CODEQL_SCANS.value(true))
+          .set(USES_CODEQL_CHECKS.value(true))
           .set(USES_LGTM_CHECKS.value(true))
           .set(WORST_LGTM_GRADE.value(LgtmGrade.A_PLUS))
           .set(USES_NOHTTP.value(true))

@@ -3,6 +3,7 @@ defaults: []
 elements:
   - type: "ScoreTestVector"
     values:
+      com.sap.sgs.phosphor.fosstars.model.score.oss.CodeqlScore: 0.0
       com.sap.sgs.phosphor.fosstars.model.score.oss.LgtmScore: 0.0
       com.sap.sgs.phosphor.fosstars.model.score.oss.FindSecBugsScore: 0.0
     expectedScore:
@@ -18,6 +19,7 @@ elements:
     expectedNotApplicableScore: false
   - type: "ScoreTestVector"
     values:
+      com.sap.sgs.phosphor.fosstars.model.score.oss.CodeqlScore: 10.0
       com.sap.sgs.phosphor.fosstars.model.score.oss.LgtmScore: 10.0
       com.sap.sgs.phosphor.fosstars.model.score.oss.FindSecBugsScore: 10.0
     expectedScore:
@@ -33,14 +35,15 @@ elements:
     expectedNotApplicableScore: false
   - type: "ScoreTestVector"
     values:
+      com.sap.sgs.phosphor.fosstars.model.score.oss.CodeqlScore: 5.0
       com.sap.sgs.phosphor.fosstars.model.score.oss.LgtmScore: 8.0
       com.sap.sgs.phosphor.fosstars.model.score.oss.FindSecBugsScore: 2.0
     expectedScore:
       type: "DoubleInterval"
-      from: 10.0
+      from: 5.0
       openLeft: false
       negativeInfinity: false
-      to: 10.0
+      to: 7.0
       openRight: false
       positiveInfinity: false
     expectedLabel: null
@@ -48,14 +51,15 @@ elements:
     expectedNotApplicableScore: false
   - type: "ScoreTestVector"
     values:
+      com.sap.sgs.phosphor.fosstars.model.score.oss.CodeqlScore: 2.0
       com.sap.sgs.phosphor.fosstars.model.score.oss.LgtmScore: 1.0
       com.sap.sgs.phosphor.fosstars.model.score.oss.FindSecBugsScore: 3.0
     expectedScore:
       type: "DoubleInterval"
-      from: 4.0
+      from: 1.0
       openLeft: false
       negativeInfinity: false
-      to: 4.0
+      to: 3.0
       openRight: false
       positiveInfinity: false
     expectedLabel: null
@@ -63,6 +67,16 @@ elements:
     expectedNotApplicableScore: false
   - type: "StandardTestVector"
     values:
+      - type: "ScoreValue"
+        score:
+          type: "CodeqlScore"
+          name: "How a project uses CodeQL"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: [ ]
+        explanation: [ ]
+        isNotApplicable: true
       - type: "ScoreValue"
         score:
           type: "LgtmScore"
@@ -96,14 +110,15 @@ elements:
     alias: "all_not_applicable"
   - type: "ScoreTestVector"
     values:
+      com.sap.sgs.phosphor.fosstars.model.score.oss.CodeqlScore: 0.0
       com.sap.sgs.phosphor.fosstars.model.score.oss.LgtmScore: 1.0
       com.sap.sgs.phosphor.fosstars.model.score.oss.FindSecBugsScore: 3.0
     expectedScore:
       type: "DoubleInterval"
-      from: 4.0
+      from: 1.0
       openLeft: false
       negativeInfinity: false
-      to: 4.0
+      to: 3.0
       openRight: false
       positiveInfinity: false
     expectedLabel: null
@@ -111,6 +126,16 @@ elements:
     expectedNotApplicableScore: false
   - type: "StandardTestVector"
     values:
+      - type: "ScoreValue"
+        score:
+          type: "CodeqlScore"
+          name: "How a project uses CodeQL"
+        value: 5.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: [ ]
+        explanation: [ ]
+        isNotApplicable: false
       - type: "ScoreValue"
         score:
           type: "LgtmScore"
@@ -146,6 +171,59 @@ elements:
     values:
       - type: "ScoreValue"
         score:
+          type: "CodeqlScore"
+          name: "How a project uses CodeQL"
+        value: 5.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: [ ]
+        explanation: [ ]
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "LgtmScore"
+          name: "How a project addresses issues reported by LGTM"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: true
+      - type: "ScoreValue"
+        score:
+          type: "FindSecBugsScore"
+          name: "How a project uses FindSecBugs"
+        value: 3.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
+    expectedScore:
+      type: "DoubleInterval"
+      from: 3.0
+      openLeft: false
+      negativeInfinity: false
+      to: 5.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    expectedNotApplicableScore: false
+    alias: "lgtm_not_applicable"
+  - type: "StandardTestVector"
+    values:
+      - type: "ScoreValue"
+        score:
+          type: "CodeqlScore"
+          name: "How a project uses CodeQL"
+        value: 5.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: [ ]
+        explanation: [ ]
+        isNotApplicable: true
+      - type: "ScoreValue"
+        score:
           type: "LgtmScore"
           name: "How a project addresses issues reported by LGTM"
         value: 0.0
@@ -174,4 +252,42 @@ elements:
       positiveInfinity: false
     expectedLabel: null
     expectedNotApplicableScore: false
-    alias: "lgtm_not_applicable"
+    alias: "codeql_not_applicable"
+  - type: "StandardTestVector"
+    values:
+      - type: "UnknownValue"
+        feature:
+          type: "LgtmGradeFeature"
+          name: "The worst LGTM grade of a project"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses LGTM checks for commits"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs CodeQL checks for commits"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs CodeQL scans"
+      - type: "UnknownValue"
+        feature:
+          type: "LanguagesFeature"
+          name: "A set of programming languages"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project uses FindSecBugs"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 0.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    expectedNotApplicableScore: false
+    expectedUnknownScore: true
+    alias: "all_unknown"

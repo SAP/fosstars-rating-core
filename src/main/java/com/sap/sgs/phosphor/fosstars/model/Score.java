@@ -8,6 +8,7 @@ import com.sap.sgs.phosphor.fosstars.model.score.WeightedCompositeScore;
 import com.sap.sgs.phosphor.fosstars.model.score.example.ProjectActivityScoreExample;
 import com.sap.sgs.phosphor.fosstars.model.score.example.SecurityScoreExample;
 import com.sap.sgs.phosphor.fosstars.model.score.example.SecurityTestingScoreExample;
+import com.sap.sgs.phosphor.fosstars.model.score.oss.CodeqlScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.CommunityCommitmentScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.DependabotScore;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.DependencyScanScore;
@@ -55,6 +56,7 @@ import java.util.Set;
     @JsonSubTypes.Type(value = OssSecurityScore.class),
     @JsonSubTypes.Type(value = DependencyScanScore.class),
     @JsonSubTypes.Type(value = LgtmScore.class),
+    @JsonSubTypes.Type(value = CodeqlScore.class),
     @JsonSubTypes.Type(value = NoHttpToolScore.class),
     @JsonSubTypes.Type(value = MemorySafetyTestingScore.class),
     @JsonSubTypes.Type(value = FindSecBugsScore.class),

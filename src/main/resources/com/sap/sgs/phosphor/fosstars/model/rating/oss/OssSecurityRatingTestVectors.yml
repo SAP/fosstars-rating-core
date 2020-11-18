@@ -87,6 +87,16 @@ defaults:
     type: "BooleanFeature"
     name: "If a project uses OWASP Java Encoder"
   flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If a project runs CodeQL scans"
+  flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If a project runs CodeQL checks for commits"
+  flag: false
 
 # test vectors
 elements:
@@ -531,6 +541,16 @@ elements:
     packageManagers:
       packageManagers:
         - "MAVEN"
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project runs CodeQL checks for commits"
+    flag: true
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project runs CodeQL scans"
+    flag: true
   expectedScore:
     type: "DoubleInterval"
     from: 3.0
