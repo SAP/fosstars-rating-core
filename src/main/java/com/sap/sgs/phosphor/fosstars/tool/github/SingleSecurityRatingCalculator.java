@@ -1,6 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.tool.github;
 
 import com.sap.sgs.phosphor.fosstars.data.DataProvider;
+import com.sap.sgs.phosphor.fosstars.data.github.CodeqlDataProvider;
 import com.sap.sgs.phosphor.fosstars.data.github.FuzzedInOssFuzz;
 import com.sap.sgs.phosphor.fosstars.data.github.GitHubDataFetcher;
 import com.sap.sgs.phosphor.fosstars.data.github.HasBugBountyProgram;
@@ -124,6 +125,7 @@ class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
         new InfoAboutVulnerabilities(fetcher, nvd),
         new IsApache(fetcher),
         new IsEclipse(fetcher),
+        new CodeqlDataProvider(fetcher),
         new LgtmDataProvider(fetcher),
         new UsesSignedCommits(fetcher),
         new UsesDependabot(fetcher),
