@@ -262,6 +262,23 @@ public class LocalRepository implements AutoCloseable {
     }
   }
 
+  /**
+   * Looks for files in a subdirectory of the repository.
+   *
+   * @param directory A path to the subdirectory.
+   * @param criteria Defines which files should be returned.
+   * @return A list of files that match the criteria.
+   * @throws IOException If something went wrong.
+   */
+  public List<Path> files(Path directory, Predicate<Path> criteria) throws IOException {
+    Objects.requireNonNull(directory, "Oh no! Directory is null!");
+    Objects.requireNonNull(criteria, "Oh no! Search criteria is null!");
+
+    try (Stream<Path> paths = Files.walk(info().path().resolve(directory))) {
+      return paths.filter(criteria).collect(Collectors.toList());
+    }
+  }
+
   @Override
   public void close() {
     repository.close();

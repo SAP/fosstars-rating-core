@@ -10,18 +10,17 @@ import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
-import java.io.BufferedReader;
+import com.sap.sgs.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import org.kohsuke.github.GHCheckRun;
-import org.kohsuke.github.GHCommit;
-import org.kohsuke.github.GHException;
+import org.apache.commons.collections4.IteratorUtils;
 
 /**
  * The data provider gathers info about how a project uses CodeQL for static analysis.
@@ -34,11 +33,6 @@ import org.kohsuke.github.GHException;
  * @see LgtmDataProvider
  */
 public class CodeqlDataProvider extends GitHubCachingDataProvider {
-
-  /**
-   * The number of latest commits to be checked.
-   */
-  private static final int COMMITS_TO_BE_CHECKED = 20;
 
   /**
    * A directory where GitHub Actions configs are stored.
@@ -54,12 +48,7 @@ public class CodeqlDataProvider extends GitHubCachingDataProvider {
   /**
    * A step in a GitHub action that triggers analysis with CodeQL.
    */
-  private static final String CODEQL_ANALYZE_STEP_CALL = "uses: github/codeql-action/analyze";
-
-  /**
-   * A pattern to check if a check in a pull request is for CodeQL scan (lowercase).
-   */
-  private static final String CODEQL_CHECK_PATTERN = "codeql";
+  private static final String CODEQL_ANALYZE_STEP_TASK = "github/codeql-action/analyze";
 
   /**
    * Initializes a data provider.
@@ -78,52 +67,85 @@ public class CodeqlDataProvider extends GitHubCachingDataProvider {
   @Override
   protected ValueSet fetchValuesFor(GitHubProject project) throws IOException {
     logger.info("Figuring out how the project uses CodeQL ...");
-    return ValueHashSet.from(usesCodeqlChecks(project), runsCodeqlScans(project));
-  }
 
-  /**
-   * Checks if a project uses CodeQL checks for pull requests.
-   *
-   * @param project The project to be checked.
-   * @return A value of the {@link OssFeatures#USES_CODEQL_CHECKS} feature.
-   * @throws IOException If something went wrong.
-   */
-  private Value<Boolean> usesCodeqlChecks(GitHubProject project) throws IOException {
-    for (GHCommit commit : fetcher.githubCommitsFor(project, COMMITS_TO_BE_CHECKED)) {
-      if (hasCodeqlChecks(commit)) {
-        return USES_CODEQL_CHECKS.value(true);
-      }
-    }
-
-    return USES_CODEQL_CHECKS.value(false);
-  }
-
-  /**
-   * Checks if a project runs CodeQL checks on pull requests.
-   *
-   * @param project The project to be checked.
-   * @return A value of the {@link OssFeatures#RUNS_CODEQL_SCANS} feature.
-   * @throws IOException If something went wrong.
-   */
-  private Value<Boolean> runsCodeqlScans(GitHubProject project) throws IOException {
     LocalRepository repository = GitHubDataFetcher.localRepositoryFor(project);
-    for (Path path : repository.files(CodeqlDataProvider::isGitHubActionConfig)) {
-      Optional<InputStream> content = repository.read(path);
+
+    List<Path> githubActionConfigs = repository.files(
+        Paths.get(GITHUB_ACTIONS_DIRECTORY), CodeqlDataProvider::isGitHubActionConfig);
+
+    Value<Boolean> runsCodeqlScans = RUNS_CODEQL_SCANS.value(false);
+    Value<Boolean> usesCodeqlChecks = USES_CODEQL_CHECKS.value(false);
+
+    // ideally, we're looking for a GitHub action that runs CodeQL scan on pull requests
+    // but if we just find an action that runs CodeQL scans, that's also fine
+    for (Path configPath : githubActionConfigs) {
+      Optional<InputStream> content = repository.read(configPath);
       if (!content.isPresent()) {
         continue;
       }
 
-      try (BufferedReader reader = new BufferedReader(new InputStreamReader(content.get()))) {
-        String line;
-        while ((line = reader.readLine()) != null) {
-          if (line.trim().startsWith(CODEQL_ANALYZE_STEP_CALL)) {
-            return RUNS_CODEQL_SCANS.value(true);
-          }
+      Map<String, Object> githubAction = Yaml.readMap(content.get());
+      if (triggersCodeqlScan(githubAction)) {
+        runsCodeqlScans = RUNS_CODEQL_SCANS.value(true);
+        if (runsOnPullRequests(githubAction)) {
+          usesCodeqlChecks = USES_CODEQL_CHECKS.value(true);
+          break;
         }
       }
     }
 
-    return RUNS_CODEQL_SCANS.value(false);
+    return ValueHashSet.from(usesCodeqlChecks, runsCodeqlScans);
+  }
+
+  /**
+   * Checks if a GitHub action triggers a CodeQL scan.
+   *
+   * @param githubAction A config for the action.
+   * @return True if the action triggers a CodeQL scan, false otherwise.
+   */
+  private static boolean triggersCodeqlScan(Map<?, ?> githubAction) {
+    return Optional.ofNullable(githubAction.get("jobs"))
+        .filter(Map.class::isInstance)
+        .map(Map.class::cast)
+        .map(jobs -> jobs.get("analyze"))
+        .filter(Map.class::isInstance)
+        .map(Map.class::cast)
+        .map(jobs -> jobs.get("steps"))
+        .filter(Iterable.class::isInstance)
+        .map(Iterable.class::cast)
+        .map(CodeqlDataProvider::hasCodeqlAnalyzeStep)
+        .orElse(false);
+  }
+
+  /**
+   * Checks if a collection of steps from a GitHub action contains a step that triggers
+   * a CodeQL scan.
+   *
+   * @param steps The steps to be checked.
+   * @return True if the steps contain a step that triggers a CodeQL scan, false otherwise.
+   */
+  private static boolean hasCodeqlAnalyzeStep(Iterable<?> steps) {
+    return IteratorUtils.toList(steps.iterator()).stream()
+        .filter(Map.class::isInstance)
+        .map(Map.class::cast)
+        .map(step -> step.get("uses"))
+        .filter(String.class::isInstance)
+        .map(String.class::cast)
+        .anyMatch(uses -> uses.startsWith(CODEQL_ANALYZE_STEP_TASK));
+  }
+
+  /**
+   * Checks if a GitHub action runs on pull requests.
+   *
+   * @param githubAction A config of the action.
+   * @return True if the action runs on pull requests, false otherwise.
+   */
+  private static boolean runsOnPullRequests(Map<?, ?> githubAction) {
+    return Optional.ofNullable(githubAction.get("on"))
+        .filter(Map.class::isInstance)
+        .map(Map.class::cast)
+        .map(on -> on.containsKey("pull_request"))
+        .orElse(false);
   }
 
   /**
@@ -133,30 +155,7 @@ public class CodeqlDataProvider extends GitHubCachingDataProvider {
    * @return True if a file looks like a config for a GitHub action, false otherwise.
    */
   private static boolean isGitHubActionConfig(Path path) {
-    return path.startsWith(GITHUB_ACTIONS_DIRECTORY)
-        && GITHUB_ACTIONS_CONFIG_EXTENSIONS.stream()
-              .anyMatch(ext -> path.getFileName().endsWith(ext));
-  }
-
-  /**
-   * Checks if a commit has CodeQL checks.
-   *
-   * @param commit The commit to be checked.
-   * @return True if the commit has CodeQL checks, false otherwise.
-   * @throws IOException If something went wrong.
-   */
-  private boolean hasCodeqlChecks(GHCommit commit) throws IOException {
-    try {
-      for (GHCheckRun checkRun : commit.getCheckRuns()) {
-        if (checkRun.getName().toLowerCase().contains(CODEQL_CHECK_PATTERN)) {
-          return true;
-        }
-      }
-    } catch (GHException e) {
-      logger.warn("Oops! Something went wrong: {}", e.getMessage());
-      logger.debug("Here is what happened: ", e);
-    }
-
-    return false;
+    return GITHUB_ACTIONS_CONFIG_EXTENSIONS
+        .stream().anyMatch(ext -> path.getFileName().toString().endsWith(ext));
   }
 }
