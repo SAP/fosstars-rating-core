@@ -72,8 +72,38 @@ The output is going to look like the following:
 [+] Project: https://github.com/apache/beam
 [+] Let's gather info and calculate a security rating for:
 [+]   https://github.com/apache/beam
+[+] Counting how many commits have been done in the last three months ...
+[+] Pulling updates from https://github.com/apache/beam ...
+[+] Counting how many people contributed to the project in the last three months ...
+[+] Counting how many stars the project has ...
+[+] Counting how many watchers the project has ...
+[+] Figuring out if the project has a security team ...
+[+] Figuring out if the project is supported by a company ...
+[+] Figuring out if the project has a security policy ...
+[+] Figuring out if the project has a bug bounty program ...
+[+] Looking for vulnerabilities in the project ...
+[+] Figuring out if the project has any unpatched vulnerability ...
+[+] Looking for vulnerabilities in NVD ...
+[+] Figuring out if the project belongs to the Apache Software Foundation ...
+[+] Figuring out if the project belongs to the Eclipse Software Foundation ...
+[+] Figuring out how the project uses CodeQL ...
+[+] Figuring out how the project uses LGTM ...
+[+] Figuring out if the project uses signed commits ...
+[+] Checking if the project uses Dependabot ...
+[+] Looking for programming languages that are used in the project...
+[+] Looking for package managers ...
+[+] Looking for programming languages that are used in the project...
+[+] Figuring out if the project uses nohttp ...
+[+] Figuring out if the project uses GitHub for development ...
+[+] Figuring out if the project uses OWASP Dependency Check ...
+[+] Figuring out if the project uses sanitizers ...
+[+] Figuring out if the project uses FindSecBugs ...
+[+] Figuring out if the project is fuzzed in OSS-Fuzz ...
+[+] Figuring out if the project signs jar files ...
+[+] Figuring out if the project uses OWASP security libraries ...
 [+] Here is what we know about the project:
 [+]    If an open-source project belongs to Eclipse Foundation: false
+[+]    If a project runs CodeQL scans: false
 [+]    If a project uses LGTM checks for commits: false
 [+]    If a project uses OWASP Java Encoder: false
 [+]    If a project uses Dependabot: false
@@ -82,9 +112,9 @@ The output is going to look like the following:
 [+]    If an open-source project uses FindSecBugs: false
 [+]    If a project signs artifacts: false
 [+]    Info about vulnerabilities in open-source project: 1 vulnerability
-[+]    Number of stars for a GitHub repository: 4199
-[+]    Number of contributors in the last three months: 93
-[+]    Number of commits in the last three months: 1388
+[+]    Number of stars for a GitHub repository: 4373
+[+]    Number of contributors in the last three months: 70
+[+]    Number of commits in the last three months: 1126
 [+]    If an open-source project belongs to Apache Foundation: true
 [+]    If a project uses OWASP Enterprise Security API (ESAPI): false
 [+]    If a project uses signed commits: false
@@ -93,24 +123,25 @@ The output is going to look like the following:
 [+]    How OWASP Dependency Check is used: NOT_USED
 [+]    If a project uses nohttp tool: false
 [+]    If a project has a bug bounty program: false
-[+]    Number of watchers for a GitHub repository: 257
+[+]    Number of watchers for a GitHub repository: 254
 [+]    A set of programming languages: C, JAVA, PYTHON, JAVASCRIPT, OTHER
 [+]    If an open-source project has a security policy: false
 [+]    If an open-source project is included to OSS-Fuzz project: false
 [+]    If a project uses OWASP Java HTML Sanitizer: false
 [+]    A CVSS threshold for OWASP Dependency Check to fail the build: 0.0
 [+]    If an open-source project uses UndefinedBehaviorSanitizer: false
+[+]    If a project runs CodeQL checks for commits: false
 [+]    A set of package managers: GRADLE
-[+]    The worst LGTM grade of a project: B
+[+]    The worst LGTM grade of a project: C
 [+]    If an open-source project is supported by a company: false
 [+] Here is how the rating was calculated:
 [+]   Score:........Security of project
-[+]   Value:........4.71 out of 10.0
+[+]   Value:........4.64 out of 10.0
 [+]   Confidence:...Max (10.0 out of 10.0)
 [+]   Based on:.....7 sub-scores:
 [+]       Sub-score:....Security testing
 [+]       Importance:...High (weight 1.0  out of  1.0)
-[+]       Value:........0.89 out of 10.0
+[+]       Value:........0.44 out of 10.0
 [+]       Confidence:...Max (10.0 out of 10.0)
 [+]       Based on:.....5 sub-scores:
 [+]           Sub-score:....Dependency testing
@@ -137,28 +168,6 @@ The output is going to look like the following:
 [+]                   What is the threshold for OWASP Dependency Check?....Not specified
 [+] 
 [+] 
-[+]           Sub-score:....Static analysis
-[+]           Importance:...High (weight 1.0  out of  1.0)
-[+]           Value:........4.0  out of 10.0
-[+]           Confidence:...Max (10.0 out of 10.0)
-[+]           Based on:.....2 sub-scores:
-[+]               Sub-score:....LGTM score
-[+]               Importance:...High (weight 1.0  out of  1.0)
-[+]               Value:........4.0  out of 10.0
-[+]               Confidence:...Max (10.0 out of 10.0)
-[+]               Based on:...2 features:
-[+]                   Does it use LGTM checks?...............No
-[+]                   The worst LGTM grade of the project:...B
-[+] 
-[+]               Sub-score:....FindSecBugs score
-[+]               Importance:...High (weight 1.0  out of  1.0)
-[+]               Value:........0.0  out of 10.0
-[+]               Confidence:...Max (10.0 out of 10.0)
-[+]               Based on:...2 features:
-[+]                   A set of programming languages:...C, JAVA, PYTHON, JAVASCRIPT, OTHER
-[+]                   Does it use FindSecBugs?..........No
-[+] 
-[+] 
 [+]           Sub-score:....Fuzzing
 [+]           Importance:...High (weight 1.0  out of  1.0)
 [+]           Value:........0.0  out of 10.0
@@ -166,6 +175,36 @@ The output is going to look like the following:
 [+]           Based on:...2 features:
 [+]               A set of programming languages:...C, JAVA, PYTHON, JAVASCRIPT, OTHER
 [+]               Is it included to OSS-Fuzz?.......No
+[+] 
+[+]           Sub-score:....Static analysis
+[+]           Importance:...High (weight 1.0  out of  1.0)
+[+]           Value:........2.0  out of 10.0
+[+]           Confidence:...Max (10.0 out of 10.0)
+[+]           Based on:.....3 sub-scores:
+[+]               Sub-score:....LGTM score
+[+]               Importance:...High (weight 1.0  out of  1.0)
+[+]               Value:........5.0  out of 10.0
+[+]               Confidence:...Max (10.0 out of 10.0)
+[+]               Based on:...1 features:
+[+]                   The worst LGTM grade of the project:...C
+[+] 
+[+]               Sub-score:....How a project uses CodeQL
+[+]               Importance:...High (weight 1.0  out of  1.0)
+[+]               Value:........0.0  out of 10.0
+[+]               Confidence:...Max (10.0 out of 10.0)
+[+]               Based on:...3 features:
+[+]                   Does it use LGTM checks?.......................No
+[+]                   If a project runs CodeQL checks for commits:...No
+[+]                   If a project runs CodeQL scans:................No
+[+] 
+[+]               Sub-score:....FindSecBugs score
+[+]               Importance:...Medium (weight 0.5  out of  1.0)
+[+]               Value:........0.0  out of 10.0
+[+]               Confidence:...Max (10.0 out of 10.0)
+[+]               Based on:...2 features:
+[+]                   A set of programming languages:...C, JAVA, PYTHON, JAVASCRIPT, OTHER
+[+]                   Does it use FindSecBugs?..........No
+[+] 
 [+] 
 [+]           Sub-score:....Memory-safety testing
 [+]           Importance:...High (weight 1.0  out of  1.0)
@@ -242,7 +281,7 @@ The output is going to look like the following:
 [+]       Based on:.....1 sub-scores:
 [+]           Sub-score:....Security testing
 [+]           Importance:...High (weight 1.0  out of  1.0)
-[+]           Value:........0.89 out of 10.0
+[+]           Value:........0.44 out of 10.0
 [+]           Confidence:...Max (10.0 out of 10.0)
 [+] 
 [+]       Based on:...1 features:
@@ -263,8 +302,8 @@ The output is going to look like the following:
 [+]       Value:........10.0 out of 10.0
 [+]       Confidence:...Max (10.0 out of 10.0)
 [+]       Based on:...2 features:
-[+]           Number of commits in the last three months:........1388
-[+]           Number of contributors in the last three months:...93
+[+]           Number of commits in the last three months:........1126
+[+]           Number of contributors in the last three months:...70
 [+] 
 [+]       Sub-score:....Community commitment
 [+]       Importance:...Medium (weight 0.5  out of  1.0)
@@ -288,13 +327,13 @@ The output is going to look like the following:
 [+]                     0 -> 0.00 (min), 450 -> 1.50, 750 -> 2.50,
 [+]                     3000 -> 10.00 (max)
 [+]       Importance:...Medium (weight 0.5  out of  1.0)
-[+]       Value:........5.06 out of 10.0
+[+]       Value:........5.22 out of 10.0
 [+]       Confidence:...Max (10.0 out of 10.0)
 [+]       Based on:...2 features:
-[+]           Number of stars for a GitHub repository:......4199
-[+]           Number of watchers for a GitHub repository:...257
+[+]           Number of stars for a GitHub repository:......4373
+[+]           Number of watchers for a GitHub repository:...254
 [+] 
-[+] Rating:     4.71 out of 10.0 -> GOOD
+[+] Rating:     4.64 out of 10.0 -> MODERATE
 [+] Confidence: Max (10.0 out of 10.0)
 [+] Bye!
 ```
