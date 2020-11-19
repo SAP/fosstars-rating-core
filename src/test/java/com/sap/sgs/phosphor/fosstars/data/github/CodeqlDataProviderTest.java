@@ -9,14 +9,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
-import com.sap.sgs.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,11 +24,6 @@ import java.util.Optional;
 import java.util.Set;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
-import org.kohsuke.github.GHCheckRun;
-import org.kohsuke.github.GHCommit;
-import org.kohsuke.github.GHRepository;
-import org.kohsuke.github.PagedIterable;
-import org.kohsuke.github.PagedIterator;
 
 public class CodeqlDataProviderTest extends TestGitHubDataFetcherHolder {
 
@@ -50,69 +43,43 @@ public class CodeqlDataProviderTest extends TestGitHubDataFetcherHolder {
   }
 
   @Test
-  public void testWithoutCodeqlCheck() throws IOException {
-    testCodeqlCheck("Another check", false);
-  }
-
-  @Test
-  public void testWithCodeqlCheck() throws IOException {
-    testCodeqlCheck("CodeQL / Analyze (java) (pull_request)", true);
-  }
-
-  @Test
   public void testWithoutCodeqlRuns() throws IOException {
     try (InputStream content = getClass().getResourceAsStream("no-codeql-analysis.yml")) {
-      testCodeqlRuns(".github/workflows/action.yml", content, false);
+      testCodeqlRuns(".github/workflows/action.yml", content,
+          USES_CODEQL_CHECKS.value(false), RUNS_CODEQL_SCANS.value(false));
     }
   }
 
   @Test
-  public void testWithCodeqlRuns() throws IOException {
-    try (InputStream content = getClass().getResourceAsStream("codeql-analysis.yml")) {
-      testCodeqlRuns(".github/workflows/codeql.yml", content, true);
+  public void testWithCodeqlRunsAndChecks() throws IOException {
+    try (InputStream content = getClass().getResourceAsStream("codeql-analysis-with-pr.yml")) {
+      testCodeqlRuns(".github/workflows/codeql.yml", content,
+          USES_CODEQL_CHECKS.value(true), RUNS_CODEQL_SCANS.value(true));
     }
   }
 
-  private void testCodeqlRuns(String filename, InputStream content, boolean expectedValue)
-      throws IOException {
-
-    GHRepository repository = mock(GHRepository.class);
-    mockCommitChecks(repository, "Some check");
-    mockFile(filename, String.join("\n", IOUtils.readLines(content)));
-
-    when(fetcher.github().getRepository(anyString())).thenReturn(repository);
-
-    CodeqlDataProvider provider = new CodeqlDataProvider(fetcher);
-
-    ValueSet values = provider.fetchValuesFor(PROJECT);
-
-    assertEquals(2, values.size());;
-    assertTrue(values.has(RUNS_CODEQL_SCANS));
-    Optional<Value> something = values.of(RUNS_CODEQL_SCANS);
-    assertTrue(something.isPresent());
-    assertTrue(something.get() instanceof BooleanValue);
-    Value<Boolean> value = something.get();
-    assertEquals(expectedValue, value.get());
+  @Test
+  public void testWithCodeqlRunsButWithoutChecks() throws IOException {
+    try (InputStream content = getClass().getResourceAsStream("codeql-analysis-without-pr.yml")) {
+      testCodeqlRuns(".github/workflows/codeql.yml", content,
+          USES_CODEQL_CHECKS.value(false), RUNS_CODEQL_SCANS.value(true));
+    }
   }
 
-  private void testCodeqlCheck(String checkName, boolean expectedValue) throws IOException {
-    GHRepository repository = mock(GHRepository.class);
-    mockCommitChecks(repository, checkName);
-    mockFile(".github/workflows/action.yml", "test");
+  private void testCodeqlRuns(String filename, InputStream content, Value<?>... expectedValues)
+      throws IOException {
 
-    when(fetcher.github().getRepository(anyString())).thenReturn(repository);
+    mockFile(filename, String.join("\n", IOUtils.readLines(content)));
 
     CodeqlDataProvider provider = new CodeqlDataProvider(fetcher);
-
     ValueSet values = provider.fetchValuesFor(PROJECT);
 
-    assertEquals(2, values.size());;
-    assertTrue(values.has(USES_CODEQL_CHECKS));
-    Optional<Value> something = values.of(USES_CODEQL_CHECKS);
-    assertTrue(something.isPresent());
-    assertTrue(something.get() instanceof BooleanValue);
-    Value<Boolean> value = something.get();
-    assertEquals(expectedValue, value.get());
+    assertEquals(2, expectedValues.length);
+    for (Value<?> expectedValue : expectedValues) {
+      Optional<Value> something = values.of(expectedValue.feature());
+      assertTrue(something.isPresent());
+      assertEquals(expectedValue, something.get());
+    }
   }
 
   private static void mockFile(String filename, String content) throws IOException {
@@ -120,33 +87,8 @@ public class CodeqlDataProviderTest extends TestGitHubDataFetcherHolder {
     when(repository.file(filename)).thenReturn(Optional.of(content));
     when(repository.read(Paths.get(filename)))
         .thenReturn(Optional.of(IOUtils.toInputStream(content)));
-    when(repository.files(any())).thenReturn(Collections.singletonList(Paths.get(filename)));
+    when(repository.files(any(), any())).thenReturn(Collections.singletonList(Paths.get(filename)));
     addForTesting(PROJECT, repository);
   }
 
-  private static void mockCommitChecks(GHRepository repository, String checkName)
-      throws IOException {
-
-    GHCheckRun checkRun = mock(GHCheckRun.class);
-    when(checkRun.getName()).thenReturn(checkName);
-
-    PagedIterator<GHCheckRun> checkRunPagedIterator = mock(PagedIterator.class);
-    when(checkRunPagedIterator.hasNext()).thenReturn(true, false);
-    when(checkRunPagedIterator.next()).thenReturn(checkRun);
-
-    PagedIterable<GHCheckRun> checkRunPagedIterable = mock(PagedIterable.class);
-    when(checkRunPagedIterable.iterator()).thenReturn(checkRunPagedIterator);
-
-    GHCommit commit = mock(GHCommit.class);
-    when(commit.getCheckRuns()).thenReturn(checkRunPagedIterable);
-
-    PagedIterator<GHCommit> commitPagedIterator = mock(PagedIterator.class);
-    when(commitPagedIterator.hasNext()).thenReturn(true, false);
-    when(commitPagedIterator.next()).thenReturn(commit);
-
-    PagedIterable<GHCommit> commitPagedIterable = mock(PagedIterable.class);
-    when(commitPagedIterable.iterator()).thenReturn(commitPagedIterator);
-
-    when(repository.listCommits()).thenReturn(commitPagedIterable);
-  }
 }
