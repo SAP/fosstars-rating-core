@@ -20,7 +20,8 @@ elements:
     openRight: false
     positiveInfinity: false
   expectedLabel: null
-  alias: "test_vector_0"
+  expectedUnknownScore: true
+  alias: "all_unknown"
 - type: "StandardTestVector"
   values:
   - type: "IntegerValue"
@@ -38,7 +39,7 @@ elements:
     from: 0.0
     openLeft: false
     negativeInfinity: false
-    to: 0.5
+    to: 0.1
     openRight: false
     positiveInfinity: false
   expectedLabel: null
@@ -54,13 +55,13 @@ elements:
     feature:
       type: "PositiveIntegerFeature"
       name: "Number of commits in the last three months"
-    number: 5
+    number: 10
   expectedScore:
     type: "DoubleInterval"
-    from: 0.0
+    from: 1.0
     openLeft: false
     negativeInfinity: false
-    to: 2.0
+    to: 3.0
     openRight: false
     positiveInfinity: false
   expectedLabel: null
@@ -71,18 +72,18 @@ elements:
     feature:
       type: "PositiveIntegerFeature"
       name: "Number of contributors in the last three months"
-    number: 3
+    number: 1
   - type: "IntegerValue"
     feature:
       type: "PositiveIntegerFeature"
       name: "Number of commits in the last three months"
-    number: 50
+    number: 40
   expectedScore:
     type: "DoubleInterval"
-    from: 1.5
+    from: 6.0
     openLeft: false
     negativeInfinity: false
-    to: 3.0
+    to: 7.0
     openRight: false
     positiveInfinity: false
   expectedLabel: null
@@ -98,13 +99,13 @@ elements:
     feature:
       type: "PositiveIntegerFeature"
       name: "Number of commits in the last three months"
-    number: 20
+    number: 100
   expectedScore:
     type: "DoubleInterval"
-    from: 0.0
+    from: 9.0
     openLeft: false
     negativeInfinity: false
-    to: 2.0
+    to: 10.0
     openRight: false
     positiveInfinity: false
   expectedLabel: null
@@ -115,12 +116,12 @@ elements:
     feature:
       type: "PositiveIntegerFeature"
       name: "Number of contributors in the last three months"
-    number: 1
+    number: 2
   - type: "IntegerValue"
     feature:
       type: "PositiveIntegerFeature"
       name: "Number of commits in the last three months"
-    number: 200
+    number: 30
   expectedScore:
     type: "DoubleInterval"
     from: 3.0
@@ -137,12 +138,12 @@ elements:
     feature:
       type: "PositiveIntegerFeature"
       name: "Number of contributors in the last three months"
-    number: 1
+    number: 3
   - type: "IntegerValue"
     feature:
       type: "PositiveIntegerFeature"
       name: "Number of commits in the last three months"
-    number: 500
+    number: 30
   expectedScore:
     type: "DoubleInterval"
     from: 5.0
@@ -159,7 +160,7 @@ elements:
     feature:
       type: "PositiveIntegerFeature"
       name: "Number of contributors in the last three months"
-    number: 20
+    number: 4
   - type: "IntegerValue"
     feature:
       type: "PositiveIntegerFeature"
@@ -167,10 +168,10 @@ elements:
     number: 50
   expectedScore:
     type: "DoubleInterval"
-    from: 5.0
+    from: 8.0
     openLeft: false
     negativeInfinity: false
-    to: 6.5
+    to: 9.0
     openRight: false
     positiveInfinity: false
   expectedLabel: null
@@ -181,18 +182,18 @@ elements:
     feature:
       type: "PositiveIntegerFeature"
       name: "Number of contributors in the last three months"
-    number: 20
+    number: 6
   - type: "IntegerValue"
     feature:
       type: "PositiveIntegerFeature"
       name: "Number of commits in the last three months"
-    number: 200
+    number: 50
   expectedScore:
     type: "DoubleInterval"
-    from: 7.0
+    from: 8.0
     openLeft: false
     negativeInfinity: false
-    to: 9.0
+    to: 9.5
     openRight: false
     positiveInfinity: false
   expectedLabel: null
@@ -202,16 +203,16 @@ elements:
   - type: "IntegerValue"
     feature:
       type: "PositiveIntegerFeature"
-      name: "Number of commits in the last three months"
-    number: 400
+      name: "Number of contributors in the last three months"
+    number: 7
   - type: "IntegerValue"
     feature:
       type: "PositiveIntegerFeature"
-      name: "Number of contributors in the last three months"
-    number: 30
+      name: "Number of commits in the last three months"
+    number: 70
   expectedScore:
     type: "DoubleInterval"
-    from: 8.0
+    from: 9.5
     openLeft: false
     negativeInfinity: false
     to: 10.0

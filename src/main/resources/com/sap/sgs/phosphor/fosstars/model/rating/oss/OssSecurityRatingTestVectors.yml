@@ -453,7 +453,7 @@ elements:
     feature:
       type: "PositiveIntegerFeature"
       name: "Number of contributors in the last three months"
-    number: 5
+    number: 3
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
@@ -483,7 +483,7 @@ elements:
     feature:
       type: "PositiveIntegerFeature"
       name: "Number of commits in the last three months"
-    number: 10
+    number: 30
   - type: "VulnerabilitiesValue"
     vulnerabilities:
       entries:
