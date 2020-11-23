@@ -151,7 +151,7 @@ public class ScoreValue implements Value<Double>, Confidence {
 
   @Override
   public Double orElse(Double other) {
-    return isUnknown() || isNotApplicable ? other : get();
+    return isUnknown() || isNotApplicable() ? other : get();
   }
 
   /**
@@ -211,16 +211,17 @@ public class ScoreValue implements Value<Double>, Confidence {
   /**
    * Add a note which explains how the score value was calculated.
    *
-   * @param note The note to be added.
+   * @param note The note to be added. That may be a format string.
+   * @param params A number of parameters if a format string is passed.
    * @return The same score value.
    */
-  public ScoreValue explain(String note) {
+  public ScoreValue explain(String note, Object... params) {
     Objects.requireNonNull(note, "Note can't be null!");
     note = note.trim();
     if (note.isEmpty()) {
       throw new IllegalArgumentException("Note can't be empty!");
     }
-    explanation.add(note);
+    explanation.add(String.format(note, params));
     return this;
   }
 
@@ -249,7 +250,7 @@ public class ScoreValue implements Value<Double>, Confidence {
    * @return The same score value.
    */
   public ScoreValue set(double value) {
-    this.value = Score.check(value);
+    this.value = Score.adjust(value);
     return this;
   }
 
@@ -308,6 +309,16 @@ public class ScoreValue implements Value<Double>, Confidence {
   @JsonGetter("confidence")
   public double confidence() {
     return confidence;
+  }
+
+  /**
+   * Set the confidence to {@link Confidence#MIN}.
+   *
+   * @return The same score value.
+   */
+  public ScoreValue withMinConfidence() {
+    this.confidence = Confidence.MIN;
+    return this;
   }
 
   /**
