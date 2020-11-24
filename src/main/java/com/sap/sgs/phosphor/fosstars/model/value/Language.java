@@ -15,7 +15,7 @@ public enum Language {
   // .NET languages
   C_SHARP, F_SHARP, VISUALBASIC,
 
-  PHP, RUBY, PYTHON, JAVASCRIPT,
+  PHP, RUBY, PYTHON, JAVASCRIPT, TYPESCRIPT, GO,
 
   OTHER;
 
@@ -40,6 +40,9 @@ public enum Language {
         return C_SHARP;
       case "F#":
         return F_SHARP;
+      case "go":
+      case "golang":
+        return GO;
       default:
         return OTHER;
     }
