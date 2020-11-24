@@ -11,7 +11,7 @@ import com.sap.sgs.phosphor.fosstars.model.score.WeightedCompositeScore;
  */
 public class SecurityScoreExample extends WeightedCompositeScore {
 
-  SecurityScoreExample() {
+  public SecurityScoreExample() {
     super("Security score (example)",
         SECURITY_TESTING_SCORE_EXAMPLE, PROJECT_ACTIVITY_SCORE_EXAMPLE);
   }
