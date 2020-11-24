@@ -56,7 +56,7 @@ public class HasSecurityPolicyTest extends TestGitHubDataFetcherHolder {
 
     assertEquals(1, values.size());
     assertTrue(values.has(HAS_SECURITY_POLICY));
-    Optional<Value> something = values.of(HAS_SECURITY_POLICY);
+    Optional<Value<Boolean>> something = values.of(HAS_SECURITY_POLICY);
     assertNotNull(something);
     assertTrue(something.isPresent());
     Value<Boolean> value = something.get();

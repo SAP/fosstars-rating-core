@@ -115,7 +115,7 @@ public class ValueHashSet implements ValueSet {
   }
 
   @Override
-  public boolean has(Feature feature) {
+  public <T> boolean has(Feature<T> feature) {
     Objects.requireNonNull(feature, "Oh no! Feature is null");
     return featureToValue.containsKey(feature);
   }
@@ -164,8 +164,8 @@ public class ValueHashSet implements ValueSet {
   }
 
   @Override
-  public Optional<Value> of(Feature feature) {
-    Value value = featureToValue.get(feature);
+  public <T> Optional<Value<T>> of(Feature<T> feature) {
+    Value<T> value = featureToValue.get(feature);
     if (value == null) {
       return Optional.empty();
     }

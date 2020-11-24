@@ -77,7 +77,7 @@ public class CodeqlDataProviderTest extends TestGitHubDataFetcherHolder {
 
     assertEquals(2, expectedValues.length);
     for (Value<?> expectedValue : expectedValues) {
-      Optional<Value> something = values.of(expectedValue.feature());
+      Optional<? extends Value<?>> something = values.of(expectedValue.feature());
       assertTrue(something.isPresent());
       assertEquals(expectedValue, something.get());
     }

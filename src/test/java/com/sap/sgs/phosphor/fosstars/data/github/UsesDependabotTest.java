@@ -164,9 +164,9 @@ public class UsesDependabotTest extends TestGitHubDataFetcherHolder {
     provider.update(project, values);
     assertEquals(1, values.size());
     assertTrue(values.has(USES_DEPENDABOT));
-    Optional<Value> something = values.of(USES_DEPENDABOT);
+    Optional<Value<Boolean>> something = values.of(USES_DEPENDABOT);
     assertTrue(something.isPresent());
-    Value numberOfContributors = something.get();
+    Value<Boolean> numberOfContributors = something.get();
     assertEquals(expected, numberOfContributors.get());
   }
 }

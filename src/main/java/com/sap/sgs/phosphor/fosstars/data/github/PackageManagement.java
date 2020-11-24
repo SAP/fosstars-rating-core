@@ -196,7 +196,7 @@ public class PackageManagement extends CachedSingleFeatureGitHubDataProvider {
     ValueSet values = new ValueHashSet();
     languagesProvider().update(project, values);
 
-    Optional<Value> something = values.of(LANGUAGES);
+    Optional<Value<Languages>> something = values.of(LANGUAGES);
     if (!something.isPresent()) {
       return Languages.empty();
     }
