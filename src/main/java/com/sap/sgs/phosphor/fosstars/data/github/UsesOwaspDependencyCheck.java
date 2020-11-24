@@ -77,44 +77,57 @@ public class UsesOwaspDependencyCheck extends GitHubCachingDataProvider {
   protected ValueSet fetchValuesFor(GitHubProject project) throws IOException {
     logger.info("Figuring out if the project uses OWASP Dependency Check ...");
     LocalRepository repository = GitHubDataFetcher.localRepositoryFor(project);
+    return selectBetter(checkMaven(repository), checkGradle(repository));
+  }
 
+  private static ValueSet selectBetter(ValueSet firstSet, ValueSet secondSet) {
+    OwaspDependencyCheckUsage firstUsage = firstSet.of(OWASP_DEPENDENCY_CHECK_USAGE)
+        .map(Value::get).orElse(NOT_USED);
+    OwaspDependencyCheckUsage secondUsage = secondSet.of(OWASP_DEPENDENCY_CHECK_USAGE)
+        .map(Value::get).orElse(NOT_USED);
+
+    if (firstUsage != secondUsage) {
+      return firstUsage.compareTo(secondUsage) < 0 ? firstSet : secondSet;
+    }
+
+    OwaspDependencyCheckCvssThresholdValue firstThreshold
+        = firstSet.of(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD)
+            .filter(OwaspDependencyCheckCvssThresholdValue.class::isInstance)
+            .map(OwaspDependencyCheckCvssThresholdValue.class::cast)
+            .orElse(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.notSpecifiedValue());
+    OwaspDependencyCheckCvssThresholdValue secondThreshold
+        = secondSet.of(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD)
+            .filter(OwaspDependencyCheckCvssThresholdValue.class::isInstance)
+            .map(OwaspDependencyCheckCvssThresholdValue.class::cast)
+            .orElse(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.notSpecifiedValue());
+
+    if (!firstThreshold.specified() && !secondThreshold.specified()) {
+      return firstSet;
+    }
+
+    if (firstThreshold.specified() && !secondThreshold.specified()) {
+      return firstSet;
+    }
+
+    if (!firstThreshold.specified() && secondThreshold.specified()) {
+      return secondSet;
+    }
+
+    return firstThreshold.get() > secondThreshold.get() ? firstSet : secondSet;
+  }
+
+  /**
+   * Checks if a project uses OWASP Dependency Check Maven plugin.
+   *
+   * @param repository The project's repository.
+   * @return A set of corresponding values.
+   * @throws IOException If something goes wrong.
+   */
+  private static ValueSet checkMaven(LocalRepository repository) throws IOException {
     ValueSet values = new ValueHashSet();
-
-    checkMaven(repository, values);
-    if (found(values)) {
-      return values;
-    }
-
-    checkGradle(repository, values);
-    if (found(values)) {
-      return values;
-    }
-
     values.update(OWASP_DEPENDENCY_CHECK_USAGE.value(NOT_USED));
     values.update(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.notSpecifiedValue());
 
-    return values;
-  }
-
-  /**
-   * Checks if a value set contains features that mean that OWASP Dependency Check was found.
-   *
-   * @param values The value set to be checked.
-   * @return True if OWASP Dependency Check was found, false otherwise.
-   */
-  private static boolean found(ValueSet values) {
-    return values.of(OWASP_DEPENDENCY_CHECK_USAGE).map(Value::get).orElse(NOT_USED) != NOT_USED;
-  }
-
-  /**
-   * Checks if a project uses OWASP Dependency Check Maven plugin,
-   * and updates a value set if the plugin is found.
-   *
-   * @param repository The project's repository.
-   * @param values A {@link ValueSet} to be updated.
-   * @throws IOException If something goes wrong.
-   */
-  private static void checkMaven(LocalRepository repository, ValueSet values) throws IOException {
     Optional<InputStream> content = repository.read("pom.xml");
 
     if (content.isPresent()) {
@@ -132,20 +145,26 @@ public class UsesOwaspDependencyCheck extends GitHubCachingDataProvider {
         values.update(usage, threshold);
       }
     }
+
+    return values;
   }
 
   /**
-   * Checks if a project uses OWASP Dependency Check Gradle plugin,
-   * and updates a value set with corresponding feature values.
+   * Checks if a project uses OWASP Dependency Check Gradle plugin.
    *
    * @param repository The project's repository.
-   * @param values A {@link ValueSet} to be updated.
+   * @return A set of corresponding values.
+   * @throws IOException If something went wrong.
    */
-  private static void checkGradle(LocalRepository repository, ValueSet values) throws IOException {
+  private static ValueSet checkGradle(LocalRepository repository) throws IOException {
+    ValueSet values = new ValueHashSet();
+    values.update(OWASP_DEPENDENCY_CHECK_USAGE.value(NOT_USED));
+    values.update(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.notSpecifiedValue());
+
     for (Path gradleFile : repository.files(path -> path.getFileName().endsWith(".gradle"))) {
       Optional<List<String>> something = repository.readLinesOf(gradleFile);
       if (!something.isPresent()) {
-        return;
+        continue;
       }
       List<String> file = something.get();
 
@@ -166,6 +185,8 @@ public class UsesOwaspDependencyCheck extends GitHubCachingDataProvider {
         }
       }
     }
+
+    return values;
   }
 
   /**
