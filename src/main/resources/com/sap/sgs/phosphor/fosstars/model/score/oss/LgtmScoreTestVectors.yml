@@ -1,5 +1,12 @@
 ---
-defaults: []
+defaults:
+- type: "LanguagesValue"
+  feature:
+    type: "LanguagesFeature"
+    name: "A set of programming languages"
+  languages:
+    elements:
+      - "JAVA"
 elements:
 - type: "StandardTestVector"
   values:
@@ -7,6 +14,10 @@ elements:
     feature:
       type: "LgtmGradeFeature"
       name: "The worst LGTM grade of a project"
+  - type: "UnknownValue"
+    feature:
+      type: "LanguagesFeature"
+      name: "A set of programming languages"
   expectedScore:
     type: "DoubleInterval"
     from: 0.0
@@ -120,3 +131,27 @@ elements:
     positiveInfinity: false
   expectedLabel: null
   alias: "test_vector_6"
+- type: "StandardTestVector"
+  values:
+    - type: "UnknownValue"
+      feature:
+        type: "LgtmGradeFeature"
+        name: "The worst LGTM grade of a project"
+    - type: "LanguagesValue"
+      feature:
+        type: "LanguagesFeature"
+        name: "A set of programming languages"
+      languages:
+        elements:
+          - "OTHER"
+  expectedScore:
+    type: "DoubleInterval"
+    from: 0.0
+    openLeft: false
+    negativeInfinity: false
+    to: 10.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  expectedNotApplicableScore: true
+  alias: "test_vector_7"
