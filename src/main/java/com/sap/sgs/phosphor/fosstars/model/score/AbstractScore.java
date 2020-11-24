@@ -259,10 +259,10 @@ public abstract class AbstractScore implements Score {
    * @throws IllegalArgumentException If a value for the score is not a {@link ScoreValue}.
    */
   protected static ScoreValue calculateIfNecessary(Score score, ValueSet values) {
-    Optional<Value> something = values.of(score);
+    Optional<Value<Double>> something = values.of(score);
 
     // if the set of values doesn't contain a value for the specified score, then calculate it
-    Value value = something.orElseGet(() -> UnknownValue.of(score));
+    Value<Double> value = something.orElseGet(() -> UnknownValue.of(score));
     if (value.isUnknown()) {
       return score.calculate(values);
     }
