@@ -28,6 +28,12 @@ public enum Language {
    */
   public static Language parse(String string) {
     Objects.requireNonNull(string, "String can't be null!");
+
+    string = string.trim();
+    if (string.isEmpty()) {
+      throw new IllegalArgumentException("String can't be empty!");
+    }
+
     for (Language language : values()) {
       if (string.equalsIgnoreCase(language.name())) {
         return language;
@@ -40,8 +46,8 @@ public enum Language {
         return C_SHARP;
       case "F#":
         return F_SHARP;
-      case "go":
-      case "golang":
+      case "GO":
+      case "GOLANG":
         return GO;
       default:
         return OTHER;
