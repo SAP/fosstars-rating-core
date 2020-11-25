@@ -1,6 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.data.github;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * An interface of a commit.
@@ -34,4 +35,11 @@ public interface Commit {
    * @return True if the commit is signed, false otherwise.
    */
   boolean isSigned();
+
+  /**
+   * Returns the commit message.
+   *
+   * @return The commit message.
+   */
+  List<String> message();
 }
