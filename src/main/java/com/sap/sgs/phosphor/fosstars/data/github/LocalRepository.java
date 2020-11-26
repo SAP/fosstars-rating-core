@@ -200,6 +200,16 @@ public class LocalRepository implements AutoCloseable {
   }
 
   /**
+   * Checks if the repository has a specified directory.
+   *
+   * @param path A path to the directory.
+   * @return Ture if the repository contains the specified directory, false otherwise.
+   */
+  public boolean hasDirectory(Path path) {
+    return Files.isDirectory(info.path().resolve(path));
+  }
+
+  /**
    * Returns a stream of a file if it exists.
    *
    * @param file The file name.
