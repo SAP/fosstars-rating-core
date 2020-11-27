@@ -44,7 +44,7 @@ public class HasSecurityTeamTest extends TestGitHubDataFetcherHolder {
     assertEquals(1, values.size());
     assertTrue(values.has(HAS_SECURITY_TEAM));
     
-    Optional<Value> something = values.of(HAS_SECURITY_TEAM);
+    Optional<Value<Boolean>> something = values.of(HAS_SECURITY_TEAM);
     assertNotNull(something);
     assertTrue(something.isPresent());
     

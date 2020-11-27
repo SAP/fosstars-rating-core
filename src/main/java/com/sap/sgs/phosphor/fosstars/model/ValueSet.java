@@ -19,9 +19,10 @@ public interface ValueSet {
    * Checks if the set of values contains a value of a particular feature.
    *
    * @param feature A feature to search for.
+   * @param <T> A type of data.
    * @return True if the set contains a value for the specified feature, false otherwise.
    */
-  boolean has(Feature feature);
+  <T> boolean has(Feature<T> feature);
 
   /**
    * Updates values in the set.
@@ -57,9 +58,10 @@ public interface ValueSet {
    * Returns a value of a particular feature if it's present in the set.
    *
    * @param feature A feature to search for.
+   * @param <T> A type of data.
    * @return A value of the specified feature.
    */
-  Optional<Value> of(Feature feature);
+  <T> Optional<Value<T>> of(Feature<T> feature);
 
   /**
    * Tells whether the set is empty or not.

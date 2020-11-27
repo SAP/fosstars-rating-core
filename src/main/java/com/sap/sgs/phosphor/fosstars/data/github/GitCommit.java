@@ -1,8 +1,11 @@
 package com.sap.sgs.phosphor.fosstars.data.github;
 
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.revwalk.RevCommit;
 
@@ -71,5 +74,11 @@ public class GitCommit implements Commit {
       signature = revCommit.getRawGpgSignature();
     }
     return signature != null && signature.length > 0;
+  }
+
+  @Override
+  public List<String> message() {
+    return Arrays.stream(revCommit.getFullMessage().split("\\r?\\n"))
+        .map(String::trim).filter(s -> !s.isEmpty()).collect(Collectors.toList());
   }
 }

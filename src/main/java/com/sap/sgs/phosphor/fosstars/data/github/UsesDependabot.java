@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
+import java.util.Optional;
 
 /**
  * <p>This data provider checks if an open-source project on GitHub
@@ -23,9 +24,15 @@ import java.util.Date;
 public class UsesDependabot extends CachedSingleFeatureGitHubDataProvider {
 
   /**
-   * A path to Dependabot configuration file in a repository.
+   * A list of locations of a Dependabot configuration file in a repository.
+   *
+   * @see <a href="https://dependabot.com/docs/config-file/">Dependabot config files</a>
+   * @see <a href="https://docs.github.com/en/free-pro-team@latest/github/managing-security-vulnerabilities/managing-vulnerabilities-in-your-projects-dependencies">Managing vulnerabilities in your project's dependencies</a>
    */
-  private static final String DEPENDABOT_CONFIG = ".dependabot/config.yml";
+  private static final String[] DEPENDABOT_CONFIGS = {
+      ".dependabot/config.yml",
+      ".github/dependabot.yml"
+  };
 
   /**
    * A minimal number of characters in a config for Dependabot.
@@ -52,12 +59,12 @@ public class UsesDependabot extends CachedSingleFeatureGitHubDataProvider {
   }
 
   @Override
-  protected Feature supportedFeature() {
+  protected Feature<Boolean> supportedFeature() {
     return USES_DEPENDABOT;
   }
 
   @Override
-  protected Value fetchValueFor(GitHubProject project) throws IOException {
+  protected Value<Boolean> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Checking if the project uses Dependabot ...");
     return usesDependabot(project);
   }
@@ -91,9 +98,14 @@ public class UsesDependabot extends CachedSingleFeatureGitHubDataProvider {
    * @return True if a config was found, false otherwise.
    */
   private boolean hasDependabotConfig(LocalRepository repository) throws IOException {
-    return repository.file(DEPENDABOT_CONFIG)
-        .filter(content -> content.length() >= ACCEPTABLE_CONFIG_SIZE)
-        .isPresent();
+    for (String config : DEPENDABOT_CONFIGS) {
+      Optional<String> content = repository.file(config);
+      if (content.isPresent() && content.get().length() >= ACCEPTABLE_CONFIG_SIZE) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   /**
@@ -102,7 +114,7 @@ public class UsesDependabot extends CachedSingleFeatureGitHubDataProvider {
    * @return A value for the {@link OssFeatures#USES_DEPENDABOT} feature.
    */
   private Value<Boolean> usesDependabot(GitHubProject project) throws IOException {
-    LocalRepository repository = fetcher.localRepositoryFor(project);
+    LocalRepository repository = GitHubDataFetcher.localRepositoryFor(project);
     return USES_DEPENDABOT.value(
         hasDependabotConfig(repository)
             || hasDependabotCommits(repository));
@@ -115,7 +127,18 @@ public class UsesDependabot extends CachedSingleFeatureGitHubDataProvider {
    * @return True if the commit was done by Dependabot, false otherwise.
    */
   private static boolean isDependabot(Commit commit) {
-    return commit.authorName().toLowerCase().contains(DEPENDABOT_PATTERN)
-        || commit.committerName().toLowerCase().contains(DEPENDABOT_PATTERN);
+    if (commit.authorName().toLowerCase().contains(DEPENDABOT_PATTERN)
+        || commit.committerName().toLowerCase().contains(DEPENDABOT_PATTERN)) {
+      return true;
+    }
+
+    for (String line : commit.message()) {
+      if ((line.startsWith("Signed-off-by:") || line.startsWith("Co-authored-by:"))
+          && line.contains(DEPENDABOT_PATTERN)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 }

@@ -141,9 +141,9 @@ public class OwaspSecurityLibrariesTest extends TestGitHubDataFetcherHolder {
     ValueSet values = new ValueHashSet();
     provider.update(project, values);
 
-    Optional<Value> something = values.of(feature);
+    Optional<Value<Boolean>> something = values.of(feature);
     assertTrue(something.isPresent());
-    Value value = something.get();
+    Value<Boolean> value = something.get();
     assertFalse(value.isUnknown());
     assertEquals(expectedValue, value.get());
   }
