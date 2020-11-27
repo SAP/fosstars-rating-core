@@ -103,7 +103,7 @@ public class PrettyPrinterTest {
   public void testPrint() {
     RatingValue ratingValue = RATING.calculate(TEST_VALUES);
 
-    PrettyPrinter printer = new PrettyPrinter();
+    PrettyPrinter printer = PrettyPrinter.withVerboseOutput();
     String text = printer.print(ratingValue);
 
     assertNotNull(text);
@@ -128,7 +128,7 @@ public class PrettyPrinterTest {
   public void testConsistency() {
     RatingValue ratingValue = RATING.calculate(TEST_VALUES);
 
-    PrettyPrinter printer = new PrettyPrinter();
+    PrettyPrinter printer = PrettyPrinter.withVerboseOutput();
     String text = printer.print(ratingValue);
     for (int i = 0; i < 100; i++) {
       assertEquals(text, printer.print(ratingValue));
