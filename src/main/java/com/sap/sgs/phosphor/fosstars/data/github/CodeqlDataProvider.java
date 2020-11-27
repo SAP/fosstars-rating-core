@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -70,15 +71,12 @@ public class CodeqlDataProvider extends GitHubCachingDataProvider {
 
     LocalRepository repository = GitHubDataFetcher.localRepositoryFor(project);
 
-    List<Path> githubActionConfigs = repository.files(
-        Paths.get(GITHUB_ACTIONS_DIRECTORY), CodeqlDataProvider::isGitHubActionConfig);
-
     Value<Boolean> runsCodeqlScans = RUNS_CODEQL_SCANS.value(false);
     Value<Boolean> usesCodeqlChecks = USES_CODEQL_CHECKS.value(false);
 
     // ideally, we're looking for a GitHub action that runs CodeQL scan on pull requests
     // but if we just find an action that runs CodeQL scans, that's also fine
-    for (Path configPath : githubActionConfigs) {
+    for (Path configPath : findGitHubActionsIn(repository)) {
       Optional<InputStream> content = repository.read(configPath);
       if (!content.isPresent()) {
         continue;
@@ -95,6 +93,23 @@ public class CodeqlDataProvider extends GitHubCachingDataProvider {
     }
 
     return ValueHashSet.from(usesCodeqlChecks, runsCodeqlScans);
+  }
+
+  /**
+   * Looks for GitHub actions in a repository.
+   *
+   * @param repository The repository to be checked.
+   * @return A list of paths to GitHub Action configs.
+   * @throws IOException If something went wrong.
+   */
+  private static List<Path> findGitHubActionsIn(LocalRepository repository) throws IOException {
+    Path path = Paths.get(GITHUB_ACTIONS_DIRECTORY);
+
+    if (!repository.hasDirectory(path)) {
+      return Collections.emptyList();
+    }
+
+    return repository.files(path, CodeqlDataProvider::isGitHubActionConfig);
   }
 
   /**
