@@ -56,4 +56,9 @@ public class IntegerValue extends AbstractValue<Integer> {
   public int hashCode() {
     return Objects.hash(super.hashCode(), number);
   }
+
+  @Override
+  public String toString() {
+    return String.valueOf(number);
+  }
 }
