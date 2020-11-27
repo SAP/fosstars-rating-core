@@ -12,8 +12,7 @@ JAR=${JAR:-"target/fosstars-github-rating-calc.jar"}
 
 # check if the tool works with an anonymous connection
 $JAVA -jar $JAR \
-  --url https://github.com/apache/poi \
-  --no-questions 2>&1 | tee tmp.log
+  --url https://github.com/apache/poi 2>&1 | tee tmp.log
 
 grep "Rating" tmp.log > /dev/null 2>&1 || exit 1
 grep "Confidence" tmp.log > /dev/null 2>&1 || exit 1
