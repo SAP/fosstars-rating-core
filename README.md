@@ -58,7 +58,7 @@ git clone git@github.com:SAP/fosstars-rating-core.git
 cd fosstars-rating-core
 mvn package -DskipTests
 TOKEN=xyz # use your personal token, see below
-java -jar target/fosstars-github-rating-calc.jar --token ${TOKEN} --url https://github.com/apache/beam --no-questions
+java -jar target/fosstars-github-rating-calc.jar --token ${TOKEN} --url https://github.com/apache/beam
 ```
 
 The `TOKEN` variable contains a token for accessing the GitHub API.
@@ -338,7 +338,7 @@ The output is going to look like the following:
 [+] Bye!
 ```
 
-If no `--no-questions` option is specified, the tool becomes a bit interactive,
+If `--interactive` option is specified, the tool becomes a bit interactive,
 and may ask the user a couple of questions.
 
 ## Known issues

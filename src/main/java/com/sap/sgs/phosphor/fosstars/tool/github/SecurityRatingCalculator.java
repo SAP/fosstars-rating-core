@@ -113,8 +113,8 @@ public class SecurityRatingCalculator {
     Options options = new Options();
     options.addOption("h", "help", false,
         "Print this message.");
-    options.addOption("n", "no-questions", false,
-        "Don't ask a user if a feature can't be automatically gathered.");
+    options.addOption("i", "interactive", false,
+        "Ask a question if a feature can't be automatically gathered.");
     options.addOption(Option.builder("t")
         .longOpt("token")
         .hasArg()
@@ -164,8 +164,8 @@ public class SecurityRatingCalculator {
           "You have to give me either --url, --gav or --config option!");
     }
 
-    UserCallback callback = commandLine.hasOption("no-questions")
-        ? NoUserCallback.INSTANCE : new Terminal();
+    UserCallback callback = commandLine.hasOption("interactive")
+        ? new Terminal() : NoUserCallback.INSTANCE;
 
     String token = commandLine.getOptionValue("token");
 

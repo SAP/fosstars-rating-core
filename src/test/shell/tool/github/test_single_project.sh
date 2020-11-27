@@ -14,7 +14,6 @@ JAR=${JAR:-"target/fosstars-github-rating-calc.jar"}
 
 $JAVA -jar $JAR \
   --url https://github.com/apache/poi \
-  --no-questions \
   $TOKEN_OPTION 2>&1 | tee tmp.log
 
 grep "Rating" tmp.log || exit 1
