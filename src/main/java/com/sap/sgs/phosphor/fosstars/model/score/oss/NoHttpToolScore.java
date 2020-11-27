@@ -7,13 +7,9 @@ import static com.sap.sgs.phosphor.fosstars.model.value.PackageManager.GRADLE;
 import static com.sap.sgs.phosphor.fosstars.model.value.PackageManager.MAVEN;
 
 import com.sap.sgs.phosphor.fosstars.model.Value;
-import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
-import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.sgs.phosphor.fosstars.model.score.FeatureBasedScore;
 import com.sap.sgs.phosphor.fosstars.model.value.PackageManagers;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * <p>The score shows if an open-source project uses nohttp tool
@@ -64,43 +60,5 @@ public class NoHttpToolScore extends FeatureBasedScore {
 
     // otherwise, return the min value
     return scoreValue;
-  }
-
-  /**
-   * This class implements a verification procedure for {@link NoHttpToolScore}.
-   * The class loads test vectors,
-   * and provides methods to verify a {@link NoHttpToolScore}
-   * against those test vectors.
-   */
-  public static class Verification extends ScoreVerification {
-
-    /**
-     * A name of a resource which contains the test vectors.
-     */
-    private static final String TEST_VECTORS_YAML = "NoHttpToolScoreTestVectors.yml";
-
-    /**
-     * Initializes a {@link Verification}
-     * for a {@link NoHttpToolScore}.
-     *
-     * @param score A score to be verified.
-     * @param vectors A list of test vectors.
-     */
-    public Verification(NoHttpToolScore score, TestVectors vectors) {
-      super(score, vectors);
-    }
-
-    /**
-     * Creates an instance of {@link Verification} for a specified score. The method loads test
-     * vectors from a default resource.
-     *
-     * @param score The score to be verified.
-     * @return An instance of {@link NoHttpToolScore}.
-     */
-    static Verification createFor(NoHttpToolScore score) throws IOException {
-      try (InputStream is = Verification.class.getResourceAsStream(TEST_VECTORS_YAML)) {
-        return new Verification(score, TestVectors.loadFromYaml(is));
-      }
-    }
   }
 }

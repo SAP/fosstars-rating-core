@@ -7,9 +7,9 @@ import static com.sap.sgs.phosphor.fosstars.model.value.Language.JAVA;
 import static org.junit.Assert.assertTrue;
 
 import com.sap.sgs.phosphor.fosstars.model.Score;
+import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.sgs.phosphor.fosstars.model.qa.VerificationFailedException;
-import com.sap.sgs.phosphor.fosstars.model.score.oss.FindSecBugsScore.Verification;
 import com.sap.sgs.phosphor.fosstars.model.value.Languages;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.io.IOException;
@@ -51,7 +51,7 @@ public class FindSecBugsScoreTest {
     try {
       vectors.storeToYaml(file);
 
-      Verification verification = new Verification(
+      ScoreVerification verification = new ScoreVerification(
           new FindSecBugsScore(),
           TestVectors.loadFromYaml(file));
 
