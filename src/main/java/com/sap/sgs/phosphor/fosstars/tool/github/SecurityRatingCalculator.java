@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -38,6 +39,7 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.LoggerContext;
 import org.kohsuke.github.GitHub;
 import org.kohsuke.github.GitHubBuilder;
 import org.kohsuke.github.HttpConnector;
@@ -83,18 +85,13 @@ public class SecurityRatingCalculator {
       "java -jar fosstars-github-rating-calc.jar [options]";
 
   /**
-   * An interface to NVD.
-   */
-  private static final NVD nvd = new NVD();
-
-  /**
    * Entry point.
    *
    * @param args Command-line parameters.
    */
   public static void main(String... args) {
     try {
-      run(args);
+      new SecurityRatingCalculator(args).run();
     } catch (Exception e) {
       LOGGER.error("Something went wrong!", e);
       LOGGER.error("Bye!");
@@ -104,13 +101,33 @@ public class SecurityRatingCalculator {
   }
 
   /**
-   * Run the tool with a list of command-line parameters.
+   * A config for command-line options.
+   */
+  private final Options options;
+
+  /**
+   * Parsed command-line options.
+   */
+  private final CommandLine commandLine;
+
+  /**
+   * An interface to NVD.
+   */
+  private final NVD nvd = new NVD();
+
+  /**
+   * A {@link PrettyPrinter} for printing out a security rating.
+   */
+  private final PrettyPrinter prettyPrinter;
+
+  /**
+   * Creates a new security rating calculator.
    *
    * @param args The command-line parameters.
    * @throws IOException If something went wrong.
    */
-  static void run(String... args) throws IOException {
-    Options options = new Options();
+  SecurityRatingCalculator(String... args) throws IOException, URISyntaxException {
+    options = new Options();
     options.addOption("h", "help", false,
         "Print this message.");
     options.addOption("i", "interactive", false,
@@ -120,6 +137,11 @@ public class SecurityRatingCalculator {
         .hasArg()
         .desc("An access token for the GitHub API.")
         .build());
+    options.addOption(
+        Option.builder("v")
+            .longOpt("verbose")
+            .desc("Print all the details.")
+            .build());
 
     OptionGroup group = new OptionGroup();
     group.addOption(Option.builder("u")
@@ -142,7 +164,6 @@ public class SecurityRatingCalculator {
         .build());
     options.addOptionGroup(group);
 
-    CommandLine commandLine;
     try {
       commandLine = new DefaultParser().parse(options, args);
     } catch (ParseException e) {
@@ -151,6 +172,21 @@ public class SecurityRatingCalculator {
       throw new IOException("Could not parse command-line parameters", e);
     }
 
+    String logConfig = commandLine.hasOption("v") ? "/log4j2-verbose.xml" : "/log4j2-standard.xml";
+    LoggerContext context = (LoggerContext) LogManager.getContext(false);
+    context.setConfigLocation(SecurityRatingCalculator.class.getResource(logConfig).toURI());
+    context.updateLoggers();
+
+    prettyPrinter = commandLine.hasOption("v")
+        ? PrettyPrinter.withVerboseOutput() : PrettyPrinter.withoutVerboseOutput();
+  }
+
+  /**
+   * Run the tool with a list of command-line parameters.
+   *
+   * @throws IOException If something went wrong.
+   */
+  void run() throws IOException {
     if (commandLine.hasOption("h")) {
       HelpFormatter formatter = new HelpFormatter();
       formatter.printHelp(USAGE, options);
@@ -205,7 +241,7 @@ public class SecurityRatingCalculator {
    * @param callback An interface for interacting with a user.
    * @throws IOException If something went wrong.
    */
-  private static void processUrl(
+  private void processUrl(
       String url, GitHubDataFetcher fetcher, String githubToken, UserCallback callback)
       throws IOException {
 
@@ -220,7 +256,7 @@ public class SecurityRatingCalculator {
     RatingValue ratingValue = project.ratingValue()
         .orElseThrow(() -> new IOException("Could not calculate a rating!"));
 
-    String content = new PrettyPrinter().print(ratingValue);
+    String content = prettyPrinter.print(ratingValue);
     for (String line : content.split("\n")) {
       LOGGER.info(line);
     }
@@ -235,7 +271,7 @@ public class SecurityRatingCalculator {
    * @param callback An interface for interacting with a user.
    * @throws IOException If something went wrong.
    */
-  private static void processGav(
+  private void processGav(
       String gav, GitHubDataFetcher fetcher, String githubToken, UserCallback callback)
       throws IOException {
 
@@ -276,7 +312,7 @@ public class SecurityRatingCalculator {
    * @param callback An interface for interacting with a user.
    * @throws IOException If something went wrong.
    */
-  private static void processConfig(
+  private void processConfig(
       String filename, GitHubDataFetcher fetcher, String githubToken, UserCallback callback)
       throws IOException {
 

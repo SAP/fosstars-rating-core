@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 import org.apache.commons.text.WordUtils;
 
 /**
@@ -47,11 +48,44 @@ public class PrettyPrinter implements Formatter {
     DECIMAL_FORMAT.setMaximumFractionDigits(2);
   }
 
+  /**
+   * Creates a new {@link PrettyPrinter} that doesn't print all the details.
+   *
+   * @return A new {@link PrettyPrinter}.
+   */
+  public static PrettyPrinter withoutVerboseOutput() {
+    return new PrettyPrinter(false);
+  }
+
+  /**
+   * Creates a new {@link PrettyPrinter} that prints out all the details.
+   *
+   * @return A new {@link PrettyPrinter}.
+   */
+  public static PrettyPrinter withVerboseOutput() {
+    return new PrettyPrinter(true);
+  }
+
+  /**
+   * A flag that turns on verbose output.
+   */
+  private final boolean verbose;
+
+  /**
+   * Creates a new {@link PrettyPrinter}.
+   *
+   * @param verbose A flag that turns on verbose output.
+   */
+  private PrettyPrinter(boolean verbose) {
+    this.verbose = verbose;
+  }
+
   @Override
   public String print(RatingValue ratingValue) {
     StringBuilder sb = new StringBuilder();
     sb.append(String.format("Here is how the rating was calculated:%n"));
     sb.append(print(ratingValue.scoreValue(), INDENT_STEP, true, new HashSet<>()));
+    sb.append("\n");
     sb.append(String.format("Rating:     %s -> %s%n",
         tellMeActualValueOf(ratingValue.scoreValue()), ratingValue.label()));
     sb.append(String.format("Confidence: %s (%s)%n",
@@ -80,7 +114,7 @@ public class PrettyPrinter implements Formatter {
       sb.append(String.format("%sScore:........%s%n", indent, nameOf(scoreValue.score())));
     }
 
-    if (!scoreValue.score().description().isEmpty()) {
+    if (shouldPrintDescriptionFor(scoreValue)) {
       String[] lines = WordUtils
           .wrap(scoreValue.score().description(), DESCRIPTION_WRAP_LENGTH)
           .split("\n");
@@ -124,17 +158,18 @@ public class PrettyPrinter implements Formatter {
       subScoreValues.sort(Collections.reverseOrder(Comparator.comparingDouble(ScoreValue::weight)));
 
       sb.append(String.format(
-          "%sBased on:.....%d sub-scores:%n", indent, subScoreValues.size()));
-      for (ScoreValue usedValue : subScoreValues) {
-        sb.append(
-            print(usedValue, indent + INDENT_STEP + INDENT_STEP, false, printedScores));
-        sb.append("\n");
-      }
+          "%sBased on:.....%d sub-scores%n", indent, subScoreValues.size()));
+
+      sb.append(subScoreValues.stream()
+          .map(value -> print(value, indent + INDENT_STEP + INDENT_STEP, false, printedScores))
+          .collect(Collectors.joining("\n")));
     }
 
     if (!featureValues.isEmpty()) {
-      sb.append(String.format("%sBased on:...%d features:%n", indent, featureValues.size()));
+      sb.append(String.format("%sBased on:...%d features%n", indent, featureValues.size()));
+    }
 
+    if (shouldPrint(featureValues)) {
       Map<String, Object> nameToValue = new TreeMap<>(String::compareTo);
       int maxLength = 0;
       for (Value usedValue : featureValues) {
@@ -156,7 +191,7 @@ public class PrettyPrinter implements Formatter {
       }
     }
 
-    if (!scoreValue.explanation().isEmpty()) {
+    if (shouldPrintExplanationFor(scoreValue)) {
       Iterator<String> iterator = scoreValue.explanation().iterator();
       sb.append(String.format("%sExplanation:..%s%n", indent, iterator.next()));
       while (iterator.hasNext()) {
@@ -167,6 +202,36 @@ public class PrettyPrinter implements Formatter {
     printedScores.add(scoreValue.score());
 
     return sb.toString();
+  }
+
+  /**
+   * Checks if the pretty printer should print out a description of a score value.
+   *
+   * @param scoreValue The score value to be checked.
+   * @return True if the pretty printer should print a description, false otherwise.
+   */
+  private boolean shouldPrintDescriptionFor(ScoreValue scoreValue) {
+    return verbose && !scoreValue.feature().description().isEmpty();
+  }
+
+  /**
+   * Checks if the pretty printer should print out an explanation for a score value.
+   *
+   * @param scoreValue The score to be checked.
+   * @return True if the pretty printer should print an explanation, false otherwise.
+   */
+  private boolean shouldPrintExplanationFor(ScoreValue scoreValue) {
+    return verbose && !scoreValue.explanation().isEmpty();
+  }
+
+  /**
+   * Checks if the pretty printer should print out feature values.
+   *
+   * @param featureValues The feature values to be checked.
+   * @return True if the pretty printer should print the feature values, false otherwise.
+   */
+  private boolean shouldPrint(List<Value> featureValues) {
+    return verbose && !featureValues.isEmpty();
   }
 
   /**

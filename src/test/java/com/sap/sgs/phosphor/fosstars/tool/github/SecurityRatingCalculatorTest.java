@@ -12,6 +12,7 @@ import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectFinder.ProjectConf
 import com.sap.sgs.phosphor.fosstars.tool.github.SecurityRatingCalculator.ReportConfig;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Collections;
 import org.junit.Test;
@@ -19,14 +20,14 @@ import org.junit.Test;
 public class SecurityRatingCalculatorTest {
 
   @Test(expected = IllegalArgumentException.class)
-  public void noParameters() throws IOException {
-    SecurityRatingCalculator.run();
+  public void noParameters() throws IOException, URISyntaxException {
+    new SecurityRatingCalculator().run();
   }
 
   @Test
-  public void help() throws IOException {
-    SecurityRatingCalculator.run("-help");
-    SecurityRatingCalculator.run("-h");
+  public void help() throws IOException, URISyntaxException {
+    new SecurityRatingCalculator("-help").run();
+    new SecurityRatingCalculator("-h").run();
   }
 
   @Test
