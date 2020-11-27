@@ -24,6 +24,7 @@
     "https://github.com/netty": [ "Apple" ],
     "https://github.com/facebook": [ "Facebook" ],
     "https://github.com/oracle": [ "Oracle" ],
-    "https://github.com/apple": [ "Apple" ]
+    "https://github.com/apple": [ "Apple" ],
+    "https://github.com/flyway/flyway": [ "Redgate" ]
   }
 }

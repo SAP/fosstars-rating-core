@@ -78,7 +78,7 @@ public class PackageManagementTest extends TestGitHubDataFetcherHolder {
     assertTrue(values.has(PACKAGE_MANAGERS));
     assertFalse(values.has(LANGUAGES));
 
-    Optional<Value> something = values.of(PACKAGE_MANAGERS);
+    Optional<Value<PackageManagers>> something = values.of(PACKAGE_MANAGERS);
     assertTrue(something.isPresent());
 
     Value<PackageManagers> value = something.get();

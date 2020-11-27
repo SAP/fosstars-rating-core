@@ -35,7 +35,7 @@ public class AbstractCachingDataProviderTest {
       assertEquals(1, values.size());
       assertTrue(values.has(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE));
       assertTrue(values.of(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE).isPresent());
-      assertEquals(42, values.of(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE).get().get());
+      assertEquals(42, (int) values.of(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE).get().get());
 
       // make sure that the cache is used
       assertEquals(1, provider.counter);
@@ -59,7 +59,7 @@ public class AbstractCachingDataProviderTest {
     assertEquals(2, values.size());
     assertTrue(values.has(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE));
     assertTrue(values.of(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE).isPresent());
-    assertEquals(42, values.of(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE).get().get());
+    assertEquals(42, (int) values.of(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE).get().get());
     assertTrue(values.has(SECURITY_REVIEW_DONE_EXAMPLE));
     assertTrue(values.of(SECURITY_REVIEW_DONE_EXAMPLE).isPresent());
     assertTrue(values.of(SECURITY_REVIEW_DONE_EXAMPLE).get().isUnknown());
@@ -71,7 +71,7 @@ public class AbstractCachingDataProviderTest {
     assertEquals(2, values.size());
     assertTrue(values.has(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE));
     assertTrue(values.of(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE).isPresent());
-    assertEquals(42, values.of(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE).get().get());
+    assertEquals(42, (int) values.of(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE).get().get());
     assertTrue(values.has(SECURITY_REVIEW_DONE_EXAMPLE));
     assertTrue(values.of(SECURITY_REVIEW_DONE_EXAMPLE).isPresent());
     assertFalse(values.of(SECURITY_REVIEW_DONE_EXAMPLE).get().isUnknown());

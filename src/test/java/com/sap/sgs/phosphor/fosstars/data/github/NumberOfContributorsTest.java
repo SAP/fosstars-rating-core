@@ -52,9 +52,9 @@ public class NumberOfContributorsTest extends TestGitHubDataFetcherHolder {
     provider.update(project, values);
     assertEquals(1, values.size());
     assertTrue(values.has(NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS));
-    Optional<Value> something = values.of(NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS);
+    Optional<Value<Integer>> something = values.of(NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS);
     assertTrue(something.isPresent());
-    Value numberOfContributors = something.get();
-    assertEquals(4, numberOfContributors.get());
+    Value<Integer> numberOfContributors = something.get();
+    assertEquals(4, (int) numberOfContributors.get());
   }
 }

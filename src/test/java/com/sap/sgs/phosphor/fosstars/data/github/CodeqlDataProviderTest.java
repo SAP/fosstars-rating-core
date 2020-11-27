@@ -18,6 +18,7 @@ import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Optional;
@@ -76,18 +77,20 @@ public class CodeqlDataProviderTest extends TestGitHubDataFetcherHolder {
 
     assertEquals(2, expectedValues.length);
     for (Value<?> expectedValue : expectedValues) {
-      Optional<Value> something = values.of(expectedValue.feature());
+      Optional<? extends Value<?>> something = values.of(expectedValue.feature());
       assertTrue(something.isPresent());
       assertEquals(expectedValue, something.get());
     }
   }
 
   private static void mockFile(String filename, String content) throws IOException {
+    Path path = Paths.get(filename);
     LocalRepository repository = mock(LocalRepository.class);
     when(repository.file(filename)).thenReturn(Optional.of(content));
-    when(repository.read(Paths.get(filename)))
+    when(repository.read(path))
         .thenReturn(Optional.of(IOUtils.toInputStream(content)));
     when(repository.files(any(), any())).thenReturn(Collections.singletonList(Paths.get(filename)));
+    when(repository.hasDirectory(path.getParent())).thenReturn(true);
     addForTesting(PROJECT, repository);
   }
 

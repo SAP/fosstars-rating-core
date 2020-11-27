@@ -16,6 +16,7 @@ import static org.mockito.Mockito.when;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
+import com.sap.sgs.phosphor.fosstars.model.feature.OwaspDependencyCheckCvssThreshold;
 import com.sap.sgs.phosphor.fosstars.model.value.CVSS;
 import com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckCvssThresholdValue;
 import com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsage;
@@ -219,16 +220,17 @@ public class UsesOwaspDependencyCheckTest extends TestGitHubDataFetcherHolder {
   }
 
   private static void checkUsage(OwaspDependencyCheckUsage expected, ValueSet values) {
-    Optional<Value> value = values.of(OWASP_DEPENDENCY_CHECK_USAGE);
+    Optional<Value<OwaspDependencyCheckUsage>> value = values.of(OWASP_DEPENDENCY_CHECK_USAGE);
     assertTrue(value.isPresent());
-    Value usage = value.get();
+    Value<OwaspDependencyCheckUsage> usage = value.get();
     assertEquals(expected, usage.get());
   }
 
   private static void checkThreshold(Double expected, ValueSet values) {
-    Optional<Value> value = values.of(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD);
+    Optional<Value<Double>> value
+        = values.of(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD);
     assertTrue(value.isPresent());
-    Value n = value.get();
+    Value<Double> n = value.get();
     assertTrue(n instanceof OwaspDependencyCheckCvssThresholdValue);
     OwaspDependencyCheckCvssThresholdValue threshold = (OwaspDependencyCheckCvssThresholdValue) n;
 

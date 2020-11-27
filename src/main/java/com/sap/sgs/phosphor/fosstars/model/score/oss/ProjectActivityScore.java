@@ -4,106 +4,60 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.findValue;
 
+import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Value;
-import com.sap.sgs.phosphor.fosstars.model.math.MathHelper;
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.sgs.phosphor.fosstars.model.score.FeatureBasedScore;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Function;
-import org.apache.commons.math3.analysis.UnivariateFunction;
-import org.apache.commons.math3.analysis.function.Logistic;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
- * <p>The project activity score is currently based on two features.</p>
+ * <p>The project activity score evaluates how active an open-source project is.
+ * It is currently based on two features.</p>
  * <ul>
- *  <li>Number of commits in the last three months.</li>
- *  <li>Number of contributors in the last three months.</li>
+ *  <li>Number of commits in the last three months</li>
+ *  <li>Number of contributors in the last three months</li>
  * </ul>
- * <p>The score uses the logistic function to transform the numbers to a score value.</p>
+ * <p>Here is how the score evaluates a number of commits in the last 3 month.
+ * First, the score supposes that it's good if a project receives more than 5 commits in a week.
+ * Assuming that 3 months is around 13 weeks, the score supposes that a project is active
+ * if it receives more than 65 commits in the last 3 months.
+ * In this case the score value is set to 10 (max).
+ * If a project received 0 commits in the last 3 months, then the score value is set to 0 (min).
+ * If a number of commits is between 0 and 65,
+ * then the score uses a linear function to calculate the score value.</p>
+ * <p>Here is how the score takes into account a number of contributors in the last 3 months.
+ * If it's just 1 contributor, then the score value doesn't change.
+ * If it was more than 1 contributor, then the score uses an additional factor for the score value.
+ * </p>
+ * <ul>
+ *   <li>If it's 2 contributors, the factor is 0.05</li>
+ *   <li>If it's 3-4 contributors, the factor is 0.1</li>
+ *   <li>If it's more than 4 contributors, the factor is 0.2</li>
+ * </ul>
  */
 public class ProjectActivityScore extends FeatureBasedScore {
 
-  /**
-   * The maximum sub-score based on a number of commits in the last three month.
-   */
-  private static final double MAX_COMMITS_SUB_SCORE = 5.1;
+  private static final int GOOD_NUMBER_OF_COMMITS = 65;
 
-  /**
-   * A logistic function which is used to convert a number of commits to a sub-score:
-   * <pre>y(n) = MAX_COMMITS_SUB_SCORE / (1 + e ^ (0.02 * (200 - n)))</pre>,
-   * where n is a number of commits in the last three months.
-   * The function belongs to the interval [0.0, MAX_COMMITS_SUB_SCORE) when n >= 0.
-   */
-  private static final Logistic LOGISTIC_FOR_NUMBER_OF_COMMITS
-      = logistic(MAX_COMMITS_SUB_SCORE, 0.02, 200);
+  private static final Map<Integer, Double> CONTRIBUTOR_FACTOR = new TreeMap<>();
 
-  /**
-   * The maximum sub-score based on a number of contributors in the last three months.
-   */
-  private static final double MAX_CONTRIBUTORS_SUB_SCORE = 5.1;
-
-  /**
-   * A shift on the Y-axis for the logistic function for the number of contributors.
-   */
-  private static final double MAX_CONTRIBUTORS_SUB_SCORE_SHIFT = -1;
-
-  /**
-   * A logistic function which is used to convert a number of contributors to a sub-score:
-   * <pre>y(m) = A / (1 + e ^ (0.4 * (4 - m)))</pre>,
-   * where m is a number of contributors in the last three months,
-   * and A = MAX_CONTRIBUTORS_SUB_SCORE - MAX_CONTRIBUTORS_SUB_SCORE_SHIFT.
-   * The function belongs to the interval [0.0, MAX_CONTRIBUTORS_SUB_SCORE) when m >= 0.
-   */
-  private static final Logistic LOGISTIC_FOR_NUMBER_OF_CONTRIBUTORS
-      = logistic(MAX_CONTRIBUTORS_SUB_SCORE - MAX_CONTRIBUTORS_SUB_SCORE_SHIFT, 0.4, 4);
-
-  /**
-   * A final function which is used to convert a number of contributors to a sub-score:
-   * <pre>y(m) = LOGISTIC_FOR_NUMBER_OF_CONTRIBUTORS(m) - MAX_CONTRIBUTORS_SUB_SCORE_SHIFT</pre>.
-   */
-  private static final UnivariateFunction NUMBER_OF_CONTRIBUTORS_SUB_SCORE =
-      m -> LOGISTIC_FOR_NUMBER_OF_CONTRIBUTORS.value(m) + MAX_CONTRIBUTORS_SUB_SCORE_SHIFT;
-
-  /**
-   * Returns  logistic function y(x) = a / (1 + e ^ k(b - x)).
-   *
-   * @return The logistic function.
-   */
-  private static Logistic logistic(double a, double k, double b) {
-    return new Logistic(a, b, k, 1, 0, 1);
+  static {
+    CONTRIBUTOR_FACTOR.put(2, 0.05);
+    CONTRIBUTOR_FACTOR.put(3, 0.1);
+    CONTRIBUTOR_FACTOR.put(5, 0.2);
   }
 
   /**
    * A description of the score.
    */
-  private static final String DESCRIPTION;
-
-  static {
-    StringBuilder sb = new StringBuilder();
-
-    sb.append("The score is based on number of commits and contributors.\n");
-    sb.append(String.format(
-        "Here is how the number of commits contributes to the score (up to %2.2f):\n",
-        MAX_COMMITS_SUB_SCORE));
-    sb.append(printInvertedValues(
-        LOGISTIC_FOR_NUMBER_OF_COMMITS::value, 0, 1000,
-        0.1, MAX_COMMITS_SUB_SCORE * 0.5, MAX_COMMITS_SUB_SCORE * 0.9));
-
-    sb.append("\n");
-    sb.append(String.format(
-        "Here is how the number of contributors contributes to the score (up to %2.2f):\n",
-        MAX_CONTRIBUTORS_SUB_SCORE));
-    sb.append(printInvertedValues(
-        NUMBER_OF_CONTRIBUTORS_SUB_SCORE::value, 0, 200,
-        0.1, MAX_CONTRIBUTORS_SUB_SCORE * 0.5, MAX_CONTRIBUTORS_SUB_SCORE * 0.9));
-
-    DESCRIPTION = sb.toString();
-  }
+  private static final String DESCRIPTION =
+      "The score evaluates how active a project is. "
+          + "It's based on number of commits and contributors in the last 3 months.";
 
   /**
    * Initializes a new score.
@@ -115,104 +69,97 @@ public class ProjectActivityScore extends FeatureBasedScore {
 
   @Override
   public ScoreValue calculate(Value... values) {
-    Value<Integer> n = findValue(values, NUMBER_OF_COMMITS_LAST_THREE_MONTHS,
+    Value<Integer> commits = findValue(values, NUMBER_OF_COMMITS_LAST_THREE_MONTHS,
         "Hey! You have to give me a number of commits!");
-    Value<Integer> m = findValue(values, NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS,
+    Value<Integer> contributors = findValue(values, NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS,
         "Hey! You have to give me a number of contributors!");
 
-    check(n, m);
+    ScoreValue scoreValue = scoreValue(MIN, commits, contributors);
 
-    return scoreValue(commitsPoints(n) + contributorsPoints(m), n, m);
-  }
-
-  /**
-   * Calculates a sub-score based on a number of commits.
-   *
-   * @param numberOfCommits The number of commits.
-   * @return The sub-score.
-   */
-  private static double commitsPoints(Value<Integer> numberOfCommits) {
-    if (numberOfCommits.isUnknown()) {
-      return 0.0;
+    // if the number of commits is unknown, then we can't calculate the score value
+    // set the confidence to min, even if we know the number of contributors
+    if (commits.isUnknown()) {
+      return scoreValue
+          .makeUnknown()
+          .withMinConfidence()
+          .explain("A score value couldn't be calculated because the number of commits is unknown");
     }
 
-    int n = numberOfCommits.get();
-    if (n < 0) {
-      throw new IllegalArgumentException(
-          "Hey! You are're not supposed to give me a negative number of commits!");
-    }
-    if (n == 0) {
-      return 0.0;
+    if (commits.isNotApplicable()) {
+      return scoreValue
+          .withMinConfidence()
+          .explain("A score value couldn't be calculated because the number of commits "
+              + "is marked as N/A for some reason. Please check the data.");
     }
 
-    return LOGISTIC_FOR_NUMBER_OF_COMMITS.value(n);
-  }
-
-  /**
-   * Calculates a sub-score based on a number of contributors.
-   *
-   * @param numberOfContributors The number of contributors.
-   * @return The sub-score value.
-   */
-  private static double contributorsPoints(Value<Integer> numberOfContributors) {
-    if (numberOfContributors.isUnknown()) {
-      return 0.0;
+    if (commits.get() < 0) {
+      return scoreValue
+          .withMinConfidence()
+          .explain("A score value couldn't be calculated because the number of commits "
+                  + "is negative (%d). Please check the data.", commits.get());
     }
 
-    int n = numberOfContributors.get();
-    if (n < 0) {
-      throw new IllegalArgumentException(
-          "Hey! You are're not supposed to give me a negative number of contributors!");
+    // otherwise, calculate a sub-score based on the number of commits
+    double value;
+    if (commits.get() >= GOOD_NUMBER_OF_COMMITS) {
+      value = MAX;
+    } else {
+      value = (MAX / GOOD_NUMBER_OF_COMMITS) * commits.get();
     }
-    if (n == 0) {
-      return 0;
+    scoreValue.set(value)
+        .explain("%d commits in the last 3 months results to %.2f points",
+            commits.get(), value);
+
+    // if the number of contributors is not available, then return what we have
+    if (contributors.isNotApplicable()) {
+      return scoreValue
+          .confidence(Confidence.MAX / 2)
+          .explain("A number of contributors is marked as N/A for some reason. "
+              + "That reduces the overall confidence. Please check the data.");
     }
-
-    return LOGISTIC_FOR_NUMBER_OF_CONTRIBUTORS.value(n);
-  }
-
-  /**
-   * Checks a number of contributors and commits.
-   *
-   * @param commits The number of commits.
-   * @param contributors The number of contributors.
-   * @throws IllegalArgumentException If the numbers are not correct.
-   */
-  private static void check(Value<Integer> commits, Value<Integer> contributors) {
-    if (commits.isUnknown() || contributors.isUnknown()) {
-      return;
-    }
-
-    int n = commits.get();
-    int m = contributors.get();
-
-    if (m > 0 && n == 0) {
-      throw new IllegalArgumentException("Contributor without commits! How is that possible?");
+    if (contributors.isUnknown()) {
+      return scoreValue
+          .confidence(Confidence.MAX / 2)
+          .explain("A number of contributors is unknown. "
+              + "That reduces the overall score and confidence");
     }
 
-    if (n > 0 && m == 0) {
-      throw new IllegalArgumentException("Commits without contributor! How is that possible?");
+    // it looks strange if a project has commits but no contributors
+    if (commits.get() > 0 && contributors.get() <= 0) {
+      return scoreValue
+          .confidence(Confidence.MAX / 2)
+          .explain("It looks strange that the project had commits (%d) "
+                  + "but the number of contributors (%d). That reduces the overall confidence. "
+                  + "Please check the data.",
+              commits.get(), contributors.get());
     }
-  }
 
-  /**
-   * Inverts a number of values of a function on a specified interval and prints them out.
-   *
-   * @param func The function to be inverted.
-   * @param a A beginning of the interval.
-   * @param b A end of the interval.
-   * @param values The values of the function to be inverted.
-   * @return A string with inverted values.
-   */
-  private static String printInvertedValues(
-      Function<Integer, Double> func, int a, int b, double... values) {
-
-    List<String> strings = new ArrayList<>();
-    for (double value : values) {
-      strings.add(String.format("%d -> %2.2f",
-          MathHelper.invert(func, a, b, value, 0.01), value));
+    // it also looks strange if a project has contributors but no commits
+    if (commits.get() == 0 && contributors.get() > 0) {
+      return scoreValue
+          .confidence(Confidence.MAX / 2)
+          .explain("It looks strange that the project has contributors (%d) but no commits. "
+              + "That reduces the overall confidence. Please check the data.", contributors.get());
     }
-    return String.join(", ", strings);
+
+    // otherwise, calculate a factor based on the number of contributors
+    double factor = 0.0;
+    for (Map.Entry<Integer, Double> entry : CONTRIBUTOR_FACTOR.entrySet()) {
+      if (contributors.get() >= entry.getKey()) {
+        factor = entry.getValue();
+      } else {
+        break;
+      }
+    }
+    if (factor > 0) {
+      double newValue = value + value * factor;
+      scoreValue
+          .set(newValue)
+          .explain("%d contributors increase the score value from %.2f to %.2f",
+              contributors.get(), value, newValue);
+    }
+
+    return scoreValue;
   }
 
   /**

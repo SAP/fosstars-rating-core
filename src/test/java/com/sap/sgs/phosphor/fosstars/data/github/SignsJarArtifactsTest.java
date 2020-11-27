@@ -62,10 +62,10 @@ public class SignsJarArtifactsTest extends TestGitHubDataFetcherHolder {
     assertEquals(1, values.size());
     assertTrue(values.has(SIGNS_ARTIFACTS));
 
-    Optional<Value> something = values.of(SIGNS_ARTIFACTS);
+    Optional<Value<Boolean>> something = values.of(SIGNS_ARTIFACTS);
     assertTrue(something.isPresent());
 
-    Value actualValue = something.get();
+    Value<Boolean> actualValue = something.get();
     assertEquals(expectedValue, actualValue.get());
   }
 }
