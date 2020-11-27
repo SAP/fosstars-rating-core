@@ -8,9 +8,9 @@ import static com.sap.sgs.phosphor.fosstars.model.qa.TestVectorBuilder.newTestVe
 import static com.sap.sgs.phosphor.fosstars.model.value.Language.CPP;
 
 import com.sap.sgs.phosphor.fosstars.model.Score;
+import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.sgs.phosphor.fosstars.model.qa.VerificationFailedException;
-import com.sap.sgs.phosphor.fosstars.model.score.oss.FuzzingScore.Verification;
 import com.sap.sgs.phosphor.fosstars.model.value.Languages;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -54,7 +54,7 @@ public class FuzzingScoreTest {
     try {
       vectors.storeToYaml(file);
 
-      Verification verification = new Verification(
+      ScoreVerification verification = new ScoreVerification(
           new FuzzingScore(),
           TestVectors.loadFromYaml(file));
 

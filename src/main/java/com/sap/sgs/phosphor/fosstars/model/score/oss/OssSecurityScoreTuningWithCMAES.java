@@ -1,10 +1,12 @@
 package com.sap.sgs.phosphor.fosstars.model.score.oss;
 
+import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
 import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerifier;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.sgs.phosphor.fosstars.model.qa.VerificationFailedException;
 import com.sap.sgs.phosphor.fosstars.model.tuning.TuningWithCMAES;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * This class tunes weights in the open-source security rating to make it pass the test vectors.
@@ -37,8 +39,23 @@ public class OssSecurityScoreTuningWithCMAES extends TuningWithCMAES {
    */
   public static void main(String... args) throws IOException, VerificationFailedException {
     OssSecurityScore score = new OssSecurityScore();
-    OssSecurityScore.Verification verification = OssSecurityScore.Verification.createFor(score);
+    ScoreVerification verification = verificationFor(score);
     new OssSecurityScoreTuningWithCMAES(score, verification.vectors()).run();
     score.weights().storeToJson(PATH);
+  }
+
+  /**
+   * Creates an instance of {@link ScoreVerification} for a specified score. The method loads test
+   * vectors from a default resource.
+   *
+   * @param score The score to be verified.
+   * @return An instance of {@link OssSecurityScore}.
+   */
+  private static ScoreVerification verificationFor(OssSecurityScore score) throws IOException {
+    try (InputStream is = OssSecurityScore.class.getResourceAsStream(
+        "OssSecurityScoreTestVectors.yml")) {
+
+      return new ScoreVerification(score, TestVectors.loadFromYaml(is));
+    }
   }
 }

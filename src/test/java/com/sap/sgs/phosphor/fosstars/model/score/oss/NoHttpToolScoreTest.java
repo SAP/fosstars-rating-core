@@ -7,9 +7,9 @@ import static com.sap.sgs.phosphor.fosstars.model.other.Utils.setOf;
 import static com.sap.sgs.phosphor.fosstars.model.qa.TestVectorBuilder.newTestVector;
 
 import com.sap.sgs.phosphor.fosstars.model.Score;
+import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
 import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.sgs.phosphor.fosstars.model.qa.VerificationFailedException;
-import com.sap.sgs.phosphor.fosstars.model.score.oss.NoHttpToolScore.Verification;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -50,7 +50,7 @@ public class NoHttpToolScoreTest {
     try {
       vectors.storeToYaml(file);
 
-      Verification verification = new Verification(
+      ScoreVerification verification = new ScoreVerification(
           new NoHttpToolScore(),
           TestVectors.loadFromYaml(file));
 

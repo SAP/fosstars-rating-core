@@ -6,12 +6,8 @@ import static com.sap.sgs.phosphor.fosstars.model.other.Utils.findValue;
 
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.math.MathHelper;
-import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
-import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.sgs.phosphor.fosstars.model.score.FeatureBasedScore;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.function.Function;
 
 /**
@@ -142,41 +138,5 @@ public class ProjectPopularityScore extends FeatureBasedScore {
     }
 
     return MAX;
-  }
-
-  /**
-   * This class implements a verification procedure for {@link ProjectPopularityScore}.
-   * The class loads test vectors, and provides methods to verify a {@link ProjectPopularityScore}
-   * against those test vectors.
-   */
-  public static class Verification extends ScoreVerification {
-
-    /**
-     * A name of a resource which contains the test vectors.
-     */
-    private static final String TEST_VECTORS_YAML = "ProjectPopularityScoreTestVectors.yml";
-
-    /**
-     * Initializes a {@link Verification} for a {@link ProjectPopularityScore}.
-     *
-     * @param score A score to be verified.
-     * @param vectors A list of test vectors.
-     */
-    public Verification(ProjectPopularityScore score, TestVectors vectors) {
-      super(score, vectors);
-    }
-
-    /**
-     * Creates an instance of {@link Verification} for a specified score. The method loads test
-     * vectors from a default resource.
-     *
-     * @param score The score to be verified.
-     * @return An instance of {@link Verification}.
-     */
-    static Verification createFor(ProjectPopularityScore score) throws IOException {
-      try (InputStream is = Verification.class.getResourceAsStream(TEST_VECTORS_YAML)) {
-        return new Verification(score, TestVectors.loadFromYaml(is));
-      }
-    }
   }
 }

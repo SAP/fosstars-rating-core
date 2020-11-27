@@ -6,15 +6,11 @@ import static com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsag
 
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
-import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
-import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.sgs.phosphor.fosstars.model.score.FeatureBasedScore;
 import com.sap.sgs.phosphor.fosstars.model.value.CVSS;
 import com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckCvssThresholdValue;
 import com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsage;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * The scores assesses how well an open-source project uses OWASP Dependency Check to scan
@@ -78,41 +74,5 @@ public class OwaspDependencyScanScore extends FeatureBasedScore {
     }
 
     return scoreValue;
-  }
-
-  /**
-   * This class implements a verification procedure for {@link OwaspDependencyScanScore}.
-   * The class loads test vectors, and provides methods to verify a {@link OwaspDependencyScanScore}
-   * against those test vectors.
-   */
-  public static class Verification extends ScoreVerification {
-
-    /**
-     * A name of a resource which contains the test vectors.
-     */
-    private static final String TEST_VECTORS_YAML = "OwaspDependencyScanScoreTestVectors.yml";
-
-    /**
-     * Initializes a {@link Verification} for a {@link OwaspDependencyScanScore}.
-     *
-     * @param score A score to be verified.
-     * @param vectors A list of test vectors.
-     */
-    public Verification(OwaspDependencyScanScore score, TestVectors vectors) {
-      super(score, vectors);
-    }
-
-    /**
-     * Creates an instance of {@link Verification} for a specified score. The method loads test
-     * vectors from a default resource.
-     *
-     * @param score The score to be verified.
-     * @return An instance of {@link Verification}.
-     */
-    static Verification createFor(OwaspDependencyScanScore score) throws IOException {
-      try (InputStream is = Verification.class.getResourceAsStream(TEST_VECTORS_YAML)) {
-        return new Verification(score, TestVectors.loadFromYaml(is));
-      }
-    }
   }
 }

@@ -8,13 +8,9 @@ import static com.sap.sgs.phosphor.fosstars.model.value.Language.C;
 import static com.sap.sgs.phosphor.fosstars.model.value.Language.CPP;
 
 import com.sap.sgs.phosphor.fosstars.model.Value;
-import com.sap.sgs.phosphor.fosstars.model.qa.ScoreVerification;
-import com.sap.sgs.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.sgs.phosphor.fosstars.model.score.FeatureBasedScore;
 import com.sap.sgs.phosphor.fosstars.model.value.Languages;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * <p>The score shows how an open-source project tests for memory-corruption issues such as
@@ -97,43 +93,5 @@ public class MemorySafetyTestingScore extends FeatureBasedScore {
     }
 
     return scoreValue;
-  }
-
-  /**
-   * This class implements a verification procedure for {@link MemorySafetyTestingScore}.
-   * The class loads test vectors,
-   * and provides methods to verify a {@link MemorySafetyTestingScore}
-   * against those test vectors.
-   */
-  public static class Verification extends ScoreVerification {
-
-    /**
-     * A name of a resource which contains the test vectors.
-     */
-    private static final String TEST_VECTORS_YAML = "MemorySafetyScoreTestVectors.yml";
-
-    /**
-     * Initializes a {@link Verification}
-     * for a {@link MemorySafetyTestingScore}.
-     *
-     * @param score A score to be verified.
-     * @param vectors A list of test vectors.
-     */
-    public Verification(MemorySafetyTestingScore score, TestVectors vectors) {
-      super(score, vectors);
-    }
-
-    /**
-     * Creates an instance of {@link Verification} for a specified score. The method loads test
-     * vectors from a default resource.
-     *
-     * @param score The score to be verified.
-     * @return An instance of {@link MemorySafetyTestingScore}.
-     */
-    static Verification createFor(MemorySafetyTestingScore score) throws IOException {
-      try (InputStream is = Verification.class.getResourceAsStream(TEST_VECTORS_YAML)) {
-        return new Verification(score, TestVectors.loadFromYaml(is));
-      }
-    }
   }
 }
