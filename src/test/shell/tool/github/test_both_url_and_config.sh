@@ -16,7 +16,6 @@ JAR=${JAR:-"target/fosstars-github-rating-calc.jar"}
 $JAVA -jar $JAR \
   --url https://github.com/apache/poi \
   --config test_config.yml \
-  --no-questions \
   $TOKEN_OPTION
 
 if [ $? -eq 0 ]; then

@@ -70,4 +70,9 @@ public class VulnerabilitiesValue extends AbstractValue<Vulnerabilities> {
   public int hashCode() {
     return Objects.hash(super.hashCode(), vulnerabilities);
   }
+
+  @Override
+  public String toString() {
+    return vulnerabilities.toString();
+  }
 }

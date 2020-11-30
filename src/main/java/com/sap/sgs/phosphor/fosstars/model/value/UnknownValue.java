@@ -95,4 +95,9 @@ public final class UnknownValue<T> implements Value<T> {
   public int hashCode() {
     return Objects.hashCode(feature);
   }
+
+  @Override
+  public String toString() {
+    return "Unknown";
+  }
 }

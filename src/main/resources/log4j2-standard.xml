@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+  <Appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout>
+        <LevelPatternSelector defaultPattern="[+] %msg%n%throwable">
+          <PatternMatch key="info" pattern="[+] %msg%n%throwable"/>
+          <PatternMatch key="warn" pattern="[!] %msg%n%throwable"/>
+          <PatternMatch key="error" pattern="[x] %msg%n%throwable"/>
+        </LevelPatternSelector>
+      </PatternLayout>
+    </Console>
+  </Appenders>
+  <Loggers>
+    <Root level="info">
+      <AppenderRef ref="Console"/>
+    </Root>
+  </Loggers>
+</Configuration>

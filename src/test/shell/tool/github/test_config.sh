@@ -18,7 +18,6 @@ mkdir -p .fosstars/report
 # check if --config works (smoke test)
 $JAVA -jar $JAR \
   --config test_config.yml \
-  --no-questions \
   $TOKEN_OPTION 2>&1 | tee tmp.log
 
 grep "Found 3 projects" tmp.log || exit 1

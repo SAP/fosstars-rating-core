@@ -30,13 +30,13 @@ import com.sap.sgs.phosphor.fosstars.data.github.UsesSignedCommits;
 import com.sap.sgs.phosphor.fosstars.data.interactive.AskAboutSecurityTeam;
 import com.sap.sgs.phosphor.fosstars.data.interactive.AskAboutUnpatchedVulnerabilities;
 import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
-import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.nvd.NVD;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -91,10 +91,9 @@ class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
     }
 
     logger.info("Here is what we know about the project:");
-    for (Value value : values.toArray()) {
-      logger.info("   {}: {}",
-          value.feature(), value.isUnknown() ? "unknown" : value.get());
-    }
+    Arrays.stream(values.toArray())
+        .sorted(Comparator.comparing(value -> value.feature().name()))
+        .forEach(value -> logger.info("   {}: {}", value.feature(), value));
 
     project.set(rating.calculate(values));
 

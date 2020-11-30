@@ -63,4 +63,9 @@ public class OwaspDependencyCheckCvssThresholdValue extends DoubleValue {
   public int hashCode() {
     return Objects.hash(super.hashCode(), specified);
   }
+
+  @Override
+  public String toString() {
+    return specified ? String.valueOf(number) : "Not specified";
+  }
 }
