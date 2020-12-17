@@ -1,6 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.tool.github;
 
 import com.sap.sgs.phosphor.fosstars.data.github.GitHubDataFetcher;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import com.sap.sgs.phosphor.fosstars.nvd.NVD;
 import java.io.IOException;
@@ -96,7 +97,7 @@ class MultipleSecurityRatingsCalculator extends AbstractRatingCalculator {
           projectCache.store(projectCacheFile);
         }
       } catch (Exception e) {
-        logger.warn("Oh no! Could not calculate a rating for {}", project.url());
+        logger.warn("Oh no! Could not calculate a rating for {}", project.scm());
         logger.warn(e);
         failedProjects.add(project);
       }

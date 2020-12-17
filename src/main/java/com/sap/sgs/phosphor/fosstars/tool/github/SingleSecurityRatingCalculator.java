@@ -32,6 +32,7 @@ import com.sap.sgs.phosphor.fosstars.data.interactive.AskAboutUnpatchedVulnerabi
 import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.nvd.NVD;
 import java.io.IOException;
@@ -60,7 +61,7 @@ class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
     Objects.requireNonNull(project, "Oh no! Project can't be null!");
 
     logger.info("Let's gather info and calculate a security rating for:");
-    logger.info("  {}", project.url());
+    logger.info("  {}", project.scm());
 
     try {
       fetcher.repositoryFor(project);

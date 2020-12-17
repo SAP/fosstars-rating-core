@@ -5,6 +5,7 @@ import com.sap.sgs.phosphor.fosstars.data.NoValueCache;
 import com.sap.sgs.phosphor.fosstars.data.UserCallback;
 import com.sap.sgs.phosphor.fosstars.data.ValueCache;
 import com.sap.sgs.phosphor.fosstars.data.github.GitHubDataFetcher;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.nvd.NVD;
 import java.util.Objects;
 import org.apache.logging.log4j.LogManager;

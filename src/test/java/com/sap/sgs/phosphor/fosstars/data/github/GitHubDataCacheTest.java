@@ -4,8 +4,8 @@ import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-import com.sap.sgs.phosphor.fosstars.tool.github.GitHubOrganization;
-import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubOrganization;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.util.Date;
 import java.util.Optional;
 import org.junit.Test;

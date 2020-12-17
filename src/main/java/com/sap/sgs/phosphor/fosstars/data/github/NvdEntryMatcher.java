@@ -1,5 +1,6 @@
 package com.sap.sgs.phosphor.fosstars.data.github;
 
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.nvd.Matcher;
 import com.sap.sgs.phosphor.fosstars.nvd.data.Affects;
 import com.sap.sgs.phosphor.fosstars.nvd.data.CVE;
@@ -14,7 +15,6 @@ import com.sap.sgs.phosphor.fosstars.nvd.data.ReferenceLink;
 import com.sap.sgs.phosphor.fosstars.nvd.data.References;
 import com.sap.sgs.phosphor.fosstars.nvd.data.Vendor;
 import com.sap.sgs.phosphor.fosstars.nvd.data.VendorData;
-import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.net.URI;
 import java.util.Collections;
 import java.util.List;
@@ -341,7 +341,7 @@ public class NvdEntryMatcher implements Matcher {
    * @return True if the host name matches with the project, false otherwise.
    */
   private static boolean checkUrlHost(String host, GitHubProject project) {
-    return host.equals(project.url().getHost());
+    return host.equals(project.scm().getHost());
   }
 
   /**

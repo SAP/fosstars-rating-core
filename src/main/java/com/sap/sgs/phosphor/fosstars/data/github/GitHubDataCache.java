@@ -1,7 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.data.github;
 
 import com.sap.sgs.phosphor.fosstars.data.Cache;
-import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Map;

@@ -7,6 +7,8 @@ import static org.junit.Assert.assertTrue;
 
 import com.sap.sgs.phosphor.fosstars.model.rating.example.SecurityRatingExample.SecurityLabelExample;
 import com.sap.sgs.phosphor.fosstars.model.score.example.ExampleScores;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubOrganization;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.io.IOException;

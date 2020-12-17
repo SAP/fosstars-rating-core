@@ -5,7 +5,7 @@ import static com.sap.sgs.phosphor.fosstars.data.github.TestGitHubDataFetcherHol
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.FUZZED_IN_OSS_FUZZ;
 import static org.junit.Assert.assertEquals;
 
-import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectValueCache;
 import java.io.File;
 import java.io.IOException;
@@ -42,7 +42,7 @@ public class FuzzedInOssFuzzTest extends TestGitHubDataFetcherHolder {
           .call();
 
       LocalRepository localRepository = new LocalRepository(
-          new LocalRepositoryInfo(directory, new Date(), OSS_FUZZ_PROJECT.url()),
+          new LocalRepositoryInfo(directory, new Date(), OSS_FUZZ_PROJECT.scm()),
           repository
       );
       addForTesting(OSS_FUZZ_PROJECT, localRepository);

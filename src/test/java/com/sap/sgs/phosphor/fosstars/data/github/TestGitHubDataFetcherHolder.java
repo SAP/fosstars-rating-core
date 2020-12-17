@@ -6,7 +6,7 @@ import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
-import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -79,7 +79,7 @@ public class TestGitHubDataFetcherHolder {
      * @param repository The {@link LocalRepository}.
      */
     static void addForTesting(GitHubProject project, LocalRepository repository) {
-      LOCAL_REPOSITORIES.put(project.url(), repository);
+      LOCAL_REPOSITORIES.put(project.scm(), repository);
     }
     
     /**
@@ -89,9 +89,9 @@ public class TestGitHubDataFetcherHolder {
      * @param projectDir The local {@link Path} for the {@link GitHubProject}.
      */
     static void addRepositoryInfoForTesting(GitHubProject project, Path projectDir) {
-      LOCAL_REPOSITORIES.remove(project.url());
-      LOCAL_REPOSITORIES_INFO.put(project.url(),
-          new LocalRepositoryInfo(projectDir, Date.from(Instant.now()), project.url()));
+      LOCAL_REPOSITORIES.remove(project.scm());
+      LOCAL_REPOSITORIES_INFO.put(project.scm(),
+          new LocalRepositoryInfo(projectDir, Date.from(Instant.now()), project.scm()));
     }
 
     /**

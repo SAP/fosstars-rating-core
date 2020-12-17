@@ -6,7 +6,7 @@ import com.sap.sgs.phosphor.fosstars.data.UserCallback;
 import com.sap.sgs.phosphor.fosstars.data.json.SecurityTeamStorage;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
-import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.io.IOException;
 
 /**
@@ -40,6 +40,6 @@ public class HasSecurityTeam extends CachedSingleFeatureGitHubDataProvider {
   @Override
   protected Value fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out if the project has a security team ...");
-    return HAS_SECURITY_TEAM.value(securityTeam.existsFor(project.url()));
+    return HAS_SECURITY_TEAM.value(securityTeam.existsFor(project.scm()));
   }
 }

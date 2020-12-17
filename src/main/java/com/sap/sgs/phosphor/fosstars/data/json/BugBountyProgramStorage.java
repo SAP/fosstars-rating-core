@@ -1,7 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.data.json;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -44,7 +44,7 @@ public class BugBountyProgramStorage extends AbstractJsonStorage {
    * @return True if the projects has a bug bounty program, false otherwise.
    */
   public boolean existsFor(GitHubProject project) {
-    return existsFor(project.url());
+    return existsFor(project.scm());
   }
 
   /**

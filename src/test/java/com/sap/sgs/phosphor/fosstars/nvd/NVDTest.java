@@ -6,8 +6,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import com.sap.sgs.phosphor.fosstars.data.github.NvdEntryMatcher;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.nvd.data.NvdEntry;
-import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;

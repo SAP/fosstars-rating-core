@@ -9,9 +9,9 @@ import com.sap.sgs.phosphor.fosstars.data.NoValueCache;
 import com.sap.sgs.phosphor.fosstars.data.UserCallback;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
-import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import org.junit.Test;
 
 public class AskAboutUnpatchedVulnerabilitiesTest {

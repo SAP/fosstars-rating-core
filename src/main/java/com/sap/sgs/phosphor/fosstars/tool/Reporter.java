@@ -1,5 +1,6 @@
 package com.sap.sgs.phosphor.fosstars.tool;
 
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.OpenSourceProject;
 import java.io.IOException;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
  *
  * @param <T> A type of projects.
  */
-public interface Reporter<T extends Project> {
+public interface Reporter<T extends OpenSourceProject> {
 
   /**
    * Runs the reporter for a list of projects.

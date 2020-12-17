@@ -4,6 +4,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER
 
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.sgs.phosphor.fosstars.tool.format.Formatter;
@@ -123,7 +124,7 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
     StringBuilder sb = new StringBuilder();
     Statistics statistics = new Statistics();
     for (GitHubProject project : allProjects) {
-      String projectPath = project.url().getPath().replaceFirst("/", "");
+      String projectPath = project.scm().getPath().replaceFirst("/", "");
 
       Path organizationDirectory = Paths.get(outputDirectory)
           .resolve(project.organization().name());
@@ -132,8 +133,9 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
       }
 
       String details = TEMPLATE
-          .replace("%PROJECT_URL%", project.url().toString())
-          .replace("%UPDATED_DATE%", DATE_FORMAT.format(project.ratingValueDate()))
+          .replace("%PROJECT_URL%", project.scm().toString())
+          .replace("%UPDATED_DATE%",
+              project.ratingValueDate().map(DATE_FORMAT::format).orElse(UNKNOWN))
           .replace("%PROJECT_NAME%", projectPath)
           .replace("%DETAILS%", detailsOf(project));
 
@@ -174,8 +176,8 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
    */
   private static String nameOf(GitHubProject project) {
     String name = insert("<br>", NAME_LINE_LENGTH,
-        project.url().getPath().replaceFirst("/", ""));
-    return String.format("[%s](%s)", name, project.url());
+        project.scm().getPath().replaceFirst("/", ""));
+    return String.format("[%s](%s)", name, project.scm());
   }
 
   /**
@@ -264,10 +266,7 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
    * Formats a date when a rating was calculated for a project.
    */
   private static String lastUpdateOf(GitHubProject project) {
-    if (project.ratingValueDate() == null) {
-      return UNKNOWN;
-    }
-    return DATE_FORMAT.format(project.ratingValueDate());
+    return project.ratingValueDate().map(DATE_FORMAT::format).orElse(UNKNOWN);
   }
 
   /**

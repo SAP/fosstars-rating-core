@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import java.io.IOException;
 import java.io.InputStream;
@@ -98,7 +99,7 @@ class GitHubProjectCache {
    * @return The same {@link GitHubProject}.
    */
   GitHubProjectCache add(GitHubProject project) {
-    cache.put(project.url().toString(), project);
+    cache.put(project.scm().toString(), project);
     return this;
   }
 
@@ -109,15 +110,15 @@ class GitHubProjectCache {
    * @return An {@link Optional} with a rating value for the project.
    */
   Optional<RatingValue> cachedRatingValueFor(GitHubProject project) {
-    GitHubProject cached = cache.get(project.url().toString());
+    GitHubProject cached = cache.get(project.scm().toString());
     if (cached == null) {
       return Optional.empty();
     }
-    if (!cached.ratingValue().isPresent()) {
+    if (!cached.ratingValue().isPresent() || !cached.ratingValueDate().isPresent()) {
       return Optional.empty();
     }
     RatingValue ratingValue = cached.ratingValue().get();
-    long age = Duration.between(cached.ratingValueDate().toInstant(), Instant.now()).toDays();
+    long age = Duration.between(cached.ratingValueDate().get().toInstant(), Instant.now()).toDays();
     if (age >= lifetime) {
       return Optional.empty();
     }

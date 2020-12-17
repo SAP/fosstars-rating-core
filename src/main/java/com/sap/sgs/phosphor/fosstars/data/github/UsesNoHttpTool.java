@@ -7,7 +7,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_N
 import com.sap.sgs.phosphor.fosstars.maven.AbstractModelVisitor;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
-import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

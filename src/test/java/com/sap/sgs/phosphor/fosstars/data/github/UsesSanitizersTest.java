@@ -13,7 +13,7 @@ import static org.mockito.Mockito.when;
 
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
-import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectValueCache;
 import java.io.IOException;
 import java.nio.file.Path;
