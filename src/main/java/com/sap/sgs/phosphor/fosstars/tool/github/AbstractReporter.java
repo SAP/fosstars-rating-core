@@ -2,7 +2,8 @@ package com.sap.sgs.phosphor.fosstars.tool.github;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sap.sgs.phosphor.fosstars.tool.Project;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.OpenSourceProject;
 import com.sap.sgs.phosphor.fosstars.tool.Reporter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,7 +19,7 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-abstract class AbstractReporter<T extends Project> implements Reporter<T> {
+abstract class AbstractReporter<T extends OpenSourceProject> implements Reporter<T> {
 
   /**
    * A logger.
@@ -50,10 +51,10 @@ abstract class AbstractReporter<T extends Project> implements Reporter<T> {
 
     Map<URL, GitHubProject> map = new HashMap<>();
     for (GitHubProject extraProject : extraProjects) {
-      map.put(extraProject.url(), extraProject);
+      map.put(extraProject.scm(), extraProject);
     }
     for (GitHubProject project : projects) {
-      map.put(project.url(), project);
+      map.put(project.scm(), project);
     }
 
     List<GitHubProject> allProjects = new ArrayList<>();

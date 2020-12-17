@@ -16,7 +16,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
@@ -295,7 +295,7 @@ public class GitHubDataFetcherTest extends TestGitHubDataFetcherHolder  {
   private static boolean checkLocalRepositories(
       List<GitHubProject> projects, Map<URL, LocalRepository> localRepositories) {
 
-    Set<URL> projectUrls = projects.stream().map(GitHubProject::url).collect(Collectors.toSet());
+    Set<URL> projectUrls = projects.stream().map(GitHubProject::scm).collect(Collectors.toSet());
     assertEquals(projects.size(), projectUrls.size());
 
     return projectUrls.containsAll(localRepositories.keySet());
@@ -311,7 +311,7 @@ public class GitHubDataFetcherTest extends TestGitHubDataFetcherHolder  {
 
     LocalRepositoryInfo localRepositoryInfo = localRepositoryInfoFor(project, expectedSize);
     assertNotNull(localRepositoryInfo);
-    assertEquals(project.url(), localRepositoryInfo.url());
+    assertEquals(project.scm(), localRepositoryInfo.url());
   }
 
   private void testCleanup(GitHubProject project, int expectedSize) throws IOException {
@@ -320,13 +320,13 @@ public class GitHubDataFetcherTest extends TestGitHubDataFetcherHolder  {
   }
 
   private void runCleanupFor(GitHubProject project) throws IOException {
-    fetcher.cleanup((url, repo, total) -> url.equals(project.url()));
+    fetcher.cleanup((url, repo, total) -> url.equals(project.scm()));
   }
 
   private static void checkCleanUp(GitHubProject project, int expectedSize) throws IOException {
     LocalRepositoryInfo cleanRepositoryInfo = localRepositoryInfoFor(project, expectedSize);
     assertNull(cleanRepositoryInfo);
-    assertFalse(LOCAL_REPOSITORIES.containsKey(project.url()));
+    assertFalse(LOCAL_REPOSITORIES.containsKey(project.scm()));
   }
 
   private static LocalRepositoryInfo localRepositoryInfoFor(GitHubProject project, int expectedSize)
@@ -334,6 +334,6 @@ public class GitHubDataFetcherTest extends TestGitHubDataFetcherHolder  {
 
     loadLocalRepositoriesInfo();
     assertEquals(LOCAL_REPOSITORIES_INFO.size(), expectedSize);
-    return LOCAL_REPOSITORIES_INFO.get(project.url());
+    return LOCAL_REPOSITORIES_INFO.get(project.scm());
   }
 }

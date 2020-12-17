@@ -1,6 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.tool.github;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -42,7 +43,7 @@ public class MergedJsonReporter extends AbstractReporter<GitHubProject> {
     List<GitHubProject> allProjects = merge(projects, existingProjects);
 
     logger.info("Storing info about projects to {}", filename);
-    allProjects.sort(Comparator.comparing(project -> project.url().toString()));
+    allProjects.sort(Comparator.comparing(project -> project.scm().toString()));
     Files.write(
         Paths.get(filename),
         MAPPER.writerWithDefaultPrettyPrinter().writeValueAsBytes(allProjects));

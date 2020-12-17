@@ -3,7 +3,7 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.net.URI;
 import java.net.URISyntaxException;
 import org.junit.Test;

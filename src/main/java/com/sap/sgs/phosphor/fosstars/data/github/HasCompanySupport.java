@@ -5,7 +5,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPOR
 import com.sap.sgs.phosphor.fosstars.data.json.CompanySupportStorage;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
-import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.io.IOException;
 
 /**
@@ -37,6 +37,6 @@ public class HasCompanySupport extends CachedSingleFeatureGitHubDataProvider {
   @Override
   protected Value<Boolean> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out if the project is supported by a company ...");
-    return SUPPORTED_BY_COMPANY.value(company.supports(project.url()));
+    return SUPPORTED_BY_COMPANY.value(company.supports(project.scm()));
   }
 }

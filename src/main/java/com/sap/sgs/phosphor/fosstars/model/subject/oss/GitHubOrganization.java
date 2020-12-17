@@ -1,14 +1,15 @@
-package com.sap.sgs.phosphor.fosstars.tool.github;
+package com.sap.sgs.phosphor.fosstars.model.subject.oss;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sap.sgs.phosphor.fosstars.model.subject.AbstractSubject;
 import java.util.Objects;
 
 /**
  * An organization (or a user) on GitHub.
  */
-public class GitHubOrganization {
+public class GitHubOrganization extends AbstractSubject {
 
   /**
    * A name.
@@ -43,12 +44,15 @@ public class GitHubOrganization {
     if (o instanceof GitHubOrganization == false) {
       return false;
     }
+    if (!super.equals(o)) {
+      return false;
+    }
     GitHubOrganization that = (GitHubOrganization) o;
     return Objects.equals(name, that.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(name);
+    return Objects.hash(super.hashCode(), name);
   }
 }

@@ -2,6 +2,7 @@ package com.sap.sgs.phosphor.fosstars.tool.github;
 
 import com.sap.sgs.phosphor.fosstars.data.UserCallback;
 import com.sap.sgs.phosphor.fosstars.data.ValueCache;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.io.IOException;
 import java.util.List;
 

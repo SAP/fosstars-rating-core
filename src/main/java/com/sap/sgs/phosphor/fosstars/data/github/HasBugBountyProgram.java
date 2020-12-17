@@ -5,7 +5,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_BU
 import com.sap.sgs.phosphor.fosstars.data.json.BugBountyProgramStorage;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
-import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.io.IOException;
 
 /**

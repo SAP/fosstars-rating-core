@@ -1,10 +1,11 @@
 package com.sap.sgs.phosphor.fosstars.tool.github;
 
 import static com.sap.sgs.phosphor.fosstars.maven.MavenUtils.readModel;
-import static com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject.isOnGitHub;
+import static com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject.isOnGitHub;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -124,7 +125,7 @@ public class MavenScmFinder {
    */
   private static boolean looksLikeValid(GitHubProject project) {
     try {
-      String content = IOUtils.toString(project.url(), CHARSET);
+      String content = IOUtils.toString(project.scm(), CHARSET);
       return StringUtils.isNotEmpty(content);
     } catch (IOException e) {
       return false;

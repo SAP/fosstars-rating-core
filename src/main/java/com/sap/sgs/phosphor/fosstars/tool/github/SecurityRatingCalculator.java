@@ -1,6 +1,6 @@
 package com.sap.sgs.phosphor.fosstars.tool.github;
 
-import static com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject.isOnGitHub;
+import static com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject.isOnGitHub;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.MapperFeature;
@@ -10,6 +10,7 @@ import com.sap.sgs.phosphor.fosstars.data.NoUserCallback;
 import com.sap.sgs.phosphor.fosstars.data.Terminal;
 import com.sap.sgs.phosphor.fosstars.data.UserCallback;
 import com.sap.sgs.phosphor.fosstars.data.github.GitHubDataFetcher;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import com.sap.sgs.phosphor.fosstars.nvd.NVD;
 import com.sap.sgs.phosphor.fosstars.tool.InputString;
@@ -294,7 +295,7 @@ public class SecurityRatingCalculator {
         throw new IOException("Oh no! I could not find a mirror on GitHub!");
       }
 
-      url = mirror.get().url().toString();
+      url = mirror.get().scm().toString();
 
       LOGGER.info("Yup, that seems to be a corresponding project on GitHub:");
       LOGGER.info("  {}", url);
@@ -329,7 +330,7 @@ public class SecurityRatingCalculator {
         .run();
     LOGGER.info("Found {} project{}", projects.size(), projects.size() > 1 ? "s" : "");
     for (GitHubProject project : projects) {
-      LOGGER.info("  {}", project.url());
+      LOGGER.info("  {}", project.scm());
     }
 
     String projectCacheFile = projectCacheFile(config);
@@ -351,7 +352,7 @@ public class SecurityRatingCalculator {
       LOGGER.warn("Ratings couldn't be calculated for {} project{}",
           failedProjects.size(), failedProjects.size() == 1 ? "" : "s");
       for (GitHubProject project : projects) {
-        LOGGER.info("    {}", project.url());
+        LOGGER.info("    {}", project.scm());
       }
     }
 

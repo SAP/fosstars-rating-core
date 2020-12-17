@@ -1,31 +1,20 @@
-package com.sap.sgs.phosphor.fosstars.tool.github;
+package com.sap.sgs.phosphor.fosstars.model.subject.oss;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sap.sgs.phosphor.fosstars.model.subject.AbstractSubject;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
-import com.sap.sgs.phosphor.fosstars.tool.Project;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * A project on GitHub.
  */
-public class GitHubProject implements Project {
-
-  /**
-   * Shows that there is no rating value assigned to a project.
-   */
-  private static final RatingValue NO_RATING_VALUE = null;
-
-  /**
-   * Shows that the date is unknown.
-   */
-  private static final Date NO_DATE = null;
+public class GitHubProject extends AbstractSubject implements OpenSourceProject {
 
   /**
    * An organization (or user) that owns the project.
@@ -41,16 +30,6 @@ public class GitHubProject implements Project {
    * A URL to the project's SCM.
    */
   private final URL url;
-
-  /**
-   * A rating value for the project.
-   */
-  private RatingValue ratingValue;
-
-  /**
-   * When the rating value was calculated.
-   */
-  private Date ratingValueDate;
 
   /**
    * Initializes a project.
@@ -69,7 +48,7 @@ public class GitHubProject implements Project {
    * @param name Project's name.
    */
   public GitHubProject(GitHubOrganization organization, String name) {
-    this(organization, name, makeUrl(organization, name), NO_RATING_VALUE, NO_DATE);
+    this(organization, name, makeUrl(organization, name), NO_RATING_VALUE, NO_RATING_DATE);
   }
 
   /**
@@ -89,16 +68,15 @@ public class GitHubProject implements Project {
       @JsonProperty("ratingValue") RatingValue ratingValue,
       @JsonProperty("ratingValueDate") Date ratingValueDate) {
 
+    super(ratingValue, ratingValueDate);
     this.organization = Objects.requireNonNull(organization, "Hey! Organization can't be null!");
     this.name = Objects.requireNonNull(name, "Hey! Project's name can't be null!");
     this.url = Objects.requireNonNull(url, "Hey! URL can't be null!");
-    this.ratingValue = ratingValue;
-    this.ratingValueDate = ratingValueDate;
   }
 
   @Override
   @JsonGetter("url")
-  public URL url() {
+  public URL scm() {
     return url;
   }
 
@@ -131,45 +109,6 @@ public class GitHubProject implements Project {
     return name;
   }
 
-  /**
-   * Returns the rating value. The method is used for serialization.
-   *
-   * @return The rating value.
-   */
-  @JsonGetter("ratingValue")
-  private RatingValue getRatingValue() {
-    return ratingValue;
-  }
-
-  /**
-   * Returns a rating value assigned to the project.
-   *
-   * @return An {@link Optional} with the rating value for the project.
-   */
-  Optional<RatingValue> ratingValue() {
-    return ratingValue == null ? Optional.empty() : Optional.of(ratingValue);
-  }
-
-  /**
-   * Set a rating value for the project.
-   *
-   * @param value The rating value.
-   */
-  void set(RatingValue value) {
-    ratingValue = value;
-    ratingValueDate = new Date();
-  }
-
-  /**
-   * Returns a date when the rating value was calculated.
-   *
-   * @return The date.
-   */
-  @JsonGetter("ratingValueDate")
-  public Date ratingValueDate() {
-    return ratingValueDate;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -178,14 +117,17 @@ public class GitHubProject implements Project {
     if (o instanceof GitHubProject == false) {
       return false;
     }
-    GitHubProject project = (GitHubProject) o;
-    return Objects.equals(organization, project.organization)
-        && Objects.equals(name, project.name);
+    if (!super.equals(o)) {
+      return false;
+    }
+    GitHubProject that = (GitHubProject) o;
+    return Objects.equals(organization, that.organization)
+        && Objects.equals(name, that.name) && Objects.equals(url, that.url);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(organization, name);
+    return Objects.hash(super.hashCode(), organization, name, url);
   }
 
   @Override

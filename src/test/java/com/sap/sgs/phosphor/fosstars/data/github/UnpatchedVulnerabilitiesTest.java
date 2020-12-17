@@ -3,11 +3,11 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.spy;
 
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerability;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerability.Resolution;
 import com.sap.sgs.phosphor.fosstars.nvd.TestNVD;
-import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.io.InputStream;
 import org.junit.Test;

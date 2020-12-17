@@ -5,6 +5,7 @@ import com.sap.sgs.phosphor.fosstars.data.ValueCache;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Objects;
@@ -38,30 +39,30 @@ public class GitHubProjectValueCache implements ValueCache<GitHubProject> {
   }
 
   public Optional<Value> get(GitHubProject project, Feature feature) {
-    return cache.get(project.url().toString(), feature);
+    return cache.get(project.scm().toString(), feature);
   }
 
   @Override
   public Optional<ValueSet> get(GitHubProject project) {
-    return cache.get(project.url().toString());
+    return cache.get(project.scm().toString());
   }
 
   public void put(GitHubProject project, Value value) {
-    cache.put(project.url().toString(), value);
+    cache.put(project.scm().toString(), value);
   }
 
   public void put(GitHubProject project, Value value, Date expiration) {
-    cache.put(project.url().toString(), value, expiration);
+    cache.put(project.scm().toString(), value, expiration);
   }
 
   @Override
   public void put(GitHubProject project, ValueSet set) {
-    cache.put(project.url().toString(), set);
+    cache.put(project.scm().toString(), set);
   }
 
   @Override
   public void put(GitHubProject project, ValueSet set, Date expiration) {
-    cache.put(project.url().toString(), set, expiration);
+    cache.put(project.scm().toString(), set, expiration);
   }
 
   /**

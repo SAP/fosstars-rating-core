@@ -5,7 +5,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.FUZZED
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures;
-import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -52,7 +52,7 @@ public class FuzzedInOssFuzz extends CachedSingleFeatureGitHubDataProvider {
           .filter(path -> "Dockerfile".equals(path.getFileName().toString()))
           .collect(Collectors.toList());
 
-      String url = project.url().toString();
+      String url = project.scm().toString();
       for (Path dockerFile : dockerFiles) {
         try (InputStream is = Files.newInputStream(dockerFile)) {
           String content = IOUtils.toString(is);

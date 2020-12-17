@@ -6,13 +6,13 @@ import com.sap.sgs.phosphor.fosstars.data.json.UnpatchedVulnerabilitiesStorage;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.feature.oss.VulnerabilitiesInProject;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.sgs.phosphor.fosstars.model.value.Vulnerability;
 import com.sap.sgs.phosphor.fosstars.nvd.NVD;
 import com.sap.sgs.phosphor.fosstars.nvd.data.CpeMatch;
 import com.sap.sgs.phosphor.fosstars.nvd.data.Node;
 import com.sap.sgs.phosphor.fosstars.nvd.data.NvdEntry;
-import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
 import java.io.IOException;
 import java.util.Objects;
 import org.apache.commons.lang3.StringUtils;
@@ -68,7 +68,7 @@ public class UnpatchedVulnerabilities extends CachedSingleFeatureGitHubDataProvi
     logger.info("Figuring out if the project has any unpatched vulnerability ...");
 
     Vulnerabilities vulnerabilities = new Vulnerabilities();
-    vulnerabilities.add(knownUnpatchedVulnerabilities.getFor(project.url()));
+    vulnerabilities.add(knownUnpatchedVulnerabilities.getFor(project.scm()));
 
     if (ANALYZE_NVD) {
       vulnerabilities.add(vulnerabilitiesFromNvdFor(project));

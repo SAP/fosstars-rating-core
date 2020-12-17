@@ -9,6 +9,8 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubOrganization;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectFinder.Config;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectFinder.ConfigParser;
 import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProjectFinder.OrganizationConfig;

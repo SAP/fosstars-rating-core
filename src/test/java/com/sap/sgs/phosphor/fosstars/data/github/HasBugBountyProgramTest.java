@@ -3,7 +3,7 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_BUG_BOUNTY_PROGRAM;
 import static org.junit.Assert.assertEquals;
 
-import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.io.IOException;
 import org.junit.Test;
 

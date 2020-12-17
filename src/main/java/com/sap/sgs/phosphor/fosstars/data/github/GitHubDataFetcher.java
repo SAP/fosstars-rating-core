@@ -2,7 +2,7 @@ package com.sap.sgs.phosphor.fosstars.data.github;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sap.sgs.phosphor.fosstars.tool.github.GitHubProject;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
@@ -193,7 +193,7 @@ public class GitHubDataFetcher {
 
       return commits;
     } catch (HttpException e) {
-      LOGGER.error(String.format("Could not fetch commits from %s", project.url()), e);
+      LOGGER.error(String.format("Could not fetch commits from %s", project.scm()), e);
       return Collections.emptyList();
     }
   }
@@ -214,13 +214,13 @@ public class GitHubDataFetcher {
 
     GHRepository repository = github().getRepository(project.path());
     if (repository == null) {
-      throw new IOException(String.format("Could not fetch repository %s (null)", project.url()));
+      throw new IOException(String.format("Could not fetch repository %s (null)", project.scm()));
     }
 
     try {
       repository.getDirectoryContent("/");
     } catch (GHFileNotFoundException e) {
-      throw new IOException(String.format("Could not fetch content of / in %s", project.url()));
+      throw new IOException(String.format("Could not fetch content of / in %s", project.scm()));
     }
 
     repositoryCache.put(project, repository, expiration());
@@ -237,11 +237,11 @@ public class GitHubDataFetcher {
    */
   public static LocalRepository localRepositoryFor(GitHubProject project) throws IOException {
     Objects.requireNonNull(project, "On no! Project is null!");
-    LocalRepository repository = LOCAL_REPOSITORIES.get(project.url());
+    LocalRepository repository = LOCAL_REPOSITORIES.get(project.scm());
 
     if (repository == null) {
       repository = loadLocalRepositoryFor(project);
-      LOCAL_REPOSITORIES.put(project.url(), repository);
+      LOCAL_REPOSITORIES.put(project.scm(), repository);
     }
 
     return repository;
@@ -258,11 +258,11 @@ public class GitHubDataFetcher {
     Objects.requireNonNull(project, "On no! Project is null!");
 
     synchronized (LOCAL_REPOSITORIES_INFO) {
-      LocalRepositoryInfo info = LOCAL_REPOSITORIES_INFO.get(project.url());
+      LocalRepositoryInfo info = LOCAL_REPOSITORIES_INFO.get(project.scm());
       if (info == null) {
         Path repositoryPath
             = REPOSITORIES_BASE_PATH.resolve(project.organization().name()).resolve(project.name());
-        info = new LocalRepositoryInfo(repositoryPath, Date.from(Instant.now()), project.url());
+        info = new LocalRepositoryInfo(repositoryPath, Date.from(Instant.now()), project.scm());
       }
 
       if (Files.isRegularFile(info.path())) {
@@ -285,20 +285,20 @@ public class GitHubDataFetcher {
         LocalRepository localRepository = new LocalRepository(info, repository.get());
 
         if (shouldUpdate(localRepository)) {
-          LOGGER.info("Pulling updates from {} ...", project.url());
+          LOGGER.info("Pulling updates from {} ...", project.scm());
           localRepository.reset();
           localRepository.pull();
         }
 
         info.updated(Date.from(Instant.now()));
-        LOCAL_REPOSITORIES_INFO.put(project.url(), info);
+        LOCAL_REPOSITORIES_INFO.put(project.scm(), info);
         return localRepository;
       } catch (IOException e) {
 
         // if something went wrong, then clean up info and cache,
         // and remove the local repository if it exists
-        LOCAL_REPOSITORIES_INFO.remove(project.url());
-        LOCAL_REPOSITORIES.remove(project.url());
+        LOCAL_REPOSITORIES_INFO.remove(project.scm());
+        LOCAL_REPOSITORIES.remove(project.scm());
         Files.deleteIfExists(info.path());
 
         // then, re-throw the original exception
@@ -339,10 +339,10 @@ public class GitHubDataFetcher {
    * @throws IOException If something went wrong while cloning the repository.
    */
   private static void clone(GitHubProject project, Path path) throws IOException {
-    LOGGER.info("Cloning {} ...", project.url());
+    LOGGER.info("Cloning {} ...", project.scm());
     try {
       Git.cloneRepository()
-          .setURI(project.url().toString())
+          .setURI(project.scm().toString())
           .setDirectory(path.toFile())
           .call();
     } catch (GitAPIException e) {
