@@ -1,0 +1,8 @@
+---
+- feature:
+    type: "BooleanFeature"
+    name: "If a project uses LGTM checks for commits"
+  text: "You can ask the project maintainers to enable LGTM checks for pull requests in the project."
+  links:
+    - name: "About automated code review"
+      url: "https://lgtm.com/help/lgtm/about-automated-code-review"
