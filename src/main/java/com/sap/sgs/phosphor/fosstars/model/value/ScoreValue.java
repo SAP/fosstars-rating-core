@@ -177,6 +177,37 @@ public class ScoreValue implements Value<Double>, Confidence {
   }
 
   /**
+   * Get a list of feature values that are used in the score value
+   * or in its underlying score values.
+   *
+   * @return A list of feature values.
+   */
+  public List<Value> usedFeatureValues() {
+    return usedFeatureValuesIn(this);
+  }
+
+  /**
+   * Get a list of feature values that are used in a score value
+   * or in its underlying score values.
+   *
+   * @param scoreValue The score value to be checked.
+   * @return A list of feature values.
+   */
+  private static List<Value> usedFeatureValuesIn(ScoreValue scoreValue) {
+    List<Value> usedFeatureValues = new ArrayList<>();
+
+    for (Value<?> value : scoreValue.usedValues) {
+      if (value instanceof ScoreValue) {
+        usedFeatureValues.addAll(usedFeatureValuesIn((ScoreValue) value));
+      } else {
+        usedFeatureValues.add(value);
+      }
+    }
+
+    return usedFeatureValues;
+  }
+
+  /**
    * Get the weight of the score value.
    *
    * @return The weight of the score value.
