@@ -47,4 +47,12 @@ public class Yaml {
     return OBJECT_MAPPER.readValue(is, MAP_TYPE_REFERENCE);
   }
 
+  /**
+   * Returns an {@link ObjectMapper} for YAML.
+   *
+   * @return An {@link ObjectMapper} for YAML.
+   */
+  public static ObjectMapper mapper() {
+    return OBJECT_MAPPER;
+  }
 }
