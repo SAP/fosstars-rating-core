@@ -10,8 +10,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 public class Utils {
@@ -91,22 +93,34 @@ public class Utils {
    * @param values The set of values.
    * @param feature The feature.
    * @param <T> A type of the data in the value.
-   * @return The value if it was found, null otherwise.
+   * @return An {@link Optional} with the value.
    */
-  public static <T> Value<T> findValue(Set<Value> values, Feature feature) {
+  public static <T> Optional<Value<T>> findValue(Set<Value> values, Feature<T> feature) {
     return findValue(values.toArray(new Value[0]), feature);
   }
 
-  private static <T> Value<T> findValue(Value[] values, Feature feature) {
+  /**
+   * Looks for a value of a specified feature in a list of values.
+   *
+   * @param values The list of values.
+   * @param feature The feature.
+   * @param <T> A type of the data in the value.
+   * @return An {@link Optional} with the value.
+   */
+  public static <T> Optional<Value<T>> findValue(List<Value> values, Feature<T> feature) {
+    return findValue(values.toArray(new Value[0]), feature);
+  }
+
+  private static <T> Optional<Value<T>> findValue(Value[] values, Feature<T> feature) {
     Objects.requireNonNull(feature, "Oh no! Feature can't be null!");
     Objects.requireNonNull(values, "Oh no! Feature values can't be null!");
     for (Value value : values) {
       if (feature.equals(value.feature())) {
-        return value;
+        return Optional.of(value);
       }
     }
 
-    return null;
+    return Optional.empty();
   }
 
   /**
@@ -120,7 +134,7 @@ public class Utils {
    * @throws IllegalArgumentException with the specified error message
    *                                  if no value was found for the specified feature.
    */
-  public static <T> Value<T> findValue(Set<Value> values, Feature feature, String errorMessage) {
+  public static <T> Value<T> findValue(Set<Value> values, Feature<T> feature, String errorMessage) {
     return findValue(values.toArray(new Value[0]), feature, errorMessage);
   }
 
@@ -135,12 +149,12 @@ public class Utils {
    * @throws IllegalArgumentException with the specified error message
    *                                  if no value was found for the specified feature.
    */
-  public static <T> Value<T> findValue(Value[] values, Feature feature, String errorMessage) {
-    Value<T> value = findValue(values, feature);
-    if (value == null) {
+  public static <T> Value<T> findValue(Value[] values, Feature<T> feature, String errorMessage) {
+    Optional<Value<T>> value = findValue(values, feature);
+    if (!value.isPresent()) {
       throw new IllegalArgumentException(errorMessage);
     }
-    return value;
+    return value.get();
   }
 
   /**
