@@ -5,6 +5,7 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.example.ExampleFeature
 import static com.sap.sgs.phosphor.fosstars.model.feature.example.ExampleFeatures.SECURITY_REVIEW_DONE_EXAMPLE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.example.ExampleFeatures.STATIC_CODE_ANALYSIS_DONE_EXAMPLE;
 import static com.sap.sgs.phosphor.fosstars.model.score.example.ExampleScores.PROJECT_ACTIVITY_SCORE_EXAMPLE;
+import static com.sap.sgs.phosphor.fosstars.model.score.example.ExampleScores.SECURITY_TESTING_SCORE_EXAMPLE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
@@ -223,6 +224,24 @@ public class ScoreValueTest {
     assertEquals(2, scoreValue.usedValues().size());
     assertEquals(4, scoreValue.usedFeatureValues().size());
     assertTrue(scoreValue.usedFeatureValues().containsAll(values));
+  }
+
+  @Test
+  public void testFindUsedSubScoreValue() {
+    Set<Value> values = new HashSet<>();
+    values.add(new IntegerValue(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 7));
+    values.add(new IntegerValue(NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, 2));
+    values.add(new BooleanValue(SECURITY_REVIEW_DONE_EXAMPLE, true));
+    values.add(new BooleanValue(STATIC_CODE_ANALYSIS_DONE_EXAMPLE, false));
+
+    Rating rating = RatingRepository.INSTANCE.rating(SecurityRatingExample.class);
+    ScoreValue scoreValue = rating.calculate(values).scoreValue();
+
+    assertEquals(2, scoreValue.usedValues().size());
+    assertTrue(
+        scoreValue.findUsedSubScoreValue(PROJECT_ACTIVITY_SCORE_EXAMPLE.getClass()).isPresent());
+    assertTrue(
+        scoreValue.findUsedSubScoreValue(SECURITY_TESTING_SCORE_EXAMPLE.getClass()).isPresent());
   }
 
 }

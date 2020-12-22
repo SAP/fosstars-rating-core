@@ -1,8 +1,10 @@
 package com.sap.sgs.phosphor.fosstars.model.advice.oss;
 
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_CODEQL_SCANS;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_CODEQL_CHECKS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM_CHECKS;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.allUnknown;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import com.sap.sgs.phosphor.fosstars.model.Rating;
@@ -26,7 +28,7 @@ public class CodeqlScoreAdvisorTest {
     Rating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
     ValueSet values = new ValueHashSet();
 
-    // no advices for an unknown value
+    // no advices for an unknown values
     values.update(allUnknown(rating.score().allFeatures()));
     assertTrue(advisor.adviseFor(project).isEmpty());
 
@@ -38,6 +40,16 @@ public class CodeqlScoreAdvisorTest {
     // expect an advice if the LGTM checks are not enabled
     values.update(USES_LGTM_CHECKS.value(false));
     project.set(rating.calculate(values));
-    assertFalse(advisor.adviseFor(project).isEmpty());
+    assertEquals(1, advisor.adviseFor(project).size());
+
+    // expect an advice if the  checks are not enabled
+    values.update(USES_CODEQL_CHECKS.value(false));
+    project.set(rating.calculate(values));
+    assertEquals(2, advisor.adviseFor(project).size());
+
+    // expect an advice if the LGTM checks are not enabled
+    values.update(RUNS_CODEQL_SCANS.value(false));
+    project.set(rating.calculate(values));
+    assertEquals(3, advisor.adviseFor(project).size());
   }
 }
