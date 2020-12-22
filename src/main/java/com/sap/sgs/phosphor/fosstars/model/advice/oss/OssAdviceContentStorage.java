@@ -1,6 +1,8 @@
 package com.sap.sgs.phosphor.fosstars.model.advice.oss;
 
+import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
 import com.sap.sgs.phosphor.fosstars.model.advice.AdviceContentStorage;
+import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 
@@ -23,20 +25,22 @@ public class OssAdviceContentStorage extends AdviceContentStorage {
 
   static {
     try {
-      DEFAULT = new OssAdviceContentStorage(RESOURCE_PATH);
+      OssSecurityRating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
+      DEFAULT = new OssAdviceContentStorage(RESOURCE_PATH, rating);
     } catch (IOException e) {
       throw new UncheckedIOException("Could not load advices", e);
     }
   }
 
   /**
-   * Create a new instance and load advices from a specified resource.
+   * Create a new instance and load advices from a resource for a {@link OssSecurityRating}.
    *
    * @param path A path to the resource.
+   * @param rating The rating.
    * @throws IOException If the advices couldn't be loaded.
    */
-  public OssAdviceContentStorage(String path) throws IOException {
-    super(path);
+  public OssAdviceContentStorage(String path, OssSecurityRating rating) throws IOException {
+    super(path, rating);
   }
 
 }
