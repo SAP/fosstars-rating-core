@@ -91,4 +91,14 @@ public class CodeqlScore extends FeatureBasedScore {
 
     return scoreValue;
   }
+
+  /**
+   * Checks if at least one of the specified languages are supported by CodeQL.
+   *
+   * @param languages The languages to be checked.
+   * @return True if at least one of the specified languages are supported by CodeQL.
+   */
+  public static boolean containsSupportedLanguage(Languages languages) {
+    return SUPPORTED_LANGUAGES.containsAnyOf(languages);
+  }
 }

@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * The class holds a score value produced by {@link Score}.
@@ -205,6 +206,44 @@ public class ScoreValue implements Value<Double>, Confidence {
     }
 
     return usedFeatureValues;
+  }
+
+  /**
+   * Recursively looks for a used sub-score value of a specified score.
+   *
+   * @param subScoreClass A class of the sub-score.
+   * @return An {@link Optional} with the sub-score value.
+   */
+  public Optional<ScoreValue> findUsedSubScoreValue(Class<? extends Score> subScoreClass) {
+    return findUsedSubScoreValueIn(this, subScoreClass);
+  }
+
+  /**
+   * Recursively looks for a used sub-score value of a specified score.
+   *
+   * @param scoreValue The score value to be checked.
+   * @param subScoreClass A class of the sub-score.
+   * @return An {@link Optional} with the sub-score value.
+   */
+  private static Optional<ScoreValue> findUsedSubScoreValueIn(
+      ScoreValue scoreValue, Class<? extends Score> subScoreClass) {
+
+    for (Value<?> usedValue : scoreValue.usedValues) {
+      if (usedValue instanceof ScoreValue) {
+        ScoreValue subScoreValue = (ScoreValue) usedValue;
+
+        if (subScoreClass.isInstance(subScoreValue.score)) {
+          return Optional.of(subScoreValue);
+        }
+
+        Optional<ScoreValue> result = findUsedSubScoreValueIn(subScoreValue, subScoreClass);
+        if (result.isPresent()) {
+          return result;
+        }
+      }
+    }
+
+    return Optional.empty();
   }
 
   /**
