@@ -1,5 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.model;
 
+import com.sap.sgs.phosphor.fosstars.model.advice.AdviceContent;
+
 /**
  * An advice about a subject's rating, score or feature value.
  */
@@ -15,14 +17,14 @@ public interface Advice {
   /**
    * Get a value for which the advice was given.
    *
-   * @return The value
+   * @return The value.
    */
   Value<?> value();
 
   /**
-   * Get a text of the advice.
+   * Get a content of the advice.
    *
-   * @return The text.
+   * @return The content.
    */
-  String get();
+  AdviceContent content();
 }
