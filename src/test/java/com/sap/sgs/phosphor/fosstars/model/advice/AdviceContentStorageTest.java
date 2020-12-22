@@ -7,7 +7,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
 import com.sap.sgs.phosphor.fosstars.model.Subject;
+import com.sap.sgs.phosphor.fosstars.model.rating.example.SecurityRatingExample;
 import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.io.IOException;
 import java.util.List;
@@ -20,7 +22,8 @@ public class AdviceContentStorageTest {
     Subject project = new GitHubProject("test", "project");
 
     AdviceContentStorage storage = new AdviceContentStorage(
-        "com/sap/sgs/phosphor/fosstars/model/advice/AdviceContentStorageTest.yml");
+        "com/sap/sgs/phosphor/fosstars/model/advice/AdviceContentStorageTest.yml",
+        RatingRepository.INSTANCE.rating(SecurityRatingExample.class));
 
     List<AdviceContent> advices = storage.advicesFor(SECURITY_REVIEW_DONE_EXAMPLE);
     assertEquals(2, advices.size());

@@ -1,26 +1,20 @@
 ---
-- feature:
-    type: BooleanFeature
-    name: If a project uses LGTM checks for commits
-  text: >
-    You can ask the project maintainers to enable LGTM checks for pull requests in the project.
-  links:
-    - name: How to enable LGTM checks for pull requests
-      url: https://lgtm.com/help/lgtm/about-automated-code-review
-- feature:
-    type: BooleanFeature
-    name: If a project runs CodeQL checks for commits
-  text: >
-    You can open a pull request to enable CodeQL scans in the project.
-    Make sure that the scans are run on pull requests.
-  links:
-    - name: How to enable CodeQL checks for pull requests
-      url: https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#enabling-code-scanning-using-actions
-- feature:
-    type: BooleanFeature
-    name: If a project runs CodeQL scans
-  text: >
-    You can open a pull request to enable CodeQL scans in the project.
-  links:
-    - name: How to enable CodeQL checks
-      url: https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#enabling-code-scanning-using-actions
+If a project uses LGTM checks for commits:
+  - advice: >
+      You can ask the project maintainers to enable LGTM checks for pull requests in the project.
+    links:
+      - name: How to enable LGTM checks for pull requests
+        url: https://lgtm.com/help/lgtm/about-automated-code-review
+If a project runs CodeQL checks for commits:
+  - advice: >
+      You can open a pull request to enable CodeQL scans in the project.
+      Make sure that the scans are run on pull requests.
+    links:
+      - name: How to enable CodeQL checks for pull requests
+        url: https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#enabling-code-scanning-using-actions
+If a project runs CodeQL scans:
+  - advice: >
+      You can open a pull request to enable CodeQL scans in the project.
+    links:
+      - name: How to enable CodeQL checks
+        url: https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#enabling-code-scanning-using-actions
