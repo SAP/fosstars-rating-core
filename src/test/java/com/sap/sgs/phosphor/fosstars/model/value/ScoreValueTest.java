@@ -2,6 +2,8 @@ package com.sap.sgs.phosphor.fosstars.model.value;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.example.ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.example.ExampleFeatures.NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE;
+import static com.sap.sgs.phosphor.fosstars.model.feature.example.ExampleFeatures.SECURITY_REVIEW_DONE_EXAMPLE;
+import static com.sap.sgs.phosphor.fosstars.model.feature.example.ExampleFeatures.STATIC_CODE_ANALYSIS_DONE_EXAMPLE;
 import static com.sap.sgs.phosphor.fosstars.model.score.example.ExampleScores.PROJECT_ACTIVITY_SCORE_EXAMPLE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -9,13 +11,18 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sap.sgs.phosphor.fosstars.model.Rating;
+import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.rating.example.SecurityRatingExample;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -201,6 +208,21 @@ public class ScoreValueTest {
   @Test(expected = IllegalStateException.class)
   public void testGetWithUnknownValue() {
     new ScoreValue(PROJECT_ACTIVITY_SCORE_EXAMPLE).makeUnknown().get();
+  }
+
+  @Test
+  public void testUsedFeatureValues() {
+    Set<Value> values = new HashSet<>();
+    values.add(new IntegerValue(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 7));
+    values.add(new IntegerValue(NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, 2));
+    values.add(new BooleanValue(SECURITY_REVIEW_DONE_EXAMPLE, true));
+    values.add(new BooleanValue(STATIC_CODE_ANALYSIS_DONE_EXAMPLE, false));
+
+    Rating rating = RatingRepository.INSTANCE.rating(SecurityRatingExample.class);
+    ScoreValue scoreValue = rating.calculate(values).scoreValue();
+    assertEquals(2, scoreValue.usedValues().size());
+    assertEquals(4, scoreValue.usedFeatureValues().size());
+    assertTrue(scoreValue.usedFeatureValues().containsAll(values));
   }
 
 }
