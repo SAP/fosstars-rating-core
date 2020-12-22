@@ -139,6 +139,12 @@ public class ValueHashSet implements ValueSet {
   }
 
   @Override
+  public ValueSet update(Set<Value> values) {
+    Objects.requireNonNull(values, "Oh no! Values is null!");
+    return update(values.toArray(new Value[0]));
+  }
+
+  @Override
   public Value[] toArray() {
     Value[] array = new Value[featureToValue.size()];
     int i = 0;

@@ -28,7 +28,7 @@ public interface ValueSet {
    * Updates values in the set.
    *
    * @param values Values to be updated.
-   * @return This ValueSet,
+   * @return This ValueSet.
    */
   ValueSet update(Value... values);
 
@@ -36,9 +36,17 @@ public interface ValueSet {
    * Updates a number of values in the set.
    *
    * @param values The new values.
-   * @return This ValueSet,
+   * @return This ValueSet.
    */
   ValueSet update(ValueSet values);
+
+  /**
+   * Updates a number of values in the set.
+   *
+   * @param values The new values.
+   * @return This ValueSet.
+   */
+  ValueSet update(Set<Value> values);
 
   /**
    * Converts the set to an array of values.
