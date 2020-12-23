@@ -18,3 +18,7 @@ If a project runs CodeQL scans:
     links:
       - name: How to enable CodeQL checks
         url: https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#enabling-code-scanning-using-actions
+The worst LGTM grade of a project:
+  - advice: >
+      You can fix the issues reported by LGTM for the project.
+    links: []
