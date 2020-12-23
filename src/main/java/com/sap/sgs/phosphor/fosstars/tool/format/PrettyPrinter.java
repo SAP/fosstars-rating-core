@@ -1,13 +1,13 @@
 package com.sap.sgs.phosphor.fosstars.tool.format;
 
-import static com.sap.sgs.phosphor.fosstars.tool.format.CommonFormatter.confidenceLabelFor;
-import static com.sap.sgs.phosphor.fosstars.tool.format.CommonFormatter.importanceLabel;
-import static com.sap.sgs.phosphor.fosstars.tool.format.CommonFormatter.nameOf;
-
+import com.sap.sgs.phosphor.fosstars.model.Advice;
+import com.sap.sgs.phosphor.fosstars.model.Advisor;
 import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Score;
+import com.sap.sgs.phosphor.fosstars.model.Subject;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.Weight;
+import com.sap.sgs.phosphor.fosstars.model.advice.Link;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.text.DecimalFormat;
@@ -21,12 +21,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.WordUtils;
 
 /**
  * The class prints a pretty rating value.
  */
-public class PrettyPrinter implements Formatter {
+public class PrettyPrinter extends CommonFormatter {
 
   /**
    * An indent step.
@@ -54,16 +55,17 @@ public class PrettyPrinter implements Formatter {
    * @return A new {@link PrettyPrinter}.
    */
   public static PrettyPrinter withoutVerboseOutput() {
-    return new PrettyPrinter(false);
+    return new PrettyPrinter(false, Advisor.DUMMY);
   }
 
   /**
    * Creates a new {@link PrettyPrinter} that prints out all the details.
    *
+   * @param advisor An advisor for calculated ratings.
    * @return A new {@link PrettyPrinter}.
    */
-  public static PrettyPrinter withVerboseOutput() {
-    return new PrettyPrinter(true);
+  public static PrettyPrinter withVerboseOutput(Advisor advisor) {
+    return new PrettyPrinter(true, advisor);
   }
 
   /**
@@ -76,8 +78,18 @@ public class PrettyPrinter implements Formatter {
    *
    * @param verbose A flag that turns on verbose output.
    */
-  private PrettyPrinter(boolean verbose) {
+  private PrettyPrinter(boolean verbose, Advisor advisor) {
+    super(advisor);
     this.verbose = verbose;
+  }
+
+  @Override
+  public String print(Subject subject) {
+    if (!subject.ratingValue().isPresent()) {
+      return StringUtils.EMPTY;
+    }
+
+    return String.format("%s%n%s", print(subject.ratingValue().get()), printAdvicesFor(subject));
   }
 
   @Override
@@ -200,6 +212,54 @@ public class PrettyPrinter implements Formatter {
     printedScores.add(scoreValue.score());
 
     return sb.toString();
+  }
+
+  /**
+   * Checks if the tool should print out advices for a calculated rating.
+   *
+   * @return True if the tool should print out advices for a calculated rating, false otherwise.
+   */
+  private boolean shouldPrintAdvices() {
+    return verbose;
+  }
+
+  /**
+   * Print out advices for a rating of a project.
+   *
+   * @param subject The project.
+   * @return A string to be displayed.
+   */
+  private String printAdvicesFor(Subject subject) {
+    if (!shouldPrintAdvices() || !subject.ratingValue().isPresent()) {
+      return StringUtils.EMPTY;
+    }
+
+    List<Advice> advices = advisor.adviseFor(subject);
+    if (advices.isEmpty()) {
+      return StringUtils.EMPTY;
+    }
+
+    StringBuilder sb = new StringBuilder();
+
+    sb.append("Here is how the rating may be improved:\n");
+    int i = 1;
+    for (Advice advice : advices) {
+      String[] text = wrap(advice.content().text());
+      sb.append(String.format("%d. %s%n", i++, text[0]));
+      for (int k = 1; k < text.length; k++) {
+        sb.append(String.format("   %s%n", text[k]));
+      }
+      if (!advice.content().links().isEmpty()) {
+        sb.append("   More info:\n");
+        int j = 1;
+        for (Link link : advice.content().links()) {
+          sb.append(String.format("   %d. %s:%n", j++, link.name));
+          sb.append(String.format("      %s%n", link.url));
+        }
+      }
+    }
+
+    return sb.append("\n").toString();
   }
 
   /**

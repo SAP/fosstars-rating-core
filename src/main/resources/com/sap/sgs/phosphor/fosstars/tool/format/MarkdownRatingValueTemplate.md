@@ -21,3 +21,5 @@ The score uses the following sub-scores:
 Below are the details about all the used sub-scores.
 
 %SUB_SCORE_DETAILS%
+
+%ADVICES%

@@ -10,12 +10,9 @@ import com.sap.sgs.phosphor.fosstars.data.NoUserCallback;
 import com.sap.sgs.phosphor.fosstars.data.Terminal;
 import com.sap.sgs.phosphor.fosstars.data.UserCallback;
 import com.sap.sgs.phosphor.fosstars.data.github.GitHubDataFetcher;
-import com.sap.sgs.phosphor.fosstars.model.Advice;
 import com.sap.sgs.phosphor.fosstars.model.Advisor;
-import com.sap.sgs.phosphor.fosstars.model.advice.Link;
 import com.sap.sgs.phosphor.fosstars.model.advice.oss.CodeqlScoreAdvisor;
 import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
-import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import com.sap.sgs.phosphor.fosstars.nvd.NVD;
 import com.sap.sgs.phosphor.fosstars.tool.InputString;
 import com.sap.sgs.phosphor.fosstars.tool.Reporter;
@@ -189,7 +186,7 @@ public class SecurityRatingCalculator {
     context.updateLoggers();
 
     prettyPrinter = commandLine.hasOption("v")
-        ? PrettyPrinter.withVerboseOutput() : PrettyPrinter.withoutVerboseOutput();
+        ? PrettyPrinter.withVerboseOutput(ADVISOR) : PrettyPrinter.withoutVerboseOutput();
   }
 
   /**
@@ -264,58 +261,12 @@ public class SecurityRatingCalculator {
         .token(githubToken)
         .calculateFor(project);
 
-    RatingValue ratingValue = project.ratingValue()
-        .orElseThrow(() -> new IOException("Could not calculate a rating!"));
+    if (!project.ratingValue().isPresent()) {
+      throw new IOException("Could not calculate a rating!");
+    }
 
-    Arrays.stream(prettyPrinter.print(ratingValue).split("\n")).forEach(LOGGER::info);
+    Arrays.stream(prettyPrinter.print(project).split("\n")).forEach(LOGGER::info);
     LOGGER.info("");
-
-    printAdvicesFor(project);
-  }
-
-  /**
-   * Print out advices for a rating of a project.
-   *
-   * @param project The project.
-   */
-  private void printAdvicesFor(GitHubProject project) {
-    if (!shouldPrintAdvices() || !project.ratingValue().isPresent()) {
-      return;
-    }
-
-    List<Advice> advices = ADVISOR.adviseFor(project);
-    if (advices.isEmpty()) {
-      return;
-    }
-
-    LOGGER.info("Here is how the rating may be improved:");
-    int i = 1;
-    for (Advice advice : advices) {
-      String[] text = prettyPrinter.wrap(advice.content().text());
-      LOGGER.info("{}. {}", i++, text[0]);
-      for (int k = 1; k < text.length; k++) {
-        LOGGER.info("   {}", text[k]);
-      }
-      if (!advice.content().links().isEmpty()) {
-        LOGGER.info("   More info:");
-        int j = 1;
-        for (Link link : advice.content().links()) {
-          LOGGER.info("   {}. {}:", j++, link.name);
-          LOGGER.info("      {}", link.url);
-        }
-      }
-    }
-
-    LOGGER.info("");
-  }
-
-  /**
-   * Checks if the tool should print out advices for a calculated rating.
-   *
-   * @return True if the tool should print out advices for a calculated rating, false otherwise.
-   */
-  private boolean shouldPrintAdvices() {
-    return commandLine.hasOption("v");
   }
 
   /**

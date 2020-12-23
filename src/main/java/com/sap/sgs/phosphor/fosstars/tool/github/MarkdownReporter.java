@@ -2,7 +2,9 @@ package com.sap.sgs.phosphor.fosstars.tool.github;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_GITHUB_STARS;
 
+import com.sap.sgs.phosphor.fosstars.model.Advisor;
 import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.advice.oss.CodeqlScoreAdvisor;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel;
 import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
@@ -40,9 +42,14 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
   private static final int UNKNOWN_NUMBER_OF_STARS = -1;
 
   /**
+   * An advisor for calculated ratings.
+   */
+  private static final Advisor ADVISOR = new CodeqlScoreAdvisor();
+
+  /**
    * A formatter for rating values.
    */
-  private static final Formatter FORMATTER = new MarkdownFormatter();
+  private static final Formatter FORMATTER = new MarkdownFormatter(ADVISOR);
 
   /**
    * A file where a report is going to be stored.
@@ -259,7 +266,7 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
     if (!project.ratingValue().isPresent()) {
       return UNKNOWN;
     }
-    return FORMATTER.print(project.ratingValue().get());
+    return FORMATTER.print(project);
   }
 
   /**

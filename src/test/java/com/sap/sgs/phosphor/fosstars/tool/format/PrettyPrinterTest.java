@@ -44,9 +44,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import com.sap.sgs.phosphor.fosstars.model.Advisor;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
 import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.advice.oss.CodeqlScoreAdvisor;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.sgs.phosphor.fosstars.model.value.Languages;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade;
@@ -103,7 +105,8 @@ public class PrettyPrinterTest {
   public void testPrint() {
     RatingValue ratingValue = RATING.calculate(TEST_VALUES);
 
-    PrettyPrinter printer = PrettyPrinter.withVerboseOutput();
+    // TODO: use a real advisor
+    PrettyPrinter printer = PrettyPrinter.withVerboseOutput(Advisor.DUMMY);
     String text = printer.print(ratingValue);
 
     assertNotNull(text);
@@ -128,7 +131,8 @@ public class PrettyPrinterTest {
   public void testConsistency() {
     RatingValue ratingValue = RATING.calculate(TEST_VALUES);
 
-    PrettyPrinter printer = PrettyPrinter.withVerboseOutput();
+    // TODO: use more advisors
+    PrettyPrinter printer = PrettyPrinter.withVerboseOutput(new CodeqlScoreAdvisor());
     String text = printer.print(ratingValue);
     for (int i = 0; i < 100; i++) {
       assertEquals(text, printer.print(ratingValue));
