@@ -12,6 +12,7 @@ import com.sap.sgs.phosphor.fosstars.model.Label;
 import com.sap.sgs.phosphor.fosstars.model.Rating;
 import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
 import com.sap.sgs.phosphor.fosstars.model.Score;
+import com.sap.sgs.phosphor.fosstars.model.advice.oss.OssSecurityAdvisor;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
@@ -62,7 +63,8 @@ public class MarkdownReporterTest {
           goodProject, moderateProject, badProject, projectWithLowConfidence
       );
 
-      MarkdownReporter reporter = new MarkdownReporter(outputDirectory.toString(), null);
+      MarkdownReporter reporter = new MarkdownReporter(
+          outputDirectory.toString(), null, new OssSecurityAdvisor());
       reporter.runFor(projects);
 
       Path reportFileName = outputDirectory.resolve(MarkdownReporter.REPORT_FILENAME);

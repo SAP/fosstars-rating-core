@@ -4,7 +4,6 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER
 
 import com.sap.sgs.phosphor.fosstars.model.Advisor;
 import com.sap.sgs.phosphor.fosstars.model.Value;
-import com.sap.sgs.phosphor.fosstars.model.advice.oss.CodeqlScoreAdvisor;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel;
 import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
@@ -40,16 +39,6 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
    * This value shows that a number of stars is unknown.
    */
   private static final int UNKNOWN_NUMBER_OF_STARS = -1;
-
-  /**
-   * An advisor for calculated ratings.
-   */
-  private static final Advisor ADVISOR = new CodeqlScoreAdvisor();
-
-  /**
-   * A formatter for rating values.
-   */
-  private static final Formatter FORMATTER = new MarkdownFormatter(ADVISOR);
 
   /**
    * A file where a report is going to be stored.
@@ -98,15 +87,26 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
   private final List<GitHubProject> extraProjects;
 
   /**
+   * An advisor for calculated ratings.
+   */
+  private final Advisor advisor;
+
+  /**
+   * A formatter for rating values.
+   */
+  private final Formatter formatter;
+
+  /**
    * Initializes a new reporter.
    *
    * @param outputDirectory An output directory.
    * @param extraSourceFileName A JSON file with serialized extra projects.
+   * @param advisor An advisor for calculated ratings.
    * @throws IOException If something went wrong
    *                     (for example, the output directory doesn't exist,
    *                     or the extra projects couldn't be loaded).
    */
-  MarkdownReporter(String outputDirectory, String extraSourceFileName)
+  MarkdownReporter(String outputDirectory, String extraSourceFileName, Advisor advisor)
       throws IOException {
 
     Objects.requireNonNull(outputDirectory, "Oh no! Output directory is null!");
@@ -116,6 +116,8 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
     }
     this.outputDirectory = outputDirectory;
     this.extraProjects = loadProjects(extraSourceFileName);
+    this.advisor = advisor;
+    this.formatter = new MarkdownFormatter(advisor);
   }
 
   @Override
@@ -262,11 +264,11 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
    * @param project The project.
    * @return The details of the rating calculation.
    */
-  private static String detailsOf(GitHubProject project) {
+  private String detailsOf(GitHubProject project) {
     if (!project.ratingValue().isPresent()) {
       return UNKNOWN;
     }
-    return FORMATTER.print(project);
+    return formatter.print(project);
   }
 
   /**
