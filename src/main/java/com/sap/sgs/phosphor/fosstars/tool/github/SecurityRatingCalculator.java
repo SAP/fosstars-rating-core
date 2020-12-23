@@ -11,7 +11,7 @@ import com.sap.sgs.phosphor.fosstars.data.Terminal;
 import com.sap.sgs.phosphor.fosstars.data.UserCallback;
 import com.sap.sgs.phosphor.fosstars.data.github.GitHubDataFetcher;
 import com.sap.sgs.phosphor.fosstars.model.Advisor;
-import com.sap.sgs.phosphor.fosstars.model.advice.oss.CodeqlScoreAdvisor;
+import com.sap.sgs.phosphor.fosstars.model.advice.oss.OssSecurityAdvisor;
 import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.nvd.NVD;
 import com.sap.sgs.phosphor.fosstars.tool.InputString;
@@ -90,7 +90,7 @@ public class SecurityRatingCalculator {
   /**
    * An advisor for calculated ratings.
    */
-  private static final Advisor ADVISOR = new CodeqlScoreAdvisor();
+  private static final Advisor ADVISOR = new OssSecurityAdvisor();
 
   /**
    * Entry point.
@@ -416,7 +416,7 @@ public class SecurityRatingCalculator {
       Objects.requireNonNull(reportConfig.type, "Hey! Reporter type can't be null!");
       switch (reportConfig.type) {
         case MARKDOWN:
-          reporters.add(new MarkdownReporter(reportConfig.where, reportConfig.source));
+          reporters.add(new MarkdownReporter(reportConfig.where, reportConfig.source, ADVISOR));
           break;
         case JSON:
           reporters.add(new MergedJsonReporter(reportConfig.where));
