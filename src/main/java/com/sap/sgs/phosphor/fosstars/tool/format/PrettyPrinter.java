@@ -115,9 +115,7 @@ public class PrettyPrinter implements Formatter {
     }
 
     if (shouldPrintDescriptionFor(scoreValue)) {
-      String[] lines = WordUtils
-          .wrap(scoreValue.score().description(), DESCRIPTION_WRAP_LENGTH)
-          .split("\n");
+      String[] lines = wrap(scoreValue.score().description());
       sb.append(String.format("%sDescription:..%s%n", indent, lines[0]));
       for (int i = 1; i < lines.length; i++) {
         sb.append(String.format("%s              %s%n", indent, lines[i]));
@@ -202,6 +200,16 @@ public class PrettyPrinter implements Formatter {
     printedScores.add(scoreValue.score());
 
     return sb.toString();
+  }
+
+  /**
+   * Split a string to multiple lines.
+   *
+   * @param string The string.
+   * @return An array of lines.
+   */
+  public String[] wrap(String string) {
+    return WordUtils.wrap(string, DESCRIPTION_WRAP_LENGTH).split("\n");
   }
 
   /**
