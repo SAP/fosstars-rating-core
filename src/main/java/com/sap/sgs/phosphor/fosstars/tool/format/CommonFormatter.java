@@ -1,5 +1,6 @@
 package com.sap.sgs.phosphor.fosstars.tool.format;
 
+import com.sap.sgs.phosphor.fosstars.model.Advisor;
 import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;
@@ -27,12 +28,13 @@ import com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckCvssThresho
 import com.sap.sgs.phosphor.fosstars.model.value.OwaspDependencyCheckUsageValue;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import org.apache.commons.lang3.StringUtils;
 
 /**
  * The class contains common methods for formatters.
  */
-public class CommonFormatter {
+public abstract class CommonFormatter implements Formatter {
 
   /**
    * Maps a class of feature to its shorter name which should be used in output.
@@ -99,6 +101,20 @@ public class CommonFormatter {
         "How is OWASP Dependency Check used?");
     FEATURE_TO_NAME.put(OssFeatures.OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD,
         "What is the threshold for OWASP Dependency Check?");
+  }
+
+  /**
+   * An advisor for calculated ratings.
+   */
+  protected final Advisor advisor;
+
+  /**
+   * Initialize a new formatter.
+   *
+   * @param advisor An advisor for calculated ratings.
+   */
+  protected CommonFormatter(Advisor advisor) {
+    this.advisor = Objects.requireNonNull(advisor, "Oh no! Advisor is null!");
   }
 
   /**

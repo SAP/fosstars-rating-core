@@ -43,7 +43,9 @@ import static org.junit.Assert.assertNotNull;
 
 import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
 import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.advice.oss.CodeqlScoreAdvisor;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating;
+import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.model.value.Languages;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.sgs.phosphor.fosstars.model.value.PackageManagers;
@@ -97,9 +99,12 @@ public class MarkdownFormatterTest {
   @Test
   public void testPrint() {
     RatingValue ratingValue = RATING.calculate(TEST_VALUES);
+    GitHubProject project = new GitHubProject("org", "test");
+    project.set(ratingValue);
 
-    MarkdownFormatter formatter = new MarkdownFormatter();
-    String text = formatter.print(ratingValue);
+    // TODO: use more advisors
+    MarkdownFormatter formatter = new MarkdownFormatter(new CodeqlScoreAdvisor());
+    String text = formatter.print(project);
 
     assertNotNull(text);
     assertFalse(text.isEmpty());

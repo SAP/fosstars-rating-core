@@ -1,12 +1,12 @@
 package com.sap.sgs.phosphor.fosstars.tool.format;
 
-import static com.sap.sgs.phosphor.fosstars.tool.format.CommonFormatter.confidenceLabelFor;
-import static com.sap.sgs.phosphor.fosstars.tool.format.CommonFormatter.importanceLabel;
-import static com.sap.sgs.phosphor.fosstars.tool.format.CommonFormatter.nameOf;
-
+import com.sap.sgs.phosphor.fosstars.model.Advice;
+import com.sap.sgs.phosphor.fosstars.model.Advisor;
 import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Score;
+import com.sap.sgs.phosphor.fosstars.model.Subject;
 import com.sap.sgs.phosphor.fosstars.model.Value;
+import com.sap.sgs.phosphor.fosstars.model.advice.Link;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.io.IOException;
@@ -27,11 +27,12 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * The class prints a rating value in Markdown.
  */
-public class MarkdownFormatter implements Formatter {
+public class MarkdownFormatter extends CommonFormatter {
 
   /**
    * A resource with a Markdown template.
@@ -49,6 +50,11 @@ public class MarkdownFormatter implements Formatter {
   private static final String LIST_INDENT_STEP = "    ";
 
   /**
+   * Print out an empty string if no advice is available for a rating.
+   */
+  private static final String NO_ADVICES = StringUtils.EMPTY;
+
+  /**
    * A formatter for doubles.
    */
   private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.#");
@@ -58,8 +64,37 @@ public class MarkdownFormatter implements Formatter {
     DECIMAL_FORMAT.setMaximumFractionDigits(2);
   }
 
+  /**
+   * Create a new formatter.
+   *
+   * @param advisor An advisor for calculated ratings.
+   */
+  public MarkdownFormatter(Advisor advisor) {
+    super(advisor);
+  }
+
+  @Override
+  public String print(Subject subject) {
+    if (!subject.ratingValue().isPresent()) {
+      return StringUtils.EMPTY;
+    }
+
+    return print(subject.ratingValue().get(), advicesFor(subject));
+  }
+
   @Override
   public String print(RatingValue ratingValue) {
+    return print(ratingValue, NO_ADVICES);
+  }
+
+  /**
+   * Print a rating value and advices.
+   *
+   * @param ratingValue The rating value.
+   * @param advices The advices.
+   * @return A string to be displayed.
+   */
+  private String print(RatingValue ratingValue, String advices) {
     Objects.requireNonNull(ratingValue, "Hey! Rating can't be null!");
 
     ScoreValue scoreValue = ratingValue.scoreValue();
@@ -74,7 +109,37 @@ public class MarkdownFormatter implements Formatter {
         .replace("%MAIN_SCORE_VALUE_DETAILS%", highLevelDescriptionOf(scoreValue))
         .replace("%MAIN_SCORE_DESCRIPTION%", scoreValue.score().description())
         .replace("%MAIN_SCORE_EXPLANATION%", explanationOf(scoreValue))
-        .replace("%SUB_SCORE_DETAILS%", descriptionOfSubScoresIn(scoreValue));
+        .replace("%SUB_SCORE_DETAILS%", descriptionOfSubScoresIn(scoreValue))
+        .replace("%ADVICES%", advices);
+  }
+
+  /**
+   * Print out advices for a subject.
+   *
+   * @param subject The subject.
+   * @return Advices to be displayed.
+   */
+  private String advicesFor(Subject subject) {
+    List<Advice> advices = advisor.adviseFor(subject);
+    if (advices.isEmpty()) {
+      return "";
+    }
+
+    StringBuilder sb = new StringBuilder();
+    sb.append("## How to improve the rating\n\n");
+    int i = 1;
+    for (Advice advice : advices) {
+      sb.append(String.format("%d.  %s", i++, advice.content().text()));
+      if (!advice.content().links().isEmpty()) {
+        sb.append(" More info:").append("\n");
+        int j = 1;
+        for (Link link : advice.content().links()) {
+          sb.append(String.format("    %d.  [%s](%s)%n", j++, link.name, link.url));
+        }
+      }
+    }
+
+    return sb.toString();
   }
 
   /**
