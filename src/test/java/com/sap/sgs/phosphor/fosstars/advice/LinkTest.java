@@ -1,4 +1,4 @@
-package com.sap.sgs.phosphor.fosstars.model.advice;
+package com.sap.sgs.phosphor.fosstars.advice;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;

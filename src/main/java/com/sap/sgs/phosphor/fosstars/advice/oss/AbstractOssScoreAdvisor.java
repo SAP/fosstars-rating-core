@@ -1,12 +1,12 @@
-package com.sap.sgs.phosphor.fosstars.model.advice.oss;
+package com.sap.sgs.phosphor.fosstars.advice.oss;
 
+import com.sap.sgs.phosphor.fosstars.advice.AdviceContent;
+import com.sap.sgs.phosphor.fosstars.advice.SimpleAdvice;
 import com.sap.sgs.phosphor.fosstars.model.Advice;
 import com.sap.sgs.phosphor.fosstars.model.Advisor;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Subject;
 import com.sap.sgs.phosphor.fosstars.model.Value;
-import com.sap.sgs.phosphor.fosstars.model.advice.AdviceContent;
-import com.sap.sgs.phosphor.fosstars.model.advice.SimpleAdvice;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.util.Collections;
 import java.util.List;

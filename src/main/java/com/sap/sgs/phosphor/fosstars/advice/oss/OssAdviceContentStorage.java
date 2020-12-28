@@ -1,7 +1,7 @@
-package com.sap.sgs.phosphor.fosstars.model.advice.oss;
+package com.sap.sgs.phosphor.fosstars.advice.oss;
 
+import com.sap.sgs.phosphor.fosstars.advice.AdviceContentStorage;
 import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
-import com.sap.sgs.phosphor.fosstars.model.advice.AdviceContentStorage;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -16,7 +16,7 @@ public class OssAdviceContentStorage extends AdviceContentStorage {
    * A path to a resource that contains the default advices.
    */
   private static final String RESOURCE_PATH
-      = "com/sap/sgs/phosphor/fosstars/model/advice/oss/OssAdvices.yml";
+      = "com/sap/sgs/phosphor/fosstars/advice/oss/OssAdvices.yml";
 
   /**
    * A default instance of the storage that contains advices loaded from {@link #RESOURCE_PATH}.

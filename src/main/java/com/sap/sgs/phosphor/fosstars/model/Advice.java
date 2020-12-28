@@ -1,6 +1,6 @@
 package com.sap.sgs.phosphor.fosstars.model;
 
-import com.sap.sgs.phosphor.fosstars.model.advice.AdviceContent;
+import com.sap.sgs.phosphor.fosstars.advice.AdviceContent;
 
 /**
  * An advice about a subject's rating, score or feature value.
