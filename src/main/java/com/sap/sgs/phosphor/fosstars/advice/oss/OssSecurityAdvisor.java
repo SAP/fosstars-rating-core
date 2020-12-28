@@ -1,6 +1,6 @@
-package com.sap.sgs.phosphor.fosstars.model.advice.oss;
+package com.sap.sgs.phosphor.fosstars.advice.oss;
 
-import com.sap.sgs.phosphor.fosstars.model.advice.CompositeAdvisor;
+import com.sap.sgs.phosphor.fosstars.advice.CompositeAdvisor;
 
 /**
  * An advisor for security ratings for open-source projects.

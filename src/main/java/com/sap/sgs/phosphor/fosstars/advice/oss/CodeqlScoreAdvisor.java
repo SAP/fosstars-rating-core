@@ -1,4 +1,4 @@
-package com.sap.sgs.phosphor.fosstars.model.advice.oss;
+package com.sap.sgs.phosphor.fosstars.advice.oss;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_CODEQL_SCANS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_CODEQL_CHECKS;

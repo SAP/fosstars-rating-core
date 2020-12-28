@@ -41,9 +41,9 @@ import static com.sap.sgs.phosphor.fosstars.model.value.PackageManager.MAVEN;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
+import com.sap.sgs.phosphor.fosstars.advice.oss.OssSecurityAdvisor;
 import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
 import com.sap.sgs.phosphor.fosstars.model.Value;
-import com.sap.sgs.phosphor.fosstars.model.advice.oss.OssSecurityAdvisor;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.model.value.Languages;

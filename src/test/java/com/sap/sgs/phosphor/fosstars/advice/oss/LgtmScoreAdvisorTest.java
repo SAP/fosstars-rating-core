@@ -1,9 +1,9 @@
-package com.sap.sgs.phosphor.fosstars.model.advice.oss;
+package com.sap.sgs.phosphor.fosstars.advice.oss;
 
-import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_CODEQL_SCANS;
-import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_CODEQL_CHECKS;
-import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM_CHECKS;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.allUnknown;
+import static com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade.A_PLUS;
+import static com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade.B;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -15,11 +15,11 @@ import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
 import org.junit.Test;
 
-public class CodeqlScoreAdvisorTest {
+public class LgtmScoreAdvisorTest {
 
   @Test
   public void testBasics() {
-    CodeqlScoreAdvisor advisor = new CodeqlScoreAdvisor();
+    LgtmScoreAdvisor advisor = new LgtmScoreAdvisor();
     GitHubProject project = new GitHubProject("org", "test");
 
     // no advices if no rating value is set
@@ -32,24 +32,14 @@ public class CodeqlScoreAdvisorTest {
     values.update(allUnknown(rating.score().allFeatures()));
     assertTrue(advisor.adviseFor(project).isEmpty());
 
-    // no advices if the LGTM checks are enabled
-    values.update(USES_LGTM_CHECKS.value(true));
+    // no advices if the LGTM grade is the best
+    values.update(WORST_LGTM_GRADE.value(A_PLUS));
     project.set(rating.calculate(values));
     assertTrue(advisor.adviseFor(project).isEmpty());
 
-    // expect an advice if the LGTM checks are not enabled
-    values.update(USES_LGTM_CHECKS.value(false));
+    // expect an advice if the LGTM grade is not the best
+    values.update(WORST_LGTM_GRADE.value(B));
     project.set(rating.calculate(values));
     assertEquals(1, advisor.adviseFor(project).size());
-
-    // expect an advice if the  checks are not enabled
-    values.update(USES_CODEQL_CHECKS.value(false));
-    project.set(rating.calculate(values));
-    assertEquals(2, advisor.adviseFor(project).size());
-
-    // expect an advice if the LGTM checks are not enabled
-    values.update(RUNS_CODEQL_SCANS.value(false));
-    project.set(rating.calculate(values));
-    assertEquals(3, advisor.adviseFor(project).size());
   }
 }

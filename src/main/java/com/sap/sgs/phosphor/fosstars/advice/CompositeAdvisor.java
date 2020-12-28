@@ -1,4 +1,4 @@
-package com.sap.sgs.phosphor.fosstars.model.advice;
+package com.sap.sgs.phosphor.fosstars.advice;
 
 import com.sap.sgs.phosphor.fosstars.model.Advice;
 import com.sap.sgs.phosphor.fosstars.model.Advisor;

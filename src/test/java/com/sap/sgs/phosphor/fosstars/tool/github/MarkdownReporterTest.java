@@ -8,11 +8,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import com.sap.sgs.phosphor.fosstars.advice.oss.OssSecurityAdvisor;
 import com.sap.sgs.phosphor.fosstars.model.Label;
 import com.sap.sgs.phosphor.fosstars.model.Rating;
 import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
 import com.sap.sgs.phosphor.fosstars.model.Score;
-import com.sap.sgs.phosphor.fosstars.model.advice.oss.OssSecurityAdvisor;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.model.value.RatingValue;

@@ -1,4 +1,4 @@
-package com.sap.sgs.phosphor.fosstars.model.advice;
+package com.sap.sgs.phosphor.fosstars.advice;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.example.ExampleFeatures.SECURITY_REVIEW_DONE_EXAMPLE;
 import static com.sap.sgs.phosphor.fosstars.model.feature.example.ExampleFeatures.STATIC_CODE_ANALYSIS_DONE_EXAMPLE;

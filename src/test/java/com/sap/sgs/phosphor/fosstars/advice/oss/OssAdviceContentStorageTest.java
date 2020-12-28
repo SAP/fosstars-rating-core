@@ -1,11 +1,11 @@
-package com.sap.sgs.phosphor.fosstars.model.advice.oss;
+package com.sap.sgs.phosphor.fosstars.advice.oss;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_COLLABORATORS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM_CHECKS;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import com.sap.sgs.phosphor.fosstars.model.advice.AdviceContent;
+import com.sap.sgs.phosphor.fosstars.advice.AdviceContent;
 import java.util.List;
 import org.junit.Test;
 

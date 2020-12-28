@@ -1,4 +1,4 @@
-package com.sap.sgs.phosphor.fosstars.model.advice;
+package com.sap.sgs.phosphor.fosstars.advice;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
