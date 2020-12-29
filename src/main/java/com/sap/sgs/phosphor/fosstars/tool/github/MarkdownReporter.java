@@ -2,7 +2,7 @@ package com.sap.sgs.phosphor.fosstars.tool.github;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_GITHUB_STARS;
 
-import com.sap.sgs.phosphor.fosstars.model.Advisor;
+import com.sap.sgs.phosphor.fosstars.advice.Advisor;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel;
 import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;

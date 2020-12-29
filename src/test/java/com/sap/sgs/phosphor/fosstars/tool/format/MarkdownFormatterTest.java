@@ -41,7 +41,7 @@ import static com.sap.sgs.phosphor.fosstars.model.value.PackageManager.MAVEN;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
-import com.sap.sgs.phosphor.fosstars.advice.oss.OssSecurityAdvisor;
+import com.sap.sgs.phosphor.fosstars.advice.oss.github.OssSecurityGithubAdvisor;
 import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating;
@@ -102,7 +102,7 @@ public class MarkdownFormatterTest {
     GitHubProject project = new GitHubProject("org", "test");
     project.set(ratingValue);
 
-    MarkdownFormatter formatter = new MarkdownFormatter(new OssSecurityAdvisor());
+    MarkdownFormatter formatter = new MarkdownFormatter(new OssSecurityGithubAdvisor());
     String text = formatter.print(project);
 
     assertNotNull(text);

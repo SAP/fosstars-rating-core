@@ -1,8 +1,8 @@
 package com.sap.sgs.phosphor.fosstars.tool.format;
 
+import com.sap.sgs.phosphor.fosstars.advice.Advice;
+import com.sap.sgs.phosphor.fosstars.advice.Advisor;
 import com.sap.sgs.phosphor.fosstars.advice.Link;
-import com.sap.sgs.phosphor.fosstars.model.Advice;
-import com.sap.sgs.phosphor.fosstars.model.Advisor;
 import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Subject;

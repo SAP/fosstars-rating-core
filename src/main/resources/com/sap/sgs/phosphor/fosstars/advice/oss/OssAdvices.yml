@@ -21,4 +21,6 @@ If a project runs CodeQL scans:
 The worst LGTM grade of a project:
   - advice: >
       You can fix the issues reported by LGTM for the project.
-    links: []
+    links:
+      - name: List of issues on LGTM
+        url: ${LGTM_PROJECT_LINK}

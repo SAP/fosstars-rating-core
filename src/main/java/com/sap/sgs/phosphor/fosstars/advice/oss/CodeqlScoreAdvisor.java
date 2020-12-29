@@ -5,36 +5,47 @@ import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_C
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM_CHECKS;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.findValue;
 
-import com.sap.sgs.phosphor.fosstars.model.Advice;
+import com.sap.sgs.phosphor.fosstars.advice.Advice;
+import com.sap.sgs.phosphor.fosstars.advice.SimpleAdvice;
+import com.sap.sgs.phosphor.fosstars.advice.oss.OssAdviceContentYamlStorage.OssAdviceContext;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
+import com.sap.sgs.phosphor.fosstars.model.Subject;
 import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.score.oss.CodeqlScore;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
  * An advisor for {@link CodeqlScore}.
  */
-public class CodeqlScoreAdvisor extends AbstractOssScoreAdvisor<CodeqlScore> {
+public class CodeqlScoreAdvisor extends AbstractOssScoreAdvisor {
 
   /**
    * Create a new advisor.
+   *
+   * @param contextFactory A factory that provides contexts for advices.
    */
-  public CodeqlScoreAdvisor() {
-    super(OssAdviceContentStorage.DEFAULT, CodeqlScore.class);
+  public CodeqlScoreAdvisor(ContextFactory contextFactory) {
+    super(OssAdviceContentYamlStorage.DEFAULT, contextFactory);
   }
 
   @Override
-  List<Advice> adviseFor(ScoreValue scoreValue, AdviceFactory factory) {
-    List<Advice> advices = new ArrayList<>();
-    advices.addAll(adviseFor(scoreValue, USES_LGTM_CHECKS, factory));
-    advices.addAll(adviseFor(scoreValue, USES_CODEQL_CHECKS, factory));
-    advices.addAll(adviseFor(scoreValue, RUNS_CODEQL_SCANS, factory));
+  public List<Advice> adviseFor(Subject subject) {
+    Optional<ScoreValue> scoreValue = findScoreValueIn(subject, CodeqlScore.class);
+    if (scoreValue.isPresent()) {
+      OssAdviceContext context = contextFactory.contextFor(subject);
+      List<Advice> advices = new ArrayList<>();
+      advices.addAll(adviseFor(scoreValue.get(), USES_LGTM_CHECKS, subject, context));
+      advices.addAll(adviseFor(scoreValue.get(), USES_CODEQL_CHECKS, subject, context));
+      advices.addAll(adviseFor(scoreValue.get(), RUNS_CODEQL_SCANS, subject, context));
+      return advices;
+    }
 
-    return advices;
+    return Collections.emptyList();
   }
 
   /**
@@ -42,17 +53,18 @@ public class CodeqlScoreAdvisor extends AbstractOssScoreAdvisor<CodeqlScore> {
    *
    * @param scoreValue The score value.
    * @param feature The feature.
-   * @param factory A factory that can create an instance of {@link Advice}.
+   * @param subject The subject for advices.
+   * @param context A context for advices.
    * @return A list of advices.
    */
-  private List<Advice> adviseFor(
-      ScoreValue scoreValue, Feature<Boolean> feature, AdviceFactory factory) {
+  private List<? extends Advice> adviseFor(
+      ScoreValue scoreValue, Feature<Boolean> feature, Subject subject, OssAdviceContext context) {
 
     return findValue(scoreValue.usedFeatureValues(), feature)
         .filter(CodeqlScoreAdvisor::knownFalseValue)
-        .map(value -> adviceStorage.advicesFor(value.feature())
+        .map(value -> adviceStorage.advicesFor(value.feature(), context)
             .stream()
-            .map(content -> factory.createAdvice(value, content))
+            .map(content -> new SimpleAdvice(subject, value, content))
             .collect(Collectors.toList()))
         .orElse(Collections.emptyList());
   }

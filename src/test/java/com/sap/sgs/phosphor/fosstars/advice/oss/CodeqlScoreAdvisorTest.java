@@ -7,6 +7,7 @@ import static com.sap.sgs.phosphor.fosstars.model.other.Utils.allUnknown;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import com.sap.sgs.phosphor.fosstars.advice.oss.AbstractOssScoreAdvisor.ContextFactory;
 import com.sap.sgs.phosphor.fosstars.model.Rating;
 import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
@@ -19,7 +20,7 @@ public class CodeqlScoreAdvisorTest {
 
   @Test
   public void testBasics() {
-    CodeqlScoreAdvisor advisor = new CodeqlScoreAdvisor();
+    CodeqlScoreAdvisor advisor = new CodeqlScoreAdvisor(ContextFactory.WITH_EMPTY_CONTEXT);
     GitHubProject project = new GitHubProject("org", "test");
 
     // no advices if no rating value is set

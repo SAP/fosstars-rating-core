@@ -5,21 +5,25 @@ import static com.sap.sgs.phosphor.fosstars.model.other.Utils.allUnknown;
 import static com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade.A_PLUS;
 import static com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade.B;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import com.sap.sgs.phosphor.fosstars.advice.Advice;
+import com.sap.sgs.phosphor.fosstars.advice.oss.AbstractOssScoreAdvisor.ContextFactory;
 import com.sap.sgs.phosphor.fosstars.model.Rating;
 import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
 import com.sap.sgs.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.model.value.ValueHashSet;
+import java.util.List;
 import org.junit.Test;
 
 public class LgtmScoreAdvisorTest {
 
   @Test
-  public void testBasics() {
-    LgtmScoreAdvisor advisor = new LgtmScoreAdvisor();
+  public void testAdvicesForLgtmGrade() {
+    LgtmScoreAdvisor advisor = new LgtmScoreAdvisor(ContextFactory.WITH_EMPTY_CONTEXT);
     GitHubProject project = new GitHubProject("org", "test");
 
     // no advices if no rating value is set
@@ -40,6 +44,10 @@ public class LgtmScoreAdvisorTest {
     // expect an advice if the LGTM grade is not the best
     values.update(WORST_LGTM_GRADE.value(B));
     project.set(rating.calculate(values));
-    assertEquals(1, advisor.adviseFor(project).size());
+    List<Advice> advices = advisor.adviseFor(project);
+    assertEquals(1, advices.size());
+    Advice advice = advices.get(0);
+    assertFalse(advice.content().text().isEmpty());
+    assertTrue(advice.content().links().isEmpty());
   }
 }
