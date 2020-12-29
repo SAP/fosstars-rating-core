@@ -1,6 +1,6 @@
 package com.sap.sgs.phosphor.fosstars.tool.format;
 
-import com.sap.sgs.phosphor.fosstars.model.Advisor;
+import com.sap.sgs.phosphor.fosstars.advice.Advisor;
 import com.sap.sgs.phosphor.fosstars.model.Confidence;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Value;

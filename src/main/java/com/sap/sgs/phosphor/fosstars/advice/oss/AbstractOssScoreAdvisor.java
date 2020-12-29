@@ -1,63 +1,56 @@
 package com.sap.sgs.phosphor.fosstars.advice.oss;
 
-import com.sap.sgs.phosphor.fosstars.advice.AdviceContent;
-import com.sap.sgs.phosphor.fosstars.advice.SimpleAdvice;
-import com.sap.sgs.phosphor.fosstars.model.Advice;
-import com.sap.sgs.phosphor.fosstars.model.Advisor;
+import com.sap.sgs.phosphor.fosstars.advice.Advisor;
+import com.sap.sgs.phosphor.fosstars.advice.oss.OssAdviceContentYamlStorage.OssAdviceContext;
 import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Subject;
-import com.sap.sgs.phosphor.fosstars.model.Value;
 import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
-import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 /**
  * A base class for advisors for a score for open-source projects.
- * It gets advices for a feature from an {@link OssAdviceContentStorage}
+ * It gets advices for a feature from an {@link OssAdviceContentYamlStorage}
  * and decides if the advices are applicable for specific feature values.
- *
- * @param <T> A type of the score.
  */
-public abstract class AbstractOssScoreAdvisor<T extends Score> implements Advisor {
+public abstract class AbstractOssScoreAdvisor implements Advisor {
 
   /**
    * A storage with advices for open-source projects.
    */
-  final OssAdviceContentStorage adviceStorage;
+  protected final OssAdviceContentYamlStorage adviceStorage;
 
   /**
-   * A type of the score.
+   * A factory that provides contexts for advices.
    */
-  final Class<T> scoreClass;
+  protected final ContextFactory contextFactory;
 
   /**
    * Creates a new instance.
    *
    * @param adviceStorage A storage with advices for open-source projects.
-   * @param scoreClass A type of the score.
+   * @param contextFactory A factory that provides contexts for advices.
    */
-  AbstractOssScoreAdvisor(OssAdviceContentStorage adviceStorage, Class<T> scoreClass) {
+  protected AbstractOssScoreAdvisor(
+      OssAdviceContentYamlStorage adviceStorage, ContextFactory contextFactory) {
+
     Objects.requireNonNull(adviceStorage, "Oh no! Advice storage is null!");
-    Objects.requireNonNull(scoreClass, "Oh no! Score class is null!");
+    Objects.requireNonNull(contextFactory, "Oh no! Context factory is null!");
 
     this.adviceStorage = adviceStorage;
-    this.scoreClass = scoreClass;
+    this.contextFactory = contextFactory;
   }
 
   /**
-   * First, the method checks if the subject has a rating value. Then, it searches for a value
-   * of the score in the rating value. Finally, it looks for advices for the feature values
-   * that contributed to the score value.
+   * Looks for a value of a score in a rating value assigned to a subject.
    *
-   * @param subject The subject.
-   * @return A list of advices.
+   * @param subject The subject that contains the rating value.
+   * @param scoreClass A class of the score.
+   * @return A value of the score if the rating value contains it.
    */
-  @Override
-  public final List<Advice> adviseFor(Subject subject) {
+  Optional<ScoreValue> findScoreValueIn(Subject subject, Class<? extends Score> scoreClass) {
     if (!subject.ratingValue().isPresent()) {
-      return Collections.emptyList();
+      return Optional.empty();
     }
 
     Optional<ScoreValue> scoreValue
@@ -66,36 +59,35 @@ public abstract class AbstractOssScoreAdvisor<T extends Score> implements Adviso
     if (!scoreValue.isPresent()
         || scoreValue.get().isUnknown() || scoreValue.get().isNotApplicable()) {
 
-      return Collections.emptyList();
+      return Optional.empty();
     }
 
-    return adviseFor(
-        scoreValue.get(),
-        (value, content) -> new SimpleAdvice(subject, value, content));
+    return scoreValue;
   }
 
   /**
-   * Returns a list of advices for feature values that contributed to a specified score value.
-   *
-   * @param scoreValue The score value.
-   * @param builder A factory that can create an instance of {@link Advice}.
-   * @return A list of advices.
+   * A factory that provides advice contexts.
    */
-  abstract List<Advice> adviseFor(ScoreValue scoreValue, AdviceFactory builder);
-
-  /**
-   * A factory that can create an instance of {@link Advice}.
-   */
-  interface AdviceFactory {
+  public interface ContextFactory {
 
     /**
-     * Create an instance of {@link Advice} for a value.
-     *
-     * @param value The value.
-     * @param content A content of the advice.
-     * @return An instance of {@link Advice}.
+     * A factory that provides empty contexts.
      */
-    Advice createAdvice(Value<?> value, AdviceContent content);
+    ContextFactory WITH_EMPTY_CONTEXT = subject -> new OssAdviceContext() {
+
+      @Override
+      public Optional<String> lgtmProjectLink() {
+        return Optional.empty();
+      }
+    };
+
+    /**
+     * Create a context for a subject.
+     *
+     * @param subject The subject.
+     * @return A context of the subject.
+     */
+    OssAdviceContext contextFor(Subject subject);
   }
 
 }

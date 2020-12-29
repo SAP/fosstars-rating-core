@@ -44,7 +44,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import com.sap.sgs.phosphor.fosstars.advice.oss.OssSecurityAdvisor;
+import com.sap.sgs.phosphor.fosstars.advice.oss.github.OssSecurityGithubAdvisor;
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
 import com.sap.sgs.phosphor.fosstars.model.Value;
@@ -104,7 +104,7 @@ public class PrettyPrinterTest {
   public void testPrint() {
     RatingValue ratingValue = RATING.calculate(TEST_VALUES);
 
-    PrettyPrinter printer = PrettyPrinter.withVerboseOutput(new OssSecurityAdvisor());
+    PrettyPrinter printer = PrettyPrinter.withVerboseOutput(new OssSecurityGithubAdvisor());
     String text = printer.print(ratingValue);
 
     assertNotNull(text);
@@ -129,7 +129,7 @@ public class PrettyPrinterTest {
   public void testConsistency() {
     RatingValue ratingValue = RATING.calculate(TEST_VALUES);
 
-    PrettyPrinter printer = PrettyPrinter.withVerboseOutput(new OssSecurityAdvisor());
+    PrettyPrinter printer = PrettyPrinter.withVerboseOutput(new OssSecurityGithubAdvisor());
     String text = printer.print(ratingValue);
     for (int i = 0; i < 100; i++) {
       assertEquals(text, printer.print(ratingValue));

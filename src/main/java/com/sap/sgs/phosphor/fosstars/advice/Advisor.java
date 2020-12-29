@@ -1,5 +1,6 @@
-package com.sap.sgs.phosphor.fosstars.model;
+package com.sap.sgs.phosphor.fosstars.advice;
 
+import com.sap.sgs.phosphor.fosstars.model.Subject;
 import java.util.Collections;
 import java.util.List;
 

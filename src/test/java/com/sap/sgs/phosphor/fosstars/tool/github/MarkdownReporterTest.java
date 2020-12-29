@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import com.sap.sgs.phosphor.fosstars.advice.oss.OssSecurityAdvisor;
+import com.sap.sgs.phosphor.fosstars.advice.oss.github.OssSecurityGithubAdvisor;
 import com.sap.sgs.phosphor.fosstars.model.Label;
 import com.sap.sgs.phosphor.fosstars.model.Rating;
 import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
@@ -64,7 +64,7 @@ public class MarkdownReporterTest {
       );
 
       MarkdownReporter reporter = new MarkdownReporter(
-          outputDirectory.toString(), null, new OssSecurityAdvisor());
+          outputDirectory.toString(), null, new OssSecurityGithubAdvisor());
       reporter.runFor(projects);
 
       Path reportFileName = outputDirectory.resolve(MarkdownReporter.REPORT_FILENAME);

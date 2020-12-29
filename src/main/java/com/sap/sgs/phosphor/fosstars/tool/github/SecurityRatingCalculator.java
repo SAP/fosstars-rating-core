@@ -6,12 +6,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.sap.sgs.phosphor.fosstars.advice.oss.OssSecurityAdvisor;
+import com.sap.sgs.phosphor.fosstars.advice.Advisor;
+import com.sap.sgs.phosphor.fosstars.advice.oss.github.OssSecurityGithubAdvisor;
 import com.sap.sgs.phosphor.fosstars.data.NoUserCallback;
 import com.sap.sgs.phosphor.fosstars.data.Terminal;
 import com.sap.sgs.phosphor.fosstars.data.UserCallback;
 import com.sap.sgs.phosphor.fosstars.data.github.GitHubDataFetcher;
-import com.sap.sgs.phosphor.fosstars.model.Advisor;
 import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.sgs.phosphor.fosstars.nvd.NVD;
 import com.sap.sgs.phosphor.fosstars.tool.InputString;
@@ -90,7 +90,7 @@ public class SecurityRatingCalculator {
   /**
    * An advisor for calculated ratings.
    */
-  private static final Advisor ADVISOR = new OssSecurityAdvisor();
+  private static final Advisor ADVISOR = new OssSecurityGithubAdvisor();
 
   /**
    * Entry point.
