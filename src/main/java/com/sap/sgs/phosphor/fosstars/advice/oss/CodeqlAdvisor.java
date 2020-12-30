@@ -32,13 +32,8 @@ public class CodeqlAdvisor extends AbstractOssAdvisor {
   }
 
   @Override
-  public List<Advice> adviseFor(Subject subject) {
-    if (!subject.ratingValue().isPresent()) {
-      return Collections.emptyList();
-    }
-
-    List<Value> usedValues = subject.ratingValue().get().scoreValue().usedFeatureValues();
-    OssAdviceContext context = contextFactory.contextFor(subject);
+  protected List<Advice> adviseFor(
+      Subject subject, List<Value> usedValues, OssAdviceContext context) {
 
     return Stream.of(USES_LGTM_CHECKS, USES_CODEQL_CHECKS, RUNS_CODEQL_SCANS)
         .map(feature -> adviseFor(usedValues, feature, subject, context))

@@ -29,13 +29,8 @@ public class LgtmAdvisor extends AbstractOssAdvisor {
   }
 
   @Override
-  public List<Advice> adviseFor(Subject subject) {
-    if (!subject.ratingValue().isPresent()) {
-      return Collections.emptyList();
-    }
-
-    List<Value> usedValues = subject.ratingValue().get().scoreValue().usedFeatureValues();
-    OssAdviceContext context = contextFactory.contextFor(subject);
+  protected List<Advice> adviseFor(
+      Subject subject, List<Value> usedValues, OssAdviceContext context) {
 
     return findValue(usedValues, WORST_LGTM_GRADE)
         .filter(LgtmAdvisor::isKnown)
