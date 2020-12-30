@@ -1,9 +1,9 @@
 package com.sap.sgs.phosphor.fosstars.advice.oss.github;
 
 import com.sap.sgs.phosphor.fosstars.advice.CompositeAdvisor;
-import com.sap.sgs.phosphor.fosstars.advice.oss.AbstractOssScoreAdvisor.ContextFactory;
-import com.sap.sgs.phosphor.fosstars.advice.oss.CodeqlScoreAdvisor;
-import com.sap.sgs.phosphor.fosstars.advice.oss.LgtmScoreAdvisor;
+import com.sap.sgs.phosphor.fosstars.advice.oss.AbstractOssAdvisor.ContextFactory;
+import com.sap.sgs.phosphor.fosstars.advice.oss.CodeqlAdvisor;
+import com.sap.sgs.phosphor.fosstars.advice.oss.LgtmAdvisor;
 import com.sap.sgs.phosphor.fosstars.advice.oss.OssAdviceContentYamlStorage.OssAdviceContext;
 import com.sap.sgs.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.util.Optional;
@@ -36,6 +36,6 @@ public class OssSecurityGithubAdvisor extends CompositeAdvisor {
    * Create a new advisor.
    */
   public OssSecurityGithubAdvisor() {
-    super(new CodeqlScoreAdvisor(CONTEXT_FACTORY), new LgtmScoreAdvisor(CONTEXT_FACTORY));
+    super(new CodeqlAdvisor(CONTEXT_FACTORY), new LgtmAdvisor(CONTEXT_FACTORY));
   }
 }

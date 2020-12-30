@@ -2,18 +2,16 @@ package com.sap.sgs.phosphor.fosstars.advice.oss;
 
 import com.sap.sgs.phosphor.fosstars.advice.Advisor;
 import com.sap.sgs.phosphor.fosstars.advice.oss.OssAdviceContentYamlStorage.OssAdviceContext;
-import com.sap.sgs.phosphor.fosstars.model.Score;
 import com.sap.sgs.phosphor.fosstars.model.Subject;
-import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.util.Objects;
 import java.util.Optional;
 
 /**
- * A base class for advisors for a score for open-source projects.
+ * A base class for advisors for ratings for open-source projects.
  * It gets advices for a feature from an {@link OssAdviceContentYamlStorage}
  * and decides if the advices are applicable for specific feature values.
  */
-public abstract class AbstractOssScoreAdvisor implements Advisor {
+public abstract class AbstractOssAdvisor implements Advisor {
 
   /**
    * A storage with advices for open-source projects.
@@ -31,7 +29,7 @@ public abstract class AbstractOssScoreAdvisor implements Advisor {
    * @param adviceStorage A storage with advices for open-source projects.
    * @param contextFactory A factory that provides contexts for advices.
    */
-  protected AbstractOssScoreAdvisor(
+  protected AbstractOssAdvisor(
       OssAdviceContentYamlStorage adviceStorage, ContextFactory contextFactory) {
 
     Objects.requireNonNull(adviceStorage, "Oh no! Advice storage is null!");
@@ -39,30 +37,6 @@ public abstract class AbstractOssScoreAdvisor implements Advisor {
 
     this.adviceStorage = adviceStorage;
     this.contextFactory = contextFactory;
-  }
-
-  /**
-   * Looks for a value of a score in a rating value assigned to a subject.
-   *
-   * @param subject The subject that contains the rating value.
-   * @param scoreClass A class of the score.
-   * @return A value of the score if the rating value contains it.
-   */
-  Optional<ScoreValue> findScoreValueIn(Subject subject, Class<? extends Score> scoreClass) {
-    if (!subject.ratingValue().isPresent()) {
-      return Optional.empty();
-    }
-
-    Optional<ScoreValue> scoreValue
-        = subject.ratingValue().get().scoreValue().findUsedSubScoreValue(scoreClass);
-
-    if (!scoreValue.isPresent()
-        || scoreValue.get().isUnknown() || scoreValue.get().isNotApplicable()) {
-
-      return Optional.empty();
-    }
-
-    return scoreValue;
   }
 
   /**
