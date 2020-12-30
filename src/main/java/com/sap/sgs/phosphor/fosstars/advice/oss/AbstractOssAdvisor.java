@@ -1,5 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.advice.oss;
 
+import static com.sap.sgs.phosphor.fosstars.advice.oss.OssAdviceContentYamlStorage.OssAdviceContext.EMPTY_OSS_CONTEXT;
+
 import com.sap.sgs.phosphor.fosstars.advice.Advice;
 import com.sap.sgs.phosphor.fosstars.advice.Advisor;
 import com.sap.sgs.phosphor.fosstars.advice.oss.OssAdviceContentYamlStorage.OssAdviceContext;
@@ -8,7 +10,6 @@ import com.sap.sgs.phosphor.fosstars.model.Value;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * A base class for advisors for ratings for open-source projects.
@@ -25,7 +26,7 @@ public abstract class AbstractOssAdvisor implements Advisor {
   /**
    * A factory that provides contexts for advices.
    */
-  protected final ContextFactory contextFactory;
+  protected final OssAdviceContextFactory contextFactory;
 
   /**
    * Creates a new instance.
@@ -34,7 +35,7 @@ public abstract class AbstractOssAdvisor implements Advisor {
    * @param contextFactory A factory that provides contexts for advices.
    */
   protected AbstractOssAdvisor(
-      OssAdviceContentYamlStorage adviceStorage, ContextFactory contextFactory) {
+      OssAdviceContentYamlStorage adviceStorage, OssAdviceContextFactory contextFactory) {
 
     Objects.requireNonNull(adviceStorage, "Oh no! Advice storage is null!");
     Objects.requireNonNull(contextFactory, "Oh no! Context factory is null!");
@@ -67,20 +68,24 @@ public abstract class AbstractOssAdvisor implements Advisor {
       Subject subject, List<Value> usedValues, OssAdviceContext context);
 
   /**
-   * A factory that provides advice contexts.
+   * Checks if a boolean value is known and false.
+   *
+   * @param value The value to be checked.
+   * @return True if the value is known and false, false otherwise.
    */
-  public interface ContextFactory {
+  protected static boolean knownFalseValue(Value<Boolean> value) {
+    return !value.isUnknown() && !value.get();
+  }
+
+  /**
+   * A factory that provides advice contexts for open-source projects.
+   */
+  public interface OssAdviceContextFactory {
 
     /**
      * A factory that provides empty contexts.
      */
-    ContextFactory WITH_EMPTY_CONTEXT = subject -> new OssAdviceContext() {
-
-      @Override
-      public Optional<String> lgtmProjectLink() {
-        return Optional.empty();
-      }
-    };
+    OssAdviceContextFactory WITH_EMPTY_CONTEXT = subject -> EMPTY_OSS_CONTEXT;
 
     /**
      * Create a context for a subject.

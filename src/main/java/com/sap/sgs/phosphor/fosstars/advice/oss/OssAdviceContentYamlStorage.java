@@ -95,6 +95,11 @@ public class OssAdviceContentYamlStorage {
       public Optional<String> lgtmProjectLink() {
         return Optional.empty();
       }
+
+      @Override
+      public Optional<String> suggestSecurityPolicyLink() {
+        return Optional.empty();
+      }
     };
 
     @Override
@@ -102,17 +107,26 @@ public class OssAdviceContentYamlStorage {
       switch (variable) {
         case "LGTM_PROJECT_LINK":
           return lgtmProjectLink();
+        case "SUGGEST_SECURITY_POLICY_ON_GITHUB":
+          return suggestSecurityPolicyLink();
         default:
           return Optional.empty();
       }
     }
 
     /**
-     * Returns a link to a project on LGTM if it's available.
+     * If available, returns a link to a project on LGTM.
      *
      * @return A link to a project on LGTM.
      */
     public abstract Optional<String> lgtmProjectLink();
+
+    /**
+     * If available, returns a link for suggesting a security policy for a subject.
+     *
+     * @return A link for suggesting a security policy.
+     */
+    public abstract Optional<String> suggestSecurityPolicyLink();
   }
 
 }

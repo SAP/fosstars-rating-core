@@ -1,5 +1,6 @@
 package com.sap.sgs.phosphor.fosstars.advice.oss.github;
 
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM_CHECKS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.allUnknown;
@@ -68,5 +69,26 @@ public class OssSecurityGithubAdvisorTest {
     Link link = advice.content().links().get(0);
     assertFalse(link.name.isEmpty());
     assertEquals("https://lgtm.com/projects/g/org/test", link.url.toString());
+  }
+
+  @Test
+  public void testAdvicesForSecurityPolicy() {
+    final OssSecurityGithubAdvisor advisor = new OssSecurityGithubAdvisor();
+    final GitHubProject project = new GitHubProject("org", "test");
+    final Rating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
+    final ValueSet values = new ValueHashSet();
+    values.update(allUnknown(rating.score().allFeatures()));
+
+    // expect an advice if the project doesn't have a security policy
+    values.update(HAS_SECURITY_POLICY.value(false));
+    project.set(rating.calculate(values));
+    List<Advice> advices = advisor.adviseFor(project);
+    assertEquals(1, advices.size());
+    Advice advice = advices.get(0);
+    assertFalse(advice.content().text().isEmpty());
+    assertFalse(advice.content().links().isEmpty());
+    boolean foundLinkForSuggestingSecurityPolicy = advice.content().links().stream().anyMatch(
+        link -> "https://github.com/org/test/security/policy".equals(link.url.toString()));
+    assertTrue(foundLinkForSuggestingSecurityPolicy);
   }
 }
