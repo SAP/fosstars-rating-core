@@ -1,8 +1,12 @@
 package com.sap.sgs.phosphor.fosstars.advice.oss;
 
+import com.sap.sgs.phosphor.fosstars.advice.Advice;
 import com.sap.sgs.phosphor.fosstars.advice.Advisor;
 import com.sap.sgs.phosphor.fosstars.advice.oss.OssAdviceContentYamlStorage.OssAdviceContext;
 import com.sap.sgs.phosphor.fosstars.model.Subject;
+import com.sap.sgs.phosphor.fosstars.model.Value;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -38,6 +42,29 @@ public abstract class AbstractOssAdvisor implements Advisor {
     this.adviceStorage = adviceStorage;
     this.contextFactory = contextFactory;
   }
+
+  @Override
+  public final List<Advice> adviseFor(Subject subject) {
+    if (!subject.ratingValue().isPresent()) {
+      return Collections.emptyList();
+    }
+
+    return adviseFor(
+        subject,
+        subject.ratingValue().get().scoreValue().usedFeatureValues(),
+        contextFactory.contextFor(subject));
+  }
+
+  /**
+   * Returns a list of advices for a subject.
+   *
+   * @param subject The subject.
+   * @param usedValues A list of value that were used to calculate a rating for the subject.
+   * @param context An advice context.
+   * @return A list of advices.
+   */
+  protected abstract List<Advice> adviseFor(
+      Subject subject, List<Value> usedValues, OssAdviceContext context);
 
   /**
    * A factory that provides advice contexts.
