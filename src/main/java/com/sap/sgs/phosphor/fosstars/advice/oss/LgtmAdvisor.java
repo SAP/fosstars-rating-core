@@ -9,51 +9,37 @@ import com.sap.sgs.phosphor.fosstars.advice.SimpleAdvice;
 import com.sap.sgs.phosphor.fosstars.advice.oss.OssAdviceContentYamlStorage.OssAdviceContext;
 import com.sap.sgs.phosphor.fosstars.model.Subject;
 import com.sap.sgs.phosphor.fosstars.model.Value;
-import com.sap.sgs.phosphor.fosstars.model.score.oss.LgtmScore;
 import com.sap.sgs.phosphor.fosstars.model.value.LgtmGrade;
-import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * An advisor for {@link LgtmScore}.
+ * An advisor for feature related to LGTM grade and findings.
  */
-public class LgtmScoreAdvisor extends AbstractOssScoreAdvisor {
+public class LgtmAdvisor extends AbstractOssAdvisor {
 
   /**
    * Create a new advisor.
    *
    * @param contextFactory A factory that provides contexts for advices.
    */
-  public LgtmScoreAdvisor(ContextFactory contextFactory) {
+  public LgtmAdvisor(ContextFactory contextFactory) {
     super(OssAdviceContentYamlStorage.DEFAULT, contextFactory);
   }
 
   @Override
   public List<Advice> adviseFor(Subject subject) {
+    if (!subject.ratingValue().isPresent()) {
+      return Collections.emptyList();
+    }
+
+    List<Value> usedValues = subject.ratingValue().get().scoreValue().usedFeatureValues();
     OssAdviceContext context = contextFactory.contextFor(subject);
-    return findScoreValueIn(subject, LgtmScore.class)
-        .map(scoreValue -> advicesFor(scoreValue, subject, context))
-        .orElse(Collections.emptyList());
-  }
 
-  /**
-   * Returns a list of advices for
-   * {@link com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures#WORST_LGTM_GRADE}
-   * feature from a score value.
-   *
-   * @param scoreValue The score value.
-   * @param subject The subject for advices.
-   * @param context A context for advices.
-   * @return A list of advices.
-   */
-  private List<Advice> advicesFor(
-      ScoreValue scoreValue, Subject subject, OssAdviceContext context) {
-
-    return findValue(scoreValue.usedFeatureValues(), WORST_LGTM_GRADE)
-        .filter(LgtmScoreAdvisor::isKnown)
-        .filter(LgtmScoreAdvisor::notTheBest)
+    return findValue(usedValues, WORST_LGTM_GRADE)
+        .filter(LgtmAdvisor::isKnown)
+        .filter(LgtmAdvisor::notTheBest)
         .map(value -> adviceStorage.advicesFor(value.feature(), context)
             .stream()
             .map(content -> new SimpleAdvice(subject, value, content))

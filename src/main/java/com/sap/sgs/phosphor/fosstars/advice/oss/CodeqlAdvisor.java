@@ -11,57 +11,54 @@ import com.sap.sgs.phosphor.fosstars.advice.oss.OssAdviceContentYamlStorage.OssA
 import com.sap.sgs.phosphor.fosstars.model.Feature;
 import com.sap.sgs.phosphor.fosstars.model.Subject;
 import com.sap.sgs.phosphor.fosstars.model.Value;
-import com.sap.sgs.phosphor.fosstars.model.score.oss.CodeqlScore;
-import com.sap.sgs.phosphor.fosstars.model.value.ScoreValue;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
- * An advisor for {@link CodeqlScore}.
+ * An advisor for features related to CodeQL.
  */
-public class CodeqlScoreAdvisor extends AbstractOssScoreAdvisor {
+public class CodeqlAdvisor extends AbstractOssAdvisor {
 
   /**
    * Create a new advisor.
    *
    * @param contextFactory A factory that provides contexts for advices.
    */
-  public CodeqlScoreAdvisor(ContextFactory contextFactory) {
+  public CodeqlAdvisor(ContextFactory contextFactory) {
     super(OssAdviceContentYamlStorage.DEFAULT, contextFactory);
   }
 
   @Override
   public List<Advice> adviseFor(Subject subject) {
-    Optional<ScoreValue> scoreValue = findScoreValueIn(subject, CodeqlScore.class);
-    if (scoreValue.isPresent()) {
-      OssAdviceContext context = contextFactory.contextFor(subject);
-      List<Advice> advices = new ArrayList<>();
-      advices.addAll(adviseFor(scoreValue.get(), USES_LGTM_CHECKS, subject, context));
-      advices.addAll(adviseFor(scoreValue.get(), USES_CODEQL_CHECKS, subject, context));
-      advices.addAll(adviseFor(scoreValue.get(), RUNS_CODEQL_SCANS, subject, context));
-      return advices;
+    if (!subject.ratingValue().isPresent()) {
+      return Collections.emptyList();
     }
 
-    return Collections.emptyList();
+    List<Value> usedValues = subject.ratingValue().get().scoreValue().usedFeatureValues();
+    OssAdviceContext context = contextFactory.contextFor(subject);
+
+    return Stream.of(USES_LGTM_CHECKS, USES_CODEQL_CHECKS, RUNS_CODEQL_SCANS)
+        .map(feature -> adviseFor(usedValues, feature, subject, context))
+        .collect(ArrayList::new, ArrayList::addAll, ArrayList::addAll);
   }
 
   /**
-   * Returns a list of advices for a feature from a score value.
+   * Returns advices for a feature from a list of values.
    *
-   * @param scoreValue The score value.
+   * @param values The values.
    * @param feature The feature.
    * @param subject The subject for advices.
    * @param context A context for advices.
    * @return A list of advices.
    */
   private List<? extends Advice> adviseFor(
-      ScoreValue scoreValue, Feature<Boolean> feature, Subject subject, OssAdviceContext context) {
+      List<Value> values, Feature<Boolean> feature, Subject subject, OssAdviceContext context) {
 
-    return findValue(scoreValue.usedFeatureValues(), feature)
-        .filter(CodeqlScoreAdvisor::knownFalseValue)
+    return findValue(values, feature)
+        .filter(CodeqlAdvisor::knownFalseValue)
         .map(value -> adviceStorage.advicesFor(value.feature(), context)
             .stream()
             .map(content -> new SimpleAdvice(subject, value, content))
