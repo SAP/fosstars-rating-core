@@ -9,7 +9,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import com.sap.sgs.phosphor.fosstars.advice.Advice;
-import com.sap.sgs.phosphor.fosstars.advice.oss.AbstractOssAdvisor.ContextFactory;
+import com.sap.sgs.phosphor.fosstars.advice.oss.AbstractOssAdvisor.OssAdviceContextFactory;
 import com.sap.sgs.phosphor.fosstars.model.Rating;
 import com.sap.sgs.phosphor.fosstars.model.RatingRepository;
 import com.sap.sgs.phosphor.fosstars.model.ValueSet;
@@ -23,7 +23,7 @@ public class LgtmScoreAdvisorTest {
 
   @Test
   public void testAdvicesForLgtmGrade() {
-    LgtmAdvisor advisor = new LgtmAdvisor(ContextFactory.WITH_EMPTY_CONTEXT);
+    LgtmAdvisor advisor = new LgtmAdvisor(OssAdviceContextFactory.WITH_EMPTY_CONTEXT);
     GitHubProject project = new GitHubProject("org", "test");
 
     // no advices if no rating value is set

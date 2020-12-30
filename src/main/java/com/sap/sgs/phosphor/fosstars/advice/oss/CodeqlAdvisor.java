@@ -27,7 +27,7 @@ public class CodeqlAdvisor extends AbstractOssAdvisor {
    *
    * @param contextFactory A factory that provides contexts for advices.
    */
-  public CodeqlAdvisor(ContextFactory contextFactory) {
+  public CodeqlAdvisor(OssAdviceContextFactory contextFactory) {
     super(OssAdviceContentYamlStorage.DEFAULT, contextFactory);
   }
 
@@ -53,21 +53,11 @@ public class CodeqlAdvisor extends AbstractOssAdvisor {
       List<Value> values, Feature<Boolean> feature, Subject subject, OssAdviceContext context) {
 
     return findValue(values, feature)
-        .filter(CodeqlAdvisor::knownFalseValue)
+        .filter(AbstractOssAdvisor::knownFalseValue)
         .map(value -> adviceStorage.advicesFor(value.feature(), context)
             .stream()
             .map(content -> new SimpleAdvice(subject, value, content))
             .collect(Collectors.toList()))
         .orElse(Collections.emptyList());
-  }
-
-  /**
-   * Checks if a boolean value is known and false.
-   *
-   * @param value The value to be checked.
-   * @return True if the value is known and false, false otherwise.
-   */
-  private static boolean knownFalseValue(Value<Boolean> value) {
-    return !value.isUnknown() && !value.get();
   }
 }

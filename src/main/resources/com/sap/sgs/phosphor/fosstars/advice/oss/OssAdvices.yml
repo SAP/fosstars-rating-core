@@ -24,3 +24,14 @@ The worst LGTM grade of a project:
     links:
       - name: List of issues on LGTM
         url: ${LGTM_PROJECT_LINK}
+If an open-source project has a security policy:
+  - advice: >
+      You can open a pull request to add a security policy for the project.
+    links:
+      - name: About adding a security policy to a repository on GitHub
+        url: https://docs.github.com/en/free-pro-team@latest/github/managing-security-vulnerabilities/adding-a-security-policy-to-your-repository
+      - name: An example of a security policy
+        url: https://github.com/apache/nifi/blob/main/SECURITY.md
+      - name: Suggest a security policy for the project
+        url: ${SUGGEST_SECURITY_POLICY_ON_GITHUB}
+
