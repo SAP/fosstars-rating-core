@@ -58,3 +58,9 @@ If an open-source project uses UndefinedBehaviorSanitizer:
     links:
       - name: About AdddressSanitizer
         url: https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html
+If an open-source project is included to OSS-Fuzz project:
+  - advice: >
+      You can include the project to OSS-Fuzz. Then, the project is going to be regularly fuzzed.
+    links:
+      - name: The OSS-Fuzz project
+        url: https://github.com/google/oss-fuzz
