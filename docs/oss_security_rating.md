@@ -22,9 +22,9 @@ If a calculated score is higher than a certain threshold, then the project gets 
 
 The thresholds depend on scores for the following [projects](oss/security):
 
-*  Relatively popular projects in Apache and Eclipse software foundations
-*  Relatively popular Spring projects
-*  Relatively popular FasterXML projects
+*  Popular projects in Apache and Eclipse software foundations
+*  Popular Spring projects
+*  Popular FasterXML projects
 *  A number of other well-known projects such as curl, Netty, OpenSSL and so on.
 
 Here is how the thresholds are calculated:
