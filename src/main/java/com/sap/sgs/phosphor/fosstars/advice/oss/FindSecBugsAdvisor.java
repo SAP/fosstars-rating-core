@@ -1,16 +1,12 @@
 package com.sap.sgs.phosphor.fosstars.advice.oss;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_FIND_SEC_BUGS;
-import static com.sap.sgs.phosphor.fosstars.model.other.Utils.findValue;
 
 import com.sap.sgs.phosphor.fosstars.advice.Advice;
-import com.sap.sgs.phosphor.fosstars.advice.SimpleAdvice;
 import com.sap.sgs.phosphor.fosstars.advice.oss.OssAdviceContentYamlStorage.OssAdviceContext;
 import com.sap.sgs.phosphor.fosstars.model.Subject;
 import com.sap.sgs.phosphor.fosstars.model.Value;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * An advisor for
@@ -31,13 +27,6 @@ public class FindSecBugsAdvisor extends AbstractOssAdvisor {
   protected List<Advice> adviseFor(
       Subject subject, List<Value> usedValues, OssAdviceContext context) {
 
-    return findValue(usedValues, USES_FIND_SEC_BUGS)
-        .filter(AbstractOssAdvisor::knownFalseValue)
-        .map(value -> adviceStorage.advicesFor(value.feature(), context)
-            .stream()
-            .map(content -> new SimpleAdvice(subject, value, content))
-            .map(Advice.class::cast)
-            .collect(Collectors.toList()))
-        .orElse(Collections.emptyList());
+    return adviseForBooleanFeature(usedValues, USES_FIND_SEC_BUGS, subject, context);
   }
 }

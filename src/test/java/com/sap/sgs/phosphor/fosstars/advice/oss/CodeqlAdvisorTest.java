@@ -19,7 +19,7 @@ import org.junit.Test;
 public class CodeqlAdvisorTest {
 
   @Test
-  public void testBasics() {
+  public void testAdvicesForCodeQl() {
     CodeqlAdvisor advisor = new CodeqlAdvisor(OssAdviceContextFactory.WITH_EMPTY_CONTEXT);
     GitHubProject project = new GitHubProject("org", "test");
 
