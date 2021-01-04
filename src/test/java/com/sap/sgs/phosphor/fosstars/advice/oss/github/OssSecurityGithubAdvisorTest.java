@@ -1,6 +1,7 @@
 package com.sap.sgs.phosphor.fosstars.advice.oss.github;
 
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
+import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_FIND_SEC_BUGS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM_CHECKS;
 import static com.sap.sgs.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 import static com.sap.sgs.phosphor.fosstars.model.other.Utils.allUnknown;
@@ -89,6 +90,27 @@ public class OssSecurityGithubAdvisorTest {
     assertFalse(advice.content().links().isEmpty());
     boolean foundLinkForSuggestingSecurityPolicy = advice.content().links().stream().anyMatch(
         link -> "https://github.com/org/test/security/policy".equals(link.url.toString()));
+    assertTrue(foundLinkForSuggestingSecurityPolicy);
+  }
+
+  @Test
+  public void testAdvicesForFindSecBugs() {
+    final OssSecurityGithubAdvisor advisor = new OssSecurityGithubAdvisor();
+    final GitHubProject project = new GitHubProject("org", "test");
+    final Rating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
+    final ValueSet values = new ValueHashSet();
+    values.update(allUnknown(rating.score().allFeatures()));
+
+    // expect an advice if the project doesn't use FindSecBugs
+    values.update(USES_FIND_SEC_BUGS.value(false));
+    project.set(rating.calculate(values));
+    List<Advice> advices = advisor.adviseFor(project);
+    assertEquals(1, advices.size());
+    Advice advice = advices.get(0);
+    assertFalse(advice.content().text().isEmpty());
+    assertFalse(advice.content().links().isEmpty());
+    boolean foundLinkForSuggestingSecurityPolicy = advice.content().links().stream().anyMatch(
+        link -> "https://find-sec-bugs.github.io/".equals(link.url.toString()));
     assertTrue(foundLinkForSuggestingSecurityPolicy);
   }
 }
