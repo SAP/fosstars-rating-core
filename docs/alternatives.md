@@ -92,6 +92,16 @@ This is similar to what Fosstars offers.
 It tries to collect some data automatically but also can take data entered by a user.
 Unfortunately, the project looks inactive.
 
+## Scorecard
+
+Here is what [the project's page](https://github.com/ossf/scorecard) says about the goals:
+
+> Goals
+> 1. Automate analysis and trust decisions on the security posture of open source projects.
+>
+> 1. Use this data to proactively improve the security posture of the critical projects the world depends on.
+>
+
 ## Others
 
 There are several other projects which collect data about project activity,
