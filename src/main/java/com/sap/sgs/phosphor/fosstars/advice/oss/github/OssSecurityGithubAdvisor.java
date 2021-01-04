@@ -4,6 +4,7 @@ import com.sap.sgs.phosphor.fosstars.advice.CompositeAdvisor;
 import com.sap.sgs.phosphor.fosstars.advice.oss.AbstractOssAdvisor.OssAdviceContextFactory;
 import com.sap.sgs.phosphor.fosstars.advice.oss.CodeqlAdvisor;
 import com.sap.sgs.phosphor.fosstars.advice.oss.FindSecBugsAdvisor;
+import com.sap.sgs.phosphor.fosstars.advice.oss.FuzzingAdvisor;
 import com.sap.sgs.phosphor.fosstars.advice.oss.LgtmAdvisor;
 import com.sap.sgs.phosphor.fosstars.advice.oss.MemorySafetyAdvisor;
 import com.sap.sgs.phosphor.fosstars.advice.oss.OssAdviceContentYamlStorage.OssAdviceContext;
@@ -56,6 +57,7 @@ public class OssSecurityGithubAdvisor extends CompositeAdvisor {
         new LgtmAdvisor(CONTEXT_FACTORY),
         new SecurityPolicyAdvisor(CONTEXT_FACTORY),
         new FindSecBugsAdvisor(CONTEXT_FACTORY),
-        new MemorySafetyAdvisor(CONTEXT_FACTORY));
+        new MemorySafetyAdvisor(CONTEXT_FACTORY),
+        new FuzzingAdvisor(CONTEXT_FACTORY));
   }
 }
