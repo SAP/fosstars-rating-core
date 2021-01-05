@@ -2,13 +2,13 @@
 
 https://github.com/eclipse-ee4j/eclipselink
 
-Last updated on Jan 4, 2021
+Last updated on Jan 5, 2021
 
 **Rating**: BAD
 
 **Score**: 3.42, where max score value is 10.0
 
-**Confidence**: Max (10.0, where max confidence value is 10.0)
+**Confidence**: High (10.0, where max confidence value is 10.0)
 
 ## Details
 

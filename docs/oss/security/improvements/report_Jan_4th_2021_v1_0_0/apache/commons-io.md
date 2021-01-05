@@ -2,13 +2,13 @@
 
 https://github.com/apache/commons-io
 
-Last updated on Jan 4, 2021
+Last updated on Jan 5, 2021
 
 **Rating**: MODERATE
 
-**Score**: 4.9, where max score value is 10.0
+**Score**: 4.53, where max score value is 10.0
 
-**Confidence**: Max (10.0, where max confidence value is 10.0)
+**Confidence**: High (10.0, where max confidence value is 10.0)
 
 ## Details
 
@@ -30,7 +30,7 @@ The score uses the following sub-scores:
     1.  **[Fuzzing](#fuzzing)**: N/A, confidence is 10.0 (max), importance is 1.0 (high)
     1.  **[Memory-safety testing](#memory-safety-testing)**: N/A, confidence is 10.0 (max), importance is 1.0 (high)
     1.  **[nohttp tool](#nohttp-tool)**: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
-1.  **[Security awareness](#security-awareness)**: 5.0, confidence is 10.0 (max), importance is 0.9 (high)
+1.  **[Security awareness](#security-awareness)**: 3.0, confidence is 10.0 (max), importance is 0.9 (high)
 1.  **[Unpatched vulnerabilities](#unpatched-vulnerabilities)**: 10.0, confidence is 10.0 (max), importance is 0.8 (high)
 1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: 2.0, confidence is 10.0 (max), importance is 0.6 (medium)
     1.  **[Security testing](#security-testing)**: 4.0, confidence is 10.0 (max), importance is 1.0 (high)
@@ -75,7 +75,7 @@ The sub-score uses the following sub-scores:
 
 ### Security awareness
 
-Score: 5.0, confidence is 10.0 (max), importance is 0.9 (high)
+Score: 3.0, confidence is 10.0 (max), importance is 0.9 (high)
 
 The score shows how a project is aware of security. If the project has a security policy, then the score adds 2.00. If the project has a security team, then the score adds 3.00. If the project uses verified signed commits, then the score adds 0.50. If the project has a bug bounty program, then the score adds 4.00. If the project signs its artifacts, then the score adds 0.50. If the project uses a security tool or library, then the score adds 1.00.
 
@@ -84,7 +84,7 @@ The score shows how a project is aware of security. If the project has a securit
 The sub-score uses 17 features:
 
 1.  Does it have a bug bounty program? No
-1.  Does it have a security policy? Yes
+1.  Does it have a security policy? No
 1.  Does it have a security team? Yes
 1.  Does it sign artifacts? No
 1.  Does it use AddressSanitizer? No

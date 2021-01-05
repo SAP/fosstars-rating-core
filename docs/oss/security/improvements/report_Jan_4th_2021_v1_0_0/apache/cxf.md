@@ -2,13 +2,13 @@
 
 https://github.com/apache/cxf
 
-Last updated on Jan 4, 2021
+Last updated on Jan 5, 2021
 
-**Rating**: MODERATE
+**Rating**: GOOD
 
-**Score**: 5.07, where max score value is 10.0
+**Score**: 5.05, where max score value is 10.0
 
-**Confidence**: Max (10.0, where max confidence value is 10.0)
+**Confidence**: High (10.0, where max confidence value is 10.0)
 
 ## Details
 
@@ -43,7 +43,7 @@ The score uses the following sub-scores:
         1.  **[Fuzzing](#fuzzing)**: N/A, confidence is 10.0 (max), importance is 1.0 (high)
         1.  **[Memory-safety testing](#memory-safety-testing)**: N/A, confidence is 10.0 (max), importance is 1.0 (high)
         1.  **[nohttp tool](#nohttp-tool)**: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
-1.  **[Project activity](#project-activity)**: 6.95, confidence is 10.0 (max), importance is 0.5 (medium)
+1.  **[Project activity](#project-activity)**: 6.81, confidence is 10.0 (max), importance is 0.5 (medium)
 1.  **[Community commitment](#community-commitment)**: 7.0, confidence is 10.0 (max), importance is 0.5 (medium)
 1.  **[Project popularity](#project-popularity)**: 0.99, confidence is 10.0 (max), importance is 0.5 (medium)
 
@@ -140,7 +140,7 @@ The sub-score uses 1 feature:
 
 ### Project activity
 
-Score: 6.95, confidence is 10.0 (max), importance is 0.5 (medium)
+Score: 6.81, confidence is 10.0 (max), importance is 0.5 (medium)
 
 The score is based on number of commits and contributors.
 Here is how the number of commits contributes to the score (up to 5.10):
@@ -152,7 +152,7 @@ Here is how the number of contributors contributes to the score (up to 5.10):
 
 The sub-score uses 2 features:
 
-1.  Number of commits in the last three months: 160
+1.  Number of commits in the last three months: 153
 1.  Number of contributors in the last three months: 9
 
 ### Community commitment
@@ -183,7 +183,7 @@ Here is how a number of watchers contributes to the score:
 
 The sub-score uses 2 features:
 
-1.  Number of stars for a GitHub repository: 685
+1.  Number of stars for a GitHub repository: 686
 1.  Number of watchers for a GitHub repository: 91
 
 ### Dependency testing
