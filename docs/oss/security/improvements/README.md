@@ -43,32 +43,32 @@ Column description:
 ### Netty
 
 1.  [Fix or suppress LGTM findings](https://github.com/netty/netty/pull/10689) by @artem-smotrakov
-1.  [Better hash algorithm in FingerprintTrustManagerFactory](https://github.com/netty/netty/pull/10683) by @artem-smotrakov
-1.  [Suppress warnings about weak hash algorithms](https://github.com/netty/netty/pull/10647) by @artem-smotrakov
-1.  [Avoid casting numbers to narrower types](https://github.com/netty/netty/pull/10645) by @artem-smotrakov
-1.  [Fix possible bugs in HTTP/2 Codec](https://github.com/netty/netty/pull/10640) by @hyperxpro
-1.  [Enable HTTP header validation in HttpServerUpgradeHandler](https://github.com/netty/netty/pull/10643) by @artem-smotrakov
-1.  [Create codeql-analysis.yml](https://github.com/netty/netty/pull/10696) by @normanmaurer
-1.  [Enable nohttp check during the build](https://github.com/netty/netty/pull/10708) by @artem-smotrakov
-1.  [Added a security policy](https://github.com/netty/netty/pull/10692) by @artem-smotrakov
+1.  [Better hash algorithm in FingerprintTrustManagerFactory](https://github.com/netty/netty/pull/10683) by [@artem-smotrakov](https://github.com/artem-smotrakov)
+1.  [Suppress warnings about weak hash algorithms](https://github.com/netty/netty/pull/10647) by [@artem-smotrakov](https://github.com/artem-smotrakov)
+1.  [Avoid casting numbers to narrower types](https://github.com/netty/netty/pull/10645) by [@artem-smotrakov](https://github.com/artem-smotrakov)
+1.  [Fix possible bugs in HTTP/2 Codec](https://github.com/netty/netty/pull/10640) by [@hyperxpro](https://github.com/hyperxpro)
+1.  [Enable HTTP header validation in HttpServerUpgradeHandler](https://github.com/netty/netty/pull/10643) by [@artem-smotrakov](https://github.com/artem-smotrakov)
+1.  [Create codeql-analysis.yml](https://github.com/netty/netty/pull/10696) by [@normanmaurer](https://github.com/normanmaurer)
+1.  [Enable nohttp check during the build](https://github.com/netty/netty/pull/10708) by [@artem-smotrakov](https://github.com/artem-smotrakov)
+1.  [Added a security policy](https://github.com/netty/netty/pull/10692) by [@artem-smotrakov](https://github.com/artem-smotrakov)
 
 ### BouncyCastle
 
-1.  [Suppress index-out-of-bound false-positives from LGTM](https://github.com/bcgit/bc-java/pull/814) by @artem-smotrakov
-1.  [Removed redundant fields and null-checks](https://github.com/bcgit/bc-java/pull/810) by @artem-smotrakov
-1.  [Make BcKeyStoreSpi less predictable](https://github.com/bcgit/bc-java/pull/809) by @artem-smotrakov
+1.  [Suppress index-out-of-bound false-positives from LGTM](https://github.com/bcgit/bc-java/pull/814) by [@artem-smotrakov](https://github.com/artem-smotrakov)
+1.  [Removed redundant fields and null-checks](https://github.com/bcgit/bc-java/pull/810) by [@artem-smotrakov](https://github.com/artem-smotrakov)
+1.  [Make BcKeyStoreSpi less predictable](https://github.com/bcgit/bc-java/pull/809) by [@artem-smotrakov](https://github.com/artem-smotrakov)
     
 ### Apache HttpComponents Client
 
-1.  [Fixed and suppressed several findings from LGTM.com](https://github.com/apache/httpcomponents-client/pull/262) by @artem-smotrakov
-1.  [Set up CodeQL scans](https://github.com/apache/httpcomponents-client/pull/264) by @artem-smotrakov
-1.  [Added a security policy](https://github.com/apache/httpcomponents-client/pull/263) by @artem-smotrakov
+1.  [Fixed and suppressed several findings from LGTM.com](https://github.com/apache/httpcomponents-client/pull/262) by [@artem-smotrakov](https://github.com/artem-smotrakov)
+1.  [Set up CodeQL scans](https://github.com/apache/httpcomponents-client/pull/264) by [@artem-smotrakov](https://github.com/artem-smotrakov)
+1.  [Added a security policy](https://github.com/apache/httpcomponents-client/pull/263) by [@artem-smotrakov](https://github.com/artem-smotrakov)
     
 ### Apache Commons Collections
 
-1.  [Add SECURITY.MD.](https://github.com/apache/commons-collections/commit/f51e6c61ed591b85525a2a10adef1fba834d5007) by @garydgregory
+1.  [Add SECURITY.MD.](https://github.com/apache/commons-collections/commit/f51e6c61ed591b85525a2a10adef1fba834d5007) by [@garydgregory](https://github.com/garydgregory)
     
 ### Apache CXF
 
-1.  [Create codeql-analysis.yml](https://github.com/apache/cxf/commit/a4b4085f1c019302b1f1124a60dc1d5af1ce7085) by @coheigea
+1.  [Create codeql-analysis.yml](https://github.com/apache/cxf/commit/a4b4085f1c019302b1f1124a60dc1d5af1ce7085) by [@coheigea](https://github.com/coheigea)
 
