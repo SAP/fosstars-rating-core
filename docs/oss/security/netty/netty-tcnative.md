@@ -2,13 +2,13 @@
 
 https://github.com/netty/netty-tcnative
 
-Last updated on Aug 31, 2020
+Last updated on Jan 5, 2021
 
 **Rating**: BAD
 
-**Score**: 2.44, where max score value is 10.0
+**Score**: 3.99, where max score value is 10.0
 
-**Confidence**: High (9.85, where max confidence value is 10.0)
+**Confidence**: High (9.88, where max confidence value is 10.0)
 
 ## Details
 
@@ -20,32 +20,34 @@ The rating is based on **security score for open-source projects**.
 
 The score uses the following sub-scores:
 
-1.  **[Security testing](#security-testing)**: 1.33, confidence is 9.44 (high), importance is 1.0 (high)
-    1.  **[Dependency testing](#dependency-testing)**: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
-        1.  **[Dependabot score](#dependabot-score)**: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
+1.  **[Security testing](#security-testing)**: 3.11, confidence is 9.56 (high), importance is 1.0 (high)
+    1.  **[Dependency testing](#dependency-testing)**: 10.0, confidence is 10.0 (max), importance is 1.0 (high)
+        1.  **[Dependabot score](#dependabot-score)**: 10.0, confidence is 10.0 (max), importance is 1.0 (high)
         1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
-    1.  **[Static analysis](#static-analysis)**: 0.0, confidence is 7.5 (low), importance is 1.0 (high)
+    1.  **[Static analysis](#static-analysis)**: 4.0, confidence is 8.0 (low), importance is 1.0 (high)
         1.  **[LGTM score](#lgtm-score)**: 0.0, confidence is 5.0 (low), importance is 1.0 (high)
-        1.  **[FindSecBugs score](#findsecbugs-score)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
+        1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: 10.0, confidence is 10.0 (max), importance is 1.0 (high)
+        1.  **[FindSecBugs score](#findsecbugs-score)**: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
     1.  **[Fuzzing](#fuzzing)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
     1.  **[Memory-safety testing](#memory-safety-testing)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
     1.  **[nohttp tool](#nohttp-tool)**: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
-1.  **[Security awareness](#security-awareness)**: 0.0, confidence is 10.0 (max), importance is 0.9 (high)
+1.  **[Security awareness](#security-awareness)**: 1.0, confidence is 10.0 (max), importance is 0.9 (high)
 1.  **[Unpatched vulnerabilities](#unpatched-vulnerabilities)**: 10.0, confidence is 10.0 (max), importance is 0.8 (high)
-1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: 2.0, confidence is 9.72 (high), importance is 0.6 (medium)
-    1.  **[Security testing](#security-testing)**: 1.33, confidence is 9.44 (high), importance is 1.0 (high)
-        1.  **[Dependency testing](#dependency-testing)**: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
-            1.  **[Dependabot score](#dependabot-score)**: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
+1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: 2.0, confidence is 9.78 (high), importance is 0.6 (medium)
+    1.  **[Security testing](#security-testing)**: 3.11, confidence is 9.56 (high), importance is 1.0 (high)
+        1.  **[Dependency testing](#dependency-testing)**: 10.0, confidence is 10.0 (max), importance is 1.0 (high)
+            1.  **[Dependabot score](#dependabot-score)**: 10.0, confidence is 10.0 (max), importance is 1.0 (high)
             1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
-        1.  **[Static analysis](#static-analysis)**: 0.0, confidence is 7.5 (low), importance is 1.0 (high)
+        1.  **[Static analysis](#static-analysis)**: 4.0, confidence is 8.0 (low), importance is 1.0 (high)
             1.  **[LGTM score](#lgtm-score)**: 0.0, confidence is 5.0 (low), importance is 1.0 (high)
-            1.  **[FindSecBugs score](#findsecbugs-score)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
+            1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: 10.0, confidence is 10.0 (max), importance is 1.0 (high)
+            1.  **[FindSecBugs score](#findsecbugs-score)**: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
         1.  **[Fuzzing](#fuzzing)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
         1.  **[Memory-safety testing](#memory-safety-testing)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
         1.  **[nohttp tool](#nohttp-tool)**: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
-1.  **[Project activity](#project-activity)**: 2.04, confidence is 10.0 (max), importance is 0.5 (medium)
-1.  **[Community commitment](#community-commitment)**: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
-1.  **[Project popularity](#project-popularity)**: 0.31, confidence is 10.0 (max), importance is 0.5 (medium)
+1.  **[Community commitment](#community-commitment)**: 8.0, confidence is 10.0 (max), importance is 0.5 (medium)
+1.  **[Project activity](#project-activity)**: 3.55, confidence is 10.0 (max), importance is 0.5 (medium)
+1.  **[Project popularity](#project-popularity)**: 0.33, confidence is 10.0 (max), importance is 0.5 (medium)
 
 
 ## Sub-scores
@@ -54,7 +56,7 @@ Below are the details about all the used sub-scores.
 
 ### Security testing
 
-Score: 1.33, confidence is 9.44 (high), importance is 1.0 (high)
+Score: 3.11, confidence is 9.56 (high), importance is 1.0 (high)
 
 
 
@@ -62,12 +64,13 @@ Score: 1.33, confidence is 9.44 (high), importance is 1.0 (high)
 
 The sub-score uses the following sub-scores:
 
-1.  **[Dependency testing](#dependency-testing)**: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
-    1.  **[Dependabot score](#dependabot-score)**: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
+1.  **[Dependency testing](#dependency-testing)**: 10.0, confidence is 10.0 (max), importance is 1.0 (high)
+    1.  **[Dependabot score](#dependabot-score)**: 10.0, confidence is 10.0 (max), importance is 1.0 (high)
     1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
-1.  **[Static analysis](#static-analysis)**: 0.0, confidence is 7.5 (low), importance is 1.0 (high)
+1.  **[Static analysis](#static-analysis)**: 4.0, confidence is 8.0 (low), importance is 1.0 (high)
     1.  **[LGTM score](#lgtm-score)**: 0.0, confidence is 5.0 (low), importance is 1.0 (high)
-    1.  **[FindSecBugs score](#findsecbugs-score)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
+    1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: 10.0, confidence is 10.0 (max), importance is 1.0 (high)
+    1.  **[FindSecBugs score](#findsecbugs-score)**: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
 1.  **[Fuzzing](#fuzzing)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
 1.  **[Memory-safety testing](#memory-safety-testing)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
 1.  **[nohttp tool](#nohttp-tool)**: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
@@ -75,7 +78,7 @@ The sub-score uses the following sub-scores:
 
 ### Security awareness
 
-Score: 0.0, confidence is 10.0 (max), importance is 0.9 (high)
+Score: 1.0, confidence is 10.0 (max), importance is 0.9 (high)
 
 The score shows how a project is aware of security. If the project has a security policy, then the score adds 2.00. If the project has a security team, then the score adds 3.00. If the project uses verified signed commits, then the score adds 0.50. If the project has a bug bounty program, then the score adds 4.00. If the project signs its artifacts, then the score adds 0.50. If the project uses a security tool or library, then the score adds 1.00.
 
@@ -88,7 +91,7 @@ The sub-score uses 17 features:
 1.  Does it have a security team? No
 1.  Does it sign artifacts? No
 1.  Does it use AddressSanitizer? No
-1.  Does it use Dependabot? No
+1.  Does it use Dependabot? Yes
 1.  Does it use FindSecBugs? No
 1.  Does it use LGTM checks? No
 1.  Does it use MemorySanitizer? No
@@ -115,7 +118,7 @@ The sub-score uses 1 feature:
 
 ### Vulnerability discovery and security testing
 
-Score: 2.0, confidence is 9.72 (high), importance is 0.6 (medium)
+Score: 2.0, confidence is 9.78 (high), importance is 0.6 (medium)
 
 The scores checks how security testing is done and how many vulnerabilities were recently discovered. If testing is good, and there are no recent vulnerabilities, then the score value is max. If there are vulnerabilities, then the score value is high. If testing is bad, and there are no recent vulnerabilities, then the score value is low. If there are vulnerabilities, then the score is min.
 
@@ -123,13 +126,14 @@ The scores checks how security testing is done and how many vulnerabilities were
 
 The sub-score uses the following sub-score:
 
-1.  **[Security testing](#security-testing)**: 1.33, confidence is 9.44 (high), importance is 1.0 (high)
-    1.  **[Dependency testing](#dependency-testing)**: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
-        1.  **[Dependabot score](#dependabot-score)**: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
+1.  **[Security testing](#security-testing)**: 3.11, confidence is 9.56 (high), importance is 1.0 (high)
+    1.  **[Dependency testing](#dependency-testing)**: 10.0, confidence is 10.0 (max), importance is 1.0 (high)
+        1.  **[Dependabot score](#dependabot-score)**: 10.0, confidence is 10.0 (max), importance is 1.0 (high)
         1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
-    1.  **[Static analysis](#static-analysis)**: 0.0, confidence is 7.5 (low), importance is 1.0 (high)
+    1.  **[Static analysis](#static-analysis)**: 4.0, confidence is 8.0 (low), importance is 1.0 (high)
         1.  **[LGTM score](#lgtm-score)**: 0.0, confidence is 5.0 (low), importance is 1.0 (high)
-        1.  **[FindSecBugs score](#findsecbugs-score)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
+        1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: 10.0, confidence is 10.0 (max), importance is 1.0 (high)
+        1.  **[FindSecBugs score](#findsecbugs-score)**: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
     1.  **[Fuzzing](#fuzzing)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
     1.  **[Memory-safety testing](#memory-safety-testing)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
     1.  **[nohttp tool](#nohttp-tool)**: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
@@ -138,26 +142,9 @@ The sub-score uses 1 feature:
 
 1.  Info about vulnerabilities: 0 vulnerabilities
 
-### Project activity
-
-Score: 2.04, confidence is 10.0 (max), importance is 0.5 (medium)
-
-The score is based on number of commits and contributors.
-Here is how the number of commits contributes to the score (up to 5.10):
-0 -> 0.10, 200 -> 2.55, 310 -> 4.59
-Here is how the number of contributors contributes to the score (up to 5.10):
-0 -> 0.10, 5 -> 2.55, 10 -> 4.59
-
-
-
-The sub-score uses 2 features:
-
-1.  Number of commits in the last three months: 24
-1.  Number of contributors in the last three months: 2
-
 ### Community commitment
 
-Score: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
+Score: 8.0, confidence is 10.0 (max), importance is 0.5 (medium)
 
 
 
@@ -167,11 +154,25 @@ The sub-score uses 3 features:
 
 1.  Does it belong to Apache? No
 1.  Does it belong to Eclipse? No
-1.  Is it supported by a company? No
+1.  Is it supported by a company? Yes
+
+### Project activity
+
+Score: 3.55, confidence is 10.0 (max), importance is 0.5 (medium)
+
+The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
+
+22 commits in the last 3 months results to 3.38 points
+2 contributors increase the score value from 3.38 to 3.55
+
+The sub-score uses 2 features:
+
+1.  Number of commits in the last three months: 22
+1.  Number of contributors in the last three months: 2
 
 ### Project popularity
 
-Score: 0.31, confidence is 10.0 (max), importance is 0.5 (medium)
+Score: 0.33, confidence is 10.0 (max), importance is 0.5 (medium)
 
 The score is based on number of stars and watchers.
 Here is how a number of stars contributes to the score:
@@ -183,12 +184,12 @@ Here is how a number of watchers contributes to the score:
 
 The sub-score uses 2 features:
 
-1.  Number of stars for a GitHub repository: 169
-1.  Number of watchers for a GitHub repository: 43
+1.  Number of stars for a GitHub repository: 179
+1.  Number of watchers for a GitHub repository: 45
 
 ### Dependency testing
 
-Score: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
+Score: 10.0, confidence is 10.0 (max), importance is 1.0 (high)
 
 
 
@@ -196,13 +197,13 @@ Score: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
 
 The sub-score uses the following sub-scores:
 
-1.  **[Dependabot score](#dependabot-score)**: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
+1.  **[Dependabot score](#dependabot-score)**: 10.0, confidence is 10.0 (max), importance is 1.0 (high)
 1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
 
 
 ### Static analysis
 
-Score: 0.0, confidence is 7.5 (low), importance is 1.0 (high)
+Score: 4.0, confidence is 8.0 (low), importance is 1.0 (high)
 
 
 
@@ -211,7 +212,8 @@ Score: 0.0, confidence is 7.5 (low), importance is 1.0 (high)
 The sub-score uses the following sub-scores:
 
 1.  **[LGTM score](#lgtm-score)**: 0.0, confidence is 5.0 (low), importance is 1.0 (high)
-1.  **[FindSecBugs score](#findsecbugs-score)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
+1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: 10.0, confidence is 10.0 (max), importance is 1.0 (high)
+1.  **[FindSecBugs score](#findsecbugs-score)**: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
 
 
 ### Fuzzing
@@ -224,7 +226,7 @@ Score: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
 
 The sub-score uses 2 features:
 
-1.  A set of programming languages: C, CPP, JAVA, RUBY, OTHER
+1.  A set of programming languages: C, JAVA, RUBY, OTHER
 1.  Is it included to OSS-Fuzz? No
 
 ### Memory-safety testing
@@ -237,7 +239,7 @@ Score: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
 
 The sub-score uses 4 features:
 
-1.  A set of programming languages: C, CPP, JAVA, RUBY, OTHER
+1.  A set of programming languages: C, JAVA, RUBY, OTHER
 1.  Does it use AddressSanitizer? No
 1.  Does it use MemorySanitizer? No
 1.  Does it use UndefinedBehaviorSanitizer? No
@@ -257,7 +259,7 @@ The sub-score uses 2 features:
 
 ### Dependabot score
 
-Score: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
+Score: 10.0, confidence is 10.0 (max), importance is 1.0 (high)
 
 
 
@@ -266,8 +268,8 @@ Score: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
 The sub-score uses 4 features:
 
 1.  A set of package managers: MAVEN
-1.  A set of programming languages: C, CPP, JAVA, RUBY, OTHER
-1.  Does it use Dependabot? No
+1.  A set of programming languages: C, JAVA, RUBY, OTHER
+1.  Does it use Dependabot? Yes
 1.  Does it use GitHub as the main development platform? Yes
 
 ### OWASP Dependency Check score
@@ -293,12 +295,27 @@ Score: 0.0, confidence is 5.0 (low), importance is 1.0 (high)
 
 The sub-score uses 2 features:
 
-1.  Does it use LGTM checks? No
+1.  A set of programming languages: C, JAVA, RUBY, OTHER
 1.  The worst LGTM grade of the project: unknown
+
+### How a project uses CodeQL
+
+Score: 10.0, confidence is 10.0 (max), importance is 1.0 (high)
+
+
+
+
+
+The sub-score uses 4 features:
+
+1.  A set of programming languages: C, JAVA, RUBY, OTHER
+1.  Does it use LGTM checks? No
+1.  If a project runs CodeQL checks for commits: Yes
+1.  If a project runs CodeQL scans: Yes
 
 ### FindSecBugs score
 
-Score: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
+Score: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
 
 
 
@@ -306,8 +323,27 @@ Score: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
 
 The sub-score uses 2 features:
 
-1.  A set of programming languages: C, CPP, JAVA, RUBY, OTHER
+1.  A set of programming languages: C, JAVA, RUBY, OTHER
 1.  Does it use FindSecBugs? No
 
 
+
+## How to improve the rating
+
+1.  You can ask the project maintainers to enable LGTM checks for pull requests in the project. More info:
+    1.  [How to enable LGTM checks for pull requests](https://lgtm.com/help/lgtm/about-automated-code-review)
+2.  You can open a pull request to add a security policy for the project. More info:
+    1.  [About adding a security policy to a repository on GitHub](https://docs.github.com/en/free-pro-team@latest/github/managing-security-vulnerabilities/adding-a-security-policy-to-your-repository)
+    2.  [An example of a security policy](https://github.com/apache/nifi/blob/main/SECURITY.md)
+    3.  [Suggest a security policy for the project](https://github.com/netty/netty-tcnative/security/policy)
+3.  You can open a pull request to enable FindSecBugs for the project. More info:
+    1.  [FindSecBugs home page](https://find-sec-bugs.github.io/)
+4.  You can open a pull request to enable AddressSanitizer for the project. More info:
+    1.  [About AdddressSanitizer](https://github.com/google/sanitizers/wiki/AddressSanitizer)
+5.  You can open a pull request to enable MemorySanitizer for the project. More info:
+    1.  [About AdddressSanitizer](https://github.com/google/sanitizers/wiki/MemorySanitizer)
+6.  You can open a pull request to enable UndefinedBehaviorSanitizer for the project. More info:
+    1.  [About AdddressSanitizer](https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html)
+7.  You can include the project to OSS-Fuzz. Then, the project is going to be regularly fuzzed. More info:
+    1.  [The OSS-Fuzz project](https://github.com/google/oss-fuzz)
 
