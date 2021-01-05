@@ -2,13 +2,13 @@
 
 https://github.com/madler/zlib
 
-Last updated on Jan 4, 2021
+Last updated on Jan 5, 2021
 
 **Rating**: BAD
 
 **Score**: 3.14, where max score value is 10.0
 
-**Confidence**: Max (10.0, where max confidence value is 10.0)
+**Confidence**: High (10.0, where max confidence value is 10.0)
 
 ## Details
 
@@ -183,8 +183,8 @@ Here is how a number of watchers contributes to the score:
 
 The sub-score uses 2 features:
 
-1.  Number of stars for a GitHub repository: 2715
-1.  Number of watchers for a GitHub repository: 167
+1.  Number of stars for a GitHub repository: 2716
+1.  Number of watchers for a GitHub repository: 166
 
 ### Dependency testing
 

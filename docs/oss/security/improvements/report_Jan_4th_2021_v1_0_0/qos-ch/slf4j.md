@@ -2,13 +2,13 @@
 
 https://github.com/qos-ch/slf4j
 
-Last updated on Jan 4, 2021
+Last updated on Jan 5, 2021
 
 **Rating**: BAD
 
 **Score**: 2.46, where max score value is 10.0
 
-**Confidence**: Max (10.0, where max confidence value is 10.0)
+**Confidence**: High (10.0, where max confidence value is 10.0)
 
 ## Details
 
@@ -45,7 +45,7 @@ The score uses the following sub-scores:
         1.  **[nohttp tool](#nohttp-tool)**: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
 1.  **[Project activity](#project-activity)**: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
 1.  **[Community commitment](#community-commitment)**: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
-1.  **[Project popularity](#project-popularity)**: 1.92, confidence is 10.0 (max), importance is 0.5 (medium)
+1.  **[Project popularity](#project-popularity)**: 1.93, confidence is 10.0 (max), importance is 0.5 (medium)
 
 
 ## Sub-scores
@@ -171,7 +171,7 @@ The sub-score uses 3 features:
 
 ### Project popularity
 
-Score: 1.92, confidence is 10.0 (max), importance is 0.5 (medium)
+Score: 1.93, confidence is 10.0 (max), importance is 0.5 (medium)
 
 The score is based on number of stars and watchers.
 Here is how a number of stars contributes to the score:
@@ -183,7 +183,7 @@ Here is how a number of watchers contributes to the score:
 
 The sub-score uses 2 features:
 
-1.  Number of stars for a GitHub repository: 1564
+1.  Number of stars for a GitHub repository: 1566
 1.  Number of watchers for a GitHub repository: 108
 
 ### Dependency testing
