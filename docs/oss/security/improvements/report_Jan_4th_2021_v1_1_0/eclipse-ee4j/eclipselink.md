@@ -2,7 +2,7 @@
 
 https://github.com/eclipse-ee4j/eclipselink
 
-Last updated on Jan 4, 2021
+Last updated on Jan 5, 2021
 
 **Rating**: MODERATE
 

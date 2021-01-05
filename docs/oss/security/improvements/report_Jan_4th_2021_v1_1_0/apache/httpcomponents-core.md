@@ -2,7 +2,7 @@
 
 https://github.com/apache/httpcomponents-core
 
-Last updated on Jan 4, 2021
+Last updated on Jan 5, 2021
 
 **Rating**: MODERATE
 
