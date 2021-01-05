@@ -65,7 +65,21 @@ that shows all sub-scores, structure and data that were used to calculate a rati
 ## Security ratings for well-known open-source projects
 
 Pre-calculated security ratings for well-known open-source projects can be found
-in this [report](oss/security).
+in this [report](oss/security/README.md).
+
+## How to improve security ratings
+
+Security ratings may be improved by contributing security enhancements to open-source projects.
+For example:
+
+*  [Contribute a security policy](https://docs.github.com/en/free-pro-team@latest/github/managing-security-vulnerabilities/adding-a-security-policy-to-your-repository)
+*  Improve a project's LGTM grade by fixing issues reported by [LGTM](https://lgtm.com)
+*  [Enable CodeQL scans](https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository)
+
+In the bottom of a rating report for a project, you can find a list of advices for improving its rating.
+
+Check out [this page](oss/security/improvements/README.md)
+that shows how security ratings have been improved for a number of open-source projects.
 
 ---
 

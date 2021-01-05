@@ -2,13 +2,13 @@
 
 The page describes how a security rating may be calculated for an open-source project.
 
-## Command line tool for calculating security ratings
+## Command-line tool for calculating security ratings
 
-There is a command line tool for gathering data about an open-source project and calculating
+There is a command-line tool for gathering data about an open-source project and calculating
 the security rating. Currently, there is not an installer for the tool (should we create one?),
 and the tool should be built locally from the sources.
 
-The following commands download the sources and build the command line tool with Maven:
+The following commands download the sources and build the command-line tool with Maven:
 
 ```
 git clone git@github.com:SAP/fosstars-rating-core.git
@@ -17,12 +17,12 @@ mvn package -DskipTests
 ```
 
 To calculate the security rating for an open-source project,
-the command line tool needs a URL to its source code management system (SCM).
+the command-line tool needs a URL to its source code management system (SCM).
 Currently, the tool works best with projects what stay on GitHub.
 
 ### Calculating the security rating by providing a URL to the source code
 
-A URL to SCM can be passed to the tool by using `--url` command line parameter.
+A URL to SCM can be passed to the tool by using `--url` command-line parameter.
 For example, here is how a security rating may be calculated for Apache Beam:
 
 ```
@@ -369,14 +369,14 @@ and may ask the user a couple of questions about the project.
 
 ### Calculating the security rating by providing GAV coordinates
 
-The command line tool also accepts GAV coordinates of Maven artifacts (group id, artifact id and version).
+The command-line tool also accepts GAV coordinates of Maven artifacts (group id, artifact id and version).
 If the coordinates are provided,
 then the tool will try to figure out which open-source project produces the artifact.
 In particular, it will try to find a URL to the project's SCM.
 If the URL is found, the tool will use it to calculate the security rating.
 Otherwise, the tool exits with an error.
 
-The tool has a command line option `--gav`, that accepts either GAV coordinates or just group id and artifact id.
+The tool has a command-line option `--gav`, that accepts either GAV coordinates or just group id and artifact id.
 Below is an example of getting a rating for Apache Commons Text by passing its group and artifact ids:
 
 ```
@@ -460,7 +460,7 @@ The Markdown report is going to be available in `fosstars/report` directory.
 
 ## Further ideas
 
-1.  Add an installer for the command line tool.
+1.  Add an installer for the command-line tool.
 1.  Add a Maven plugin that looks for dependencies in an application and calculate security ratings for them.
 1.  Add a GitHub App that looks for dependencies in a repository, calculates security ratings for them,
     and report them via GitHub issues or comments in pull requests.
