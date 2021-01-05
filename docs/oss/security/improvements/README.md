@@ -13,7 +13,7 @@ Below you can find a list of implemented improvements for specific projects.
 Column description:
 
 *  `Project` contains a name open-source project.
-*  `Rating on Sep 1st, 2020 (v1.0.0)` contains a baseline security rating that was calculated
+*  `Rating on Sep 1st, 2020 (v1.0.0) baseline` contains a baseline security rating that was calculated
    with [Fosstars Core 1.0.0](https://github.com/SAP/fosstars-rating-core/releases/tag/v1.0.0) version.
 *  `Improvements` contains a link to implemented security improvements for a specific project.
 *  `Rating on Jan 4st, 2021 (v1.0.0)` contains an updated security rating that was calculated
@@ -24,19 +24,19 @@ Column description:
    The new version includes bug fixed and enhancements that were identified while improving
    the security ratings for the projects in the table.
 
-| Project | Rating on Sep 1st, 2020 (v1.0.0) | Improvements | Rating on Jan 4st, 2021 (v1.0.0) | Rating on Jan 4st, 2021 (v1.1.0) |
+| Project | Rating&nbsp;on&nbsp;Sep&nbsp;1st,&nbsp;2020 (v1.0.0)&nbsp;baseline | Improvements | Rating&nbsp;on&nbsp;Jan&nbsp;4st,&nbsp;2021 (v1.0.0) | Rating&nbsp;on&nbsp;Jan&nbsp;4st,&nbsp;2021 (v1.1.0) |
 |---|---|---|---|---|
-| [Netty](https://github.com/netty/netty) | [3.52, BAD](report_Sep_1st_2020_v1_0_0/netty/netty.md) | [9 improvements](#Netty) | [4.47, MODERATE](report_Jan_4th_2021_v1_0_0/netty/netty.md) | [TBD](report_Jan_4th_2021_v1_1_0/netty/netty.md) |
-| [Bouncy Castle Java](https://github.com/bcgit/bc-java) | [3.06, BAD](report_Sep_1st_2020_v1_0_0/bcgit/bc-java.md) | [3 improvements](#BouncyCastle) | [3.18, BAD](report_Jan_4th_2021_v1_0_0/bcgit/bc-java.md) | [TBD](report_Jan_4th_2021_v1_1_0/bcgit/bc-java.md) |
-| [EclipseLink](https://github.com/eclipse-ee4j/eclipselink) | [3.28, BAD](report_Sep_1st_2020_v1_0_0/eclipse-ee4j/eclipselink.md) | Nothing | [3.42, BAD](report_Jan_4th_2021_v1_0_0/eclipse-ee4j/eclipselink.md) | [TBD](report_Jan_4th_2021_v1_1_0/eclipse-ee4j/eclipselink.md) |
-| [Apache HttpComponents Client](https://github.com/apache/httpcomponents-client) | [2.76, BAD](report_Sep_1st_2020_v1_0_0/apache/httpcomponents-client.md) | [3 improvements](#Apache HttpComponents Client) | [3.64, BAD](report_Jan_4th_2021_v1_0_0/apache/httpcomponents-client.md) | [TBD](report_Jan_4th_2021_v1_1_0/apache/httpcomponents-client.md) |
-| [Apache HttpComponents Core](https://github.com/apache/httpcomponents-core) | [4.01, MODERATE](report_Sep_1st_2020_v1_0_0/apache/httpcomponents-core.md) | Nothing | [3.94, BAD](report_Jan_4th_2021_v1_0_0/apache/httpcomponents-core.md) | [TBD](report_Jan_4th_2021_v1_1_0/apache/httpcomponents-core.md) |
-| [Apache Commons FileUpload](https://github.com/apache/commons-fileupload) | [2.59, BAD](report_Sep_1st_2020_v1_0_0/apache/commons-fileupload.md) | Nothing | [2.97, BAD](report_Jan_4th_2021_v1_0_0/apache/commons-fileupload.md) | [TBD](report_Jan_4th_2021_v1_1_0/apache/commons-fileupload.md) |
-| [Apache Commons Collections](https://github.com/apache/commons-collections) | [4.52, MODERATE](report_Sep_1st_2020_v1_0_0/apache/commons-collections.md) | [1 improvement](#Apache Commons Collections) | [4.78, MODERATE](report_Jan_4th_2021_v1_0_0/apache/commons-collections.md) | [TBD](report_Jan_4th_2021_v1_1_0/apache/commons-collections.md) |
-| [Apache Commons I/O](https://github.com/apache/commons-io) | [5.17, GOOD](report_Sep_1st_2020_v1_0_0/apache/commons-io.md) | Nothing | [4.90, MODERATE](report_Jan_4th_2021_v1_0_0/apache/commons-io.md) | [TBD](report_Jan_4th_2021_v1_1_0/apache/commons-io.md) |
-| [Apache CXF](https://github.com/apache/cxf) | [4.88, GOOD](report_Sep_1st_2020_v1_0_0/apache/cxf.md) | [1 improvement](#Apache CXF) | [5.07, MODERATE](report_Jan_4th_2021_v1_0_0/apache/cxf.md) | [TBD](report_Jan_4th_2021_v1_1_0/apache/cxf.md) |
-| [SLF4J](https://github.com/qos-ch/slf4j) | [2.45, BAD](report_Sep_1st_2020_v1_0_0/qos-ch/slf4j.md) | Nothing | [2.46, BAD](report_Jan_4th_2021_v1_0_0/qos-ch/slf4j.md) | [TBD](report_Jan_4th_2021_v1_1_0/qos-ch/slf4j.md) |
-| [zlib](https://github.com/madler/zlib) | [3.07, BAD](report_Sep_1st_2020_v1_0_0/madler/zlib.md) | Nothing | [3.14, BAD](report_Jan_4th_2021_v1_0_0/madler/zlib.md) | [TBD](report_Jan_4th_2021_v1_1_0/madler/zlib.md) |
+| [Netty](https://github.com/netty/netty) | [3.52, BAD](report_Sep_1st_2020_v1_0_0/netty/netty.md) | [9&nbsp;improvements](#Netty) | [4.47, MODERATE](report_Jan_4th_2021_v1_0_0/netty/netty.md) :arrow_up: | [6.02, GOOD](report_Jan_4th_2021_v1_1_0/netty/netty.md) :arrow_up: |
+| [Bouncy Castle Java](https://github.com/bcgit/bc-java) | [3.06, BAD](report_Sep_1st_2020_v1_0_0/bcgit/bc-java.md) | [3&nbsp;improvements](#BouncyCastle) | [3.18, BAD](report_Jan_4th_2021_v1_0_0/bcgit/bc-java.md) :arrow_up: | [3.37, BAD](report_Jan_4th_2021_v1_1_0/bcgit/bc-java.md) :arrow_up: |
+| [EclipseLink](https://github.com/eclipse-ee4j/eclipselink) | [3.28, BAD](report_Sep_1st_2020_v1_0_0/eclipse-ee4j/eclipselink.md) | Nothing | [3.42, BAD](report_Jan_4th_2021_v1_0_0/eclipse-ee4j/eclipselink.md) :arrow_up: | [4.53, MODERATE](report_Jan_4th_2021_v1_1_0/eclipse-ee4j/eclipselink.md) :arrow_up: |
+| [Apache HttpComponents Client](https://github.com/apache/httpcomponents-client) | [2.76, BAD](report_Sep_1st_2020_v1_0_0/apache/httpcomponents-client.md) | [3&nbsp;improvements](#Apache HttpComponents Client) | [3.64, BAD](report_Jan_4th_2021_v1_0_0/apache/httpcomponents-client.md) :arrow_up: | [3.64, BAD](report_Jan_4th_2021_v1_1_0/apache/httpcomponents-client.md) :arrow_up: |
+| [Apache HttpComponents Core](https://github.com/apache/httpcomponents-core) | [4.01, MODERATE](report_Sep_1st_2020_v1_0_0/apache/httpcomponents-core.md) | Nothing | [3.94, BAD](report_Jan_4th_2021_v1_0_0/apache/httpcomponents-core.md) :arrow_down: | [4.35, MODERATE](report_Jan_4th_2021_v1_1_0/apache/httpcomponents-core.md) :arrow_up: |
+| [Apache Commons FileUpload](https://github.com/apache/commons-fileupload) | [2.59, BAD](report_Sep_1st_2020_v1_0_0/apache/commons-fileupload.md) | Nothing | [2.97, BAD](report_Jan_4th_2021_v1_0_0/apache/commons-fileupload.md) :arrow_up: | [3.36, BAD](report_Jan_4th_2021_v1_1_0/apache/commons-fileupload.md) :arrow_up: |
+| [Apache Commons Collections](https://github.com/apache/commons-collections) | [4.52, MODERATE](report_Sep_1st_2020_v1_0_0/apache/commons-collections.md) | [1&nbsp;improvement](#Apache Commons Collections) | [4.78, MODERATE](report_Jan_4th_2021_v1_0_0/apache/commons-collections.md) :arrow_up: | [5.58, GOOD](report_Jan_4th_2021_v1_1_0/apache/commons-collections.md) :arrow_up: |
+| [Apache Commons I/O](https://github.com/apache/commons-io) | [5.17, GOOD](report_Sep_1st_2020_v1_0_0/apache/commons-io.md) | Nothing | [4.90, MODERATE](report_Jan_4th_2021_v1_0_0/apache/commons-io.md) :arrow_down: | [5.61, GOOD](report_Jan_4th_2021_v1_1_0/apache/commons-io.md) :arrow_up: |
+| [Apache CXF](https://github.com/apache/cxf) | [4.88, GOOD](report_Sep_1st_2020_v1_0_0/apache/cxf.md) | [1&nbsp;improvement](#Apache CXF) | [5.07, MODERATE](report_Jan_4th_2021_v1_0_0/apache/cxf.md) :arrow_up: | [5.62, GOOD](report_Jan_4th_2021_v1_1_0/apache/cxf.md) :arrow_up: |
+| [SLF4J](https://github.com/qos-ch/slf4j) | [2.45, BAD](report_Sep_1st_2020_v1_0_0/qos-ch/slf4j.md) | Nothing | [2.46, BAD](report_Jan_4th_2021_v1_0_0/qos-ch/slf4j.md) :arrow_up: | [2.88, BAD](report_Jan_4th_2021_v1_1_0/qos-ch/slf4j.md) :arrow_up: |
+| [zlib](https://github.com/madler/zlib) | [3.07, BAD](report_Sep_1st_2020_v1_0_0/madler/zlib.md) | Nothing | [3.14, BAD](report_Jan_4th_2021_v1_0_0/madler/zlib.md) :arrow_up: | [3.12, BAD](report_Jan_4th_2021_v1_1_0/madler/zlib.md) :arrow_up: |
 
 ## Implemented security improvements
 
