@@ -2,11 +2,11 @@
 
 https://github.com/apache/cordova-ios
 
-Last updated on Aug 31, 2020
+Last updated on Jan 5, 2021
 
-**Rating**: MODERATE
+**Rating**: BAD
 
-**Score**: 4.24, where max score value is 10.0
+**Score**: 3.76, where max score value is 10.0
 
 **Confidence**: Max (10.0, where max confidence value is 10.0)
 
@@ -20,32 +20,34 @@ The rating is based on **security score for open-source projects**.
 
 The score uses the following sub-scores:
 
-1.  **[Security testing](#security-testing)**: 2.22, confidence is 10.0 (max), importance is 1.0 (high)
+1.  **[Security testing](#security-testing)**: 2.11, confidence is 10.0 (max), importance is 1.0 (high)
     1.  **[Dependency testing](#dependency-testing)**: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
         1.  **[Dependabot score](#dependabot-score)**: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
         1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
-    1.  **[Static analysis](#static-analysis)**: 4.0, confidence is 10.0 (max), importance is 1.0 (high)
-        1.  **[LGTM score](#lgtm-score)**: 4.0, confidence is 10.0 (max), importance is 1.0 (high)
-        1.  **[FindSecBugs score](#findsecbugs-score)**: N/A, confidence is 10.0 (max), importance is 1.0 (high)
+    1.  **[Static analysis](#static-analysis)**: 3.5, confidence is 10.0 (max), importance is 1.0 (high)
+        1.  **[LGTM score](#lgtm-score)**: 7.0, confidence is 10.0 (max), importance is 1.0 (high)
+        1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
+        1.  **[FindSecBugs score](#findsecbugs-score)**: N/A, confidence is 10.0 (max), importance is 0.5 (medium)
     1.  **[Fuzzing](#fuzzing)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
     1.  **[Memory-safety testing](#memory-safety-testing)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
     1.  **[nohttp tool](#nohttp-tool)**: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
 1.  **[Security awareness](#security-awareness)**: 3.5, confidence is 10.0 (max), importance is 0.9 (high)
 1.  **[Unpatched vulnerabilities](#unpatched-vulnerabilities)**: 10.0, confidence is 10.0 (max), importance is 0.8 (high)
-1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: 2.0, confidence is 10.0 (max), importance is 0.6 (medium)
-    1.  **[Security testing](#security-testing)**: 2.22, confidence is 10.0 (max), importance is 1.0 (high)
+1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: 0.0, confidence is 10.0 (max), importance is 0.6 (medium)
+    1.  **[Security testing](#security-testing)**: 2.11, confidence is 10.0 (max), importance is 1.0 (high)
         1.  **[Dependency testing](#dependency-testing)**: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
             1.  **[Dependabot score](#dependabot-score)**: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
             1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
-        1.  **[Static analysis](#static-analysis)**: 4.0, confidence is 10.0 (max), importance is 1.0 (high)
-            1.  **[LGTM score](#lgtm-score)**: 4.0, confidence is 10.0 (max), importance is 1.0 (high)
-            1.  **[FindSecBugs score](#findsecbugs-score)**: N/A, confidence is 10.0 (max), importance is 1.0 (high)
+        1.  **[Static analysis](#static-analysis)**: 3.5, confidence is 10.0 (max), importance is 1.0 (high)
+            1.  **[LGTM score](#lgtm-score)**: 7.0, confidence is 10.0 (max), importance is 1.0 (high)
+            1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
+            1.  **[FindSecBugs score](#findsecbugs-score)**: N/A, confidence is 10.0 (max), importance is 0.5 (medium)
         1.  **[Fuzzing](#fuzzing)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
         1.  **[Memory-safety testing](#memory-safety-testing)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
         1.  **[nohttp tool](#nohttp-tool)**: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
-1.  **[Project activity](#project-activity)**: 2.02, confidence is 10.0 (max), importance is 0.5 (medium)
 1.  **[Community commitment](#community-commitment)**: 7.0, confidence is 10.0 (max), importance is 0.5 (medium)
-1.  **[Project popularity](#project-popularity)**: 2.52, confidence is 10.0 (max), importance is 0.5 (medium)
+1.  **[Project activity](#project-activity)**: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
+1.  **[Project popularity](#project-popularity)**: 2.59, confidence is 10.0 (max), importance is 0.5 (medium)
 
 
 ## Sub-scores
@@ -54,7 +56,7 @@ Below are the details about all the used sub-scores.
 
 ### Security testing
 
-Score: 2.22, confidence is 10.0 (max), importance is 1.0 (high)
+Score: 2.11, confidence is 10.0 (max), importance is 1.0 (high)
 
 
 
@@ -65,9 +67,10 @@ The sub-score uses the following sub-scores:
 1.  **[Dependency testing](#dependency-testing)**: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
     1.  **[Dependabot score](#dependabot-score)**: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
     1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
-1.  **[Static analysis](#static-analysis)**: 4.0, confidence is 10.0 (max), importance is 1.0 (high)
-    1.  **[LGTM score](#lgtm-score)**: 4.0, confidence is 10.0 (max), importance is 1.0 (high)
-    1.  **[FindSecBugs score](#findsecbugs-score)**: N/A, confidence is 10.0 (max), importance is 1.0 (high)
+1.  **[Static analysis](#static-analysis)**: 3.5, confidence is 10.0 (max), importance is 1.0 (high)
+    1.  **[LGTM score](#lgtm-score)**: 7.0, confidence is 10.0 (max), importance is 1.0 (high)
+    1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
+    1.  **[FindSecBugs score](#findsecbugs-score)**: N/A, confidence is 10.0 (max), importance is 0.5 (medium)
 1.  **[Fuzzing](#fuzzing)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
 1.  **[Memory-safety testing](#memory-safety-testing)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
 1.  **[nohttp tool](#nohttp-tool)**: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
@@ -111,11 +114,11 @@ No unpatched vulnerabilities found which is good
 
 The sub-score uses 1 feature:
 
-1.  Info about vulnerabilities: 16 vulnerabilities
+1.  Info about vulnerabilities: 17 vulnerabilities
 
 ### Vulnerability discovery and security testing
 
-Score: 2.0, confidence is 10.0 (max), importance is 0.6 (medium)
+Score: 0.0, confidence is 10.0 (max), importance is 0.6 (medium)
 
 The scores checks how security testing is done and how many vulnerabilities were recently discovered. If testing is good, and there are no recent vulnerabilities, then the score value is max. If there are vulnerabilities, then the score value is high. If testing is bad, and there are no recent vulnerabilities, then the score value is low. If there are vulnerabilities, then the score is min.
 
@@ -123,37 +126,21 @@ The scores checks how security testing is done and how many vulnerabilities were
 
 The sub-score uses the following sub-score:
 
-1.  **[Security testing](#security-testing)**: 2.22, confidence is 10.0 (max), importance is 1.0 (high)
+1.  **[Security testing](#security-testing)**: 2.11, confidence is 10.0 (max), importance is 1.0 (high)
     1.  **[Dependency testing](#dependency-testing)**: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
         1.  **[Dependabot score](#dependabot-score)**: 6.0, confidence is 10.0 (max), importance is 1.0 (high)
         1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
-    1.  **[Static analysis](#static-analysis)**: 4.0, confidence is 10.0 (max), importance is 1.0 (high)
-        1.  **[LGTM score](#lgtm-score)**: 4.0, confidence is 10.0 (max), importance is 1.0 (high)
-        1.  **[FindSecBugs score](#findsecbugs-score)**: N/A, confidence is 10.0 (max), importance is 1.0 (high)
+    1.  **[Static analysis](#static-analysis)**: 3.5, confidence is 10.0 (max), importance is 1.0 (high)
+        1.  **[LGTM score](#lgtm-score)**: 7.0, confidence is 10.0 (max), importance is 1.0 (high)
+        1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
+        1.  **[FindSecBugs score](#findsecbugs-score)**: N/A, confidence is 10.0 (max), importance is 0.5 (medium)
     1.  **[Fuzzing](#fuzzing)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
     1.  **[Memory-safety testing](#memory-safety-testing)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
     1.  **[nohttp tool](#nohttp-tool)**: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
 
 The sub-score uses 1 feature:
 
-1.  Info about vulnerabilities: 16 vulnerabilities
-
-### Project activity
-
-Score: 2.02, confidence is 10.0 (max), importance is 0.5 (medium)
-
-The score is based on number of commits and contributors.
-Here is how the number of commits contributes to the score (up to 5.10):
-0 -> 0.10, 200 -> 2.55, 310 -> 4.59
-Here is how the number of contributors contributes to the score (up to 5.10):
-0 -> 0.10, 5 -> 2.55, 10 -> 4.59
-
-
-
-The sub-score uses 2 features:
-
-1.  Number of commits in the last three months: 18
-1.  Number of contributors in the last three months: 2
+1.  Info about vulnerabilities: 17 vulnerabilities
 
 ### Community commitment
 
@@ -169,9 +156,22 @@ The sub-score uses 3 features:
 1.  Does it belong to Eclipse? No
 1.  Is it supported by a company? No
 
+### Project activity
+
+Score: 0.0, confidence is 10.0 (max), importance is 0.5 (medium)
+
+The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
+
+0 commits in the last 3 months results to 0.00 points
+
+The sub-score uses 2 features:
+
+1.  Number of commits in the last three months: 0
+1.  Number of contributors in the last three months: 0
+
 ### Project popularity
 
-Score: 2.52, confidence is 10.0 (max), importance is 0.5 (medium)
+Score: 2.59, confidence is 10.0 (max), importance is 0.5 (medium)
 
 The score is based on number of stars and watchers.
 Here is how a number of stars contributes to the score:
@@ -183,8 +183,8 @@ Here is how a number of watchers contributes to the score:
 
 The sub-score uses 2 features:
 
-1.  Number of stars for a GitHub repository: 1881
-1.  Number of watchers for a GitHub repository: 193
+1.  Number of stars for a GitHub repository: 1944
+1.  Number of watchers for a GitHub repository: 195
 
 ### Dependency testing
 
@@ -202,7 +202,7 @@ The sub-score uses the following sub-scores:
 
 ### Static analysis
 
-Score: 4.0, confidence is 10.0 (max), importance is 1.0 (high)
+Score: 3.5, confidence is 10.0 (max), importance is 1.0 (high)
 
 
 
@@ -210,8 +210,9 @@ Score: 4.0, confidence is 10.0 (max), importance is 1.0 (high)
 
 The sub-score uses the following sub-scores:
 
-1.  **[LGTM score](#lgtm-score)**: 4.0, confidence is 10.0 (max), importance is 1.0 (high)
-1.  **[FindSecBugs score](#findsecbugs-score)**: N/A, confidence is 10.0 (max), importance is 1.0 (high)
+1.  **[LGTM score](#lgtm-score)**: 7.0, confidence is 10.0 (max), importance is 1.0 (high)
+1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
+1.  **[FindSecBugs score](#findsecbugs-score)**: N/A, confidence is 10.0 (max), importance is 0.5 (medium)
 
 
 ### Fuzzing
@@ -285,7 +286,7 @@ The sub-score uses 2 features:
 
 ### LGTM score
 
-Score: 4.0, confidence is 10.0 (max), importance is 1.0 (high)
+Score: 7.0, confidence is 10.0 (max), importance is 1.0 (high)
 
 
 
@@ -293,12 +294,27 @@ Score: 4.0, confidence is 10.0 (max), importance is 1.0 (high)
 
 The sub-score uses 2 features:
 
-1.  Does it use LGTM checks? No
+1.  A set of programming languages: C, RUBY, PYTHON, JAVASCRIPT, OTHER
 1.  The worst LGTM grade of the project: B
+
+### How a project uses CodeQL
+
+Score: 0.0, confidence is 10.0 (max), importance is 1.0 (high)
+
+
+
+
+
+The sub-score uses 4 features:
+
+1.  A set of programming languages: C, RUBY, PYTHON, JAVASCRIPT, OTHER
+1.  Does it use LGTM checks? No
+1.  If a project runs CodeQL checks for commits: No
+1.  If a project runs CodeQL scans: No
 
 ### FindSecBugs score
 
-Score: N/A, confidence is 10.0 (max), importance is 1.0 (high)
+Score: N/A, confidence is 10.0 (max), importance is 0.5 (medium)
 
 
 
@@ -310,4 +326,29 @@ The sub-score uses 2 features:
 1.  Does it use FindSecBugs? No
 
 
+
+## How to improve the rating
+
+1.  You can ask the project maintainers to enable LGTM checks for pull requests in the project. More info:
+    1.  [How to enable LGTM checks for pull requests](https://lgtm.com/help/lgtm/about-automated-code-review)
+2.  You can open a pull request to enable CodeQL scans in the project. Make sure that the scans are run on pull requests. More info:
+    1.  [How to enable CodeQL checks for pull requests](https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#enabling-code-scanning-using-actions)
+3.  You can open a pull request to enable CodeQL scans in the project. More info:
+    1.  [How to enable CodeQL checks](https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#enabling-code-scanning-using-actions)
+4.  You can fix the issues reported by LGTM for the project. More info:
+    1.  [List of issues on LGTM](https://lgtm.com/projects/g/apache/cordova-ios)
+5.  You can open a pull request to add a security policy for the project. More info:
+    1.  [About adding a security policy to a repository on GitHub](https://docs.github.com/en/free-pro-team@latest/github/managing-security-vulnerabilities/adding-a-security-policy-to-your-repository)
+    2.  [An example of a security policy](https://github.com/apache/nifi/blob/main/SECURITY.md)
+    3.  [Suggest a security policy for the project](https://github.com/apache/cordova-ios/security/policy)
+6.  You can open a pull request to enable FindSecBugs for the project. More info:
+    1.  [FindSecBugs home page](https://find-sec-bugs.github.io/)
+7.  You can open a pull request to enable AddressSanitizer for the project. More info:
+    1.  [About AdddressSanitizer](https://github.com/google/sanitizers/wiki/AddressSanitizer)
+8.  You can open a pull request to enable MemorySanitizer for the project. More info:
+    1.  [About AdddressSanitizer](https://github.com/google/sanitizers/wiki/MemorySanitizer)
+9.  You can open a pull request to enable UndefinedBehaviorSanitizer for the project. More info:
+    1.  [About AdddressSanitizer](https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html)
+10.  You can include the project to OSS-Fuzz. Then, the project is going to be regularly fuzzed. More info:
+    1.  [The OSS-Fuzz project](https://github.com/google/oss-fuzz)
 
