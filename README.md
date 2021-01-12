@@ -409,7 +409,7 @@ if you found a bug, or you'd like to propose an enhancement.
 If you think you found a security issue, please follow [this guideline](SECURITY.md).
 
 We currently don't have a support channel.
-If you have a question, please also ask it via GitHub issues.
+If you have a question, please [open a discussion](https://github.com/SAP/fosstars-rating-core/discussions).
 
 # Contributing
 
