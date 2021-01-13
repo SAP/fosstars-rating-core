@@ -1,0 +1,32 @@
+{
+  "values" : {
+    "com.sap.oss.phosphor.fosstars.model.score.oss.ProjectSecurityAwarenessScore" : {
+      "type" : "MutableWeight",
+      "value" : 0.9
+    },
+    "com.sap.oss.phosphor.fosstars.model.score.oss.UnpatchedVulnerabilitiesScore" : {
+      "type" : "MutableWeight",
+      "value" : 0.8
+    },
+    "com.sap.oss.phosphor.fosstars.model.score.oss.ProjectPopularityScore" : {
+      "type" : "MutableWeight",
+      "value" : 0.5
+    },
+    "com.sap.oss.phosphor.fosstars.model.score.oss.ProjectActivityScore" : {
+      "type" : "MutableWeight",
+      "value" : 0.5
+    },
+    "com.sap.oss.phosphor.fosstars.model.score.oss.ProjectSecurityTestingScore" : {
+      "type" : "MutableWeight",
+      "value" : 1.0
+    },
+    "com.sap.oss.phosphor.fosstars.model.score.oss.CommunityCommitmentScore" : {
+      "type" : "MutableWeight",
+      "value" : 0.5
+    },
+    "com.sap.oss.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore" : {
+      "type" : "MutableWeight",
+      "value" : 0.6
+    }
+  }
+}

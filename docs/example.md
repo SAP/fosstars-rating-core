@@ -123,9 +123,9 @@ def SecurityRatingExample(r) {
 
 The implementation of the rating above can be found here:
 
-*  [com.sap.sgs.phosphor.fosstars.model.feature.example](https://github.com/SAP/fosstars-rating-core/tree/master/src/main/java/com/sap/sgs/phosphor/fosstars/model/feature/example)
-*  [com.sap.sgs.phosphor.fosstars.model.score.example](https://github.com/SAP/fosstars-rating-core/tree/master/src/main/java/com/sap/sgs/phosphor/fosstars/model/score/example)
-*  [SecurityRatingExample](https://github.com/SAP/fosstars-rating-core/blob/master/src/main/java/com/sap/sgs/phosphor/fosstars/model/rating/example/SecurityRatingExample.java)
+*  [com.sap.oss.phosphor.fosstars.model.feature.example](https://github.com/SAP/fosstars-rating-core/tree/master/src/main/java/com/sap/oss/phosphor/fosstars/model/feature/example)
+*  [com.sap.oss.phosphor.fosstars.model.score.example](https://github.com/SAP/fosstars-rating-core/tree/master/src/main/java/com/sap/oss/phosphor/fosstars/model/score/example)
+*  [SecurityRatingExample](https://github.com/SAP/fosstars-rating-core/blob/master/src/main/java/com/sap/oss/phosphor/fosstars/model/rating/example/SecurityRatingExample.java)
 
 ---
 

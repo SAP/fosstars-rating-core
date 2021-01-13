@@ -82,9 +82,9 @@ The two approaches described above may be combined:
 
 ## Implementation
 
-The [com.sap.sgs.phosphor.fosstars.model.tuning](https://github.com/SAP/fosstars-rating-core/tree/master/src/main/java/com/sap/sgs/phosphor/fosstars/model/tuning)
+The [com.sap.oss.phosphor.fosstars.model.tuning](https://github.com/SAP/fosstars-rating-core/tree/master/src/main/java/com/sap/oss/phosphor/fosstars/model/tuning)
 package contains the optimization procedure described above.
-[TuningWithCMAES](https://github.com/SAP/fosstars-rating-core/blob/master/src/main/java/com/sap/sgs/phosphor/fosstars/model/tuning/TuningWithCMAES.java)
+[TuningWithCMAES](https://github.com/SAP/fosstars-rating-core/blob/master/src/main/java/com/sap/oss/phosphor/fosstars/model/tuning/TuningWithCMAES.java)
 class uses [CMA-ES algorithm](https://en.wikipedia.org/wiki/CMA-ES).
 
 ---
