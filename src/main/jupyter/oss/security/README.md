@@ -1,12 +1,5 @@
-# Test vectors for the open-source security rating
+# Jupyter notebooks for analysing security ratings for open-source projects
 
-First, to work with test the vectors,
-you need to install [Jupyter Notebook](https://jupyter.org/install).
+First, you need to install [Jupyter Notebook](https://jupyter.org/install).
 
-Then, start `jupyter` with the following command:
-
-```
-jupyter notebook
-```
-
-Next, open one of the notebooks for specific scores or the entire open-source security rating.
+Next, run `jupyter notebook`. Then, open `SecurityRatingAnalysis.ipynb`.
