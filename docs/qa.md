@@ -98,7 +98,7 @@ This procedure may be also applied to a score.
 ## Implementation
 
 The verification procedure defined above is implemented in
-[com.sap.sgs.phosphor.fosstars.model.qa](https://github.com/SAP/fosstars-rating-core/tree/master/src/main/java/com/sap/sgs/phosphor/fosstars/model/qa) package.
+[com.sap.oss.phosphor.fosstars.model.qa](https://github.com/SAP/fosstars-rating-core/tree/master/src/main/java/com/sap/oss/phosphor/fosstars/model/qa) package.
 
 ---
 

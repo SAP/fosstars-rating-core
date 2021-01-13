@@ -1,7 +1,7 @@
 # Security ratings for open-source projects
 
 This section describes a security rating for open-source projects.
-The rating is implemented in the [OssSecurityRating](https://github.com/SAP/fosstars-rating-core/blob/master/src/main/java/com/sap/sgs/phosphor/fosstars/model/rating/oss/OssSecurityRating.java) class.
+The rating is implemented in the [OssSecurityRating](https://github.com/SAP/fosstars-rating-core/blob/master/src/main/java/com/sap/oss/phosphor/fosstars/model/rating/oss/OssSecurityRating.java) class.
 
 The rating may be used to assess how well open-source projects and their communities care about security. 
 This may then be used to estimate security risks that may affect an application when it uses open-source components.
@@ -15,7 +15,7 @@ Here is a list of labels:
 1.  `UNCLEAR`: there is no enough data to reliably calculate a score and a label for the project.
 
 The security rating uses
-[thresholds](https://github.com/SAP/fosstars-rating-core/blob/master/src/main/java/com/sap/sgs/phosphor/fosstars/model/rating/oss/OssSecurityRating.java#L84)
+[thresholds](https://github.com/SAP/fosstars-rating-core/blob/master/src/main/java/com/sap/oss/phosphor/fosstars/model/rating/oss/OssSecurityRating.java#L84)
 for score and confidence to assign one of the labels to an open-source project.
 If a confidence score is lower than a certain value, then the project gets the `UNCLEAR` label.
 If a calculated score is higher than a certain threshold, then the project gets `GOOD`, `MODERATE` or `BAD` label.

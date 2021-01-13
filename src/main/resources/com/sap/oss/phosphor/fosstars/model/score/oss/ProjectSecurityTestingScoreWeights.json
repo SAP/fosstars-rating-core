@@ -1,0 +1,24 @@
+{
+  "values" : {
+    "com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore" : {
+      "type" : "ImmutableWeight",
+      "value" : 1.0
+    },
+    "com.sap.oss.phosphor.fosstars.model.score.oss.StaticAnalysisScore" : {
+      "type" : "ImmutableWeight",
+      "value" : 1.0
+    },
+    "com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore" : {
+      "type" : "ImmutableWeight",
+      "value" : 1.0
+    },
+    "com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore" : {
+      "type" : "ImmutableWeight",
+      "value" : 0.5
+    },
+    "com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore" : {
+      "type" : "ImmutableWeight",
+      "value" : 1.0
+    }
+  }
+}

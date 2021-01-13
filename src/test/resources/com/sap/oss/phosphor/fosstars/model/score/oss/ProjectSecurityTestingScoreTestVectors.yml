@@ -1,0 +1,328 @@
+---
+defaults: []
+elements:
+  - type: "ScoreTestVector"
+    values:
+      com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore: 0.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore: 0.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore: 0.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.StaticAnalysisScore: 0.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore: 0.0
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 0.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "all_min"
+    expectedNotApplicableScore: false
+  - type: "ScoreTestVector"
+    values:
+      com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore: 8.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore: 9.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore: 3.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.StaticAnalysisScore: 7.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore: 5.0
+    expectedScore:
+      type: "DoubleInterval"
+      from: 6.0
+      openLeft: false
+      negativeInfinity: false
+      to: 7.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_1"
+    expectedNotApplicableScore: false
+  - type: "ScoreTestVector"
+    values:
+      com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore: 5.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore: 1.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore: 5.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.StaticAnalysisScore: 4.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore: 2.0
+    expectedScore:
+      type: "DoubleInterval"
+      from: 3.0
+      openLeft: false
+      negativeInfinity: false
+      to: 4.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_2"
+    expectedNotApplicableScore: false
+  - type: "ScoreTestVector"
+    values:
+      com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore: 5.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore: 0.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore: 7.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.StaticAnalysisScore: 3.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore: 5.0
+    expectedScore:
+      type: "DoubleInterval"
+      from: 4.0
+      openLeft: false
+      negativeInfinity: false
+      to: 5.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_3"
+    expectedNotApplicableScore: false
+  - type: "ScoreTestVector"
+    values:
+      com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore: 10.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore: 10.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore: 10.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.StaticAnalysisScore: 10.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore: 10.0
+    expectedScore:
+      type: "DoubleInterval"
+      from: 10.0
+      openLeft: false
+      negativeInfinity: false
+      to: 10.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_4"
+    expectedNotApplicableScore: false
+
+  # NoHttpToolScore is N/A
+  - type: "StandardTestVector"
+    values:
+      - type: "ScoreValue"
+        score:
+          type: "DependencyScanScore"
+          name: "How a project scans its dependencies for vulnerabilities"
+        value: 3.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "LgtmScore"
+          name: "How a project addresses issues reported by LGTM"
+        value: 7.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "CodeqlScore"
+          name: "How a project uses CodeQL"
+        value: 7.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: [ ]
+        explanation: [ ]
+      - type: "ScoreValue"
+        score:
+          type: "NoHttpToolScore"
+          name: "If a project uses nohttp tool"
+        value: 0.0
+        weight: 1.0
+        confidence: 0.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: true
+      - type: "ScoreValue"
+        score:
+          type: "MemorySafetyTestingScore"
+          name: "How a project tests for memory-safety issues"
+        value: 10.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "FuzzingScore"
+          name: "How a project uses fuzzing"
+        value: 5.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "FindSecBugsScore"
+          name: "How a project uses FindSecBugs"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+    expectedScore:
+      type: "DoubleInterval"
+      from: 5.0
+      openLeft: false
+      negativeInfinity: false
+      to: 10.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "nohttp_tool_not_applicable"
+
+  # MemorySafetyTestingScore and FussingScore are N/A
+  - type: "StandardTestVector"
+    values:
+      - type: "ScoreValue"
+        score:
+          type: "DependencyScanScore"
+          name: "How a project scans its dependencies for vulnerabilities"
+        value: 3.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "LgtmScore"
+          name: "How a project addresses issues reported by LGTM"
+        value: 7.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "CodeqlScore"
+          name: "How a project uses CodeQL"
+        value: 7.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: [ ]
+        explanation: [ ]
+      - type: "ScoreValue"
+        score:
+          type: "NoHttpToolScore"
+          name: "If a project uses nohttp tool"
+        value: 6.0
+        weight: 1.0
+        confidence: 0.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "MemorySafetyTestingScore"
+          name: "How a project tests for memory-safety issues"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: true
+      - type: "ScoreValue"
+        score:
+          type: "FuzzingScore"
+          name: "How a project uses fuzzing"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: true
+      - type: "ScoreValue"
+        score:
+          type: "FindSecBugsScore"
+          name: "How a project uses FindSecBugs"
+        value: 10.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+    expectedScore:
+      type: "DoubleInterval"
+      from: 5.0
+      openLeft: false
+      negativeInfinity: false
+      to: 10.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "memory_safety_and_fuzzing_not_applicable"
+
+  # FindSecBugsScore is N/A
+  - type: "StandardTestVector"
+    values:
+      - type: "ScoreValue"
+        score:
+          type: "CodeqlScore"
+          name: "How a project uses CodeQL"
+        value: 7.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: [ ]
+        explanation: [ ]
+      - type: "ScoreValue"
+        score:
+          type: "LgtmScore"
+          name: "How a project addresses issues reported by LGTM"
+        value: 7.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "DependencyScanScore"
+          name: "How a project scans its dependencies for vulnerabilities"
+        value: 3.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "NoHttpToolScore"
+          name: "If a project uses nohttp tool"
+        value: 9.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "MemorySafetyTestingScore"
+          name: "How a project tests for memory-safety issues"
+        value: 5.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "FuzzingScore"
+          name: "How a project uses fuzzing"
+        value: 8.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "FindSecBugsScore"
+          name: "How a project uses FindSecBugs"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: true
+    expectedScore:
+      type: "DoubleInterval"
+      from: 6.0
+      openLeft: false
+      negativeInfinity: false
+      to: 7.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "find_sec_bugs_not_applicable"
