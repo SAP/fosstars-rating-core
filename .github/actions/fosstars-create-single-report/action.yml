@@ -1,0 +1,16 @@
+name: "Create a report for a project"
+description: "The action calculates a security rating for a project and stores it to a branch."
+inputs:
+  report-branch:
+    description: "A branch where the report is stored"
+    required: true
+    default: fosstars
+  token:
+    description: "A token for accessing the repository"
+    required: true
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - ${{ inputs.report-branch }}
+    - ${{ inputs.token }}
