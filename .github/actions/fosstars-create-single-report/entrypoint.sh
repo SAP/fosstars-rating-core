@@ -25,6 +25,12 @@ java -jar /opt/stuff/fosstars-rating-core/target/fosstars-github-rating-calc.jar
           --report-type markdown \
           --raw-rating-file $raw_rating_file
 
+git add $report_file $raw_rating_file
+if git status | grep "nothing to commit" > /dev/null ; then
+    echo "No updates found"
+    exit 0
+fi
+
 # Update the current badge
 label=$(cat $raw_rating_file | jq -r .label[1] | tr '[:upper:]' '[:lower:]' | sed 's/ //g')
 case $label in
@@ -36,13 +42,13 @@ case $label in
       ;;
 esac
 current_badge_file="fosstars-security-rating.svg"
-wget -O $current_badge_file https://raw.githubusercontent.com/artem-smotrakov/fosstars-rating-core/fosstars-single-report-action/.github/actions/fosstars-create-single-report/images/security-fosstars-$suffix.svg
+wget -O $current_badge_file https://raw.githubusercontent.com/SAP/fosstars-rating-core/fosstars-single-report-action/.github/actions/fosstars-create-single-report/images/security-fosstars-$suffix.svg
+git add $current_badge_file
 
 # Commit the report and the badge
 set -e
 git config --global user.name "Fosstars"
 git config --global user.email "fosstars@users.noreply.github.com"
-git remote set-url origin https://x-access-token:$TOKEN@github.com/$GITHUB_REPOSITORY
-git add $report_file $current_badge_file
-git commit -m "Update Fosstars security rating report" $report_file $current_badge_file
+git remote set-url origin https://x-access-token:$TOKEN@$GITHUB_SERVER_URL/$GITHUB_REPOSITORY
+git commit -m "Update Fosstars security rating report" $report_file $current_badge_file $raw_rating_file
 git push origin $REPORT_BRANCH

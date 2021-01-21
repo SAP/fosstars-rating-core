@@ -1,12 +1,16 @@
-name: "Create Fosstars report"
-on: [push]
+name: "Fosstars"
+on:
+  push:
+  schedule:
+    - cron: "0 0 * * *"
 
 jobs:
   create_fosstars_report:
     runs-on: ubuntu-latest
-    name: Create Fosstars report
+    name: "Security rating"
     steps:
       - uses: actions/checkout@v2.3.4
       - uses: ./.github/actions/fosstars-create-single-report
         with:
+          report-branch: fosstars-report
           token: "${{ secrets.GITHUB_TOKEN }}"
