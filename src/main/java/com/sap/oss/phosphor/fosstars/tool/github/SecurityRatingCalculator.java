@@ -18,12 +18,15 @@ import com.sap.oss.phosphor.fosstars.tool.InputString;
 import com.sap.oss.phosphor.fosstars.tool.Reporter;
 import com.sap.oss.phosphor.fosstars.tool.YesNoQuestion;
 import com.sap.oss.phosphor.fosstars.tool.YesNoQuestion.Answer;
+import com.sap.oss.phosphor.fosstars.tool.format.Formatter;
+import com.sap.oss.phosphor.fosstars.tool.format.MarkdownFormatter;
 import com.sap.oss.phosphor.fosstars.tool.format.PrettyPrinter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -140,15 +143,37 @@ public class SecurityRatingCalculator {
         "Print this message.");
     options.addOption("i", "interactive", false,
         "Ask a question if a feature can't be automatically gathered.");
-    options.addOption(Option.builder("t")
-        .longOpt("token")
-        .hasArg()
-        .desc("An access token for the GitHub API.")
-        .build());
+    options.addOption(
+        Option.builder("t")
+            .longOpt("token")
+            .hasArg()
+            .desc("An access token for the GitHub API.")
+            .build());
     options.addOption(
         Option.builder("v")
             .longOpt("verbose")
             .desc("Print all the details.")
+            .build());
+    options.addOption(
+        Option.builder()
+            .longOpt("report-file")
+            .hasArg()
+            .argName("path")
+            .desc("Store a report to a specified file.")
+            .build());
+    options.addOption(
+        Option.builder()
+            .longOpt("report-type")
+            .hasArg()
+            .argName("format")
+            .desc("Format of the report (text or markdown).")
+            .build());
+    options.addOption(
+        Option.builder()
+            .longOpt("raw-rating-file")
+            .hasArg()
+            .argName("path")
+            .desc("Store a raw rating to a specified file.")
             .build());
 
     OptionGroup group = new OptionGroup();
@@ -201,12 +226,7 @@ public class SecurityRatingCalculator {
       return;
     }
 
-    if (!commandLine.hasOption("url") && !commandLine.hasOption("config")
-        && !commandLine.hasOption("gav")) {
-
-      throw new IllegalArgumentException(
-          "You have to give me either --url, --gav or --config option!");
-    }
+    checkOptionsIn(commandLine);
 
     UserCallback callback = commandLine.hasOption("interactive")
         ? new Terminal() : NoUserCallback.INSTANCE;
@@ -225,11 +245,11 @@ public class SecurityRatingCalculator {
 
     try {
       if (commandLine.hasOption("url")) {
-        processUrl(commandLine.getOptionValue("url"), fetcher, token, callback);
+        processUrl(commandLine.getOptionValue("url"), commandLine, fetcher, token, callback);
       }
 
       if (commandLine.hasOption("gav")) {
-        processGav(commandLine.getOptionValue("gav"), fetcher, token, callback);
+        processGav(commandLine.getOptionValue("gav"), commandLine, fetcher, token, callback);
       }
 
       if (commandLine.hasOption("config")) {
@@ -241,17 +261,44 @@ public class SecurityRatingCalculator {
   }
 
   /**
+   * Checks command-line options and throws an exception if something is wrong.
+   *
+   * @param commandLine The command-line options.
+   * @throws IllegalArgumentException If the options are invalid.
+   */
+  private static void checkOptionsIn(CommandLine commandLine) {
+    if (!commandLine.hasOption("url") && !commandLine.hasOption("config")
+        && !commandLine.hasOption("gav")) {
+
+      throw new IllegalArgumentException(
+          "You have to give me either --url, --gav or --config option!");
+    }
+
+    if (commandLine.hasOption("report-type") && !commandLine.hasOption("report-file")) {
+      throw new IllegalArgumentException(
+          "The option --report-type has to be used with --report-file");
+    }
+
+    if (commandLine.hasOption("report-type")
+        && !Arrays.asList("text", "markdown").contains(commandLine.getOptionValue("report-type"))) {
+
+      throw new IllegalArgumentException(
+          String.format("Unknown report type: %s", commandLine.getOptionValue("report-type")));
+    }
+  }
+
+  /**
    * Calculate a rating for a single project identified by a URL to its SCM.
    *
    * @param url A URL of the project repository.
+   * @param commandLine Command-line options.
    * @param fetcher An interface for accessing the GitHub.
    * @param githubToken A token for accessing the GitHub APIs.
    * @param callback An interface for interacting with a user.
    * @throws IOException If something went wrong.
    */
-  private void processUrl(
-      String url, GitHubDataFetcher fetcher, String githubToken, UserCallback callback)
-      throws IOException {
+  private void processUrl(String url, CommandLine commandLine, GitHubDataFetcher fetcher,
+      String githubToken, UserCallback callback) throws IOException {
 
     GitHubProject project = GitHubProject.parse(url);
 
@@ -267,20 +314,22 @@ public class SecurityRatingCalculator {
 
     Arrays.stream(prettyPrinter.print(project).split("\n")).forEach(LOGGER::info);
     LOGGER.info("");
+
+    storeReportIfRequested(project, commandLine);
   }
 
   /**
    * Calculate a rating for a single project identified by GAV coordinates.
    *
    * @param gav The GAV coordinates.
+   * @param commandLine Command-line options.
    * @param fetcher An interface for accessing the GitHub.
    * @param githubToken A token for accessing the GitHub APIs.
    * @param callback An interface for interacting with a user.
    * @throws IOException If something went wrong.
    */
-  private void processGav(
-      String gav, GitHubDataFetcher fetcher, String githubToken, UserCallback callback)
-      throws IOException {
+  private void processGav(String gav, CommandLine commandLine, GitHubDataFetcher fetcher,
+      String githubToken, UserCallback callback) throws IOException {
 
     MavenScmFinder finder = new MavenScmFinder();
 
@@ -307,7 +356,7 @@ public class SecurityRatingCalculator {
       LOGGER.info("  {}", url);
     }
 
-    processUrl(url, fetcher, githubToken, callback);
+    processUrl(url, commandLine, fetcher, githubToken, callback);
   }
 
   /**
@@ -367,6 +416,61 @@ public class SecurityRatingCalculator {
       for (Reporter<GitHubProject> reporter : reporters) {
         reporter.runFor(projects);
       }
+    }
+  }
+
+  /**
+   * Stores a rating of a project if a user asked about it.
+   *
+   * @param project The project.
+   * @param commandLine Command-line options.
+   * @throws IOException If something went wrong.
+   */
+  private static void storeReportIfRequested(GitHubProject project, CommandLine commandLine)
+      throws IOException {
+
+    if (!project.ratingValue().isPresent()) {
+      throw new IOException("Could not calculate a rating!");
+    }
+
+    if (commandLine.hasOption("report-file")) {
+      String type = commandLine.getOptionValue("report-type", "text");
+      String file = commandLine.getOptionValue("report-file");
+      Formatter formatter = createFormatter(type);
+
+      LOGGER.info("Storing a report to {} ({})", file, type);
+
+      Files.write(
+          Paths.get(file),
+          formatter.print(project).getBytes(StandardCharsets.UTF_8));
+    }
+
+    if (commandLine.hasOption("raw-rating-file")) {
+      String file = commandLine.getOptionValue("raw-rating-file");
+      LOGGER.info("Storing a raw rating to {}", file);
+      Files.write(
+          Paths.get(file),
+          new ObjectMapper()
+              .writerWithDefaultPrettyPrinter()
+              .writeValueAsBytes(project.ratingValue().get()));
+    }
+  }
+
+  /**
+   * Creates a formatter for a specified type.
+   *
+   * @param type The type.
+   * @return A formatter.
+   * @throws IllegalArgumentException If the type is unknown.
+   */
+  private static Formatter createFormatter(String type) {
+    switch (type) {
+      case "text":
+        return PrettyPrinter.withVerboseOutput(ADVISOR);
+      case "markdown":
+        return new MarkdownFormatter(ADVISOR);
+      default:
+        throw new IllegalArgumentException(String.format("Unknown report type: %s", type));
     }
   }
 
