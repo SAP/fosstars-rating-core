@@ -5,7 +5,7 @@ TOKEN=$2
 
 PROJECT_SCM_URL=$GITHUB_SERVER_URL/$GITHUB_REPOSITORY
 
-# Switch to the Fosstars branch
+# Switch to the branch where the report should be stored
 git fetch origin $REPORT_BRANCH || git branch $REPORT_BRANCH
 git checkout $REPORT_BRANCH
 if [ $? -ne 0 ]; then
@@ -15,29 +15,34 @@ if [ $? -ne 0 ]; then
 fi
 
 # Generate a report
-report_file="fosstars_security_rating.txt"
+report_file="fosstars_security_rating.md"
+raw_rating_file="fosstars_security_rating.json"
 java -jar /opt/stuff/fosstars-rating-core/target/fosstars-github-rating-calc.jar \
-          --verbose --url $PROJECT_SCM_URL --token $TOKEN 2>&1 | tee $report_file
+          --url $PROJECT_SCM_URL \
+          --token $TOKEN \
+          --verbose \
+          --report-file $report_file \
+          --report-type markdown \
+          --raw-rating-file $raw_rating_file
 
-label=$(cat fosstars_security_rating.txt | grep "Rating: " | cut -d ">" -f 2 | tr '[:upper:]' '[:lower:]' | sed 's/ //g')
+# Update the current badge
+label=$(cat $raw_rating_file | jq -r .label[1] | tr '[:upper:]' '[:lower:]' | sed 's/ //g')
 case $label in
-good|moderate|bad|unclear)
-  suffix=$label
-  ;;
-*)
-  suffix="unknown"
-  ;;
+    good|moderate|bad|unclear)
+      suffix=$label
+      ;;
+    *)
+      suffix="unknown"
+      ;;
 esac
-
 current_badge_file="fosstars-security-rating.svg"
 wget -O $current_badge_file https://raw.githubusercontent.com/artem-smotrakov/fosstars-rating-core/fosstars-single-report-action/.github/actions/fosstars-create-single-report/images/security-fosstars-$suffix.svg
-git add $current_badge_file
 
-# Commit the report
+# Commit the report and the badge
 set -e
 git config --global user.name "Fosstars"
 git config --global user.email "fosstars@users.noreply.github.com"
 git remote set-url origin https://x-access-token:$TOKEN@github.com/$GITHUB_REPOSITORY
-git add $report_file
+git add $report_file $current_badge_file
 git commit -m "Update Fosstars security rating report" $report_file $current_badge_file
 git push origin $REPORT_BRANCH
