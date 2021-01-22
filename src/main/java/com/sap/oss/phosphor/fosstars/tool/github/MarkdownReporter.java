@@ -4,13 +4,13 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER
 
 import com.sap.oss.phosphor.fosstars.advice.Advisor;
 import com.sap.oss.phosphor.fosstars.model.Value;
+import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.oss.phosphor.fosstars.tool.format.Formatter;
 import com.sap.oss.phosphor.fosstars.tool.format.MarkdownFormatter;
-import com.sap.oss.phosphor.fosstars.tool.format.PrettyPrinter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,6 +19,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
@@ -72,6 +73,16 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
       = new SimpleDateFormat("MMM d, yyyy", Locale.US);
 
   /**
+   * A formatter for doubles.
+   */
+  private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.#");
+
+  static {
+    DECIMAL_FORMAT.setMinimumFractionDigits(1);
+    DECIMAL_FORMAT.setMaximumFractionDigits(2);
+  }
+
+  /**
    * This string is printed out if something is unknown.
    */
   static final String UNKNOWN = "Unknown";
@@ -87,36 +98,42 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
   private final List<GitHubProject> extraProjects;
 
   /**
-   * An advisor for calculated ratings.
-   */
-  private final Advisor advisor;
-
-  /**
    * A formatter for rating values.
    */
   private final Formatter formatter;
+
+  /**
+   * A rating used in a report.
+   */
+  private final OssSecurityRating rating;
 
   /**
    * Initializes a new reporter.
    *
    * @param outputDirectory An output directory.
    * @param extraSourceFileName A JSON file with serialized extra projects.
+   * @param rating A rating.
    * @param advisor An advisor for calculated ratings.
    * @throws IOException If something went wrong
    *                     (for example, the output directory doesn't exist,
    *                     or the extra projects couldn't be loaded).
    */
-  MarkdownReporter(String outputDirectory, String extraSourceFileName, Advisor advisor)
+  MarkdownReporter(
+      String outputDirectory, String extraSourceFileName, OssSecurityRating rating, Advisor advisor)
       throws IOException {
+
+    Objects.requireNonNull(rating, "Oh no! Rating is null");
+    Objects.requireNonNull(advisor, "Oh no! Advisor is null");
 
     Objects.requireNonNull(outputDirectory, "Oh no! Output directory is null!");
     if (!Files.isDirectory(Paths.get(outputDirectory))) {
       throw new FileNotFoundException(
           String.format("Oh no! I could not find %s", outputDirectory));
     }
+
     this.outputDirectory = outputDirectory;
     this.extraProjects = loadProjects(extraSourceFileName);
-    this.advisor = advisor;
+    this.rating = rating;
     this.formatter = new MarkdownFormatter(advisor);
   }
 
@@ -130,7 +147,7 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
     }
     allProjects.sort(Collections.reverseOrder(Comparator.comparingInt(stars::get)));
 
-    StringBuilder sb = new StringBuilder();
+    StringBuilder projectsTable = new StringBuilder();
     Statistics statistics = new Statistics();
     for (GitHubProject project : allProjects) {
       String projectPath = project.scm().getPath().replaceFirst("/", "");
@@ -167,14 +184,14 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
           .replace("%LABEL%", labelString)
           .replace("%CONFIDENCE%", confidenceOf(project))
           .replace("%DATE%", lastUpdateOf(project));
-      sb.append(line).append("\n");
+      projectsTable.append(line).append("\n");
 
       statistics.add(project);
     }
 
     Path path = Paths.get(outputDirectory).resolve(REPORT_FILENAME);
     logger.info("Storing a report to {}", path);
-    Files.write(path, build(sb.toString(), statistics).getBytes());
+    Files.write(path, buildReportWith(projectsTable.toString(), statistics).getBytes());
   }
 
   /**
@@ -222,11 +239,11 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
    * @return The report.
    * @throws IOException If something went wrong.
    */
-  private static String build(String table, Statistics statistics) throws IOException {
+  private String buildReportWith(String table, Statistics statistics) throws IOException {
     try (InputStream is = MarkdownReporter.class
         .getResourceAsStream("MarkdownReporterMainTemplate.md")) {
 
-      String template = IOUtils.toString(is, "UTF-8");
+      String template = IOUtils.toString(is, StandardCharsets.UTF_8);
       return template
           .replace("%PROJECT_TABLE%", table)
           .replace("%NUMBER_OF_PROJECTS%", String.valueOf(statistics.total))
@@ -244,7 +261,13 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
           .replace("%PERCENT_UNCLEAR_RATINGS%",
               printPercent(statistics.unclearRatingsPercent()))
           .replace("%PERCENT_UNKNOWN_RATINGS%",
-              printPercent(statistics.unknownRatingsPercent()));
+              printPercent(statistics.unknownRatingsPercent()))
+          .replaceAll("%MODERATE_THRESHOLD%",
+              format(rating.thresholds().forModerate()))
+          .replaceAll("%GOOD_THRESHOLD%",
+              format(rating.thresholds().forGood()))
+          .replaceAll("%UNCLEAR_THRESHOLD%",
+              format(rating.thresholds().forUnclear()));
     }
   }
 
@@ -256,6 +279,16 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
    */
   private static String printPercent(double value) {
     return String.format("%2.1f", value);
+  }
+
+  /**
+   * Format a double.
+   *
+   * @param value The number.
+   * @return A formatter number.
+   */
+  private static String format(double value) {
+    return DECIMAL_FORMAT.format(value);
   }
 
   /**
@@ -313,7 +346,26 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
 
     RatingValue ratingValue = something.get();
     ScoreValue scoreValue = ratingValue.scoreValue();
-    return PrettyPrinter.tellMeActualValueOf(scoreValue);
+    return actualValueOf(scoreValue);
+  }
+
+  /**
+   * Prints an actual value of a score value. The method takes care about
+   * unknown and not-applicable score values.
+   *
+   * @param scoreValue The score value.
+   * @return A string that represents the score value.
+   */
+  private static String actualValueOf(ScoreValue scoreValue) {
+    if (scoreValue.isNotApplicable()) {
+      return "N/A";
+    }
+
+    if (scoreValue.isUnknown()) {
+      return "unknown";
+    }
+
+    return format(scoreValue.get());
   }
 
   /**

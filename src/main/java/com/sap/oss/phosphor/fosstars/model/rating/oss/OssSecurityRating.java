@@ -79,6 +79,15 @@ public class OssSecurityRating extends AbstractRating {
   }
 
   /**
+   * Return thresholds for the labels.
+   *
+   * @return The thresholds for the labels.
+   */
+  public Thresholds thresholds() {
+    return thresholds;
+  }
+
+  /**
    * Holds thresholds for labels.
    */
   public static class Thresholds {
@@ -128,6 +137,33 @@ public class OssSecurityRating extends AbstractRating {
       this.moderate = moderate;
       this.good = good;
       this.unclear = unclear;
+    }
+
+    /**
+     * Returns the threshold for {@link SecurityLabel#MODERATE} label.
+     *
+     * @return The threshold.
+     */
+    public double forModerate() {
+      return moderate;
+    }
+
+    /**
+     * Returns the threshold for {@link SecurityLabel#GOOD} label.
+     *
+     * @return The threshold.
+     */
+    public double forGood() {
+      return good;
+    }
+
+    /**
+     * Returns the threshold for {@link SecurityLabel#UNCLEAR} label.
+     *
+     * @return The threshold.
+     */
+    public double forUnclear() {
+      return unclear;
     }
   }
 
