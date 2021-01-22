@@ -61,6 +61,12 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
    */
   private static final String PROJECT_LINE_TEMPLATE
       = "| %NAME% | %STARS% | %SCORE% | %LABEL% | %CONFIDENCE% | %DATE% |";
+
+  /**
+   * A template for links in Markdown.
+   */
+  private static final String LINK_TEMPLATE = "[%s](%s)";
+  
   /**
    * A length of line in a project name.
    */
@@ -78,7 +84,7 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
   private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.#");
 
   static {
-    DECIMAL_FORMAT.setMinimumFractionDigits(1);
+    DECIMAL_FORMAT.setMinimumFractionDigits(2);
     DECIMAL_FORMAT.setMaximumFractionDigits(2);
   }
 
@@ -173,15 +179,19 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
       String relativePathToDetails = String.format("%s/%s",
           project.organization().name(), projectReportFilename);
 
-      String labelString = String.format("[%s](%s)", labelOf(project), relativePathToDetails);
+      String labelLink = String.format(LINK_TEMPLATE, labelOf(project), relativePathToDetails);
+      String nameLink = String.format(LINK_TEMPLATE, nameOf(project), relativePathToDetails);
+
       Integer numberOfStars = stars.get(project);
-      String numberOfStarsString = numberOfStars != null && numberOfStars >= 0
-          ? numberOfStars.toString() : UNKNOWN;
+      String numberOfStarsString
+          = numberOfStars != null && numberOfStars >= 0 ? numberOfStars.toString() : UNKNOWN;
+      String numberOfStarsLink = String.format(LINK_TEMPLATE, numberOfStarsString, project.scm());
+
       String line = PROJECT_LINE_TEMPLATE
-          .replace("%NAME%", nameOf(project))
-          .replace("%STARS%", numberOfStarsString)
+          .replace("%NAME%", nameLink)
+          .replace("%STARS%", numberOfStarsLink)
           .replace("%SCORE%", scoreOf(project))
-          .replace("%LABEL%", labelString)
+          .replace("%LABEL%", labelLink)
           .replace("%CONFIDENCE%", confidenceOf(project))
           .replace("%DATE%", lastUpdateOf(project));
       projectsTable.append(line).append("\n");
@@ -201,9 +211,8 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
    * @return A name of the project.
    */
   private static String nameOf(GitHubProject project) {
-    String name = insert("<br>", NAME_LINE_LENGTH,
+    return insert("<br>", NAME_LINE_LENGTH,
         project.scm().getPath().replaceFirst("/", ""));
-    return String.format("[%s](%s)", name, project.scm());
   }
 
   /**
