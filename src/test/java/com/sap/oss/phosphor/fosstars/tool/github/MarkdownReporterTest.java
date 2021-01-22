@@ -10,7 +10,6 @@ import static org.junit.Assert.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.advice.oss.github.OssSecurityGithubAdvisor;
 import com.sap.oss.phosphor.fosstars.model.Label;
-import com.sap.oss.phosphor.fosstars.model.Rating;
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
 import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
@@ -33,7 +32,7 @@ public class MarkdownReporterTest {
   public void testReport() throws IOException {
     Path outputDirectory = Files.createTempDirectory(MarkdownReporterTest.class.getName());
     try {
-      Rating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
+      OssSecurityRating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
 
       GitHubProject goodProject = new GitHubProject("org", "good");
       goodProject.set(
@@ -64,7 +63,7 @@ public class MarkdownReporterTest {
       );
 
       MarkdownReporter reporter = new MarkdownReporter(
-          outputDirectory.toString(), null, new OssSecurityGithubAdvisor());
+          outputDirectory.toString(), null, rating, new OssSecurityGithubAdvisor());
       reporter.runFor(projects);
 
       Path reportFileName = outputDirectory.resolve(MarkdownReporter.REPORT_FILENAME);
