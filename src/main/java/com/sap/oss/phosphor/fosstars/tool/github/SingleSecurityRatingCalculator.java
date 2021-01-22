@@ -1,6 +1,10 @@
 package com.sap.oss.phosphor.fosstars.tool.github;
 
 import com.sap.oss.phosphor.fosstars.data.DataProvider;
+import com.sap.oss.phosphor.fosstars.data.NoUserCallback;
+import com.sap.oss.phosphor.fosstars.data.NoValueCache;
+import com.sap.oss.phosphor.fosstars.data.UserCallback;
+import com.sap.oss.phosphor.fosstars.data.ValueCache;
 import com.sap.oss.phosphor.fosstars.data.github.CodeqlDataProvider;
 import com.sap.oss.phosphor.fosstars.data.github.FuzzedInOssFuzz;
 import com.sap.oss.phosphor.fosstars.data.github.GitHubDataFetcher;
@@ -40,11 +44,44 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * The class calculates a security rating for a single open-source project.
  */
-class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
+class SingleSecurityRatingCalculator {
+
+  /**
+   * A logger.
+   */
+  private static final Logger LOGGER = LogManager.getLogger(SingleSecurityRatingCalculator.class);
+
+  /**
+   * An interface to GitHub.
+   */
+  private final GitHubDataFetcher fetcher;
+
+  /**
+   * An interface to NVD.
+   */
+  private final NVD nvd;
+
+  /**
+   * Open source security rating.
+   */
+  private final OssSecurityRating rating
+      = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
+
+  /**
+   * A cache of feature values for GitHub projects.
+   */
+  private ValueCache<GitHubProject> cache = NoValueCache.create();
+
+  /**
+   * An interface for interacting with a user.
+   */
+  private UserCallback callback = NoUserCallback.INSTANCE;
 
   /**
    * Initializes a new calculator.
@@ -53,25 +90,56 @@ class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
    * @param nvd An interface to NVD.
    */
   SingleSecurityRatingCalculator(GitHubDataFetcher fetcher, NVD nvd) {
-    super(fetcher, nvd);
+    Objects.requireNonNull(fetcher, "Oh no! An interface to GitHub can't be null!");
+    Objects.requireNonNull(nvd, "Oh no! An interface to NVD can't be null!");
+    this.fetcher = fetcher;
+    this.nvd = nvd;
   }
 
-  @Override
+  /**
+   * Get the open source security rating.
+   *
+   * @return The rating.
+   */
+  OssSecurityRating rating() {
+    return rating;
+  }
+
+  /**
+   * Sets an interface for interacting with a user.
+   *
+   * @param callback The interface for interacting with a user.
+   * @return The same calculator.
+   */
+  SingleSecurityRatingCalculator set(UserCallback callback) {
+    this.callback = callback;
+    return this;
+  }
+
+  /**
+   * Set a cache for the calculator.
+   *
+   * @param cache The cache.
+   * @return The same calculator.
+   */
+  SingleSecurityRatingCalculator set(ValueCache<GitHubProject> cache) {
+    this.cache = Objects.requireNonNull(cache, "Oh no! Cache can't be null!");
+    return this;
+  }
+
   public SingleSecurityRatingCalculator calculateFor(GitHubProject project) throws IOException {
     Objects.requireNonNull(project, "Oh no! Project can't be null!");
 
-    logger.info("Let's gather info and calculate a security rating for:");
-    logger.info("  {}", project.scm());
+    LOGGER.info("Let's gather info and calculate a security rating for:");
+    LOGGER.info("  {}", project.scm());
 
     try {
       fetcher.repositoryFor(project);
     } catch (IOException e) {
-      logger.error("Looks like something is wrong with the project!", e);
-      logger.warn("Let's skip the project ...");
+      LOGGER.error("Looks like something is wrong with the project!", e);
+      LOGGER.warn("Let's skip the project ...");
       return this;
     }
-
-    OssSecurityRating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
 
     ValueSet values = ValueHashSet.unknown(rating.allFeatures());
     for (DataProvider<GitHubProject> provider : dataProviders()) {
@@ -84,26 +152,21 @@ class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
       try {
         provider.set(callback).set(cache).update(project, values);
       } catch (Exception e) {
-        logger.warn("Holy Moly, {} data provider failed!",
+        LOGGER.warn("Holy Moly, {} data provider failed!",
             provider.getClass().getSimpleName());
-        logger.warn("The last thing that it said was", e);
-        logger.warn("But we don't give up!");
+        LOGGER.warn("The last thing that it said was", e);
+        LOGGER.warn("But we don't give up!");
       }
     }
 
-    logger.info("Here is what we know about the project:");
+    LOGGER.info("Here is what we know about the project:");
     Arrays.stream(values.toArray())
         .sorted(Comparator.comparing(value -> value.feature().name()))
-        .forEach(value -> logger.info("   {}: {}", value.feature(), value));
+        .forEach(value -> LOGGER.info("   {}: {}", value.feature(), value));
 
     project.set(rating.calculate(values));
 
     return this;
-  }
-
-  @Override
-  public SingleSecurityRatingCalculator calculateFor(List<GitHubProject> projects) {
-    throw new UnsupportedOperationException("I can't handle multiple projects!");
   }
 
   /**

@@ -1,19 +1,30 @@
 package com.sap.oss.phosphor.fosstars.tool.github;
 
-import com.sap.oss.phosphor.fosstars.data.github.GitHubDataFetcher;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
-import com.sap.oss.phosphor.fosstars.nvd.NVD;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * The class calculates security ratings for multiple open-source projects.
  */
-class MultipleSecurityRatingsCalculator extends AbstractRatingCalculator {
+class MultipleSecurityRatingsCalculator {
+
+  /**
+   * A logger.
+   */
+  private static final Logger LOGGER
+      = LogManager.getLogger(MultipleSecurityRatingsCalculator.class);
+
+  /**
+   * A calculator that calculate a rating for a single project.
+   */
+  private final SingleSecurityRatingCalculator calculator;
 
   /**
    * A cache of processed projects.
@@ -31,13 +42,13 @@ class MultipleSecurityRatingsCalculator extends AbstractRatingCalculator {
   private final List<GitHubProject> failedProjects = new ArrayList<>();
 
   /**
-   * Initializes a new calculator.
+   * Initializes a new calculator that calculates ratings for multiple projects.
    *
-   * @param fetcher An interface to GitHub.
-   * @param nvd An interface to NVD.
+   * @param calculator A calculator that calculate a rating for a single project.
    */
-  MultipleSecurityRatingsCalculator(GitHubDataFetcher fetcher, NVD nvd) {
-    super(fetcher, nvd);
+  MultipleSecurityRatingsCalculator(SingleSecurityRatingCalculator calculator) {
+    Objects.requireNonNull(calculator, "Oh no! Calculator is null!");
+    this.calculator = calculator;
   }
 
   /**
@@ -58,20 +69,27 @@ class MultipleSecurityRatingsCalculator extends AbstractRatingCalculator {
    * @return The same {@link MultipleSecurityRatingsCalculator}.
    */
   MultipleSecurityRatingsCalculator storeProjectCacheTo(String filename) {
+    Objects.requireNonNull(filename, "Hey! Filename can't be null!");
     projectCacheFile = filename;
     return this;
   }
 
-  @Override
-  public MultipleSecurityRatingsCalculator calculateFor(GitHubProject project) throws IOException {
+  /**
+   * Calculate a rating for a project.
+   *
+   * @param project The project.
+   * @return The same {@link MultipleSecurityRatingsCalculator}.
+   * @throws IOException If something went wrong.
+   */
+  private MultipleSecurityRatingsCalculator calculateFor(GitHubProject project) throws IOException {
     Optional<RatingValue> cachedRatingValue = projectCache.cachedRatingValueFor(project);
     if (cachedRatingValue.isPresent()) {
       project.set(cachedRatingValue.get());
-      logger.info("Found a cached rating for {}", project);
+      LOGGER.info("Found a cached rating for {}", project);
       return this;
     }
 
-    singleSecurityRatingCalculator().calculateFor(project);
+    calculator.calculateFor(project);
     projectCache.add(project);
 
     return this;
@@ -84,8 +102,7 @@ class MultipleSecurityRatingsCalculator extends AbstractRatingCalculator {
    * @param projects The projects.
    * @return The same calculator.
    */
-  @Override
-  public MultipleSecurityRatingsCalculator calculateFor(List<GitHubProject> projects) {
+  MultipleSecurityRatingsCalculator calculateFor(List<GitHubProject> projects) {
     failedProjects.clear();
 
     for (GitHubProject project : projects) {
@@ -93,12 +110,12 @@ class MultipleSecurityRatingsCalculator extends AbstractRatingCalculator {
         calculateFor(project);
 
         if (projectCacheFile != null) {
-          logger.info("Storing the project cache to {}", projectCacheFile);
+          LOGGER.info("Storing the project cache to {}", projectCacheFile);
           projectCache.store(projectCacheFile);
         }
       } catch (Exception e) {
-        logger.warn("Oh no! Could not calculate a rating for {}", project.scm());
-        logger.warn(e);
+        LOGGER.warn("Oh no! Could not calculate a rating for {}", project.scm());
+        LOGGER.warn(e);
         failedProjects.add(project);
       }
     }
@@ -113,18 +130,6 @@ class MultipleSecurityRatingsCalculator extends AbstractRatingCalculator {
    */
   List<GitHubProject> failedProjects() {
     return new ArrayList<>(failedProjects);
-  }
-
-  /**
-   * Creates a {@link SingleSecurityRatingCalculator} for calculating a rating for a single project.
-   *
-   * @return An instance of {@link SingleSecurityRatingCalculator}.
-   */
-  RatingCalculator singleSecurityRatingCalculator() {
-    return new SingleSecurityRatingCalculator(fetcher, nvd)
-        .token(token)
-        .set(callback)
-        .set(cache);
   }
 
 }

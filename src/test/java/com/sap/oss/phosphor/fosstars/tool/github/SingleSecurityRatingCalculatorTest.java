@@ -32,7 +32,6 @@ public class SingleSecurityRatingCalculatorTest extends TestGitHubDataFetcherHol
     SingleSecurityRatingCalculator calculator
         = new SingleSecurityRatingCalculator(fetcher, new NVD());
 
-    calculator.token("test");
     calculator.set(NoUserCallback.INSTANCE);
     calculator = spy(calculator);
 
@@ -75,7 +74,6 @@ public class SingleSecurityRatingCalculatorTest extends TestGitHubDataFetcherHol
     SingleSecurityRatingCalculator calculator
         = new SingleSecurityRatingCalculator(fetcher, new NVD());
 
-    calculator.token("test");
     calculator.set(NoUserCallback.INSTANCE);
     calculator = spy(calculator);
 

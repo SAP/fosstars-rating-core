@@ -127,6 +127,16 @@ public class SecurityRatingCalculator {
   private final NVD nvd = new NVD();
 
   /**
+   * An interface for accessing GitHub.
+   */
+  private final GitHubDataFetcher fetcher;
+
+  /**
+   * A calculator for security ratings.
+   */
+  private final SingleSecurityRatingCalculator calculator;
+
+  /**
    * A {@link PrettyPrinter} for printing out a security rating.
    */
   private final PrettyPrinter prettyPrinter;
@@ -205,10 +215,23 @@ public class SecurityRatingCalculator {
       throw new IOException("Could not parse command-line parameters", e);
     }
 
+    checkOptionsIn(commandLine);
+
     String logConfig = commandLine.hasOption("v") ? "/log4j2-verbose.xml" : "/log4j2-standard.xml";
     LoggerContext context = (LoggerContext) LogManager.getContext(false);
     context.setConfigLocation(SecurityRatingCalculator.class.getResource(logConfig).toURI());
     context.updateLoggers();
+
+    UserCallback callback = commandLine.hasOption("interactive")
+        ? new Terminal() : NoUserCallback.INSTANCE;
+
+    String githubToken = commandLine.getOptionValue("token");
+
+    fetcher = new GitHubDataFetcher(connectToGithub(githubToken, callback));
+
+    calculator = new SingleSecurityRatingCalculator(fetcher, nvd);
+    calculator.set(VALUE_CACHE);
+    calculator.set(callback);
 
     prettyPrinter = commandLine.hasOption("v")
         ? PrettyPrinter.withVerboseOutput(ADVISOR) : PrettyPrinter.withoutVerboseOutput();
@@ -226,34 +249,25 @@ public class SecurityRatingCalculator {
       return;
     }
 
-    checkOptionsIn(commandLine);
-
-    UserCallback callback = commandLine.hasOption("interactive")
-        ? new Terminal() : NoUserCallback.INSTANCE;
-
-    String token = commandLine.getOptionValue("token");
-
-    GitHubDataFetcher fetcher = new GitHubDataFetcher(connectToGithub(token, callback));
-
-    nvd.download();
-    nvd.parse();
-
     Path path = Paths.get(FOSSTARS_DIRECTORY);
     if (!Files.exists(path)) {
       Files.createDirectories(path);
     }
 
+    nvd.download();
+    nvd.parse();
+
     try {
       if (commandLine.hasOption("url")) {
-        processUrl(commandLine.getOptionValue("url"), commandLine, fetcher, token, callback);
+        processUrl(commandLine.getOptionValue("url"));
       }
 
       if (commandLine.hasOption("gav")) {
-        processGav(commandLine.getOptionValue("gav"), commandLine, fetcher, token, callback);
+        processGav(commandLine.getOptionValue("gav"));
       }
 
       if (commandLine.hasOption("config")) {
-        processConfig(commandLine.getOptionValue("config"), fetcher, token, callback);
+        processConfig(commandLine.getOptionValue("config"));
       }
     } finally {
       VALUE_CACHE.store(PATH_TO_VALUE_CACHE);
@@ -267,6 +281,10 @@ public class SecurityRatingCalculator {
    * @throws IllegalArgumentException If the options are invalid.
    */
   private static void checkOptionsIn(CommandLine commandLine) {
+    if (commandLine.hasOption("h")) {
+      return;
+    }
+
     if (!commandLine.hasOption("url") && !commandLine.hasOption("config")
         && !commandLine.hasOption("gav")) {
 
@@ -291,22 +309,11 @@ public class SecurityRatingCalculator {
    * Calculate a rating for a single project identified by a URL to its SCM.
    *
    * @param url A URL of the project repository.
-   * @param commandLine Command-line options.
-   * @param fetcher An interface for accessing the GitHub.
-   * @param githubToken A token for accessing the GitHub APIs.
-   * @param callback An interface for interacting with a user.
    * @throws IOException If something went wrong.
    */
-  private void processUrl(String url, CommandLine commandLine, GitHubDataFetcher fetcher,
-      String githubToken, UserCallback callback) throws IOException {
-
+  private void processUrl(String url) throws IOException {
     GitHubProject project = GitHubProject.parse(url);
-
-    new SingleSecurityRatingCalculator(fetcher, nvd)
-        .set(callback)
-        .set(VALUE_CACHE)
-        .token(githubToken)
-        .calculateFor(project);
+    calculator.calculateFor(project);
 
     if (!project.ratingValue().isPresent()) {
       throw new IOException("Could not calculate a rating!");
@@ -322,15 +329,9 @@ public class SecurityRatingCalculator {
    * Calculate a rating for a single project identified by GAV coordinates.
    *
    * @param gav The GAV coordinates.
-   * @param commandLine Command-line options.
-   * @param fetcher An interface for accessing the GitHub.
-   * @param githubToken A token for accessing the GitHub APIs.
-   * @param callback An interface for interacting with a user.
    * @throws IOException If something went wrong.
    */
-  private void processGav(String gav, CommandLine commandLine, GitHubDataFetcher fetcher,
-      String githubToken, UserCallback callback) throws IOException {
-
+  private void processGav(String gav) throws IOException {
     MavenScmFinder finder = new MavenScmFinder();
 
     Optional<String> scm = finder.findScmFor(gav);
@@ -356,22 +357,16 @@ public class SecurityRatingCalculator {
       LOGGER.info("  {}", url);
     }
 
-    processUrl(url, commandLine, fetcher, githubToken, callback);
+    processUrl(url);
   }
 
   /**
    * Calculate a rating for projects specified in a config.
    *
    * @param filename A path to the config.
-   * @param fetcher An interface for accessing the GitHub.
-   * @param githubToken A token for accessing the GitHub APIs.
-   * @param callback An interface for interacting with a user.
    * @throws IOException If something went wrong.
    */
-  private void processConfig(
-      String filename, GitHubDataFetcher fetcher, String githubToken, UserCallback callback)
-      throws IOException {
-
+  private void processConfig(String filename) throws IOException {
     LOGGER.info("Loading config from {}", filename);
     Config config = config(filename);
 
@@ -391,18 +386,15 @@ public class SecurityRatingCalculator {
     String projectCacheFile = projectCacheFile(config);
 
     LOGGER.info("Starting calculating ratings ...");
-    MultipleSecurityRatingsCalculator calculator =
-        (MultipleSecurityRatingsCalculator) new MultipleSecurityRatingsCalculator(fetcher, nvd)
+    MultipleSecurityRatingsCalculator multipleSecurityRatingsCalculator =
+        new MultipleSecurityRatingsCalculator(calculator)
             .set(loadProjectCache(projectCacheFile))
             .storeProjectCacheTo(projectCacheFile)
-            .set(VALUE_CACHE)
-            .set(callback)
-            .token(githubToken)
             .calculateFor(projects);
 
     LOGGER.info("Okay, we've done calculating the ratings");
 
-    List<GitHubProject> failedProjects = calculator.failedProjects();
+    List<GitHubProject> failedProjects = multipleSecurityRatingsCalculator.failedProjects();
     if (!failedProjects.isEmpty()) {
       LOGGER.warn("Ratings couldn't be calculated for {} project{}",
           failedProjects.size(), failedProjects.size() == 1 ? "" : "s");
@@ -503,16 +495,16 @@ public class SecurityRatingCalculator {
 
   /**
    * Create a reporter from a config.
-   * The method returns {@link Reporter#DUMMY} if the config is null.
+   * The method returns a list with only {@link Reporter#dummy()} if the config is null.
    *
    * @param config The config.
    * @return A reporter.
    * @throws IllegalArgumentException If the type is unknown.
    */
-  private static List<Reporter<GitHubProject>> makeReporters(Config config) throws IOException {
+  private List<Reporter<GitHubProject>> makeReporters(Config config) throws IOException {
     Objects.requireNonNull(config, "Oh no! Config is null!");
     if (config.reportConfigs == null) {
-      return Collections.singletonList(Reporter.DUMMY);
+      return Collections.singletonList(Reporter.dummy());
     }
 
     List<Reporter<GitHubProject>> reporters = new ArrayList<>();
@@ -520,7 +512,8 @@ public class SecurityRatingCalculator {
       Objects.requireNonNull(reportConfig.type, "Hey! Reporter type can't be null!");
       switch (reportConfig.type) {
         case MARKDOWN:
-          reporters.add(new MarkdownReporter(reportConfig.where, reportConfig.source, ADVISOR));
+          reporters.add(new MarkdownReporter(
+              reportConfig.where, reportConfig.source, calculator.rating(), ADVISOR));
           break;
         case JSON:
           reporters.add(new MergedJsonReporter(reportConfig.where));
@@ -697,11 +690,10 @@ public class SecurityRatingCalculator {
     if (token != null) {
       LOGGER.info("Okay, we have a GitHub token, let's try to use it");
       try {
-        GitHub github = new GitHubBuilder()
+        return new GitHubBuilder()
             .withConnector(connector)
             .withOAuthToken(token)
             .build();
-        return github;
       } catch (IOException e) {
         LOGGER.warn("Something went wrong: {}", e.getMessage());
         suppressed.add(e);
