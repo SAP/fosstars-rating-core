@@ -33,16 +33,13 @@ public class MultipleSecurityRatingsCalculatorTest extends TestGitHubDataFetcher
 
     SingleSecurityRatingCalculator singleRatingCalculator
         = new SingleSecurityRatingCalculator(fetcher, nvd);
+    singleRatingCalculator.set(NoUserCallback.INSTANCE);
     singleRatingCalculator = spy(singleRatingCalculator);
     when(singleRatingCalculator.dataProviders()).thenReturn(Collections.emptyList());
 
     MultipleSecurityRatingsCalculator multipleRatingsCalculator
-        = new MultipleSecurityRatingsCalculator(fetcher, nvd);
-    multipleRatingsCalculator.token("test");
-    multipleRatingsCalculator.set(NoUserCallback.INSTANCE);
+        = new MultipleSecurityRatingsCalculator(singleRatingCalculator);
     multipleRatingsCalculator = spy(multipleRatingsCalculator);
-    when(multipleRatingsCalculator.singleSecurityRatingCalculator())
-        .thenReturn(singleRatingCalculator);
 
     GitHubProject apacheNiFi = new GitHubProject("apache", "nifi");
     GitHubProject eclipseSteady = new GitHubProject("eclipse", "steady");

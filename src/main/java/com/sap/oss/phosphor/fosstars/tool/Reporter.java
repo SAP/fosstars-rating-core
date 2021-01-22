@@ -20,7 +20,12 @@ public interface Reporter<T extends OpenSourceProject> {
   void runFor(List<T> projects) throws IOException;
 
   /**
-   * This is a reporter which does nothing.
+   * Returns a reporter that does nothing.
+   *
+   * @param <T> A type of projects.
+   * @return A reporter that does nothing.
    */
-  Reporter DUMMY = projects -> {};
+  static <T extends OpenSourceProject> Reporter<T> dummy() {
+    return projects -> {};
+  }
 }
