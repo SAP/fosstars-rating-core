@@ -56,7 +56,10 @@ import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Set;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class PrettyPrinterTest {
@@ -99,6 +102,14 @@ public class PrettyPrinterTest {
       OWASP_DEPENDENCY_CHECK_USAGE.value(NOT_USED),
       OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.notSpecifiedValue(),
       PACKAGE_MANAGERS.value(new PackageManagers(MAVEN)));
+
+  private static Locale savedLocale;
+
+  @BeforeClass
+  public static void setup() {
+    savedLocale = Locale.getDefault();
+    Locale.setDefault(new Locale("en", "US"));
+  }
 
   @Test
   public void testPrint() {
@@ -159,4 +170,10 @@ public class PrettyPrinterTest {
     assertEquals("9.0  out of 10.0",
         PrettyPrinter.printValueAndMax(9.0, 10.0));
   }
+
+  @AfterClass
+  public static void cleanup() {
+    Locale.setDefault(savedLocale);
+  }
+
 }
