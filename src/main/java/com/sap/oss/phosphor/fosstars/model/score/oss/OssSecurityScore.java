@@ -29,6 +29,8 @@ public class OssSecurityScore extends WeightedCompositeScore {
     ProjectSecurityTestingScore securityTestingScore = new ProjectSecurityTestingScore();
 
     SUB_SCORES.add(securityTestingScore);
+    SUB_SCORES.add(new ArtifactMaintenanceScore());
+    SUB_SCORES.add(new ArtifactVersionReleaseScore());
     SUB_SCORES.add(new ProjectActivityScore());
     SUB_SCORES.add(new ProjectPopularityScore());
     SUB_SCORES.add(new CommunityCommitmentScore());
