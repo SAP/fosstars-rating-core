@@ -7,6 +7,7 @@ import com.sap.oss.phosphor.fosstars.model.feature.LgtmGradeFeature;
 import com.sap.oss.phosphor.fosstars.model.feature.OwaspDependencyCheckCvssThreshold;
 import com.sap.oss.phosphor.fosstars.model.feature.OwaspDependencyCheckUsageFeature;
 import com.sap.oss.phosphor.fosstars.model.feature.PositiveIntegerFeature;
+import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersions;
 import com.sap.oss.phosphor.fosstars.model.value.Languages;
 import com.sap.oss.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.oss.phosphor.fosstars.model.value.PackageManagers;
@@ -24,6 +25,9 @@ public class OssFeatures {
   private OssFeatures() {
 
   }
+
+  public static final Feature<ArtifactVersions> RELEASED_ARTIFACT_VERSIONS
+      = new ArtifactVersionFeature("Released artifact versions");
 
   /**
    * Shows how many commits have been integrated in the last three months.
