@@ -177,7 +177,7 @@ public abstract class CommonFormatter implements Formatter {
    * @param value The value to be printed out.
    * @return A formatted value.
    */
-  static String actualValueOf(Value<?> value) {
+  protected String actualValueOf(Value<?> value) {
     if (value.isUnknown()) {
       return "unknown";
     }

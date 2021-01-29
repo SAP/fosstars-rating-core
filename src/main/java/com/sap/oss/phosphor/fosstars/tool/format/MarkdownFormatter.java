@@ -9,6 +9,8 @@ import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
+import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
+import com.sap.oss.phosphor.fosstars.model.value.Vulnerability;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
@@ -25,6 +27,7 @@ import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -110,7 +113,71 @@ public class MarkdownFormatter extends CommonFormatter {
         .replace("%MAIN_SCORE_DESCRIPTION%", scoreValue.score().description())
         .replace("%MAIN_SCORE_EXPLANATION%", explanationOf(scoreValue))
         .replace("%SUB_SCORE_DETAILS%", descriptionOfSubScoresIn(scoreValue))
-        .replace("%ADVICES%", advices);
+        .replace("%ADVICES%", advices)
+        .replace("%INFO_ABOUT_VULNERABILITIES%", infoAboutVulnerabilitiesIn(scoreValue));
+  }
+
+  /**
+   * Prints info about vulnerabilities that was used for calculating a score value.
+   *
+   * @param scoreValue The score value.
+   * @return Formatted info about vulnerabilities.
+   */
+  private String infoAboutVulnerabilitiesIn(ScoreValue scoreValue) {
+    Set<Vulnerability> uniqueVulnerabilities = new TreeSet<>((first, second) -> {
+      if (first.id().equals(second.id())) {
+        return 0;
+      }
+
+      if (first.published().isPresent() && second.published().isPresent()) {
+        return first.published().get().compareTo(second.published().get());
+      }
+
+      return first.id().compareTo(second.id());
+    });
+
+    for (Value<?> value : scoreValue.usedFeatureValues()) {
+      if (value.isUnknown()) {
+        continue;
+      }
+
+      if (value.get() instanceof Vulnerabilities) {
+        Vulnerabilities vulnerabilities = (Vulnerabilities) value.get();
+        for (Vulnerability vulnerability : vulnerabilities) {
+          uniqueVulnerabilities.add(vulnerability);
+        }
+      }
+    }
+
+    if (uniqueVulnerabilities.isEmpty()) {
+      return "No vulnerabilities found";
+    }
+
+    StringBuilder info = new StringBuilder();
+    for (Vulnerability vulnerability : uniqueVulnerabilities) {
+      if (vulnerability.description().isPresent()) {
+        info.append(String.format("1.  %s: %s%n",
+            linkFor(vulnerability), vulnerability.description()));
+      } else {
+        info.append(String.format("1.  %s%n", linkFor(vulnerability)));
+      }
+    }
+    return info.toString();
+  }
+
+  /**
+   * Prints a link for a vulnerability if possible.
+   *
+   * @param vulnerability The vulnerability.
+   * @return A link for the vulnerability if available, or its identifier otherwise.
+   */
+  private static String linkFor(Vulnerability vulnerability) {
+    if (vulnerability.id().startsWith("CVE-")) {
+      return String.format("[%s](https://nvd.nist.gov/vuln/detail/%s)",
+          vulnerability.id(), vulnerability.id());
+    }
+
+    return vulnerability.id();
   }
 
   /**
@@ -236,7 +303,7 @@ public class MarkdownFormatter extends CommonFormatter {
    * @param scoreValue The score value to be printed out.
    * @return A formatted text.
    */
-  private static String descriptionOfSubScoresIn(ScoreValue scoreValue) {
+  String descriptionOfSubScoresIn(ScoreValue scoreValue) {
     StringBuilder sb = new StringBuilder();
 
     Set<Score> processedScores = new HashSet<>();
@@ -263,7 +330,7 @@ public class MarkdownFormatter extends CommonFormatter {
    * @param scoreValue The score value to be printed.
    * @return A formatted score value.
    */
-  private static String detailsOf(ScoreValue scoreValue) {
+  private String detailsOf(ScoreValue scoreValue) {
     StringBuilder sb = new StringBuilder();
 
     sb.append(String.format("### %s%n%n", nameOf(scoreValue.score())));
@@ -304,7 +371,7 @@ public class MarkdownFormatter extends CommonFormatter {
       sb.append(String.format("This sub-score is based on %d feature%s:%n%n",
           featureValues.size(), featureValues.size() == 1 ? StringUtils.EMPTY : "s"));
 
-      Map<String, Object> nameToValue = new TreeMap<>(String::compareTo);
+      Map<String, String> nameToValue = new TreeMap<>(String::compareTo);
       for (Value<?> usedValue : featureValues) {
         String name = nameOf(usedValue.feature());
 
@@ -312,10 +379,10 @@ public class MarkdownFormatter extends CommonFormatter {
           name += ":";
         }
 
-        nameToValue.put(name, CommonFormatter.actualValueOf(usedValue));
+        nameToValue.put(name, actualValueOf(usedValue));
       }
 
-      for (Map.Entry<String, Object> entry : nameToValue.entrySet()) {
+      for (Map.Entry<String, String> entry : nameToValue.entrySet()) {
         sb.append(String.format("1.  %s **%s**%n", entry.getKey(), entry.getValue()));
       }
     }
@@ -342,6 +409,20 @@ public class MarkdownFormatter extends CommonFormatter {
     }
 
     return formatted(scoreValue.get());
+  }
+
+  @Override
+  protected String actualValueOf(Value<?> value) {
+    if (!value.isUnknown() && value.get() instanceof Vulnerabilities) {
+      Vulnerabilities vulnerabilities = (Vulnerabilities) value.get();
+      if (vulnerabilities.isEmpty()) {
+        return "Not found";
+      } else {
+        return String.format("%s, [details below](#known-vulnerabilities)", vulnerabilities);
+      }
+    }
+
+    return super.actualValueOf(value);
   }
 
   /**
