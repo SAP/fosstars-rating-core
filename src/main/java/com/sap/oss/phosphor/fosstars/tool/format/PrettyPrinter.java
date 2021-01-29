@@ -154,8 +154,8 @@ public class PrettyPrinter extends CommonFormatter {
     }
 
     List<ScoreValue> subScoreValues = new ArrayList<>();
-    List<Value> featureValues = new ArrayList<>();
-    for (Value usedValue : scoreValue.usedValues()) {
+    List<Value<?>> featureValues = new ArrayList<>();
+    for (Value<?> usedValue : scoreValue.usedValues()) {
       if (usedValue instanceof ScoreValue) {
         subScoreValues.add((ScoreValue) usedValue);
       } else {
@@ -182,9 +182,9 @@ public class PrettyPrinter extends CommonFormatter {
     if (shouldPrint(featureValues)) {
       Map<String, Object> nameToValue = new TreeMap<>(String::compareTo);
       int maxLength = 0;
-      for (Value usedValue : featureValues) {
+      for (Value<?> usedValue : featureValues) {
         String name = nameOf(usedValue.feature());
-        nameToValue.put(name, CommonFormatter.actualValueOf(usedValue));
+        nameToValue.put(name, actualValueOf(usedValue));
 
         if (maxLength < name.length()) {
           maxLength = name.length();
@@ -298,7 +298,7 @@ public class PrettyPrinter extends CommonFormatter {
    * @param featureValues The feature values to be checked.
    * @return True if the pretty printer should print the feature values, false otherwise.
    */
-  private boolean shouldPrint(List<Value> featureValues) {
+  private boolean shouldPrint(List<Value<?>> featureValues) {
     return verbose && !featureValues.isEmpty();
   }
 
