@@ -122,7 +122,7 @@ public class MarkdownFormatter extends CommonFormatter {
   private String advicesFor(Subject subject) {
     List<Advice> advices = advisor.adviseFor(subject);
     if (advices.isEmpty()) {
-      return "";
+      return StringUtils.EMPTY;
     }
 
     StringBuilder sb = new StringBuilder();
@@ -131,7 +131,7 @@ public class MarkdownFormatter extends CommonFormatter {
     for (Advice advice : advices) {
       sb.append(String.format("%d.  %s", i++, advice.content().text()));
       if (!advice.content().links().isEmpty()) {
-        sb.append(" More info:").append("\n");
+        sb.append("\n    More info:").append("\n");
         int j = 1;
         for (Link link : advice.content().links()) {
           sb.append(String.format("    %d.  [%s](%s)%n", j++, link.name, link.url));
@@ -173,7 +173,7 @@ public class MarkdownFormatter extends CommonFormatter {
    * @return A formatted text.
    */
   private static String highLevelDescriptionOf(ScoreValue scoreValue) {
-    return highLevelDescriptionOf(scoreValue, "");
+    return highLevelDescriptionOf(scoreValue, StringUtils.EMPTY);
   }
 
   /**
@@ -201,13 +201,10 @@ public class MarkdownFormatter extends CommonFormatter {
    * @return A formatted text.
    */
   private static String shortDescriptionOf(ScoreValue scoreValue) {
-    return String.format("**%s**: %s, confidence is %s (%s), importance is %s (%s)",
+    return String.format("**%s**: **%s** (weight is %s)",
         anchorFor(nameOf(scoreValue.score())),
         actualValueOf(scoreValue),
-        formatted(scoreValue.confidence()),
-        confidenceLabelFor(scoreValue.confidence()).toLowerCase(),
-        formatted(scoreValue.weight()),
-        importanceLabel(scoreValue.weight()).toLowerCase()
+        formatted(scoreValue.weight())
     );
   }
 
@@ -271,12 +268,12 @@ public class MarkdownFormatter extends CommonFormatter {
 
     sb.append(String.format("### %s%n%n", nameOf(scoreValue.score())));
 
-    sb.append(String.format("Score: %s, confidence is %s (%s), importance is %s (%s)%n%n",
+    sb.append(String.format("Score: **%s**, confidence is %s (%s), weight is %s (%s)%n%n",
         actualValueOf(scoreValue),
         formatted(scoreValue.confidence()),
         confidenceLabelFor(scoreValue.confidence()).toLowerCase(),
         formatted(scoreValue.weight()),
-        importanceLabel(scoreValue.weight()).toLowerCase()));
+        weightLabel(scoreValue.weight()).toLowerCase()));
 
     sb.append(scoreValue.score().description());
     sb.append("\n\n");
@@ -285,8 +282,8 @@ public class MarkdownFormatter extends CommonFormatter {
     sb.append("\n\n");
 
     List<ScoreValue> subScoreValues = new ArrayList<>();
-    List<Value> featureValues = new ArrayList<>();
-    for (Value usedValue : scoreValue.usedValues()) {
+    List<Value<?>> featureValues = new ArrayList<>();
+    for (Value<?> usedValue : scoreValue.usedValues()) {
       if (usedValue instanceof ScoreValue) {
         subScoreValues.add((ScoreValue) usedValue);
       } else {
@@ -297,18 +294,18 @@ public class MarkdownFormatter extends CommonFormatter {
     if (!subScoreValues.isEmpty()) {
       subScoreValues.sort(Collections.reverseOrder(Comparator.comparingDouble(ScoreValue::weight)));
 
-      sb.append(String.format("The sub-score uses the following sub-score%s:%n%n",
-          subScoreValues.size() == 1 ? "" : "s"));
+      sb.append(String.format("This sub-score is based on the following sub-score%s:%n%n",
+          subScoreValues.size() == 1 ? StringUtils.EMPTY : "s"));
       sb.append(highLevelDescriptionOf(scoreValue));
       sb.append("\n");
     }
 
     if (!featureValues.isEmpty()) {
-      sb.append(String.format("The sub-score uses %d feature%s:%n%n",
-          featureValues.size(), featureValues.size() == 1 ? "" : "s"));
+      sb.append(String.format("This sub-score is based on %d feature%s:%n%n",
+          featureValues.size(), featureValues.size() == 1 ? StringUtils.EMPTY : "s"));
 
       Map<String, Object> nameToValue = new TreeMap<>(String::compareTo);
-      for (Value usedValue : featureValues) {
+      for (Value<?> usedValue : featureValues) {
         String name = nameOf(usedValue.feature());
 
         if (!name.endsWith("?")) {
@@ -319,7 +316,7 @@ public class MarkdownFormatter extends CommonFormatter {
       }
 
       for (Map.Entry<String, Object> entry : nameToValue.entrySet()) {
-        sb.append(String.format("1.  %s %s%n", entry.getKey(), entry.getValue()));
+        sb.append(String.format("1.  %s **%s**%n", entry.getKey(), entry.getValue()));
       }
     }
 

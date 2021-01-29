@@ -137,7 +137,7 @@ public class PrettyPrinter extends CommonFormatter {
     if (!isMainScore) {
       sb.append(String.format("%sImportance:...%s (weight %s)%n",
           indent,
-          importanceLabel(scoreValue.weight()),
+          weightLabel(scoreValue.weight()),
           printValueAndMax(scoreValue.weight(), Weight.MAX)));
     }
 
