@@ -39,7 +39,7 @@ public abstract class CommonFormatter implements Formatter {
   /**
    * Maps a class of feature to its shorter name which should be used in output.
    */
-  private static final Map<Class<? extends Feature>, String> FEATURE_CLASS_TO_NAME
+  private static final Map<Class<? extends Feature<?>>, String> FEATURE_CLASS_TO_NAME
       = new HashMap<>();
 
   static {
@@ -67,7 +67,7 @@ public abstract class CommonFormatter implements Formatter {
   /**
    * Maps a feature to its shorter name which should be used in output.
    */
-  private static final Map<Feature, String> FEATURE_TO_NAME = new HashMap<>();
+  private static final Map<Feature<?>, String> FEATURE_TO_NAME = new HashMap<>();
 
   static {
     FEATURE_TO_NAME.put(OssFeatures.HAS_SECURITY_TEAM, "Does it have a security team?");
@@ -139,7 +139,7 @@ public abstract class CommonFormatter implements Formatter {
    * @param weight The weight.
    * @return A human-readable label.
    */
-  static String importanceLabel(double weight) {
+  static String weightLabel(double weight) {
     if (weight < 0.3) {
       return "Low";
     }
@@ -155,14 +155,14 @@ public abstract class CommonFormatter implements Formatter {
    * @param feature The feature.
    * @return A name of the feature.
    */
-  static String nameOf(Feature feature) {
-    for (Map.Entry<Class<? extends Feature>, String> entry : FEATURE_CLASS_TO_NAME.entrySet()) {
+  static String nameOf(Feature<?> feature) {
+    for (Map.Entry<Class<? extends Feature<?>>, String> entry : FEATURE_CLASS_TO_NAME.entrySet()) {
       if (feature.getClass() == entry.getKey()) {
         return entry.getValue();
       }
     }
 
-    for (Map.Entry<Feature, String> entry : FEATURE_TO_NAME.entrySet()) {
+    for (Map.Entry<Feature<?>, String> entry : FEATURE_TO_NAME.entrySet()) {
       if (feature.equals(entry.getKey())) {
         return entry.getValue();
       }
@@ -177,7 +177,7 @@ public abstract class CommonFormatter implements Formatter {
    * @param value The value to be printed out.
    * @return A formatted value.
    */
-  static String actualValueOf(Value value) {
+  static String actualValueOf(Value<?> value) {
     if (value.isUnknown()) {
       return "unknown";
     }

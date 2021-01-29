@@ -1,8 +1,8 @@
-**Rating**: %RATING_LABEL%
+**Rating**: **%RATING_LABEL%**
 
-**Score**: %SCORE_VALUE%, where max score value is %MAX_SCORE%
+**Score**: **%SCORE_VALUE%**, max score value is %MAX_SCORE%
 
-**Confidence**: %CONFIDENCE_LABEL% (%CONFIDENCE_VALUE%, where max confidence value is %MAX_CONFIDENCE%)
+**Confidence**: %CONFIDENCE_LABEL% (%CONFIDENCE_VALUE%, max confidence value is %MAX_CONFIDENCE%)
 
 ## Details
 
@@ -12,7 +12,7 @@ The rating is based on **%MAIN_SCORE_NAME%**.
 
 %MAIN_SCORE_EXPLANATION%
 
-The score uses the following sub-scores:
+It used the following sub-scores:
 
 %MAIN_SCORE_VALUE_DETAILS%
 
