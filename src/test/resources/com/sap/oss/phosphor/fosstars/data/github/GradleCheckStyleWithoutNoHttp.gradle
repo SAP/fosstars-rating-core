@@ -1,7 +1,0 @@
-plugins {
-    id "org.corp.something" version "0.0.4.RELEASE"
-}
-
-repositories {
-    mavenCentral()
-}
