@@ -178,7 +178,7 @@ Here is how a number of watchers contributes to the score:
 
 The sub-score uses 2 features:
 
-1.  Number of stars for a GitHub repository: 21
+1.  Number of stars for a GitHub repository: 22
 1.  Number of watchers for a GitHub repository: 9
 
 ### Dependency testing
