@@ -1,6 +1,5 @@
 package com.sap.oss.phosphor.fosstars.model;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.model.other.MakeImmutable;
 import com.sap.oss.phosphor.fosstars.model.rating.example.SecurityRatingExample;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
@@ -8,6 +7,7 @@ import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating.Threshol
 import com.sap.oss.phosphor.fosstars.model.score.oss.OssSecurityScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.ProjectSecurityTestingScore;
 import com.sap.oss.phosphor.fosstars.model.weight.ScoreWeights;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,11 +44,6 @@ public class RatingRepository {
    * A logger.
    */
   private static final Logger LOGGER = LogManager.getLogger(RatingRepository.class);
-
-  /**
-   * An ObjectMapper for serialization and deserialization ratings to JSON.
-   */
-  private static final ObjectMapper MAPPER = new ObjectMapper();
 
   /**
    * Singleton.
@@ -157,7 +152,7 @@ public class RatingRepository {
    * @throws IOException If something went wrong.
    */
   private void store(Rating rating, Path path) throws IOException {
-    Files.write(path, MAPPER.writerWithDefaultPrettyPrinter().writeValueAsBytes(rating));
+    Files.write(path, Json.toBytes(rating));
   }
 
   /**
@@ -179,7 +174,7 @@ public class RatingRepository {
    * @throws IOException If something went wrong.
    */
   private void store(Score score, Path path) throws IOException {
-    Files.write(path, MAPPER.writerWithDefaultPrettyPrinter().writeValueAsBytes(score));
+    Files.write(path, Json.toBytes(score));
   }
 
   /**
@@ -201,13 +196,13 @@ public class RatingRepository {
 
     File file = Paths.get(path.replace('/', File.separatorChar)).toFile();
     if (file.exists()) {
-      return MAPPER.readValue(file, clazz);
+      return Json.mapper().readValue(file, clazz);
     }
 
     InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
     if (is != null) {
       try {
-        return MAPPER.readValue(is, clazz);
+        return Json.mapper().readValue(is, clazz);
       } finally {
         is.close();
       }

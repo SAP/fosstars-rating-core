@@ -11,7 +11,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Parameter;
@@ -22,6 +21,7 @@ import com.sap.oss.phosphor.fosstars.model.feature.DoubleFeature;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.oss.phosphor.fosstars.model.weight.MutableWeight;
 import com.sap.oss.phosphor.fosstars.model.weight.ScoreWeights;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
@@ -339,14 +339,12 @@ public class WeightedCompositeScoreTest {
 
   @Test
   public void testSerializationAndDeserialization() throws IOException {
-    ObjectMapper mapper = new ObjectMapper();
     WeightedScoreImpl score = new WeightedScoreImpl(
         setOf(SECURITY_TESTING_SCORE_EXAMPLE, PROJECT_ACTIVITY_SCORE_EXAMPLE),
         ScoreWeights.createFor(SECURITY_TESTING_SCORE_EXAMPLE, PROJECT_ACTIVITY_SCORE_EXAMPLE));
     score.weights().set(SECURITY_TESTING_SCORE_EXAMPLE, new MutableWeight(0.1));
     score.weights().set(PROJECT_ACTIVITY_SCORE_EXAMPLE, new MutableWeight(0.7));
-    WeightedScoreImpl clone = mapper.readValue(
-        mapper.writeValueAsBytes(score), WeightedScoreImpl.class
+    WeightedScoreImpl clone = Json.read(Json.toBytes(score), WeightedScoreImpl.class
     );
     assertEquals(score, clone);
   }

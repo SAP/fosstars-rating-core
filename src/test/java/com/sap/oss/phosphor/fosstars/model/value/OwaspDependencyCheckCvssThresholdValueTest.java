@@ -5,8 +5,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.model.feature.OwaspDependencyCheckCvssThreshold;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import org.junit.Test;
 
@@ -61,11 +61,9 @@ public class OwaspDependencyCheckCvssThresholdValueTest {
 
   @Test
   public void testSerializationAndDeserialization() throws IOException {
-    ObjectMapper mapper = new ObjectMapper();
-
     OwaspDependencyCheckCvssThresholdValue value = FEATURE.value(5.7);
-    OwaspDependencyCheckCvssThresholdValue clone = mapper.readValue(
-        mapper.writeValueAsBytes(value), OwaspDependencyCheckCvssThresholdValue.class);
+    OwaspDependencyCheckCvssThresholdValue clone = Json.read(
+        Json.toBytes(value), OwaspDependencyCheckCvssThresholdValue.class);
     assertEquals(value, clone);
     assertEquals(value.hashCode(), clone.hashCode());
   }

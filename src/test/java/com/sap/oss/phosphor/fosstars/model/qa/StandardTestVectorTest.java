@@ -9,9 +9,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
 import com.sap.oss.phosphor.fosstars.model.Interval;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.feature.example.ExampleFeatures;
@@ -19,6 +16,8 @@ import com.sap.oss.phosphor.fosstars.model.math.DoubleInterval;
 import com.sap.oss.phosphor.fosstars.model.rating.example.SecurityRatingExample.SecurityLabelExample;
 import com.sap.oss.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.oss.phosphor.fosstars.model.value.IntegerValue;
+import com.sap.oss.phosphor.fosstars.util.Json;
+import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
@@ -172,13 +171,10 @@ public class StandardTestVectorTest {
     StandardTestVector vector = new StandardTestVector(
         values, expectedScore, SecurityLabelExample.OKAY, "test");
 
-    YAMLFactory factory = new YAMLFactory();
-    factory.disable(YAMLGenerator.Feature.USE_NATIVE_TYPE_ID);
-    ObjectMapper mapper = new ObjectMapper(factory);
-    byte[] bytes = mapper.writeValueAsBytes(vector);
+    byte[] bytes = Yaml.toBytes(vector);
     assertNotNull(bytes);
     assertTrue(bytes.length > 0);
-    StandardTestVector clone = mapper.readValue(bytes, StandardTestVector.class);
+    StandardTestVector clone = Yaml.read(bytes, StandardTestVector.class);
     assertEquals(vector, clone);
     assertEquals(vector.hashCode(), clone.hashCode());
   }
@@ -191,11 +187,10 @@ public class StandardTestVectorTest {
     StandardTestVector vector = new StandardTestVector(
         values, expectedScore, SecurityLabelExample.OKAY, "test");
 
-    ObjectMapper mapper = new ObjectMapper();
-    byte[] bytes = mapper.writeValueAsBytes(vector);
+    byte[] bytes = Json.toBytes(vector);
     assertNotNull(bytes);
     assertTrue(bytes.length > 0);
-    StandardTestVector clone = mapper.readValue(bytes, StandardTestVector.class);
+    StandardTestVector clone = Json.read(bytes, StandardTestVector.class);
     assertEquals(vector, clone);
     assertEquals(vector.hashCode(), clone.hashCode());
   }
@@ -207,11 +202,10 @@ public class StandardTestVectorTest {
     StandardTestVector vector = new StandardTestVector(
         values, null, SecurityLabelExample.OKAY, "test", false, true);
 
-    ObjectMapper mapper = new ObjectMapper();
-    byte[] bytes = mapper.writeValueAsBytes(vector);
+    byte[] bytes = Json.toBytes(vector);
     assertNotNull(bytes);
     assertTrue(bytes.length > 0);
-    StandardTestVector clone = mapper.readValue(bytes, StandardTestVector.class);
+    StandardTestVector clone = Json.read(bytes, StandardTestVector.class);
     assertEquals(vector, clone);
     assertEquals(vector.hashCode(), clone.hashCode());
   }

@@ -8,6 +8,7 @@ import com.sap.oss.phosphor.fosstars.model.value.CVSS;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerability;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerability.Resolution;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -136,7 +137,7 @@ public class UnpatchedVulnerabilitiesStorage extends AbstractJsonStorage {
    * @throws IOException If something went wrong.
    */
   public void store(String path) throws IOException {
-    Files.write(Paths.get(path), MAPPER.writerWithDefaultPrettyPrinter().writeValueAsBytes(this));
+    Files.write(Paths.get(path), Json.toBytes(this));
   }
 
   /**

@@ -14,11 +14,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.value.Languages;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import org.junit.Test;
 
@@ -157,10 +157,8 @@ public class StaticAnalysisScoreTest {
 
   @Test
   public void testSerialization() throws IOException {
-    ObjectMapper mapper = new ObjectMapper();
     StaticAnalysisScore score = new StaticAnalysisScore();
-    StaticAnalysisScore clone = mapper.readValue(
-        mapper.writeValueAsBytes(score), StaticAnalysisScore.class);
+    StaticAnalysisScore clone = Json.read(Json.toBytes(score), StaticAnalysisScore.class);
     assertEquals(score, clone);
   }
 

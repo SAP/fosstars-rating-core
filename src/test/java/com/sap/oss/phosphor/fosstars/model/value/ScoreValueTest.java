@@ -11,12 +11,12 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.model.Rating;
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
 import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.rating.example.SecurityRatingExample;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -181,14 +181,13 @@ public class ScoreValueTest {
         NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE.value(10),
         NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE.value(3));
 
-    ObjectMapper mapper = new ObjectMapper();
     ScoreValue value = new ScoreValue(
         PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.1, 1.0, 7.2, usedValues);
-    byte[] bytes = mapper.writeValueAsBytes(value);
+    byte[] bytes = Json.toBytes(value);
     assertNotNull(bytes);
     assertTrue(bytes.length > 0);
 
-    ScoreValue clone = mapper.readValue(bytes, ScoreValue.class);
+    ScoreValue clone = Json.read(bytes, ScoreValue.class);
     assertNotNull(clone);
     assertEquals(value, clone);
     assertEquals(value.hashCode(), clone.hashCode());

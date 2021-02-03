@@ -5,6 +5,7 @@ import static com.sap.oss.phosphor.fosstars.model.score.example.ExampleScores.SE
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
 import org.junit.Test;
 
@@ -46,9 +47,7 @@ public class ScoreWeightsTest {
     weights.set(PROJECT_ACTIVITY_SCORE_EXAMPLE, new MutableWeight(0.2));
     weights.set(SECURITY_TESTING_SCORE_EXAMPLE, new MutableWeight(0.7));
 
-    ScoreWeights clone = ScoreWeights.YAML_OBJECT_MAPPER.readValue(
-        ScoreWeights.YAML_OBJECT_MAPPER.writeValueAsBytes(weights),
-        ScoreWeights.class);
+    ScoreWeights clone = Yaml.read(Yaml.toBytes(weights), ScoreWeights.class);
     assertTrue(weights.equals(clone) && clone.equals(weights));
     assertEquals(weights.hashCode(), clone.hashCode());
   }

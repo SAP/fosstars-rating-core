@@ -9,7 +9,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.util.Iterator;
 import org.junit.Test;
@@ -44,9 +44,8 @@ public class LanguagesTest {
 
   @Test
   public void testSerialization() throws IOException {
-    ObjectMapper mapper = new ObjectMapper();
     Languages languages = Languages.of(JAVA, C, OTHER);
-    Languages clone = mapper.readValue(mapper.writeValueAsBytes(languages), Languages.class);
+    Languages clone = Json.read(Json.toBytes(languages), Languages.class);
     assertEquals(languages, clone);
   }
 

@@ -4,24 +4,24 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import org.junit.Test;
 
 public class NotApplicableLabelTest {
 
   @Test
-  public void name() {
+  public void testName() {
     assertFalse(new NotApplicableLabel().name().isEmpty());
   }
 
   @Test
-  public void isNotApplicable() {
+  public void testIsNotApplicable() {
     assertTrue(new NotApplicableLabel().isNotApplicable());
   }
 
   @Test
-  public void equalsAndHashCode() {
+  public void testEqualsAndHashCode() {
     NotApplicableLabel one = new NotApplicableLabel();
     NotApplicableLabel two = new NotApplicableLabel();
     assertEquals(one, one);
@@ -30,11 +30,10 @@ public class NotApplicableLabelTest {
   }
 
   @Test
-  public void serializationAndDeserialization() throws IOException {
-    ObjectMapper mapper = new ObjectMapper();
+  public void testSerializationAndDeserialization() throws IOException {
     NotApplicableLabel label = new NotApplicableLabel();
-    NotApplicableLabel clone = mapper.readValue(
-        mapper.writeValueAsBytes(label), NotApplicableLabel.class);
+    NotApplicableLabel clone = Json.read(
+        Json.toBytes(label), NotApplicableLabel.class);
     assertEquals(label, clone);
   }
 

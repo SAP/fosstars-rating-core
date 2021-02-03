@@ -3,35 +3,35 @@ package com.sap.oss.phosphor.fosstars.model.weight;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import org.junit.Test;
 
 public class ImmutableWeightTest {
 
   @Test
-  public void good() {
+  public void testGood() {
     assertEquals(0.45, new ImmutableWeight(0.45).value(), 0.0);
     assertEquals(1, new ImmutableWeight(1).value(), 0.0);
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void zero() {
+  public void testZero() {
     new ImmutableWeight(0);
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void negative() {
+  public void testNegative() {
     new ImmutableWeight(-1);
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void tooBig() {
+  public void testTooBig() {
     new ImmutableWeight(2);
   }
 
   @Test(expected = UnsupportedOperationException.class)
-  public void update() {
+  public void testUpdate() {
     ImmutableWeight weight = new ImmutableWeight(0.5);
     assertTrue(weight.isImmutable());
     assertEquals(0.5, weight.value(), 0.001);
@@ -39,16 +39,14 @@ public class ImmutableWeightTest {
   }
 
   @Test
-  public void serializeAndDeserialize() throws IOException {
-    ObjectMapper mapper = new ObjectMapper();
+  public void testSerializeAndDeserialize() throws IOException {
     ImmutableWeight weight = new ImmutableWeight(0.5);
-    byte[] bytes = mapper.writeValueAsBytes(weight);
-    ImmutableWeight clone = mapper.readValue(bytes, ImmutableWeight.class);
+    ImmutableWeight clone = Json.read(Json.toBytes(weight), ImmutableWeight.class);
     assertEquals(weight, clone);
   }
 
   @Test
-  public void boundaries() {
+  public void testBoundaries() {
     MutableWeight weight = new MutableWeight(0.5);
     assertTrue(weight.boundaries().contains(weight.value()));
   }

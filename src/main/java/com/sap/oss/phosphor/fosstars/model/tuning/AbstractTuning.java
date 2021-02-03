@@ -1,6 +1,5 @@
 package com.sap.oss.phosphor.fosstars.model.tuning;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.model.Tunable;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.qa.TestVectorResult;
@@ -15,11 +14,6 @@ import org.apache.logging.log4j.Logger;
  * This is a base class for tuning procedures.
  */
 public abstract class AbstractTuning {
-
-  /**
-   * An ObjectMapper for serialization and deserialization ratings to JSON.
-   */
-  private static final ObjectMapper MAPPER = new ObjectMapper();
 
   /**
    * A logger.

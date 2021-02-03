@@ -7,8 +7,8 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.model.rating.example.SecurityRatingExample.SecurityLabelExample;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.util.Collections;
 import org.junit.Test;
@@ -16,7 +16,7 @@ import org.junit.Test;
 public class RatingValueTest {
 
   @Test
-  public void smokeTest() {
+  public void testBasics() {
     ScoreValue scoreValue = new ScoreValue(
         PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.1, 0.8, 9.0, Collections.emptyList());
     RatingValue ratingValue = new RatingValue(scoreValue, SecurityLabelExample.OKAY);
@@ -26,7 +26,7 @@ public class RatingValueTest {
   }
 
   @Test
-  public void equalsAndHashCode() {
+  public void testEqualsAndHashCode() {
     ScoreValue scoreValue = new ScoreValue(
         PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.1, 0.8, 9.0, Collections.emptyList());
     ScoreValue scoreValueClone = new ScoreValue(
@@ -57,15 +57,14 @@ public class RatingValueTest {
   }
 
   @Test
-  public void serializeAndDeserialize() throws IOException {
+  public void testSerializeAndDeserialize() throws IOException {
     ScoreValue scoreValue = new ScoreValue(
         PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.1, 0.8, 9.0, Collections.emptyList());
     RatingValue ratingValue = new RatingValue(scoreValue, SecurityLabelExample.OKAY);
-    ObjectMapper mapper = new ObjectMapper();
-    byte[] bytes = mapper.writeValueAsBytes(ratingValue);
+    byte[] bytes = Json.toBytes(ratingValue);
     assertNotNull(bytes);
     assertTrue(bytes.length > 0);
-    RatingValue clone = mapper.readValue(bytes, RatingValue.class);
+    RatingValue clone = Json.read(bytes, RatingValue.class);
     assertNotNull(clone);
     assertEquals(ratingValue, clone);
     assertEquals(ratingValue.hashCode(), clone.hashCode());

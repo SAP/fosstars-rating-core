@@ -1,7 +1,7 @@
 package com.sap.oss.phosphor.fosstars.tool.github;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -13,11 +13,6 @@ import java.util.Objects;
  * This reporter takes a number of projects and merge them in to a JSON file.
  */
 public class MergedJsonReporter extends AbstractReporter<GitHubProject> {
-
-  /**
-   * Serializer and deserializer.
-   */
-  private static final ObjectMapper MAPPER = new ObjectMapper();
 
   /**
    * A path to an output file.
@@ -44,8 +39,6 @@ public class MergedJsonReporter extends AbstractReporter<GitHubProject> {
 
     logger.info("Storing info about projects to {}", filename);
     allProjects.sort(Comparator.comparing(project -> project.scm().toString()));
-    Files.write(
-        Paths.get(filename),
-        MAPPER.writerWithDefaultPrettyPrinter().writeValueAsBytes(allProjects));
+    Files.write(Paths.get(filename), Json.toBytes(allProjects));
   }
 }

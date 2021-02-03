@@ -5,7 +5,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import org.junit.Test;
 
@@ -25,11 +25,10 @@ public class GitHubOrganizationTest {
   @Test
   public void testSerialization() throws IOException {
     GitHubOrganization org = new GitHubOrganization("test");
-    ObjectMapper mapper = new ObjectMapper();
-    byte[] bytes = mapper.writeValueAsBytes(org);
+    byte[] bytes = Json.toBytes(org);
     assertNotNull(bytes);
     assertTrue(bytes.length > 0);
-    GitHubOrganization clone = mapper.readValue(bytes, GitHubOrganization.class);
+    GitHubOrganization clone = Json.read(bytes, GitHubOrganization.class);
     assertNotNull(clone);
     assertEquals(org, clone);
     assertEquals(org.hashCode(), clone.hashCode());

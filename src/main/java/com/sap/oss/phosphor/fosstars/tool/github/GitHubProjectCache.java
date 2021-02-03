@@ -3,9 +3,9 @@ package com.sap.oss.phosphor.fosstars.tool.github;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -21,11 +21,6 @@ import java.util.Optional;
  * This is a cache of {@link GitHubProject}s.
  */
 class GitHubProjectCache {
-
-  /**
-   * For serialization and deserialization.
-   */
-  private static final ObjectMapper MAPPER = new ObjectMapper();
 
   /**
    * The default lifetime of a cache entry in days.
@@ -157,7 +152,7 @@ class GitHubProjectCache {
    * @throws IOException If something went wrong.
    */
   static GitHubProjectCache load(InputStream is) throws IOException {
-    return MAPPER.readValue(is, GitHubProjectCache.class);
+    return Json.read(is, GitHubProjectCache.class);
   }
 
   /**
@@ -177,8 +172,6 @@ class GitHubProjectCache {
    * @throws IOException If something went wrong.
    */
   void store(Path filename) throws IOException {
-    Files.write(
-        filename,
-        MAPPER.writerWithDefaultPrettyPrinter().writeValueAsBytes(this));
+    Files.write(filename, Json.toBytes(this));
   }
 }

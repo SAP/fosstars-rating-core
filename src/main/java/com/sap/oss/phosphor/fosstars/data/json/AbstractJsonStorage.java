@@ -1,6 +1,6 @@
 package com.sap.oss.phosphor.fosstars.data.json;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,11 +11,6 @@ import java.net.URL;
  * This is a base class for all storage classes in this package.
  */
 class AbstractJsonStorage {
-
-  /**
-   * An ObjectMapper for serialization and deserialization.
-   */
-  static final ObjectMapper MAPPER = new ObjectMapper();
 
   /**
    * Checks if a URL is valid and uses HTTPS.
@@ -49,7 +44,7 @@ class AbstractJsonStorage {
     T storage;
 
     if (file.exists()) {
-      storage = MAPPER.readValue(file, clazz);
+      storage = Json.mapper().readValue(file, clazz);
     } else {
       storage = loadFromResource(path, clazz);
     }
@@ -74,7 +69,7 @@ class AbstractJsonStorage {
     InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
     if (is != null) {
       try {
-        return MAPPER.readValue(is, clazz);
+        return Json.mapper().readValue(is, clazz);
       } finally {
         is.close();
       }

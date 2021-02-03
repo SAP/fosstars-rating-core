@@ -1,12 +1,11 @@
 package com.sap.oss.phosphor.fosstars.nvd;
 
-import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.nvd.data.CVE;
 import com.sap.oss.phosphor.fosstars.nvd.data.CveMetaData;
 import com.sap.oss.phosphor.fosstars.nvd.data.NvdEntry;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -55,16 +54,6 @@ public class NVD {
    * The version of NVD feed to be used.
    */
   private static final String NVD_FEED_VERSION = "1.1";
-
-  /**
-   * An {@link ObjectMapper} for serialization and deserialization.
-   */
-  private static final ObjectMapper MAPPER = new ObjectMapper();
-
-  /**
-   * A factory for parsing JSON.
-   */
-  private static final JsonFactory JSON_FACTORY = MAPPER.getFactory();
 
   /**
    * The location where the data from the NVD is stored.
@@ -245,7 +234,7 @@ public class NVD {
    */
   public void parse() throws IOException {
     for (String file : jsonFiles()) {
-      try (JsonParser parser = JSON_FACTORY.createParser(open(file))) {
+      try (JsonParser parser = Json.mapper().getFactory().createParser(open(file))) {
         while (!parser.isClosed()) {
           if (!JsonToken.FIELD_NAME.equals(parser.nextToken())) {
             continue;
@@ -259,7 +248,7 @@ public class NVD {
           throw new IllegalArgumentException("Hmm ... Looks like 'CVE_Items' is not an array!");
         }
 
-        for (NvdEntry entry : MAPPER.readValue(parser, NvdEntry[].class)) {
+        for (NvdEntry entry : Json.mapper().readValue(parser, NvdEntry[].class)) {
 
           // if one of the following null-checks becomes true,
           // that would mean the there is an entry in NVD without a CVE id
