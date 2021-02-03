@@ -544,7 +544,7 @@ public class SecurityRatingCalculator {
    * @throws IOException If something went wrong.
    */
   static Config config(InputStream is) throws IOException {
-    ObjectMapper mapper = Yaml.newMapper();
+    ObjectMapper mapper = Yaml.mapper();
     mapper.enable(MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS);
     return mapper.readValue(is, Config.class);
   }

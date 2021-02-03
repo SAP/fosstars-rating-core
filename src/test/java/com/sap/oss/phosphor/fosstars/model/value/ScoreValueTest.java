@@ -197,12 +197,11 @@ public class ScoreValueTest {
   public void testSerializeAndDeserializeUnknown() throws IOException {
     ScoreValue value = new ScoreValue(PROJECT_ACTIVITY_SCORE_EXAMPLE).makeUnknown();
 
-    ObjectMapper mapper = new ObjectMapper();
-    byte[] bytes = mapper.writeValueAsBytes(value);
+    byte[] bytes = Json.toBytes(value);
     assertNotNull(bytes);
     assertTrue(bytes.length > 0);
 
-    ScoreValue clone = mapper.readValue(bytes, ScoreValue.class);
+    ScoreValue clone = Json.read(bytes, ScoreValue.class);
     assertNotNull(clone);
     assertTrue(clone.isUnknown());
     assertEquals(value, clone);

@@ -1,8 +1,8 @@
 package com.sap.oss.phosphor.fosstars.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
 import java.io.IOException;
@@ -13,29 +13,16 @@ import java.util.Objects;
 /**
  * This is a helper class that offers methods for serialization and deserialization using YAML.
  */
-public class Yaml {
+public class Yaml extends Deserialization {
 
   /**
    * A factory for parsing YAML.
    */
   private static final YAMLFactory YAML_FACTORY;
 
-  /**
-   * For serialization and deserialization in YAML.
-   */
-  private static final ObjectMapper OBJECT_MAPPER;
-
-  /**
-   * A type reference for deserialization to a Map.
-   */
-  private static final TypeReference<Map<String,Object>> MAP_TYPE_REFERENCE
-      = new TypeReference<Map<String, Object>>() {};
-
   static {
     YAML_FACTORY = new YAMLFactory();
     YAML_FACTORY.disable(YAMLGenerator.Feature.USE_NATIVE_TYPE_ID);
-    OBJECT_MAPPER = new ObjectMapper(YAML_FACTORY);
-    OBJECT_MAPPER.findAndRegisterModules();
   }
 
   /**
@@ -46,7 +33,8 @@ public class Yaml {
    * @throws IOException If something went wrong.
    */
   public static Map<String, Object> readMap(InputStream is) throws IOException {
-    return OBJECT_MAPPER.readValue(is, MAP_TYPE_REFERENCE);
+    Objects.requireNonNull(is, "Oh no! Input stream is null!");
+    return mapper().readValue(is, MAP_TYPE_REFERENCE);
   }
 
   /**
@@ -59,7 +47,8 @@ public class Yaml {
    * @throws IOException If deserialization failed.
    */
   public static <T> T read(InputStream is, Class<T> clazz) throws IOException {
-    return OBJECT_MAPPER.readValue(is, clazz);
+    Objects.requireNonNull(is, "Oh no! Input stream is null!");
+    return mapper().readValue(is, clazz);
   }
 
   /**
@@ -72,7 +61,9 @@ public class Yaml {
    * @throws IOException If deserialization failed.
    */
   public static <T> T read(byte[] bytes, Class<T> clazz) throws IOException {
-    return OBJECT_MAPPER.readValue(bytes, clazz);
+    Objects.requireNonNull(bytes, "Oh no! Bytes is null!");
+    Objects.requireNonNull(clazz, "Oh no! Class is null!");
+    return mapper().readValue(bytes, clazz);
   }
 
   /**
@@ -84,7 +75,7 @@ public class Yaml {
    */
   public static byte[] toBytes(Object object) throws JsonProcessingException {
     Objects.requireNonNull(object, "Oh no! Object is null!");
-    return OBJECT_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsBytes(object);
+    return mapper().writerWithDefaultPrettyPrinter().writeValueAsBytes(object);
   }
 
   /**
@@ -93,15 +84,9 @@ public class Yaml {
    * @return A shared {@link ObjectMapper} for YAML.
    */
   public static ObjectMapper mapper() {
-    return OBJECT_MAPPER;
-  }
-
-  /**
-   * Creates a new {@link ObjectMapper} for YAML.
-   *
-   * @return A new {@link ObjectMapper} for YAML.
-   */
-  public static ObjectMapper newMapper() {
-    return new ObjectMapper(YAML_FACTORY);
+    ObjectMapper mapper = JsonMapper.builder(YAML_FACTORY)
+        .polymorphicTypeValidator(validator()).build();
+    mapper.findAndRegisterModules();
+    return mapper;
   }
 }

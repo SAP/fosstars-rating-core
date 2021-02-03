@@ -17,7 +17,7 @@ public class VulnerabilitiesInProject extends AbstractFeature<Vulnerabilities> {
   /**
    * For deserialization.
    */
-  private static final ObjectMapper MAPPER = Json.newMapper();
+  private static final ObjectMapper MAPPER = Json.mapper();
 
   static {
     MAPPER.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
