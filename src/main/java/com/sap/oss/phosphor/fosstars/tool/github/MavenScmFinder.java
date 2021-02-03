@@ -4,8 +4,8 @@ import static com.sap.oss.phosphor.fosstars.maven.MavenUtils.readModel;
 import static com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject.isOnGitHub;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -22,11 +22,6 @@ import org.apache.maven.model.Scm;
  * The class takes GAV coordinates of an artifact and looks for a URL to its SCM.
  */
 public class MavenScmFinder {
-
-  /**
-   * For parsing JSON.
-   */
-  private static final ObjectMapper MAPPER = new ObjectMapper();
 
   /**
    * A template of a request to the Maven Search API.
@@ -200,7 +195,7 @@ public class MavenScmFinder {
         .replace("{ARTIFACT_ID}", artifactId);
     URL url = new URL(urlString);
 
-    JsonNode node = MAPPER.readTree(url);
+    JsonNode node = Json.mapper().readTree(url);
 
     if (!node.has("response")) {
       throw new IOException("Oh no! The response doesn't have a response filed!");

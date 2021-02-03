@@ -5,11 +5,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.model.feature.example.ExampleFeatures;
 import com.sap.oss.phosphor.fosstars.model.math.DoubleInterval;
 import com.sap.oss.phosphor.fosstars.model.rating.example.SecurityRatingExample.SecurityLabelExample;
 import com.sap.oss.phosphor.fosstars.model.value.IntegerValue;
+import com.sap.oss.phosphor.fosstars.util.Json;
+import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
 import org.junit.Test;
 
@@ -70,18 +71,16 @@ public class TestVectorsTest {
 
   @Test
   public void testSerializationJson() throws IOException {
-    ObjectMapper mapper = new ObjectMapper();
-    TestVectors clone = mapper.readValue(
-        mapper.writeValueAsBytes(VECTORS), TestVectors.class);
+    TestVectors clone = Json.read(Json.toBytes(VECTORS), TestVectors.class);
     assertTrue(VECTORS.equals(clone) && clone.equals(VECTORS));
     assertEquals(VECTORS.hashCode(), clone.hashCode());
   }
 
   @Test
   public void testSerializationYaml() throws IOException {
-    byte[] bytes = TestVectors.YAML_OBJECT_MAPPER.writeValueAsBytes(VECTORS);
+    byte[] bytes = Yaml.toBytes(VECTORS);
     System.out.println(new String(bytes));
-    TestVectors clone = TestVectors.YAML_OBJECT_MAPPER.readValue(bytes, TestVectors.class);
+    TestVectors clone = Yaml.read(bytes, TestVectors.class);
     assertTrue(VECTORS.equals(clone) && clone.equals(VECTORS));
     assertEquals(VECTORS.hashCode(), clone.hashCode());
   }

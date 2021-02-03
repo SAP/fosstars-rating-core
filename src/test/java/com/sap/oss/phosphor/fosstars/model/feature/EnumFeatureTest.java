@@ -6,8 +6,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.model.value.EnumValue;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import org.junit.Test;
 
@@ -66,14 +66,12 @@ public class EnumFeatureTest {
 
   @Test
   public void testSerializeAndDeserialize() throws IOException {
-    ObjectMapper mapper = new ObjectMapper();
-
     EnumFeature<TestEnum> feature = new EnumFeature<>(TestEnum.class, "feature");
-    byte[] bytes = mapper.writeValueAsBytes(feature);
+    byte[] bytes = Json.toBytes(feature);
     assertNotNull(bytes);
     assertTrue(bytes.length > 0);
 
-    Object clone = mapper.readValue(bytes, EnumFeature.class);
+    Object clone = Json.read(bytes, EnumFeature.class);
     assertNotNull(clone);
     assertEquals(feature, clone);
     assertEquals(feature.hashCode(), clone.hashCode());

@@ -6,9 +6,9 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.feature.EnumFeature;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import org.junit.Test;
 
@@ -29,7 +29,7 @@ public class EnumValueTest {
 
   @Test
   public void testUnknown() {
-    Value value = new EnumFeature<>(TestEnum.class, "test").unknown();
+    Value<?> value = new EnumFeature<>(TestEnum.class, "test").unknown();
     assertNotNull(value);
     assertTrue(value.isUnknown());
   }
@@ -57,15 +57,13 @@ public class EnumValueTest {
 
   @Test
   public void testSerializeAndDeserialize() throws IOException {
-    ObjectMapper mapper = new ObjectMapper();
-
     EnumFeature<TestEnum> feature = new EnumFeature<>(TestEnum.class, "feature");
-    EnumValue a = feature.value(TestEnum.A);
-    byte[] bytes = mapper.writeValueAsBytes(a);
+    EnumValue<TestEnum> a = feature.value(TestEnum.A);
+    byte[] bytes = Json.toBytes(a);
     assertNotNull(bytes);
     assertTrue(bytes.length > 0);
 
-    Object clone = mapper.readValue(bytes, EnumValue.class);
+    Object clone = Json.read(bytes, EnumValue.class);
     assertNotNull(clone);
     assertEquals(a, clone);
     assertEquals(a.hashCode(), clone.hashCode());

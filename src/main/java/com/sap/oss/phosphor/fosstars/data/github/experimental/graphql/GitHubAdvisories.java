@@ -1,11 +1,11 @@
 package com.sap.oss.phosphor.fosstars.data.github.experimental.graphql;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.data.github.experimental.graphql.data.Advisory;
 import com.sap.oss.phosphor.fosstars.data.github.experimental.graphql.data.GitHubAdvisoryEntry;
 import com.sap.oss.phosphor.fosstars.data.github.experimental.graphql.data.Identifier;
 import com.sap.oss.phosphor.fosstars.data.github.experimental.graphql.data.Node;
 import com.sap.oss.phosphor.fosstars.model.value.PackageManager;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -50,11 +50,6 @@ public class GitHubAdvisories {
    * First n advisories per page.
    */
   private static final int FIRST_N_ADVISORIES = 100;
-
-  /**
-   * An {@link ObjectMapper} for serialization and deserialization.
-   */
-  private static final ObjectMapper MAPPER = new ObjectMapper();
 
   /**
    * The token to access GitHub API.
@@ -139,7 +134,8 @@ public class GitHubAdvisories {
     try (CloseableHttpClient client = httpClient()) {
       HttpPost httpPostRequest = buildRequest(gitHubToken, jsonEntity);
       try (CloseableHttpResponse response = client.execute(httpPostRequest)) {
-        return MAPPER.readValue(response.getEntity().getContent(), GitHubAdvisoryEntry.class);
+        return Json.mapper().readValue(
+            response.getEntity().getContent(), GitHubAdvisoryEntry.class);
       }
     }
   }

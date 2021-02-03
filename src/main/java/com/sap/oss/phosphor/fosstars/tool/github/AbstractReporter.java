@@ -1,10 +1,10 @@
 package com.sap.oss.phosphor.fosstars.tool.github;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.OpenSourceProject;
 import com.sap.oss.phosphor.fosstars.tool.Reporter;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -25,11 +25,6 @@ abstract class AbstractReporter<T extends OpenSourceProject> implements Reporter
    * A logger.
    */
   protected final Logger logger = LogManager.getLogger(getClass());
-
-  /**
-   * For serialization.
-   */
-  private static final ObjectMapper MAPPER = new ObjectMapper();
 
   /**
    * A type reference of a list of {@link GitHubProject}s for deserialization.
@@ -83,7 +78,7 @@ abstract class AbstractReporter<T extends OpenSourceProject> implements Reporter
       return Collections.emptyList();
     }
     try (InputStream is = Files.newInputStream(path)) {
-      return MAPPER.readValue(is, LIST_OF_GITHUB_PROJECTS_TYPE);
+      return Json.mapper().readValue(is, LIST_OF_GITHUB_PROJECTS_TYPE);
     }
   }
 

@@ -1,8 +1,8 @@
 package com.sap.oss.phosphor.fosstars.data.github;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
@@ -48,11 +48,6 @@ public class GitHubDataFetcher {
    * A logger.
    */
   private static final Logger LOGGER = LogManager.getLogger(GitHubDataFetcher.class);
-
-  /**
-   * An {@link ObjectMapper} for serialization.
-   */
-  private static final ObjectMapper MAPPER = new ObjectMapper();
 
   /**
    * A type reference for serializing {@link #LOCAL_REPOSITORIES_INFO}.
@@ -414,7 +409,7 @@ public class GitHubDataFetcher {
       try (InputStream is = Files.newInputStream(LOCAL_REPOSITORIES_INFO_FILE)) {
         LOCAL_REPOSITORIES_INFO.clear();
         LOCAL_REPOSITORIES_INFO.putAll(
-            MAPPER.readValue(is, LOCAL_REPOSITORIES_TYPE_REF));
+            Json.mapper().readValue(is, LOCAL_REPOSITORIES_TYPE_REF));
       }
     }
   }
@@ -428,7 +423,7 @@ public class GitHubDataFetcher {
     synchronized (LOCAL_REPOSITORIES_INFO) {
       Files.write(
           LOCAL_REPOSITORIES_INFO_FILE,
-          MAPPER.writeValueAsBytes(LOCAL_REPOSITORIES_INFO));
+          Json.toBytes(LOCAL_REPOSITORIES_INFO));
     }
   }
 

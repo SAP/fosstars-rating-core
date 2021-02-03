@@ -11,9 +11,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.util.Set;
 import org.junit.Test;
@@ -36,7 +36,7 @@ public class ValueHashSetTest {
   }
 
   @Test
-  public void testHas() {
+  public void testHasValue() {
     ValueSet values = ValueHashSet.empty();
     values.update(NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(10));
     assertEquals(1, values.size());
@@ -91,13 +91,12 @@ public class ValueHashSetTest {
     values.update(NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(10));
     values.update(HAS_SECURITY_TEAM.value(true));
 
-    ObjectMapper mapper = new ObjectMapper();
-    byte[] bytes = mapper.writeValueAsBytes(values);
+    byte[] bytes = Json.toBytes(values);
     assertNotNull(bytes);
     assertTrue(bytes.length > 0);
     System.out.println(new String(bytes));
 
-    ValueSet clone = mapper.readValue(bytes, ValueSet.class);
+    ValueSet clone = Json.read(bytes, ValueSet.class);
     assertEquals(values, clone);
   }
 }

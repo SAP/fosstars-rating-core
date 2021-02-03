@@ -5,7 +5,6 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
@@ -14,6 +13,7 @@ import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.oss.phosphor.fosstars.model.value.UnknownValue;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.util.Set;
 import org.apache.http.HttpHeaders;
@@ -42,11 +42,6 @@ public class LgtmDataProvider extends GitHubCachingDataProvider {
    * The number of latest commits to be checked.
    */
   private static final int COMMITS_TO_BE_CHECKED = 20;
-
-  /**
-   * For parsing JSON.
-   */
-  private static final ObjectMapper MAPPER = new ObjectMapper();
 
   /**
    * Initializes a data provider.
@@ -79,7 +74,7 @@ public class LgtmDataProvider extends GitHubCachingDataProvider {
       HttpGet httpGetRequest = new HttpGet(url);
       httpGetRequest.addHeader(HttpHeaders.ACCEPT, ContentType.APPLICATION_JSON.getMimeType());
       try (CloseableHttpResponse httpResponse = client.execute(httpGetRequest)) {
-        return MAPPER.readTree(httpResponse.getEntity().getContent());
+        return Json.mapper().readTree(httpResponse.getEntity().getContent());
       }
     }
   }

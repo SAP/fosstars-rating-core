@@ -42,7 +42,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.Value;
@@ -52,6 +51,7 @@ import com.sap.oss.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.oss.phosphor.fosstars.model.value.PackageManagers;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Set;
@@ -62,18 +62,17 @@ public class OssSecurityScoreTest {
   private static final double DELTA = 0.01;
 
   @Test
-  public void serializeAndDeserialize() throws IOException {
-    ObjectMapper mapper = new ObjectMapper();
+  public void testSerializeAndDeserialize() throws IOException {
     OssSecurityScore score = new OssSecurityScore();
-    byte[] bytes = mapper.writeValueAsBytes(score);
+    byte[] bytes = Json.toBytes(score);
     assertNotNull(bytes);
     assertTrue(bytes.length > 0);
-    OssSecurityScore clone = mapper.readValue(bytes, OssSecurityScore.class);
+    OssSecurityScore clone = Json.read(bytes, OssSecurityScore.class);
     assertEquals(score, clone);
   }
 
   @Test
-  public void calculateForAllUnknown() {
+  public void testCalculateForAllUnknown() {
     Score score = new OssSecurityScore();
     ScoreValue scoreValue = score.calculate(Utils.allUnknown(score.allFeatures()));
     assertEquals(Score.MIN, scoreValue.get(), 0.01);
@@ -82,7 +81,7 @@ public class OssSecurityScoreTest {
   }
 
   @Test
-  public void calculate() {
+  public void testCalculate() {
     Score score = new OssSecurityScore();
     Set<Value<?>> values = setOf(
         SUPPORTED_BY_COMPANY.value(false),
@@ -126,7 +125,7 @@ public class OssSecurityScoreTest {
 
   private static void checkUsedValues(ScoreValue scoreValue) {
     assertEquals(scoreValue.score().subScores().size(), scoreValue.usedValues().size());
-    for (Value value : scoreValue.usedValues()) {
+    for (Value<?> value : scoreValue.usedValues()) {
       boolean found = false;
       for (Score subScore : scoreValue.score().subScores()) {
         if (value.feature().getClass() == subScore.getClass()) {

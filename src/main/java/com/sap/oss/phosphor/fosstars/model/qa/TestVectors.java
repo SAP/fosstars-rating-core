@@ -3,10 +3,8 @@ package com.sap.oss.phosphor.fosstars.model.qa;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
 import com.sap.oss.phosphor.fosstars.model.Value;
+import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -29,23 +27,6 @@ public class TestVectors implements Iterable<TestVector> {
    * No default values.
    */
   private static final Set<Value<?>> NO_DEFAULTS = Collections.emptySet();
-
-  /**
-   * A factory for parsing YAML.
-   */
-  private static final YAMLFactory YAML_FACTORY;
-
-  /**
-   * For serialization and deserialization in YAML.
-   */
-  static final ObjectMapper YAML_OBJECT_MAPPER;
-
-  static {
-    YAML_FACTORY = new YAMLFactory();
-    YAML_FACTORY.disable(YAMLGenerator.Feature.USE_NATIVE_TYPE_ID);
-    YAML_OBJECT_MAPPER = new ObjectMapper(YAML_FACTORY);
-    YAML_OBJECT_MAPPER.findAndRegisterModules();
-  }
 
   /**
    * A list of test vectors.
@@ -206,7 +187,7 @@ public class TestVectors implements Iterable<TestVector> {
    */
   public static TestVectors loadFromYaml(InputStream is) throws IOException {
     Objects.requireNonNull(is, "Input stream can't be null!");
-    return YAML_OBJECT_MAPPER.readValue(is, TestVectors.class);
+    return Yaml.read(is, TestVectors.class);
   }
 
   /**
@@ -217,7 +198,7 @@ public class TestVectors implements Iterable<TestVector> {
    */
   public void storeToYaml(Path filename) throws IOException {
     Objects.requireNonNull(filename, "Filename can't be null!");
-    Files.write(filename, YAML_OBJECT_MAPPER.writeValueAsBytes(this));
+    Files.write(filename, Yaml.toBytes(this));
   }
 
 }

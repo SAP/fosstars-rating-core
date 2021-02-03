@@ -5,8 +5,8 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.model.Value;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import org.junit.Test;
 
@@ -14,13 +14,12 @@ public class DoubleFeatureTest {
 
   @Test
   public void serializeAndDeserialize() throws IOException {
-    ObjectMapper mapper = new ObjectMapper();
     DoubleFeature feature = new DoubleFeature("test");
-    byte[] bytes = mapper.writeValueAsBytes(feature);
+    byte[] bytes = Json.toBytes(feature);
     assertNotNull(bytes);
     assertTrue(bytes.length > 0);
 
-    DoubleFeature clone = mapper.readValue(bytes, DoubleFeature.class);
+    DoubleFeature clone = Json.mapper().readValue(bytes, DoubleFeature.class);
     assertNotNull(clone);
     assertEquals(feature, clone);
     assertEquals(feature.hashCode(), clone.hashCode());

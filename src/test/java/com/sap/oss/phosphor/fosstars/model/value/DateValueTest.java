@@ -6,10 +6,10 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.feature.DateFeature;
 import com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.util.Date;
 import org.junit.Test;
@@ -17,7 +17,7 @@ import org.junit.Test;
 public class DateValueTest {
 
   @Test
-  public void get() {
+  public void testGet() {
     Value<Date> one = new DateValue(OssFeatures.PROJECT_START_DATE, new Date(1));
     assertFalse(one.isUnknown());
     assertNotNull(one.get());
@@ -26,7 +26,7 @@ public class DateValueTest {
   }
 
   @Test
-  public void equals() {
+  public void testEquals() {
     final Value<Date> one = new DateValue(OssFeatures.PROJECT_START_DATE, new Date(1));
     final Value<Date> two = new DateValue(OssFeatures.PROJECT_START_DATE, new Date(1));
     final Value<Date> three = new DateValue(OssFeatures.PROJECT_START_DATE, new Date(2));
@@ -49,14 +49,13 @@ public class DateValueTest {
   }
 
   @Test
-  public void serialization() throws IOException {
-    ObjectMapper mapper = new ObjectMapper();
+  public void testSerialization() throws IOException {
     DateValue dateValue = new DateValue(new DateFeature("test"), new Date());
-    byte[] bytes = mapper.writeValueAsBytes(dateValue);
+    byte[] bytes = Json.toBytes(dateValue);
     assertNotNull(bytes);
     assertTrue(bytes.length > 0);
 
-    DateValue clone = mapper.readValue(bytes, DateValue.class);
+    DateValue clone = Json.read(bytes, DateValue.class);
     assertNotNull(clone);
     assertEquals(dateValue, clone);
     assertEquals(dateValue.hashCode(), clone.hashCode());

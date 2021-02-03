@@ -5,11 +5,11 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.model.rating.example.SecurityRatingExample.SecurityLabelExample;
 import com.sap.oss.phosphor.fosstars.model.score.example.ExampleScores;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import org.junit.Test;
 
@@ -23,11 +23,10 @@ public class GitHubProjectTest {
         new RatingValue(
             new ScoreValue(ExampleScores.SECURITY_SCORE_EXAMPLE),
             SecurityLabelExample.OKAY));
-    ObjectMapper mapper = new ObjectMapper();
-    byte[] bytes = mapper.writeValueAsBytes(project);
+    byte[] bytes = Json.toBytes(project);
     assertNotNull(bytes);
     assertTrue(bytes.length > 0);
-    GitHubProject clone = mapper.readValue(bytes, GitHubProject.class);
+    GitHubProject clone = Json.read(bytes, GitHubProject.class);
     assertNotNull(clone);
     assertEquals(project, clone);
     assertEquals(project.hashCode(), clone.hashCode());

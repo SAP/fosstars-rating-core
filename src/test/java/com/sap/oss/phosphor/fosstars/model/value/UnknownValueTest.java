@@ -4,8 +4,8 @@ import static com.sap.oss.phosphor.fosstars.model.feature.example.ExampleFeature
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.model.Value;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import org.junit.Test;
 
@@ -29,10 +29,8 @@ public class UnknownValueTest {
 
   @Test
   public void testSerializationAndDeserialization() throws IOException {
-    ObjectMapper mapper = new ObjectMapper();
     UnknownValue<Integer> value = UnknownValue.of(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE);
-    UnknownValue<Integer> clone = mapper.readValue(
-        mapper.writeValueAsBytes(value), UnknownValue.class);
+    UnknownValue<?> clone = Json.read(Json.toBytes(value), UnknownValue.class);
     assertEquals(value, clone);
     assertEquals(value.hashCode(), clone.hashCode());
   }

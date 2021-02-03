@@ -3,12 +3,12 @@ package com.sap.oss.phosphor.fosstars.data;
 import static com.sap.oss.phosphor.fosstars.model.value.ExpiringValue.NO_EXPIRATION;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.value.ExpiringValue;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -25,11 +25,6 @@ import java.util.Optional;
  * This is a cache of feature values which use string as keys.
  */
 public class StandardValueCache implements Cache<String, ValueSet> {
-
-  /**
-   * An ObjectMapper for serialization and deserialization.
-   */
-  private static final ObjectMapper MAPPER = new ObjectMapper();
 
   /**
    * A map of cache entries.
@@ -66,7 +61,7 @@ public class StandardValueCache implements Cache<String, ValueSet> {
    *
    * @param key The key
    * @param feature The feature.
-   * @param <T> Type of data.
+   * @param <T> Type of data that the feature holds.
    * @return An {@link Optional} with a cached value if it's available.
    */
   public <T> Optional<Value<T>> get(String key, Feature<T> feature) {
@@ -101,6 +96,7 @@ public class StandardValueCache implements Cache<String, ValueSet> {
    * The method extracts an original value from a ExpiringValue if it's not expired.
    *
    * @param value The ExpiringValue.
+   * @param <T> Type of data that the value holds.
    * @return The original value if it's not expired.
    * @throws IllegalStateException If the value is not an instance of ExpiringValue.
    */
@@ -150,8 +146,8 @@ public class StandardValueCache implements Cache<String, ValueSet> {
    *
    * @param key The key.
    * @param value The value to store in the cache.
+   * @param <T> Type of data that the value holds
    * @param expiration The expiration date.
-   * @param <T> A type of the value.
    */
   public <T> void put(String key, Value<T> value, Date expiration) {
     ValueSet set = entries.get(key);
@@ -175,7 +171,7 @@ public class StandardValueCache implements Cache<String, ValueSet> {
     if (!Files.exists(dir)) {
       Files.createDirectories(dir);
     }
-    Files.write(path, MAPPER.writerWithDefaultPrettyPrinter().writeValueAsBytes(this));
+    Files.write(path, Json.toBytes(this));
   }
 
   /**
@@ -190,7 +186,7 @@ public class StandardValueCache implements Cache<String, ValueSet> {
     if (!file.exists()) {
       throw new FileNotFoundException(String.format("Can't find %s", path));
     }
-    return MAPPER.readValue(file, StandardValueCache.class);
+    return Json.mapper().readValue(file, StandardValueCache.class);
   }
 
   @Override

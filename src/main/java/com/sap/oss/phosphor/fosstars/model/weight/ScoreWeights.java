@@ -4,14 +4,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
 import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.Tunable;
 import com.sap.oss.phosphor.fosstars.model.Weight;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -27,25 +24,6 @@ import java.util.Set;
  * A collection of weights for scores.
  */
 public class ScoreWeights implements Tunable {
-
-  /**
-   * A factory for parsing YAML.
-   */
-  static final YAMLFactory YAML_FACTORY;
-
-  /**
-   * For serialization and deserialization in YAML.
-   */
-  static final ObjectMapper YAML_OBJECT_MAPPER;
-
-  static {
-    YAML_FACTORY = new YAMLFactory();
-    YAML_FACTORY.disable(YAMLGenerator.Feature.USE_NATIVE_TYPE_ID);
-    YAML_OBJECT_MAPPER = new ObjectMapper(YAML_FACTORY);
-    YAML_OBJECT_MAPPER.findAndRegisterModules();
-  }
-
-  private static final ObjectMapper JSON_OBJECT_MAPPER = new ObjectMapper();
 
   /**
    * The default weight for sub-scores.
@@ -178,7 +156,7 @@ public class ScoreWeights implements Tunable {
    * This method exists to make Jackson happy.
    */
   @JsonGetter("values")
-  private Map<Class, Weight> values() {
+  private Map<Class<?>, Weight> values() {
     return new HashMap<>(values);
   }
 
@@ -225,25 +203,12 @@ public class ScoreWeights implements Tunable {
   }
 
   /**
-   * Loads weights from YAML.
-   *
-   * @param is An input stream with data.
-   * @return The weights.
-   * @throws IOException If something went wrong.
-   */
-  public static ScoreWeights loadWeightsFromYaml(InputStream is) throws IOException {
-    return YAML_OBJECT_MAPPER.readValue(is, ScoreWeights.class);
-  }
-
-  /**
    * Stores the weights to a JSON file.
    *
    * @param file The file.
    * @throws IOException If something went wrong.
    */
   public void storeToJson(String file) throws IOException {
-    Files.write(
-        Paths.get(file),
-        JSON_OBJECT_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsBytes(this));
+    Files.write(Paths.get(file), Json.toBytes(this));
   }
 }

@@ -2,10 +2,9 @@ package com.sap.oss.phosphor.fosstars.tool.github;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubOrganization;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
+import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -273,11 +272,6 @@ public class GitHubProjectFinder {
   static class ConfigParser {
 
     /**
-     * A factory for parsing YAML.
-     */
-    private static final YAMLFactory YAML_FACTORY = new YAMLFactory();
-
-    /**
      * Parse a configuration stored in a file.
      *
      * @param filename The file name.
@@ -299,8 +293,7 @@ public class GitHubProjectFinder {
      */
     Config parse(InputStream is) throws IOException {
       Objects.requireNonNull(is, "Input stream can't be null!");
-      ObjectMapper mapper = new ObjectMapper(YAML_FACTORY);
-      return mapper.readValue(is, Config.class);
+      return Yaml.read(is, Config.class);
     }
   }
 

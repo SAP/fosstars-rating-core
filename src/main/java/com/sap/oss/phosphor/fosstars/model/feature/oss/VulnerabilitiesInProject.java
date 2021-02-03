@@ -9,6 +9,7 @@ import com.sap.oss.phosphor.fosstars.model.feature.AbstractFeature;
 import com.sap.oss.phosphor.fosstars.model.value.UnknownValue;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.oss.phosphor.fosstars.model.value.VulnerabilitiesValue;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 
 public class VulnerabilitiesInProject extends AbstractFeature<Vulnerabilities> {
@@ -16,7 +17,7 @@ public class VulnerabilitiesInProject extends AbstractFeature<Vulnerabilities> {
   /**
    * For deserialization.
    */
-  private static final ObjectMapper MAPPER = new ObjectMapper();
+  private static final ObjectMapper MAPPER = Json.newMapper();
 
   static {
     MAPPER.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);

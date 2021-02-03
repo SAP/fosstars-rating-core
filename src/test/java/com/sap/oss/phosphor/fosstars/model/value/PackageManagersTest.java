@@ -9,7 +9,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.util.List;
 import org.junit.Test;
@@ -46,10 +46,8 @@ public class PackageManagersTest {
 
   @Test
   public void testSerialization() throws IOException {
-    ObjectMapper mapper = new ObjectMapper();
     PackageManagers packageManagers = PackageManagers.from(PIP, MAVEN);
-    PackageManagers clone = mapper.readValue(
-        mapper.writeValueAsBytes(packageManagers), PackageManagers.class);
+    PackageManagers clone = Json.read(Json.toBytes(packageManagers), PackageManagers.class);
     assertEquals(packageManagers, clone);
   }
 

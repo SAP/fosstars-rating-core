@@ -6,9 +6,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerability.Resolution;
+import com.sap.oss.phosphor.fosstars.util.Json;
+import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -19,17 +19,13 @@ import org.junit.Test;
 public class VulnerabilitiesTest {
 
   @Test
-  public void jsonSerializationAndDeserialization() throws IOException {
-    serializationAndDeserialization(new ObjectMapper(), vulnerabilities());
+  public void tstJsonSerializationAndDeserialization() throws IOException {
+    serializationAndDeserialization(Json.mapper(), vulnerabilities());
   }
 
   @Test
-  public void yamlSerializationAndDeserialization() throws IOException {
-    YAMLFactory factory = new YAMLFactory();
-    factory.disable(YAMLGenerator.Feature.USE_NATIVE_TYPE_ID);
-    ObjectMapper mapper = new ObjectMapper(factory);
-    mapper.findAndRegisterModules();
-    serializationAndDeserialization(mapper, vulnerabilities());
+  public void testYamlSerializationAndDeserialization() throws IOException {
+    serializationAndDeserialization(Yaml.mapper(), vulnerabilities());
   }
 
   private static void serializationAndDeserialization(

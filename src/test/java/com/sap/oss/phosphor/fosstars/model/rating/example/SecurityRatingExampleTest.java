@@ -9,7 +9,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Parameter;
 import com.sap.oss.phosphor.fosstars.model.Rating;
@@ -22,6 +21,7 @@ import com.sap.oss.phosphor.fosstars.model.other.MakeImmutable;
 import com.sap.oss.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.oss.phosphor.fosstars.model.value.IntegerValue;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
@@ -31,10 +31,8 @@ public class SecurityRatingExampleTest {
 
   @Test
   public void testSerializeAndDeserialize() throws IOException  {
-    ObjectMapper mapper = new ObjectMapper();
     SecurityRatingExample rating = new SecurityRatingExample();
-    SecurityRatingExample clone = mapper.readValue(
-        mapper.writeValueAsBytes(rating), SecurityRatingExample.class);
+    SecurityRatingExample clone = Json.read(Json.toBytes(rating), SecurityRatingExample.class);
     assertEquals(rating, clone);
   }
 

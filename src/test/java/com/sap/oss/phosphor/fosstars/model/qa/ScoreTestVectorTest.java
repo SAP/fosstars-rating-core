@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
 import com.sap.oss.phosphor.fosstars.model.Interval;
@@ -12,6 +11,7 @@ import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.math.DoubleInterval;
 import com.sap.oss.phosphor.fosstars.model.score.example.ExampleScores;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,13 +62,12 @@ public class ScoreTestVectorTest {
 
     YAMLFactory factory = new YAMLFactory();
     factory.disable(YAMLGenerator.Feature.USE_NATIVE_TYPE_ID);
-    ObjectMapper mapper = new ObjectMapper(factory);
 
-    byte[] bytes = mapper.writeValueAsBytes(vector);
+    byte[] bytes = Json.toBytes(vector);
     assertNotNull(bytes);
     assertTrue(bytes.length > 0);
 
-    ScoreTestVector clone = mapper.readValue(bytes, ScoreTestVector.class);
+    ScoreTestVector clone = Json.read(bytes, ScoreTestVector.class);
     assertEquals(vector, clone);
     assertEquals(vector.hashCode(), clone.hashCode());
   }

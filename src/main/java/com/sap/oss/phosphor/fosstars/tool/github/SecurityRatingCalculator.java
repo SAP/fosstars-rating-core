@@ -5,7 +5,6 @@ import static com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject.isOn
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.sap.oss.phosphor.fosstars.advice.Advisor;
 import com.sap.oss.phosphor.fosstars.advice.oss.github.OssSecurityGithubAdvisor;
 import com.sap.oss.phosphor.fosstars.data.NoUserCallback;
@@ -21,6 +20,8 @@ import com.sap.oss.phosphor.fosstars.tool.YesNoQuestion.Answer;
 import com.sap.oss.phosphor.fosstars.tool.format.Formatter;
 import com.sap.oss.phosphor.fosstars.tool.format.MarkdownFormatter;
 import com.sap.oss.phosphor.fosstars.tool.format.PrettyPrinter;
+import com.sap.oss.phosphor.fosstars.util.Json;
+import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -439,11 +440,7 @@ public class SecurityRatingCalculator {
     if (commandLine.hasOption("raw-rating-file")) {
       String file = commandLine.getOptionValue("raw-rating-file");
       LOGGER.info("Storing a raw rating to {}", file);
-      Files.write(
-          Paths.get(file),
-          new ObjectMapper()
-              .writerWithDefaultPrettyPrinter()
-              .writeValueAsBytes(project.ratingValue().get()));
+      Files.write(Paths.get(file), Json.toBytes(project.ratingValue().get()));
     }
   }
 
@@ -547,8 +544,7 @@ public class SecurityRatingCalculator {
    * @throws IOException If something went wrong.
    */
   static Config config(InputStream is) throws IOException {
-    YAMLFactory factory = new YAMLFactory();
-    ObjectMapper mapper = new ObjectMapper(factory);
+    ObjectMapper mapper = Yaml.newMapper();
     mapper.enable(MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS);
     return mapper.readValue(is, Config.class);
   }
