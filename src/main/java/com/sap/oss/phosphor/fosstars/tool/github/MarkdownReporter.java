@@ -11,7 +11,6 @@ import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.oss.phosphor.fosstars.tool.format.Formatter;
 import com.sap.oss.phosphor.fosstars.tool.format.MarkdownFormatter;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
@@ -96,7 +95,7 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
   /**
    * An output directory.
    */
-  private final String outputDirectory;
+  private final Path outputDirectory;
 
   /**
    * A list of extra projects which should be added to the report.
@@ -130,14 +129,22 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
 
     Objects.requireNonNull(rating, "Oh no! Rating is null");
     Objects.requireNonNull(advisor, "Oh no! Advisor is null");
-
     Objects.requireNonNull(outputDirectory, "Oh no! Output directory is null!");
-    if (!Files.isDirectory(Paths.get(outputDirectory))) {
-      throw new FileNotFoundException(
-          String.format("Oh no! I could not find %s", outputDirectory));
+
+    Path directory = Paths.get(outputDirectory);
+    if (Files.isSymbolicLink(directory) || Files.isRegularFile(directory)) {
+      throw new IOException(
+          String.format("Oops! Output directory is not a directory: %s", outputDirectory));
+    }
+    if (!Files.isDirectory(directory)) {
+      Files.createDirectories(directory);
+    }
+    if (!Files.isDirectory(directory)) {
+      throw new IOException(
+          String.format("Oops! Output directory doesn't exist: %s", directory));
     }
 
-    this.outputDirectory = outputDirectory;
+    this.outputDirectory = directory;
     this.extraProjects = loadProjects(extraSourceFileName);
     this.rating = rating;
     this.formatter = new MarkdownFormatter(advisor);
@@ -158,8 +165,7 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
     for (GitHubProject project : allProjects) {
       String projectPath = project.scm().getPath().replaceFirst("/", "");
 
-      Path organizationDirectory = Paths.get(outputDirectory)
-          .resolve(project.organization().name());
+      Path organizationDirectory = outputDirectory.resolve(project.organization().name());
       if (!Files.isDirectory(organizationDirectory)) {
         Files.createDirectories(organizationDirectory);
       }
@@ -199,7 +205,7 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
       statistics.add(project);
     }
 
-    Path path = Paths.get(outputDirectory).resolve(REPORT_FILENAME);
+    Path path = outputDirectory.resolve(REPORT_FILENAME);
     logger.info("Storing a report to {}", path);
     Files.write(path, buildReportWith(projectsTable.toString(), statistics).getBytes());
   }

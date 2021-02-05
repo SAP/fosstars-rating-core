@@ -7,6 +7,7 @@ import static com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating.S
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import com.sap.oss.phosphor.fosstars.advice.oss.github.OssSecurityGithubAdvisor;
 import com.sap.oss.phosphor.fosstars.model.Label;
@@ -22,6 +23,7 @@ import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
@@ -103,6 +105,25 @@ public class MarkdownReporterTest {
     assertEquals(
         "aaa",
         MarkdownReporter.insert("<br>", 3, "aaa"));
+  }
+
+  @Test
+  public void testCreatingReportDirectory() throws IOException {
+    Path baseDirectory = Files.createTempDirectory(MarkdownReporterTest.class.getName());
+    Path outputDirectory = baseDirectory.resolve("one").resolve("two");
+    if (Files.exists(outputDirectory)) {
+      fail("Report directory already exists. Please fix the test or its environment");
+    }
+    try {
+      MarkdownReporter reporter = new MarkdownReporter(
+          outputDirectory.toString(),
+          null,
+          RatingRepository.INSTANCE.rating(OssSecurityRating.class),
+          new OssSecurityGithubAdvisor());
+      reporter.runFor(Collections.emptyList());
+    } finally {
+      FileUtils.forceDeleteOnExit(baseDirectory.toFile());
+    }
   }
 
   private static int linesWith(String string, String content) throws IOException {
