@@ -195,6 +195,21 @@ public class ScoreValueTest {
   }
 
   @Test
+  public void testSerializeAndDeserializeUnknown() throws IOException {
+    ScoreValue value = new ScoreValue(PROJECT_ACTIVITY_SCORE_EXAMPLE).makeUnknown();
+
+    ObjectMapper mapper = new ObjectMapper();
+    byte[] bytes = mapper.writeValueAsBytes(value);
+    assertNotNull(bytes);
+    assertTrue(bytes.length > 0);
+
+    ScoreValue clone = mapper.readValue(bytes, ScoreValue.class);
+    assertNotNull(clone);
+    assertTrue(clone.isUnknown());
+    assertEquals(value, clone);
+  }
+
+  @Test
   public void testOrElse() {
     ScoreValue value = new ScoreValue(PROJECT_ACTIVITY_SCORE_EXAMPLE).set(5.1);
     assertEquals(5.1, value.orElse(1.2), ACCURACY);

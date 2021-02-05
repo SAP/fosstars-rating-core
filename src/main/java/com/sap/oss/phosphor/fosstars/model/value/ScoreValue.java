@@ -140,8 +140,15 @@ public class ScoreValue implements Value<Double>, Confidence {
     return isNotApplicable;
   }
 
-  @Override
+  /*
+   * This is only for deserialization.
+   */
   @JsonGetter("value")
+  private Double value() {
+    return value;
+  }
+
+  @Override
   public Double get() {
     if (isUnknown()) {
       throw new IllegalStateException(
