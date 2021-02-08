@@ -29,7 +29,7 @@
     lines="48"/>
   <suppress checks="AbbreviationAsWordInName"
     files="NVD.java"
-    lines="31"/>
+    lines="32"/>
   <suppress checks="AbbreviationAsWordInName"
     files="BaseMetricV2.java"
     lines="52"/>
@@ -38,7 +38,7 @@
     lines="28"/>
   <suppress checks="AbbreviationAsWordInName"
     files="TestNVD.java"
-    lines="9"/>
+    lines="12"/>
   <suppress checks="AbbreviationAsWordInName"
     files="CVE.java"
     lines="32"/>

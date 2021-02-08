@@ -26,7 +26,8 @@ import org.apache.logging.log4j.Logger;
 import us.springett.nistdatamirror.NistDataMirror;
 
 /**
- * This class offers an interface to the NVD.
+ * <p>This class offers an interface to the NVD.</p>
+ * <p>The class is not thread-safe.</p>
  */
 public class NVD {
 
@@ -96,10 +97,7 @@ public class NVD {
    * Downloads data from the NVD database.
    */
   public void download() {
-    if (shouldDownload()) {
-      new NistDataMirror(downloadDirectory).mirror(NVD_FEED_VERSION);
-      updateTimestamp();
-    }
+    new NistDataMirror(downloadDirectory).mirror(NVD_FEED_VERSION);
   }
 
   /**
@@ -145,6 +143,28 @@ public class NVD {
   }
 
   /**
+   * Download and parses NVD if necessary.
+   */
+  private void updateIfNecessary() throws IOException {
+    if (shouldDownload()) {
+      download();
+      updateTimestamp();
+      parse();
+    }
+  }
+
+  /**
+   * Returns NVD entries. If necessary, the method downloads and parse data from NVD.
+   *
+   * @return NVD entries.
+   * @throws IOException If something went wrong when downloading and parsing NVD.
+   */
+  private Map<String, NvdEntry> nvdEntries() throws IOException {
+    updateIfNecessary();
+    return nvdEntries;
+  }
+
+  /**
    * Tells whether downloading date from the NVD failed or not.
    *
    * @return True if downloading the data from the NVD failed, false otherwise.
@@ -180,11 +200,12 @@ public class NVD {
    *
    * @param matchers The matchers.
    * @return A list of NVD entries for the specified vendor and product.
+   * @throws IOException If something went wrong.
    */
-  public List<NvdEntry> search(Matcher... matchers) {
+  public List<NvdEntry> search(Matcher... matchers) throws IOException {
     List<NvdEntry> result = new ArrayList<>();
 
-    for (NvdEntry entry : nvdEntries.values()) {
+    for (NvdEntry entry : nvdEntries().values()) {
       for (Matcher matcher : matchers) {
         if (matcher.match(entry)) {
           result.add(entry);
@@ -200,9 +221,10 @@ public class NVD {
    *
    * @param cve The CVE ID.
    * @return The vulnerability.
+   * @throws IOException If something went wrong.
    */
-  public Optional<NvdEntry> get(String cve) {
-    return Optional.ofNullable(nvdEntries.get(cve));
+  public Optional<NvdEntry> get(String cve) throws IOException {
+    return Optional.ofNullable(nvdEntries().get(cve));
   }
 
   /**
@@ -222,10 +244,6 @@ public class NVD {
    * @throws IOException If something went wrong.
    */
   public void parse() throws IOException {
-    if (!nvdEntries.isEmpty()) {
-      return;
-    }
-
     for (String file : jsonFiles()) {
       try (JsonParser parser = JSON_FACTORY.createParser(open(file))) {
         while (!parser.isClosed()) {
