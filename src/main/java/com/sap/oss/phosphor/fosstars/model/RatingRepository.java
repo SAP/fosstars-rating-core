@@ -58,7 +58,7 @@ public class RatingRepository {
   /**
    * A mapping from a version to a rating.
    */
-  private final Map<Class, Rating> ratings = new HashMap<>();
+  private final Map<Class<? extends Rating>, Rating> ratings = new HashMap<>();
 
   /**
    * This constructor loads all available ratings.

@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * a density ratio compared against a percentage threshold
  * ({@link #SIGNED_COMMIT_PERCENTAGE_THRESHOLD}).
  */
-public class UsesSignedCommits extends CachedSingleFeatureGitHubDataProvider {
+public class UsesSignedCommits extends CachedSingleFeatureGitHubDataProvider<Boolean> {
 
   /**
    * A period of time when the provider should look for signed commits.
@@ -40,12 +40,12 @@ public class UsesSignedCommits extends CachedSingleFeatureGitHubDataProvider {
   }
 
   @Override
-  protected Feature supportedFeature() {
+  protected Feature<Boolean> supportedFeature() {
     return USES_SIGNED_COMMITS;
   }
 
   @Override
-  protected Value fetchValueFor(GitHubProject project) throws IOException {
+  protected Value<Boolean> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out if the project uses signed commits ...");
     return usesSignedCommits(project);
   }
@@ -78,7 +78,8 @@ public class UsesSignedCommits extends CachedSingleFeatureGitHubDataProvider {
    * @throws IOException caused during REST call to GitHub API.
    */  
   private boolean askGithub(GitHubProject project) throws IOException {
-    List<Commit> yearCommits = fetcher.localRepositoryFor(project).commitsWithin(ONE_YEAR);
+    List<Commit> yearCommits
+        = GitHubDataFetcher.localRepositoryFor(project).commitsWithin(ONE_YEAR);
     int counter = yearCommits.size();
 
     List<Commit> signedCommits = yearCommits.stream()

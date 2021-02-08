@@ -47,7 +47,7 @@ public class CommunityCommitmentScoreTest {
     assertScore(Score.MAX, COMMUNITY_COMMITMENT, values(true, false, true));
   }
 
-  private static Set<Value> values(boolean company, boolean apache, boolean eclipse) {
+  private static Set<Value<?>> values(boolean company, boolean apache, boolean eclipse) {
     return setOf(
         SUPPORTED_BY_COMPANY.value(company), IS_APACHE.value(apache), IS_ECLIPSE.value(eclipse));
   }

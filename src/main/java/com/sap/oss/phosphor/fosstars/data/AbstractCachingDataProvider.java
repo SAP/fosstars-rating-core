@@ -37,21 +37,21 @@ public abstract class AbstractCachingDataProvider<T> extends AbstractDataProvide
       throws IOException {
 
     // get a list of features which are supported by the data provider
-    Set<Feature> features = supportedFeatures();
+    Set<Feature<?>> features = supportedFeatures();
 
     // look for values for the supported features in the cache
     // unknown values don't count
-    Set<Value> cachedValues = new HashSet<>();
+    Set<Value<?>> cachedValues = new HashSet<>();
     for (Feature feature : features) {
-      Optional<Value> something = cache.get(object, feature);
-      Value value = something.orElse(UnknownValue.of(feature));
+      Optional<Value<?>> something = cache.get(object, feature);
+      Value<?> value = something.orElse(UnknownValue.of(feature));
       if (!value.isUnknown()) {
         cachedValues.add(value);
       }
     }
 
     // put the cached values to the resulting set of values
-    for (Value value : cachedValues) {
+    for (Value<?> value : cachedValues) {
       values.update(value);
     }
 

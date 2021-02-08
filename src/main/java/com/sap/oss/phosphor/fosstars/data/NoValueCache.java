@@ -9,7 +9,7 @@ import java.util.Optional;
 /**
  * This is a dummy cache which stores nothing.
  */
-public class NoValueCache<T> implements ValueCache<T> {
+public class NoValueCache<K> implements ValueCache<K> {
 
   /**
    * Creates an instance of {@link NoValueCache}.
@@ -22,22 +22,22 @@ public class NoValueCache<T> implements ValueCache<T> {
   }
 
   @Override
-  public Optional<Value> get(T key, Feature feature) {
+  public <T> Optional<Value<T>> get(K key, Feature<T> feature) {
     return Optional.empty();
   }
 
   @Override
-  public Optional<ValueSet> get(T key) {
+  public Optional<ValueSet> get(K key) {
     return Optional.empty();
   }
 
   @Override
-  public void put(T key, ValueSet value) {
+  public void put(K key, ValueSet value) {
     // do nothing
   }
 
   @Override
-  public void put(T key, ValueSet value, Date expiration) {
+  public void put(K key, ValueSet value, Date expiration) {
     // do nothing
   }
 

@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * This data provider returns a number of stars for a project.
  */
-public class NumberOfStars extends CachedSingleFeatureGitHubDataProvider {
+public class NumberOfStars extends CachedSingleFeatureGitHubDataProvider<Integer> {
 
   /**
    * Initializes a data provider.
@@ -22,7 +22,7 @@ public class NumberOfStars extends CachedSingleFeatureGitHubDataProvider {
   }
 
   @Override
-  protected Feature supportedFeature() {
+  protected Feature<Integer> supportedFeature() {
     return NUMBER_OF_GITHUB_STARS;
   }
 
@@ -34,7 +34,7 @@ public class NumberOfStars extends CachedSingleFeatureGitHubDataProvider {
    * @throws IOException If something went wrong.
    */
   @Override
-  protected Value fetchValueFor(GitHubProject project) throws IOException {
+  protected Value<Integer> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Counting how many stars the project has ...");
     return NUMBER_OF_GITHUB_STARS.value(
         fetcher.repositoryFor(project).getStargazersCount());

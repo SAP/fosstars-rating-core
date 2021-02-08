@@ -38,7 +38,15 @@ public class GitHubProjectValueCache implements ValueCache<GitHubProject> {
     this.cache = Objects.requireNonNull(cache, "Unfortunately cache can't be null");
   }
 
-  public Optional<Value> get(GitHubProject project, Feature feature) {
+  /**
+   * Looks for a feature value for a specified project.
+   *
+   * @param project The project.
+   * @param feature The feature.
+   * @param <T> Type of data.
+   * @return An {@link Optional} with the feature value if it's in the cache.
+   */
+  public <T> Optional<Value<T>> get(GitHubProject project, Feature<T> feature) {
     return cache.get(project.scm().toString(), feature);
   }
 
@@ -47,11 +55,26 @@ public class GitHubProjectValueCache implements ValueCache<GitHubProject> {
     return cache.get(project.scm().toString());
   }
 
-  public void put(GitHubProject project, Value value) {
+  /**
+   * Store a value for a GitHub project.
+   *
+   * @param project The project.
+   * @param value The value.
+   * @param <T> A type of the value.
+   */
+  public <T> void put(GitHubProject project, Value<T> value) {
     cache.put(project.scm().toString(), value);
   }
 
-  public void put(GitHubProject project, Value value, Date expiration) {
+  /**
+   * Store a value with an expiration data for a GitHub project.
+   *
+   * @param project The project.
+   * @param value The value.
+   * @param expiration The expiration date.
+   * @param <T> A type of the value.
+   */
+  public <T> void put(GitHubProject project, Value<T> value, Date expiration) {
     cache.put(project.scm().toString(), value, expiration);
   }
 

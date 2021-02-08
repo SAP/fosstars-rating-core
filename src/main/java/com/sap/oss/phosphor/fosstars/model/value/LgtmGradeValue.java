@@ -21,7 +21,7 @@ public class LgtmGradeValue extends AbstractValue<LgtmGrade> {
    */
   @JsonCreator
   public LgtmGradeValue(
-      @JsonProperty("feature") Feature feature,
+      @JsonProperty("feature") Feature<LgtmGrade> feature,
       @JsonProperty("value") LgtmGrade value) {
 
     super(feature);

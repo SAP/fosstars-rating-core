@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * This data provider returns a number of watchers for a project.
  */
-public class NumberOfWatchers extends CachedSingleFeatureGitHubDataProvider {
+public class NumberOfWatchers extends CachedSingleFeatureGitHubDataProvider<Integer> {
 
   /**
    * Initializes a data provider.
@@ -22,7 +22,7 @@ public class NumberOfWatchers extends CachedSingleFeatureGitHubDataProvider {
   }
 
   @Override
-  protected Feature supportedFeature() {
+  protected Feature<Integer> supportedFeature() {
     return NUMBER_OF_WATCHERS_ON_GITHUB;
   }
 
@@ -34,7 +34,7 @@ public class NumberOfWatchers extends CachedSingleFeatureGitHubDataProvider {
    * @throws IOException If something went wrong.
    */
   @Override
-  protected Value fetchValueFor(GitHubProject project) throws IOException {
+  protected Value<Integer> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Counting how many watchers the project has ...");
     return NUMBER_OF_WATCHERS_ON_GITHUB.value(
         fetcher.repositoryFor(project).getSubscribersCount());

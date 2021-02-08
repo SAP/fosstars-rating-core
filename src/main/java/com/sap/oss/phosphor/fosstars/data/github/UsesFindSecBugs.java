@@ -24,7 +24,7 @@ import org.codehaus.plexus.util.xml.Xpp3Dom;
  *
  * <p>The provider fills out the {@link OssFeatures#USES_FIND_SEC_BUGS} feature.</p>
  */
-public class UsesFindSecBugs extends CachedSingleFeatureGitHubDataProvider {
+public class UsesFindSecBugs extends CachedSingleFeatureGitHubDataProvider<Boolean> {
 
   /**
    * Initializes a data provider.
@@ -36,12 +36,12 @@ public class UsesFindSecBugs extends CachedSingleFeatureGitHubDataProvider {
   }
 
   @Override
-  protected Feature supportedFeature() {
+  protected Feature<Boolean> supportedFeature() {
     return USES_FIND_SEC_BUGS;
   }
 
   @Override
-  protected Value fetchValueFor(GitHubProject project) throws IOException {
+  protected Value<Boolean> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out if the project uses FindSecBugs ...");
     LocalRepository repository = GitHubDataFetcher.localRepositoryFor(project);
     boolean answer = checkMaven(repository);

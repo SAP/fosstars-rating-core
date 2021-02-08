@@ -30,7 +30,7 @@ public class LgtmAdvisor extends AbstractOssAdvisor {
 
   @Override
   protected List<Advice> adviseFor(
-      Subject subject, List<Value> usedValues, OssAdviceContext context) {
+      Subject subject, List<Value<?>> usedValues, OssAdviceContext context) {
 
     return findValue(usedValues, WORST_LGTM_GRADE)
         .filter(LgtmAdvisor::isKnown)

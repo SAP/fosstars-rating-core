@@ -40,7 +40,7 @@ import java.util.function.Predicate;
 /**
  * This data provider returns package managers which are used in a project.
  */
-public class PackageManagement extends CachedSingleFeatureGitHubDataProvider {
+public class PackageManagement extends CachedSingleFeatureGitHubDataProvider<PackageManagers> {
 
   /**
    * A minimal number of characters in a config to consider it valid.

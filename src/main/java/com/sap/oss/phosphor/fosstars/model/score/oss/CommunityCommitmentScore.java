@@ -33,7 +33,7 @@ public class CommunityCommitmentScore extends FeatureBasedScore {
   }
 
   @Override
-  public ScoreValue calculate(Value... values) {
+  public ScoreValue calculate(Value<?>... values) {
     Value<Boolean> hasResponsibleCompany = findValue(values, SUPPORTED_BY_COMPANY,
         "Hey! You have to tell me if the project is supported by a company or not!");
     Value<Boolean> isApacheProject = findValue(values, IS_APACHE,

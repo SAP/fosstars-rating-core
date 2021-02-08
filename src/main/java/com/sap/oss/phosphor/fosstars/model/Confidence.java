@@ -80,7 +80,7 @@ public interface Confidence {
    * @param values The features values.
    * @return The confidence level.
    */
-  static double make(List<Value> values) {
+  static double make(List<Value<?>> values) {
     Objects.requireNonNull(values, "Hey! Values can't be null!");
 
     if (values.size() == 0) {
@@ -90,7 +90,7 @@ public interface Confidence {
     double weightSum = 0.0;
     double weightedConfidenceSum = 0.0;
 
-    for (Value value : values) {
+    for (Value<?> value : values) {
       if (value.isUnknown()) {
         // if value is unknown, then confidence is min and weight is 1.0
         weightSum += 1.0;
@@ -118,7 +118,7 @@ public interface Confidence {
    * @return The confidence level
    * @see #make(List)
    */
-  static double make(Value... values) {
+  static double make(Value<?>... values) {
     Objects.requireNonNull(values, "Hey! Values can't be null!");
     return make(Arrays.asList(values));
   }

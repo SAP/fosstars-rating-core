@@ -88,7 +88,7 @@ public abstract class AbstractScore implements Score {
   }
 
   @Override
-  public ScoreValue calculate(Set<Value> values) {
+  public ScoreValue calculate(Set<Value<?>> values) {
     Objects.requireNonNull(values, "Hey! Values can't be null!");
     return calculate(values.toArray(new Value[0]));
   }
@@ -121,7 +121,7 @@ public abstract class AbstractScore implements Score {
   }
 
   @Override
-  public Set<Feature> allFeatures() {
+  public Set<Feature<?>> allFeatures() {
     return fillOutFeatures(this, new HashSet<>());
   }
 
@@ -170,7 +170,7 @@ public abstract class AbstractScore implements Score {
    * @param allFeatures A set of features to be filled out.
    * @return The specified set of features.
    */
-  private static Set<Feature> fillOutFeatures(Score score, Set<Feature> allFeatures) {
+  private static Set<Feature<?>> fillOutFeatures(Score score, Set<Feature<?>> allFeatures) {
     allFeatures.addAll(score.features());
     for (Score subScore : score.subScores()) {
       fillOutFeatures(subScore, allFeatures);
@@ -186,7 +186,7 @@ public abstract class AbstractScore implements Score {
    * @param usedValues The values which were used to produce the score value.
    * @return A new {@link ScoreValue}.
    */
-  protected ScoreValue scoreValue(double value, Value... usedValues) {
+  protected ScoreValue scoreValue(double value, Value<?>... usedValues) {
     return new ScoreValue(
         this,
         Score.adjust(value),
@@ -203,7 +203,7 @@ public abstract class AbstractScore implements Score {
    * @param usedValues The values which were used to produce the score value.
    * @return A new {@link ScoreValue}.
    */
-  protected ScoreValue scoreValue(double value, List<Value> usedValues) {
+  protected ScoreValue scoreValue(double value, List<Value<?>> usedValues) {
     return new ScoreValue(
         this,
         Score.adjust(value),
@@ -221,13 +221,13 @@ public abstract class AbstractScore implements Score {
    * @return A value for the specified feature if it's in the list.
    * @throws IllegalArgumentException If a value was not found.
    */
-  protected <T> Value<T> find(Feature<T> feature, Value... values) {
+  protected <T> Value<T> find(Feature<T> feature, Value<?>... values) {
     Objects.requireNonNull(values, "Oh no! Feature values can't be null!");
     Objects.requireNonNull(feature, "Oh no! Feature can't be null!");
 
-    for (Value value : values) {
+    for (Value<?> value : values) {
       if (feature.equals(value.feature())) {
-        return value;
+        return (Value<T>) value;
       }
     }
 
@@ -243,7 +243,7 @@ public abstract class AbstractScore implements Score {
    * @return The calculated score value.
    * @see #calculateIfNecessary(Score, ValueSet)
    */
-  protected static ScoreValue calculateIfNecessary(Score score, Value... values) {
+  protected static ScoreValue calculateIfNecessary(Score score, Value<?>... values) {
     return calculateIfNecessary(score, ValueHashSet.from(values));
   }
 
@@ -283,14 +283,14 @@ public abstract class AbstractScore implements Score {
    * @return True if all values are unknown, false otherwise.
    * @throws IllegalArgumentException If values are empty.
    */
-  protected static boolean allUnknown(Value... values) {
+  protected static boolean allUnknown(Value<?>... values) {
     Objects.requireNonNull(values, "Oh no! Values is null!");
 
     if (values.length == 0) {
       throw new IllegalStateException("Oh no! Values is empty!");
     }
 
-    for (Value value : values) {
+    for (Value<?> value : values) {
       if (!value.isUnknown()) {
         return false;
       }
@@ -306,14 +306,14 @@ public abstract class AbstractScore implements Score {
    * @return True if all values are N/A, false otherwise.
    * @throws IllegalArgumentException If values are empty.
    */
-  protected static boolean allNotApplicable(Value... values) {
+  protected static boolean allNotApplicable(Value<?>... values) {
     Objects.requireNonNull(values, "Oh no! Values is null!");
 
     if (values.length == 0) {
       throw new IllegalStateException("Oh no! Values is empty!");
     }
 
-    for (Value value : values) {
+    for (Value<?> value : values) {
       if (!value.isNotApplicable()) {
         return false;
       }

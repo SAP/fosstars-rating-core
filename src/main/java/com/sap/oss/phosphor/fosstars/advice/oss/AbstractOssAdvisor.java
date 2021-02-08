@@ -72,7 +72,7 @@ public abstract class AbstractOssAdvisor implements Advisor {
    * @return A list of advices.
    */
   protected abstract List<Advice> adviseFor(
-      Subject subject, List<Value> usedValues, OssAdviceContext context);
+      Subject subject, List<Value<?>> usedValues, OssAdviceContext context);
 
   /**
    * Returns advices for a boolean feature from a list of values.
@@ -84,7 +84,7 @@ public abstract class AbstractOssAdvisor implements Advisor {
    * @return A list of advices.
    */
   protected List<Advice> adviseForBooleanFeature(
-      List<Value> values, Feature<Boolean> feature, Subject subject, OssAdviceContext context) {
+      List<Value<?>> values, Feature<Boolean> feature, Subject subject, OssAdviceContext context) {
 
     return findValue(values, feature)
         .filter(AbstractOssAdvisor::knownFalseValue)

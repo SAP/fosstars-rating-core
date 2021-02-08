@@ -26,12 +26,13 @@ import java.util.Objects;
  * The data provider cache a value for
  * the {@link com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures#VULNERABILITIES} feature.
  */
-public class InfoAboutVulnerabilities extends CachedSingleFeatureGitHubDataProvider {
+public class InfoAboutVulnerabilities
+    extends CachedSingleFeatureGitHubDataProvider<Vulnerabilities> {
 
   /**
    * A list of underlying data providers.
    */
-  private List<DataProvider<GitHubProject>> providers;
+  private final List<DataProvider<GitHubProject>> providers;
 
   /**
    * Initializes a data provider.
@@ -49,12 +50,12 @@ public class InfoAboutVulnerabilities extends CachedSingleFeatureGitHubDataProvi
   }
 
   @Override
-  protected Feature supportedFeature() {
+  protected Feature<Vulnerabilities> supportedFeature() {
     return VULNERABILITIES;
   }
 
   @Override
-  protected Value fetchValueFor(GitHubProject project) throws IOException {
+  protected Value<Vulnerabilities> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Looking for vulnerabilities in the project ...");
 
     Vulnerabilities allVulnerabilities = new Vulnerabilities();
@@ -62,7 +63,7 @@ public class InfoAboutVulnerabilities extends CachedSingleFeatureGitHubDataProvi
       ValueSet subset = new ValueHashSet();
       provider.set(callback).set(cache).update(project, subset);
 
-      for (Value value : subset.toArray()) {
+      for (Value<?> value : subset.toArray()) {
         if (value.isUnknown()) {
           continue;
         }

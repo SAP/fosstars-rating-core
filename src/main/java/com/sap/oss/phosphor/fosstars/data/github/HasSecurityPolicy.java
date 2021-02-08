@@ -12,7 +12,7 @@ import java.io.IOException;
  * This data provider check if an open-source project has a security policy which describes how
  * vulnerabilities should be reported and fixed.
  */
-public class HasSecurityPolicy extends CachedSingleFeatureGitHubDataProvider {
+public class HasSecurityPolicy extends CachedSingleFeatureGitHubDataProvider<Boolean> {
 
   /**
    * A minimal number of characters in a security policy to consider it valid.
@@ -42,12 +42,12 @@ public class HasSecurityPolicy extends CachedSingleFeatureGitHubDataProvider {
   }
 
   @Override
-  protected Feature supportedFeature() {
+  protected Feature<Boolean> supportedFeature() {
     return HAS_SECURITY_POLICY;
   }
 
   @Override
-  protected Value fetchValueFor(GitHubProject project) throws IOException {
+  protected Value<Boolean> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out if the project has a security policy ...");
     return hasSecurityPolicy(project);
   }
@@ -59,7 +59,7 @@ public class HasSecurityPolicy extends CachedSingleFeatureGitHubDataProvider {
    * @throws IOException If something went wrong.
    */
   private Value<Boolean> hasSecurityPolicy(GitHubProject project) throws IOException {
-    LocalRepository repository = fetcher.localRepositoryFor(project);
+    LocalRepository repository = GitHubDataFetcher.localRepositoryFor(project);
     for (String path : POLICY_LOCATIONS) {
       if (isPolicy(repository, path)) {
         return HAS_SECURITY_POLICY.value(true);

@@ -74,7 +74,7 @@ public class StandardValueCacheTest {
     assertEquals(2, cache.size());
   }
 
-  private static void testPutAndGet(StandardValueCache cache, String key, Value value) {
+  private static <T> void testPutAndGet(StandardValueCache cache, String key, Value<T> value) {
     cache.put(key, value);
 
     Optional<ValueSet> someValueSet = cache.get(key);
@@ -84,7 +84,7 @@ public class StandardValueCacheTest {
     assertTrue(values.of(value.feature()).isPresent());
     assertEquals(value, values.of(value.feature()).get());
 
-    Optional<Value> someValue = cache.get(key, value.feature());
+    Optional<Value<T>> someValue = cache.get(key, value.feature());
     assertTrue(someValue.isPresent());
     assertEquals(value, someValue.get());
   }
@@ -96,7 +96,8 @@ public class StandardValueCacheTest {
     Value<Integer> value = NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE.value(0);
     Date inTwoSecond = new Date(System.currentTimeMillis() + 2 * 1000);
     cache.put("test", value, inTwoSecond);
-    Optional<Value> something = cache.get("test", NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE);
+    Optional<Value<Integer>> something
+        = cache.get("test", NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE);
     assertTrue(something.isPresent());
     Thread.sleep(5000); // sleep for 5 seconds
     something = cache.get("test", NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE);

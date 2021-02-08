@@ -30,7 +30,7 @@ public interface TestVector {
    *
    * @return The values.
    */
-  Set<Value> values();
+  Set<Value<?>> values();
 
   /**
    * Returns the values resolved for a specified score.
@@ -38,7 +38,7 @@ public interface TestVector {
    * @param score The score.
    * @return The values.
    */
-  Set<Value> valuesFor(Score score);
+  Set<Value<?>> valuesFor(Score score);
 
   /**
    * Returns an expected interval for a score value.

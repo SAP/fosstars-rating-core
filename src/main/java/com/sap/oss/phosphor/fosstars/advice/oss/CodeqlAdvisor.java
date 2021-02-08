@@ -28,7 +28,7 @@ public class CodeqlAdvisor extends AbstractOssAdvisor {
 
   @Override
   protected List<Advice> adviseFor(
-      Subject subject, List<Value> usedValues, OssAdviceContext context) {
+      Subject subject, List<Value<?>> usedValues, OssAdviceContext context) {
 
     return Stream.of(USES_LGTM_CHECKS, USES_CODEQL_CHECKS, RUNS_CODEQL_SCANS)
         .map(feature -> adviseForBooleanFeature(usedValues, feature, subject, context))

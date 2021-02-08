@@ -64,7 +64,7 @@ public class ProjectActivityScore extends FeatureBasedScore {
   }
 
   @Override
-  public ScoreValue calculate(Value... values) {
+  public ScoreValue calculate(Value<?>... values) {
     Value<Integer> commits = findValue(values, NUMBER_OF_COMMITS_LAST_THREE_MONTHS,
         "Hey! You have to give me a number of commits!");
     Value<Integer> contributors = findValue(values, NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS,

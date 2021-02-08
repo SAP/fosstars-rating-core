@@ -19,7 +19,7 @@ public abstract class FeatureBasedScore extends AbstractScore {
   /**
    * A set of features which are used in the score.
    */
-  private final Set<Feature> features;
+  private final Set<Feature<?>> features;
 
   /**
    * Initializes a feature-based score with an empty description.
@@ -27,7 +27,7 @@ public abstract class FeatureBasedScore extends AbstractScore {
    * @param name A name of the score.
    * @param features A number of features which are used in the score.
    */
-  public FeatureBasedScore(String name, Feature... features) {
+  public FeatureBasedScore(String name, Feature<?>... features) {
     this(name, EMPTY_DESCRIPTION, setOf(features));
   }
 
@@ -38,7 +38,7 @@ public abstract class FeatureBasedScore extends AbstractScore {
    * @param description A description of the score (may be empty).
    * @param features A number of features which are used in the score.
    */
-  public FeatureBasedScore(String name, String description, Feature... features) {
+  public FeatureBasedScore(String name, String description, Feature<?>... features) {
     this(name, description, setOf(features));
   }
 
@@ -49,9 +49,9 @@ public abstract class FeatureBasedScore extends AbstractScore {
    * @param description A description of the score (may be empty).
    * @param features A set of features which are used in the score.
    */
-  public FeatureBasedScore(String name, String description, Set<Feature> features) {
+  public FeatureBasedScore(String name, String description, Set<Feature<?>> features) {
     super(name, description);
-    for (Feature feature : features) {
+    for (Feature<?> feature : features) {
       if (feature instanceof Score) {
         throw new IllegalArgumentException("Hey! I cannot work with scores!");
       }
@@ -61,7 +61,7 @@ public abstract class FeatureBasedScore extends AbstractScore {
 
   @Override
   @JsonIgnore
-  public final Set<Feature> features() {
+  public final Set<Feature<?>> features() {
     return new HashSet<>(features);
   }
 
@@ -74,7 +74,7 @@ public abstract class FeatureBasedScore extends AbstractScore {
   @Override
   public void accept(Visitor visitor) {
     super.accept(visitor);
-    for (Feature feature : features) {
+    for (Feature<?> feature : features) {
       feature.accept(visitor);
     }
   }

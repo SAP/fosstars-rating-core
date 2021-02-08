@@ -51,10 +51,10 @@ public class Utils {
    * @param feature A feature.
    * @return True if the specified set of values contains the feature, false otherwise.
    */
-  public static boolean contains(Set<Value> values, Feature feature) {
+  public static boolean contains(Set<Value<?>> values, Feature<?> feature) {
     Objects.requireNonNull(values, "Give me a set of values but not a null please!");
     Objects.requireNonNull(feature, "Give me a feature but not a null please!");
-    for (Value value : values) {
+    for (Value<?> value : values) {
       if (value.feature().equals(feature)) {
         return true;
       }
@@ -68,7 +68,7 @@ public class Utils {
    * @param features An array of features.
    * @return A set of unknown values for the specified features.
    */
-  public static Set<Value> allUnknown(Feature... features) {
+  public static Set<Value<?>> allUnknown(Feature<?>... features) {
     return allUnknown(Arrays.asList(features));
   }
 
@@ -78,10 +78,10 @@ public class Utils {
    * @param features A collection of features.
    * @return A set of unknown values for the specified features.
    */
-  public static Set<Value> allUnknown(Collection<Feature> features) {
+  public static Set<Value<?>> allUnknown(Collection<Feature<?>> features) {
     Objects.requireNonNull(features, "Hey! Give me features but not a null!");
-    Set<Value> values = new HashSet<>();
-    for (Feature feature : features) {
+    Set<Value<?>> values = new HashSet<>();
+    for (Feature<?> feature : features) {
       values.add(UnknownValue.of(feature));
     }
     return values;
@@ -95,7 +95,7 @@ public class Utils {
    * @param <T> A type of the data in the value.
    * @return An {@link Optional} with the value.
    */
-  public static <T> Optional<Value<T>> findValue(Set<Value> values, Feature<T> feature) {
+  public static <T> Optional<Value<T>> findValue(Set<Value<?>> values, Feature<T> feature) {
     return findValue(values.toArray(new Value[0]), feature);
   }
 
@@ -107,16 +107,16 @@ public class Utils {
    * @param <T> A type of the data in the value.
    * @return An {@link Optional} with the value.
    */
-  public static <T> Optional<Value<T>> findValue(List<Value> values, Feature<T> feature) {
+  public static <T> Optional<Value<T>> findValue(List<Value<?>> values, Feature<T> feature) {
     return findValue(values.toArray(new Value[0]), feature);
   }
 
-  private static <T> Optional<Value<T>> findValue(Value[] values, Feature<T> feature) {
+  private static <T> Optional<Value<T>> findValue(Value<?>[] values, Feature<T> feature) {
     Objects.requireNonNull(feature, "Oh no! Feature can't be null!");
     Objects.requireNonNull(values, "Oh no! Feature values can't be null!");
-    for (Value value : values) {
+    for (Value<?> value : values) {
       if (feature.equals(value.feature())) {
-        return Optional.of(value);
+        return Optional.of((Value<T>) value);
       }
     }
 
@@ -134,7 +134,9 @@ public class Utils {
    * @throws IllegalArgumentException with the specified error message
    *                                  if no value was found for the specified feature.
    */
-  public static <T> Value<T> findValue(Set<Value> values, Feature<T> feature, String errorMessage) {
+  public static <T> Value<T> findValue(
+      Set<Value<?>> values, Feature<T> feature, String errorMessage) {
+
     return findValue(values.toArray(new Value[0]), feature, errorMessage);
   }
 
@@ -149,7 +151,7 @@ public class Utils {
    * @throws IllegalArgumentException with the specified error message
    *                                  if no value was found for the specified feature.
    */
-  public static <T> Value<T> findValue(Value[] values, Feature<T> feature, String errorMessage) {
+  public static <T> Value<T> findValue(Value<?>[] values, Feature<T> feature, String errorMessage) {
     Optional<Value<T>> value = findValue(values, feature);
     if (!value.isPresent()) {
       throw new IllegalArgumentException(errorMessage);

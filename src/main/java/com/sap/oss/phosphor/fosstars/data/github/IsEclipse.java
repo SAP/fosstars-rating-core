@@ -11,7 +11,7 @@ import java.io.IOException;
  * The data provider tries to figure out if an open-source project belongs to the Eclipse Software
  * Foundation.
  */
-public class IsEclipse extends CachedSingleFeatureGitHubDataProvider {
+public class IsEclipse extends CachedSingleFeatureGitHubDataProvider<Boolean> {
 
   private static final String[] KNOWN_ECLIPSE_ORGANISATIONS = { "eclipse", "eclipse-ee4j" };
 

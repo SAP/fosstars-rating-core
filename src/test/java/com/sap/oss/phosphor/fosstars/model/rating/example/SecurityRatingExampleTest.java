@@ -40,7 +40,7 @@ public class SecurityRatingExampleTest {
 
   @Test
   public void testCalculate() {
-    Set<Value> values = new HashSet<>();
+    Set<Value<?>> values = new HashSet<>();
     values.add(new IntegerValue(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 7));
     values.add(new IntegerValue(NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, 2));
     values.add(new BooleanValue(SECURITY_REVIEW_DONE_EXAMPLE, true));
@@ -64,7 +64,7 @@ public class SecurityRatingExampleTest {
   @Test
   public void testAllFeatures() {
     Rating rating = RatingRepository.INSTANCE.rating(SecurityRatingExample.class);
-    Set<Feature> features = rating.allFeatures();
+    Set<Feature<?>> features = rating.allFeatures();
     assertNotNull(features);
     assertEquals(4, features.size());
     assertTrue(features.contains(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE));

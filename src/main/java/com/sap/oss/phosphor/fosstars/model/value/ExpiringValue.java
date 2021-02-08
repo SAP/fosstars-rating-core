@@ -45,7 +45,7 @@ public class ExpiringValue<T> implements Value<T> {
   }
 
   @Override
-  public Feature feature() {
+  public Feature<T> feature() {
     return value.feature();
   }
 
@@ -118,7 +118,7 @@ public class ExpiringValue<T> implements Value<T> {
    * @return The original feature value.
    */
   @JsonGetter("value")
-  public Value original() {
+  public Value<T> original() {
     return value;
   }
 

@@ -59,7 +59,7 @@ public class LgtmScore extends FeatureBasedScore {
   }
 
   @Override
-  public ScoreValue calculate(Value... values) {
+  public ScoreValue calculate(Value<?>... values) {
     Value<LgtmGrade> worstLgtmGrade = findValue(values, WORST_LGTM_GRADE,
         "Hey! You have to tell me the worst LGTM grade for the project!");
     Value<Languages> languages = findValue(values, LANGUAGES,

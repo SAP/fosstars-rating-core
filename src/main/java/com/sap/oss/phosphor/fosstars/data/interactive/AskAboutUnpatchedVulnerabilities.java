@@ -58,7 +58,7 @@ public class AskAboutUnpatchedVulnerabilities<T> extends AbstractInteractiveData
   }
 
   @Override
-  protected Set<Feature> supportedFeatures() {
+  protected Set<Feature<?>> supportedFeatures() {
     return Collections.singleton(VULNERABILITIES);
   }
 }

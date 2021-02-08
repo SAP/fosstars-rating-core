@@ -68,7 +68,7 @@ public class UsesSanitizers extends GitHubCachingDataProvider {
   }
 
   @Override
-  protected Set<Feature> supportedFeatures() {
+  protected Set<Feature<?>> supportedFeatures() {
     return setOf(USES_ADDRESS_SANITIZER, USES_MEMORY_SANITIZER, USES_UNDEFINED_BEHAVIOR_SANITIZER);
   }
 
@@ -83,7 +83,7 @@ public class UsesSanitizers extends GitHubCachingDataProvider {
     values.update(USES_MEMORY_SANITIZER.value(false));
     values.update(USES_UNDEFINED_BEHAVIOR_SANITIZER.value(false));
 
-    LocalRepository repository = fetcher.localRepositoryFor(project);
+    LocalRepository repository = GitHubDataFetcher.localRepositoryFor(project);
 
     List<Path> files = repository.files(
         path -> Files.isRegularFile(path) && maybeBuildConfig(path));

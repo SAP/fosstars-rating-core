@@ -98,7 +98,7 @@ public class ProjectPopularityScoreTest {
     assertFalse(PROJECT_POPULARITY.description().isEmpty());
   }
 
-  private static Set<Value> values(int stars, int watchers) {
+  private static Set<Value<?>> values(int stars, int watchers) {
     return setOf(
         NUMBER_OF_GITHUB_STARS.value(stars),
         NUMBER_OF_WATCHERS_ON_GITHUB.value(watchers));

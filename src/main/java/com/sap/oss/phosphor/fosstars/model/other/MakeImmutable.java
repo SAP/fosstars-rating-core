@@ -23,7 +23,7 @@ public class MakeImmutable implements Visitor {
   }
 
   @Override
-  public void visit(Feature feature) {
+  public void visit(Feature<?> feature) {
     tryToMakeImmutable(feature);
   }
 

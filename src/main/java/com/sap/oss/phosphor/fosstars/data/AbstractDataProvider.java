@@ -56,7 +56,7 @@ public abstract class AbstractDataProvider<T> implements DataProvider<T> {
    *
    * @return A set of features that the provider can fill out.
    */
-  protected abstract Set<Feature> supportedFeatures();
+  protected abstract Set<Feature<?>> supportedFeatures();
 
   /**
    * Gathers data about an object and updates a specified set of values.

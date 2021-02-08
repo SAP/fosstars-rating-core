@@ -9,6 +9,7 @@ import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Optional;
@@ -49,7 +50,7 @@ public class MavenScmFinder {
   /**
    * The default charset.
    */
-  private static final Charset CHARSET = Charset.forName("UTF-8");
+  private static final Charset CHARSET = StandardCharsets.UTF_8;
 
   /**
    * Takes GAV coordinates of an artifact and looks for a URL to its SCM.
@@ -152,12 +153,7 @@ public class MavenScmFinder {
       return project;
     }
 
-    project = guessEclipseProjectFor(groupId, artifactId);
-    if (project.isPresent()) {
-      return project;
-    }
-
-    return Optional.empty();
+    return guessEclipseProjectFor(groupId, artifactId);
   }
 
   /**

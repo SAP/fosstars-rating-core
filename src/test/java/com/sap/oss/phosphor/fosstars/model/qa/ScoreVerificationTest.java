@@ -19,7 +19,7 @@ public class ScoreVerificationTest {
   public void successfulVerification() throws VerificationFailedException {
     SecurityRatingExample rating = RatingRepository.INSTANCE.rating(SecurityRatingExample.class);
 
-    Set<Value> values = new HashSet<>();
+    Set<Value<?>> values = new HashSet<>();
     values.add(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE.value(0));
     values.add(NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE.value(0));
     values.add(SECURITY_REVIEW_DONE_EXAMPLE.value(false));
@@ -37,7 +37,7 @@ public class ScoreVerificationTest {
   public void failedVerification() throws VerificationFailedException {
     SecurityRatingExample rating = RatingRepository.INSTANCE.rating(SecurityRatingExample.class);
 
-    Set<Value> values = new HashSet<>();
+    Set<Value<?>> values = new HashSet<>();
     values.add(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE.value(0));
     values.add(NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE.value(0));
     values.add(SECURITY_REVIEW_DONE_EXAMPLE.value(false));

@@ -63,7 +63,7 @@ public class AverageCompositeScore extends AbstractScore {
    * @return An empty set of features.
    */
   @Override
-  public Set<Feature> features() {
+  public Set<Feature<?>> features() {
     return Collections.emptySet();
   }
 
@@ -80,7 +80,7 @@ public class AverageCompositeScore extends AbstractScore {
    * @return An overall score.
    */
   @Override
-  public ScoreValue calculate(Value... values) {
+  public ScoreValue calculate(Value<?>... values) {
     ValueHashSet valueSet = new ValueHashSet(values);
     ScoreValue scoreValue = new ScoreValue(this);
 

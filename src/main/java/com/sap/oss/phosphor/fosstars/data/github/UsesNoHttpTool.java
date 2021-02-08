@@ -25,7 +25,7 @@ import org.apache.maven.model.Plugin;
  * The provider fills out the
  * {@link com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures#USES_NOHTTP} feature.
  */
-public class UsesNoHttpTool extends CachedSingleFeatureGitHubDataProvider {
+public class UsesNoHttpTool extends CachedSingleFeatureGitHubDataProvider<Boolean> {
 
   /**
    * Initializes a data provider.
@@ -37,15 +37,15 @@ public class UsesNoHttpTool extends CachedSingleFeatureGitHubDataProvider {
   }
 
   @Override
-  protected Feature supportedFeature() {
+  protected Feature<Boolean> supportedFeature() {
     return USES_NOHTTP;
   }
 
   @Override
-  protected Value fetchValueFor(GitHubProject project) throws IOException {
+  protected Value<Boolean> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out if the project uses nohttp ...");
 
-    LocalRepository repository = fetcher.localRepositoryFor(project);
+    LocalRepository repository = GitHubDataFetcher.localRepositoryFor(project);
     return USES_NOHTTP.value(checkMaven(repository) || checkGradle(repository));
   }
 

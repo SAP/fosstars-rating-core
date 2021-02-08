@@ -59,18 +59,18 @@ public class ScoreTestVector extends AbstractTestVector {
   }
 
   @Override
-  public Set<Value> values() {
+  public Set<Value<?>> values() {
     throw new UnsupportedOperationException("I need a score to create values!");
   }
 
   @Override
-  public Set<Value> valuesFor(Score score) {
+  public Set<Value<?>> valuesFor(Score score) {
     Objects.requireNonNull(score, "Oh no! Score is null!");
 
-    Set<Value> result = new HashSet<>();
+    Set<Value<?>> result = new HashSet<>();
     for (Map.Entry<Class<? extends Score>, Double> entry : values.entrySet()) {
       Score subScore = subScore(score, entry.getKey());
-      Value value = subScore.value(entry.getValue());
+      Value<?> value = subScore.value(entry.getValue());
       result.add(value);
     }
 

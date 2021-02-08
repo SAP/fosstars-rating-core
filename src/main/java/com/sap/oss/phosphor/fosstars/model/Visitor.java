@@ -31,7 +31,7 @@ public interface Visitor {
    *
    * @param feature The feature to be visited.
    */
-  void visit(Feature feature);
+  void visit(Feature<?> feature);
 
   /**
    * Visit a {@link Parameter}.

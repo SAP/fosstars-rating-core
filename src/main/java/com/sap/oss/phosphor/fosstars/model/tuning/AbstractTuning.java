@@ -70,7 +70,7 @@ public abstract class AbstractTuning {
         logger.info("    expected label: {}", result.vector.expectedLabel());
         logger.info("    features:");
 
-        for (Value value : result.vector.values()) {
+        for (Value<?> value : result.vector.values()) {
           logger.info("      {}: {}",
               value.feature().name(), value.isUnknown() ? "unknown" : value.get());
         }

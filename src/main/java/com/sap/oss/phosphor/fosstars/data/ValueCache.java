@@ -18,7 +18,8 @@ public interface ValueCache<K> extends Cache<K, ValueSet> {
    *
    * @param key The key.
    * @param feature The feature.
+   * @param <T> Type of data held by the feature.
    * @return An {@link Optional} with the value if the cache has it.
    */
-  Optional<Value> get(K key, Feature feature);
+  <T> Optional<Value<T>> get(K key, Feature<T> feature);
 }

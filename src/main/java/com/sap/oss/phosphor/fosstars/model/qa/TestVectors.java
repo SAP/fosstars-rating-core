@@ -28,7 +28,7 @@ public class TestVectors implements Iterable<TestVector> {
   /**
    * No default values.
    */
-  private static final Set<Value> NO_DEFAULTS = Collections.emptySet();
+  private static final Set<Value<?>> NO_DEFAULTS = Collections.emptySet();
 
   /**
    * A factory for parsing YAML.
@@ -55,7 +55,7 @@ public class TestVectors implements Iterable<TestVector> {
   /**
    * A set of default values.
    */
-  private final Set<Value> defaults;
+  private final Set<Value<?>> defaults;
 
   /**
    * Initializes a new collection of test vectors.
@@ -74,7 +74,7 @@ public class TestVectors implements Iterable<TestVector> {
    */
   public TestVectors(
       @JsonProperty("elements") List<TestVector> vectors,
-      @JsonProperty("defaults") Set<Value> defaults) {
+      @JsonProperty("defaults") Set<Value<?>> defaults) {
 
     Objects.requireNonNull(vectors, "Hey! Vectors can't be null!");
     Objects.requireNonNull(defaults, "Hey! Defaults can't be null!");
@@ -144,7 +144,7 @@ public class TestVectors implements Iterable<TestVector> {
    * This getter is to make Jackson happy.
    */
   @JsonGetter("defaults")
-  private Set<Value> defaults() {
+  private Set<Value<?>> defaults() {
     return new HashSet<>(defaults);
   }
 

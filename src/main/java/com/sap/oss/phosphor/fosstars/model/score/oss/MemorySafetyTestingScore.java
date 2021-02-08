@@ -66,7 +66,7 @@ public class MemorySafetyTestingScore extends FeatureBasedScore {
   }
 
   @Override
-  public ScoreValue calculate(Value... values) {
+  public ScoreValue calculate(Value<?>... values) {
     Value<Languages> languages = find(LANGUAGES, values);
     Value<Boolean> usesAddressSanitizer = find(USES_ADDRESS_SANITIZER, values);
     Value<Boolean> usesMemorySanitizer = find(USES_MEMORY_SANITIZER, values);

@@ -11,7 +11,7 @@ import java.io.IOException;
  * The data provider tries to figure out if an open-source project belongs to the Apache Software
  * Foundation.
  */
-public class IsApache extends CachedSingleFeatureGitHubDataProvider {
+public class IsApache extends CachedSingleFeatureGitHubDataProvider<Boolean> {
 
   /**
    * Initializes a data provider.
@@ -23,12 +23,12 @@ public class IsApache extends CachedSingleFeatureGitHubDataProvider {
   }
 
   @Override
-  protected Feature supportedFeature() {
+  protected Feature<Boolean> supportedFeature() {
     return IS_APACHE;
   }
 
   @Override
-  protected Value fetchValueFor(GitHubProject project) throws IOException {
+  protected Value<Boolean> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out if the project belongs to the Apache Software Foundation ...");
     return IS_APACHE.value("apache".equalsIgnoreCase(project.organization().name()));
   }

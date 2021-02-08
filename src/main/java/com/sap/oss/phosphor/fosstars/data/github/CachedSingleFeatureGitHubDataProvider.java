@@ -11,8 +11,10 @@ import java.util.Set;
 
 /**
  * This is a base class for data providers that fill out a single feature for a project on GitHub.
+ *
+ * @param <F> Type of data held by the feature.
  */
-public abstract class CachedSingleFeatureGitHubDataProvider extends GitHubCachingDataProvider {
+public abstract class CachedSingleFeatureGitHubDataProvider<F> extends GitHubCachingDataProvider {
 
   /**
    * Initializes a data provider.
@@ -29,7 +31,7 @@ public abstract class CachedSingleFeatureGitHubDataProvider extends GitHubCachin
   }
 
   @Override
-  protected final Set<Feature> supportedFeatures() {
+  protected final Set<Feature<?>> supportedFeatures() {
     return Collections.singleton(supportedFeature());
   }
 
@@ -38,7 +40,7 @@ public abstract class CachedSingleFeatureGitHubDataProvider extends GitHubCachin
    *
    * @return A feature that the provider can fill out.
    */
-  protected abstract Feature supportedFeature();
+  protected abstract Feature<F> supportedFeature();
 
   /**
    * Fetch a feature value for a project.
@@ -47,5 +49,5 @@ public abstract class CachedSingleFeatureGitHubDataProvider extends GitHubCachin
    * @return The value.
    * @throws IOException If something went wrong.
    */
-  protected abstract Value fetchValueFor(GitHubProject project) throws IOException;
+  protected abstract Value<F> fetchValueFor(GitHubProject project) throws IOException;
 }

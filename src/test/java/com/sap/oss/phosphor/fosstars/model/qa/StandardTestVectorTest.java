@@ -34,7 +34,7 @@ public class StandardTestVectorTest {
 
   @Test
   public void smoke() {
-    Set<Value> values = new HashSet<>();
+    Set<Value<?>> values = new HashSet<>();
     values.add(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1));
     Interval expectedScore = DoubleInterval.init().from(4.0).to(6.4).closed().make();
     StandardTestVector vector = new StandardTestVector(
@@ -61,21 +61,21 @@ public class StandardTestVectorTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void emptyValues() {
-    Set<Value> values = new HashSet<>();
+    Set<Value<?>> values = new HashSet<>();
     Interval expectedScore = DoubleInterval.init().from(4.0).to(6.4).closed().make();
     new StandardTestVector(values, expectedScore, SecurityLabelExample.OKAY, "test");
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void noExpectedScore() {
-    Set<Value> values = new HashSet<>();
+    Set<Value<?>> values = new HashSet<>();
     values.add(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1));
     new StandardTestVector(values, NO_EXPECTED_SCORE, SecurityLabelExample.OKAY, "test");
   }
 
   @Test
   public void notApplicableScore() {
-    Set<Value> values = new HashSet<>();
+    Set<Value<?>> values = new HashSet<>();
     values.add(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1));
     new StandardTestVector(
         values, NO_EXPECTED_SCORE, SecurityLabelExample.OKAY, "test", IS_KNOWN, NOT_APPLICABLE);
@@ -83,7 +83,7 @@ public class StandardTestVectorTest {
 
   @Test
   public void noLabel() {
-    Set<Value> values = new HashSet<>();
+    Set<Value<?>> values = new HashSet<>();
     values.add(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1));
     Interval expectedScore = DoubleInterval.init().from(4.0).to(6.4).closed().make();
     StandardTestVector vector = new StandardTestVector(
@@ -166,7 +166,7 @@ public class StandardTestVectorTest {
 
   @Test
   public void yamlSerializeAndDeserialize() throws IOException {
-    Set<Value> values = new HashSet<>();
+    Set<Value<?>> values = new HashSet<>();
     values.add(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1));
     Interval expectedScore = DoubleInterval.init().from(4.0).to(6.4).closed().make();
     StandardTestVector vector = new StandardTestVector(
@@ -185,7 +185,7 @@ public class StandardTestVectorTest {
 
   @Test
   public void jsonSerializeAndDeserialize() throws IOException {
-    Set<Value> values = new HashSet<>();
+    Set<Value<?>> values = new HashSet<>();
     values.add(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1));
     Interval expectedScore = DoubleInterval.init().from(4.0).to(6.4).closed().make();
     StandardTestVector vector = new StandardTestVector(
@@ -202,7 +202,7 @@ public class StandardTestVectorTest {
 
   @Test
   public void jsonSerializeAndDeserializeWithNotApplicableScoreValue() throws IOException {
-    Set<Value> values = new HashSet<>();
+    Set<Value<?>> values = new HashSet<>();
     values.add(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1));
     StandardTestVector vector = new StandardTestVector(
         values, null, SecurityLabelExample.OKAY, "test", false, true);

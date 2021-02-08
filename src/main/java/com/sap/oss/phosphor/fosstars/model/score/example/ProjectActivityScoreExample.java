@@ -46,7 +46,7 @@ public class ProjectActivityScoreExample extends FeatureBasedScore {
   }
 
   @Override
-  public ScoreValue calculate(Value... values) {
+  public ScoreValue calculate(Value<?>... values) {
     Value<Integer> numberOfCommitsLastMonthValue = findValue(values,
         NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE,
         "Couldn't find number of commits last month!");

@@ -130,7 +130,7 @@ public class AverageCompositeScoreTest {
     assertFalse(scoreValue.isNotApplicable());
     assertEquals(Confidence.MAX, scoreValue.confidence(), PRECISION);
 
-    List<Value> usedValues = scoreValue.usedValues();
+    List<Value<?>> usedValues = scoreValue.usedValues();
     usedValues.sort(Comparator.comparing(a -> a.feature().name()));
 
     assertEquals(2, usedValues.size());
@@ -163,7 +163,7 @@ public class AverageCompositeScoreTest {
 
     private boolean returnsNotApplicable = false;
 
-    AbstractTestScore(String name, Feature... features) {
+    AbstractTestScore(String name, Feature<?>... features) {
       super(name, features);
     }
 
@@ -173,7 +173,7 @@ public class AverageCompositeScoreTest {
     }
 
     @Override
-    public ScoreValue calculate(Value... values) {
+    public ScoreValue calculate(Value<?>... values) {
       ScoreValue value = calculateImpl(values);
       if (returnsNotApplicable) {
         return value.makeNotApplicable();
@@ -181,7 +181,7 @@ public class AverageCompositeScoreTest {
       return value;
     }
 
-    abstract ScoreValue calculateImpl(Value... values);
+    abstract ScoreValue calculateImpl(Value<?>... values);
 
     @Override
     public int hashCode() {
@@ -205,7 +205,7 @@ public class AverageCompositeScoreTest {
     }
 
     @Override
-    public ScoreValue calculateImpl(Value... values) {
+    public ScoreValue calculateImpl(Value<?>... values) {
       return scoreValue(VALUE, values).confidence(Confidence.MAX);
     }
   }
@@ -221,7 +221,7 @@ public class AverageCompositeScoreTest {
     }
 
     @Override
-    public ScoreValue calculateImpl(Value... values) {
+    public ScoreValue calculateImpl(Value<?>... values) {
       return scoreValue(VALUE, values).confidence(Confidence.MAX);
     }
   }

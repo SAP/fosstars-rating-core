@@ -16,7 +16,7 @@ import java.util.Objects;
 /**
  * This data provider looks for vulnerabilities in NVD.
  */
-public class VulnerabilitiesFromNvd extends CachedSingleFeatureGitHubDataProvider {
+public class VulnerabilitiesFromNvd extends CachedSingleFeatureGitHubDataProvider<Vulnerabilities> {
 
   /**
    * A feature that hold info about vulnerabilities in the NVD.
@@ -42,12 +42,12 @@ public class VulnerabilitiesFromNvd extends CachedSingleFeatureGitHubDataProvide
   }
 
   @Override
-  protected Feature supportedFeature() {
+  protected Feature<Vulnerabilities> supportedFeature() {
     return VULNERABILITIES_IN_NVD;
   }
 
   @Override
-  protected Value fetchValueFor(GitHubProject project) throws IOException {
+  protected Value<Vulnerabilities> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Looking for vulnerabilities in NVD ...");
 
     Vulnerabilities vulnerabilities = new Vulnerabilities();

@@ -19,7 +19,7 @@ public class StandardTestVector extends AbstractTestVector {
   /**
    * A set of feature values.
    */
-  private final Set<Value> values;
+  private final Set<Value<?>> values;
 
   /**
    * Initializes a new {@link StandardTestVector}.
@@ -30,7 +30,7 @@ public class StandardTestVector extends AbstractTestVector {
    * @param alias A alias of the test vector.
    */
   public StandardTestVector(
-      Set<Value> values, Interval expectedScore, Label expectedLabel, String alias) {
+      Set<Value<?>> values, Interval expectedScore, Label expectedLabel, String alias) {
 
     this(values, expectedScore, expectedLabel, alias, false, false);
   }
@@ -49,7 +49,7 @@ public class StandardTestVector extends AbstractTestVector {
    */
   @JsonCreator
   public StandardTestVector(
-      @JsonProperty("values") Set<Value> values,
+      @JsonProperty("values") Set<Value<?>> values,
       @JsonProperty("expectedScore") Interval expectedScore,
       @JsonProperty("expectedLabel") Label expectedLabel,
       @JsonProperty("alias") String alias,
@@ -73,12 +73,12 @@ public class StandardTestVector extends AbstractTestVector {
 
   @Override
   @JsonGetter("values")
-  public final Set<Value> values() {
+  public final Set<Value<?>> values() {
     return Collections.unmodifiableSet(values);
   }
 
   @Override
-  public Set<Value> valuesFor(Score score) {
+  public Set<Value<?>> valuesFor(Score score) {
     return values();
   }
 

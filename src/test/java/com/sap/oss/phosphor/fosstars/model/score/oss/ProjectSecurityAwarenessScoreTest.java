@@ -23,7 +23,7 @@ public class ProjectSecurityAwarenessScoreTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testWithoutEnoughInfo() {
-    Set<Value> values = Utils.allUnknown(PROJECT_SECURITY_AWARENESS_SCORE.allFeatures());
+    Set<Value<?>> values = Utils.allUnknown(PROJECT_SECURITY_AWARENESS_SCORE.allFeatures());
     values.remove(HAS_SECURITY_TEAM.unknown());
     PROJECT_SECURITY_AWARENESS_SCORE.calculate(values);
   }
@@ -36,7 +36,7 @@ public class ProjectSecurityAwarenessScoreTest {
 
   @Test
   public void testCalculate() {
-    Set<Value> values = Utils.allUnknown(PROJECT_SECURITY_AWARENESS_SCORE.allFeatures());
+    Set<Value<?>> values = Utils.allUnknown(PROJECT_SECURITY_AWARENESS_SCORE.allFeatures());
     ScoreValue scoreValue = PROJECT_SECURITY_AWARENESS_SCORE.calculate(values);
     assertFalse(scoreValue.isUnknown());
     assertFalse(scoreValue.isNotApplicable());

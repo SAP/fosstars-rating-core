@@ -102,14 +102,14 @@ public interface Score extends Feature<Double> {
    *
    * @return A set of features which the score uses directly.
    */
-  Set<Feature> features();
+  Set<Feature<?>> features();
 
   /**
    * Returns all features which are used by the score.
    *
    * @return A number of features.
    */
-  Set<Feature> allFeatures();
+  Set<Feature<?>> allFeatures();
 
   /**
    * Get sub-scores which the score directly uses.
@@ -126,7 +126,7 @@ public interface Score extends Feature<Double> {
    * @throws IllegalArgumentException If the provided values don't contain required features
    *                                  which are used by the score.
    */
-  ScoreValue calculate(Set<Value> values);
+  ScoreValue calculate(Set<Value<?>> values);
 
   /**
    * Takes a number of values and calculates a score.
@@ -136,7 +136,7 @@ public interface Score extends Feature<Double> {
    * @throws IllegalArgumentException If the provided values don't contain required features
    *                                  which are used by the score.
    */
-  ScoreValue calculate(Value... values);
+  ScoreValue calculate(Value<?>... values);
 
   /**
    * Takes an instance of {@link ValueSet} and calculates a score.

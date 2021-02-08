@@ -13,7 +13,7 @@ public class RatingVerification extends AbstractVerification {
   /**
    * A rating to be verified.
    */
-  private Rating rating;
+  private final Rating rating;
 
   /**
    * Initializes a {@link RatingVerification} for a {@link Rating}.

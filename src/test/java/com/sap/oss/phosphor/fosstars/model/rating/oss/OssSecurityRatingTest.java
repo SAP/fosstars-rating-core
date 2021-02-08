@@ -29,7 +29,7 @@ public class OssSecurityRatingTest {
   @Test
   public void testCalculate() {
     Rating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
-    Set<Value> values = Utils.allUnknown(rating.allFeatures());
+    Set<Value<?>> values = Utils.allUnknown(rating.allFeatures());
     RatingValue ratingValue = rating.calculate(values);
     assertTrue(Score.INTERVAL.contains(ratingValue.score()));
     assertEquals(UNCLEAR, ratingValue.label());
