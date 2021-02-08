@@ -29,7 +29,7 @@
     lines="48"/>
   <suppress checks="AbbreviationAsWordInName"
     files="NVD.java"
-    lines="29"/>
+    lines="31"/>
   <suppress checks="AbbreviationAsWordInName"
     files="BaseMetricV2.java"
     lines="52"/>

@@ -12,10 +12,12 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -37,6 +39,16 @@ public class NVD {
    * The default location where the date from the NVD is stored.
    */
   private static final String DEFAULT_DOWNLOAD_DIRECTORY = ".fosstars";
+
+  /**
+   * A file where the class stores a timestamp when the data was downloaded.
+   */
+  private static final String TIMESTAMP_FILENAME = "nvd_last_updated_timestamp";
+
+  /**
+   * How often data from NVD should be downloaded.
+   */
+  private static final Duration UPDATE_INTERVAL = Duration.ofDays(1);
 
   /**
    * The version of NVD feed to be used.
@@ -76,6 +88,7 @@ public class NVD {
    * @param downloadDirectory A directory where the date from the NVD should be stored.
    */
   public NVD(String downloadDirectory) {
+    Objects.requireNonNull(downloadDirectory, "Oh no! Download directory is null!");
     this.downloadDirectory = downloadDirectory;
   }
 
@@ -83,7 +96,52 @@ public class NVD {
    * Downloads data from the NVD database.
    */
   public void download() {
-    new NistDataMirror(DEFAULT_DOWNLOAD_DIRECTORY).mirror(NVD_FEED_VERSION);
+    if (shouldDownload()) {
+      new NistDataMirror(downloadDirectory).mirror(NVD_FEED_VERSION);
+      updateTimestamp();
+    }
+  }
+
+  /**
+   * Checks if data from NVD should be downloaded.
+   *
+   * @return True if data from NVD should be downloaded, false otherwise.
+   */
+  private boolean shouldDownload() {
+    Path path = timestampFile();
+    if (Files.isRegularFile(path)) {
+      try {
+        long timestamp = Long.parseLong(new String(Files.readAllBytes(path)));
+        Duration lastUpdated = Duration.ofMillis(System.currentTimeMillis() - timestamp);
+        return lastUpdated.compareTo(UPDATE_INTERVAL) > 0;
+      } catch (IOException | NumberFormatException e) {
+        LOGGER.warn("Oops! Could not read a timestamp from '{}'", path);
+        return true;
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * Store a timestamp when NVD was downloaded.
+   */
+  private void updateTimestamp() {
+    Path path = timestampFile();
+    try {
+      Files.write(path, String.valueOf(System.currentTimeMillis()).getBytes());
+    } catch (IOException e) {
+      LOGGER.warn("Oops! Could not write a timestamp to '{}'", path);
+    }
+  }
+
+  /**
+   * Returns a path to the file that stores a timestamp when NVD was downloaded.
+   *
+   * @return A path to the file that stores a timestamp when NVD was downloaded.
+   */
+  private Path timestampFile() {
+    return Paths.get(downloadDirectory).resolve(TIMESTAMP_FILENAME);
   }
 
   /**
@@ -97,13 +155,6 @@ public class NVD {
     } catch (IOException e) {
       return true;
     }
-  }
-
-  /**
-   * Returns where the data from the NVD is stored.
-   */
-  String location() {
-    return downloadDirectory;
   }
 
   /**
