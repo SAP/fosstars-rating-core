@@ -254,9 +254,6 @@ public class SecurityRatingCalculator {
       Files.createDirectories(path);
     }
 
-    nvd.download();
-    nvd.parse();
-
     try {
       if (commandLine.hasOption("url")) {
         processUrl(commandLine.getOptionValue("url"));

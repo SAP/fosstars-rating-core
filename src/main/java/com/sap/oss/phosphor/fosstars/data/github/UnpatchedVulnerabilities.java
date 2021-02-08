@@ -26,7 +26,8 @@ public class UnpatchedVulnerabilities extends CachedSingleFeatureGitHubDataProvi
    * The flag shows if the provider should look for unpatched vulnerabilities in NVD.
    * This is an unstable experimental feature.
    */
-  private static boolean ANALYZE_NVD = Boolean.getBoolean("lookForUnpatchedIssuesInNVD");
+  private static final boolean ANALYZE_NVD
+      = Boolean.getBoolean("lookForUnpatchedIssuesInNVD");
 
   /**
    * A feature that hold info about unpatched vulnerabilities.
@@ -59,12 +60,12 @@ public class UnpatchedVulnerabilities extends CachedSingleFeatureGitHubDataProvi
   }
 
   @Override
-  protected Feature supportedFeature() {
+  protected Feature<Vulnerabilities> supportedFeature() {
     return UNPATCHED_VULNERABILITIES;
   }
 
   @Override
-  protected Value fetchValueFor(GitHubProject project) {
+  protected Value<Vulnerabilities> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out if the project has any unpatched vulnerability ...");
 
     Vulnerabilities vulnerabilities = new Vulnerabilities();
@@ -82,8 +83,9 @@ public class UnpatchedVulnerabilities extends CachedSingleFeatureGitHubDataProvi
    *
    * @param project The project.
    * @return Unpatched vulnerabilities.
+   * @throws IOException If something went wrong.
    */
-  Vulnerabilities vulnerabilitiesFromNvdFor(GitHubProject project) {
+  Vulnerabilities vulnerabilitiesFromNvdFor(GitHubProject project) throws IOException {
     Vulnerabilities vulnerabilities = new Vulnerabilities();
     for (NvdEntry entry : nvd.search(NvdEntryMatcher.entriesFor(project))) {
       if (isUnpatched(entry, project)) {
