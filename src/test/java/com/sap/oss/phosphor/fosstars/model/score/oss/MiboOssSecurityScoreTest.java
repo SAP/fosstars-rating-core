@@ -1,5 +1,6 @@
 package com.sap.oss.phosphor.fosstars.model.score.oss;
 
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ARTIFACT_VERSION;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.FUZZED_IN_OSS_FUZZ;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_BUG_BOUNTY_PROGRAM;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
@@ -95,6 +96,7 @@ public class MiboOssSecurityScoreTest {
     OssSecurityScore score = new OssSecurityScore();
     Set<Value> values = setOf(
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(false)),
+        ARTIFACT_VERSION.value("1.2.0"),
         SUPPORTED_BY_COMPANY.value(false),
         IS_APACHE.value(true),
         IS_ECLIPSE.value(false),

@@ -5,9 +5,14 @@ import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
@@ -48,7 +53,7 @@ public class ArtifactVersions implements Iterable<ArtifactVersion> {
   @JsonCreator
   public ArtifactVersions(@JsonProperty("elements") Set<ArtifactVersion> versions) {
     Objects.requireNonNull(versions, "versions can't be null!");
-    this.elements = new TreeSet<>(versions);
+    this.elements = new HashSet<>(versions);
   }
 
   /**
@@ -86,6 +91,25 @@ public class ArtifactVersions implements Iterable<ArtifactVersion> {
     return false;
   }
 
+  public static final Comparator<ArtifactVersion> RELEASE_DATE_COMPARISON =
+      (a, b) -> b.getReleaseDate().compareTo(a.getReleaseDate());
+
+  public Collection<ArtifactVersion> getSortByReleaseDate() {
+    SortedSet<ArtifactVersion> sortedArtifacts = new TreeSet<>(RELEASE_DATE_COMPARISON);
+    sortedArtifacts.addAll(elements);
+    return sortedArtifacts;
+  }
+
+  /**
+   * Returns Artifact version with given version.
+   * If the version is not available an empty optional is returned.
+   * @param version to be searched version
+   * @return found version or empty optional
+   */
+  public Optional<ArtifactVersion> getArtifactVersion(String version) {
+    return elements.parallelStream().filter(v -> v.getVersion().equals(version)).findFirst();
+  }
+
   /**
    * Checks if the collection contains one of the other versions.
    *
@@ -104,7 +128,7 @@ public class ArtifactVersions implements Iterable<ArtifactVersion> {
    */
   @JsonGetter("elements")
   public Set<ArtifactVersion> get() {
-    return new TreeSet<>(elements);
+    return new HashSet<>(elements);
   }
 
   @Override
