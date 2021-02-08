@@ -12,7 +12,7 @@ import java.util.Optional;
 /**
  * This data provider returns a date of the first commit.
  */
-public class FirstCommit extends CachedSingleFeatureGitHubDataProvider {
+public class FirstCommit extends CachedSingleFeatureGitHubDataProvider<Date> {
 
   /**
    * Initializes a data provider.
@@ -24,12 +24,12 @@ public class FirstCommit extends CachedSingleFeatureGitHubDataProvider {
   }
 
   @Override
-  protected Feature supportedFeature() {
+  protected Feature<Date> supportedFeature() {
     return FIRST_COMMIT_DATE;
   }
 
   @Override
-  protected Value fetchValueFor(GitHubProject project) throws IOException {
+  protected Value<Date> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out when the first commit was done ...");
     return firstCommitDate(project);
   }
@@ -41,7 +41,7 @@ public class FirstCommit extends CachedSingleFeatureGitHubDataProvider {
    * @throws IOException If something went wrong.
    */
   private Value<Date> firstCommitDate(GitHubProject project) throws IOException {
-    Optional<Commit> firstCommit = fetcher.localRepositoryFor(project).firstCommit();
+    Optional<Commit> firstCommit = GitHubDataFetcher.localRepositoryFor(project).firstCommit();
     if (firstCommit.isPresent()) {
       return FIRST_COMMIT_DATE.value(firstCommit.get().date());
     }

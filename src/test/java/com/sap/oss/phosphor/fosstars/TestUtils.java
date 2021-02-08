@@ -24,7 +24,7 @@ public class TestUtils {
    * @param score The score.
    * @param values The values.
    */
-  public static void assertScore(double expectedScoreValue, Score score, Set<Value> values) {
+  public static void assertScore(double expectedScoreValue, Score score, Set<Value<?>> values) {
     ScoreValue scoreValue = score.calculate(values);
     assertEquals(expectedScoreValue, scoreValue.get(), DELTA);
     assertEquals(values.size(), scoreValue.usedValues().size());
@@ -41,7 +41,7 @@ public class TestUtils {
    * @param score The score.
    * @param values The values.
    */
-  public static void assertScore(Interval expectedInterval, Score score, Set<Value> values) {
+  public static void assertScore(Interval expectedInterval, Score score, Set<Value<?>> values) {
     ScoreValue scoreValue = score.calculate(values);
     assertTrue(expectedInterval.contains(scoreValue.get()));
     assertTrue(Confidence.INTERVAL.contains(scoreValue.confidence()));

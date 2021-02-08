@@ -36,7 +36,7 @@ public class ValueHashSet implements ValueSet {
   /**
    * A mapping from a feature to its value.
    */
-  private final Map<Feature, Value> featureToValue = new HashMap<>();
+  private final Map<Feature<?>, Value<?>> featureToValue = new HashMap<>();
 
   /**
    * Initializes a new {@link ValueHashSet} with a number of values.
@@ -44,7 +44,7 @@ public class ValueHashSet implements ValueSet {
    * @param values The values.
    * @return The new {@link ValueHashSet}.
    */
-  public static ValueHashSet from(Value... values) {
+  public static ValueHashSet from(Value<?>... values) {
     Objects.requireNonNull(values, "Values can't be null!");
     return new ValueHashSet(values);
   }
@@ -61,7 +61,7 @@ public class ValueHashSet implements ValueSet {
    *
    * @param values The values.
    */
-  public ValueHashSet(Set<Value> values) {
+  public ValueHashSet(Set<Value<?>> values) {
     this(Objects.requireNonNull(values, "Values can't be null!").toArray(new Value[0]));
   }
 
@@ -70,9 +70,9 @@ public class ValueHashSet implements ValueSet {
    *
    * @param values The values.
    */
-  public ValueHashSet(Value... values) {
+  public ValueHashSet(Value<?>... values) {
     Objects.requireNonNull(values, "Values can't be null!");
-    for (Value value : values) {
+    for (Value<?> value : values) {
       update(value);
     }
   }
@@ -92,9 +92,9 @@ public class ValueHashSet implements ValueSet {
    * @param features A collection of features.
    * @return An instance of {@link ValueHashSet}.
    */
-  public static ValueHashSet unknown(Collection<Feature> features) {
+  public static ValueHashSet unknown(Collection<Feature<?>> features) {
     ValueHashSet values = empty();
-    for (Feature feature : features) {
+    for (Feature<?> feature : features) {
       if (values.has(feature)) {
         throw new IllegalArgumentException(String.format(
             "Hey! You just gave me a duplicate feature: %s", feature));
@@ -110,7 +110,7 @@ public class ValueHashSet implements ValueSet {
    * @param features A number of features.
    * @return An instance of {@link ValueHashSet}.
    */
-  public static ValueHashSet unknown(Feature... features) {
+  public static ValueHashSet unknown(Feature<?>... features) {
     return unknown(Arrays.asList(features));
   }
 
@@ -121,9 +121,9 @@ public class ValueHashSet implements ValueSet {
   }
 
   @Override
-  public ValueSet update(Value... values) {
+  public ValueSet update(Value<?>... values) {
     Objects.requireNonNull(values, "Oh no! Values is null!");
-    for (Value value : values) {
+    for (Value<?> value : values) {
       featureToValue.put(value.feature(), value);
     }
     return this;
@@ -132,14 +132,14 @@ public class ValueHashSet implements ValueSet {
   @Override
   public ValueSet update(ValueSet values) {
     Objects.requireNonNull(values, "Oh no! Values is null!");
-    for (Value value : values.toArray()) {
+    for (Value<?> value : values.toArray()) {
       update(value);
     }
     return this;
   }
 
   @Override
-  public ValueSet update(Set<Value> values) {
+  public ValueSet update(Set<Value<?>> values) {
     Objects.requireNonNull(values, "Oh no! Values is null!");
     return update(values.toArray(new Value[0]));
   }
@@ -160,7 +160,7 @@ public class ValueHashSet implements ValueSet {
    *
    * @return A set with values.
    */
-  public Set<Value> toSet() {
+  public Set<Value<?>> toSet() {
     return new HashSet<>(featureToValue.values());
   }
 
@@ -171,7 +171,7 @@ public class ValueHashSet implements ValueSet {
 
   @Override
   public <T> Optional<Value<T>> of(Feature<T> feature) {
-    Value<T> value = featureToValue.get(feature);
+    Value<T> value = (Value<T>) featureToValue.get(feature);
     if (value == null) {
       return Optional.empty();
     }
@@ -201,7 +201,7 @@ public class ValueHashSet implements ValueSet {
   }
 
   @Override
-  public boolean containsAll(Set<Feature> features) {
+  public boolean containsAll(Set<Feature<?>> features) {
     Objects.requireNonNull(features, "Oh no! Features is null");
     return featureToValue.keySet().containsAll(features);
   }
@@ -236,9 +236,9 @@ public class ValueHashSet implements ValueSet {
       WritableTypeId typeId = typeSer.typeId(valueHashSet,JsonToken.START_ARRAY);
       typeSer.writeTypePrefix(gen, typeId);
 
-      for (Map.Entry<Feature, Value> entry : valueHashSet.featureToValue.entrySet()) {
-        Feature feature = entry.getKey();
-        Value value = entry.getValue();
+      for (Map.Entry<Feature<?>, Value<?>> entry : valueHashSet.featureToValue.entrySet()) {
+        Feature<?> feature = entry.getKey();
+        Value<?> value = entry.getValue();
         if (!feature.equals(value.feature())) {
           throw new IllegalArgumentException("Feature doesn't match!");
         }
@@ -272,8 +272,8 @@ public class ValueHashSet implements ValueSet {
 
       ValueHashSet valueHashSet = new ValueHashSet();
 
-      Value[] values = jsonParser.getCodec().readValue(jsonParser, Value[].class);
-      for (Value value : values) {
+      Value<?>[] values = jsonParser.getCodec().readValue(jsonParser, Value[].class);
+      for (Value<?> value : values) {
         valueHashSet.update(value);
       }
 

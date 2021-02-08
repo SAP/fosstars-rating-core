@@ -8,7 +8,6 @@ import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.Weight;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -42,7 +41,7 @@ public class ScoreValue implements Value<Double>, Confidence {
   /**
    * A list of values which were used to build the score value.
    */
-  private final List<Value> usedValues;
+  private final List<Value<?>> usedValues;
 
   /**
    * A list of notes which explain how the score value was calculated.
@@ -78,7 +77,7 @@ public class ScoreValue implements Value<Double>, Confidence {
    * @param usedValues A list of values which were used to produce the score value.
    */
   public ScoreValue(Score score, double value, double weight, double confidence,
-      List<Value> usedValues) {
+      List<Value<?>> usedValues) {
 
     this(score, value, weight, confidence, usedValues, Collections.emptyList(), false, false);
   }
@@ -101,19 +100,20 @@ public class ScoreValue implements Value<Double>, Confidence {
       @JsonProperty("value") double value,
       @JsonProperty("weight") double weight,
       @JsonProperty("confidence") double confidence,
-      @JsonProperty("usedValues") List<Value> usedValues,
+      @JsonProperty("usedValues") List<Value<?>> usedValues,
       @JsonProperty("explanation") List<String> explanation,
       @JsonProperty(value = "isUnknown", defaultValue = "false") boolean isUnknown,
       @JsonProperty(value = "isNotApplicable", defaultValue = "false") boolean isNotApplicable) {
 
     this.score = Objects.requireNonNull(score, "Score can't be null!");
+    Objects.requireNonNull(usedValues, "Values can't be null!");
+    Objects.requireNonNull(explanation, "Explanation can't be null!");
+
     this.value = Score.check(value);
     this.weight = Weight.check(weight);
     this.confidence = Confidence.check(confidence);
-    this.usedValues = new ArrayList<>(
-        Objects.requireNonNull(usedValues, "Values can't be null!"));
-    this.explanation = new ArrayList<>(
-        Objects.requireNonNull(explanation, "Explanation can't be null!"));
+    this.usedValues = new ArrayList(usedValues);
+    this.explanation = new ArrayList<>(explanation);
     this.isUnknown = isUnknown;
     this.isNotApplicable = isNotApplicable;
   }
@@ -168,7 +168,7 @@ public class ScoreValue implements Value<Double>, Confidence {
    * @return A list of values which were used to calculate the score value.
    */
   @JsonGetter("usedValues")
-  public List<Value> usedValues() {
+  public List<Value<?>> usedValues() {
     return new ArrayList<>(usedValues);
   }
 
@@ -178,9 +178,11 @@ public class ScoreValue implements Value<Double>, Confidence {
    * @param values The values to be added.
    * @return The same score value.
    */
-  public ScoreValue usedValues(Value... values) {
+  public ScoreValue usedValues(Value<?>... values) {
     Objects.requireNonNull(values, "Hey! Values can't be null!");
-    this.usedValues.addAll(Arrays.asList(values));
+    for (Value<?> value : values) {
+      usedValues.add(value);
+    }
     return this;
   }
 
@@ -190,7 +192,7 @@ public class ScoreValue implements Value<Double>, Confidence {
    *
    * @return A list of feature values.
    */
-  public List<Value> usedFeatureValues() {
+  public List<Value<?>> usedFeatureValues() {
     return usedFeatureValuesIn(this);
   }
 
@@ -201,8 +203,8 @@ public class ScoreValue implements Value<Double>, Confidence {
    * @param scoreValue The score value to be checked.
    * @return A list of feature values.
    */
-  private static List<Value> usedFeatureValuesIn(ScoreValue scoreValue) {
-    List<Value> usedFeatureValues = new ArrayList<>();
+  private static List<Value<?>> usedFeatureValuesIn(ScoreValue scoreValue) {
+    List<Value<?>> usedFeatureValues = new ArrayList<>();
 
     for (Value<?> value : scoreValue.usedValues) {
       if (value instanceof ScoreValue) {

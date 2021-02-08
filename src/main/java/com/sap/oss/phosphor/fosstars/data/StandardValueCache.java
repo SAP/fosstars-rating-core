@@ -66,14 +66,15 @@ public class StandardValueCache implements Cache<String, ValueSet> {
    *
    * @param key The key
    * @param feature The feature.
+   * @param <T> Type of data.
    * @return An {@link Optional} with a cached value if it's available.
    */
-  public Optional<Value> get(String key, Feature feature) {
+  public <T> Optional<Value<T>> get(String key, Feature<T> feature) {
     ValueSet values = entries.get(key);
     if (values == null) {
       return Optional.empty();
     }
-    Optional<Value> something = values.of(feature);
+    Optional<Value<T>> something = values.of(feature);
     if (!something.isPresent()) {
       return Optional.empty();
     }
@@ -89,7 +90,7 @@ public class StandardValueCache implements Cache<String, ValueSet> {
     }
 
     ValueSet result = new ValueHashSet();
-    for (Value value : set.toArray()) {
+    for (Value<?> value : set.toArray()) {
       unwrapExpiring(value).ifPresent(result::update);
     }
 
@@ -103,11 +104,11 @@ public class StandardValueCache implements Cache<String, ValueSet> {
    * @return The original value if it's not expired.
    * @throws IllegalStateException If the value is not an instance of ExpiringValue.
    */
-  private static Optional<Value> unwrapExpiring(Value value) {
+  private static <T> Optional<Value<T>> unwrapExpiring(Value<T> value) {
     if (value instanceof ExpiringValue == false) {
       throw new IllegalStateException("It should be an expiring value!");
     }
-    ExpiringValue expiringValue = (ExpiringValue) value;
+    ExpiringValue<T> expiringValue = (ExpiringValue<T>) value;
 
     if (expiringValue.neverExpires() || !expiringValue.expired()) {
       return Optional.of(expiringValue.original());
@@ -128,7 +129,7 @@ public class StandardValueCache implements Cache<String, ValueSet> {
 
   @Override
   public void put(String key, ValueSet set, Date expiration) {
-    for (Value value : set.toArray()) {
+    for (Value<?> value : set.toArray()) {
       put(key, value, expiration);
     }
   }
@@ -138,8 +139,9 @@ public class StandardValueCache implements Cache<String, ValueSet> {
    *
    * @param key The key.
    * @param value The value to store to the cache.
+   * @param <T> A type of the value.
    */
-  public void put(String key, Value value) {
+  public <T> void put(String key, Value<T> value) {
     put(key, value, NO_EXPIRATION);
   }
 
@@ -149,14 +151,15 @@ public class StandardValueCache implements Cache<String, ValueSet> {
    * @param key The key.
    * @param value The value to store in the cache.
    * @param expiration The expiration date.
+   * @param <T> A type of the value.
    */
-  public void put(String key, Value value, Date expiration) {
+  public <T> void put(String key, Value<T> value, Date expiration) {
     ValueSet set = entries.get(key);
     if (set == null) {
       set = new ValueHashSet();
       entries.put(key, set);
     }
-    ExpiringValue wrapper = new ExpiringValue(value, expiration);
+    ExpiringValue<T> wrapper = new ExpiringValue<>(value, expiration);
     set.update(wrapper);
   }
 

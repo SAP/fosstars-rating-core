@@ -19,7 +19,7 @@ import org.apache.commons.io.IOUtils;
  * This data provider check if an open-source project is included to the OSS-Fuzz project.
  * It fills out the {@link OssFeatures#FUZZED_IN_OSS_FUZZ} feature.
  */
-public class FuzzedInOssFuzz extends CachedSingleFeatureGitHubDataProvider {
+public class FuzzedInOssFuzz extends CachedSingleFeatureGitHubDataProvider<Boolean> {
 
   /**
    * OSS-Fuzz project on GitHub.

@@ -19,7 +19,7 @@ public class TestVectorBuilder {
   /**
    * A set of feature values.
    */
-  private final Set<Value> values = new HashSet<>();
+  private final Set<Value<?>> values = new HashSet<>();
 
   /**
    * An interval for an expected score.
@@ -134,9 +134,9 @@ public class TestVectorBuilder {
    * @param values A set of values to be set.
    * @return This instance of TestVectorBuilder.
    */
-  public TestVectorBuilder set(Set<Value> values) {
+  public TestVectorBuilder set(Set<Value<?>> values) {
     Objects.requireNonNull(values, "Hey! You have to give me a set of values but not a null!");
-    for (Value value : values) {
+    for (Value<?> value : values) {
       set(value);
     }
     return this;
@@ -148,7 +148,7 @@ public class TestVectorBuilder {
    * @param value A value to be set.
    * @return This instance of TestVectorBuilder.
    */
-  public TestVectorBuilder set(Value value) {
+  public TestVectorBuilder set(Value<?> value) {
     Objects.requireNonNull(value, "Hey! You have to give me a feature value but not null");
     boolean added = values.add(value);
     if (!added) {

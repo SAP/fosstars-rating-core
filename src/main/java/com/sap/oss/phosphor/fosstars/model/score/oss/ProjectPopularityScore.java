@@ -87,7 +87,7 @@ public class ProjectPopularityScore extends FeatureBasedScore {
   }
 
   @Override
-  public ScoreValue calculate(Value... values) {
+  public ScoreValue calculate(Value<?>... values) {
     Value<Integer> n = findValue(values, NUMBER_OF_GITHUB_STARS,
         "Hey! You have to give me a number of stars!");
     Value<Integer> m = findValue(values, NUMBER_OF_WATCHERS_ON_GITHUB,

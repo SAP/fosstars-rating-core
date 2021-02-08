@@ -21,7 +21,7 @@ import java.util.Optional;
  * Next, the provider searches for commits from Dependabot in the commit history.
  * If the commits are found, then the provider also reports that the project uses Dependabot.</p>
  */
-public class UsesDependabot extends CachedSingleFeatureGitHubDataProvider {
+public class UsesDependabot extends CachedSingleFeatureGitHubDataProvider<Boolean> {
 
   /**
    * A list of locations of a Dependabot configuration file in a repository.

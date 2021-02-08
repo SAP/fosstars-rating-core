@@ -20,7 +20,7 @@ public class SecurityTestingScoreExample extends FeatureBasedScore {
   }
 
   @Override
-  public ScoreValue calculate(Value... values) {
+  public ScoreValue calculate(Value<?>... values) {
     Value<Boolean> securityReviewDone = findValue(values, SECURITY_REVIEW_DONE_EXAMPLE,
         "Couldn't find security review status!");
     Value<Boolean> staticCodeAnalysisDone = findValue(values, STATIC_CODE_ANALYSIS_DONE_EXAMPLE,

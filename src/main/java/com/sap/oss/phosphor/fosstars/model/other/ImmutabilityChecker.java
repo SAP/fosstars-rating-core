@@ -34,7 +34,7 @@ public class ImmutabilityChecker implements Visitor {
   }
 
   @Override
-  public void visit(Feature feature) {
+  public void visit(Feature<?> feature) {
     checkImmutability(feature);
   }
 

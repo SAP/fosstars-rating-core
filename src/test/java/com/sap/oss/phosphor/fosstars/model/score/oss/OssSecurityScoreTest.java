@@ -84,7 +84,7 @@ public class OssSecurityScoreTest {
   @Test
   public void calculate() {
     Score score = new OssSecurityScore();
-    Set<Value> values = setOf(
+    Set<Value<?>> values = setOf(
         SUPPORTED_BY_COMPANY.value(false),
         IS_APACHE.value(true),
         IS_ECLIPSE.value(false),

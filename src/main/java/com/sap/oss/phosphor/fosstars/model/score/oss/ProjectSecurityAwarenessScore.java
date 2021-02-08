@@ -143,7 +143,7 @@ public class ProjectSecurityAwarenessScore extends FeatureBasedScore {
   /**
    * Features that tell if a project uses specific security tools.
    */
-  private static final Feature[] SECURITY_TOOLS_FEATURES = new Feature[] {
+  private static final Feature<?>[] SECURITY_TOOLS_FEATURES = new Feature[] {
       FUZZED_IN_OSS_FUZZ,
       USES_DEPENDABOT,
       USES_NOHTTP, USES_LGTM_CHECKS, USES_FIND_SEC_BUGS,
@@ -163,18 +163,18 @@ public class ProjectSecurityAwarenessScore extends FeatureBasedScore {
   }
 
   @Override
-  public ScoreValue calculate(Value... values) {
+  public ScoreValue calculate(Value<?>... values) {
     Value<Boolean> securityPolicy = find(HAS_SECURITY_POLICY, values);
     Value<Boolean> securityTeam = find(HAS_SECURITY_TEAM, values);
     Value<Boolean> signedCommits = find(USES_SIGNED_COMMITS, values);
     Value<Boolean> hasBugBountyProgram = find(HAS_BUG_BOUNTY_PROGRAM, values);
     Value<Boolean> signsArtifacts = find(SIGNS_ARTIFACTS, values);
 
-    List<Value> securityToolsValues = new ArrayList<>();
+    List<Value<?>> securityToolsValues = new ArrayList<>();
     Arrays.stream(SECURITY_TOOLS_FEATURES)
         .forEach(feature -> securityToolsValues.add(find(feature, values)));
 
-    List<Value> usedValues = new ArrayList<>();
+    List<Value<?>> usedValues = new ArrayList<>();
     usedValues.addAll(Arrays.asList(
         securityPolicy, securityTeam, signedCommits, hasBugBountyProgram, signsArtifacts));
     usedValues.addAll(securityToolsValues);
@@ -226,7 +226,7 @@ public class ProjectSecurityAwarenessScore extends FeatureBasedScore {
    * @return True if a value means that one of the security tools is used, false otherwise.
    * @throws IllegalArgumentException In case of an unexpected type of the value.
    */
-  private static boolean usedSecurityTools(Value value) {
+  private static boolean usedSecurityTools(Value<?> value) {
     if (value.isUnknown()) {
       return false;
     }

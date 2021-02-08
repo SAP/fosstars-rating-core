@@ -58,7 +58,7 @@ public class CodeqlScore extends FeatureBasedScore {
   }
 
   @Override
-  public ScoreValue calculate(Value... values) {
+  public ScoreValue calculate(Value<?>... values) {
     Value<Boolean> usesLgtmChecks = findValue(values, USES_LGTM_CHECKS,
         "Hey! You have to tell me if the project uses LGTM checks!");
     Value<Boolean> usesCodeqlChecks = findValue(values, USES_CODEQL_CHECKS,
@@ -90,15 +90,5 @@ public class CodeqlScore extends FeatureBasedScore {
     }
 
     return scoreValue;
-  }
-
-  /**
-   * Checks if at least one of the specified languages are supported by CodeQL.
-   *
-   * @param languages The languages to be checked.
-   * @return True if at least one of the specified languages are supported by CodeQL.
-   */
-  public static boolean containsSupportedLanguage(Languages languages) {
-    return SUPPORTED_LANGUAGES.containsAnyOf(languages);
   }
 }

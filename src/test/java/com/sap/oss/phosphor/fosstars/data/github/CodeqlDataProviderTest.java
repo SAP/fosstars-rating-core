@@ -37,7 +37,7 @@ public class CodeqlDataProviderTest extends TestGitHubDataFetcherHolder {
 
   @Test
   public void testSupportedFeatures() {
-    Set<Feature> features = new CodeqlDataProvider(fetcher).supportedFeatures();
+    Set<Feature<?>> features = new CodeqlDataProvider(fetcher).supportedFeatures();
     assertEquals(2, features.size());
     assertThat(features, hasItem(RUNS_CODEQL_SCANS));
     assertThat(features, hasItem(USES_CODEQL_CHECKS));

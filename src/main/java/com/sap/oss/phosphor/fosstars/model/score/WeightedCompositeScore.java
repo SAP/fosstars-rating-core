@@ -137,7 +137,7 @@ public class WeightedCompositeScore extends AbstractScore implements Tunable {
    * @return An overall score.
    */
   @Override
-  public final ScoreValue calculate(Value... values) {
+  public final ScoreValue calculate(Value<?>... values) {
     ValueHashSet valueSet = new ValueHashSet(values);
 
     double weightSum = 0.0;
@@ -188,7 +188,7 @@ public class WeightedCompositeScore extends AbstractScore implements Tunable {
    * @return An empty set of features.
    */
   @Override
-  public final Set<Feature> features() {
+  public final Set<Feature<?>> features() {
     return Collections.emptySet();
   }
 

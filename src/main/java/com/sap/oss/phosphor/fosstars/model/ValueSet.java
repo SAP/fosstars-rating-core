@@ -30,7 +30,7 @@ public interface ValueSet {
    * @param values Values to be updated.
    * @return This ValueSet.
    */
-  ValueSet update(Value... values);
+  ValueSet update(Value<?>... values);
 
   /**
    * Updates a number of values in the set.
@@ -46,7 +46,7 @@ public interface ValueSet {
    * @param values The new values.
    * @return This ValueSet.
    */
-  ValueSet update(Set<Value> values);
+  ValueSet update(Set<Value<?>> values);
 
   /**
    * Converts the set to an array of values.
@@ -84,5 +84,5 @@ public interface ValueSet {
    * @param features A Set of features.
    * @return True if the set contains all the specified features, false otherwise.
    */
-  boolean containsAll(Set<Feature> features);
+  boolean containsAll(Set<Feature<?>> features);
 }

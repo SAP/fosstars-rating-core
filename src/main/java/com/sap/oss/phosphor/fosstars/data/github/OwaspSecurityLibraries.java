@@ -56,7 +56,7 @@ public class OwaspSecurityLibraries extends GitHubCachingDataProvider {
   }
 
   @Override
-  protected Set<Feature> supportedFeatures() {
+  protected Set<Feature<?>> supportedFeatures() {
     return setOf(USES_OWASP_ESAPI, USES_OWASP_JAVA_ENCODER, USES_OWASP_JAVA_HTML_SANITIZER);
   }
 

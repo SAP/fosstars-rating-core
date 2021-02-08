@@ -39,7 +39,7 @@ public interface Rating {
    * @param values A set of values.
    * @return A rating value.
    */
-  RatingValue calculate(Set<Value> values);
+  RatingValue calculate(Set<Value<?>> values);
 
   /**
    * Takes a number of feature values and calculates a score.
@@ -47,7 +47,7 @@ public interface Rating {
    * @param values A number of values.
    * @return A rating value.
    */
-  RatingValue calculate(Value... values);
+  RatingValue calculate(Value<?>... values);
 
   /**
    * Takes a set of feature values and calculates a score.
@@ -62,7 +62,7 @@ public interface Rating {
    *
    * @return A number of features.
    */
-  Set<Feature> allFeatures();
+  Set<Feature<?>> allFeatures();
 
   /**
    * Accept a visitor.

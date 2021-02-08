@@ -54,7 +54,7 @@ public class UnpatchedVulnerabilitiesScore extends FeatureBasedScore {
   }
 
   @Override
-  public ScoreValue calculate(Value... values) {
+  public ScoreValue calculate(Value<?>... values) {
     Value<Vulnerabilities> vulnerabilities = findValue(values, VULNERABILITIES,
         "Hey! Give me info about vulnerabilities!");
 

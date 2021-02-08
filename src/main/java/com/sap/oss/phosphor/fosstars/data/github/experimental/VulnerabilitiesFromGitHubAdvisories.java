@@ -34,7 +34,8 @@ import org.kohsuke.github.GHRepository;
  * This data provider looks for vulnerabilities in {@link GitHubAdvisories} which are not present in
  * {@link com.sap.oss.phosphor.fosstars.nvd.NVD}.
  */
-public class VulnerabilitiesFromGitHubAdvisories extends CachedSingleFeatureGitHubDataProvider {
+public class VulnerabilitiesFromGitHubAdvisories
+    extends CachedSingleFeatureGitHubDataProvider<Vulnerabilities> {
 
   /**
    * A feature that holds info about vulnerabilities in the GitHub Advisory Database.
@@ -60,12 +61,12 @@ public class VulnerabilitiesFromGitHubAdvisories extends CachedSingleFeatureGitH
   }
 
   @Override
-  protected Feature supportedFeature() {
+  protected Feature<Vulnerabilities> supportedFeature() {
     return VULNERABILITIES_IN_ADVISORIES;
   }
 
   @Override
-  protected Value fetchValueFor(GitHubProject project) throws IOException {
+  protected Value<Vulnerabilities> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Looking for vulnerabilities from GitHub Advisory ...");
 
     Vulnerabilities vulnerabilities = new Vulnerabilities();

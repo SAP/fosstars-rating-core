@@ -67,7 +67,7 @@ public class PrettyPrinterTest {
   private static final OssSecurityRating RATING
       = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
 
-  private static final Set<Value> TEST_VALUES = setOf(
+  private static final Set<Value<?>> TEST_VALUES = setOf(
       SUPPORTED_BY_COMPANY.value(false),
       IS_APACHE.value(true),
       IS_ECLIPSE.value(false),
@@ -121,10 +121,10 @@ public class PrettyPrinterTest {
     assertNotNull(text);
     assertFalse(text.isEmpty());
     System.out.println(text);
-    for (Value value : ratingValue.scoreValue().usedValues()) {
+    for (Value<?> value : ratingValue.scoreValue().usedValues()) {
       assertTrue(text.contains(CommonFormatter.nameOf(value.feature())));
     }
-    for (Feature feature : RATING.allFeatures()) {
+    for (Feature<?> feature : RATING.allFeatures()) {
       assertTrue(String.format("'%s' feature should be there!", feature.name()),
           text.contains(CommonFormatter.nameOf(feature)));
     }

@@ -20,7 +20,7 @@ import org.kohsuke.github.GHRepository;
 /**
  * This data provider tries to figure out if a project uses GitHub for development.
  */
-public class UsesGithubForDevelopment extends CachedSingleFeatureGitHubDataProvider {
+public class UsesGithubForDevelopment extends CachedSingleFeatureGitHubDataProvider<Boolean> {
 
   /**
    * This threshold shows how many checks have to be passed to say that a project uses GitHub

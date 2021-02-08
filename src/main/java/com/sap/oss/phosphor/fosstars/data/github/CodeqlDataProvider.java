@@ -61,7 +61,7 @@ public class CodeqlDataProvider extends GitHubCachingDataProvider {
   }
 
   @Override
-  protected Set<Feature> supportedFeatures() {
+  protected Set<Feature<?>> supportedFeatures() {
     return setOf(RUNS_CODEQL_SCANS, USES_CODEQL_CHECKS);
   }
 

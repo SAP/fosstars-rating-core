@@ -22,7 +22,7 @@ public class TestVectorWithDefaults implements TestVector {
   /**
    * A set of default values.
    */
-  private final Set<Value> defaults;
+  private final Set<Value<?>> defaults;
 
   /**
    * Initializes a new wrapper.
@@ -30,7 +30,7 @@ public class TestVectorWithDefaults implements TestVector {
    * @param vector A test vector to be wrapped.
    * @param defaults A set of default values.
    */
-  TestVectorWithDefaults(TestVector vector, Set<Value> defaults) {
+  TestVectorWithDefaults(TestVector vector, Set<Value<?>> defaults) {
     Objects.requireNonNull(vector, "Hey! Vector can't be null!");
     Objects.requireNonNull(defaults, "Hey! Defaults can't be null!");
     this.vector = vector;
@@ -47,13 +47,13 @@ public class TestVectorWithDefaults implements TestVector {
   }
 
   @Override
-  public Set<Value> values() {
+  public Set<Value<?>> values() {
     ValueHashSet values = new ValueHashSet(vector.values());
     return extendedWithDefaults(values);
   }
 
   @Override
-  public Set<Value> valuesFor(Score score) {
+  public Set<Value<?>> valuesFor(Score score) {
     ValueHashSet values = new ValueHashSet(vector.valuesFor(score));
     return extendedWithDefaults(values);
   }
@@ -64,8 +64,8 @@ public class TestVectorWithDefaults implements TestVector {
    * @param values The value set to be extended.
    * @return An extended set of values.
    */
-  private Set<Value> extendedWithDefaults(ValueHashSet values) {
-    for (Value defaultValue : defaults) {
+  private Set<Value<?>> extendedWithDefaults(ValueHashSet values) {
+    for (Value<?> defaultValue : defaults) {
       if (!values.has(defaultValue.feature())) {
         values.update(defaultValue);
       }

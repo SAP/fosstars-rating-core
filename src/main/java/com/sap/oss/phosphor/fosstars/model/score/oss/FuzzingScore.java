@@ -36,7 +36,7 @@ public class FuzzingScore extends FeatureBasedScore {
   }
 
   @Override
-  public ScoreValue calculate(Value... values) {
+  public ScoreValue calculate(Value<?>... values) {
     Value<Languages> languages = find(LANGUAGES, values);
     Value<Boolean> fuzzedInOssFuzz = find(FUZZED_IN_OSS_FUZZ, values);
 

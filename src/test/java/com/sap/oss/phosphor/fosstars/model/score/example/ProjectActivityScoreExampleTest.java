@@ -31,7 +31,7 @@ public class ProjectActivityScoreExampleTest {
 
   @Test
   public void calculate() {
-    Set<Value> values = makeValues(1, 2);
+    Set<Value<?>> values = makeValues(1, 2);
     assertTrue(Score.INTERVAL.contains(PROJECT_ACTIVITY_SCORE_EXAMPLE.calculate(values).get()));
     values = makeValues(0, 0);
     assertTrue(Score.INTERVAL.contains(PROJECT_ACTIVITY_SCORE_EXAMPLE.calculate(values).get()));
@@ -42,7 +42,7 @@ public class ProjectActivityScoreExampleTest {
   @Test(expected = IllegalArgumentException.class)
   public void negativeCommitsNumber() {
     ProjectActivityScoreExample score = PROJECT_ACTIVITY_SCORE_EXAMPLE;
-    Set<Value> values = new HashSet<>();
+    Set<Value<?>> values = new HashSet<>();
     values.add(new IntegerValue(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, -1));
     values.add(new IntegerValue(NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, 11));
     Score.INTERVAL.contains(score.calculate(values).get());
@@ -50,7 +50,7 @@ public class ProjectActivityScoreExampleTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void negativeContributorsNumber() {
-    Set<Value> values = new HashSet<>();
+    Set<Value<?>> values = new HashSet<>();
     values.add(new IntegerValue(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 11));
     values.add(new IntegerValue(NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, -1));
     Score.INTERVAL.contains(PROJECT_ACTIVITY_SCORE_EXAMPLE.calculate(values).get());
@@ -58,22 +58,22 @@ public class ProjectActivityScoreExampleTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void noCommitsNumber() {
-    Set<Value> values = new HashSet<>();
+    Set<Value<?>> values = new HashSet<>();
     values.add(new IntegerValue(NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, 11));
     Score.INTERVAL.contains(PROJECT_ACTIVITY_SCORE_EXAMPLE.calculate(values).get());
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void noContributorsNumber() {
-    Set<Value> values = new HashSet<>();
+    Set<Value<?>> values = new HashSet<>();
     values.add(new IntegerValue(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 11));
     Score.INTERVAL.contains(PROJECT_ACTIVITY_SCORE_EXAMPLE.calculate(values).get());
   }
 
-  private static Set<Value> makeValues(
+  private static Set<Value<?>> makeValues(
       int numberOfCommitsLastMonth, int numberOfContributorsLastMonth) {
 
-    Set<Value> values = new HashSet<>();
+    Set<Value<?>> values = new HashSet<>();
     values.add(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE.value(numberOfCommitsLastMonth));
     values.add(NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE.value(numberOfContributorsLastMonth));
     return values;

@@ -33,7 +33,7 @@ public class NoHttpToolScore extends FeatureBasedScore {
   }
 
   @Override
-  public ScoreValue calculate(Value... values) {
+  public ScoreValue calculate(Value<?>... values) {
     Value<Boolean> usesNoHttp = findValue(values, USES_NOHTTP,
         "Hey! You have to tell me if the project uses nohttp tool!");
     Value<PackageManagers> packageManagers = findValue(values, PACKAGE_MANAGERS,

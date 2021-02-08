@@ -201,11 +201,7 @@ public class ScoreWeights implements Tunable {
 
   @Override
   public List<Weight> parameters() {
-    List<Weight> parameters = new ArrayList<>();
-    for (Weight weight : values.values()) {
-      parameters.add(weight);
-    }
-    return parameters;
+    return new ArrayList<>(values.values());
   }
 
   @Override

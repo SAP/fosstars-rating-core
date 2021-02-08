@@ -111,7 +111,7 @@ public class ProjectActivityScoreTest {
     assertFalse(PROJECT_ACTIVITY.description().isEmpty());
   }
 
-  private static Set<Value> values(int commits, int contributors) {
+  private static Set<Value<?>> values(int commits, int contributors) {
     return setOf(
         NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(commits),
         NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(contributors));

@@ -39,7 +39,7 @@ public class AbstractScoreTest {
     }
 
     @Override
-    public Set<Feature> features() {
+    public Set<Feature<?>> features() {
       return setOf(
           ExampleFeatures.STATIC_CODE_ANALYSIS_DONE_EXAMPLE,
           ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE);
@@ -51,7 +51,7 @@ public class AbstractScoreTest {
     }
 
     @Override
-    public ScoreValue calculate(Value... values) {
+    public ScoreValue calculate(Value<?>... values) {
       return scoreValue(1.23);
     }
   }

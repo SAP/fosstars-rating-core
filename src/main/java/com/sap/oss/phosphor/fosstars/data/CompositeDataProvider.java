@@ -97,7 +97,7 @@ public class CompositeDataProvider<T> implements DataProvider<T> {
   @Override
   public CompositeDataProvider<T> set(UserCallback callback) {
     Objects.requireNonNull(callback, "Callback can't be null!");
-    for (DataProvider provider : providers) {
+    for (DataProvider<?> provider : providers) {
       provider.set(callback);
     }
     return this;
@@ -118,7 +118,7 @@ public class CompositeDataProvider<T> implements DataProvider<T> {
    * @param features The features.
    * @return This data provider.
    */
-  public CompositeDataProvider<T> stopWhenFilledOut(Feature... features) {
+  public CompositeDataProvider<T> stopWhenFilledOut(Feature<?>... features) {
     stopCondition(new AllFeaturesFilledOut(features));
     return this;
   }
@@ -155,14 +155,14 @@ public class CompositeDataProvider<T> implements DataProvider<T> {
     /**
      * A list of features.
      */
-    private final List<Feature> features = new ArrayList<>();
+    private final List<Feature<?>> features = new ArrayList<>();
 
     /**
      * Initializes a stop condition with a number of features.
      *
      * @param features The features. It can't be null or empty.
      */
-    AllFeaturesFilledOut(Feature... features) {
+    AllFeaturesFilledOut(Feature<?>... features) {
       Objects.requireNonNull(features, "Features can't be null!");
       if (features.length == 0) {
         throw new IllegalArgumentException("No features provided!");
@@ -173,7 +173,7 @@ public class CompositeDataProvider<T> implements DataProvider<T> {
     @Override
     public boolean satisfied(ValueSet values) {
       for (Feature feature : features) {
-        Optional<Value> something = values.of(feature);
+        Optional<Value<?>> something = values.of(feature);
         if (!something.isPresent()) {
           return false;
         }

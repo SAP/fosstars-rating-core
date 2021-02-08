@@ -77,7 +77,7 @@ public class ScoreValueTest {
 
   @Test
   public void testUsedValues() {
-    List<Value> usedValues = Arrays.asList(
+    List<Value<?>> usedValues = Arrays.asList(
         NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE.value(10),
         NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE.value(3));
 
@@ -147,7 +147,7 @@ public class ScoreValueTest {
 
   @Test
   public void testEqualsAndHashCode() {
-    List<Value> usedValues = Arrays.asList(
+    List<Value<?>> usedValues = Arrays.asList(
         NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE.value(10),
         NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE.value(3));
 
@@ -177,7 +177,7 @@ public class ScoreValueTest {
 
   @Test
   public void testSerializeAndDeserialize() throws IOException {
-    List<Value> usedValues = Arrays.asList(
+    List<Value<?>> usedValues = Arrays.asList(
         NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE.value(10),
         NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE.value(3));
 
@@ -228,7 +228,7 @@ public class ScoreValueTest {
 
   @Test
   public void testUsedFeatureValues() {
-    Set<Value> values = new HashSet<>();
+    Set<Value<?>> values = new HashSet<>();
     values.add(new IntegerValue(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 7));
     values.add(new IntegerValue(NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, 2));
     values.add(new BooleanValue(SECURITY_REVIEW_DONE_EXAMPLE, true));
@@ -243,7 +243,7 @@ public class ScoreValueTest {
 
   @Test
   public void testFindUsedSubScoreValue() {
-    Set<Value> values = new HashSet<>();
+    Set<Value<?>> values = new HashSet<>();
     values.add(new IntegerValue(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 7));
     values.add(new IntegerValue(NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, 2));
     values.add(new BooleanValue(SECURITY_REVIEW_DONE_EXAMPLE, true));

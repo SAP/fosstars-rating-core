@@ -20,7 +20,8 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * This data provider tries to figure out if an open-source project has unpatched vulnerabilities.
  */
-public class UnpatchedVulnerabilities extends CachedSingleFeatureGitHubDataProvider {
+public class UnpatchedVulnerabilities
+    extends CachedSingleFeatureGitHubDataProvider<Vulnerabilities> {
 
   /**
    * The flag shows if the provider should look for unpatched vulnerabilities in NVD.

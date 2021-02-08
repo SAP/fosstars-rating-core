@@ -43,7 +43,7 @@ public class ScoreTestVectorTest {
     ScoreTestVector vector = new ScoreTestVector(
         values, expectedScore, null, "test", false, false);
 
-    Set<Value> set = vector.valuesFor(ExampleScores.SECURITY_SCORE_EXAMPLE);
+    Set<Value<?>> set = vector.valuesFor(ExampleScores.SECURITY_SCORE_EXAMPLE);
     assertNotNull(set);
     assertEquals(2, set.size());
     assertTrue(set.contains(ExampleScores.PROJECT_ACTIVITY_SCORE_EXAMPLE.value(5.3)));

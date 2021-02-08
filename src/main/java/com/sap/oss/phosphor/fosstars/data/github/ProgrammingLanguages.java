@@ -16,7 +16,7 @@ import org.kohsuke.github.GHRepository;
  * This data provider returns a number of languages that are used
  * in an open-source project.
  */
-public class ProgrammingLanguages extends CachedSingleFeatureGitHubDataProvider {
+public class ProgrammingLanguages extends CachedSingleFeatureGitHubDataProvider<Languages> {
 
   /**
    * Initializes a data provider.
@@ -28,12 +28,12 @@ public class ProgrammingLanguages extends CachedSingleFeatureGitHubDataProvider 
   }
 
   @Override
-  protected Feature supportedFeature() {
+  protected Feature<Languages> supportedFeature() {
     return LANGUAGES;
   }
 
   @Override
-  protected Value fetchValueFor(GitHubProject project) throws IOException {
+  protected Value<Languages> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Looking for programming languages that are used in the project...");
     return languagesOf(project);
   }

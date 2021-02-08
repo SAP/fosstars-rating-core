@@ -29,7 +29,7 @@ public abstract class AbstractValue<T> implements Value<T> {
 
   @Override
   @JsonGetter("feature")
-  public final Feature feature() {
+  public final Feature<T> feature() {
     return feature;
   }
 

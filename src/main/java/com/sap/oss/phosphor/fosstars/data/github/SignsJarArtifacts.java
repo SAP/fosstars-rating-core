@@ -23,7 +23,7 @@ import org.apache.maven.model.Plugin;
  * <a href="http://maven.apache.org/plugins/maven-gpg-plugin/">Maven GPG plugin</a>.</p>
  * <p>The provider fills out the {@link OssFeatures#SIGNS_ARTIFACTS} feature.</p>
  */
-public class SignsJarArtifacts extends CachedSingleFeatureGitHubDataProvider {
+public class SignsJarArtifacts extends CachedSingleFeatureGitHubDataProvider<Boolean> {
 
   /**
    * Initializes a data provider.
@@ -35,14 +35,14 @@ public class SignsJarArtifacts extends CachedSingleFeatureGitHubDataProvider {
   }
 
   @Override
-  protected Feature supportedFeature() {
+  protected Feature<Boolean> supportedFeature() {
     return SIGNS_ARTIFACTS;
   }
 
   @Override
-  protected Value fetchValueFor(GitHubProject project) throws IOException {
+  protected Value<Boolean> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out if the project signs jar files ...");
-    LocalRepository repository = fetcher.localRepositoryFor(project);
+    LocalRepository repository = GitHubDataFetcher.localRepositoryFor(project);
     boolean answer = checkMaven(repository);
     return SIGNS_ARTIFACTS.value(answer);
   }

@@ -14,7 +14,7 @@ import java.io.IOException;
  * project belongs to an organization which provides a security team such as Apache Software
  * Foundation. Next, it tries to ask a user if {@link UserCallback} is available.
  */
-public class HasSecurityTeam extends CachedSingleFeatureGitHubDataProvider {
+public class HasSecurityTeam extends CachedSingleFeatureGitHubDataProvider<Boolean> {
 
   /**
    * Where info about security teams are stored.
@@ -33,12 +33,12 @@ public class HasSecurityTeam extends CachedSingleFeatureGitHubDataProvider {
   }
 
   @Override
-  protected Feature supportedFeature() {
+  protected Feature<Boolean> supportedFeature() {
     return HAS_SECURITY_TEAM;
   }
 
   @Override
-  protected Value fetchValueFor(GitHubProject project) throws IOException {
+  protected Value<Boolean> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out if the project has a security team ...");
     return HAS_SECURITY_TEAM.value(securityTeam.existsFor(project.scm()));
   }

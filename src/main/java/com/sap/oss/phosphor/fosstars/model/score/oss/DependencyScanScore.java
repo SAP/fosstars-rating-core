@@ -42,7 +42,7 @@ public class DependencyScanScore extends AbstractScore {
   }
 
   @Override
-  public Set<Feature> features() {
+  public Set<Feature<?>> features() {
     return Collections.emptySet();
   }
 
@@ -52,7 +52,7 @@ public class DependencyScanScore extends AbstractScore {
   }
 
   @Override
-  public ScoreValue calculate(Value... values) {
+  public ScoreValue calculate(Value<?>... values) {
     Objects.requireNonNull(values, "Oh no! Values is null!");
 
     ScoreValue dependabotScoreValue = calculateIfNecessary(dependabotScore, values);

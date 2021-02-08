@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * This data provider tries to figure out if a project has a bug bounty program.
  */
-public class HasBugBountyProgram extends CachedSingleFeatureGitHubDataProvider {
+public class HasBugBountyProgram extends CachedSingleFeatureGitHubDataProvider<Boolean> {
 
   /**
    * Where info about bug bounty programs are stored.
@@ -30,12 +30,12 @@ public class HasBugBountyProgram extends CachedSingleFeatureGitHubDataProvider {
   }
 
   @Override
-  protected Feature supportedFeature() {
+  protected Feature<Boolean> supportedFeature() {
     return HAS_BUG_BOUNTY_PROGRAM;
   }
 
   @Override
-  protected Value fetchValueFor(GitHubProject project) throws IOException {
+  protected Value<Boolean> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out if the project has a bug bounty program ...");
     return HAS_BUG_BOUNTY_PROGRAM.value(bugBounties.existsFor(project));
   }

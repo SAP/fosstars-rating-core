@@ -67,7 +67,7 @@ public class UsesOwaspDependencyCheck extends GitHubCachingDataProvider {
   }
 
   @Override
-  protected Set<Feature> supportedFeatures() {
+  protected Set<Feature<?>> supportedFeatures() {
     return setOf(
         OWASP_DEPENDENCY_CHECK_USAGE, 
         OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD);

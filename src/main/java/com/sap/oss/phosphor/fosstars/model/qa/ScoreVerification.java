@@ -13,7 +13,7 @@ public class ScoreVerification extends AbstractVerification {
   /**
    * A score to be verified.
    */
-  private Score score;
+  private final Score score;
 
   /**
    * Initializes a {@link ScoreVerification} for a {@link Score}.

@@ -29,7 +29,7 @@ public class FindSecBugsScore extends FeatureBasedScore {
   }
 
   @Override
-  public ScoreValue calculate(Value... values) {
+  public ScoreValue calculate(Value<?>... values) {
     Value<Languages> languages = find(LANGUAGES, values);
     Value<Boolean> usesFindSecBugs = find(USES_FIND_SEC_BUGS, values);
 

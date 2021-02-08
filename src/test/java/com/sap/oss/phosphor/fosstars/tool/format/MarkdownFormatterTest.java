@@ -60,7 +60,7 @@ public class MarkdownFormatterTest {
   private static final OssSecurityRating RATING
       = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
 
-  private static final Set<Value> TEST_VALUES = setOf(
+  private static final Set<Value<?>> TEST_VALUES = setOf(
       SUPPORTED_BY_COMPANY.value(false),
       IS_APACHE.value(true),
       IS_ECLIPSE.value(false),

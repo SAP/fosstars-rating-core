@@ -42,12 +42,12 @@ public abstract class AbstractRating implements Rating {
   }
 
   @Override
-  public final RatingValue calculate(Set<Value> values) {
+  public final RatingValue calculate(Set<Value<?>> values) {
     return calculate(score.calculate(values));
   }
 
   @Override
-  public RatingValue calculate(Value... values) {
+  public RatingValue calculate(Value<?>... values) {
     return calculate(score.calculate(values));
   }
 
@@ -84,7 +84,7 @@ public abstract class AbstractRating implements Rating {
   }
 
   @Override
-  public Set<Feature> allFeatures() {
+  public Set<Feature<?>> allFeatures() {
     return score.allFeatures();
   }
 

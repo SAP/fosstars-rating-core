@@ -54,7 +54,7 @@ public class SecurityRatingExampleVerification extends RatingVerification {
       boolean securityReviewDone, boolean staticAnalysisDone,
       Interval expectedScore, Label expectedLabel) {
 
-    Set<Value> values = new HashSet<>();
+    Set<Value<?>> values = new HashSet<>();
     values.add(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE.value(numberOfCommits));
     values.add(NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE.value(numberOfContributors));
     values.add(SECURITY_REVIEW_DONE_EXAMPLE.value(securityReviewDone));

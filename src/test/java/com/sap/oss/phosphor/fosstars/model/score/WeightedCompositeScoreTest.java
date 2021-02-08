@@ -67,7 +67,7 @@ public class WeightedCompositeScoreTest {
     assertEquals(expectedScore, scoreValue.get(), PRECISION);
     assertEquals(Confidence.MAX, scoreValue.confidence(), PRECISION);
     assertEquals(2, scoreValue.usedValues().size());
-    for (Value value : scoreValue.usedValues()) {
+    for (Value<?> value : scoreValue.usedValues()) {
       if (value.feature() instanceof FirstScore) {
         assertEquals(firstScoreValue, value.get());
         continue;
@@ -288,7 +288,7 @@ public class WeightedCompositeScoreTest {
     assertFalse(scoreValue.isNotApplicable());
     assertEquals(Confidence.MAX, scoreValue.confidence(), PRECISION);
 
-    List<Value> usedValues = scoreValue.usedValues();
+    List<Value<?>> usedValues = scoreValue.usedValues();
     usedValues.sort(Comparator.comparing(a -> a.feature().name()));
 
     assertEquals(2, usedValues.size());
@@ -356,7 +356,7 @@ public class WeightedCompositeScoreTest {
     private boolean returnsNotApplicable = false;
     private boolean returnUnknown = false;
 
-    AbstractTestScore(String name, Feature... features) {
+    AbstractTestScore(String name, Feature<?>... features) {
       super(name, features);
     }
 
@@ -371,7 +371,7 @@ public class WeightedCompositeScoreTest {
     }
 
     @Override
-    public ScoreValue calculate(Value... values) {
+    public ScoreValue calculate(Value<?>... values) {
       if (returnsNotApplicable) {
         return scoreValue(MIN, values)
             .confidence(Confidence.make(values))
@@ -385,7 +385,7 @@ public class WeightedCompositeScoreTest {
       return calculateImpl(values);
     }
 
-    abstract ScoreValue calculateImpl(Value... values);
+    abstract ScoreValue calculateImpl(Value<?>... values);
 
     @Override
     public int hashCode() {
@@ -409,7 +409,7 @@ public class WeightedCompositeScoreTest {
     }
 
     @Override
-    public ScoreValue calculateImpl(Value... values) {
+    public ScoreValue calculateImpl(Value<?>... values) {
       return scoreValue(VALUE, values).confidence(Confidence.MAX);
     }
   }
@@ -425,7 +425,7 @@ public class WeightedCompositeScoreTest {
     }
 
     @Override
-    public ScoreValue calculateImpl(Value... values) {
+    public ScoreValue calculateImpl(Value<?>... values) {
       return scoreValue(VALUE, values).confidence(Confidence.MAX);
     }
   }

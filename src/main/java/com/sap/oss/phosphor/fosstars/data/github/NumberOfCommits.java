@@ -13,7 +13,7 @@ import java.util.Date;
 /**
  * This data provider returns a number of commits last 3 months.
  */
-public class NumberOfCommits extends CachedSingleFeatureGitHubDataProvider {
+public class NumberOfCommits extends CachedSingleFeatureGitHubDataProvider<Integer> {
 
   /**
    * ~3 months.
@@ -30,16 +30,16 @@ public class NumberOfCommits extends CachedSingleFeatureGitHubDataProvider {
   }
 
   @Override
-  protected Feature supportedFeature() {
+  protected Feature<Integer> supportedFeature() {
     return NUMBER_OF_COMMITS_LAST_THREE_MONTHS;
   }
 
   @Override
-  protected Value fetchValueFor(GitHubProject project) throws IOException {
+  protected Value<Integer> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Counting how many commits have been done in the last three months ...");
 
     Date date = Date.from(Instant.now().minus(THREE_MONTHS));
     return NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(
-        fetcher.localRepositoryFor(project).commitsAfter(date).size());
+        GitHubDataFetcher.localRepositoryFor(project).commitsAfter(date).size());
   }
 }

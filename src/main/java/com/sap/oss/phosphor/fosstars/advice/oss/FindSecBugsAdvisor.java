@@ -25,7 +25,7 @@ public class FindSecBugsAdvisor extends AbstractOssAdvisor {
 
   @Override
   protected List<Advice> adviseFor(
-      Subject subject, List<Value> usedValues, OssAdviceContext context) {
+      Subject subject, List<Value<?>> usedValues, OssAdviceContext context) {
 
     return adviseForBooleanFeature(usedValues, USES_FIND_SEC_BUGS, subject, context);
   }

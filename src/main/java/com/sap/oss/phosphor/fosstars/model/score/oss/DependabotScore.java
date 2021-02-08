@@ -84,7 +84,7 @@ public class DependabotScore extends FeatureBasedScore {
   }
 
   @Override
-  public ScoreValue calculate(Value... values) {
+  public ScoreValue calculate(Value<?>... values) {
     Value<Boolean> usesDependabot = find(USES_DEPENDABOT, values);
     Value<Boolean> usesGithub = find(USES_GITHUB_FOR_DEVELOPMENT, values);
     Value<Languages> languages = find(LANGUAGES, values);

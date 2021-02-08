@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * This data provider check if an open-source project is supported by a company.
  */
-public class HasCompanySupport extends CachedSingleFeatureGitHubDataProvider {
+public class HasCompanySupport extends CachedSingleFeatureGitHubDataProvider<Boolean> {
 
   /**
    * Where the info about open-source projects is stored.

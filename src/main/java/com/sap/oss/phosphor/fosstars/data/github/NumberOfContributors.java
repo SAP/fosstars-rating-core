@@ -17,7 +17,7 @@ import java.util.Set;
  * is an author of a commit or a person who committed the commit. The provider iterates over all
  * commits which have been made for lat 3 months, and collect unique login names of contributors.
  */
-public class NumberOfContributors extends CachedSingleFeatureGitHubDataProvider {
+public class NumberOfContributors extends CachedSingleFeatureGitHubDataProvider<Integer> {
 
   /**
    * Period of time to be checked.
@@ -34,17 +34,17 @@ public class NumberOfContributors extends CachedSingleFeatureGitHubDataProvider 
   }
 
   @Override
-  protected Feature supportedFeature() {
+  protected Feature<Integer> supportedFeature() {
     return NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS;
   }
 
   @Override
-  protected Value fetchValueFor(GitHubProject project) throws IOException {
+  protected Value<Integer> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Counting how many people contributed to the project in the last three months ...");
 
     Date date = Date.from(Instant.now().minus(THREE_MONTHS));
     Set<String> contributors = new HashSet<>();
-    for (Commit commit : fetcher.localRepositoryFor(project).commitsAfter(date)) {
+    for (Commit commit : GitHubDataFetcher.localRepositoryFor(project).commitsAfter(date)) {
       contributors.add(commit.authorName());
       contributors.add(commit.committerName());
     }

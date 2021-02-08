@@ -13,7 +13,7 @@ import java.util.Optional;
  * This data provider estimates a date when a project was created by the date when the repository
  * was created.
  */
-public class ProjectStarted extends CachedSingleFeatureGitHubDataProvider {
+public class ProjectStarted extends CachedSingleFeatureGitHubDataProvider<Date> {
 
   /**
    * Initializes a data provider.
@@ -25,15 +25,15 @@ public class ProjectStarted extends CachedSingleFeatureGitHubDataProvider {
   }
 
   @Override
-  protected Feature supportedFeature() {
+  protected Feature<Date> supportedFeature() {
     return PROJECT_START_DATE;
   }
 
   @Override
-  protected Value fetchValueFor(GitHubProject project) throws IOException {
+  protected Value<Date> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out when the project started ...");
 
-    Optional<Commit> firstCommit = fetcher.localRepositoryFor(project).firstCommit();
+    Optional<Commit> firstCommit = GitHubDataFetcher.localRepositoryFor(project).firstCommit();
     Date firstCommitDate = firstCommit.map(Commit::date).orElse(null);
     Date repositoryCreated = fetcher.repositoryFor(project).getCreatedAt();
 

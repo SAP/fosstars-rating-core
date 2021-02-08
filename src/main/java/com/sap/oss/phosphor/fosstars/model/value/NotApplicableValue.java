@@ -25,7 +25,7 @@ public final class NotApplicableValue<T> extends AbstractValue<T> {
    *
    * @param feature The feature.
    */
-  public NotApplicableValue(@JsonProperty("feature") Feature feature) {
+  public NotApplicableValue(@JsonProperty("feature") Feature<T> feature) {
     super(feature);
   }
 

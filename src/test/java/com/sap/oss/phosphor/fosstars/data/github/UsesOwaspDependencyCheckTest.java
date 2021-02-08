@@ -212,7 +212,7 @@ public class UsesOwaspDependencyCheckTest extends TestGitHubDataFetcherHolder {
     ValueSet values = new ValueHashSet();
     provider.update(project, values);
 
-    Set<Feature> features = provider.supportedFeatures();
+    Set<Feature<?>> features = provider.supportedFeatures();
     assertEquals(features.size(), values.size());
     assertTrue(values.containsAll(features));
     return values;
