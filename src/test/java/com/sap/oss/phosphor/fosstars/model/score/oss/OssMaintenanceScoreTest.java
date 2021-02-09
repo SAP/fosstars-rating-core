@@ -47,11 +47,10 @@ import static org.junit.Assert.fail;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Score;
-import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.other.Utils;
-import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
-import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating.Thresholds;
+import com.sap.oss.phosphor.fosstars.model.rating.oss.OssMaintenanceRating;
+import com.sap.oss.phosphor.fosstars.model.rating.oss.OssMaintenanceRating.Thresholds;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersions;
 import com.sap.oss.phosphor.fosstars.model.value.Languages;
@@ -67,24 +66,24 @@ import java.util.Date;
 import java.util.Set;
 import org.junit.Test;
 
-public class MiboOssSecurityScoreTest {
+public class OssMaintenanceScoreTest {
 
   private static final double DELTA = 0.01;
 
   @Test
   public void serializeAndDeserialize() throws IOException {
     ObjectMapper mapper = new ObjectMapper();
-    OssSecurityScore score = new OssSecurityScore();
+    OssMaintenanceScore score = new OssMaintenanceScore();
     byte[] bytes = mapper.writeValueAsBytes(score);
     assertNotNull(bytes);
     assertTrue(bytes.length > 0);
-    OssSecurityScore clone = mapper.readValue(bytes, OssSecurityScore.class);
+    OssMaintenanceScore clone = mapper.readValue(bytes, OssMaintenanceScore.class);
     assertEquals(score, clone);
   }
 
   @Test
   public void calculateForAllUnknown() {
-    Score score = new OssSecurityScore();
+    Score score = new OssMaintenanceScore();
     ScoreValue scoreValue = score.calculate(Utils.allUnknown(score.allFeatures()));
     assertEquals(Score.MIN, scoreValue.get(), 0.01);
     assertEquals(Confidence.MIN, scoreValue.confidence(), DELTA);
@@ -93,7 +92,7 @@ public class MiboOssSecurityScoreTest {
 
   @Test
   public void calculate() {
-    OssSecurityScore score = new OssSecurityScore();
+    OssMaintenanceScore score = new OssMaintenanceScore();
     Set<Value> values = setOf(
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(false)),
         ARTIFACT_VERSION.value("1.2.0"),
@@ -131,9 +130,10 @@ public class MiboOssSecurityScoreTest {
         OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.value(7.0),
         PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)));
 
-    OssSecurityRating rating = new OssSecurityRating(score, Thresholds.DEFAULT);
+    OssMaintenanceRating rating = new OssMaintenanceRating(score, Thresholds.DEFAULT);
 
     RatingValue ratingValue = rating.calculate(values);
+    // FIXME (mibo): only for test reasons
     System.out.println(PrettyPrinter.withoutVerboseOutput().print(ratingValue));
   }
 
