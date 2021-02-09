@@ -27,7 +27,7 @@ public class ArtifactMaintenanceScore extends FeatureBasedScore {
    */
   public ArtifactMaintenanceScore() {
     // FIXME: name is only a working name and require change
-    super("How well the artifact version is maintained",
+    super("Artifact specific version own maintenance expectation",
         OssFeatures.RELEASED_ARTIFACT_VERSIONS,
         ARTIFACT_VERSION);
   }
