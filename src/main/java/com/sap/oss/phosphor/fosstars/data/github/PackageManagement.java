@@ -30,12 +30,12 @@ import com.sap.oss.phosphor.fosstars.model.value.PackageManager;
 import com.sap.oss.phosphor.fosstars.model.value.PackageManagers;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Predicate;
-import org.kohsuke.github.GHContent;
-import org.kohsuke.github.GHRepository;
 
 /**
  * This data provider returns package managers which are used in a project.
@@ -121,12 +121,12 @@ public class PackageManagement extends CachedSingleFeatureGitHubDataProvider {
   }
 
   @Override
-  protected Feature supportedFeature() {
+  protected Feature<PackageManagers> supportedFeature() {
     return PACKAGE_MANAGERS;
   }
 
   @Override
-  protected Value fetchValueFor(GitHubProject project) throws IOException {
+  protected Value<PackageManagers> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Looking for package managers ...");
     return packageManagers(project);
   }
@@ -147,39 +147,47 @@ public class PackageManagement extends CachedSingleFeatureGitHubDataProvider {
       }
     }
 
-    GHRepository repository = fetcher.repositoryFor(project);
     PackageManagers packageManagers = new PackageManagers();
-    for (GHContent content : repository.getDirectoryContent("/")) {
-      if (!content.isFile()) {
-        continue;
-      }
-
-      possiblePackageManagers.list().forEach(packageManager -> {
-        if (isKnownConfigFile(content, packageManager)) {
-          packageManagers.add(packageManager);
-        }
-      });
-    }
+    GitHubDataFetcher.localRepositoryFor(project).files(Files::isRegularFile)
+        .forEach(path -> {
+          for (PackageManager packageManager : possiblePackageManagers) {
+            if (isKnownConfigFile(path, packageManager)) {
+              packageManagers.add(packageManager);
+            }
+          }
+        });
 
     return PACKAGE_MANAGERS.value(packageManagers);
   }
 
   /**
-   * Checks if a file from a repository looks like a config for a package manager.
+   * Checks if a file looks like a config of a specified package manager.
    *
-   * @param content The file.
+   * @param path A path to the file.
    * @param packageManager The package manager.
-   * @return True if the file is a config for the package manager, false otherwise.
+   * @return True if a file looks like a config of the package manager, false otherwise.
    */
-  static boolean isKnownConfigFile(GHContent content, PackageManager packageManager) {
+  static boolean isKnownConfigFile(Path path, PackageManager packageManager) {
     if (!CONFIG_FILES_PATTERNS.containsKey(packageManager)) {
       return false;
     }
 
-    for (Predicate<String> matcher : CONFIG_FILES_PATTERNS.get(packageManager)) {
-      if (matcher.test(content.getName()) && content.getSize() >= ACCEPTABLE_CONFIG_SIZE) {
-        return true;
+    try {
+      if (!Files.isRegularFile(path)) {
+        return false;
       }
+
+      if (Files.size(path) < ACCEPTABLE_CONFIG_SIZE) {
+        return false;
+      }
+
+      for (Predicate<String> matcher : CONFIG_FILES_PATTERNS.get(packageManager)) {
+        if (matcher.test(path.getFileName().toString())) {
+          return true;
+        }
+      }
+    } catch (IOException e) {
+      return false;
     }
 
     return false;

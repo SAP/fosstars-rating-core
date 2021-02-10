@@ -4,7 +4,9 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.LANGUA
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.PACKAGE_MANAGERS;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.JAVA;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.OTHER;
+import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.MAVEN;
 import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.NPM;
+import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.YARN;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -23,13 +25,15 @@ import com.sap.oss.phosphor.fosstars.model.value.PackageManagers;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.oss.phosphor.fosstars.tool.github.GitHubProjectValueCache;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
-import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GHRepository;
 
 public class PackageManagementTest extends TestGitHubDataFetcherHolder {
@@ -41,6 +45,7 @@ public class PackageManagementTest extends TestGitHubDataFetcherHolder {
 
     Map<String, Long> languagesMap = new HashMap<>();
     languagesMap.put("Javascript", 42L);
+    languagesMap.put("Java", 100L);
     languagesMap.put("C++", 1001L);
 
     final GHRepository repository = mock(GHRepository.class);
@@ -51,59 +56,72 @@ public class PackageManagementTest extends TestGitHubDataFetcherHolder {
     programmingLanguagesProvider.set(cache);
     programmingLanguagesProvider = spy(programmingLanguagesProvider);
 
-    final List<GHContent> contents = new ArrayList<>();
-    when(repository.getDirectoryContent("/")).thenReturn(contents);
+    Path baseDir = Files.createTempDirectory(PackageManagementTest.class.getName());
+    try {
+      Path pomXml = baseDir.resolve("pom.xml");
+      Files.write(pomXml, StringUtils.repeat("x", 1000).getBytes());
+      Path submodule = baseDir.resolve("submodule");
+      Files.createDirectory(submodule);
+      Path packageJson = submodule.resolve("package.json");
+      Files.write(packageJson, StringUtils.repeat("x", 500).getBytes());
 
-    GHContent src = mock(GHContent.class);
-    when(src.getName()).thenReturn("src");
-    when(src.isFile()).thenReturn(false);
-    when(src.isDirectory()).thenReturn(true);
-    contents.add(src);
+      LocalRepository localRepository = mock(LocalRepository.class);
+      when(localRepository.files(any()))
+          .thenReturn(Arrays.asList(baseDir, pomXml, submodule, packageJson));
+      TestGitHubDataFetcher.addForTesting(project, localRepository);
 
-    GHContent packageJson = mock(GHContent.class);
-    when(packageJson.getName()).thenReturn("package.json");
-    when(packageJson.isFile()).thenReturn(true);
-    when(packageJson.isDirectory()).thenReturn(false);
-    when(packageJson.getSize()).thenReturn(1500L);
-    contents.add(packageJson);
+      PackageManagement provider = new PackageManagement(fetcher);
+      provider.set(cache);
+      provider = spy(provider);
+      when(provider.languagesProvider()).thenReturn(programmingLanguagesProvider);
 
-    PackageManagement provider = new PackageManagement(fetcher);
-    provider.set(cache);
-    provider = spy(provider);
-    when(provider.languagesProvider()).thenReturn(programmingLanguagesProvider);
+      ValueSet values = new ValueHashSet();
+      provider.update(project, values);
 
-    ValueSet values = new ValueHashSet();
-    provider.update(project, values);
+      assertTrue(values.has(PACKAGE_MANAGERS));
+      assertFalse(values.has(LANGUAGES));
 
-    assertTrue(values.has(PACKAGE_MANAGERS));
-    assertFalse(values.has(LANGUAGES));
+      Optional<Value<PackageManagers>> something = values.of(PACKAGE_MANAGERS);
+      assertTrue(something.isPresent());
 
-    Optional<Value<PackageManagers>> something = values.of(PACKAGE_MANAGERS);
-    assertTrue(something.isPresent());
-
-    Value<PackageManagers> value = something.get();
-    assertTrue(value.get().list().contains(NPM));
+      Value<PackageManagers> value = something.get();
+      assertEquals(3, value.get().list().size());
+      assertTrue(value.get().list().contains(MAVEN));
+      assertTrue(value.get().list().contains(NPM));
+      assertTrue(value.get().list().contains(YARN));
+    } finally {
+      FileUtils.deleteDirectory(baseDir.toFile());
+    }
   }
 
   @Test
-  public void testIsKnownConfigFile() {
-    GHContent content = mock(GHContent.class);
-    assertFalse(PackageManagement.isKnownConfigFile(content, PackageManager.OTHER));
+  public void testIsKnownConfigFile() throws IOException {
+    Path baseDir = Files.createTempDirectory(PackageManagementTest.class.getName());
+    try {
+      assertFalse(PackageManagement.isKnownConfigFile(baseDir, NPM));
 
-    when(content.getSize()).thenReturn(1000L);
-    when(content.getName()).thenReturn("unknown.config");
-    assertFalse(PackageManagement.isKnownConfigFile(content, PackageManager.MAVEN));
+      Path path = baseDir.resolve("Makefile");
+      Files.write(path, StringUtils.repeat("x", 1000).getBytes());
+      assertFalse(PackageManagement.isKnownConfigFile(path, PackageManager.OTHER));
 
-    when(content.getName()).thenReturn(".pom.xml");
-    assertFalse(PackageManagement.isKnownConfigFile(content, PackageManager.MAVEN));
+      path = baseDir.resolve("unknown.config");
+      Files.write(path, StringUtils.repeat("x", 1000).getBytes());
+      assertFalse(PackageManagement.isKnownConfigFile(path, MAVEN));
 
-    when(content.getSize()).thenReturn(1L);
-    when(content.getName()).thenReturn("pom.xml");
-    assertFalse(PackageManagement.isKnownConfigFile(content, PackageManager.MAVEN));
+      path = baseDir.resolve(".pom.xml");
+      Files.write(path, StringUtils.repeat("x", 1000).getBytes());
+      assertFalse(PackageManagement.isKnownConfigFile(path, MAVEN));
 
-    when(content.getSize()).thenReturn(1000L);
-    when(content.getName()).thenReturn("pom.xml");
-    assertTrue(PackageManagement.isKnownConfigFile(content, PackageManager.MAVEN));
+      path = baseDir.resolve("pom.xml");
+      Files.write(path, StringUtils.repeat("x", 10).getBytes());
+      assertFalse(PackageManagement.isKnownConfigFile(path, MAVEN));
+
+      path = baseDir.resolve("pom.xml");
+      Files.write(path, StringUtils.repeat("x", 1000).getBytes());
+      assertTrue(PackageManagement.isKnownConfigFile(path, MAVEN));
+    } finally {
+      FileUtils.deleteDirectory(baseDir.toFile());
+    }
   }
 
   @Test
