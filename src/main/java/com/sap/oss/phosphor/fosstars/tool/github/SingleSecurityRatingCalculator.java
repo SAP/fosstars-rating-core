@@ -160,7 +160,7 @@ class SingleSecurityRatingCalculator {
     }
 
     LOGGER.info("Here is what we know about the project:");
-    Arrays.stream(values.toArray())
+    values.toSet().stream()
         .sorted(Comparator.comparing(value -> value.feature().name()))
         .forEach(value -> LOGGER.info("   {}: {}", value.feature(), value));
 

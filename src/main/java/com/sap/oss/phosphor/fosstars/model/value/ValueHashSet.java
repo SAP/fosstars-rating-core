@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -132,7 +133,7 @@ public class ValueHashSet implements ValueSet {
   @Override
   public ValueSet update(ValueSet values) {
     Objects.requireNonNull(values, "Oh no! Values is null!");
-    for (Value<?> value : values.toArray()) {
+    for (Value<?> value : values) {
       update(value);
     }
     return this;
@@ -145,21 +146,6 @@ public class ValueHashSet implements ValueSet {
   }
 
   @Override
-  public Value[] toArray() {
-    Value[] array = new Value[featureToValue.size()];
-    int i = 0;
-    for (Value value : featureToValue.values()) {
-      array[i] = value;
-      i++;
-    }
-    return array;
-  }
-
-  /**
-   * Converts a value set to a regular {@link Set}.
-   *
-   * @return A set with values.
-   */
   public Set<Value<?>> toSet() {
     return new HashSet<>(featureToValue.values());
   }
@@ -204,6 +190,11 @@ public class ValueHashSet implements ValueSet {
   public boolean containsAll(Set<Feature<?>> features) {
     Objects.requireNonNull(features, "Oh no! Features is null");
     return featureToValue.keySet().containsAll(features);
+  }
+
+  @Override
+  public Iterator<Value<?>> iterator() {
+    return toSet().iterator();
   }
 
   /**

@@ -16,7 +16,7 @@ import org.junit.Test;
 
 public class CompositeDataProviderTest {
 
-  private static class DataProviderImpl implements DataProvider {
+  private static class DataProviderImpl implements DataProvider<Object> {
 
     private final String featureName;
 
@@ -27,7 +27,7 @@ public class CompositeDataProviderTest {
     }
 
     @Override
-    public DataProvider update(Object object, ValueSet values) {
+    public DataProvider<Object> update(Object object, ValueSet values) {
       values.update(new BooleanValue(new BooleanFeature(featureName), true));
       return this;
     }
@@ -38,25 +38,25 @@ public class CompositeDataProviderTest {
     }
 
     @Override
-    public ValueCache cache() {
+    public ValueCache<Object> cache() {
       return null;
     }
 
     @Override
-    public DataProvider set(UserCallback callback) {
+    public DataProvider<Object> set(UserCallback callback) {
       this.callback = callback;
       return this;
     }
 
     @Override
-    public DataProvider set(ValueCache cache) {
+    public DataProvider<Object> set(ValueCache<Object> cache) {
       return null;
     }
   }
 
   @Test
-  public void testAllProvidersCalled() throws IOException {
-    CompositeDataProvider compositeDataProvider = new CompositeDataProvider(
+  public void testThatAllProvidersCalled() throws IOException {
+    CompositeDataProvider<Object> compositeDataProvider = new CompositeDataProvider<>(
         new DataProviderImpl("feature 1"),
         new DataProviderImpl("feature 2"),
         new DataProviderImpl("feature 3")
@@ -80,7 +80,7 @@ public class CompositeDataProviderTest {
     compositeDataProvider.update(new Object(), values);
 
     assertEquals(3, values.size());
-    for (Value value : values.toArray()) {
+    for (Value<?> value : values) {
       BooleanValue booleanValue = (BooleanValue) value;
       assertFalse(booleanValue.isUnknown());
       assertTrue(booleanValue.feature().name().startsWith("feature "));
@@ -89,11 +89,11 @@ public class CompositeDataProviderTest {
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void noInteractiveProviders() {
-    new CompositeDataProvider(
-        new DataProvider() {
+  public void testWithNoInteractiveProviders() {
+    new CompositeDataProvider<>(
+        new DataProvider<Object>() {
           @Override
-          public DataProvider update(Object object, ValueSet values) {
+          public DataProvider<Object> update(Object object, ValueSet values) {
             throw new UnsupportedOperationException("This should not be called!");
           }
 
@@ -103,17 +103,17 @@ public class CompositeDataProviderTest {
           }
 
           @Override
-          public ValueCache cache() {
+          public ValueCache<Object> cache() {
             throw new UnsupportedOperationException("This should not be called!");
           }
 
           @Override
-          public DataProvider set(UserCallback callback) {
+          public DataProvider<Object> set(UserCallback callback) {
             throw new UnsupportedOperationException("This should not be called!");
           }
 
           @Override
-          public DataProvider set(ValueCache cache) {
+          public DataProvider<Object> set(ValueCache<Object> cache) {
             throw new UnsupportedOperationException("This should not be called!");
           }
         }

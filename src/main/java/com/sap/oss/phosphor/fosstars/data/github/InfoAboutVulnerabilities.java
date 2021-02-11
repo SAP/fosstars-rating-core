@@ -63,7 +63,7 @@ public class InfoAboutVulnerabilities
       ValueSet subset = new ValueHashSet();
       provider.set(callback).set(cache).update(project, subset);
 
-      for (Value<?> value : subset.toArray()) {
+      for (Value<?> value : subset) {
         if (value.isUnknown()) {
           continue;
         }

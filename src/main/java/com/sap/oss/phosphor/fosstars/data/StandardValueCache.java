@@ -90,7 +90,7 @@ public class StandardValueCache implements Cache<String, ValueSet> {
     }
 
     ValueSet result = new ValueHashSet();
-    for (Value<?> value : set.toArray()) {
+    for (Value<?> value : set) {
       unwrapExpiring(value).ifPresent(result::update);
     }
 
@@ -129,7 +129,7 @@ public class StandardValueCache implements Cache<String, ValueSet> {
 
   @Override
   public void put(String key, ValueSet set, Date expiration) {
-    for (Value<?> value : set.toArray()) {
+    for (Value<?> value : set) {
       put(key, value, expiration);
     }
   }
