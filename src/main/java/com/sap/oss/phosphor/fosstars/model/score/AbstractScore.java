@@ -96,7 +96,7 @@ public abstract class AbstractScore implements Score {
   @Override
   public ScoreValue calculate(ValueSet values) {
     Objects.requireNonNull(values, "Hey! Value set can't be null!");
-    return calculate(values.toArray());
+    return calculate(values.toSet());
   }
 
   @Override

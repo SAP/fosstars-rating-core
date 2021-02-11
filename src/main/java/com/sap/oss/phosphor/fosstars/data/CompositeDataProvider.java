@@ -172,8 +172,8 @@ public class CompositeDataProvider<T> implements DataProvider<T> {
 
     @Override
     public boolean satisfied(ValueSet values) {
-      for (Feature feature : features) {
-        Optional<Value<?>> something = values.of(feature);
+      for (Feature<?> feature : features) {
+        Optional<? extends Value<?>> something = values.of(feature);
         if (!something.isPresent()) {
           return false;
         }

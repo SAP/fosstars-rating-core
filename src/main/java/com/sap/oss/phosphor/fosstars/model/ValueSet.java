@@ -13,7 +13,7 @@ import java.util.Set;
     @JsonSubTypes.Type(value = ValueHashSet.class, name = "ValueHashSet")
 })
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
-public interface ValueSet {
+public interface ValueSet extends Iterable<Value<?>> {
 
   /**
    * Checks if the set of values contains a value of a particular feature.
@@ -49,13 +49,6 @@ public interface ValueSet {
   ValueSet update(Set<Value<?>> values);
 
   /**
-   * Converts the set to an array of values.
-   *
-   * @return An array of values.
-   */
-  Value[] toArray();
-
-  /**
    * Get a number of values in the value set.
    *
    * @return A number of values in the set.
@@ -85,4 +78,11 @@ public interface ValueSet {
    * @return True if the set contains all the specified features, false otherwise.
    */
   boolean containsAll(Set<Feature<?>> features);
+
+  /**
+   * Converts a value set to a regular {@link Set}.
+   *
+   * @return A set with values.
+   */
+  Set<Value<?>> toSet();
 }
