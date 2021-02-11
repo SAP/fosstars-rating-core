@@ -41,7 +41,8 @@ public class ArtifactMaintenanceScore extends FeatureBasedScore {
 
     ArtifactVersions artifactVersions = artifactVersionsValue.get();
     Collection<ArtifactVersion> sortedByReleaseDate = artifactVersions.getSortByReleaseDate();
-    Optional<ArtifactVersion> mappedVersion = artifactVersions.getArtifactVersion(versionValue.get());
+    Optional<ArtifactVersion> mappedVersion =
+        artifactVersions.getArtifactVersion(versionValue.get());
 
     if (mappedVersion.isPresent()) {
       ArtifactVersion latestVersion = sortedByReleaseDate.iterator().next();
@@ -72,9 +73,4 @@ public class ArtifactMaintenanceScore extends FeatureBasedScore {
     // otherwise, return the minimal score
     return scoreValue.set(Score.MIN);
   }
-
-
-//  public static final Comparator<ArtifactVersion> RELEASE_DATE_COMPARISON =
-//      Comparator.comparing(ArtifactVersion::getReleaseDate);
-
 }

@@ -108,7 +108,7 @@ public class PrettyPrinterTest {
   @BeforeClass
   public static void setup() {
     savedLocale = Locale.getDefault();
-    Locale.setDefault(new Locale("en", "US"));
+    Locale.setDefault(new Locale("us", "US"));
   }
 
   @Test

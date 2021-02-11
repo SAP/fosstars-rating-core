@@ -27,9 +27,9 @@ public class OssMaintenanceScore extends WeightedCompositeScore {
     SUB_SCORES.add(new ArtifactMaintenanceScore());
     SUB_SCORES.add(new ArtifactVersionReleaseScore());
     SUB_SCORES.add(new ArtifactVersionAgeScore());
-//    SUB_SCORES.add(new ProjectActivityScore());
-//    SUB_SCORES.add(new ProjectPopularityScore());
-//    SUB_SCORES.add(new CommunityCommitmentScore());
+    //    SUB_SCORES.add(new ProjectActivityScore());
+    //    SUB_SCORES.add(new ProjectPopularityScore());
+    //    SUB_SCORES.add(new CommunityCommitmentScore());
   }
 
   /**

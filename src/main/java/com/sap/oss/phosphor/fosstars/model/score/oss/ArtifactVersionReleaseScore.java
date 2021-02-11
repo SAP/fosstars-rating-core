@@ -53,20 +53,6 @@ public class ArtifactVersionReleaseScore extends FeatureBasedScore {
 
     Collection<ArtifactVersion> sortedByReleaseDate = sortByReleaseDate(artifactVersions);
 
-//    ArtifactVersion latestVersion = sortedByReleaseDate.iterator().next();
-//    LocalDate oneMonthBack = LocalDate.now().minusMonths(1);
-//    LocalDate sixMonthBack = LocalDate.now().minusMonths(6);
-//    LocalDate oneYearBack = LocalDate.now().minusYears(1);
-//
-//    // check age of latest release
-//    if (latestVersion.getReleaseDate().isAfter(oneMonthBack)) {
-//      scoreValue.set(Score.MAX);
-//    } else if (latestVersion.getReleaseDate().isAfter(sixMonthBack)) {
-//      scoreValue.set(5.0);
-//    } else if (latestVersion.getReleaseDate().isAfter(oneYearBack)) {
-//      scoreValue.set(2.0);
-//    }
-
     // check release frequency over time
     Collection<VersionInfo> versionInfos = createVersionInfos(sortedByReleaseDate);
     VersionStats stats = createVersionStats(versionInfos);
@@ -103,7 +89,7 @@ public class ArtifactVersionReleaseScore extends FeatureBasedScore {
         .filter(v -> v.daysDiffToVersionBefore >= 0)
         .mapToInt(v -> v.daysDiffToVersionBefore)
         .summaryStatistics();
-    //
+
     int releaseCycleTrend = 0;
     int lastDays = -1;
     for (VersionInfo versionInfo : versionInfos) {
@@ -120,7 +106,8 @@ public class ArtifactVersionReleaseScore extends FeatureBasedScore {
       }
     }
 
-    return new VersionStats((double) releaseCycleTrend/stats.getCount(), stats.getAverage());
+    double usedReleaseCycleTrend = (double) releaseCycleTrend / stats.getCount();
+    return new VersionStats(usedReleaseCycleTrend, stats.getAverage());
   }
 
   private Collection<VersionInfo> createVersionInfos(Collection<ArtifactVersion> artifactVersions) {
@@ -160,17 +147,16 @@ public class ArtifactVersionReleaseScore extends FeatureBasedScore {
 
     @Override
     public String toString() {
-      return "VersionStats{" +
-          "releaseCycleTrend=" + releaseCycleTrend +
-          ", averageDaysBetweenReleases=" + averageDaysBetweenReleases +
-          '}';
+      return "VersionStats{"
+          + "releaseCycleTrend=" + releaseCycleTrend
+          + ", averageDaysBetweenReleases=" + averageDaysBetweenReleases
+          + '}';
     }
   }
 
   private static class VersionInfo {
     final boolean latestVersion;
     final int daysDiffToVersionBefore;
-//    final ArtifactVersion beforeVersion;
     final ArtifactVersion version;
 
     public VersionInfo(boolean latestVersion, int daysDiffToVersionBefore,
@@ -182,10 +168,7 @@ public class ArtifactVersionReleaseScore extends FeatureBasedScore {
   }
 
 
-//  public static final Comparator<ArtifactVersion> RELEASE_DATE_COMPARISON =
-//      Comparator.comparing(ArtifactVersion::getReleaseDate);
-
-  public static final Comparator<ArtifactVersion> RELEASE_DATE_COMPARISON =
+  private static final Comparator<ArtifactVersion> RELEASE_DATE_COMPARISON =
       (a, b) -> b.getReleaseDate().compareTo(a.getReleaseDate());
 
   private Collection<ArtifactVersion> sortByReleaseDate(Value<ArtifactVersions> artifactVersions) {

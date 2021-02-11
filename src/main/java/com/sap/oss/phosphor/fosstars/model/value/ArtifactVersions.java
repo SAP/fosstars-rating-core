@@ -22,6 +22,12 @@ import java.util.stream.Collectors;
 public class ArtifactVersions implements Iterable<ArtifactVersion> {
 
   /**
+   * Comparator for artifact versions release date.
+   */
+  private static final Comparator<ArtifactVersion> RELEASE_DATE_COMPARISON =
+      (a, b) -> b.getReleaseDate().compareTo(a.getReleaseDate());
+
+  /**
    * A set of versions.
    */
   private final Set<ArtifactVersion> elements;
@@ -79,7 +85,7 @@ public class ArtifactVersions implements Iterable<ArtifactVersion> {
    *
    * @param versions The other versions.
    * @return True if at least one of the other versions is present in the collection,
-   *         false otherwise.
+   *          false otherwise.
    */
   public boolean containsAnyOf(ArtifactVersions versions) {
     for (ArtifactVersion version : versions) {
@@ -91,9 +97,12 @@ public class ArtifactVersions implements Iterable<ArtifactVersion> {
     return false;
   }
 
-  public static final Comparator<ArtifactVersion> RELEASE_DATE_COMPARISON =
-      (a, b) -> b.getReleaseDate().compareTo(a.getReleaseDate());
-
+  /**
+   * Get versions sorted by date.
+   * First entry is the latest release.
+   *
+   * @return versions sorted by date
+   */
   public Collection<ArtifactVersion> getSortByReleaseDate() {
     SortedSet<ArtifactVersion> sortedArtifacts = new TreeSet<>(RELEASE_DATE_COMPARISON);
     sortedArtifacts.addAll(elements);
@@ -103,22 +112,14 @@ public class ArtifactVersions implements Iterable<ArtifactVersion> {
   /**
    * Returns Artifact version with given version.
    * If the version is not available an empty optional is returned.
+   *
    * @param version to be searched version
    * @return found version or empty optional
    */
   public Optional<ArtifactVersion> getArtifactVersion(String version) {
-    return elements.parallelStream().filter(v -> v.getVersion().equals(version)).findFirst();
-  }
-
-  /**
-   * Checks if the collection contains one of the other versions.
-   *
-   * @param versions The other versions.
-   * @return True if at least one of the other versions is present in the collection,
-   *         false otherwise.
-   */
-  public boolean containsAnyOf(ArtifactVersion... versions) {
-    return containsAnyOf(ArtifactVersions.of(versions));
+    return elements.parallelStream()
+        .filter(v -> v.getVersion().equals(version))
+        .findFirst();
   }
 
   /**

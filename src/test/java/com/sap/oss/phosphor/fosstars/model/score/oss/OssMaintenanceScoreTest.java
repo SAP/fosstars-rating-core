@@ -114,7 +114,7 @@ public class OssMaintenanceScoreTest {
     RatingValue ratingValue = rating.calculate(values);
     // FIXME (mibo): only for test reasons
     System.out.println("#########\n\ncalculate:");
-//    System.out.println(PrettyPrinter.withoutVerboseOutput().print(ratingValue));
+    //    System.out.println(PrettyPrinter.withoutVerboseOutput().print(ratingValue));
     System.out.println(PrettyPrinter.withVerboseOutput(Advisor.DUMMY).print(ratingValue));
   }
 
@@ -138,7 +138,7 @@ public class OssMaintenanceScoreTest {
     RatingValue ratingValue = rating.calculate(values);
     // FIXME (mibo): only for test reasons
     System.out.println("#########\n\ncalculateWith20:");
-//    System.out.println(PrettyPrinter.withoutVerboseOutput().print(ratingValue));
+    //    System.out.println(PrettyPrinter.withoutVerboseOutput().print(ratingValue));
     System.out.println(PrettyPrinter.withVerboseOutput(Advisor.DUMMY).print(ratingValue));
   }
 
@@ -162,7 +162,7 @@ public class OssMaintenanceScoreTest {
     RatingValue ratingValue = rating.calculate(values);
     // FIXME (mibo): only for test reasons
     System.out.println("#########\n\ncalculateWith20Used:");
-//    System.out.println(PrettyPrinter.withoutVerboseOutput().print(ratingValue));
+    //    System.out.println(PrettyPrinter.withoutVerboseOutput().print(ratingValue));
     System.out.println(PrettyPrinter.withVerboseOutput(Advisor.DUMMY).print(ratingValue));
   }
 

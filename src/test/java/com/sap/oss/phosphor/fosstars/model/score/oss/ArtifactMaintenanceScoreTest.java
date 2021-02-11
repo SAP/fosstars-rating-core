@@ -18,7 +18,6 @@ public class ArtifactMaintenanceScoreTest {
 
   @Test
   public void smokeTest() {
-    long monthMilliseconds = 2629800000L;
     ArtifactVersion version100 =
         new ArtifactVersion("1.0.0", LocalDate.now().minusMonths(14));
     ArtifactVersion version110 =
@@ -49,7 +48,9 @@ public class ArtifactMaintenanceScoreTest {
     Value<String> version = ARTIFACT_VERSION.value("2.0.0");
     ScoreValue value = score.calculate(versions, version);
     System.out.println("\n\ncurrentVersionUnknown");
-    System.out.printf("Available versions: %s;%nChecked version %s;%nrating: %2.2f%n", versions, version, value.get());
+    System.out
+        .printf("Available versions: %s;%nChecked version %s;%nrating: %2.2f%n", versions, version,
+            value.get());
     Assert.assertEquals(Double.valueOf(0.0), value.get());
   }
 
@@ -67,7 +68,9 @@ public class ArtifactMaintenanceScoreTest {
     Value<String> version = ARTIFACT_VERSION.value("1.2.0");
     ScoreValue value = score.calculate(versions, version);
     System.out.println("\n\ncurrentReleasedVersion");
-    System.out.printf("Available versions: %s;%nChecked version %s;%nrating: %2.2f%n", versions, version, value.get());
+    System.out
+        .printf("Available versions: %s;%nChecked version %s;%nrating: %2.2f%n", versions, version,
+            value.get());
     Assert.assertEquals(Double.valueOf(10.0), value.get());
   }
 
@@ -85,7 +88,9 @@ public class ArtifactMaintenanceScoreTest {
     Value<String> version = ARTIFACT_VERSION.value("1.1.0");
     ScoreValue value = score.calculate(versions, version);
     System.out.println("\n\ntwoMonthOldVersionButNewerAvailable");
-    System.out.printf("Available versions: %s;%nChecked version %s;%nrating: %2.2f%n", versions, version, value.get());
+    System.out
+        .printf("Available versions: %s;%nChecked version %s;%nrating: %2.2f%n", versions, version,
+            value.get());
     Assert.assertEquals(Double.valueOf(7.0), value.get());
   }
 
@@ -102,7 +107,9 @@ public class ArtifactMaintenanceScoreTest {
     Value<String> version = ARTIFACT_VERSION.value("1.1.0");
     ScoreValue value = score.calculate(versions, version);
     System.out.println("\n\ntwoMonthOldVersion");
-    System.out.printf("Available versions: %s;%nChecked version %s;%nrating: %2.2f%n", versions, version, value.get());
+    System.out
+        .printf("Available versions: %s;%nChecked version %s;%nrating: %2.2f%n", versions, version,
+            value.get());
     Assert.assertEquals(Double.valueOf(9.0), value.get());
   }
 
@@ -119,7 +126,9 @@ public class ArtifactMaintenanceScoreTest {
     Value<String> version = ARTIFACT_VERSION.value("1.1.0");
     ScoreValue value = score.calculate(versions, version);
     System.out.println("\n\neightMonthOldVersion");
-    System.out.printf("Available versions: %s;%nChecked version %s;%nrating: %2.2f%n", versions, version, value.get());
+    System.out
+        .printf("Available versions: %s;%nChecked version %s;%nrating: %2.2f%n", versions, version,
+            value.get());
     Assert.assertEquals(Double.valueOf(6.0), value.get());
   }
 
@@ -134,7 +143,8 @@ public class ArtifactMaintenanceScoreTest {
     Value<String> version = ARTIFACT_VERSION.value("1.0.0");
     ScoreValue value = score.calculate(versions, version);
     System.out.println("\n\nfourteenMonthOldVersion");
-    System.out.printf("Available versions: %s;%nChecked version %s;%nrating: %2.2f%n", versions, version, value.get());
+    System.out.printf("Available versions: %s;%nChecked version %s;%nrating: %2.2f%n",
+        versions, version, value.get());
     Assert.assertEquals(Double.valueOf(2.0), value.get());
   }
 
@@ -151,7 +161,9 @@ public class ArtifactMaintenanceScoreTest {
     Value<String> version = ARTIFACT_VERSION.value("1.0.0");
     ScoreValue value = score.calculate(versions, version);
     System.out.println("\n\nfourteenMonthOldVersion");
-    System.out.printf("Available versions: %s;%nChecked version %s;%nrating: %2.2f%n", versions, version, value.get());
+    System.out
+        .printf("Available versions: %s;%nChecked version %s;%nrating: %2.2f%n", versions, version,
+            value.get());
     Assert.assertEquals(Double.valueOf(0.0), value.get());
   }
 

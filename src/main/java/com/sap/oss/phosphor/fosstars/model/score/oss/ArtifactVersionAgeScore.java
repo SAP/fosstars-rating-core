@@ -58,11 +58,7 @@ public class ArtifactVersionAgeScore extends FeatureBasedScore {
     return scoreValue.set(Score.MIN);
   }
 
-
-//  public static final Comparator<ArtifactVersion> RELEASE_DATE_COMPARISON =
-//      Comparator.comparing(ArtifactVersion::getReleaseDate);
-
-  public static final Comparator<ArtifactVersion> RELEASE_DATE_COMPARISON =
+  private static final Comparator<ArtifactVersion> RELEASE_DATE_COMPARISON =
       (a, b) -> b.getReleaseDate().compareTo(a.getReleaseDate());
 
   private Collection<ArtifactVersion> sortByReleaseDate(Value<ArtifactVersions> artifactVersions) {

@@ -116,7 +116,8 @@ public class ArtifactVersionReleaseScoreTest {
 
     ArtifactVersionReleaseScore score = new ArtifactVersionReleaseScore();
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
-        ArtifactVersions.of(version100, version110, version120, version130, version140, version150));
+        ArtifactVersions
+            .of(version100, version110, version120, version130, version140, version150));
     ScoreValue value = score.calculate(versions);
     System.out.println("\n\ntwoMonthOldVersionStable");
     System.out.printf("Available versions: %s;%nrating: %2.2f%n", versions, value.get());
@@ -140,7 +141,8 @@ public class ArtifactVersionReleaseScoreTest {
 
     ArtifactVersionReleaseScore score = new ArtifactVersionReleaseScore();
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
-        ArtifactVersions.of(version100, version110, version120, version130, version140, version150));
+        ArtifactVersions
+            .of(version100, version110, version120, version130, version140, version150));
     ScoreValue value = score.calculate(versions);
     System.out.println("\n\ntwoMonthOldVersionDecrease");
     System.out.printf("Available versions: %s;%nrating: %2.2f%n", versions, value.get());
