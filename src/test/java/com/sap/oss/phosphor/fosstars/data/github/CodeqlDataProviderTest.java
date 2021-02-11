@@ -108,7 +108,7 @@ public class CodeqlDataProviderTest extends TestGitHubDataFetcherHolder {
   @AfterClass
   public static void shutdown() {
     try {
-      FileUtils.deleteDirectory(repositoryDirectory.toFile());
+      FileUtils.forceDeleteOnExit(repositoryDirectory.toFile());
     } catch (IOException e) {
       throw new UncheckedIOException(e);
     }

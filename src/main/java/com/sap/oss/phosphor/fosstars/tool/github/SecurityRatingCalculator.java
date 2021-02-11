@@ -43,6 +43,7 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
@@ -217,10 +218,11 @@ public class SecurityRatingCalculator {
 
     checkOptionsIn(commandLine);
 
-    String logConfig = commandLine.hasOption("v") ? "/log4j2-verbose.xml" : "/log4j2-standard.xml";
-    LoggerContext context = (LoggerContext) LogManager.getContext(false);
-    context.setConfigLocation(SecurityRatingCalculator.class.getResource(logConfig).toURI());
-    context.updateLoggers();
+    if (commandLine.hasOption("v")) {
+      LoggerContext context = (LoggerContext) LogManager.getContext(false);
+      context.getRootLogger().setLevel(Level.DEBUG);
+      context.updateLoggers();
+    }
 
     UserCallback callback = commandLine.hasOption("interactive")
         ? new Terminal() : NoUserCallback.INSTANCE;
