@@ -13,6 +13,7 @@ import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -77,12 +78,8 @@ public class CodeqlDataProvider extends GitHubCachingDataProvider {
     // ideally, we're looking for a GitHub action that runs CodeQL scan on pull requests
     // but if we just find an action that runs CodeQL scans, that's also fine
     for (Path configPath : findGitHubActionsIn(repository)) {
-      Optional<InputStream> content = repository.read(configPath);
-      if (!content.isPresent()) {
-        continue;
-      }
-
-      Map<String, Object> githubAction = Yaml.readMap(content.get());
+      InputStream content = Files.newInputStream(configPath);
+      Map<String, Object> githubAction = Yaml.readMap(content);
       if (triggersCodeqlScan(githubAction)) {
         runsCodeqlScans = RUNS_CODEQL_SCANS.value(true);
         if (runsOnPullRequests(githubAction)) {
