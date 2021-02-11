@@ -1,6 +1,5 @@
 package com.sap.oss.phosphor.fosstars.data.github;
 
-import static com.sap.oss.phosphor.fosstars.data.github.TestGitHubDataFetcherHolder.TestGitHubDataFetcher.addForTesting;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_CODEQL_SCANS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_CODEQL_CHECKS;
 import static org.hamcrest.CoreMatchers.hasItem;
@@ -18,17 +17,36 @@ import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UncheckedIOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class CodeqlDataProviderTest extends TestGitHubDataFetcherHolder {
 
   private static final GitHubProject PROJECT = new GitHubProject("org", "test");
+
+  private static Path repositoryDirectory;
+
+  private static LocalRepository localRepository;
+
+  @BeforeClass
+  public static void setup() {
+    try {
+      repositoryDirectory = Files.createTempDirectory(PackageManagementTest.class.getName());
+      localRepository = mock(LocalRepository.class);
+      TestGitHubDataFetcher.addForTesting(PROJECT, localRepository);
+    } catch (IOException e) {
+      throw new UncheckedIOException(e);
+    }
+  }
 
   @Test
   public void testNotInteractive() {
@@ -70,7 +88,11 @@ public class CodeqlDataProviderTest extends TestGitHubDataFetcherHolder {
   private void testCodeqlRuns(String filename, InputStream content, Value<?>... expectedValues)
       throws IOException {
 
-    mockFile(filename, String.join("\n", IOUtils.readLines(content)));
+    Path file = repositoryDirectory.resolve(filename);
+    Files.createDirectories(file.getParent());
+    when(localRepository.hasDirectory(any())).thenReturn(true);
+    IOUtils.copy(content, Files.newOutputStream(file));
+    when(localRepository.files(any(), any())).thenReturn(Collections.singletonList(file));
 
     CodeqlDataProvider provider = new CodeqlDataProvider(fetcher);
     ValueSet values = provider.fetchValuesFor(PROJECT);
@@ -83,15 +105,13 @@ public class CodeqlDataProviderTest extends TestGitHubDataFetcherHolder {
     }
   }
 
-  private static void mockFile(String filename, String content) throws IOException {
-    Path path = Paths.get(filename);
-    LocalRepository repository = mock(LocalRepository.class);
-    when(repository.file(filename)).thenReturn(Optional.of(content));
-    when(repository.read(path))
-        .thenReturn(Optional.of(IOUtils.toInputStream(content)));
-    when(repository.files(any(), any())).thenReturn(Collections.singletonList(Paths.get(filename)));
-    when(repository.hasDirectory(path.getParent())).thenReturn(true);
-    addForTesting(PROJECT, repository);
+  @AfterClass
+  public static void shutdown() {
+    try {
+      FileUtils.deleteDirectory(repositoryDirectory.toFile());
+    } catch (IOException e) {
+      throw new UncheckedIOException(e);
+    }
   }
 
 }
