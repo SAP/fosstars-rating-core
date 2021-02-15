@@ -98,9 +98,9 @@ public class ArtifactVersionReleaseScore extends FeatureBasedScore {
           lastDays = versionInfo.daysDiffToVersionBefore;
         } else {
           if (lastDays > versionInfo.daysDiffToVersionBefore) {
-            releaseCycleTrend++;
-          } else {
             releaseCycleTrend--;
+          } else if (lastDays < versionInfo.daysDiffToVersionBefore) {
+            releaseCycleTrend++;
           }
         }
       }

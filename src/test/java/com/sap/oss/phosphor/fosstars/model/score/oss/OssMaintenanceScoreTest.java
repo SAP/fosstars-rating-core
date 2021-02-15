@@ -111,9 +111,34 @@ public class OssMaintenanceScoreTest {
 
     OssMaintenanceRating rating = new OssMaintenanceRating(score, Thresholds.DEFAULT);
 
-    RatingValue ratingValue = rating.calculate(values);
     // FIXME (mibo): only for test reasons
     System.out.println("#########\n\ncalculate:");
+    RatingValue ratingValue = rating.calculate(values);
+    //    System.out.println(PrettyPrinter.withoutVerboseOutput().print(ratingValue));
+    System.out.println(PrettyPrinter.withVerboseOutput(Advisor.DUMMY).print(ratingValue));
+  }
+
+
+  @Test
+  public void calculateWithOldVersion() {
+    OssMaintenanceScore score = new OssMaintenanceScore();
+    Set<Value> values = setOf(
+        RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(false)),
+        ARTIFACT_VERSION.value("1.0.0"),
+        SUPPORTED_BY_COMPANY.value(false),
+        IS_APACHE.value(true),
+        IS_ECLIPSE.value(false),
+        NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(50),
+        NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(3),
+        NUMBER_OF_GITHUB_STARS.value(10),
+        NUMBER_OF_WATCHERS_ON_GITHUB.value(5),
+        PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)));
+
+    OssMaintenanceRating rating = new OssMaintenanceRating(score, Thresholds.DEFAULT);
+
+    // FIXME (mibo): only for test reasons
+    System.out.println("#########\n\ncalculate:");
+    RatingValue ratingValue = rating.calculate(values);
     //    System.out.println(PrettyPrinter.withoutVerboseOutput().print(ratingValue));
     System.out.println(PrettyPrinter.withVerboseOutput(Advisor.DUMMY).print(ratingValue));
   }
@@ -135,9 +160,9 @@ public class OssMaintenanceScoreTest {
 
     OssMaintenanceRating rating = new OssMaintenanceRating(score, Thresholds.DEFAULT);
 
-    RatingValue ratingValue = rating.calculate(values);
     // FIXME (mibo): only for test reasons
     System.out.println("#########\n\ncalculateWith20:");
+    RatingValue ratingValue = rating.calculate(values);
     //    System.out.println(PrettyPrinter.withoutVerboseOutput().print(ratingValue));
     System.out.println(PrettyPrinter.withVerboseOutput(Advisor.DUMMY).print(ratingValue));
   }
@@ -159,9 +184,9 @@ public class OssMaintenanceScoreTest {
 
     OssMaintenanceRating rating = new OssMaintenanceRating(score, Thresholds.DEFAULT);
 
-    RatingValue ratingValue = rating.calculate(values);
     // FIXME (mibo): only for test reasons
     System.out.println("#########\n\ncalculateWith20Used:");
+    RatingValue ratingValue = rating.calculate(values);
     //    System.out.println(PrettyPrinter.withoutVerboseOutput().print(ratingValue));
     System.out.println(PrettyPrinter.withVerboseOutput(Advisor.DUMMY).print(ratingValue));
   }

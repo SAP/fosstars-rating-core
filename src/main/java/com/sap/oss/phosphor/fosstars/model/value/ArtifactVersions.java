@@ -151,7 +151,10 @@ public class ArtifactVersions implements Iterable<ArtifactVersion> {
 
   @Override
   public String toString() {
-    return elements.stream().map(ArtifactVersion::toString).collect(Collectors.joining(", "));
+    return getSortByReleaseDate().stream()
+        .map(v -> v.getVersion() + ":" + v.getReleaseDate())
+        .collect(Collectors.joining(", "));
+    // return elements.stream().map(ArtifactVersion::toString).collect(Collectors.joining(", "));
   }
 
   @Override
