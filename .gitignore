@@ -1,5 +1,5 @@
 .idea
-fosstars-model.iml
+*.iml
 target
 .attach_pid*
 .fosstars

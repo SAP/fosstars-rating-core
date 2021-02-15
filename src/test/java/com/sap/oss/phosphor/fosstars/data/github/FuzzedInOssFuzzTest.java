@@ -13,10 +13,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Date;
 import org.apache.commons.io.FileUtils;
+import org.eclipse.jgit.api.CommitCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.junit.Test;
 
 public class FuzzedInOssFuzzTest extends TestGitHubDataFetcherHolder {
@@ -37,8 +39,13 @@ public class FuzzedInOssFuzzTest extends TestGitHubDataFetcherHolder {
       Files.write(dockerFilePath, content.getBytes());
 
       git.add().addFilepattern("projects/project/Dockerfile").call();
-      git.commit()
-          .setMessage("Added Dockerfile")
+      CommitCommand commit = git.commit();
+      commit.setCredentialsProvider(
+              new UsernamePasswordCredentialsProvider("fuzzer", "don't tell anyone"));
+      commit.setMessage("Added Dockerfile")
+          .setSign(false)
+          .setAuthor("Mr. Fuzzer", "fuzzer@test.com")
+          .setCommitter("Mr. Fuzzer", "fuzzer@test.com")
           .call();
 
       LocalRepository localRepository = new LocalRepository(

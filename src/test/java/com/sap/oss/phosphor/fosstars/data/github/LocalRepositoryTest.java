@@ -16,10 +16,12 @@ import java.util.List;
 import java.util.Optional;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.eclipse.jgit.api.CommitCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.junit.Test;
 
 public class LocalRepositoryTest {
@@ -38,8 +40,13 @@ public class LocalRepositoryTest {
       Path path = new File(repository.getDirectory().getParent(), filename).toPath();
       Files.write(path, content.getBytes());
       git.add().addFilepattern(filename).call();
-      git.commit()
-          .setMessage("Added " + filename)
+      CommitCommand commit = git.commit();
+      commit.setCredentialsProvider(
+              new UsernamePasswordCredentialsProvider("test", "don't tell anyone"));
+      commit.setMessage("Added " + filename)
+          .setSign(false)
+          .setAuthor("Mr. Test", "test@test.com")
+          .setCommitter("Mr. Test", "test@test.com")
           .call();
 
       LocalRepository localRepository = new LocalRepository(
@@ -72,8 +79,11 @@ public class LocalRepositoryTest {
           Paths.get(repository.getDirectory().getParent()).resolve("file"),
           "test".getBytes());
       git.add().addFilepattern("README.md").call();
-      git.commit()
-          .setMessage("Old commit")
+      CommitCommand commit = git.commit();
+      commit.setCredentialsProvider(
+              new UsernamePasswordCredentialsProvider("mr.white", "don't tell anyone"));
+      commit.setMessage("Old commit")
+          .setSign(false)
           .setAuthor("Mr. White", "mr.white@test.com")
           .setCommitter("Mr. White", "mr.white@test.com")
           .call();
@@ -85,8 +95,11 @@ public class LocalRepositoryTest {
           Paths.get(repository.getDirectory().getParent()).resolve("file"),
           "test".getBytes());
       git.add().addFilepattern("SECURITY.md").call();
-      git.commit()
-          .setMessage("Latest commit")
+      commit = git.commit();
+      commit.setCredentialsProvider(
+              new UsernamePasswordCredentialsProvider("mr.black", "don't tell anyone"));
+      commit.setMessage("Latest commit")
+          .setSign(false)
           .setAuthor("Mr. Black", "mr.black@test.com")
           .setCommitter("Mr. Black", "mr.black@test.com")
           .call();
