@@ -1,184 +1,188 @@
 # Statistics
 
-|                 | # or projects             |  % or projects              |
-| :-------------- | ------------------------: | --------------------------: |
-| Total           |      168 |                        100% |
-| BAD rating      |      46 |      27.4% |
-| MODERATE rating | 81 | 48.2% |
-| GOOD rating     |     41 |     24.4% |
-| Unclear ratings |  0 |  0.0% |
-| Unknown ratings |  0 |  0.0% |
+|                  |                                                         | # or projects             |  % or projects              |
+| :--------------- | :------------------------------------------------------ | ------------------------: | --------------------------: |
+| Total            |                                                         | 172      |                        100% |
+| BAD ratings      | score below 4.52                        | 29      |      16.9% |
+| MODERATE ratings | score between 4.52 and 5.64 | 91 | 52.9% |
+| GOOD ratings     | score above 5.64                            | 52     |     30.2% |
+| UNCLEAR ratings  | confidence below 8.00                    | 0  |  0.0% |
+| UNKNOWN ratings  |                                                         | 0  |  0.0% |
 
 # Projects
 
 | Project | Stars | Score<br>from&nbsp;0&nbsp;to&nbsp;10 | Rating | Confidence | Last<br>updated |
 | ------- | ----: | -----------------------------------: | :----- | :--------- | --------------- |
-| [spring-projects/spring-boot](https://github.com/spring-projects/spring-boot) | 52677 | 6.23 out of 10.0 | [GOOD](spring-projects/spring-boot.md) | 10.00 | Jan 5, 2021 |
-| [spring-projects/spring-framework](https://github.com/spring-projects/spring-framework) | 40894 | 4.71 out of 10.0 | [MODERATE](spring-projects/spring-framework.md) | 10.00 | Jan 5, 2021 |
-| [google/guava](https://github.com/google/guava) | 39878 | 4.44 out of 10.0 | [MODERATE](google/guava.md) | 10.00 | Jan 5, 2021 |
-| [apache/dubbo](https://github.com/apache/dubbo) | 34395 | 5.61 out of 10.0 | [GOOD](apache/dubbo.md) | 10.00 | Jan 5, 2021 |
-| [apache/spark](https://github.com/apache/spark) | 28454 | 4.37 out of 10.0 | [MODERATE](apache/spark.md) | 10.00 | Jan 5, 2021 |
-| [netty/netty](https://github.com/netty/netty) | 25672 | 6.4  out of 10.0 | [GOOD](netty/netty.md) | 10.00 | Jan 5, 2021 |
-| [google/leveldb](https://github.com/google/leveldb) | 22625 | 4.88 out of 10.0 | [MODERATE](google/leveldb.md) | 10.00 | Jan 5, 2021 |
-| [GoogleChrome/lighthouse](https://github.com/GoogleChrome/lighthouse) | 21471 | 5.64 out of 10.0 | [GOOD](GoogleChrome/lighthouse.md) | 10.00 | Jan 5, 2021 |
-| [google/iosched](https://github.com/google/iosched) | 20247 | 3.79 out of 10.0 | [BAD](google/iosched.md) | 10.00 | Jan 5, 2021 |
-| [apache/airflow](https://github.com/apache/airflow) | 19842 | 6.82 out of 10.0 | [GOOD](apache/airflow.md) | 10.00 | Jan 5, 2021 |
-| [curl/curl](https://github.com/curl/curl) | 19032 | 4.72 out of 10.0 | [MODERATE](curl/curl.md) | 10.00 | Jan 5, 2021 |
-| [google/gson](https://github.com/google/gson) | 18987 | 4.37 out of 10.0 | [MODERATE](google/gson.md) | 10.00 | Jan 5, 2021 |
-| [google/web-starter-kit](https://github.com/google/web-starter-kit) | 18514 | 4.71 out of 10.0 | [MODERATE](google/web-starter-kit.md) | 10.00 | Jan 5, 2021 |
-| [google/python-fire](https://github.com/google/python-fire) | 18470 | 4.34 out of 10.0 | [MODERATE](google/python-fire.md) | 10.00 | Jan 5, 2021 |
-| [apache/kafka](https://github.com/apache/kafka) | 17711 | 5.37 out of 10.0 | [GOOD](apache/kafka.md) | 10.00 | Jan 5, 2021 |
-| [google/ExoPlayer](https://github.com/google/ExoPlayer) | 16992 | 5.65 out of 10.0 | [GOOD](google/ExoPlayer.md) | 10.00 | Jan 5, 2021 |
-| [google/flexbox-layout](https://github.com/google/flexbox-layout) | 16327 | 4.09 out of 10.0 | [BAD](google/flexbox-layout.md) | 10.00 | Jan 5, 2021 |
-| [apache/skywalking](https://github.com/apache/skywalking) | 15734 | 5.7  out of 10.0 | [GOOD](apache/skywalking.md) | 10.00 | Jan 5, 2021 |
-| [google/dagger](https://github.com/google/dagger) | 15727 | 4.76 out of 10.0 | [MODERATE](google/dagger.md) | 9.88 | Jan 5, 2021 |
-| [google/flatbuffers](https://github.com/google/flatbuffers) | 15591 | 6.36 out of 10.0 | [GOOD](google/flatbuffers.md) | 10.00 | Jan 5, 2021 |
-| [apache/flink](https://github.com/apache/flink) | 15135 | 5.87 out of 10.0 | [GOOD](apache/flink.md) | 10.00 | Jan 5, 2021 |
-| [openssl/openssl](https://github.com/openssl/openssl) | 14510 | 6.41 out of 10.0 | [GOOD](openssl/openssl.md) | 10.00 | Jan 5, 2021 |
-| [apache/rocketmq](https://github.com/apache/rocketmq) | 13208 | 5.26 out of 10.0 | [GOOD](apache/rocketmq.md) | 10.00 | Jan 5, 2021 |
-| [apache/shardingsphere](https://github.com/apache/shardingsphere) | 13114 | 4.8  out of 10.0 | [MODERATE](apache/shardingsphere.md) | 10.00 | Jan 5, 2021 |
-| [google/deepdream](https://github.com/google/deepdream) | 12665 | 3.79 out of 10.0 | [BAD](google/deepdream.md) | 9.88 | Jan 5, 2021 |
-| [google/guetzli](https://github.com/google/guetzli) | 12490 | 4.6  out of 10.0 | [MODERATE](google/guetzli.md) | 10.00 | Jan 5, 2021 |
-| [apache/predictionio](https://github.com/apache/predictionio) | 12474 | 4.55 out of 10.0 | [MODERATE](apache/predictionio.md) | 10.00 | Jan 5, 2021 |
-| [eclipse/deeplearning4j](https://github.com/eclipse/deeplearning4j) | 11897 | 5.14 out of 10.0 | [GOOD](eclipse/deeplearning4j.md) | 10.00 | Jan 5, 2021 |
-| [google/libphonenumber](https://github.com/google/libphonenumber) | 11626 | 5.34 out of 10.0 | [GOOD](google/libphonenumber.md) | 10.00 | Jan 5, 2021 |
-| [google/cadvisor](https://github.com/google/cadvisor) | 11587 | 4.92 out of 10.0 | [MODERATE](google/cadvisor.md) | 10.00 | Jan 5, 2021 |
-| [google/yapf](https://github.com/google/yapf) | 11345 | 4.34 out of 10.0 | [MODERATE](google/yapf.md) | 10.00 | Jan 5, 2021 |
-| [apache/hadoop](https://github.com/apache/hadoop) | 11201 | 6.07 out of 10.0 | [GOOD](apache/hadoop.md) | 10.00 | Jan 5, 2021 |
-| [google/jax](https://github.com/google/jax) | 10926 | 5.04 out of 10.0 | [MODERATE](google/jax.md) | 10.00 | Jan 5, 2021 |
-| [google/tink](https://github.com/google/tink) | 10906 | 4.68 out of 10.0 | [MODERATE](google/tink.md) | 10.00 | Jan 5, 2021 |
-| [google/gvisor](https://github.com/google/gvisor) | 10797 | 6.09 out of 10.0 | [GOOD](google/gvisor.md) | 10.00 | Jan 5, 2021 |
-| [aws/aws-cli](https://github.com/aws/aws-cli) | 10521 | 6.23 out of 10.0 | [GOOD](aws/aws-cli.md) | 10.00 | Jan 5, 2021 |
-| [google/mediapipe](https://github.com/google/mediapipe) | 10452 | 3.94 out of 10.0 | [BAD](google/mediapipe.md) | 9.88 | Jan 5, 2021 |
-| [apache/druid](https://github.com/apache/druid) | 10402 | 5.41 out of 10.0 | [GOOD](apache/druid.md) | 10.00 | Jan 5, 2021 |
-| [google/filament](https://github.com/google/filament) | 10330 | 4.87 out of 10.0 | [MODERATE](google/filament.md) | 10.00 | Jan 5, 2021 |
-| [google/grumpy](https://github.com/google/grumpy) | 10234 | 3.87 out of 10.0 | [BAD](google/grumpy.md) | 10.00 | Jan 5, 2021 |
-| [apache/zookeeper](https://github.com/apache/zookeeper) | 8967 | 4.94 out of 10.0 | [MODERATE](apache/zookeeper.md) | 10.00 | Jan 5, 2021 |
-| [apache/thrift](https://github.com/apache/thrift) | 7993 | 5.02 out of 10.0 | [MODERATE](apache/thrift.md) | 10.00 | Jan 5, 2021 |
-| [aws/serverless-application-model](https://github.com/aws/serverless-application-model) | 7611 | 4.4  out of 10.0 | [MODERATE](aws/serverless-application-model.md) | 10.00 | Jan 5, 2021 |
-| [aws/chalice](https://github.com/aws/chalice) | 7506 | 6.06 out of 10.0 | [GOOD](aws/chalice.md) | 10.00 | Jan 5, 2021 |
-| [apache/pulsar](https://github.com/apache/pulsar) | 7037 | 5.52 out of 10.0 | [GOOD](apache/pulsar.md) | 10.00 | Jan 5, 2021 |
-| [apache/arrow](https://github.com/apache/arrow) | 6818 | 5.89 out of 10.0 | [GOOD](apache/arrow.md) | 10.00 | Jan 5, 2021 |
-| [apache/shardingsphere-elasticjob](https://github.com/apache/shardingsphere-elasticjob) | 6722 | 6.5  out of 10.0 | [GOOD](apache/shardingsphere-elasticjob.md) | 10.00 | Jan 5, 2021 |
-| [aws/aws-sdk-js](https://github.com/aws/aws-sdk-js) | 6381 | 5.94 out of 10.0 | [GOOD](aws/aws-sdk-js.md) | 10.00 | Jan 5, 2021 |
-| [apache/cassandra](https://github.com/apache/cassandra) | 6367 | 3.86 out of 10.0 | [BAD](apache/cassandra.md) | 10.00 | Jan 5, 2021 |
-| [eclipse/che](https://github.com/eclipse/che) | 6342 | 5.46 out of 10.0 | [GOOD](eclipse/che.md) | 10.00 | Jan 5, 2021 |
-| [aws/aws-sdk-go](https://github.com/aws/aws-sdk-go) | 6329 | 4.84 out of 10.0 | [MODERATE](aws/aws-sdk-go.md) | 10.00 | Jan 5, 2021 |
-| [FasterXML/jackson](https://github.com/FasterXML/jackson) | 6193 | 2.81 out of 10.0 | [BAD](FasterXML/jackson.md) | 9.88 | Jan 5, 2021 |
-| [apache/storm](https://github.com/apache/storm) | 6187 | 4.91 out of 10.0 | [MODERATE](apache/storm.md) | 10.00 | Jan 5, 2021 |
-| [apache/tvm](https://github.com/apache/tvm) | 6135 | 5.25 out of 10.0 | [GOOD](apache/tvm.md) | 10.00 | Jan 5, 2021 |
-| [aws/aws-cdk](https://github.com/aws/aws-cdk) | 6008 | 5.67 out of 10.0 | [GOOD](aws/aws-cdk.md) | 10.00 | Jan 5, 2021 |
-| [spring-projects/spring-security](https://github.com/spring-projects/spring-security) | 5516 | 4.9  out of 10.0 | [MODERATE](spring-projects/spring-security.md) | 10.00 | Jan 5, 2021 |
-| [aws/aws-sam-cli](https://github.com/aws/aws-sam-cli) | 5358 | 5.82 out of 10.0 | [GOOD](aws/aws-sam-cli.md) | 10.00 | Jan 5, 2021 |
-| [apache/openwhisk](https://github.com/apache/openwhisk) | 5115 | 4.45 out of 10.0 | [MODERATE](apache/openwhisk.md) | 10.00 | Jan 5, 2021 |
-| [apache/tomcat](https://github.com/apache/tomcat) | 5105 | 3.89 out of 10.0 | [BAD](apache/tomcat.md) | 10.00 | Jan 5, 2021 |
-| [apache/zeppelin](https://github.com/apache/zeppelin) | 5082 | 4.45 out of 10.0 | [MODERATE](apache/zeppelin.md) | 10.00 | Jan 5, 2021 |
-| [aws/aws-sdk-php](https://github.com/aws/aws-sdk-php) | 5067 | 5.24 out of 10.0 | [GOOD](aws/aws-sdk-php.md) | 10.00 | Jan 5, 2021 |
-| [apache/dubbo-spring-boot-project](https://github.com/apache/dubbo-spring-boot-project) | 4911 | 4.86 out of 10.0 | [MODERATE](apache/dubbo-spring-boot-project.md) | 10.00 | Jan 5, 2021 |
-| [spring-projects/spring-mvc-showcase](https://github.com/spring-projects/spring-mvc-showcase) | 4882 | 4.58 out of 10.0 | [MODERATE](spring-projects/spring-mvc-showcase.md) | 10.00 | Jan 5, 2021 |
-| [apache/jmeter](https://github.com/apache/jmeter) | 4852 | 5.04 out of 10.0 | [MODERATE](apache/jmeter.md) | 10.00 | Jan 5, 2021 |
-| [apache/couchdb](https://github.com/apache/couchdb) | 4776 | 3.59 out of 10.0 | [BAD](apache/couchdb.md) | 10.00 | Jan 5, 2021 |
-| [apache/mesos](https://github.com/apache/mesos) | 4634 | 3.87 out of 10.0 | [BAD](apache/mesos.md) | 10.00 | Jan 5, 2021 |
-| [spring-projects/spring-petclinic](https://github.com/spring-projects/spring-petclinic) | 4597 | 5.36 out of 10.0 | [GOOD](spring-projects/spring-petclinic.md) | 10.00 | Jan 5, 2021 |
-| [apache/beam](https://github.com/apache/beam) | 4487 | 4.65 out of 10.0 | [MODERATE](apache/beam.md) | 10.00 | Jan 5, 2021 |
-| [eclipse/mosquitto](https://github.com/eclipse/mosquitto) | 4336 | 5.32 out of 10.0 | [GOOD](eclipse/mosquitto.md) | 10.00 | Jan 5, 2021 |
-| [spring-projects/spring-security-oauth](https://github.com/spring-projects/spring-security-oauth) | 4285 | 3.5  out of 10.0 | [BAD](spring-projects/spring-security-oauth.md) | 10.00 | Jan 5, 2021 |
-| [apache/apisix](https://github.com/apache/apisix) | 4089 | 4.59 out of 10.0 | [MODERATE](apache/apisix.md) | 9.88 | Jan 5, 2021 |
-| [apache/groovy](https://github.com/apache/groovy) | 3969 | 5.1  out of 10.0 | [MODERATE](apache/groovy.md) | 10.00 | Jan 5, 2021 |
-| [apache/lucene-solr](https://github.com/apache/lucene-solr) | 3969 | 4.82 out of 10.0 | [MODERATE](apache/lucene-solr.md) | 10.00 | Jan 5, 2021 |
-| [apache/hbase](https://github.com/apache/hbase) | 3863 | 4.07 out of 10.0 | [BAD](apache/hbase.md) | 10.00 | Jan 5, 2021 |
-| [apache/ignite](https://github.com/apache/ignite) | 3594 | 3.84 out of 10.0 | [BAD](apache/ignite.md) | 10.00 | Jan 5, 2021 |
-| [apache/camel](https://github.com/apache/camel) | 3547 | 5.36 out of 10.0 | [GOOD](apache/camel.md) | 10.00 | Jan 5, 2021 |
-| [apache/hive](https://github.com/apache/hive) | 3503 | 3.96 out of 10.0 | [BAD](apache/hive.md) | 10.00 | Jan 5, 2021 |
-| [aws/aws-sdk-java](https://github.com/aws/aws-sdk-java) | 3439 | 5.06 out of 10.0 | [MODERATE](aws/aws-sdk-java.md) | 10.00 | Jan 5, 2021 |
-| [aws/containers-roadmap](https://github.com/aws/containers-roadmap) | 3386 | 3.41 out of 10.0 | [BAD](aws/containers-roadmap.md) | 9.88 | Jan 5, 2021 |
-| [apache/rocketmq-externals](https://github.com/apache/rocketmq-externals) | 3342 | 4.05 out of 10.0 | [BAD](apache/rocketmq-externals.md) | 10.00 | Jan 5, 2021 |
-| [apache/shiro](https://github.com/apache/shiro) | 3308 | 5.0  out of 10.0 | [MODERATE](apache/shiro.md) | 10.00 | Jan 5, 2021 |
-| [aws/aws-sdk-ruby](https://github.com/aws/aws-sdk-ruby) | 3194 | 5.01 out of 10.0 | [MODERATE](aws/aws-sdk-ruby.md) | 10.00 | Jan 5, 2021 |
-| [apache/cordova-android](https://github.com/apache/cordova-android) | 3104 | 4.39 out of 10.0 | [MODERATE](apache/cordova-android.md) | 10.00 | Jan 5, 2021 |
-| [eclipse/jetty.project](https://github.com/eclipse/jetty.project) | 3030 | 5.59 out of 10.0 | [GOOD](eclipse/jetty.project.md) | 10.00 | Jan 5, 2021 |
-| [apache/dubbo-admin](https://github.com/apache/dubbo-admin) | 2994 | 4.4  out of 10.0 | [MODERATE](apache/dubbo-admin.md) | 10.00 | Jan 5, 2021 |
-| [apache/kylin](https://github.com/apache/kylin) | 2915 | 4.14 out of 10.0 | [BAD](apache/kylin.md) | 10.00 | Jan 5, 2021 |
-| [FasterXML/jackson-databind](https://github.com/FasterXML/jackson-databind) | 2730 | 4.22 out of 10.0 | [MODERATE](FasterXML/jackson-databind.md) | 10.00 | Jan 5, 2021 |
-| [apache/dubbo-go](https://github.com/apache/dubbo-go) | 2610 | 5.34 out of 10.0 | [GOOD](apache/dubbo-go.md) | 9.88 | Jan 5, 2021 |
-| [apache/httpd](https://github.com/apache/httpd) | 2592 | 4.23 out of 10.0 | [MODERATE](apache/httpd.md) | 10.00 | Jan 5, 2021 |
-| [spring-projects/spring-loaded](https://github.com/spring-projects/spring-loaded) | 2527 | 3.46 out of 10.0 | [BAD](spring-projects/spring-loaded.md) | 10.00 | Jan 5, 2021 |
-| [eclipse/openj9](https://github.com/eclipse/openj9) | 2522 | 4.31 out of 10.0 | [MODERATE](eclipse/openj9.md) | 9.88 | Jan 5, 2021 |
-| [aws/aws-lambda-go](https://github.com/aws/aws-lambda-go) | 2507 | 2.97 out of 10.0 | [BAD](aws/aws-lambda-go.md) | 9.88 | Jan 5, 2021 |
-| [apache/curator](https://github.com/apache/curator) | 2404 | 4.32 out of 10.0 | [MODERATE](apache/curator.md) | 10.00 | Jan 5, 2021 |
-| [apache/nifi](https://github.com/apache/nifi) | 2396 | 4.72 out of 10.0 | [MODERATE](apache/nifi.md) | 10.00 | Jan 5, 2021 |
-| [apache/maven](https://github.com/apache/maven) | 2379 | 5.64 out of 10.0 | [GOOD](apache/maven.md) | 10.00 | Jan 5, 2021 |
-| [spring-projects/spring-data-elasticsearch](https://github.com/spring-projects/spring-data-elasticsearch) | 2341 | 5.49 out of 10.0 | [GOOD](spring-projects/spring-data-elasticsearch.md) | 10.00 | Jan 5, 2021 |
-| [apache/calcite](https://github.com/apache/calcite) | 2242 | 4.59 out of 10.0 | [MODERATE](apache/calcite.md) | 10.00 | Jan 5, 2021 |
-| [aws/amazon-freertos](https://github.com/aws/amazon-freertos) | 2165 | 4.79 out of 10.0 | [MODERATE](aws/amazon-freertos.md) | 10.00 | Jan 5, 2021 |
-| [apache/nutch](https://github.com/apache/nutch) | 2162 | 3.74 out of 10.0 | [BAD](apache/nutch.md) | 10.00 | Jan 5, 2021 |
-| [apache/singa](https://github.com/apache/singa) | 2158 | 4.74 out of 10.0 | [MODERATE](apache/singa.md) | 10.00 | Jan 5, 2021 |
-| [eclipse/paho.mqtt.android](https://github.com/eclipse/paho.mqtt.android) | 2054 | 4.22 out of 10.0 | [MODERATE](eclipse/paho.mqtt.android.md) | 10.00 | Jan 5, 2021 |
-| [apache/commons-lang](https://github.com/apache/commons-lang) | 2054 | 6.22 out of 10.0 | [GOOD](apache/commons-lang.md) | 10.00 | Jan 5, 2021 |
-| [apache/flume](https://github.com/apache/flume) | 2051 | 4.25 out of 10.0 | [MODERATE](apache/flume.md) | 10.00 | Jan 5, 2021 |
-| [spring-projects/spring-data-jpa](https://github.com/spring-projects/spring-data-jpa) | 1965 | 5.17 out of 10.0 | [GOOD](spring-projects/spring-data-jpa.md) | 10.00 | Jan 5, 2021 |
-| [apache/cordova-ios](https://github.com/apache/cordova-ios) | 1944 | 3.76 out of 10.0 | [BAD](apache/cordova-ios.md) | 10.00 | Jan 5, 2021 |
-| [FasterXML/jackson-core](https://github.com/FasterXML/jackson-core) | 1901 | 4.42 out of 10.0 | [MODERATE](FasterXML/jackson-core.md) | 10.00 | Jan 5, 2021 |
-| [apache/mahout](https://github.com/apache/mahout) | 1896 | 4.06 out of 10.0 | [BAD](apache/mahout.md) | 10.00 | Jan 5, 2021 |
-| [apache/geode](https://github.com/apache/geode) | 1878 | 4.59 out of 10.0 | [MODERATE](apache/geode.md) | 10.00 | Jan 5, 2021 |
-| [apache/activemq](https://github.com/apache/activemq) | 1848 | 4.68 out of 10.0 | [MODERATE](apache/activemq.md) | 10.00 | Jan 5, 2021 |
-| [apache/servicecomb-pack](https://github.com/apache/servicecomb-pack) | 1774 | 4.33 out of 10.0 | [MODERATE](apache/servicecomb-pack.md) | 10.00 | Jan 5, 2021 |
-| [aws/amazon-ecs-agent](https://github.com/aws/amazon-ecs-agent) | 1748 | 3.92 out of 10.0 | [BAD](aws/amazon-ecs-agent.md) | 9.88 | Jan 5, 2021 |
-| [apache/avro](https://github.com/apache/avro) | 1745 | 5.06 out of 10.0 | [MODERATE](apache/avro.md) | 10.00 | Jan 5, 2021 |
-| [apache/libcloud](https://github.com/apache/libcloud) | 1734 | 4.88 out of 10.0 | [MODERATE](apache/libcloud.md) | 10.00 | Jan 5, 2021 |
-| [spring-projects/spring-batch](https://github.com/spring-projects/spring-batch) | 1723 | 3.5  out of 10.0 | [BAD](spring-projects/spring-batch.md) | 10.00 | Jan 5, 2021 |
-| [apache/servicecomb-java-chassis](https://github.com/apache/servicecomb-java-chassis) | 1654 | 5.13 out of 10.0 | [MODERATE](apache/servicecomb-java-chassis.md) | 10.00 | Jan 5, 2021 |
-| [apache/hudi](https://github.com/apache/hudi) | 1629 | 5.68 out of 10.0 | [GOOD](apache/hudi.md) | 10.00 | Jan 5, 2021 |
-| [eclipse/eclipse-collections](https://github.com/eclipse/eclipse-collections) | 1612 | 5.34 out of 10.0 | [GOOD](eclipse/eclipse-collections.md) | 10.00 | Jan 5, 2021 |
-| [spring-projects/spring-session](https://github.com/spring-projects/spring-session) | 1571 | 4.2  out of 10.0 | [MODERATE](spring-projects/spring-session.md) | 10.00 | Jan 5, 2021 |
-| [qos-ch/slf4j](https://github.com/qos-ch/slf4j) | 1564 | 2.88 out of 10.0 | [BAD](qos-ch/slf4j.md) | 10.00 | Jan 5, 2021 |
-| [apache/guacamole-server](https://github.com/apache/guacamole-server) | 1561 | 4.43 out of 10.0 | [MODERATE](apache/guacamole-server.md) | 10.00 | Jan 5, 2021 |
-| [aws/aws-sdk-net](https://github.com/aws/aws-sdk-net) | 1549 | 4.2  out of 10.0 | [MODERATE](aws/aws-sdk-net.md) | 10.00 | Jan 5, 2021 |
-| [aws/amazon-ecs-cli](https://github.com/aws/amazon-ecs-cli) | 1523 | 4.43 out of 10.0 | [MODERATE](aws/amazon-ecs-cli.md) | 10.00 | Jan 5, 2021 |
-| [apache/lucenenet](https://github.com/apache/lucenenet) | 1517 | 3.72 out of 10.0 | [BAD](apache/lucenenet.md) | 10.00 | Jan 5, 2021 |
-| [apache/netbeans](https://github.com/apache/netbeans) | 1507 | 4.21 out of 10.0 | [MODERATE](apache/netbeans.md) | 10.00 | Jan 5, 2021 |
-| [apache/drill](https://github.com/apache/drill) | 1478 | 4.09 out of 10.0 | [BAD](apache/drill.md) | 10.00 | Jan 5, 2021 |
-| [eclipse/paho.mqtt.golang](https://github.com/eclipse/paho.mqtt.golang) | 1459 | 3.62 out of 10.0 | [BAD](eclipse/paho.mqtt.golang.md) | 9.88 | Jan 5, 2021 |
-| [apache/ambari](https://github.com/apache/ambari) | 1417 | 3.92 out of 10.0 | [BAD](apache/ambari.md) | 10.00 | Jan 5, 2021 |
-| [eclipse/paho.mqtt.java](https://github.com/eclipse/paho.mqtt.java) | 1398 | 4.05 out of 10.0 | [BAD](eclipse/paho.mqtt.java.md) | 10.00 | Jan 5, 2021 |
-| [spring-projects/spring-retry](https://github.com/spring-projects/spring-retry) | 1397 | 4.25 out of 10.0 | [MODERATE](spring-projects/spring-retry.md) | 10.00 | Jan 5, 2021 |
-| [aws/lumberyard](https://github.com/aws/lumberyard) | 1388 | 3.0  out of 10.0 | [BAD](aws/lumberyard.md) | 10.00 | Jan 5, 2021 |
-| [aws/amazon-vpc-cni-k8s](https://github.com/aws/amazon-vpc-cni-k8s) | 1384 | 3.57 out of 10.0 | [BAD](aws/amazon-vpc-cni-k8s.md) | 9.88 | Jan 5, 2021 |
-| [aws/aws-sdk-php-laravel](https://github.com/aws/aws-sdk-php-laravel) | 1362 | 3.79 out of 10.0 | [BAD](aws/aws-sdk-php-laravel.md) | 9.88 | Jan 5, 2021 |
-| [apache/pdfbox](https://github.com/apache/pdfbox) | 1332 | 4.72 out of 10.0 | [MODERATE](apache/pdfbox.md) | 10.00 | Jan 5, 2021 |
-| [bcgit/bc-java](https://github.com/bcgit/bc-java) | 1326 | 3.37 out of 10.0 | [BAD](bcgit/bc-java.md) | 10.00 | Jan 5, 2021 |
-| [spring-projects/greenhouse](https://github.com/spring-projects/greenhouse) | 1316 | 3.98 out of 10.0 | [BAD](spring-projects/greenhouse.md) | 9.88 | Jan 5, 2021 |
-| [apache/kudu](https://github.com/apache/kudu) | 1309 | 4.46 out of 10.0 | [MODERATE](apache/kudu.md) | 10.00 | Jan 5, 2021 |
-| [aws/sagemaker-python-sdk](https://github.com/aws/sagemaker-python-sdk) | 1281 | 4.29 out of 10.0 | [MODERATE](aws/sagemaker-python-sdk.md) | 10.00 | Jan 5, 2021 |
-| [aws/aws-controllers-k8s](https://github.com/aws/aws-controllers-k8s) | 1278 | 5.39 out of 10.0 | [GOOD](aws/aws-controllers-k8s.md) | 10.00 | Jan 5, 2021 |
-| [apache/tinkerpop](https://github.com/apache/tinkerpop) | 1265 | 4.46 out of 10.0 | [MODERATE](apache/tinkerpop.md) | 10.00 | Jan 5, 2021 |
-| [eclipse/paho.mqtt.python](https://github.com/eclipse/paho.mqtt.python) | 1262 | 3.77 out of 10.0 | [BAD](eclipse/paho.mqtt.python.md) | 10.00 | Jan 5, 2021 |
-| [spring-projects/spring-data-redis](https://github.com/spring-projects/spring-data-redis) | 1260 | 4.3  out of 10.0 | [MODERATE](spring-projects/spring-data-redis.md) | 10.00 | Jan 5, 2021 |
-| [apache/parquet-mr](https://github.com/apache/parquet-mr) | 1240 | 4.49 out of 10.0 | [MODERATE](apache/parquet-mr.md) | 10.00 | Jan 5, 2021 |
-| [spring-projects/spring-data-mongodb](https://github.com/spring-projects/spring-data-mongodb) | 1231 | 5.02 out of 10.0 | [MODERATE](spring-projects/spring-data-mongodb.md) | 10.00 | Jan 5, 2021 |
-| [apache/trafficserver](https://github.com/apache/trafficserver) | 1225 | 4.82 out of 10.0 | [MODERATE](apache/trafficserver.md) | 10.00 | Jan 5, 2021 |
-| [eclipse/mraa](https://github.com/eclipse/mraa) | 1213 | 3.51 out of 10.0 | [BAD](eclipse/mraa.md) | 10.00 | Jan 5, 2021 |
-| [spring-projects/spring-kafka](https://github.com/spring-projects/spring-kafka) | 1212 | 4.8  out of 10.0 | [MODERATE](spring-projects/spring-kafka.md) | 10.00 | Jan 5, 2021 |
-| [apache/rocketmq-spring](https://github.com/apache/rocketmq-spring) | 1198 | 4.44 out of 10.0 | [MODERATE](apache/rocketmq-spring.md) | 10.00 | Jan 5, 2021 |
-| [aws/aws-sdk-cpp](https://github.com/aws/aws-sdk-cpp) | 1165 | 4.61 out of 10.0 | [MODERATE](aws/aws-sdk-cpp.md) | 10.00 | Jan 5, 2021 |
-| [apache/servicecomb-service-center](https://github.com/apache/servicecomb-service-center) | 1164 | 4.47 out of 10.0 | [MODERATE](apache/servicecomb-service-center.md) | 10.00 | Jan 5, 2021 |
-| [aws/copilot-cli](https://github.com/aws/copilot-cli) | 1159 | 5.32 out of 10.0 | [GOOD](aws/copilot-cli.md) | 10.00 | Jan 5, 2021 |
-| [spring-projects/spring-data-book](https://github.com/spring-projects/spring-data-book) | 1152 | 4.34 out of 10.0 | [MODERATE](spring-projects/spring-data-book.md) | 10.00 | Jan 5, 2021 |
-| [apache/nano](https://github.com/apache/nano) | 1129 | 4.05 out of 10.0 | [BAD](apache/nano.md) | 10.00 | Jan 5, 2021 |
-| [apache/carbondata](https://github.com/apache/carbondata) | 1127 | 4.82 out of 10.0 | [MODERATE](apache/carbondata.md) | 10.00 | Jan 5, 2021 |
-| [spring-projects/spring-integration](https://github.com/spring-projects/spring-integration) | 1123 | 3.52 out of 10.0 | [BAD](spring-projects/spring-integration.md) | 10.00 | Jan 5, 2021 |
-| [apache/tika](https://github.com/apache/tika) | 1115 | 3.11 out of 10.0 | [BAD](apache/tika.md) | 10.00 | Jan 5, 2021 |
-| [apache/bookkeeper](https://github.com/apache/bookkeeper) | 1105 | 5.14 out of 10.0 | [MODERATE](apache/bookkeeper.md) | 10.00 | Jan 5, 2021 |
-| [apache/poi](https://github.com/apache/poi) | 1095 | 4.56 out of 10.0 | [MODERATE](apache/poi.md) | 10.00 | Jan 5, 2021 |
-| [apache/logging-log4j2](https://github.com/apache/logging-log4j2) | 1087 | 4.6  out of 10.0 | [MODERATE](apache/logging-log4j2.md) | 10.00 | Jan 5, 2021 |
-| [apache/iotdb](https://github.com/apache/iotdb) | 1082 | 4.55 out of 10.0 | [MODERATE](apache/iotdb.md) | 10.00 | Jan 5, 2021 |
-| [aws/opsworks-cookbooks](https://github.com/aws/opsworks-cookbooks) | 1057 | 3.19 out of 10.0 | [BAD](aws/opsworks-cookbooks.md) | 10.00 | Jan 5, 2021 |
-| [aws/aws-fpga](https://github.com/aws/aws-fpga) | 1054 | 3.28 out of 10.0 | [BAD](aws/aws-fpga.md) | 10.00 | Jan 5, 2021 |
-| [apache/struts](https://github.com/apache/struts) | 1051 | 3.55 out of 10.0 | [BAD](apache/struts.md) | 9.59 | Jan 5, 2021 |
-| [spring-projects/spring-statemachine](https://github.com/spring-projects/spring-statemachine) | 1018 | 4.66 out of 10.0 | [MODERATE](spring-projects/spring-statemachine.md) | 10.00 | Jan 5, 2021 |
-| [aws/aws-sdk-java-v2](https://github.com/aws/aws-sdk-java-v2) | 1012 | 4.52 out of 10.0 | [MODERATE](aws/aws-sdk-java-v2.md) | 10.00 | Jan 5, 2021 |
-| [apache/httpcomponents-client](https://github.com/apache/httpcomponents-client) | 1008 | 3.3  out of 10.0 | [BAD](apache/httpcomponents-client.md) | 10.00 | Jan 5, 2021 |
-| [eclipse/paho.mqtt.c](https://github.com/eclipse/paho.mqtt.c) | 1007 | 4.55 out of 10.0 | [MODERATE](eclipse/paho.mqtt.c.md) | 10.00 | Jan 5, 2021 |
-| [apache/opennlp](https://github.com/apache/opennlp) | 1003 | 4.15 out of 10.0 | [BAD](apache/opennlp.md) | 10.00 | Jan 5, 2021 |
-| [netty/netty-tcnative](https://github.com/netty/netty-tcnative) | 179 | 3.99 out of 10.0 | [BAD](netty/netty-tcnative.md) | 9.88 | Jan 5, 2021 |
+| [spring-projects/spring-boot](spring-projects/spring-boot.md) | [53478](https://github.com/spring-projects/spring-boot) | 6.67 | [GOOD](spring-projects/spring-boot.md) | 10.00 | Feb 16, 2021 |
+| [apache/echarts](apache/echarts.md) | [45107](https://github.com/apache/echarts) | 6.21 | [GOOD](apache/echarts.md) | 10.00 | Feb 16, 2021 |
+| [spring-projects/spring-framework](spring-projects/spring-framework.md) | [41445](https://github.com/spring-projects/spring-framework) | 6.00 | [GOOD](spring-projects/spring-framework.md) | 10.00 | Feb 16, 2021 |
+| [google/guava](google/guava.md) | [40312](https://github.com/google/guava) | 5.30 | [MODERATE](google/guava.md) | 10.00 | Feb 16, 2021 |
+| [apache/superset](apache/superset.md) | [35251](https://github.com/apache/superset) | 6.78 | [GOOD](apache/superset.md) | 10.00 | Feb 16, 2021 |
+| [apache/dubbo](apache/dubbo.md) | [34660](https://github.com/apache/dubbo) | 5.84 | [GOOD](apache/dubbo.md) | 10.00 | Feb 16, 2021 |
+| [apache/spark](apache/spark.md) | [28798](https://github.com/apache/spark) | 5.66 | [GOOD](apache/spark.md) | 10.00 | Feb 16, 2021 |
+| [netty/netty](netty/netty.md) | [25983](https://github.com/netty/netty) | 6.65 | [GOOD](netty/netty.md) | 10.00 | Feb 16, 2021 |
+| [google/leveldb](google/leveldb.md) | [22978](https://github.com/google/leveldb) | 4.93 | [MODERATE](google/leveldb.md) | 10.00 | Feb 16, 2021 |
+| [GoogleChrome/lighthouse](GoogleChrome/lighthouse.md) | [21767](https://github.com/GoogleChrome/lighthouse) | 5.64 | [GOOD](GoogleChrome/lighthouse.md) | 10.00 | Feb 16, 2021 |
+| [apache/airflow](apache/airflow.md) | [20456](https://github.com/apache/airflow) | 7.07 | [GOOD](apache/airflow.md) | 10.00 | Feb 16, 2021 |
+| [google/iosched](google/iosched.md) | [20307](https://github.com/google/iosched) | 3.79 | [BAD](google/iosched.md) | 10.00 | Feb 16, 2021 |
+| [curl/curl](curl/curl.md) | [19372](https://github.com/curl/curl) | 6.10 | [GOOD](curl/curl.md) | 10.00 | Feb 16, 2021 |
+| [google/gson](google/gson.md) | [19184](https://github.com/google/gson) | 4.62 | [MODERATE](google/gson.md) | 10.00 | Feb 16, 2021 |
+| [google/python-fire](google/python-fire.md) | [18651](https://github.com/google/python-fire) | 4.44 | [MODERATE](google/python-fire.md) | 10.00 | Feb 16, 2021 |
+| [google/web-starter-kit](google/web-starter-kit.md) | [18498](https://github.com/google/web-starter-kit) | 4.71 | [MODERATE](google/web-starter-kit.md) | 10.00 | Feb 16, 2021 |
+| [apache/kafka](apache/kafka.md) | [18028](https://github.com/apache/kafka) | 5.62 | [GOOD](apache/kafka.md) | 10.00 | Feb 16, 2021 |
+| [google/ExoPlayer](google/ExoPlayer.md) | [17266](https://github.com/google/ExoPlayer) | 5.65 | [GOOD](google/ExoPlayer.md) | 10.00 | Feb 16, 2021 |
+| [google/flexbox-layout](google/flexbox-layout.md) | [16463](https://github.com/google/flexbox-layout) | 4.09 | [BAD](google/flexbox-layout.md) | 10.00 | Feb 16, 2021 |
+| [apache/skywalking](apache/skywalking.md) | [16080](https://github.com/apache/skywalking) | 5.95 | [GOOD](apache/skywalking.md) | 10.00 | Feb 16, 2021 |
+| [google/dagger](google/dagger.md) | [15837](https://github.com/google/dagger) | 5.33 | [MODERATE](google/dagger.md) | 9.88 | Feb 16, 2021 |
+| [google/flatbuffers](google/flatbuffers.md) | [15787](https://github.com/google/flatbuffers) | 6.45 | [GOOD](google/flatbuffers.md) | 10.00 | Feb 16, 2021 |
+| [apache/flink](apache/flink.md) | [15509](https://github.com/apache/flink) | 6.12 | [GOOD](apache/flink.md) | 10.00 | Feb 16, 2021 |
+| [openssl/openssl](openssl/openssl.md) | [14801](https://github.com/openssl/openssl) | 4.86 | [MODERATE](openssl/openssl.md) | 10.00 | Feb 16, 2021 |
+| [apache/rocketmq](apache/rocketmq.md) | [13518](https://github.com/apache/rocketmq) | 5.31 | [MODERATE](apache/rocketmq.md) | 10.00 | Feb 16, 2021 |
+| [apache/shardingsphere](apache/shardingsphere.md) | [13351](https://github.com/apache/shardingsphere) | 6.09 | [GOOD](apache/shardingsphere.md) | 10.00 | Feb 16, 2021 |
+| [google/deepdream](google/deepdream.md) | [12697](https://github.com/google/deepdream) | 3.79 | [BAD](google/deepdream.md) | 9.88 | Feb 16, 2021 |
+| [google/guetzli](google/guetzli.md) | [12519](https://github.com/google/guetzli) | 4.60 | [MODERATE](google/guetzli.md) | 10.00 | Feb 16, 2021 |
+| [apache/predictionio](apache/predictionio.md) | [12485](https://github.com/apache/predictionio) | 4.55 | [MODERATE](apache/predictionio.md) | 10.00 | Feb 16, 2021 |
+| [eclipse/deeplearning4j](eclipse/deeplearning4j.md) | [11957](https://github.com/eclipse/deeplearning4j) | 5.14 | [MODERATE](eclipse/deeplearning4j.md) | 10.00 | Feb 16, 2021 |
+| [google/libphonenumber](google/libphonenumber.md) | [11766](https://github.com/google/libphonenumber) | 5.32 | [MODERATE](google/libphonenumber.md) | 10.00 | Feb 16, 2021 |
+| [google/cadvisor](google/cadvisor.md) | [11741](https://github.com/google/cadvisor) | 4.74 | [MODERATE](google/cadvisor.md) | 10.00 | Feb 16, 2021 |
+| [google/jax](google/jax.md) | [11474](https://github.com/google/jax) | 5.04 | [MODERATE](google/jax.md) | 10.00 | Feb 16, 2021 |
+| [google/yapf](google/yapf.md) | [11457](https://github.com/google/yapf) | 4.38 | [MODERATE](google/yapf.md) | 10.00 | Feb 16, 2021 |
+| [apache/hadoop](apache/hadoop.md) | [11311](https://github.com/apache/hadoop) | 6.13 | [GOOD](apache/hadoop.md) | 10.00 | Feb 16, 2021 |
+| [google/tink](google/tink.md) | [11048](https://github.com/google/tink) | 5.43 | [GOOD](google/tink.md) | 10.00 | Feb 16, 2021 |
+| [google/gvisor](google/gvisor.md) | [10942](https://github.com/google/gvisor) | 6.09 | [GOOD](google/gvisor.md) | 10.00 | Feb 16, 2021 |
+| [google/mediapipe](google/mediapipe.md) | [10921](https://github.com/google/mediapipe) | 3.84 | [BAD](google/mediapipe.md) | 9.88 | Feb 16, 2021 |
+| [aws/aws-cli](aws/aws-cli.md) | [10659](https://github.com/aws/aws-cli) | 6.23 | [GOOD](aws/aws-cli.md) | 10.00 | Feb 16, 2021 |
+| [google/filament](google/filament.md) | [10553](https://github.com/google/filament) | 5.15 | [MODERATE](google/filament.md) | 10.00 | Feb 16, 2021 |
+| [apache/druid](apache/druid.md) | [10544](https://github.com/apache/druid) | 6.89 | [GOOD](apache/druid.md) | 10.00 | Feb 16, 2021 |
+| [google/grumpy](google/grumpy.md) | [10255](https://github.com/google/grumpy) | 3.87 | [BAD](google/grumpy.md) | 10.00 | Feb 16, 2021 |
+| [apache/zookeeper](apache/zookeeper.md) | [9110](https://github.com/apache/zookeeper) | 5.71 | [GOOD](apache/zookeeper.md) | 10.00 | Feb 16, 2021 |
+| [apache/thrift](apache/thrift.md) | [8097](https://github.com/apache/thrift) | 5.57 | [GOOD](apache/thrift.md) | 10.00 | Feb 16, 2021 |
+| [aws/serverless-application-model](aws/serverless-application-model.md) | [7714](https://github.com/aws/serverless-application-model) | 4.34 | [MODERATE](aws/serverless-application-model.md) | 10.00 | Feb 16, 2021 |
+| [aws/chalice](aws/chalice.md) | [7638](https://github.com/aws/chalice) | 6.07 | [GOOD](aws/chalice.md) | 10.00 | Feb 16, 2021 |
+| [apache/pulsar](apache/pulsar.md) | [7290](https://github.com/apache/pulsar) | 5.51 | [GOOD](apache/pulsar.md) | 10.00 | Feb 16, 2021 |
+| [apache/arrow](apache/arrow.md) | [7187](https://github.com/apache/arrow) | 6.21 | [GOOD](apache/arrow.md) | 10.00 | Feb 16, 2021 |
+| [apache/shardingsphere-elasticjob](apache/shardingsphere-elasticjob.md) | [6818](https://github.com/apache/shardingsphere-elasticjob) | 6.08 | [GOOD](apache/shardingsphere-elasticjob.md) | 10.00 | Feb 16, 2021 |
+| [aws/aws-sdk-go](aws/aws-sdk-go.md) | [6471](https://github.com/aws/aws-sdk-go) | 4.86 | [MODERATE](aws/aws-sdk-go.md) | 10.00 | Feb 16, 2021 |
+| [aws/aws-sdk-js](aws/aws-sdk-js.md) | [6456](https://github.com/aws/aws-sdk-js) | 5.95 | [GOOD](aws/aws-sdk-js.md) | 10.00 | Feb 16, 2021 |
+| [apache/cassandra](apache/cassandra.md) | [6445](https://github.com/apache/cassandra) | 5.16 | [MODERATE](apache/cassandra.md) | 10.00 | Feb 16, 2021 |
+| [eclipse/che](eclipse/che.md) | [6367](https://github.com/eclipse/che) | 5.71 | [GOOD](eclipse/che.md) | 10.00 | Feb 16, 2021 |
+| [FasterXML/jackson](FasterXML/jackson.md) | [6310](https://github.com/FasterXML/jackson) | 2.74 | [BAD](FasterXML/jackson.md) | 9.88 | Feb 16, 2021 |
+| [apache/tvm](apache/tvm.md) | [6292](https://github.com/apache/tvm) | 5.54 | [GOOD](apache/tvm.md) | 10.00 | Feb 16, 2021 |
+| [aws/aws-cdk](aws/aws-cdk.md) | [6233](https://github.com/aws/aws-cdk) | 5.69 | [GOOD](aws/aws-cdk.md) | 10.00 | Feb 16, 2021 |
+| [apache/storm](apache/storm.md) | [6195](https://github.com/apache/storm) | 5.28 | [MODERATE](apache/storm.md) | 10.00 | Feb 16, 2021 |
+| [spring-projects/spring-security](spring-projects/spring-security.md) | [5647](https://github.com/spring-projects/spring-security) | 5.16 | [MODERATE](spring-projects/spring-security.md) | 10.00 | Feb 16, 2021 |
+| [aws/aws-sam-cli](aws/aws-sam-cli.md) | [5415](https://github.com/aws/aws-sam-cli) | 5.83 | [GOOD](aws/aws-sam-cli.md) | 10.00 | Feb 16, 2021 |
+| [apache/tomcat](apache/tomcat.md) | [5184](https://github.com/apache/tomcat) | 5.69 | [GOOD](apache/tomcat.md) | 10.00 | Feb 16, 2021 |
+| [apache/openwhisk](apache/openwhisk.md) | [5162](https://github.com/apache/openwhisk) | 4.85 | [MODERATE](apache/openwhisk.md) | 10.00 | Feb 16, 2021 |
+| [apache/zeppelin](apache/zeppelin.md) | [5140](https://github.com/apache/zeppelin) | 5.50 | [GOOD](apache/zeppelin.md) | 10.00 | Feb 16, 2021 |
+| [aws/aws-sdk-php](aws/aws-sdk-php.md) | [5097](https://github.com/aws/aws-sdk-php) | 5.24 | [MODERATE](aws/aws-sdk-php.md) | 10.00 | Feb 16, 2021 |
+| [apache/jmeter](apache/jmeter.md) | [4986](https://github.com/apache/jmeter) | 5.55 | [GOOD](apache/jmeter.md) | 10.00 | Feb 16, 2021 |
+| [apache/dubbo-spring-boot-project](apache/dubbo-spring-boot-project.md) | [4955](https://github.com/apache/dubbo-spring-boot-project) | 4.86 | [MODERATE](apache/dubbo-spring-boot-project.md) | 10.00 | Feb 16, 2021 |
+| [spring-projects/spring-mvc-showcase](spring-projects/spring-mvc-showcase.md) | [4892](https://github.com/spring-projects/spring-mvc-showcase) | 4.58 | [MODERATE](spring-projects/spring-mvc-showcase.md) | 10.00 | Feb 16, 2021 |
+| [apache/couchdb](apache/couchdb.md) | [4820](https://github.com/apache/couchdb) | 4.38 | [MODERATE](apache/couchdb.md) | 10.00 | Feb 16, 2021 |
+| [spring-projects/spring-petclinic](spring-projects/spring-petclinic.md) | [4681](https://github.com/spring-projects/spring-petclinic) | 5.54 | [GOOD](spring-projects/spring-petclinic.md) | 10.00 | Feb 16, 2021 |
+| [apache/mesos](apache/mesos.md) | [4648](https://github.com/apache/mesos) | 4.40 | [MODERATE](apache/mesos.md) | 10.00 | Feb 16, 2021 |
+| [apache/beam](apache/beam.md) | [4574](https://github.com/apache/beam) | 5.19 | [MODERATE](apache/beam.md) | 10.00 | Feb 16, 2021 |
+| [eclipse/mosquitto](eclipse/mosquitto.md) | [4476](https://github.com/eclipse/mosquitto) | 5.57 | [GOOD](eclipse/mosquitto.md) | 10.00 | Feb 16, 2021 |
+| [apache/apisix](apache/apisix.md) | [4358](https://github.com/apache/apisix) | 6.45 | [GOOD](apache/apisix.md) | 9.88 | Feb 16, 2021 |
+| [spring-projects/spring-security-oauth](spring-projects/spring-security-oauth.md) | [4319](https://github.com/spring-projects/spring-security-oauth) | 3.50 | [BAD](spring-projects/spring-security-oauth.md) | 10.00 | Feb 16, 2021 |
+| [apache/lucene-solr](apache/lucene-solr.md) | [4071](https://github.com/apache/lucene-solr) | 4.83 | [MODERATE](apache/lucene-solr.md) | 10.00 | Feb 16, 2021 |
+| [apache/groovy](apache/groovy.md) | [4020](https://github.com/apache/groovy) | 5.36 | [GOOD](apache/groovy.md) | 10.00 | Feb 16, 2021 |
+| [apache/hbase](apache/hbase.md) | [3926](https://github.com/apache/hbase) | 5.08 | [MODERATE](apache/hbase.md) | 10.00 | Feb 16, 2021 |
+| [apache/ignite](apache/ignite.md) | [3676](https://github.com/apache/ignite) | 5.10 | [MODERATE](apache/ignite.md) | 10.00 | Feb 16, 2021 |
+| [apache/camel](apache/camel.md) | [3606](https://github.com/apache/camel) | 5.62 | [GOOD](apache/camel.md) | 10.00 | Feb 16, 2021 |
+| [apache/hive](apache/hive.md) | [3580](https://github.com/apache/hive) | 5.01 | [MODERATE](apache/hive.md) | 10.00 | Feb 16, 2021 |
+| [aws/aws-sdk-java](aws/aws-sdk-java.md) | [3477](https://github.com/aws/aws-sdk-java) | 5.03 | [MODERATE](aws/aws-sdk-java.md) | 10.00 | Feb 16, 2021 |
+| [aws/containers-roadmap](aws/containers-roadmap.md) | [3455](https://github.com/aws/containers-roadmap) | 3.43 | [BAD](aws/containers-roadmap.md) | 9.88 | Feb 16, 2021 |
+| [apache/rocketmq-externals](apache/rocketmq-externals.md) | [3426](https://github.com/apache/rocketmq-externals) | 4.78 | [MODERATE](apache/rocketmq-externals.md) | 10.00 | Feb 16, 2021 |
+| [apache/shiro](apache/shiro.md) | [3347](https://github.com/apache/shiro) | 5.20 | [MODERATE](apache/shiro.md) | 10.00 | Feb 16, 2021 |
+| [aws/aws-sdk-ruby](aws/aws-sdk-ruby.md) | [3221](https://github.com/aws/aws-sdk-ruby) | 5.01 | [MODERATE](aws/aws-sdk-ruby.md) | 10.00 | Feb 16, 2021 |
+| [apache/cordova-android](apache/cordova-android.md) | [3125](https://github.com/apache/cordova-android) | 4.54 | [MODERATE](apache/cordova-android.md) | 10.00 | Feb 16, 2021 |
+| [eclipse/jetty.project](eclipse/jetty.project.md) | [3055](https://github.com/eclipse/jetty.project) | 5.84 | [GOOD](eclipse/jetty.project.md) | 10.00 | Feb 16, 2021 |
+| [apache/dubbo-admin](apache/dubbo-admin.md) | [3042](https://github.com/apache/dubbo-admin) | 4.61 | [MODERATE](apache/dubbo-admin.md) | 10.00 | Feb 16, 2021 |
+| [apache/kylin](apache/kylin.md) | [2966](https://github.com/apache/kylin) | 4.58 | [MODERATE](apache/kylin.md) | 10.00 | Feb 16, 2021 |
+| [FasterXML/jackson-databind](FasterXML/jackson-databind.md) | [2760](https://github.com/FasterXML/jackson-databind) | 4.48 | [MODERATE](FasterXML/jackson-databind.md) | 10.00 | Feb 16, 2021 |
+| [apache/dubbo-go](apache/dubbo-go.md) | [2723](https://github.com/apache/dubbo-go) | 5.60 | [GOOD](apache/dubbo-go.md) | 9.88 | Feb 16, 2021 |
+| [apache/httpd](apache/httpd.md) | [2624](https://github.com/apache/httpd) | 4.77 | [MODERATE](apache/httpd.md) | 10.00 | Feb 16, 2021 |
+| [eclipse/openj9](eclipse/openj9.md) | [2571](https://github.com/eclipse/openj9) | 4.57 | [MODERATE](eclipse/openj9.md) | 9.88 | Feb 16, 2021 |
+| [aws/aws-lambda-go](aws/aws-lambda-go.md) | [2540](https://github.com/aws/aws-lambda-go) | 3.23 | [BAD](aws/aws-lambda-go.md) | 9.88 | Feb 16, 2021 |
+| [spring-projects/spring-loaded](spring-projects/spring-loaded.md) | [2538](https://github.com/spring-projects/spring-loaded) | 3.71 | [BAD](spring-projects/spring-loaded.md) | 10.00 | Feb 16, 2021 |
+| [apache/nifi](apache/nifi.md) | [2451](https://github.com/apache/nifi) | 6.38 | [GOOD](apache/nifi.md) | 10.00 | Feb 16, 2021 |
+| [apache/curator](apache/curator.md) | [2432](https://github.com/apache/curator) | 4.41 | [MODERATE](apache/curator.md) | 10.00 | Feb 16, 2021 |
+| [apache/maven](apache/maven.md) | [2429](https://github.com/apache/maven) | 5.84 | [GOOD](apache/maven.md) | 10.00 | Feb 16, 2021 |
+| [spring-projects/spring-data-elasticsearch](spring-projects/spring-data-elasticsearch.md) | [2379](https://github.com/spring-projects/spring-data-elasticsearch) | 5.50 | [GOOD](spring-projects/spring-data-elasticsearch.md) | 10.00 | Feb 16, 2021 |
+| [apache/calcite](apache/calcite.md) | [2314](https://github.com/apache/calcite) | 5.35 | [GOOD](apache/calcite.md) | 10.00 | Feb 16, 2021 |
+| [aws/amazon-freertos](aws/amazon-freertos.md) | [2205](https://github.com/aws/amazon-freertos) | 4.80 | [MODERATE](aws/amazon-freertos.md) | 10.00 | Feb 16, 2021 |
+| [apache/nutch](apache/nutch.md) | [2172](https://github.com/apache/nutch) | 4.04 | [BAD](apache/nutch.md) | 10.00 | Feb 16, 2021 |
+| [apache/singa](apache/singa.md) | [2171](https://github.com/apache/singa) | 4.93 | [MODERATE](apache/singa.md) | 10.00 | Feb 16, 2021 |
+| [eclipse/paho.mqtt.android](eclipse/paho.mqtt.android.md) | [2095](https://github.com/eclipse/paho.mqtt.android) | 4.23 | [MODERATE](eclipse/paho.mqtt.android.md) | 10.00 | Feb 16, 2021 |
+| [apache/flume](apache/flume.md) | [2072](https://github.com/apache/flume) | 4.26 | [MODERATE](apache/flume.md) | 10.00 | Feb 16, 2021 |
+| [apache/commons-lang](apache/commons-lang.md) | [2065](https://github.com/apache/commons-lang) | 6.22 | [GOOD](apache/commons-lang.md) | 10.00 | Feb 16, 2021 |
+| [spring-projects/spring-data-jpa](spring-projects/spring-data-jpa.md) | [2002](https://github.com/spring-projects/spring-data-jpa) | 4.84 | [MODERATE](spring-projects/spring-data-jpa.md) | 10.00 | Feb 16, 2021 |
+| [apache/cordova-ios](apache/cordova-ios.md) | [1961](https://github.com/apache/cordova-ios) | 4.27 | [MODERATE](apache/cordova-ios.md) | 10.00 | Feb 16, 2021 |
+| [FasterXML/jackson-core](FasterXML/jackson-core.md) | [1916](https://github.com/FasterXML/jackson-core) | 4.42 | [MODERATE](FasterXML/jackson-core.md) | 10.00 | Feb 16, 2021 |
+| [apache/mahout](apache/mahout.md) | [1902](https://github.com/apache/mahout) | 4.41 | [MODERATE](apache/mahout.md) | 10.00 | Feb 16, 2021 |
+| [apache/geode](apache/geode.md) | [1896](https://github.com/apache/geode) | 5.34 | [GOOD](apache/geode.md) | 10.00 | Feb 16, 2021 |
+| [apache/activemq](apache/activemq.md) | [1862](https://github.com/apache/activemq) | 4.93 | [MODERATE](apache/activemq.md) | 10.00 | Feb 16, 2021 |
+| [apache/gobblin](apache/gobblin.md) | [1853](https://github.com/apache/gobblin) | 4.50 | [MODERATE](apache/gobblin.md) | 10.00 | Feb 16, 2021 |
+| [apache/servicecomb-pack](apache/servicecomb-pack.md) | [1790](https://github.com/apache/servicecomb-pack) | 4.33 | [MODERATE](apache/servicecomb-pack.md) | 10.00 | Feb 16, 2021 |
+| [apache/avro](apache/avro.md) | [1782](https://github.com/apache/avro) | 5.14 | [MODERATE](apache/avro.md) | 10.00 | Feb 16, 2021 |
+| [aws/amazon-ecs-agent](aws/amazon-ecs-agent.md) | [1755](https://github.com/aws/amazon-ecs-agent) | 4.04 | [BAD](aws/amazon-ecs-agent.md) | 9.88 | Feb 16, 2021 |
+| [spring-projects/spring-batch](spring-projects/spring-batch.md) | [1752](https://github.com/spring-projects/spring-batch) | 5.05 | [MODERATE](spring-projects/spring-batch.md) | 10.00 | Feb 16, 2021 |
+| [apache/hudi](apache/hudi.md) | [1741](https://github.com/apache/hudi) | 5.79 | [GOOD](apache/hudi.md) | 10.00 | Feb 16, 2021 |
+| [apache/libcloud](apache/libcloud.md) | [1732](https://github.com/apache/libcloud) | 5.30 | [MODERATE](apache/libcloud.md) | 10.00 | Feb 16, 2021 |
+| [apache/servicecomb-java-chassis](apache/servicecomb-java-chassis.md) | [1671](https://github.com/apache/servicecomb-java-chassis) | 5.13 | [MODERATE](apache/servicecomb-java-chassis.md) | 10.00 | Feb 16, 2021 |
+| [eclipse/eclipse-collections](eclipse/eclipse-collections.md) | [1635](https://github.com/eclipse/eclipse-collections) | 5.03 | [MODERATE](eclipse/eclipse-collections.md) | 10.00 | Feb 16, 2021 |
+| [apache/guacamole-server](apache/guacamole-server.md) | [1603](https://github.com/apache/guacamole-server) | 4.34 | [MODERATE](apache/guacamole-server.md) | 10.00 | Feb 16, 2021 |
+| [qos-ch/slf4j](qos-ch/slf4j.md) | [1593](https://github.com/qos-ch/slf4j) | 2.88 | [BAD](qos-ch/slf4j.md) | 10.00 | Feb 16, 2021 |
+| [spring-projects/spring-session](spring-projects/spring-session.md) | [1578](https://github.com/spring-projects/spring-session) | 4.04 | [BAD](spring-projects/spring-session.md) | 10.00 | Feb 16, 2021 |
+| [aws/aws-sdk-net](aws/aws-sdk-net.md) | [1574](https://github.com/aws/aws-sdk-net) | 4.70 | [MODERATE](aws/aws-sdk-net.md) | 10.00 | Feb 16, 2021 |
+| [apache/lucenenet](apache/lucenenet.md) | [1541](https://github.com/apache/lucenenet) | 4.76 | [MODERATE](apache/lucenenet.md) | 10.00 | Feb 16, 2021 |
+| [apache/netbeans](apache/netbeans.md) | [1536](https://github.com/apache/netbeans) | 4.74 | [MODERATE](apache/netbeans.md) | 10.00 | Feb 16, 2021 |
+| [aws/amazon-ecs-cli](aws/amazon-ecs-cli.md) | [1534](https://github.com/aws/amazon-ecs-cli) | 4.42 | [MODERATE](aws/amazon-ecs-cli.md) | 10.00 | Feb 16, 2021 |
+| [eclipse/paho.mqtt.golang](eclipse/paho.mqtt.golang.md) | [1506](https://github.com/eclipse/paho.mqtt.golang) | 3.70 | [BAD](eclipse/paho.mqtt.golang.md) | 9.88 | Feb 16, 2021 |
+| [apache/drill](apache/drill.md) | [1494](https://github.com/apache/drill) | 4.90 | [MODERATE](apache/drill.md) | 10.00 | Feb 16, 2021 |
+| [apache/ambari](apache/ambari.md) | [1440](https://github.com/apache/ambari) | 3.93 | [BAD](apache/ambari.md) | 10.00 | Feb 16, 2021 |
+| [aws/lumberyard](aws/lumberyard.md) | [1426](https://github.com/aws/lumberyard) | 3.29 | [BAD](aws/lumberyard.md) | 10.00 | Feb 16, 2021 |
+| [spring-projects/spring-retry](spring-projects/spring-retry.md) | [1426](https://github.com/spring-projects/spring-retry) | 4.83 | [MODERATE](spring-projects/spring-retry.md) | 10.00 | Feb 16, 2021 |
+| [eclipse/paho.mqtt.java](eclipse/paho.mqtt.java.md) | [1412](https://github.com/eclipse/paho.mqtt.java) | 4.05 | [BAD](eclipse/paho.mqtt.java.md) | 10.00 | Feb 16, 2021 |
+| [aws/amazon-vpc-cni-k8s](aws/amazon-vpc-cni-k8s.md) | [1411](https://github.com/aws/amazon-vpc-cni-k8s) | 3.64 | [BAD](aws/amazon-vpc-cni-k8s.md) | 9.88 | Feb 16, 2021 |
+| [aws/aws-sdk-php-laravel](aws/aws-sdk-php-laravel.md) | [1365](https://github.com/aws/aws-sdk-php-laravel) | 3.75 | [BAD](aws/aws-sdk-php-laravel.md) | 9.88 | Feb 16, 2021 |
+| [apache/pdfbox](apache/pdfbox.md) | [1359](https://github.com/apache/pdfbox) | 4.72 | [MODERATE](apache/pdfbox.md) | 10.00 | Feb 16, 2021 |
+| [bcgit/bc-java](bcgit/bc-java.md) | [1356](https://github.com/bcgit/bc-java) | 3.37 | [BAD](bcgit/bc-java.md) | 10.00 | Feb 16, 2021 |
+| [apache/kudu](apache/kudu.md) | [1340](https://github.com/apache/kudu) | 4.75 | [MODERATE](apache/kudu.md) | 10.00 | Feb 16, 2021 |
+| [spring-projects/greenhouse](spring-projects/greenhouse.md) | [1316](https://github.com/spring-projects/greenhouse) | 3.98 | [BAD](spring-projects/greenhouse.md) | 9.88 | Feb 16, 2021 |
+| [aws/sagemaker-python-sdk](aws/sagemaker-python-sdk.md) | [1313](https://github.com/aws/sagemaker-python-sdk) | 4.30 | [MODERATE](aws/sagemaker-python-sdk.md) | 10.00 | Feb 16, 2021 |
+| [eclipse/paho.mqtt.python](eclipse/paho.mqtt.python.md) | [1294](https://github.com/eclipse/paho.mqtt.python) | 3.78 | [BAD](eclipse/paho.mqtt.python.md) | 10.00 | Feb 16, 2021 |
+| [apache/tinkerpop](apache/tinkerpop.md) | [1289](https://github.com/apache/tinkerpop) | 5.51 | [GOOD](apache/tinkerpop.md) | 10.00 | Feb 16, 2021 |
+| [spring-projects/spring-data-redis](spring-projects/spring-data-redis.md) | [1281](https://github.com/spring-projects/spring-data-redis) | 5.06 | [MODERATE](spring-projects/spring-data-redis.md) | 10.00 | Feb 16, 2021 |
+| [apache/parquet-mr](apache/parquet-mr.md) | [1264](https://github.com/apache/parquet-mr) | 4.66 | [MODERATE](apache/parquet-mr.md) | 10.00 | Feb 16, 2021 |
+| [apache/rocketmq-spring](apache/rocketmq-spring.md) | [1256](https://github.com/apache/rocketmq-spring) | 4.48 | [MODERATE](apache/rocketmq-spring.md) | 10.00 | Feb 16, 2021 |
+| [spring-projects/spring-kafka](spring-projects/spring-kafka.md) | [1254](https://github.com/spring-projects/spring-kafka) | 5.34 | [MODERATE](spring-projects/spring-kafka.md) | 10.00 | Feb 16, 2021 |
+| [apache/trafficserver](apache/trafficserver.md) | [1247](https://github.com/apache/trafficserver) | 4.56 | [MODERATE](apache/trafficserver.md) | 10.00 | Feb 16, 2021 |
+| [spring-projects/spring-data-mongodb](spring-projects/spring-data-mongodb.md) | [1240](https://github.com/spring-projects/spring-data-mongodb) | 5.11 | [MODERATE](spring-projects/spring-data-mongodb.md) | 10.00 | Feb 16, 2021 |
+| [aws/copilot-cli](aws/copilot-cli.md) | [1227](https://github.com/aws/copilot-cli) | 5.42 | [GOOD](aws/copilot-cli.md) | 10.00 | Feb 16, 2021 |
+| [eclipse/mraa](eclipse/mraa.md) | [1216](https://github.com/eclipse/mraa) | 3.72 | [BAD](eclipse/mraa.md) | 10.00 | Feb 16, 2021 |
+| [apache/servicecomb-service-center](apache/servicecomb-service-center.md) | [1216](https://github.com/apache/servicecomb-service-center) | 5.06 | [MODERATE](apache/servicecomb-service-center.md) | 10.00 | Feb 16, 2021 |
+| [aws/aws-sdk-cpp](aws/aws-sdk-cpp.md) | [1182](https://github.com/aws/aws-sdk-cpp) | 4.61 | [MODERATE](aws/aws-sdk-cpp.md) | 10.00 | Feb 16, 2021 |
+| [spring-projects/spring-data-book](spring-projects/spring-data-book.md) | [1168](https://github.com/spring-projects/spring-data-book) | 4.34 | [MODERATE](spring-projects/spring-data-book.md) | 10.00 | Feb 16, 2021 |
+| [apache/iceberg](apache/iceberg.md) | [1162](https://github.com/apache/iceberg) | 4.67 | [MODERATE](apache/iceberg.md) | 10.00 | Feb 16, 2021 |
+| [apache/iotdb](apache/iotdb.md) | [1150](https://github.com/apache/iotdb) | 4.80 | [MODERATE](apache/iotdb.md) | 10.00 | Feb 16, 2021 |
+| [apache/bookkeeper](apache/bookkeeper.md) | [1141](https://github.com/apache/bookkeeper) | 5.06 | [MODERATE](apache/bookkeeper.md) | 10.00 | Feb 16, 2021 |
+| [apache/carbondata](apache/carbondata.md) | [1139](https://github.com/apache/carbondata) | 4.82 | [MODERATE](apache/carbondata.md) | 10.00 | Feb 16, 2021 |
+| [apache/tika](apache/tika.md) | [1133](https://github.com/apache/tika) | 4.40 | [MODERATE](apache/tika.md) | 10.00 | Feb 16, 2021 |
+| [spring-projects/spring-integration](spring-projects/spring-integration.md) | [1132](https://github.com/spring-projects/spring-integration) | 4.81 | [MODERATE](spring-projects/spring-integration.md) | 10.00 | Feb 16, 2021 |
+| [apache/nano](apache/nano.md) | [1128](https://github.com/apache/nano) | 4.05 | [BAD](apache/nano.md) | 10.00 | Feb 16, 2021 |
+| [apache/poi](apache/poi.md) | [1120](https://github.com/apache/poi) | 4.84 | [MODERATE](apache/poi.md) | 10.00 | Feb 16, 2021 |
+| [apache/logging-log4j2](apache/logging-log4j2.md) | [1108](https://github.com/apache/logging-log4j2) | 6.12 | [GOOD](apache/logging-log4j2.md) | 10.00 | Feb 16, 2021 |
+| [aws/aws-fpga](aws/aws-fpga.md) | [1074](https://github.com/aws/aws-fpga) | 3.26 | [BAD](aws/aws-fpga.md) | 10.00 | Feb 16, 2021 |
+| [apache/struts](apache/struts.md) | [1062](https://github.com/apache/struts) | 4.85 | [MODERATE](apache/struts.md) | 9.59 | Feb 16, 2021 |
+| [aws/opsworks-cookbooks](aws/opsworks-cookbooks.md) | [1056](https://github.com/aws/opsworks-cookbooks) | 3.19 | [BAD](aws/opsworks-cookbooks.md) | 10.00 | Feb 16, 2021 |
+| [aws/aws-sdk-java-v2](aws/aws-sdk-java-v2.md) | [1041](https://github.com/aws/aws-sdk-java-v2) | 4.52 | [MODERATE](aws/aws-sdk-java-v2.md) | 10.00 | Feb 16, 2021 |
+| [aws/jsii](aws/jsii.md) | [1041](https://github.com/aws/jsii) | 5.33 | [MODERATE](aws/jsii.md) | 10.00 | Feb 16, 2021 |
+| [spring-projects/spring-statemachine](spring-projects/spring-statemachine.md) | [1040](https://github.com/spring-projects/spring-statemachine) | 4.91 | [MODERATE](spring-projects/spring-statemachine.md) | 10.00 | Feb 16, 2021 |
+| [eclipse/paho.mqtt.c](eclipse/paho.mqtt.c.md) | [1033](https://github.com/eclipse/paho.mqtt.c) | 4.07 | [BAD](eclipse/paho.mqtt.c.md) | 10.00 | Feb 16, 2021 |
+| [apache/httpcomponents-client](apache/httpcomponents-client.md) | [1021](https://github.com/apache/httpcomponents-client) | 4.11 | [BAD](apache/httpcomponents-client.md) | 10.00 | Feb 16, 2021 |
+| [apache/opennlp](apache/opennlp.md) | [1012](https://github.com/apache/opennlp) | 4.34 | [MODERATE](apache/opennlp.md) | 10.00 | Feb 16, 2021 |
+| [netty/netty-tcnative](netty/netty-tcnative.md) | [181](https://github.com/netty/netty-tcnative) | 4.26 | [MODERATE](netty/netty-tcnative.md) | 9.88 | Feb 16, 2021 |
 
