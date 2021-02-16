@@ -463,7 +463,7 @@ elements:
     feature:
       type: "BooleanFeature"
       name: "If an open-source project has a security team"
-    flag: false
+    flag: true
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
@@ -473,7 +473,7 @@ elements:
     feature:
       type: "LgtmGradeFeature"
       name: "The worst LGTM grade of a project"
-    value: "C"
+    value: "A"
   - type: "IntegerValue"
     feature:
       type: "PositiveIntegerFeature"

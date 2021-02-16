@@ -1,12 +1,12 @@
-# spring-projects/spring-integration
+# apache/gobblin
 
-https://github.com/spring-projects/spring-integration
+https://github.com/apache/gobblin
 
 Last updated on Feb 16, 2021
 
 **Rating**: **MODERATE**
 
-**Score**: **4.81**, max score value is 10.0
+**Score**: **4.5**, max score value is 10.0
 
 **Confidence**: Max (10.0, max confidence value is 10.0)
 
@@ -20,34 +20,34 @@ The rating is based on **security score for open-source projects**.
 
 It used the following sub-scores:
 
-1.  **[Security testing](#security-testing)**: **1.44** (weight is 1.0)
+1.  **[Security testing](#security-testing)**: **0.0** (weight is 1.0)
     1.  **[Dependency testing](#dependency-testing)**: **0.0** (weight is 1.0)
         1.  **[Dependabot score](#dependabot-score)**: **0.0** (weight is 1.0)
         1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
-    1.  **[Static analysis](#static-analysis)**: **3.6** (weight is 1.0)
-        1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
+    1.  **[Fuzzing](#fuzzing)**: **0.0** (weight is 1.0)
+    1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
+    1.  **[Static analysis](#static-analysis)**: **0.0** (weight is 1.0)
+        1.  **[LGTM score](#lgtm-score)**: **0.0** (weight is 1.0)
         1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
         1.  **[FindSecBugs score](#findsecbugs-score)**: **0.0** (weight is 0.5)
-    1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
-    1.  **[Memory-safety testing](#memory-safety-testing)**: **N/A** (weight is 1.0)
     1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.5)
 1.  **[Security awareness](#security-awareness)**: **3.0** (weight is 0.9)
 1.  **[Unpatched vulnerabilities](#unpatched-vulnerabilities)**: **10.0** (weight is 0.8)
 1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: **2.0** (weight is 0.6)
-    1.  **[Security testing](#security-testing)**: **1.44** (weight is 1.0)
+    1.  **[Security testing](#security-testing)**: **0.0** (weight is 1.0)
         1.  **[Dependency testing](#dependency-testing)**: **0.0** (weight is 1.0)
             1.  **[Dependabot score](#dependabot-score)**: **0.0** (weight is 1.0)
             1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
-        1.  **[Static analysis](#static-analysis)**: **3.6** (weight is 1.0)
-            1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
+        1.  **[Fuzzing](#fuzzing)**: **0.0** (weight is 1.0)
+        1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
+        1.  **[Static analysis](#static-analysis)**: **0.0** (weight is 1.0)
+            1.  **[LGTM score](#lgtm-score)**: **0.0** (weight is 1.0)
             1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
             1.  **[FindSecBugs score](#findsecbugs-score)**: **0.0** (weight is 0.5)
-        1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
-        1.  **[Memory-safety testing](#memory-safety-testing)**: **N/A** (weight is 1.0)
         1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.5)
-1.  **[Community commitment](#community-commitment)**: **8.0** (weight is 0.5)
+1.  **[Community commitment](#community-commitment)**: **7.0** (weight is 0.5)
 1.  **[Project activity](#project-activity)**: **10.0** (weight is 0.5)
-1.  **[Project popularity](#project-popularity)**: **1.51** (weight is 0.5)
+1.  **[Project popularity](#project-popularity)**: **2.43** (weight is 0.5)
 
 
 ## Sub-scores
@@ -56,7 +56,7 @@ Below are the details about all the used sub-scores.
 
 ### Security testing
 
-Score: **1.44**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **0.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -67,12 +67,12 @@ This sub-score is based on the following sub-scores:
 1.  **[Dependency testing](#dependency-testing)**: **0.0** (weight is 1.0)
     1.  **[Dependabot score](#dependabot-score)**: **0.0** (weight is 1.0)
     1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
-1.  **[Static analysis](#static-analysis)**: **3.6** (weight is 1.0)
-    1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
+1.  **[Fuzzing](#fuzzing)**: **0.0** (weight is 1.0)
+1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
+1.  **[Static analysis](#static-analysis)**: **0.0** (weight is 1.0)
+    1.  **[LGTM score](#lgtm-score)**: **0.0** (weight is 1.0)
     1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
     1.  **[FindSecBugs score](#findsecbugs-score)**: **0.0** (weight is 0.5)
-1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
-1.  **[Memory-safety testing](#memory-safety-testing)**: **N/A** (weight is 1.0)
 1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.5)
 
 
@@ -126,16 +126,16 @@ The scores checks how security testing is done and how many vulnerabilities were
 
 This sub-score is based on the following sub-score:
 
-1.  **[Security testing](#security-testing)**: **1.44** (weight is 1.0)
+1.  **[Security testing](#security-testing)**: **0.0** (weight is 1.0)
     1.  **[Dependency testing](#dependency-testing)**: **0.0** (weight is 1.0)
         1.  **[Dependabot score](#dependabot-score)**: **0.0** (weight is 1.0)
         1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
-    1.  **[Static analysis](#static-analysis)**: **3.6** (weight is 1.0)
-        1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
+    1.  **[Fuzzing](#fuzzing)**: **0.0** (weight is 1.0)
+    1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
+    1.  **[Static analysis](#static-analysis)**: **0.0** (weight is 1.0)
+        1.  **[LGTM score](#lgtm-score)**: **0.0** (weight is 1.0)
         1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
         1.  **[FindSecBugs score](#findsecbugs-score)**: **0.0** (weight is 0.5)
-    1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
-    1.  **[Memory-safety testing](#memory-safety-testing)**: **N/A** (weight is 1.0)
     1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.5)
 
 This sub-score is based on 1 feature:
@@ -144,7 +144,7 @@ This sub-score is based on 1 feature:
 
 ### Community commitment
 
-Score: **8.0**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **7.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 
 
@@ -152,9 +152,9 @@ Score: **8.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 This sub-score is based on 3 features:
 
-1.  Does it belong to Apache? **No**
+1.  Does it belong to Apache? **Yes**
 1.  Does it belong to Eclipse? **No**
-1.  Is it supported by a company? **Yes**
+1.  Is it supported by a company? **No**
 
 ### Project activity
 
@@ -162,17 +162,17 @@ Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-68 commits in the last 3 months results to 10.00 points
-4 contributors increase the score value from 10.00 to 11.00
+76 commits in the last 3 months results to 10.00 points
+7 contributors increase the score value from 10.00 to 12.00
 
 This sub-score is based on 2 features:
 
-1.  Number of commits in the last three months: **68**
-1.  Number of contributors in the last three months: **4**
+1.  Number of commits in the last three months: **76**
+1.  Number of contributors in the last three months: **7**
 
 ### Project popularity
 
-Score: **1.51**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **2.43**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score is based on number of stars and watchers.
 Here is how a number of stars contributes to the score:
@@ -184,8 +184,8 @@ Here is how a number of watchers contributes to the score:
 
 This sub-score is based on 2 features:
 
-1.  Number of stars for a GitHub repository: **1132**
-1.  Number of watchers for a GitHub repository: **114**
+1.  Number of stars for a GitHub repository: **1853**
+1.  Number of watchers for a GitHub repository: **173**
 
 ### Dependency testing
 
@@ -201,24 +201,9 @@ This sub-score is based on the following sub-scores:
 1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
 
 
-### Static analysis
-
-Score: **3.6**, confidence is 10.0 (max), weight is 1.0 (high)
-
-
-
-
-
-This sub-score is based on the following sub-scores:
-
-1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
-1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
-1.  **[FindSecBugs score](#findsecbugs-score)**: **0.0** (weight is 0.5)
-
-
 ### Fuzzing
 
-Score: **N/A**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **0.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -226,12 +211,12 @@ Score: **N/A**, confidence is 10.0 (max), weight is 1.0 (high)
 
 This sub-score is based on 2 features:
 
-1.  A set of programming languages: **JAVA, RUBY, PYTHON, JAVASCRIPT, OTHER**
+1.  A set of programming languages: **CPP, JAVA, PYTHON, JAVASCRIPT, OTHER**
 1.  Is it included to OSS-Fuzz? **No**
 
 ### Memory-safety testing
 
-Score: **N/A**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **0.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -239,10 +224,25 @@ Score: **N/A**, confidence is 10.0 (max), weight is 1.0 (high)
 
 This sub-score is based on 4 features:
 
-1.  A set of programming languages: **JAVA, RUBY, PYTHON, JAVASCRIPT, OTHER**
+1.  A set of programming languages: **CPP, JAVA, PYTHON, JAVASCRIPT, OTHER**
 1.  Does it use AddressSanitizer? **No**
 1.  Does it use MemorySanitizer? **No**
 1.  Does it use UndefinedBehaviorSanitizer? **No**
+
+### Static analysis
+
+Score: **0.0**, confidence is 10.0 (max), weight is 1.0 (high)
+
+
+
+
+
+This sub-score is based on the following sub-scores:
+
+1.  **[LGTM score](#lgtm-score)**: **0.0** (weight is 1.0)
+1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
+1.  **[FindSecBugs score](#findsecbugs-score)**: **0.0** (weight is 0.5)
+
 
 ### nohttp tool
 
@@ -268,7 +268,7 @@ Score: **0.0**, confidence is 10.0 (max), weight is 1.0 (high)
 This sub-score is based on 4 features:
 
 1.  A set of package managers: **GRADLE**
-1.  A set of programming languages: **JAVA, RUBY, PYTHON, JAVASCRIPT, OTHER**
+1.  A set of programming languages: **CPP, JAVA, PYTHON, JAVASCRIPT, OTHER**
 1.  Does it use Dependabot? **No**
 1.  Does it use GitHub as the main development platform? **Yes**
 
@@ -287,7 +287,7 @@ This sub-score is based on 2 features:
 
 ### LGTM score
 
-Score: **9.0**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **0.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -295,8 +295,8 @@ Score: **9.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 This sub-score is based on 2 features:
 
-1.  A set of programming languages: **JAVA, RUBY, PYTHON, JAVASCRIPT, OTHER**
-1.  The worst LGTM grade of the project: **A**
+1.  A set of programming languages: **CPP, JAVA, PYTHON, JAVASCRIPT, OTHER**
+1.  The worst LGTM grade of the project: **E**
 
 ### How a project uses CodeQL
 
@@ -308,7 +308,7 @@ Score: **0.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 This sub-score is based on 4 features:
 
-1.  A set of programming languages: **JAVA, RUBY, PYTHON, JAVASCRIPT, OTHER**
+1.  A set of programming languages: **CPP, JAVA, PYTHON, JAVASCRIPT, OTHER**
 1.  Does it use LGTM checks? **No**
 1.  If a project runs CodeQL checks for commits: **No**
 1.  If a project runs CodeQL scans: **No**
@@ -323,7 +323,7 @@ Score: **0.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 This sub-score is based on 2 features:
 
-1.  A set of programming languages: **JAVA, RUBY, PYTHON, JAVASCRIPT, OTHER**
+1.  A set of programming languages: **CPP, JAVA, PYTHON, JAVASCRIPT, OTHER**
 1.  Does it use FindSecBugs? **No**
 
 
@@ -341,15 +341,27 @@ This sub-score is based on 2 features:
     1.  [How to enable CodeQL checks](https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#enabling-code-scanning-using-actions)
 4.  You can fix the issues reported by LGTM for the project.
     More info:
-    1.  [List of issues on LGTM](https://lgtm.com/projects/g/spring-projects/spring-integration)
+    1.  [List of issues on LGTM](https://lgtm.com/projects/g/apache/gobblin)
 5.  You can open a pull request to add a security policy for the project.
     More info:
     1.  [About adding a security policy to a repository on GitHub](https://docs.github.com/en/free-pro-team@latest/github/managing-security-vulnerabilities/adding-a-security-policy-to-your-repository)
     2.  [An example of a security policy](https://github.com/apache/nifi/blob/main/SECURITY.md)
-    3.  [Suggest a security policy for the project](https://github.com/spring-projects/spring-integration/security/policy)
+    3.  [Suggest a security policy for the project](https://github.com/apache/gobblin/security/policy)
 6.  You can open a pull request to enable FindSecBugs for the project.
     More info:
     1.  [FindSecBugs home page](https://find-sec-bugs.github.io/)
+7.  You can open a pull request to enable AddressSanitizer for the project.
+    More info:
+    1.  [About AdddressSanitizer](https://github.com/google/sanitizers/wiki/AddressSanitizer)
+8.  You can open a pull request to enable MemorySanitizer for the project.
+    More info:
+    1.  [About AdddressSanitizer](https://github.com/google/sanitizers/wiki/MemorySanitizer)
+9.  You can open a pull request to enable UndefinedBehaviorSanitizer for the project.
+    More info:
+    1.  [About AdddressSanitizer](https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html)
+10.  You can include the project to OSS-Fuzz. Then, the project is going to be regularly fuzzed.
+    More info:
+    1.  [The OSS-Fuzz project](https://github.com/google/oss-fuzz)
 
 
 ## Known vulnerabilities
