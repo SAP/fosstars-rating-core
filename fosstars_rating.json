@@ -195,7 +195,7 @@
         }
       }
     },
-    "value" : 6.953437499999999,
+    "value" : 6.953645833333332,
     "weight" : 1.0,
     "confidence" : 9.999999999999998,
     "usedValues" : [ {
@@ -917,7 +917,7 @@
         "type" : "ProjectPopularityScore",
         "name" : "Open-source project popularity score"
       },
-      "value" : 0.053000000000000005,
+      "value" : 0.05500000000000001,
       "weight" : 0.5,
       "confidence" : 10.0,
       "usedValues" : [ {
@@ -926,7 +926,7 @@
           "type" : "PositiveIntegerFeature",
           "name" : "Number of stars for a GitHub repository"
         },
-        "number" : 23
+        "number" : 25
       }, {
         "type" : "IntegerValue",
         "feature" : {
