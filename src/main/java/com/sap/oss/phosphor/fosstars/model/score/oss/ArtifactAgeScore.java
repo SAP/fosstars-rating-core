@@ -21,14 +21,14 @@ import java.util.TreeSet;
  *   <li>{@link OssFeatures#RELEASED_ARTIFACT_VERSIONS}</li>
  * </ul>
  */
-public class ArtifactVersionAgeScore extends FeatureBasedScore {
+public class ArtifactAgeScore extends FeatureBasedScore {
 
   /**
    * Initializes a new score.
    */
-  public ArtifactVersionAgeScore() {
+  public ArtifactAgeScore() {
     // FIXME: name is only a working name and require change
-    super("Artifact versions age",
+    super("How old the artifacts are",
         OssFeatures.RELEASED_ARTIFACT_VERSIONS);
   }
 

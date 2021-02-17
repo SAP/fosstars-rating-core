@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.feature.AbstractFeature;
-import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersionValue;
-import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersions;
-import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersionsValue;
 
 /**
  * This feature contains .... TODO

@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class ArtifactMaintenanceScoreTest {
+public class ArtifactVersionScoreTest {
 
   @Test
   public void smokeTest() {
@@ -26,7 +26,7 @@ public class ArtifactMaintenanceScoreTest {
 
     assertScore(
         Score.INTERVAL,
-        new ArtifactMaintenanceScore(),
+        new ArtifactVersionScore(),
         setOf(
             RELEASED_ARTIFACT_VERSIONS.value(
                 ArtifactVersions.of(version100, version110, version120)),
@@ -42,7 +42,7 @@ public class ArtifactMaintenanceScoreTest {
         new ArtifactVersion("1.1.0", LocalDate.now().minusMonths(2));
     ArtifactVersion version120 = new ArtifactVersion("1.2.0", LocalDate.now().minusDays(7));
 
-    ArtifactMaintenanceScore score = new ArtifactMaintenanceScore();
+    ArtifactVersionScore score = new ArtifactVersionScore();
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
         ArtifactVersions.of(version100, version110, version120));
     Value<String> version = ARTIFACT_VERSION.value("2.0.0");
@@ -62,7 +62,7 @@ public class ArtifactMaintenanceScoreTest {
         new ArtifactVersion("1.1.0", LocalDate.now().minusMonths(2));
     ArtifactVersion version120 = new ArtifactVersion("1.2.0", LocalDate.now().minusDays(7));
 
-    ArtifactMaintenanceScore score = new ArtifactMaintenanceScore();
+    ArtifactVersionScore score = new ArtifactVersionScore();
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
         ArtifactVersions.of(version100, version110, version120));
     Value<String> version = ARTIFACT_VERSION.value("1.2.0");
@@ -82,7 +82,7 @@ public class ArtifactMaintenanceScoreTest {
         new ArtifactVersion("1.1.0", LocalDate.now().minusMonths(2));
     ArtifactVersion version120 = new ArtifactVersion("1.2.0", LocalDate.now().minusDays(7));
 
-    ArtifactMaintenanceScore score = new ArtifactMaintenanceScore();
+    ArtifactVersionScore score = new ArtifactVersionScore();
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
         ArtifactVersions.of(version100, version110, version120));
     Value<String> version = ARTIFACT_VERSION.value("1.1.0");
@@ -101,7 +101,7 @@ public class ArtifactMaintenanceScoreTest {
     ArtifactVersion version110 =
         new ArtifactVersion("1.1.0", LocalDate.now().minusMonths(2));
 
-    ArtifactMaintenanceScore score = new ArtifactMaintenanceScore();
+    ArtifactVersionScore score = new ArtifactVersionScore();
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
         ArtifactVersions.of(version100, version110));
     Value<String> version = ARTIFACT_VERSION.value("1.1.0");
@@ -120,7 +120,7 @@ public class ArtifactMaintenanceScoreTest {
     ArtifactVersion version110 =
         new ArtifactVersion("1.1.0", LocalDate.now().minusMonths(8));
 
-    ArtifactMaintenanceScore score = new ArtifactMaintenanceScore();
+    ArtifactVersionScore score = new ArtifactVersionScore();
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
         ArtifactVersions.of(version100, version110));
     Value<String> version = ARTIFACT_VERSION.value("1.1.0");
@@ -137,7 +137,7 @@ public class ArtifactMaintenanceScoreTest {
     ArtifactVersion version100 =
         new ArtifactVersion("1.0.0", LocalDate.now().minusMonths(14));
 
-    ArtifactMaintenanceScore score = new ArtifactMaintenanceScore();
+    ArtifactVersionScore score = new ArtifactVersionScore();
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
         ArtifactVersions.of(version100));
     Value<String> version = ARTIFACT_VERSION.value("1.0.0");
@@ -155,7 +155,7 @@ public class ArtifactMaintenanceScoreTest {
     ArtifactVersion version110 =
         new ArtifactVersion("1.1.0", LocalDate.now().minusMonths(8));
 
-    ArtifactMaintenanceScore score = new ArtifactMaintenanceScore();
+    ArtifactVersionScore score = new ArtifactVersionScore();
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
         ArtifactVersions.of(version100, version110));
     Value<String> version = ARTIFACT_VERSION.value("1.0.0");

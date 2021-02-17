@@ -1,20 +1,14 @@
 package com.sap.oss.phosphor.fosstars.model.score.oss;
 
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ARTIFACT_VERSION;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RELEASED_ARTIFACT_VERSIONS;
 import static java.time.temporal.ChronoUnit.DAYS;
 
-import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.oss.phosphor.fosstars.model.score.FeatureBasedScore;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersions;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -29,14 +23,14 @@ import java.util.TreeSet;
  *   <li>{@link OssFeatures#RELEASED_ARTIFACT_VERSIONS}</li>
  * </ul>
  */
-public class ArtifactVersionReleaseScore extends FeatureBasedScore {
+public class ArtifactReleaseHistoryScore extends FeatureBasedScore {
 
   /**
    * Initializes a new score.
    */
-  public ArtifactVersionReleaseScore() {
+  public ArtifactReleaseHistoryScore() {
     // FIXME: name is only a working name and require change
-    super("Artifact versions releases history",
+    super("How the artifact releases history is",
         OssFeatures.RELEASED_ARTIFACT_VERSIONS);
   }
 

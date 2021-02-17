@@ -20,14 +20,14 @@ import java.util.Optional;
  *   <li>{@link OssFeatures#RELEASED_ARTIFACT_VERSIONS}</li>
  * </ul>
  */
-public class ArtifactMaintenanceScore extends FeatureBasedScore {
+public class ArtifactVersionScore extends FeatureBasedScore {
 
   /**
    * Initializes a new score.
    */
-  public ArtifactMaintenanceScore() {
+  public ArtifactVersionScore() {
     // FIXME: name is only a working name and require change
-    super("Artifact specific version own maintenance expectation",
+    super("Maintenance effort score for an artifact of open-source project",
         OssFeatures.RELEASED_ARTIFACT_VERSIONS,
         ARTIFACT_VERSION);
   }

@@ -6,15 +6,15 @@ import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Label;
 import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.rating.AbstractRating;
-import com.sap.oss.phosphor.fosstars.model.score.oss.OssMaintenanceScore;
+import com.sap.oss.phosphor.fosstars.model.score.oss.OssArtifactMaintenanceScore;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import java.util.Objects;
 
 /**
- * This is a maintenance rating for open-source projects
- * that is based on a maintenance score for open-source project.
+ * This is a security rating for artifacts of an open-source project
+ * that is based on open-source artifact and project specific security score.
  */
-public class OssMaintenanceRating extends AbstractRating {
+public class OssArtifactSecurityRating extends AbstractRating {
 
   /**
    * A set of labels for the rating.
@@ -32,8 +32,8 @@ public class OssMaintenanceRating extends AbstractRating {
   /**
    * Initializes a maintenance rating with defaults.
    */
-  public OssMaintenanceRating() {
-    this(new OssMaintenanceScore(), Thresholds.DEFAULT);
+  public OssArtifactSecurityRating() {
+    this(new OssArtifactMaintenanceScore(), Thresholds.DEFAULT);
   }
 
   /**
@@ -43,8 +43,8 @@ public class OssMaintenanceRating extends AbstractRating {
    * @param thresholds Thresholds for labels.
    */
   @JsonCreator
-  public OssMaintenanceRating(
-      @JsonProperty("score") OssMaintenanceScore score,
+  public OssArtifactSecurityRating(
+      @JsonProperty("score") OssArtifactMaintenanceScore score,
       @JsonProperty("thresholds") Thresholds thresholds) {
 
     super("maintenance rating for open-source projects", score);
@@ -53,8 +53,8 @@ public class OssMaintenanceRating extends AbstractRating {
   }
 
   @Override
-  public OssMaintenanceScore score() {
-    return (OssMaintenanceScore) super.score();
+  public OssArtifactMaintenanceScore score() {
+    return (OssArtifactMaintenanceScore) super.score();
   }
 
   @Override
