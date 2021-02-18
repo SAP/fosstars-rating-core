@@ -4,7 +4,7 @@ A weight for a score defines how important the score is,
 and how much the score contributes to a rating.
 
 To produce meaningful and expected results defined by the [quality requirements](qa.md),
-an implementation of a rating has to be configured with right weights.
+rating procedures and scoring functions have to be configured with right weights.
 
 This page describes several ways how the weights can be assigned to meet the quality requirements.
 
@@ -12,17 +12,17 @@ This page describes several ways how the weights can be assigned to meet the qua
 
 Weights can be configured manually based on expert's knowledge and expertise.
 It may be relatively easy if there are not too many features, scores and test vectors.
-But the more complex a rating becomes, the harder it's to configure weights to meet the quality requirements.
+The more complex a rating becomes, the harder it's to configure weights to meet the quality requirements.
 
 ## Automated weights adjustment
 
-Let's consider an implementation of a rating as a function `calculate_rating(v, w)`
+Let's consider an implementation of a rating procedure as a function `calculate_rating(v, w)`
 that takes two parameters:
 
 *  `v` is a vector of values for features `f[i]` where `i = 1..N`.
 *  `w` is a vector of weights for scores `s[j]` where `j = 1..M`.
 
-The function `calculate_rating(v, w)` returns a rating score that is a float number in the interval `[0, 10]`.
+The function `calculate_rating(v, w)` returns a score that is a float number in the interval `[0, 10]`.
 
 A set of [test vectors](qa.md) `t[k]` defines constrains `t[k].e.a <= calculate_rating(t[k].v, w) <= t[k].e.b`
 where `k = 1..L`.
@@ -41,8 +41,8 @@ def fit_expected_interval(r, e) {
 ```
 
 Next, let's define a function `fit_test_vectors(calculate_rating, t, w)`
-that shows how well the `calculate_rating(v, w)` function produces rating values for the specified weights `w`.
-The function returns a non-negative float number. The less the number is, the better the produced ratings are.
+that shows how well the `calculate_rating(v, w)` function produces scores with the specified weights `w`.
+The function returns a non-negative float number. The less the number is, the better the produced scores are.
 
 Such a function may be defined as the following:
 
@@ -57,7 +57,7 @@ fit_test_vectors(calculate_rating, t, w) {
 ```
 
 Then, we need to find such a vector of weights `w*` that minimizes the function `fit_test_vectors(calculate_rating, t, w)`
-for the specified function `calculate_rating(v, w)` and constrains defined by the test vectors:
+with the specified function `calculate_rating(v, w)` and constrains defined by the test vectors:
 
 ```
 0 < w[j] <= 1 , where j = 1..M

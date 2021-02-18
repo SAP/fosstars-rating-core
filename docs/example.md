@@ -1,6 +1,6 @@
 # Example
 
-For demo purposes, let's define a very simple security rating for an open-source project.
+For demo purposes, let's define a very simple security rating for an open source project.
 The rating is going to contain 4 features and 2 scores.
 
 ## Features
@@ -29,11 +29,11 @@ Then, let's define which features are used by the scores:
 1.  The score `s[2]` uses the features `f[3]` and `f[4]`, in other words `F_s[2] = { f[3], f[4] }`.
 1.  The score `s[3]` uses the scores `s[1]` and `s[2]`, in other words `F_s[3] = { s[1], s[2] }`.
 
-## Score functions
+## Scoring functions
 
-Now it's time to describe the score functions.
+Now it's time to describe the scoring functions.
 
-For the security testing score, let's define a score function as the following:
+For the security testing score, let's define a scoring function as the following:
 
 ```
 score[1] = SecurityTestingScore
@@ -50,7 +50,7 @@ def SecurityTestingScoreExample(
 }
 ```
 
-For the project activity score, let's define a score function as the following:
+For the project activity score, let's define a scoring function as the following:
 
 ```
 score[2] = ProjectActivityScore
@@ -80,7 +80,7 @@ then the security testing score may be more important than the project activity 
 To address it in the rating, let's set the weight for security testing score as `w[1] = 0.7`,
 and the weight for project activity score as `w[2] = 0.3`.
 
-Then, for the overall security score, let's define a score function as the following:
+Then, for the overall security score, let's define a scoring function as the following:
 
 ```
 rating = score[3] = SecurityTestingScore

@@ -3,21 +3,21 @@
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP/fosstars-rating-core)](https://api.reuse.software/info/github.com/SAP/fosstars-rating-core)
 [![Fosstars security rating](https://raw.githubusercontent.com/SAP/fosstars-rating-core/fosstars-report/fosstars_badge.svg)](https://github.com/SAP/fosstars-rating-core/blob/fosstars-report/fosstars_report.md)
 
-# Ratings for open-source projects
+# Ratings for open source projects
 
-This is a framework for defining and calculating ratings for open-source projects.
+This is a framework for defining and calculating ratings for open source projects.
 See [docs](https://sap.github.io/fosstars-rating-core/) for more details.
 
-## Security rating for open-source projects
+## Security rating for open source projects
 
-Open-source software helps a lot, but it also may bring new security issues
+open source software helps a lot, but it also may bring new security issues
 and therefore increase security risks.
-Is it safe to use a particular open-source component?
+Is it safe to use a particular open source component?
 Sometimes answering this question is not easy.
-The security rating for open-source projects helps to answer this question.
-First, it gathers various data about an open-source project.
+The security rating for open source projects helps to answer this question.
+First, it gathers various data about an open source project.
 Then, it calculates a security rating for it.
-The rating helps to assess the security risk that comes with this open-source project.
+The rating helps to assess the security risk that comes with this open source project.
 
 More details about the security rating
 can be found in the [docs](https://sap.github.io/fosstars-rating-core/oss_security_rating.html).
@@ -47,9 +47,14 @@ Or, the project can be built and installed with the following command:
 mvn clean install
 ```
 
-## Command line tool for calculating security ratings
+## Fosstars GitHub action
 
-There is a command line tool that takes a URL to a project on GitHub,
+For projects on GitHub, there is a [GitHub action](https://github.com/SAP/fosstars-rating-core-action)
+that calculates a security rating and generates a badge.
+
+## Command-line tool for calculating security ratings
+
+There is a command-line tool that takes a URL to a project on GitHub,
 gathers data about it, and calculates a security rating.
 
 The tool can be run with commands like the following:

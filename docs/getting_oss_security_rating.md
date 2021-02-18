@@ -1,14 +1,20 @@
 # Getting the security ratings
 
-The page describes how a security rating may be calculated for an open-source project.
+The page describes how a security rating may be calculated for an open source project.
+
+## Fosstars GitHub action
+
+For projects on GitHub, there is a [GitHub action](https://github.com/SAP/fosstars-rating-core-action)
+that calculates a security rating and generates a badge.
 
 ## Command-line tool for calculating security ratings
 
-There is a command-line tool for gathering data about an open-source project and calculating
-the security rating. Currently, there is not an installer for the tool (should we create one?),
-and the tool should be built locally from the sources.
+There is a command-line tool for gathering data about an open source project and calculating
+a security rating for it. 
+Currently, there is not an [installer](https://github.com/SAP/fosstars-rating-core/issues/399) for the tool,
+and the tool has to be built locally from the source code.
 
-The following commands download the sources and build the command-line tool with Maven:
+The following commands download the source code and build the command-line tool with Maven:
 
 ```
 git clone git@github.com:SAP/fosstars-rating-core.git
@@ -16,9 +22,9 @@ cd fosstars-rating-core
 mvn package -DskipTests
 ```
 
-To calculate the security rating for an open-source project,
+To calculate a security rating for an open source project,
 the command-line tool needs a URL to its source code management system (SCM).
-Currently, the tool works best with projects what stay on GitHub.
+Currently, the tool works best with projects that stay on GitHub.
 
 ### Calculating the security rating by providing a URL to the source code
 
@@ -34,7 +40,7 @@ You can create a personal token in the
 [settings/tokens](https://github.com/settings/tokens) tab in your profile on GitHub.
 It's okay to run the tool without the token, but the result will be a bit less precise.
 
-The tool will try to gather info about the project.
+First, the tool will try to gather info about the project.
 In particular, it will try to download the source code,
 make a number of requests to GitHub and other services, fetch data from NVD and so on.
 The output is going to look like the following:
@@ -362,7 +368,8 @@ The output is going to look like the following:
 
 The tool prints out the gathered data, the structure of the overall security score, used sub-scores,
 their weights and so on. This info may be useful if one would like to understand how the tool
-calculated the rating. It may also give an idea for possible improvements that can improve the rating.
+calculated the rating. In the end, the tool print a list of possible improvement in the project
+that would positively impact the rating.
 
 If `--interactive` option is specified, the tool becomes a bit interactive,
 and may ask the user a couple of questions about the project.
@@ -371,13 +378,13 @@ and may ask the user a couple of questions about the project.
 
 The command-line tool also accepts GAV coordinates of Maven artifacts (group id, artifact id and version).
 If the coordinates are provided,
-then the tool will try to figure out which open-source project produces the artifact.
+then the tool will try to figure out which open source project produced the artifact.
 In particular, it will try to find a URL to the project's SCM.
 If the URL is found, the tool will use it to calculate the security rating.
 Otherwise, the tool exits with an error.
 
-The tool has a command-line option `--gav`, that accepts either GAV coordinates or just group id and artifact id.
-Below is an example of getting a rating for Apache Commons Text by passing its group and artifact ids:
+The tool has a command-line option `--gav` that accepts either GAV coordinates or just group id and artifact id.
+Below is an example of getting a security rating for Apache Commons Text by passing its group and artifact ids:
 
 ```
 java -jar target/fosstars-github-rating-calc.jar --token ${TOKEN} --gav org.apache.commons:commons-text --verbose
@@ -392,7 +399,7 @@ to the report, and which format should be used for the report.
 Here is an example of such a configuration file:
 
 ```
-# this is a configuration for generating a report for a number of open-source projects
+# this is a configuration for generating a report for a number of open source projects
 
 # a cache to store fetched data about the projects
 cache: .fosstars/project_rating_cache.json
@@ -460,11 +467,10 @@ The Markdown report is going to be available in `fosstars/report` directory.
 
 ## Further ideas
 
-1.  Add an installer for the command-line tool.
-1.  Add a Maven plugin that looks for dependencies in an application and calculate security ratings for them.
+1.  [Add an installer for the command-line tool.](https://github.com/SAP/fosstars-rating-core/issues/399)
+1.  [Add a Maven plugin](https://github.com/SAP/fosstars-rating-core/issues/344) that looks for dependencies in an application and calculate security ratings for them.
 1.  Add a GitHub App that looks for dependencies in a repository, calculates security ratings for them,
     and report them via GitHub issues or comments in pull requests.
-1.  Offer a GitHub action that regularly generates reports.
 
 ---
 
