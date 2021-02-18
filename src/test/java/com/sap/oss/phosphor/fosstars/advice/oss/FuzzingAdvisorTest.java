@@ -21,21 +21,21 @@ import org.junit.Test;
 public class FuzzingAdvisorTest {
 
   @Test
-  public void testAdvicesForOssFuzz() {
+  public void testAdviseForOssFuzz() {
     FuzzingAdvisor advisor = new FuzzingAdvisor(WITH_EMPTY_CONTEXT);
     GitHubProject project = new GitHubProject("org", "test");
 
-    // no advices if no rating value is set
+    // no advice if no rating value is set
     assertTrue(advisor.adviseFor(project).isEmpty());
 
     Rating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
     ValueSet values = new ValueHashSet();
 
-    // no advices for an unknown values
+    // no advice for an unknown values
     values.update(allUnknown(rating.score().allFeatures()));
     assertTrue(advisor.adviseFor(project).isEmpty());
 
-    // no advices if the project is fuzzed in OSS-Fuzz
+    // no advice if the project is fuzzed in OSS-Fuzz
     values.update(FUZZED_IN_OSS_FUZZ.value(true));
     values.update(LANGUAGES.value(Languages.of(C)));
     project.set(rating.calculate(values));
@@ -48,7 +48,7 @@ public class FuzzingAdvisorTest {
   }
 
   @Test
-  public void testAdvicesWhenFuzzingScoreIsNotApplicable() {
+  public void testAdviceWhenFuzzingScoreIsNotApplicable() {
     final FuzzingAdvisor advisor = new FuzzingAdvisor(WITH_EMPTY_CONTEXT);
     final GitHubProject project = new GitHubProject("org", "test");
 
@@ -60,7 +60,7 @@ public class FuzzingAdvisorTest {
     project.set(rating.calculate(values));
 
     // fuzzing score is not applicable for projects that use only Java
-    // therefore no advices are expected.
+    // therefore no advice are expected.
     assertTrue(advisor.adviseFor(project).isEmpty());
   }
 }

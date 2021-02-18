@@ -17,7 +17,7 @@ public class SecurityPolicyAdvisor extends AbstractOssAdvisor {
   /**
    * Create a new advisor.
    *
-   * @param contextFactory A factory that provides contexts for advices.
+   * @param contextFactory A factory that provides contexts for advice.
    */
   public SecurityPolicyAdvisor(OssAdviceContextFactory contextFactory) {
     super(OssAdviceContentYamlStorage.DEFAULT, contextFactory);

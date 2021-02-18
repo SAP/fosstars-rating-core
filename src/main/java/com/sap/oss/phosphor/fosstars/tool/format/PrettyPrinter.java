@@ -96,7 +96,7 @@ public class PrettyPrinter extends CommonFormatter {
       return StringUtils.EMPTY;
     }
 
-    return String.format("%s%n%s", print(subject.ratingValue().get()), printAdvicesFor(subject));
+    return String.format("%s%n%s", print(subject.ratingValue().get()), printAdviceFor(subject));
   }
 
   @Override
@@ -222,27 +222,27 @@ public class PrettyPrinter extends CommonFormatter {
   }
 
   /**
-   * Checks if the tool should print out advices for a calculated rating.
+   * Checks if the tool should print out advice for a calculated rating.
    *
-   * @return True if the tool should print out advices for a calculated rating, false otherwise.
+   * @return True if the tool should print out advice for a calculated rating, false otherwise.
    */
-  private boolean shouldPrintAdvices() {
+  private boolean shouldPrintAdvice() {
     return verbose;
   }
 
   /**
-   * Print out advices for a rating of a project.
+   * Print out advice for a rating of a project.
    *
    * @param subject The project.
    * @return A string to be displayed.
    */
-  private String printAdvicesFor(Subject subject) {
-    if (!shouldPrintAdvices() || !subject.ratingValue().isPresent()) {
+  private String printAdviceFor(Subject subject) {
+    if (!shouldPrintAdvice() || !subject.ratingValue().isPresent()) {
       return StringUtils.EMPTY;
     }
 
-    List<Advice> advices = advisor.adviseFor(subject);
-    if (advices.isEmpty()) {
+    List<Advice> adviceList = advisor.adviseFor(subject);
+    if (adviceList.isEmpty()) {
       return StringUtils.EMPTY;
     }
 
@@ -250,7 +250,7 @@ public class PrettyPrinter extends CommonFormatter {
 
     sb.append("Here is how the rating may be improved:\n");
     int i = 1;
-    for (Advice advice : advices) {
+    for (Advice advice : adviceList) {
       String[] text = wrap(advice.content().text());
       sb.append(String.format("%d. %s%n", i++, text[0]));
       for (int k = 1; k < text.length; k++) {

@@ -22,21 +22,21 @@ import org.junit.Test;
 public class LgtmScoreAdvisorTest {
 
   @Test
-  public void testAdvicesForLgtmGrade() {
+  public void testAdviseForLgtmGrade() {
     LgtmAdvisor advisor = new LgtmAdvisor(OssAdviceContextFactory.WITH_EMPTY_CONTEXT);
     GitHubProject project = new GitHubProject("org", "test");
 
-    // no advices if no rating value is set
+    // no advice if no rating value is set
     assertTrue(advisor.adviseFor(project).isEmpty());
 
     Rating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
     ValueSet values = new ValueHashSet();
 
-    // no advices for an unknown values
+    // no advice for an unknown values
     values.update(allUnknown(rating.score().allFeatures()));
     assertTrue(advisor.adviseFor(project).isEmpty());
 
-    // no advices if the LGTM grade is the best
+    // no advice if the LGTM grade is the best
     values.update(WORST_LGTM_GRADE.value(A_PLUS));
     project.set(rating.calculate(values));
     assertTrue(advisor.adviseFor(project).isEmpty());
@@ -44,9 +44,9 @@ public class LgtmScoreAdvisorTest {
     // expect an advice if the LGTM grade is not the best
     values.update(WORST_LGTM_GRADE.value(B));
     project.set(rating.calculate(values));
-    List<Advice> advices = advisor.adviseFor(project);
-    assertEquals(1, advices.size());
-    Advice advice = advices.get(0);
+    List<Advice> adviceList = advisor.adviseFor(project);
+    assertEquals(1, adviceList.size());
+    Advice advice = adviceList.get(0);
     assertFalse(advice.content().text().isEmpty());
     assertTrue(advice.content().links().isEmpty());
   }

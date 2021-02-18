@@ -22,21 +22,21 @@ import org.junit.Test;
 public class MemorySafetyAdvisorTest {
 
   @Test
-  public void testAdvicesForMemorySanitizers() {
+  public void testAdviseForMemorySanitizers() {
     MemorySafetyAdvisor advisor = new MemorySafetyAdvisor(WITH_EMPTY_CONTEXT);
     GitHubProject project = new GitHubProject("org", "test");
 
-    // no advices if no rating value is set
+    // no advice if no rating value is set
     assertTrue(advisor.adviseFor(project).isEmpty());
 
     Rating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
     ValueSet values = new ValueHashSet();
 
-    // no advices for an unknown values
+    // no advice for an unknown values
     values.update(allUnknown(rating.score().allFeatures()));
     assertTrue(advisor.adviseFor(project).isEmpty());
 
-    // no advices if sanitizers are enabled
+    // no advice if sanitizers are enabled
     values.update(USES_ADDRESS_SANITIZER.value(true));
     values.update(USES_MEMORY_SANITIZER.value(true));
     values.update(USES_UNDEFINED_BEHAVIOR_SANITIZER.value(true));
@@ -60,7 +60,7 @@ public class MemorySafetyAdvisorTest {
   }
 
   @Test
-  public void testAdvicesWhenMemorySafetyTestingScoreIsNotApplicable() {
+  public void testAdviseWhenMemorySafetyTestingScoreIsNotApplicable() {
     final MemorySafetyAdvisor advisor = new MemorySafetyAdvisor(WITH_EMPTY_CONTEXT);
     final GitHubProject project = new GitHubProject("org", "test");
 
@@ -74,7 +74,7 @@ public class MemorySafetyAdvisorTest {
     project.set(rating.calculate(values));
 
     // sanitizers are not applicable for projects that use only Java
-    // therefore no advices are expected.
+    // therefore no advice are expected.
     assertTrue(advisor.adviseFor(project).isEmpty());
   }
 }

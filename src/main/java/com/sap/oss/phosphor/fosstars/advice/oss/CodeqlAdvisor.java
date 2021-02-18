@@ -20,7 +20,7 @@ public class CodeqlAdvisor extends AbstractOssAdvisor {
   /**
    * Create a new advisor.
    *
-   * @param contextFactory A factory that provides contexts for advices.
+   * @param contextFactory A factory that provides contexts for advice.
    */
   public CodeqlAdvisor(OssAdviceContextFactory contextFactory) {
     super(OssAdviceContentYamlStorage.DEFAULT, contextFactory);

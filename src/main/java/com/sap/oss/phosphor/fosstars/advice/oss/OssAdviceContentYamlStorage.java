@@ -14,21 +14,21 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * The class provides advices
+ * The class provides advice
  * for {@link com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures}. It is based
  * on {@link AdviceContentYamlStorage}. The class requires a {@link OssAdviceContext} that
- * helps with creating detailed advices for open-source projects.
+ * helps with creating detailed advice for open-source projects.
  */
 public class OssAdviceContentYamlStorage {
 
   /**
-   * A path to a resource that contains the default advices.
+   * A path to a resource that contains the default advice.
    */
   private static final String RESOURCE_PATH
-      = "com/sap/oss/phosphor/fosstars/advice/oss/OssAdvices.yml";
+      = "com/sap/oss/phosphor/fosstars/advice/oss/OssAdvice.yml";
 
   /**
-   * A default instance of the storage that contains advices loaded from {@link #RESOURCE_PATH}.
+   * A default instance of the storage that contains advice loaded from {@link #RESOURCE_PATH}.
    */
   public static final OssAdviceContentYamlStorage DEFAULT;
 
@@ -37,7 +37,7 @@ public class OssAdviceContentYamlStorage {
       DEFAULT = OssAdviceContentYamlStorage.loadFromResource(
           RESOURCE_PATH, RatingRepository.INSTANCE.rating(OssSecurityRating.class));
     } catch (IOException e) {
-      throw new UncheckedIOException("Could not load advices", e);
+      throw new UncheckedIOException("Could not load advice", e);
     }
   }
 
@@ -57,23 +57,23 @@ public class OssAdviceContentYamlStorage {
   }
 
   /**
-   * Returns advices for a feature in a specified context for an open-source project.
+   * Returns advice for a feature in a specified context for an open-source project.
    *
    * @param feature The feature.
    * @param context The context.
-   * @return A list of advices.
+   * @return A list of advice.
    */
-  public List<AdviceContent> advicesFor(Feature<?> feature, OssAdviceContext context) {
-    return adviceContentYamlStorage.advicesFor(feature, context);
+  public List<AdviceContent> adviseFor(Feature<?> feature, OssAdviceContext context) {
+    return adviceContentYamlStorage.adviceFor(feature, context);
   }
 
   /**
-   * Loads advices from a resource for a specified rating.
+   * Loads advice from a resource for a specified rating.
    *
    * @param path A path to the resource.
    * @param rating The rating.
    * @return An instance of {@link OssAdviceContentYamlStorage}.
-   * @throws IOException If the advices couldn't be loaded.
+   * @throws IOException If the advice couldn't be loaded.
    */
   public static OssAdviceContentYamlStorage loadFromResource(String path, Rating rating)
       throws IOException {

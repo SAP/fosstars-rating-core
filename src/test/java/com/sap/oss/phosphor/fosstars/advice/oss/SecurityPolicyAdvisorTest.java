@@ -20,21 +20,21 @@ import org.junit.Test;
 public class SecurityPolicyAdvisorTest {
 
   @Test
-  public void testAdvicesForSecurityPolicy() {
+  public void testAdviseForSecurityPolicy() {
     SecurityPolicyAdvisor advisor = new SecurityPolicyAdvisor(WITH_EMPTY_CONTEXT);
     GitHubProject project = new GitHubProject("org", "test");
 
-    // no advices if no rating value is set
+    // no advice if no rating value is set
     assertTrue(advisor.adviseFor(project).isEmpty());
 
     Rating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
     ValueSet values = new ValueHashSet();
 
-    // no advices for an unknown values
+    // no advice for an unknown values
     values.update(allUnknown(rating.score().allFeatures()));
     assertTrue(advisor.adviseFor(project).isEmpty());
 
-    // no advices if the project has a security policy
+    // no advice if the project has a security policy
     values.update(HAS_SECURITY_POLICY.value(true));
     project.set(rating.calculate(values));
     assertTrue(advisor.adviseFor(project).isEmpty());
@@ -42,9 +42,9 @@ public class SecurityPolicyAdvisorTest {
     // expect an advice if the project doesn't have a security policy
     values.update(HAS_SECURITY_POLICY.value(false));
     project.set(rating.calculate(values));
-    List<Advice> advices = advisor.adviseFor(project);
-    assertEquals(1, advices.size());
-    Advice advice = advices.get(0);
+    List<Advice> adviceList = advisor.adviseFor(project);
+    assertEquals(1, adviceList.size());
+    Advice advice = adviceList.get(0);
     assertFalse(advice.content().text().isEmpty());
     assertFalse(advice.content().links().isEmpty());
   }

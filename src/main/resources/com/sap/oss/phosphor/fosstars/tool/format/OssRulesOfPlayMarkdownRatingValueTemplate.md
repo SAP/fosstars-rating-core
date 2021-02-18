@@ -22,7 +22,7 @@ Below are the details about all the used sub-scores.
 
 %SUB_SCORE_DETAILS%
 
-%ADVICES%
+%ADVICE%
 
 ## Known vulnerabilities
 
