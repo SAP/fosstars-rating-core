@@ -2,7 +2,7 @@
 
 ## BlackDuck OpenHub
 
-[OpenHub](https://www.openhub.net) collects data about open-source projects amd calculates a couple of security indexes:
+[OpenHub](https://www.openhub.net) collects data about open source projects amd calculates a couple of security indexes:
 
 1.  Security Confidence Index
 1.  Vulnerability Exposure Index
@@ -25,7 +25,7 @@ Here is what they say about the indexes (see the [Security Landscape section](ht
 ## OSSPal
 
 The [OSSPal project](http://osspal.org/content/welcome-osspal) allows users to provide their ratings
-for open-source projects in the following categories:
+for open source projects in the following categories:
 
 1.  Installability
 1.  Usability
@@ -51,7 +51,7 @@ Unfortunately, it doesn't look like that the project has a lot of reviews. Here 
 
 ## Core Infrastructure Initiative Best Practices Badge
 
-This project identifies best practices for open-source software and implements a badging system for those best practices.
+This project identifies best practices for open source software and implements a badging system for those best practices.
 It offers `passing`, `silver` or `gold` badges for a project.
 
 Here is what [the project page](https://github.com/coreinfrastructure/best-practices-badge) says:

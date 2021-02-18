@@ -4,7 +4,7 @@
 
 The relevance of some data which are used to built ratings should decrease over time.
 
-For example, let's say a security expert completed a security review for an open-source project.
+For example, let's say a security expert completed a security review for an open source project.
 Then, for sure, we can rely on the results during certain period of time.
 During this period of time the results of the review should affect the overall security rating the most.
 After some time the results of the review may become a bit outdated,
