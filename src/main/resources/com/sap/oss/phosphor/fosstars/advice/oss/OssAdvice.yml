@@ -44,19 +44,19 @@ If an open-source project uses AddressSanitizer:
   - advice: >
       You can open a pull request to enable AddressSanitizer for the project.
     links:
-      - name: About AdddressSanitizer
+      - name: About AddressSanitizer
         url: https://github.com/google/sanitizers/wiki/AddressSanitizer
 If an open-source project uses MemorySanitizer:
   - advice: >
       You can open a pull request to enable MemorySanitizer for the project.
     links:
-      - name: About AdddressSanitizer
+      - name: About MemorySanitizer
         url: https://github.com/google/sanitizers/wiki/MemorySanitizer
 If an open-source project uses UndefinedBehaviorSanitizer:
   - advice: >
       You can open a pull request to enable UndefinedBehaviorSanitizer for the project.
     links:
-      - name: About AdddressSanitizer
+      - name: About UndefinedBehaviorSanitizer
         url: https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html
 If an open-source project is included to OSS-Fuzz project:
   - advice: >
