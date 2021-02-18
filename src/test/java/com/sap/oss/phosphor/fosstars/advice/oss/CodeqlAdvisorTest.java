@@ -19,21 +19,21 @@ import org.junit.Test;
 public class CodeqlAdvisorTest {
 
   @Test
-  public void testAdvicesForCodeQl() {
+  public void testAdviseForCodeQl() {
     CodeqlAdvisor advisor = new CodeqlAdvisor(OssAdviceContextFactory.WITH_EMPTY_CONTEXT);
     GitHubProject project = new GitHubProject("org", "test");
 
-    // no advices if no rating value is set
+    // no advice if no rating value is set
     assertTrue(advisor.adviseFor(project).isEmpty());
 
     Rating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
     ValueSet values = new ValueHashSet();
 
-    // no advices for an unknown values
+    // no advice for an unknown values
     values.update(allUnknown(rating.score().allFeatures()));
     assertTrue(advisor.adviseFor(project).isEmpty());
 
-    // no advices if the LGTM checks are enabled
+    // no advice if the LGTM checks are enabled
     values.update(USES_LGTM_CHECKS.value(true));
     project.set(rating.calculate(values));
     assertTrue(advisor.adviseFor(project).isEmpty());

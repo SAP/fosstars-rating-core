@@ -71,7 +71,7 @@ In the verbose mode, the tool is going to print out the following:
 *  Data that was used for calculating a security rating
 *  Sub-scores that describes particular security aspects
 *  Overall score and label
-*  A number of advices on how the rating may be improved.
+*  Advice on how the rating may be improved.
 
 Here is what the output looks like:
 

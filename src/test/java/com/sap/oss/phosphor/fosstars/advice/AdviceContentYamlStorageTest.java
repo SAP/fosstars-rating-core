@@ -27,22 +27,22 @@ public class AdviceContentYamlStorageTest {
         "com/sap/oss/phosphor/fosstars/advice/AdviceContentStorageTest.yml",
         RatingRepository.INSTANCE.rating(SecurityRatingExample.class));
 
-    List<AdviceContent> advices = storage.advicesFor(
+    List<AdviceContent> advice = storage.adviceFor(
         SECURITY_REVIEW_DONE_EXAMPLE, OssAdviceContext.EMPTY_ADVICE_CONTEXT);
 
-    assertEquals(2, advices.size());
+    assertEquals(2, advice.size());
     for (int i = 0; i < 2; i++) {
-      assertFalse(advices.get(i).text().isEmpty());
-      assertFalse(advices.get(0).links().isEmpty());
+      assertFalse(advice.get(i).text().isEmpty());
+      assertFalse(advice.get(0).links().isEmpty());
     }
 
-    advices = storage.advicesFor(STATIC_CODE_ANALYSIS_DONE_EXAMPLE, EMPTY_OSS_CONTEXT);
-    assertEquals(1, advices.size());
-    assertFalse(advices.get(0).text().isEmpty());
-    assertFalse(advices.get(0).links().isEmpty());
+    advice = storage.adviceFor(STATIC_CODE_ANALYSIS_DONE_EXAMPLE, EMPTY_OSS_CONTEXT);
+    assertEquals(1, advice.size());
+    assertFalse(advice.get(0).text().isEmpty());
+    assertFalse(advice.get(0).links().isEmpty());
 
-    advices = storage.advicesFor(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, EMPTY_OSS_CONTEXT);
-    assertTrue(advices.isEmpty());
+    advice = storage.adviceFor(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, EMPTY_OSS_CONTEXT);
+    assertTrue(advice.isEmpty());
   }
 
   @Test

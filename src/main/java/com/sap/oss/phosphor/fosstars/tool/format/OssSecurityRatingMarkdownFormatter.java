@@ -51,7 +51,7 @@ public class OssSecurityRatingMarkdownFormatter extends CommonFormatter {
   /**
    * Print out an empty string if no advice is available for a rating.
    */
-  private static final String NO_ADVICES = StringUtils.EMPTY;
+  private static final String NO_ADVICE = StringUtils.EMPTY;
 
   /**
    * An advisor for calculated ratings.
@@ -73,22 +73,22 @@ public class OssSecurityRatingMarkdownFormatter extends CommonFormatter {
       return StringUtils.EMPTY;
     }
 
-    return print(subject.ratingValue().get(), advicesFor(subject));
+    return print(subject.ratingValue().get(), adviseFor(subject));
   }
 
   @Override
   public String print(RatingValue ratingValue) {
-    return print(ratingValue, NO_ADVICES);
+    return print(ratingValue, NO_ADVICE);
   }
 
   /**
-   * Print a rating value and advices.
+   * Print a rating value and advice.
    *
    * @param ratingValue The rating value.
-   * @param advices The advices.
+   * @param advice The advice.
    * @return A string to be displayed.
    */
-  private String print(RatingValue ratingValue, String advices) {
+  private String print(RatingValue ratingValue, String advice) {
     Objects.requireNonNull(ratingValue, "Hey! Rating can't be null!");
 
     ScoreValue scoreValue = ratingValue.scoreValue();
@@ -104,7 +104,7 @@ public class OssSecurityRatingMarkdownFormatter extends CommonFormatter {
         .replace("%MAIN_SCORE_DESCRIPTION%", scoreValue.score().description())
         .replace("%MAIN_SCORE_EXPLANATION%", explanationOf(scoreValue))
         .replace("%SUB_SCORE_DETAILS%", descriptionOfSubScoresIn(scoreValue))
-        .replace("%ADVICES%", advices)
+        .replace("%ADVICE%", advice)
         .replace("%INFO_ABOUT_VULNERABILITIES%", infoAboutVulnerabilitiesIn(scoreValue));
   }
 
@@ -172,21 +172,21 @@ public class OssSecurityRatingMarkdownFormatter extends CommonFormatter {
   }
 
   /**
-   * Print out advices for a subject.
+   * Print out advice for a subject.
    *
    * @param subject The subject.
-   * @return Advices to be displayed.
+   * @return Advice to be displayed.
    */
-  private String advicesFor(Subject subject) {
-    List<Advice> advices = advisor.adviseFor(subject);
-    if (advices.isEmpty()) {
+  private String adviseFor(Subject subject) {
+    List<Advice> adviceList = advisor.adviseFor(subject);
+    if (adviceList.isEmpty()) {
       return StringUtils.EMPTY;
     }
 
     StringBuilder sb = new StringBuilder();
     sb.append("## How to improve the rating\n\n");
     int i = 1;
-    for (Advice advice : advices) {
+    for (Advice advice : adviceList) {
       sb.append(String.format("%d.  %s", i++, advice.content().text()));
       if (!advice.content().links().isEmpty()) {
         sb.append("\n    More info:").append("\n");

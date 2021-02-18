@@ -26,14 +26,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * <p>The class provides advices for features. In other words, it maps a feature to a list of
+ * <p>The class provides advice for features. In other words, it maps a feature to a list of
  * {@link AdviceContent}.</p>
  *
- * <p>The storage stores advices in YAML.</p>
+ * <p>The storage stores advice in YAML.</p>
  *
- * <p>Advices in a storage may be generic meaning that they don't contain
+ * <p>Advice in a storage may be generic meaning that they don't contain
  * details that are specific for a particular {@link com.sap.oss.phosphor.fosstars.model.Subject}.
- * To make advices more concrete, the storage takes an {@link AdviceContent} that provides details
+ * To make advice more concrete, the storage takes an {@link AdviceContent} that provides details
  * about a specific subject.</p>
  */
 public class AdviceContentYamlStorage {
@@ -50,14 +50,14 @@ public class AdviceContentYamlStorage {
       = new TypeReference<Map<String, List<RawAdviceContent>>>() {};
 
   /**
-   * Maps a feature to a list of raw advices.
+   * Maps a feature to a list of raw advice.
    */
   private final Map<Feature<?>, List<RawAdviceContent>> featureToContent;
 
   /**
    * Initializes a new advice storage.
    *
-   * @param featureToContent Advices mapped to features.
+   * @param featureToContent Advice mapped to features.
    */
   protected AdviceContentYamlStorage(Map<Feature<?>, List<RawAdviceContent>> featureToContent) {
     Objects.requireNonNull(featureToContent, "Oh no! Content is null!");
@@ -65,13 +65,13 @@ public class AdviceContentYamlStorage {
   }
 
   /**
-   * Returns advices for a feature in a specified context.
+   * Returns advice for a feature in a specified context.
    *
    * @param feature The feature.
    * @param context The context.
-   * @return A list of advices.
+   * @return A list of advice.
    */
-  public List<AdviceContent> advicesFor(Feature<?> feature, AdviceContext context) {
+  public List<AdviceContent> adviceFor(Feature<?> feature, AdviceContext context) {
     return featureToContent.getOrDefault(feature, Collections.emptyList())
         .stream()
         .map(rawAdvice -> rawAdvice.transformFor(feature, context))
@@ -79,12 +79,12 @@ public class AdviceContentYamlStorage {
   }
 
   /**
-   * Loads advices from a resource for a specified rating.
+   * Loads advice from a resource for a specified rating.
    *
    * @param path A path to the resource.
    * @param rating The rating.
    * @return An instance of {@link AdviceContentYamlStorage}.
-   * @throws IOException If the advices couldn't be loaded.
+   * @throws IOException If the advice couldn't be loaded.
    */
   public static AdviceContentYamlStorage loadFromResource(String path, Rating rating)
       throws IOException {

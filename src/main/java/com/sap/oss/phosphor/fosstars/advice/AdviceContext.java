@@ -3,7 +3,7 @@ package com.sap.oss.phosphor.fosstars.advice;
 import java.util.Optional;
 
 /**
- * A context for making advices more detailed for a specific subject.
+ * A context for making advice more detailed for a specific subject.
  */
 public interface AdviceContext {
 

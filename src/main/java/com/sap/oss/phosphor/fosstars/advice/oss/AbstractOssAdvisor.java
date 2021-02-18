@@ -20,26 +20,26 @@ import java.util.stream.Collectors;
 
 /**
  * A base class for advisors for ratings for open-source projects.
- * It gets advices for a feature from an {@link OssAdviceContentYamlStorage}
- * and decides if the advices are applicable for specific feature values.
+ * It gets advice for a feature from an {@link OssAdviceContentYamlStorage}
+ * and decides if the advice are applicable for specific feature values.
  */
 public abstract class AbstractOssAdvisor implements Advisor {
 
   /**
-   * A storage with advices for open-source projects.
+   * A storage with advice for open-source projects.
    */
   protected final OssAdviceContentYamlStorage adviceStorage;
 
   /**
-   * A factory that provides contexts for advices.
+   * A factory that provides contexts for advice.
    */
   protected final OssAdviceContextFactory contextFactory;
 
   /**
    * Creates a new instance.
    *
-   * @param adviceStorage A storage with advices for open-source projects.
-   * @param contextFactory A factory that provides contexts for advices.
+   * @param adviceStorage A storage with advice for open-source projects.
+   * @param contextFactory A factory that provides contexts for advice.
    */
   protected AbstractOssAdvisor(
       OssAdviceContentYamlStorage adviceStorage, OssAdviceContextFactory contextFactory) {
@@ -64,31 +64,31 @@ public abstract class AbstractOssAdvisor implements Advisor {
   }
 
   /**
-   * Returns a list of advices for a subject.
+   * Returns a list of advice for a subject.
    *
    * @param subject The subject.
    * @param usedValues A list of value that were used to calculate a rating for the subject.
    * @param context An advice context.
-   * @return A list of advices.
+   * @return A list of advice.
    */
   protected abstract List<Advice> adviseFor(
       Subject subject, List<Value<?>> usedValues, OssAdviceContext context);
 
   /**
-   * Returns advices for a boolean feature from a list of values.
+   * Returns advice for a boolean feature from a list of values.
    *
    * @param values The values.
    * @param feature The feature.
-   * @param subject The subject for advices.
-   * @param context A context for advices.
-   * @return A list of advices.
+   * @param subject The subject for advice.
+   * @param context A context for advice.
+   * @return A list of advice.
    */
   protected List<Advice> adviseForBooleanFeature(
       List<Value<?>> values, Feature<Boolean> feature, Subject subject, OssAdviceContext context) {
 
     return findValue(values, feature)
         .filter(AbstractOssAdvisor::knownFalseValue)
-        .map(value -> adviceStorage.advicesFor(value.feature(), context)
+        .map(value -> adviceStorage.adviseFor(value.feature(), context)
             .stream()
             .map(content -> new SimpleAdvice(subject, value, content))
             .map(Advice.class::cast)

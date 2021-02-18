@@ -22,7 +22,7 @@ public class LgtmAdvisor extends AbstractOssAdvisor {
   /**
    * Create a new advisor.
    *
-   * @param contextFactory A factory that provides contexts for advices.
+   * @param contextFactory A factory that provides contexts for advice.
    */
   public LgtmAdvisor(OssAdviceContextFactory contextFactory) {
     super(OssAdviceContentYamlStorage.DEFAULT, contextFactory);
@@ -35,7 +35,7 @@ public class LgtmAdvisor extends AbstractOssAdvisor {
     return findValue(usedValues, WORST_LGTM_GRADE)
         .filter(LgtmAdvisor::isKnown)
         .filter(LgtmAdvisor::notTheBest)
-        .map(value -> adviceStorage.advicesFor(value.feature(), context)
+        .map(value -> adviceStorage.adviseFor(value.feature(), context)
             .stream()
             .map(content -> new SimpleAdvice(subject, value, content))
             .map(Advice.class::cast)
