@@ -153,6 +153,9 @@ public class PackageManagers implements Iterable<PackageManager> {
 
   @Override
   public String toString() {
+    if (packageManagers.isEmpty()) {
+      return "None";
+    }
     return packageManagers.stream().map(Enum::toString).collect(Collectors.joining(", "));
   }
 

@@ -126,6 +126,9 @@ public class Languages implements Iterable<Language> {
 
   @Override
   public String toString() {
+    if (elements.isEmpty()) {
+      return "None";
+    }
     return elements.stream().map(Enum::toString).collect(Collectors.joining(", "));
   }
 
