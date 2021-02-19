@@ -158,7 +158,7 @@ public abstract class CommonFormatter implements Formatter {
    * @param feature The feature.
    * @return A name of the feature.
    */
-  static String nameOf(Feature<?> feature) {
+  public static String nameOf(Feature<?> feature) {
     for (Map.Entry<Class<? extends Feature<?>>, String> entry : FEATURE_CLASS_TO_NAME.entrySet()) {
       if (feature.getClass() == entry.getKey()) {
         return entry.getValue();
