@@ -64,4 +64,9 @@ public enum LgtmGrade {
 
     throw new IllegalArgumentException(String.format("Unknown value: %s", string));
   }
+
+  @Override
+  public String toString() {
+    return grade;
+  }
 }

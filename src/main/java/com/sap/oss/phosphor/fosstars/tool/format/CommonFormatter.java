@@ -108,6 +108,11 @@ public abstract class CommonFormatter implements Formatter {
     FEATURE_TO_NAME.put(OssFeatures.USES_REUSE, "Does the project use Reuse?");
     FEATURE_TO_NAME.put(OssFeatures.HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT,
         "Does the project have open pull requests from Dependabot?");
+    FEATURE_TO_NAME.put(OssFeatures.PACKAGE_MANAGERS, "Package managers");
+    FEATURE_TO_NAME.put(OssFeatures.LANGUAGES, "Programming languages");
+    FEATURE_TO_NAME.put(OssFeatures.RUNS_CODEQL_SCANS, "Does it run CodeQL scans?");
+    FEATURE_TO_NAME.put(OssFeatures.USES_CODEQL_CHECKS,
+        "Does it use CodeQL checks for pull requests?");
   }
 
   /**
