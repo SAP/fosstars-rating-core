@@ -17,7 +17,7 @@ and the tool has to be built locally from the source code.
 The following commands download the source code and build the command-line tool with Maven:
 
 ```
-git clone git@github.com:SAP/fosstars-rating-core.git
+git clone https://github.com/SAP/fosstars-rating-core.git
 cd fosstars-rating-core
 mvn package -DskipTests
 ```
