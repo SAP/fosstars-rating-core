@@ -1,16 +1,23 @@
 package com.sap.oss.phosphor.fosstars.data.github;
 
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_DEPENDABOT;
+import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 
 import com.sap.oss.phosphor.fosstars.model.Feature;
-import com.sap.oss.phosphor.fosstars.model.Value;
+import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
+import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
 import java.util.Optional;
+import java.util.Set;
+import org.kohsuke.github.GHIssueState;
+import org.kohsuke.github.GHPullRequest;
+import org.kohsuke.github.GHUser;
 
 /**
  * <p>This data provider checks if an open-source project on GitHub
@@ -21,7 +28,7 @@ import java.util.Optional;
  * Next, the provider searches for commits from Dependabot in the commit history.
  * If the commits are found, then the provider also reports that the project uses Dependabot.</p>
  */
-public class UsesDependabot extends CachedSingleFeatureGitHubDataProvider<Boolean> {
+public class UsesDependabot extends GitHubCachingDataProvider {
 
   /**
    * A list of locations of a Dependabot configuration file in a repository.
@@ -59,14 +66,19 @@ public class UsesDependabot extends CachedSingleFeatureGitHubDataProvider<Boolea
   }
 
   @Override
-  protected Feature<Boolean> supportedFeature() {
-    return USES_DEPENDABOT;
+  protected Set<Feature<?>> supportedFeatures() {
+    return setOf(USES_DEPENDABOT, HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT);
   }
 
   @Override
-  protected Value<Boolean> fetchValueFor(GitHubProject project) throws IOException {
-    logger.info("Checking if the project uses Dependabot ...");
-    return usesDependabot(project);
+  protected ValueSet fetchValuesFor(GitHubProject project) throws IOException {
+    logger.info("Checking how the project uses Dependabot ...");
+
+    LocalRepository repository = GitHubDataFetcher.localRepositoryFor(project);
+
+    return ValueHashSet.from(
+        USES_DEPENDABOT.value(hasDependabotConfig(repository) || hasDependabotCommits(repository)),
+        HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT.value(hasOpenPullRequestFromDependabot(project)));
   }
 
   /**
@@ -109,15 +121,32 @@ public class UsesDependabot extends CachedSingleFeatureGitHubDataProvider<Boolea
   }
 
   /**
-   * Checks if a project uses Dependabot.
+   * Checks whether a project has open pull requests from Dependabot.
    *
-   * @return A value for the {@link OssFeatures#USES_DEPENDABOT} feature.
+   * @param project The project.
+   * @return True if the project has open pull requests form Dependabot.
+   * @throws IOException If something went wrong.
    */
-  private Value<Boolean> usesDependabot(GitHubProject project) throws IOException {
-    LocalRepository repository = GitHubDataFetcher.localRepositoryFor(project);
-    return USES_DEPENDABOT.value(
-        hasDependabotConfig(repository)
-            || hasDependabotCommits(repository));
+  private boolean hasOpenPullRequestFromDependabot(GitHubProject project) throws IOException {
+    return fetcher.repositoryFor(project).getPullRequests(GHIssueState.OPEN).stream()
+        .anyMatch(this::createdByDependabot);
+  }
+
+  /**
+   * Checks if a pull request was created by Dependabot.
+   *
+   * @param pullRequest The pull request.
+   * @return True if the user looks like Dependabot, false otherwise.
+   */
+  private boolean createdByDependabot(GHPullRequest pullRequest) {
+    try {
+      GHUser user = pullRequest.getUser();
+      return user.getName().toLowerCase().contains(DEPENDABOT_PATTERN)
+          || user.getLogin().toLowerCase().contains(DEPENDABOT_PATTERN);
+    } catch (IOException e) {
+      logger.warn("Oops! Could not fetch name or login!", e);
+      return false;
+    }
   }
 
   /**

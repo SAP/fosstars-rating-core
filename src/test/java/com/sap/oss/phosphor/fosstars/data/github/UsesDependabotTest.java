@@ -1,6 +1,7 @@
 package com.sap.oss.phosphor.fosstars.data.github;
 
 import static com.sap.oss.phosphor.fosstars.data.github.TestGitHubDataFetcherHolder.TestGitHubDataFetcher.addForTesting;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_DEPENDABOT;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -8,6 +9,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
@@ -16,13 +18,19 @@ import com.sap.oss.phosphor.fosstars.tool.github.GitHubProjectValueCache;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
+import org.kohsuke.github.GHPullRequest;
+import org.kohsuke.github.GHRepository;
+import org.kohsuke.github.GHUser;
 
 public class UsesDependabotTest extends TestGitHubDataFetcherHolder {
+
+  private static final GitHubProject PROJECT = new GitHubProject("org", "test");
 
   @Test
   public void testWithDependabotInAuthorName() throws IOException {
@@ -42,11 +50,13 @@ public class UsesDependabotTest extends TestGitHubDataFetcherHolder {
 
     LocalRepository repository = mock(LocalRepository.class);
     when(repository.commitsAfter(any())).thenReturn(commits);
+    addForTesting(PROJECT, repository);
 
-    GitHubProject project = new GitHubProject("org", "test");
-    addForTesting(project, repository);
+    GHRepository githubRepository = mock(GHRepository.class);
+    when(fetcher.github().getRepository(any())).thenReturn(githubRepository);
 
-    testProvider(true, project);
+    testProvider(
+        USES_DEPENDABOT.value(true), HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT.value(false));
   }
 
   @Test
@@ -69,11 +79,13 @@ public class UsesDependabotTest extends TestGitHubDataFetcherHolder {
 
     LocalRepository repository = mock(LocalRepository.class);
     when(repository.commitsAfter(any())).thenReturn(commits);
+    addForTesting(PROJECT, repository);
 
-    GitHubProject project = new GitHubProject("org", "test");
-    addForTesting(project, repository);
+    GHRepository githubRepository = mock(GHRepository.class);
+    when(fetcher.github().getRepository(any())).thenReturn(githubRepository);
 
-    testProvider(true, project);
+    testProvider(
+        USES_DEPENDABOT.value(true), HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT.value(false));
   }
 
   @Test
@@ -95,11 +107,13 @@ public class UsesDependabotTest extends TestGitHubDataFetcherHolder {
 
     LocalRepository repository = mock(LocalRepository.class);
     when(repository.commitsAfter(any())).thenReturn(commits);
+    addForTesting(PROJECT, repository);
 
-    GitHubProject project = new GitHubProject("org", "test");
-    addForTesting(project, repository);
+    GHRepository githubRepository = mock(GHRepository.class);
+    when(fetcher.github().getRepository(any())).thenReturn(githubRepository);
 
-    testProvider(true, project);
+    testProvider(
+        USES_DEPENDABOT.value(true), HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT.value(false));
   }
 
   @Test
@@ -107,11 +121,13 @@ public class UsesDependabotTest extends TestGitHubDataFetcherHolder {
     final LocalRepository repository = mock(LocalRepository.class);
     when(repository.file(".dependabot/config.yml"))
         .thenReturn(Optional.of(StringUtils.repeat("x", 1000)));
+    addForTesting(PROJECT, repository);
 
-    GitHubProject project = new GitHubProject("org", "test");
-    addForTesting(project, repository);
+    GHRepository githubRepository = mock(GHRepository.class);
+    when(fetcher.github().getRepository(any())).thenReturn(githubRepository);
 
-    testProvider(true, project);
+    testProvider(
+        USES_DEPENDABOT.value(true), HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT.value(false));
   }
 
   @Test
@@ -119,11 +135,13 @@ public class UsesDependabotTest extends TestGitHubDataFetcherHolder {
     final LocalRepository repository = mock(LocalRepository.class);
     when(repository.file(".github/dependabot.yml"))
         .thenReturn(Optional.of(StringUtils.repeat("x", 1000)));
+    addForTesting(PROJECT, repository);
 
-    GitHubProject project = new GitHubProject("org", "test");
-    addForTesting(project, repository);
+    GHRepository githubRepository = mock(GHRepository.class);
+    when(fetcher.github().getRepository(any())).thenReturn(githubRepository);
 
-    testProvider(true, project);
+    testProvider(
+        USES_DEPENDABOT.value(true), HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT.value(false));
   }
 
   @Test
@@ -147,26 +165,50 @@ public class UsesDependabotTest extends TestGitHubDataFetcherHolder {
     LocalRepository repository = mock(LocalRepository.class);
     when(repository.file(".dependabot/config.yml")).thenReturn(Optional.empty());
     when(repository.commitsAfter(any())).thenReturn(commits);
+    addForTesting(PROJECT, repository);
 
-    GitHubProject project = new GitHubProject("org", "test");
-    addForTesting(project, repository);
+    GHRepository githubRepository = mock(GHRepository.class);
+    when(fetcher.github().getRepository(any())).thenReturn(githubRepository);
 
-    testProvider(false, project);
+    testProvider(
+        USES_DEPENDABOT.value(false), HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT.value(false));
+  }
+
+  @Test
+  public void testWithOpenPullRequestFromDependabot() throws IOException {
+    final LocalRepository repository = mock(LocalRepository.class);
+    when(repository.file(".github/dependabot.yml"))
+        .thenReturn(Optional.of(StringUtils.repeat("x", 1000)));
+    addForTesting(PROJECT, repository);
+
+    GHRepository githubRepository = mock(GHRepository.class);
+    when(fetcher.github().getRepository(any())).thenReturn(githubRepository);
+    GHPullRequest pullRequest = mock(GHPullRequest.class);
+    GHUser user = mock(GHUser.class);
+    when(user.getName()).thenReturn("dependabot");
+    when(pullRequest.getUser()).thenReturn(user);
+    when(githubRepository.getPullRequests(any()))
+        .thenReturn(Collections.singletonList(pullRequest));
+
+    testProvider(
+        USES_DEPENDABOT.value(true), HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT.value(true));
   }
   
-  private void testProvider(boolean expected, GitHubProject project) throws IOException {
+  private void testProvider(Value<Boolean>... expectedValues) throws IOException {
     UsesDependabot provider = new UsesDependabot(fetcher);
     provider.set(new GitHubProjectValueCache());
 
     ValueSet values = new ValueHashSet();
     assertEquals(0, values.size());
 
-    provider.update(project, values);
-    assertEquals(1, values.size());
-    assertTrue(values.has(USES_DEPENDABOT));
-    Optional<Value<Boolean>> something = values.of(USES_DEPENDABOT);
-    assertTrue(something.isPresent());
-    Value<Boolean> numberOfContributors = something.get();
-    assertEquals(expected, numberOfContributors.get());
+    provider.update(PROJECT, values);
+    assertEquals(expectedValues.length, values.size());
+    for (Value<Boolean> expectedValue : expectedValues) {
+      Feature<Boolean> feature = expectedValue.feature();
+      assertTrue(values.has(feature));
+      Optional<Value<Boolean>> actualValue = values.of(feature);
+      assertTrue(actualValue.isPresent());
+      assertEquals(expectedValue, actualValue.get());
+    }
   }
 }
