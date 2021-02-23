@@ -143,6 +143,15 @@ public class OssFeatures {
       = new BooleanFeature("If a project uses Dependabot");
 
   /**
+   * Shows if an open source project has open pull requests from Dependabot which means that
+   * there are dependencies with known vulnerabilities.
+   *
+   * @see <a href="https://dependabot.com/">Dependabot</a>
+   */
+  public static final BooleanFeature HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT
+      = new BooleanFeature("If a project has open pull requests from Dependabot");
+
+  /**
    * Shows how many GitHub users starred an open-source project.
    */
   public static final Feature<Integer> NUMBER_OF_GITHUB_STARS
@@ -278,4 +287,12 @@ public class OssFeatures {
    */
   public static final BooleanFeature USES_OWASP_JAVA_ENCODER
       = new BooleanFeature("If a project uses OWASP Java Encoder");
+
+  /**
+   * Shows if an open source project uses Reuse tool.
+   *
+   * @see <a href="https://reuse.software/">Reuse Software</a>
+   */
+  public static final BooleanFeature USE_REUSE
+      = new BooleanFeature("If a project uses Reuse tool");
 }
