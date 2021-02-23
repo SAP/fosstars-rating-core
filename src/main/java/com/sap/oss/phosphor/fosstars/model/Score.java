@@ -17,6 +17,7 @@ import com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore;
+import com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.OssSecurityScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.OwaspDependencyScanScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.ProjectActivityScore;
@@ -64,7 +65,8 @@ import java.util.Set;
     @JsonSubTypes.Type(value = StaticAnalysisScore.class),
     @JsonSubTypes.Type(value = DependabotScore.class),
     @JsonSubTypes.Type(value = OwaspDependencyScanScore.class),
-    @JsonSubTypes.Type(value = VulnerabilityDiscoveryAndSecurityTestingScore.class)
+    @JsonSubTypes.Type(value = VulnerabilityDiscoveryAndSecurityTestingScore.class),
+    @JsonSubTypes.Type(value = OssRulesOfPlayScore.class)
 })
 public interface Score extends Feature<Double> {
 

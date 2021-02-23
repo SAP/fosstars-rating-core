@@ -2,6 +2,7 @@ package com.sap.oss.phosphor.fosstars.model.value;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import java.util.Objects;
@@ -60,5 +61,15 @@ public class BooleanValue extends AbstractValue<Boolean> {
   @Override
   public String toString() {
     return flag ? "Yes" : "No";
+  }
+
+  /**
+   * Checks whether the value is false or not.
+   *
+   * @return True if it is false, false otherwise :)
+   */
+  @JsonIgnore
+  public boolean isFalse() {
+    return !flag;
   }
 }
