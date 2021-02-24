@@ -2,6 +2,7 @@ package com.sap.oss.phosphor.fosstars.model;
 
 import com.sap.oss.phosphor.fosstars.model.other.MakeImmutable;
 import com.sap.oss.phosphor.fosstars.model.rating.example.SecurityRatingExample;
+import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating.Thresholds;
 import com.sap.oss.phosphor.fosstars.model.score.oss.OssSecurityScore;
@@ -59,33 +60,60 @@ public class RatingRepository {
    * This constructor loads all available ratings.
    */
   private RatingRepository() {
-    register(() -> load(
+    register(RatingRepository::securityRatingExample);
+    register(RatingRepository::ossSecurityRating);
+    register(RatingRepository::ossRulesOfPlayRating);
+  }
+
+  /**
+   * Loads a {@link SecurityRatingExample}.
+   *
+   * @return An instance of {@link SecurityRatingExample};
+   * @throws IOException If something went wrong.
+   */
+  private static SecurityRatingExample securityRatingExample() throws IOException {
+    return load(
         "com/sap/oss/phosphor/fosstars/model/rating/example/SecurityRatingExample.json",
-        SecurityRatingExample.class));
+        SecurityRatingExample.class);
+  }
 
-    register(() -> {
-      OssSecurityScore ossSecurityScore = new OssSecurityScore();
-      ossSecurityScore.weights().update(
-          loadScoreWeights("com/sap/oss/phosphor/fosstars/model/score/oss/"
-              + "OssSecurityScoreWeights.json"));
+  /**
+   * Loads a {@link OssSecurityRating}.
+   *
+   * @return An instance of {@link OssSecurityRating};
+   * @throws IOException If something went wrong.
+   */
+  private static OssSecurityRating ossSecurityRating() throws IOException {
+    OssSecurityScore ossSecurityScore = new OssSecurityScore();
+    ossSecurityScore.weights().update(
+        loadScoreWeights("com/sap/oss/phosphor/fosstars/model/score/oss/"
+            + "OssSecurityScoreWeights.json"));
 
-      Optional<ProjectSecurityTestingScore> projectSecurityTestingScore =
-          ossSecurityScore.subScore(ProjectSecurityTestingScore.class);
-      if (!projectSecurityTestingScore.isPresent()) {
-        throw new IllegalStateException(
-            "Oh no! Could not find the project security testing score!");
-      }
+    Optional<ProjectSecurityTestingScore> projectSecurityTestingScore =
+        ossSecurityScore.subScore(ProjectSecurityTestingScore.class);
+    if (!projectSecurityTestingScore.isPresent()) {
+      throw new IllegalStateException(
+          "Oh no! Could not find the project security testing score!");
+    }
 
-      projectSecurityTestingScore.get().weights().update(
-          loadScoreWeights("com/sap/oss/phosphor/fosstars/model/score/oss/"
-              + "ProjectSecurityTestingScoreWeights.json"));
+    projectSecurityTestingScore.get().weights().update(
+        loadScoreWeights("com/sap/oss/phosphor/fosstars/model/score/oss/"
+            + "ProjectSecurityTestingScoreWeights.json"));
 
-      Thresholds thresholds = load(
-          "com/sap/oss/phosphor/fosstars/model/rating/oss/OssSecurityRatingThresholds.json",
-          Thresholds.class);
+    Thresholds thresholds = load(
+        "com/sap/oss/phosphor/fosstars/model/rating/oss/OssSecurityRatingThresholds.json",
+        Thresholds.class);
 
-      return new OssSecurityRating(ossSecurityScore, thresholds);
-    });
+    return new OssSecurityRating(ossSecurityScore, thresholds);
+  }
+
+  /**
+   * Loads a {@link OssRulesOfPlayRating}.
+   *
+   * @return An instance of {@link OssRulesOfPlayRating}.
+   */
+  private static OssRulesOfPlayRating ossRulesOfPlayRating() {
+    return new OssRulesOfPlayRating();
   }
 
   /**

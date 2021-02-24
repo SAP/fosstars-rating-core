@@ -10,6 +10,7 @@ import static org.junit.Assert.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Feature;
+import com.sap.oss.phosphor.fosstars.model.RatingRepository;
 import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
@@ -30,7 +31,8 @@ import org.junit.Test;
 
 public class OssRulesOfPlayRatingTest {
 
-  private static final OssRulesOfPlayRating RATING = new OssRulesOfPlayRating();
+  private static final OssRulesOfPlayRating RATING
+      = RatingRepository.INSTANCE.rating(OssRulesOfPlayRating.class);
 
   private static final double DELTA = 0.01;
 
