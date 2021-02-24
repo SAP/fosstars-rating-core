@@ -156,7 +156,7 @@
           <finalName>fosstars-github-rating</finalName>
           <archive>
             <manifest>
-              <mainClass>com.sap.oss.phosphor.fosstars.tool.github.SecurityRatingCalculator</mainClass>
+              <mainClass>com.sap.oss.phosphor.fosstars.tool.github.Application</mainClass>
             </manifest>
           </archive>
           <descriptor>assembly.xml</descriptor>

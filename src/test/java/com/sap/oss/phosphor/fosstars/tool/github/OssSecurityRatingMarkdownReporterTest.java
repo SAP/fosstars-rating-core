@@ -28,11 +28,12 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
-public class MarkdownReporterTest {
+public class OssSecurityRatingMarkdownReporterTest {
 
   @Test
   public void testReport() throws IOException {
-    Path outputDirectory = Files.createTempDirectory(MarkdownReporterTest.class.getName());
+    Path outputDirectory = Files.createTempDirectory(
+        OssSecurityRatingMarkdownReporterTest.class.getName());
     try {
       OssSecurityRating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
 
@@ -64,11 +65,12 @@ public class MarkdownReporterTest {
           goodProject, moderateProject, badProject, projectWithLowConfidence
       );
 
-      MarkdownReporter reporter = new MarkdownReporter(
+      OssSecurityRatingMarkdownReporter reporter = new OssSecurityRatingMarkdownReporter(
           outputDirectory.toString(), null, rating, new OssSecurityGithubAdvisor());
       reporter.runFor(projects);
 
-      Path reportFileName = outputDirectory.resolve(MarkdownReporter.REPORT_FILENAME);
+      Path reportFileName = outputDirectory.resolve(
+          OssSecurityRatingMarkdownReporter.REPORT_FILENAME);
       assertTrue(Files.exists(reportFileName));
 
       String report = new String(Files.readAllBytes(reportFileName));
@@ -79,7 +81,7 @@ public class MarkdownReporterTest {
       for (Label label : OssSecurityRating.SecurityLabel.values()) {
         assertTrue(report.contains(label.name()));
       }
-      assertTrue(report.contains(MarkdownReporter.UNKNOWN));
+      assertTrue(report.contains(OssSecurityRatingMarkdownReporter.UNKNOWN));
       assertTrue(report.contains("org/good"));
       assertTrue(report.contains("org/bad"));
       assertTrue(report.contains("org/moderate"));
@@ -98,24 +100,25 @@ public class MarkdownReporterTest {
   public void testInsert() {
     assertEquals(
         "aaa<br>bbb<br>ccc",
-        MarkdownReporter.insert("<br>", 3, "aaabbbccc"));
+        OssSecurityRatingMarkdownReporter.insert("<br>", 3, "aaabbbccc"));
     assertEquals(
         "aaa<br>bbb<br>ccc<br>dd",
-        MarkdownReporter.insert("<br>", 3, "aaabbbcccdd"));
+        OssSecurityRatingMarkdownReporter.insert("<br>", 3, "aaabbbcccdd"));
     assertEquals(
         "aaa",
-        MarkdownReporter.insert("<br>", 3, "aaa"));
+        OssSecurityRatingMarkdownReporter.insert("<br>", 3, "aaa"));
   }
 
   @Test
   public void testCreatingReportDirectory() throws IOException {
-    Path baseDirectory = Files.createTempDirectory(MarkdownReporterTest.class.getName());
+    Path baseDirectory = Files.createTempDirectory(
+        OssSecurityRatingMarkdownReporterTest.class.getName());
     Path outputDirectory = baseDirectory.resolve("one").resolve("two");
     if (Files.exists(outputDirectory)) {
       fail("Report directory already exists. Please fix the test or its environment");
     }
     try {
-      MarkdownReporter reporter = new MarkdownReporter(
+      OssSecurityRatingMarkdownReporter reporter = new OssSecurityRatingMarkdownReporter(
           outputDirectory.toString(),
           null,
           RatingRepository.INSTANCE.rating(OssSecurityRating.class),

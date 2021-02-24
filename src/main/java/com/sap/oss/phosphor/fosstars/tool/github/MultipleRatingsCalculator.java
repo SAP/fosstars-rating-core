@@ -1,5 +1,7 @@
 package com.sap.oss.phosphor.fosstars.tool.github;
 
+import com.sap.oss.phosphor.fosstars.data.UserCallback;
+import com.sap.oss.phosphor.fosstars.data.ValueCache;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
 import java.io.IOException;
@@ -11,20 +13,19 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * The class calculates security ratings for multiple open-source projects.
+ * The class calculates ratings for multiple open source projects.
  */
-class MultipleSecurityRatingsCalculator {
+class MultipleRatingsCalculator implements RatingCalculator {
 
   /**
    * A logger.
    */
-  private static final Logger LOGGER
-      = LogManager.getLogger(MultipleSecurityRatingsCalculator.class);
+  private static final Logger LOGGER = LogManager.getLogger(MultipleRatingsCalculator.class);
 
   /**
    * A calculator that calculate a rating for a single project.
    */
-  private final SingleSecurityRatingCalculator calculator;
+  private final RatingCalculator calculator;
 
   /**
    * A cache of processed projects.
@@ -46,18 +47,32 @@ class MultipleSecurityRatingsCalculator {
    *
    * @param calculator A calculator that calculate a rating for a single project.
    */
-  MultipleSecurityRatingsCalculator(SingleSecurityRatingCalculator calculator) {
+  MultipleRatingsCalculator(RatingCalculator calculator) {
     Objects.requireNonNull(calculator, "Oh no! Calculator is null!");
     this.calculator = calculator;
+  }
+
+  @Override
+  public MultipleRatingsCalculator set(UserCallback callback) {
+    Objects.requireNonNull(callback, "Oh no! Callback is null!");
+    calculator.set(callback);
+    return this;
+  }
+
+  @Override
+  public MultipleRatingsCalculator set(ValueCache<GitHubProject> cache) {
+    Objects.requireNonNull(cache, "Oh no! Cache is null!");
+    calculator.set(cache);
+    return this;
   }
 
   /**
    * Set a cache of processed projects.
    *
    * @param projectCache The cache.
-   * @return The same {@link MultipleSecurityRatingsCalculator}.
+   * @return The same {@link MultipleRatingsCalculator}.
    */
-  MultipleSecurityRatingsCalculator set(GitHubProjectCache projectCache) {
+  public MultipleRatingsCalculator set(GitHubProjectCache projectCache) {
     this.projectCache = Objects.requireNonNull(projectCache, "Oh no! Project cache can't be null!");
     return this;
   }
@@ -66,9 +81,9 @@ class MultipleSecurityRatingsCalculator {
    * Sets a file where the cache of processed projects should be stored.
    *
    * @param filename The file.
-   * @return The same {@link MultipleSecurityRatingsCalculator}.
+   * @return The same {@link MultipleRatingsCalculator}.
    */
-  MultipleSecurityRatingsCalculator storeProjectCacheTo(String filename) {
+  MultipleRatingsCalculator storeProjectCacheTo(String filename) {
     Objects.requireNonNull(filename, "Hey! Filename can't be null!");
     projectCacheFile = filename;
     return this;
@@ -78,10 +93,11 @@ class MultipleSecurityRatingsCalculator {
    * Calculate a rating for a project.
    *
    * @param project The project.
-   * @return The same {@link MultipleSecurityRatingsCalculator}.
+   * @return The same {@link MultipleRatingsCalculator}.
    * @throws IOException If something went wrong.
    */
-  private MultipleSecurityRatingsCalculator calculateFor(GitHubProject project) throws IOException {
+  @Override
+  public MultipleRatingsCalculator calculateFor(GitHubProject project) throws IOException {
     Optional<RatingValue> cachedRatingValue = projectCache.cachedRatingValueFor(project);
     if (cachedRatingValue.isPresent()) {
       project.set(cachedRatingValue.get());
@@ -102,7 +118,7 @@ class MultipleSecurityRatingsCalculator {
    * @param projects The projects.
    * @return The same calculator.
    */
-  MultipleSecurityRatingsCalculator calculateFor(List<GitHubProject> projects) {
+  MultipleRatingsCalculator calculateFor(List<GitHubProject> projects) {
     failedProjects.clear();
 
     for (GitHubProject project : projects) {
