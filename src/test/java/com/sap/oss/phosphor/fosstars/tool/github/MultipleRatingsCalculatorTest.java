@@ -10,7 +10,9 @@ import static org.mockito.Mockito.when;
 
 import com.sap.oss.phosphor.fosstars.data.NoUserCallback;
 import com.sap.oss.phosphor.fosstars.data.github.TestGitHubDataFetcherHolder;
+import com.sap.oss.phosphor.fosstars.model.RatingRepository;
 import com.sap.oss.phosphor.fosstars.model.math.DoubleInterval;
+import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
@@ -22,7 +24,7 @@ import java.util.List;
 import org.junit.Test;
 import org.kohsuke.github.GHRepository;
 
-public class MultipleSecurityRatingsCalculatorTest extends TestGitHubDataFetcherHolder {
+public class MultipleRatingsCalculatorTest extends TestGitHubDataFetcherHolder {
 
   @Test
   public void testCalculateFor() throws IOException {
@@ -32,13 +34,14 @@ public class MultipleSecurityRatingsCalculatorTest extends TestGitHubDataFetcher
     NVD nvd = new NVD();
 
     SingleSecurityRatingCalculator singleRatingCalculator
-        = new SingleSecurityRatingCalculator(fetcher, nvd);
+        = new SingleSecurityRatingCalculator(
+            RatingRepository.INSTANCE.rating(OssSecurityRating.class), fetcher, nvd);
     singleRatingCalculator.set(NoUserCallback.INSTANCE);
     singleRatingCalculator = spy(singleRatingCalculator);
     when(singleRatingCalculator.dataProviders()).thenReturn(Collections.emptyList());
 
-    MultipleSecurityRatingsCalculator multipleRatingsCalculator
-        = new MultipleSecurityRatingsCalculator(singleRatingCalculator);
+    MultipleRatingsCalculator multipleRatingsCalculator
+        = new MultipleRatingsCalculator(singleRatingCalculator);
     multipleRatingsCalculator = spy(multipleRatingsCalculator);
 
     GitHubProject apacheNiFi = new GitHubProject("apache", "nifi");

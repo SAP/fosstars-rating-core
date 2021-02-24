@@ -7,9 +7,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
+import com.sap.oss.phosphor.fosstars.tool.github.Application.ReportConfig;
 import com.sap.oss.phosphor.fosstars.tool.github.GitHubProjectFinder.OrganizationConfig;
 import com.sap.oss.phosphor.fosstars.tool.github.GitHubProjectFinder.ProjectConfig;
-import com.sap.oss.phosphor.fosstars.tool.github.SecurityRatingCalculator.ReportConfig;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
@@ -17,24 +17,24 @@ import java.util.Arrays;
 import java.util.Collections;
 import org.junit.Test;
 
-public class SecurityRatingCalculatorTest {
+public class ApplicationTest {
 
   @Test(expected = IllegalArgumentException.class)
-  public void noParameters() throws IOException, URISyntaxException {
-    new SecurityRatingCalculator().run();
+  public void testNoParameters() throws IOException, URISyntaxException {
+    new Application().run();
   }
 
   @Test
-  public void help() throws IOException, URISyntaxException {
-    new SecurityRatingCalculator("-help").run();
-    new SecurityRatingCalculator("-h").run();
+  public void testHelp() throws IOException, URISyntaxException {
+    new Application("-help").run();
+    new Application("-h").run();
   }
 
   @Test
-  public void loadConfig() throws IOException {
+  public void testLoadConfig() throws IOException {
     final String filename = "ValidSecurityRatingCalculatorConfig.yml";
     try (InputStream is = getClass().getResourceAsStream(filename)) {
-      SecurityRatingCalculator.Config mainConfig = SecurityRatingCalculator.config(is);
+      Application.Config mainConfig = Application.config(is);
 
       assertEquals(".fosstars/project_rating_cache.json", mainConfig.cacheFilename);
 

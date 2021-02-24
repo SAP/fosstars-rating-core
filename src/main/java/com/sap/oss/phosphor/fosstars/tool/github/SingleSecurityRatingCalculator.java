@@ -1,10 +1,6 @@
 package com.sap.oss.phosphor.fosstars.tool.github;
 
 import com.sap.oss.phosphor.fosstars.data.DataProvider;
-import com.sap.oss.phosphor.fosstars.data.NoUserCallback;
-import com.sap.oss.phosphor.fosstars.data.NoValueCache;
-import com.sap.oss.phosphor.fosstars.data.UserCallback;
-import com.sap.oss.phosphor.fosstars.data.ValueCache;
 import com.sap.oss.phosphor.fosstars.data.github.CodeqlDataProvider;
 import com.sap.oss.phosphor.fosstars.data.github.FuzzedInOssFuzz;
 import com.sap.oss.phosphor.fosstars.data.github.GitHubDataFetcher;
@@ -33,150 +29,36 @@ import com.sap.oss.phosphor.fosstars.data.github.UsesSanitizers;
 import com.sap.oss.phosphor.fosstars.data.github.UsesSignedCommits;
 import com.sap.oss.phosphor.fosstars.data.interactive.AskAboutSecurityTeam;
 import com.sap.oss.phosphor.fosstars.data.interactive.AskAboutUnpatchedVulnerabilities;
-import com.sap.oss.phosphor.fosstars.model.RatingRepository;
-import com.sap.oss.phosphor.fosstars.model.ValueSet;
-import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
+import com.sap.oss.phosphor.fosstars.model.Rating;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
-import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.oss.phosphor.fosstars.nvd.NVD;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
- * The class calculates a security rating for a single open-source project.
+ * The class calculates a security rating for a single open source project.
  */
-class SingleSecurityRatingCalculator {
+class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
 
   /**
-   * A logger.
+   * A list of data providers for gathering required data.
    */
-  private static final Logger LOGGER = LogManager.getLogger(SingleSecurityRatingCalculator.class);
-
-  /**
-   * An interface to GitHub.
-   */
-  private final GitHubDataFetcher fetcher;
-
-  /**
-   * An interface to NVD.
-   */
-  private final NVD nvd;
-
-  /**
-   * Open source security rating.
-   */
-  private final OssSecurityRating rating
-      = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
-
-  /**
-   * A cache of feature values for GitHub projects.
-   */
-  private ValueCache<GitHubProject> cache = NoValueCache.create();
-
-  /**
-   * An interface for interacting with a user.
-   */
-  private UserCallback callback = NoUserCallback.INSTANCE;
+  private final List<DataProvider<GitHubProject>> providers;
 
   /**
    * Initializes a new calculator.
    *
+   * @param rating A rating.
    * @param fetcher An interface to GitHub.
    * @param nvd An interface to NVD.
    */
-  SingleSecurityRatingCalculator(GitHubDataFetcher fetcher, NVD nvd) {
-    Objects.requireNonNull(fetcher, "Oh no! An interface to GitHub can't be null!");
-    Objects.requireNonNull(nvd, "Oh no! An interface to NVD can't be null!");
-    this.fetcher = fetcher;
-    this.nvd = nvd;
-  }
+  SingleSecurityRatingCalculator(Rating rating, GitHubDataFetcher fetcher, NVD nvd)
+      throws IOException {
 
-  /**
-   * Get the open source security rating.
-   *
-   * @return The rating.
-   */
-  OssSecurityRating rating() {
-    return rating;
-  }
+    super(rating, fetcher, nvd);
 
-  /**
-   * Sets an interface for interacting with a user.
-   *
-   * @param callback The interface for interacting with a user.
-   * @return The same calculator.
-   */
-  SingleSecurityRatingCalculator set(UserCallback callback) {
-    this.callback = callback;
-    return this;
-  }
-
-  /**
-   * Set a cache for the calculator.
-   *
-   * @param cache The cache.
-   * @return The same calculator.
-   */
-  SingleSecurityRatingCalculator set(ValueCache<GitHubProject> cache) {
-    this.cache = Objects.requireNonNull(cache, "Oh no! Cache can't be null!");
-    return this;
-  }
-
-  public SingleSecurityRatingCalculator calculateFor(GitHubProject project) throws IOException {
-    Objects.requireNonNull(project, "Oh no! Project can't be null!");
-
-    LOGGER.info("Let's gather info and calculate a security rating for:");
-    LOGGER.info("  {}", project.scm());
-
-    try {
-      fetcher.repositoryFor(project);
-    } catch (IOException e) {
-      LOGGER.error("Looks like something is wrong with the project!", e);
-      LOGGER.warn("Let's skip the project ...");
-      return this;
-    }
-
-    ValueSet values = ValueHashSet.unknown(rating.allFeatures());
-    for (DataProvider<GitHubProject> provider : dataProviders()) {
-
-      // skip data providers that talk to users but the callback doesn't allow that
-      if (provider.interactive() && !callback.canTalk()) {
-        continue;
-      }
-
-      try {
-        provider.set(callback).set(cache).update(project, values);
-      } catch (Exception e) {
-        LOGGER.warn("Holy Moly, {} data provider failed!",
-            provider.getClass().getSimpleName());
-        LOGGER.warn("The last thing that it said was", e);
-        LOGGER.warn("But we don't give up!");
-      }
-    }
-
-    LOGGER.info("Here is what we know about the project:");
-    values.toSet().stream()
-        .sorted(Comparator.comparing(value -> value.feature().name()))
-        .forEach(value -> LOGGER.info("   {}: {}", value.feature(), value));
-
-    project.set(rating.calculate(values));
-
-    return this;
-  }
-
-  /**
-   * Initializes a list of data providers that are going to be used by the calculator.
-   *
-   * @return The list of data providers.
-   * @throws IOException If something went wrong during the initialization.
-   */
-  List<DataProvider<GitHubProject>> dataProviders() throws IOException {
-    return Arrays.asList(
+    providers = Arrays.asList(
         new NumberOfCommits(fetcher),
         new NumberOfContributors(fetcher),
         new NumberOfStars(fetcher),
@@ -207,5 +89,10 @@ class SingleSecurityRatingCalculator {
         new AskAboutSecurityTeam<>(),
         new AskAboutUnpatchedVulnerabilities<>()
     );
+  }
+
+  @Override
+  List<DataProvider<GitHubProject>> dataProviders() {
+    return providers;
   }
 }

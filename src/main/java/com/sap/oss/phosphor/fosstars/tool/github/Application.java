@@ -11,6 +11,10 @@ import com.sap.oss.phosphor.fosstars.data.NoUserCallback;
 import com.sap.oss.phosphor.fosstars.data.Terminal;
 import com.sap.oss.phosphor.fosstars.data.UserCallback;
 import com.sap.oss.phosphor.fosstars.data.github.GitHubDataFetcher;
+import com.sap.oss.phosphor.fosstars.model.Rating;
+import com.sap.oss.phosphor.fosstars.model.RatingRepository;
+import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating;
+import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.nvd.NVD;
 import com.sap.oss.phosphor.fosstars.tool.InputString;
@@ -20,13 +24,13 @@ import com.sap.oss.phosphor.fosstars.tool.YesNoQuestion.Answer;
 import com.sap.oss.phosphor.fosstars.tool.format.Formatter;
 import com.sap.oss.phosphor.fosstars.tool.format.MarkdownFormatter;
 import com.sap.oss.phosphor.fosstars.tool.format.PrettyPrinter;
+import com.sap.oss.phosphor.fosstars.tool.github.Application.ReportConfig.ReportType;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -34,7 +38,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import org.apache.commons.cli.CommandLine;
@@ -57,12 +63,12 @@ import org.kohsuke.github.extras.ImpatientHttpConnector;
  * This is a command line tool for calculating security ratings for one
  * of multiple open-source projects.
  */
-public class SecurityRatingCalculator {
+public class Application {
 
   /**
    * A logger.
    */
-  private static final Logger LOGGER = LogManager.getLogger(SecurityRatingCalculator.class);
+  private static final Logger LOGGER = LogManager.getLogger(Application.class);
 
   /**
    * A directory where the tool stores stuff.
@@ -97,6 +103,21 @@ public class SecurityRatingCalculator {
    */
   private static final Advisor ADVISOR = new OssSecurityGithubAdvisor();
 
+  private static Map<String, Rating> RATINGS = new HashMap<>();
+
+  static {
+    Rating ossSecurityRating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
+    RATINGS.put("default", ossSecurityRating);
+    RATINGS.put("security", ossSecurityRating);
+    RATINGS.put(ossSecurityRating.getClass().getSimpleName(), ossSecurityRating);
+    RATINGS.put(ossSecurityRating.getClass().getCanonicalName(), ossSecurityRating);
+
+    Rating ossRulesOfPlay = RatingRepository.INSTANCE.rating(OssRulesOfPlayRating.class);
+    RATINGS.put("oss-rules-of-play", ossRulesOfPlay);
+    RATINGS.put(ossRulesOfPlay.getClass().getSimpleName(), ossRulesOfPlay);
+    RATINGS.put(ossRulesOfPlay.getClass().getCanonicalName(), ossRulesOfPlay);
+  }
+
   /**
    * Entry point.
    *
@@ -104,7 +125,7 @@ public class SecurityRatingCalculator {
    */
   public static void main(String... args) {
     try {
-      new SecurityRatingCalculator(args).run();
+      new Application(args).run();
     } catch (Exception e) {
       LOGGER.error("Something went wrong!", e);
       LOGGER.error("Bye!");
@@ -122,6 +143,11 @@ public class SecurityRatingCalculator {
    * Parsed command-line options.
    */
   private final CommandLine commandLine;
+
+  /**
+   * A rating to use.
+   */
+  private final Rating rating;
 
   /**
    * An interface to NVD.
@@ -149,12 +175,18 @@ public class SecurityRatingCalculator {
    * @param args The command-line parameters.
    * @throws IOException If something went wrong.
    */
-  SecurityRatingCalculator(String... args) throws IOException, URISyntaxException {
+  Application(String... args) throws IOException {
     options = new Options();
     options.addOption("h", "help", false,
         "Print this message.");
     options.addOption("i", "interactive", false,
         "Ask a question if a feature can't be automatically gathered.");
+    options.addOption(
+        Option.builder("r")
+            .longOpt("rating")
+            .hasArg()
+            .desc("A rating to use: security, oss-rules-of-play (default, security)")
+            .build());
     options.addOption(
         Option.builder("t")
             .longOpt("token")
@@ -219,6 +251,12 @@ public class SecurityRatingCalculator {
 
     checkOptionsIn(commandLine);
 
+    String ratingName = commandLine.getOptionValue("r", "default");
+    rating = RATINGS.get(ratingName);
+    if (rating == null) {
+      throw new IllegalArgumentException(String.format("Could not find a rating '%s'", ratingName));
+    }
+
     if (commandLine.hasOption("v")) {
       LoggerContext context = (LoggerContext) LogManager.getContext(false);
       context.getRootLogger().setLevel(Level.DEBUG);
@@ -232,7 +270,8 @@ public class SecurityRatingCalculator {
 
     fetcher = new GitHubDataFetcher(connectToGithub(githubToken, callback));
 
-    calculator = new SingleSecurityRatingCalculator(fetcher, nvd);
+    calculator = new SingleSecurityRatingCalculator(
+        RatingRepository.INSTANCE.rating(OssSecurityRating.class), fetcher, nvd);
     calculator.set(VALUE_CACHE);
     calculator.set(callback);
 
@@ -386,15 +425,15 @@ public class SecurityRatingCalculator {
     String projectCacheFile = projectCacheFile(config);
 
     LOGGER.info("Starting calculating ratings ...");
-    MultipleSecurityRatingsCalculator multipleSecurityRatingsCalculator =
-        new MultipleSecurityRatingsCalculator(calculator)
+    MultipleRatingsCalculator multipleRatingsCalculator =
+        new MultipleRatingsCalculator(calculator)
             .set(loadProjectCache(projectCacheFile))
             .storeProjectCacheTo(projectCacheFile)
             .calculateFor(projects);
 
     LOGGER.info("Okay, we've done calculating the ratings");
 
-    List<GitHubProject> failedProjects = multipleSecurityRatingsCalculator.failedProjects();
+    List<GitHubProject> failedProjects = multipleRatingsCalculator.failedProjects();
     if (!failedProjects.isEmpty()) {
       LOGGER.warn("Ratings couldn't be calculated for {} project{}",
           failedProjects.size(), failedProjects.size() == 1 ? "" : "s");
@@ -505,22 +544,33 @@ public class SecurityRatingCalculator {
 
     List<Reporter<GitHubProject>> reporters = new ArrayList<>();
     for (ReportConfig reportConfig : config.reportConfigs) {
-      Objects.requireNonNull(reportConfig.type, "Hey! Reporter type can't be null!");
-      switch (reportConfig.type) {
-        case MARKDOWN:
-          reporters.add(new MarkdownReporter(
-              reportConfig.where, reportConfig.source, calculator.rating(), ADVISOR));
-          break;
-        case JSON:
-          reporters.add(new MergedJsonReporter(reportConfig.where));
-          break;
-        default:
-          throw new IllegalArgumentException(String.format(
-              "Oh no! That's an unknown type of report: %s", reportConfig.type));
-      }
+      reporters.add(reporterFrom(reportConfig));
     }
 
     return reporters;
+  }
+
+  /**
+   * Create a reporter from a specified report config.
+   *
+   * @param reportConfig The config.
+   * @return A reporter.
+   * @throws IOException If something went wrong.
+   */
+  private Reporter<GitHubProject> reporterFrom(ReportConfig reportConfig) throws IOException {
+    Objects.requireNonNull(reportConfig.type, "Hey! Reporter type can't be null!");
+
+    if (reportConfig.type == ReportType.JSON) {
+      return new MergedJsonReporter(reportConfig.where);
+    }
+
+    if (reportConfig.type == ReportType.MARKDOWN && rating instanceof OssSecurityRating) {
+      return new OssSecurityRatingMarkdownReporter(
+          reportConfig.where, reportConfig.source, (OssSecurityRating) rating, ADVISOR);
+    }
+
+    throw new IllegalArgumentException(String.format(
+        "Oh no! That's an unknown type of report: %s", reportConfig.type));
   }
 
   /**
@@ -550,7 +600,7 @@ public class SecurityRatingCalculator {
   }
 
   /**
-   * The class holds a configuration for {@link SecurityRatingCalculator}.
+   * The class holds a configuration for {@link Application}.
    */
   static class Config {
 

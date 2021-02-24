@@ -33,7 +33,7 @@ import org.apache.commons.io.IOUtils;
 /**
  * This reporter takes a number of projects and generates a markdown report.
  */
-public class MarkdownReporter extends AbstractReporter<GitHubProject> {
+public class OssSecurityRatingMarkdownReporter extends AbstractReporter<GitHubProject> {
 
   /**
    * This value shows that a number of stars is unknown.
@@ -123,7 +123,7 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
    *                     (for example, the output directory doesn't exist,
    *                     or the extra projects couldn't be loaded).
    */
-  MarkdownReporter(
+  OssSecurityRatingMarkdownReporter(
       String outputDirectory, String extraSourceFileName, OssSecurityRating rating, Advisor advisor)
       throws IOException {
 
@@ -255,7 +255,7 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
    * @throws IOException If something went wrong.
    */
   private String buildReportWith(String table, Statistics statistics) throws IOException {
-    try (InputStream is = MarkdownReporter.class
+    try (InputStream is = OssSecurityRatingMarkdownReporter.class
         .getResourceAsStream("MarkdownReporterMainTemplate.md")) {
 
       String template = IOUtils.toString(is, StandardCharsets.UTF_8);
@@ -559,7 +559,7 @@ public class MarkdownReporter extends AbstractReporter<GitHubProject> {
    * @return The content of the resource.
    */
   private static String loadFrom(String name) {
-    try (InputStream is = MarkdownReporter.class.getResourceAsStream(name)) {
+    try (InputStream is = OssSecurityRatingMarkdownReporter.class.getResourceAsStream(name)) {
       return IOUtils.toString(is, StandardCharsets.UTF_8);
     } catch (IOException e) {
       throw new UncheckedIOException("Holy moly! Could not load template!", e);

@@ -12,7 +12,9 @@ import com.sap.oss.phosphor.fosstars.data.NoUserCallback;
 import com.sap.oss.phosphor.fosstars.data.github.IsApache;
 import com.sap.oss.phosphor.fosstars.data.github.IsEclipse;
 import com.sap.oss.phosphor.fosstars.data.github.TestGitHubDataFetcherHolder;
+import com.sap.oss.phosphor.fosstars.model.RatingRepository;
 import com.sap.oss.phosphor.fosstars.model.math.DoubleInterval;
+import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
@@ -30,7 +32,8 @@ public class SingleSecurityRatingCalculatorTest extends TestGitHubDataFetcherHol
     when(fetcher.github().getRepository(any())).thenReturn(repository);
 
     SingleSecurityRatingCalculator calculator
-        = new SingleSecurityRatingCalculator(fetcher, new NVD());
+        = new SingleSecurityRatingCalculator(
+            RatingRepository.INSTANCE.rating(OssSecurityRating.class), fetcher, new NVD());
 
     calculator.set(NoUserCallback.INSTANCE);
     calculator = spy(calculator);
@@ -72,7 +75,8 @@ public class SingleSecurityRatingCalculatorTest extends TestGitHubDataFetcherHol
 
   private void checkNoRating() throws IOException {
     SingleSecurityRatingCalculator calculator
-        = new SingleSecurityRatingCalculator(fetcher, new NVD());
+        = new SingleSecurityRatingCalculator(
+            RatingRepository.INSTANCE.rating(OssSecurityRating.class), fetcher, new NVD());
 
     calculator.set(NoUserCallback.INSTANCE);
     calculator = spy(calculator);
