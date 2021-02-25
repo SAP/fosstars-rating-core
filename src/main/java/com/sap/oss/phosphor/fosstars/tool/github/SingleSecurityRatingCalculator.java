@@ -1,98 +1,110 @@
 package com.sap.oss.phosphor.fosstars.tool.github;
 
 import com.sap.oss.phosphor.fosstars.data.DataProvider;
-import com.sap.oss.phosphor.fosstars.data.github.CodeqlDataProvider;
-import com.sap.oss.phosphor.fosstars.data.github.FuzzedInOssFuzz;
-import com.sap.oss.phosphor.fosstars.data.github.GitHubDataFetcher;
-import com.sap.oss.phosphor.fosstars.data.github.HasBugBountyProgram;
-import com.sap.oss.phosphor.fosstars.data.github.HasCompanySupport;
-import com.sap.oss.phosphor.fosstars.data.github.HasSecurityPolicy;
-import com.sap.oss.phosphor.fosstars.data.github.HasSecurityTeam;
-import com.sap.oss.phosphor.fosstars.data.github.InfoAboutVulnerabilities;
-import com.sap.oss.phosphor.fosstars.data.github.IsApache;
-import com.sap.oss.phosphor.fosstars.data.github.IsEclipse;
-import com.sap.oss.phosphor.fosstars.data.github.LgtmDataProvider;
-import com.sap.oss.phosphor.fosstars.data.github.NumberOfCommits;
-import com.sap.oss.phosphor.fosstars.data.github.NumberOfContributors;
-import com.sap.oss.phosphor.fosstars.data.github.NumberOfStars;
-import com.sap.oss.phosphor.fosstars.data.github.NumberOfWatchers;
-import com.sap.oss.phosphor.fosstars.data.github.OwaspSecurityLibraries;
-import com.sap.oss.phosphor.fosstars.data.github.PackageManagement;
-import com.sap.oss.phosphor.fosstars.data.github.ProgrammingLanguages;
-import com.sap.oss.phosphor.fosstars.data.github.SignsJarArtifacts;
-import com.sap.oss.phosphor.fosstars.data.github.UsesDependabot;
-import com.sap.oss.phosphor.fosstars.data.github.UsesFindSecBugs;
-import com.sap.oss.phosphor.fosstars.data.github.UsesGithubForDevelopment;
-import com.sap.oss.phosphor.fosstars.data.github.UsesNoHttpTool;
-import com.sap.oss.phosphor.fosstars.data.github.UsesOwaspDependencyCheck;
-import com.sap.oss.phosphor.fosstars.data.github.UsesSanitizers;
-import com.sap.oss.phosphor.fosstars.data.github.UsesSignedCommits;
-import com.sap.oss.phosphor.fosstars.data.interactive.AskAboutSecurityTeam;
-import com.sap.oss.phosphor.fosstars.data.interactive.AskAboutUnpatchedVulnerabilities;
+import com.sap.oss.phosphor.fosstars.data.NoUserCallback;
+import com.sap.oss.phosphor.fosstars.data.NoValueCache;
+import com.sap.oss.phosphor.fosstars.data.UserCallback;
+import com.sap.oss.phosphor.fosstars.data.ValueCache;
 import com.sap.oss.phosphor.fosstars.model.Rating;
+import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
-import com.sap.oss.phosphor.fosstars.nvd.NVD;
-import java.io.IOException;
-import java.util.Arrays;
+import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
- * The class calculates a security rating for a single open source project.
+ * The class calculates a rating for a project.
  */
-class SingleSecurityRatingCalculator extends AbstractRatingCalculator {
+public class SingleSecurityRatingCalculator implements RatingCalculator {
 
   /**
-   * A list of data providers for gathering required data.
+   * A logger.
+   */
+  private static final Logger LOGGER = LogManager.getLogger(SingleSecurityRatingCalculator.class);
+
+  /**
+   * Open source security rating.
+   */
+  private final Rating rating;
+
+  /**
+   * A list of data providers.
    */
   private final List<DataProvider<GitHubProject>> providers;
+
+  /**
+   * A cache of feature values for GitHub projects.
+   */
+  ValueCache<GitHubProject> cache = NoValueCache.create();
+
+  /**
+   * An interface for interacting with a user.
+   */
+  UserCallback callback = NoUserCallback.INSTANCE;
 
   /**
    * Initializes a new calculator.
    *
    * @param rating A rating.
-   * @param fetcher An interface to GitHub.
-   * @param nvd An interface to NVD.
+   * @param providers A list of data providers.
    */
-  SingleSecurityRatingCalculator(Rating rating, GitHubDataFetcher fetcher, NVD nvd)
-      throws IOException {
+  SingleSecurityRatingCalculator(Rating rating, List<DataProvider<GitHubProject>> providers) {
+    Objects.requireNonNull(rating, "Oh no! Rating can't be null!");
+    Objects.requireNonNull(providers, "Oh no! A list of data providers can't be null!");
 
-    super(rating, fetcher, nvd);
-
-    providers = Arrays.asList(
-        new NumberOfCommits(fetcher),
-        new NumberOfContributors(fetcher),
-        new NumberOfStars(fetcher),
-        new NumberOfWatchers(fetcher),
-        new HasSecurityTeam(fetcher),
-        new HasCompanySupport(fetcher),
-        new HasSecurityPolicy(fetcher),
-        new HasBugBountyProgram(fetcher),
-        new InfoAboutVulnerabilities(fetcher, nvd),
-        new IsApache(fetcher),
-        new IsEclipse(fetcher),
-        new CodeqlDataProvider(fetcher),
-        new LgtmDataProvider(fetcher),
-        new UsesSignedCommits(fetcher),
-        new UsesDependabot(fetcher),
-        new ProgrammingLanguages(fetcher),
-        new PackageManagement(fetcher),
-        new UsesNoHttpTool(fetcher),
-        new UsesGithubForDevelopment(fetcher),
-        new UsesOwaspDependencyCheck(fetcher),
-        new UsesSanitizers(fetcher),
-        new UsesFindSecBugs(fetcher),
-        new FuzzedInOssFuzz(fetcher),
-        new SignsJarArtifacts(fetcher),
-        new OwaspSecurityLibraries(fetcher),
-
-        // currently interactive data provider have to be added to the end, see issue #133
-        new AskAboutSecurityTeam<>(),
-        new AskAboutUnpatchedVulnerabilities<>()
-    );
+    this.rating = rating;
+    this.providers = providers;
   }
 
   @Override
-  List<DataProvider<GitHubProject>> dataProviders() {
-    return providers;
+  public SingleSecurityRatingCalculator set(UserCallback callback) {
+    Objects.requireNonNull(callback, "Oh no! Callback can't be null!");
+    this.callback = callback;
+    return this;
+  }
+
+  @Override
+  public SingleSecurityRatingCalculator set(ValueCache<GitHubProject> cache) {
+    Objects.requireNonNull(cache, "Oh no! Cache can't be null!");
+    this.cache = cache;
+    return this;
+  }
+
+  @Override
+  public SingleSecurityRatingCalculator calculateFor(GitHubProject project) {
+    Objects.requireNonNull(project, "Oh no! Project can't be null!");
+
+    LOGGER.info("Let's gather info and calculate a security rating for:");
+    LOGGER.info("  {}", project.scm());
+
+    ValueSet values = ValueHashSet.unknown(rating.allFeatures());
+    for (DataProvider<GitHubProject> provider : providers) {
+
+      // skip data providers that talk to users but the callback doesn't allow that
+      if (provider.interactive() && !callback.canTalk()) {
+        continue;
+      }
+
+      try {
+        provider.set(callback).set(cache).update(project, values);
+      } catch (Exception e) {
+        LOGGER.warn("Holy Moly, {} data provider failed!",
+            provider.getClass().getSimpleName());
+        LOGGER.warn("The last thing that it said was", e);
+        LOGGER.warn("But we don't give up!");
+      }
+    }
+
+    LOGGER.info("Here is what we know about the project:");
+    values.toSet().stream()
+        .sorted(Comparator.comparing(value -> value.feature().name()))
+        .forEach(value -> LOGGER.info("   {}: {}", value.feature(), value));
+
+    project.set(rating.calculate(values));
+
+    return this;
   }
 }

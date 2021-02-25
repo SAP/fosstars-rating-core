@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.advice.Advisor;
 import com.sap.oss.phosphor.fosstars.advice.oss.github.OssSecurityGithubAdvisor;
+import com.sap.oss.phosphor.fosstars.data.DataProvider;
 import com.sap.oss.phosphor.fosstars.data.NoUserCallback;
 import com.sap.oss.phosphor.fosstars.data.Terminal;
 import com.sap.oss.phosphor.fosstars.data.UserCallback;
@@ -103,7 +104,7 @@ public class Application {
    */
   private static final Advisor ADVISOR = new OssSecurityGithubAdvisor();
 
-  private static Map<String, Rating> RATINGS = new HashMap<>();
+  private static final Map<String, Rating> RATINGS = new HashMap<>();
 
   static {
     Rating ossSecurityRating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
@@ -148,11 +149,6 @@ public class Application {
    * A rating to use.
    */
   private final Rating rating;
-
-  /**
-   * An interface to NVD.
-   */
-  private final NVD nvd = new NVD();
 
   /**
    * An interface for accessing GitHub.
@@ -269,9 +265,10 @@ public class Application {
     String githubToken = commandLine.getOptionValue("token");
 
     fetcher = new GitHubDataFetcher(connectToGithub(githubToken, callback));
+    List<DataProvider<GitHubProject>> providers
+        = new DataProviderSelector(fetcher, new NVD()).providersFor(rating);
 
-    calculator = new SingleSecurityRatingCalculator(
-        RatingRepository.INSTANCE.rating(OssSecurityRating.class), fetcher, nvd);
+    calculator = new SingleSecurityRatingCalculator(rating, providers);
     calculator.set(VALUE_CACHE);
     calculator.set(callback);
 
