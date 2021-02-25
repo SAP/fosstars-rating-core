@@ -114,7 +114,7 @@ public class DataProviderSelector {
    * @param feature The feature.
    * @return A list of data providers.
    */
-  private List<DataProvider<GitHubProject>> providersFor(Feature<?> feature) {
+  List<DataProvider<GitHubProject>> providersFor(Feature<?> feature) {
     return providers.stream()
         .filter(provider -> applicable(provider, feature))
         .collect(Collectors.toList());
