@@ -1,10 +1,8 @@
 package com.sap.oss.phosphor.fosstars.data;
 
-import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import java.io.IOException;
 import java.util.Objects;
-import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

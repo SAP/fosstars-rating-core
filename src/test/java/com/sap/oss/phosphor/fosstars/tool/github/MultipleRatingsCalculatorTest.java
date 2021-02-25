@@ -3,42 +3,32 @@ package com.sap.oss.phosphor.fosstars.tool.github;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
 
 import com.sap.oss.phosphor.fosstars.data.NoUserCallback;
 import com.sap.oss.phosphor.fosstars.data.github.TestGitHubDataFetcherHolder;
+import com.sap.oss.phosphor.fosstars.model.Confidence;
+import com.sap.oss.phosphor.fosstars.model.Rating;
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
 import com.sap.oss.phosphor.fosstars.model.math.DoubleInterval;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
-import com.sap.oss.phosphor.fosstars.nvd.NVD;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import org.junit.Test;
-import org.kohsuke.github.GHRepository;
 
 public class MultipleRatingsCalculatorTest extends TestGitHubDataFetcherHolder {
 
   @Test
-  public void testCalculateFor() throws IOException {
-    GHRepository repository = mock(GHRepository.class);
-    when(fetcher.github().getRepository(any())).thenReturn(repository);
-
-    NVD nvd = new NVD();
+  public void testCalculateFor() {
+    Rating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
 
     SingleSecurityRatingCalculator singleRatingCalculator
-        = new SingleSecurityRatingCalculator(
-            RatingRepository.INSTANCE.rating(OssSecurityRating.class), fetcher, nvd);
+        = new SingleSecurityRatingCalculator(rating, Collections.emptyList());
     singleRatingCalculator.set(NoUserCallback.INSTANCE);
-    singleRatingCalculator = spy(singleRatingCalculator);
-    when(singleRatingCalculator.dataProviders()).thenReturn(Collections.emptyList());
 
     MultipleRatingsCalculator multipleRatingsCalculator
         = new MultipleRatingsCalculator(singleRatingCalculator);
@@ -64,7 +54,7 @@ public class MultipleRatingsCalculatorTest extends TestGitHubDataFetcherHolder {
 
   private static void check(RatingValue ratingValue) {
     assertEquals(SecurityLabel.UNCLEAR, ratingValue.label());
-    assertTrue(DoubleInterval.closed(0, 3).contains(ratingValue.scoreValue().confidence()));
-    assertTrue(DoubleInterval.closed(0, 3).contains(ratingValue.scoreValue().get()));
+    assertEquals(0, Double.compare(Confidence.MIN, ratingValue.scoreValue().confidence()));
+    assertTrue(DoubleInterval.closed(0, 1).contains(ratingValue.scoreValue().get()));
   }
 }
