@@ -2,7 +2,7 @@ package com.sap.oss.phosphor.fosstars.model.score.oss;
 
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USE_REUSE;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_REUSE;
 
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.score.FeatureBasedScore;
@@ -23,8 +23,8 @@ public class OssRulesOfPlayScore extends FeatureBasedScore {
   public OssRulesOfPlayScore() {
     super(
         "Open source rules or play score",
-        "The score shows whether an open source project violates violates certain rules or not.",
-        USE_REUSE,
+        "The score shows whether an open source project violates certain rules or not.",
+        USES_REUSE,
         HAS_SECURITY_POLICY,
         HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT);
   }

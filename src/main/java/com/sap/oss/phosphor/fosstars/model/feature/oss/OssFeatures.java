@@ -293,6 +293,6 @@ public class OssFeatures {
    *
    * @see <a href="https://reuse.software/">Reuse Software</a>
    */
-  public static final BooleanFeature USE_REUSE
+  public static final BooleanFeature USES_REUSE
       = new BooleanFeature("If a project uses Reuse tool");
 }

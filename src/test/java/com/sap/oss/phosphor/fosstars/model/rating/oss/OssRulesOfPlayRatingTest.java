@@ -2,7 +2,7 @@ package com.sap.oss.phosphor.fosstars.model.rating.oss;
 
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USE_REUSE;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_REUSE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -103,7 +103,7 @@ public class OssRulesOfPlayRatingTest {
   @Test
   public void testCalculateWithAllTrueValues() {
     RatingValue ratingValue = RATING.calculate(
-        USE_REUSE.value(true),
+        USES_REUSE.value(true),
         HAS_SECURITY_POLICY.value(true),
         HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT.value(true));
     assertFalse(ratingValue.scoreValue().isUnknown());
