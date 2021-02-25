@@ -53,7 +53,7 @@ public class LgtmDataProvider extends GitHubCachingDataProvider {
   }
 
   @Override
-  protected Set<Feature<?>> supportedFeatures() {
+  public Set<Feature<?>> supportedFeatures() {
     return setOf(USES_LGTM_CHECKS, WORST_LGTM_GRADE);
   }
 

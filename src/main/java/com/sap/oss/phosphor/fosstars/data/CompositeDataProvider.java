@@ -10,6 +10,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * This is a composite data provider which runs multiple data providers.
@@ -110,6 +112,14 @@ public class CompositeDataProvider<T> implements DataProvider<T> {
       provider.set(cache);
     }
     return this;
+  }
+
+  @Override
+  public Set<Feature<?>> supportedFeatures() {
+    return providers.stream()
+        .map(DataProvider::supportedFeatures)
+        .flatMap(Set::stream)
+        .collect(Collectors.toSet());
   }
 
   /**

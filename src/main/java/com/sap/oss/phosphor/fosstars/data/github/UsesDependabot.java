@@ -66,7 +66,7 @@ public class UsesDependabot extends GitHubCachingDataProvider {
   }
 
   @Override
-  protected Set<Feature<?>> supportedFeatures() {
+  public Set<Feature<?>> supportedFeatures() {
     return setOf(USES_DEPENDABOT, HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT);
   }
 

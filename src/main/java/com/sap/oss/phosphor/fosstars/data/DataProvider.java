@@ -1,7 +1,9 @@
 package com.sap.oss.phosphor.fosstars.data;
 
+import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import java.io.IOException;
+import java.util.Set;
 
 /**
  * An interface of a data provider which knows
@@ -54,4 +56,11 @@ public interface DataProvider<T> {
    * @return This data provider.
    */
   DataProvider<T> set(ValueCache<T> cache);
+
+  /**
+   * Get a set of supported features.
+   *
+   * @return A set of features that the provider can fill out.
+   */
+  Set<Feature<?>> supportedFeatures();
 }

@@ -6,12 +6,15 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.feature.BooleanFeature;
 import com.sap.oss.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Set;
 import org.junit.Test;
 
 public class CompositeDataProviderTest {
@@ -50,7 +53,12 @@ public class CompositeDataProviderTest {
 
     @Override
     public DataProvider<Object> set(ValueCache<Object> cache) {
-      return null;
+      return this;
+    }
+
+    @Override
+    public Set<Feature<?>> supportedFeatures() {
+      return Collections.singleton(new BooleanFeature(featureName));
     }
   }
 
@@ -92,6 +100,7 @@ public class CompositeDataProviderTest {
   public void testWithNoInteractiveProviders() {
     new CompositeDataProvider<>(
         new DataProvider<Object>() {
+
           @Override
           public DataProvider<Object> update(Object object, ValueSet values) {
             throw new UnsupportedOperationException("This should not be called!");
@@ -114,6 +123,11 @@ public class CompositeDataProviderTest {
 
           @Override
           public DataProvider<Object> set(ValueCache<Object> cache) {
+            throw new UnsupportedOperationException("This should not be called!");
+          }
+
+          @Override
+          public Set<Feature<?>> supportedFeatures() {
             throw new UnsupportedOperationException("This should not be called!");
           }
         }

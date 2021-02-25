@@ -41,7 +41,7 @@ public class AskAboutSecurityTeam<T> extends AbstractInteractiveDataProvider<T> 
   }
 
   @Override
-  protected Set<Feature<?>> supportedFeatures() {
+  public Set<Feature<?>> supportedFeatures() {
     return Collections.singleton(HAS_SECURITY_TEAM);
   }
 }
