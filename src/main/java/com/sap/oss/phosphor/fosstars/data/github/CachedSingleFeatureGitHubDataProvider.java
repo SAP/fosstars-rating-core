@@ -31,7 +31,7 @@ public abstract class CachedSingleFeatureGitHubDataProvider<F> extends GitHubCac
   }
 
   @Override
-  protected final Set<Feature<?>> supportedFeatures() {
+  public final Set<Feature<?>> supportedFeatures() {
     return Collections.singleton(supportedFeature());
   }
 

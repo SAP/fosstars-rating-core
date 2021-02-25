@@ -68,7 +68,7 @@ public class UsesSanitizers extends GitHubCachingDataProvider {
   }
 
   @Override
-  protected Set<Feature<?>> supportedFeatures() {
+  public Set<Feature<?>> supportedFeatures() {
     return setOf(USES_ADDRESS_SANITIZER, USES_MEMORY_SANITIZER, USES_UNDEFINED_BEHAVIOR_SANITIZER);
   }
 

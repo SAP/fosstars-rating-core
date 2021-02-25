@@ -99,7 +99,7 @@ public class AbstractCachingDataProviderTest {
     }
 
     @Override
-    protected Set<Feature<?>> supportedFeatures() {
+    public Set<Feature<?>> supportedFeatures() {
       return Collections.singleton(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE);
     }
 
@@ -121,7 +121,7 @@ public class AbstractCachingDataProviderTest {
     }
 
     @Override
-    protected Set<Feature<?>> supportedFeatures() {
+    public Set<Feature<?>> supportedFeatures() {
       return setOf(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, SECURITY_REVIEW_DONE_EXAMPLE);
     }
 
