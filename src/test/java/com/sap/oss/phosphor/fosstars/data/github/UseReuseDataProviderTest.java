@@ -1,7 +1,7 @@
 package com.sap.oss.phosphor.fosstars.data.github;
 
 import static com.sap.oss.phosphor.fosstars.data.github.UseReuseDataProvider.REUSE_CONFIG;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USE_REUSE;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_REUSE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -20,7 +20,7 @@ public class UseReuseDataProviderTest extends TestGitHubDataFetcherHolder {
 
   @Test
   public void testSupportedFeature() {
-    assertEquals(USE_REUSE, new UseReuseDataProvider(fetcher).supportedFeature());
+    assertEquals(USES_REUSE, new UseReuseDataProvider(fetcher).supportedFeature());
   }
 
   @Test
@@ -41,7 +41,7 @@ public class UseReuseDataProviderTest extends TestGitHubDataFetcherHolder {
 
     ValueSet values = provider.fetchValuesFor(PROJECT);
     assertEquals(1, values.size());
-    Optional<Value<Boolean>> something = values.of(USE_REUSE);
+    Optional<Value<Boolean>> something = values.of(USES_REUSE);
     assertTrue(something.isPresent());
     Value<Boolean> value = something.get();
     assertEquals(expectedValue, value.get());

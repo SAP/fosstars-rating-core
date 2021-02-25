@@ -101,6 +101,9 @@ public abstract class CommonFormatter implements Formatter {
         "How is OWASP Dependency Check used?");
     FEATURE_TO_NAME.put(OssFeatures.OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD,
         "What is the threshold for OWASP Dependency Check?");
+    FEATURE_TO_NAME.put(OssFeatures.USES_REUSE, "Does the project use Reuse?");
+    FEATURE_TO_NAME.put(OssFeatures.HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT,
+        "Does the project have open pull requests from Dependabot?");
   }
 
   /**
