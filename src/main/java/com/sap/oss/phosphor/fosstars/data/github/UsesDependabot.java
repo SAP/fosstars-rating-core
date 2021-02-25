@@ -141,8 +141,7 @@ public class UsesDependabot extends GitHubCachingDataProvider {
   private boolean createdByDependabot(GHPullRequest pullRequest) {
     try {
       GHUser user = pullRequest.getUser();
-      return user.getName().toLowerCase().contains(DEPENDABOT_PATTERN)
-          || user.getLogin().toLowerCase().contains(DEPENDABOT_PATTERN);
+      return isDependabot(user.getName()) || isDependabot(user.getLogin());
     } catch (IOException e) {
       logger.warn("Oops! Could not fetch name or login!", e);
       return false;
@@ -156,8 +155,7 @@ public class UsesDependabot extends GitHubCachingDataProvider {
    * @return True if the commit was done by Dependabot, false otherwise.
    */
   private static boolean isDependabot(Commit commit) {
-    if (commit.authorName().toLowerCase().contains(DEPENDABOT_PATTERN)
-        || commit.committerName().toLowerCase().contains(DEPENDABOT_PATTERN)) {
+    if (isDependabot(commit.authorName()) || isDependabot(commit.committerName())) {
       return true;
     }
 
@@ -169,5 +167,15 @@ public class UsesDependabot extends GitHubCachingDataProvider {
     }
 
     return false;
+  }
+
+  /**
+   * Checks whether a name looks like Dependabot.
+   *
+   * @param name The name.
+   * @return True if the name looks like Dependabot, false otherwise.
+   */
+  private static boolean isDependabot(String name) {
+    return name != null && name.toLowerCase().contains(DEPENDABOT_PATTERN);
   }
 }
