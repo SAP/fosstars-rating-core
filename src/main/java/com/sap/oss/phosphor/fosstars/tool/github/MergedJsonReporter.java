@@ -4,6 +4,7 @@ import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Comparator;
 import java.util.List;
@@ -17,7 +18,7 @@ public class MergedJsonReporter extends AbstractReporter<GitHubProject> {
   /**
    * A path to an output file.
    */
-  private final String filename;
+  private final Path filename;
 
   /**
    * Initializes a new reporter.
@@ -29,7 +30,7 @@ public class MergedJsonReporter extends AbstractReporter<GitHubProject> {
     if (filename.trim().isEmpty()) {
       throw new IllegalArgumentException("Oh no! Output filename is empty!");
     }
-    this.filename = filename;
+    this.filename = Paths.get(filename);
   }
 
   @Override
@@ -39,6 +40,6 @@ public class MergedJsonReporter extends AbstractReporter<GitHubProject> {
 
     logger.info("Storing info about projects to {}", filename);
     allProjects.sort(Comparator.comparing(project -> project.scm().toString()));
-    Files.write(Paths.get(filename), Json.toBytes(allProjects));
+    Files.write(filename, Json.toBytes(allProjects));
   }
 }

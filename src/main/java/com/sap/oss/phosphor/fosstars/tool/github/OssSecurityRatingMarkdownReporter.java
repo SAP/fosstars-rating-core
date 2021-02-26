@@ -13,7 +13,6 @@ import com.sap.oss.phosphor.fosstars.tool.format.Formatter;
 import com.sap.oss.phosphor.fosstars.tool.format.MarkdownFormatter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -53,7 +52,8 @@ public class OssSecurityRatingMarkdownReporter extends AbstractReporter<GitHubPr
   /**
    * A template for the report.
    */
-  private static final String TEMPLATE = loadFrom(RESOURCE);
+  private static final String TEMPLATE
+      = loadFrom(RESOURCE, OssSecurityRatingMarkdownReporter.class);
 
   /**
    * A template for a table row in the report.
@@ -549,20 +549,6 @@ public class OssSecurityRatingMarkdownReporter extends AbstractReporter<GitHubPr
      */
     double unclearRatingsPercent() {
       return (double) unclearRatings * 100 / total;
-    }
-  }
-
-  /**
-   * Loads a resource.
-   *
-   * @param name A name of the resource.
-   * @return The content of the resource.
-   */
-  private static String loadFrom(String name) {
-    try (InputStream is = OssSecurityRatingMarkdownReporter.class.getResourceAsStream(name)) {
-      return IOUtils.toString(is, StandardCharsets.UTF_8);
-    } catch (IOException e) {
-      throw new UncheckedIOException("Holy moly! Could not load template!", e);
     }
   }
 
