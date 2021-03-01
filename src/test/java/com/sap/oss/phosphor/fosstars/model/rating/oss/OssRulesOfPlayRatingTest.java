@@ -7,6 +7,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Feature;
@@ -18,6 +19,7 @@ import com.sap.oss.phosphor.fosstars.model.feature.BooleanFeature;
 import com.sap.oss.phosphor.fosstars.model.other.Utils;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating.OssRulesOfPlayLabel;
 import com.sap.oss.phosphor.fosstars.model.score.example.ExampleScores;
+import com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScore;
 import com.sap.oss.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
@@ -26,7 +28,6 @@ import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.util.Set;
-import java.util.stream.Collectors;
 import org.junit.Test;
 
 public class OssRulesOfPlayRatingTest {
@@ -101,11 +102,8 @@ public class OssRulesOfPlayRatingTest {
   }
 
   @Test
-  public void testCalculateWithAllTrueValues() {
-    RatingValue ratingValue = RATING.calculate(
-        USES_REUSE.value(true),
-        HAS_SECURITY_POLICY.value(true),
-        HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT.value(true));
+  public void testCalculateWithAllPassedRules() {
+    RatingValue ratingValue = RATING.calculate(allRulesPassed());
     assertFalse(ratingValue.scoreValue().isUnknown());
     assertFalse(ratingValue.scoreValue().isNotApplicable());
     assertEquals(Score.MAX, ratingValue.scoreValue().get(), DELTA);
@@ -114,10 +112,17 @@ public class OssRulesOfPlayRatingTest {
   }
 
   @Test
-  public void testCalculateWithOneFalseValue() {
+  public void testCalculateWithOneFailedRule() {
     for (Feature<?> feature : RATING.allFeatures()) {
       assertTrue(feature instanceof BooleanFeature);
-      ValueSet values = allTrueValues().update(new BooleanValue((BooleanFeature) feature, false));
+      ValueSet values = allRulesPassed();
+      if (OssRulesOfPlayScore.EXPECTED_FALSE.contains(feature)) {
+        values.update(new BooleanValue((BooleanFeature) feature, true));
+      } else if (OssRulesOfPlayScore.EXPECTED_TRUE.contains(feature)) {
+        values.update(new BooleanValue((BooleanFeature) feature, false));
+      } else {
+        fail("Unexpected feature: " + feature);
+      }
       RatingValue ratingValue = RATING.calculate(values);
       ScoreValue scoreValue = ratingValue.scoreValue();
       assertFalse(scoreValue.isUnknown());
@@ -132,7 +137,7 @@ public class OssRulesOfPlayRatingTest {
   public void testCalculateWithOneUnknownValue() {
     for (Feature<?> feature : RATING.allFeatures()) {
       assertTrue(feature instanceof BooleanFeature);
-      ValueSet values = allTrueValues().update(UnknownValue.of(feature));
+      ValueSet values = allRulesPassed().update(UnknownValue.of(feature));
       RatingValue ratingValue = RATING.calculate(values);
       ScoreValue scoreValue = ratingValue.scoreValue();
       assertFalse(scoreValue.isUnknown());
@@ -144,11 +149,10 @@ public class OssRulesOfPlayRatingTest {
     }
   }
 
-  private static ValueSet allTrueValues() {
-    return new ValueHashSet(
-        RATING.allFeatures().stream()
-            .map(BooleanFeature.class::cast)
-            .map(feature -> new BooleanValue(feature, true))
-            .collect(Collectors.toSet()));
+  private static ValueSet allRulesPassed() {
+    return new ValueHashSet()
+        .update(USES_REUSE.value(true))
+        .update(HAS_SECURITY_POLICY.value(true))
+        .update(HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT.value(false));
   }
 }
