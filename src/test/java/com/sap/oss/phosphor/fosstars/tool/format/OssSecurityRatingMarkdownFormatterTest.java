@@ -55,7 +55,7 @@ import java.util.Date;
 import java.util.Set;
 import org.junit.Test;
 
-public class MarkdownFormatterTest {
+public class OssSecurityRatingMarkdownFormatterTest {
 
   private static final OssSecurityRating RATING
       = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
@@ -102,7 +102,8 @@ public class MarkdownFormatterTest {
     GitHubProject project = new GitHubProject("org", "test");
     project.set(ratingValue);
 
-    MarkdownFormatter formatter = new MarkdownFormatter(new OssSecurityGithubAdvisor());
+    OssSecurityRatingMarkdownFormatter formatter
+        = new OssSecurityRatingMarkdownFormatter(new OssSecurityGithubAdvisor());
     String text = formatter.print(project);
 
     assertNotNull(text);

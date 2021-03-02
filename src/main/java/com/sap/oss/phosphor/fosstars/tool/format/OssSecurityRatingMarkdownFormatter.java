@@ -11,11 +11,6 @@ import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerability;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UncheckedIOException;
-import java.nio.charset.StandardCharsets;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -29,23 +24,24 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * The class prints a rating value in Markdown.
+ * The class prints a rating value
+ * for {@link com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating} in Markdown.
  */
-public class MarkdownFormatter extends CommonFormatter {
+public class OssSecurityRatingMarkdownFormatter extends CommonFormatter {
 
   /**
    * A resource with a Markdown template.
    */
-  private static final String RESOURCE = "MarkdownRatingValueTemplate.md";
+  private static final String RESOURCE = "OssSecurityRatingMarkdownRatingValueTemplate.md";
 
   /**
    * A Markdown template for a rating value.
    */
-  private static final String TEMPLATE = loadFrom(RESOURCE);
+  private static final String TEMPLATE
+      = loadFrom(RESOURCE, OssSecurityRatingMarkdownFormatter.class);
 
   /**
    * An indent for building nested lists.
@@ -58,22 +54,17 @@ public class MarkdownFormatter extends CommonFormatter {
   private static final String NO_ADVICES = StringUtils.EMPTY;
 
   /**
-   * A formatter for doubles.
+   * An advisor for calculated ratings.
    */
-  private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.#");
-
-  static {
-    DECIMAL_FORMAT.setMinimumFractionDigits(1);
-    DECIMAL_FORMAT.setMaximumFractionDigits(2);
-  }
+  protected final Advisor advisor;
 
   /**
    * Create a new formatter.
    *
    * @param advisor An advisor for calculated ratings.
    */
-  public MarkdownFormatter(Advisor advisor) {
-    super(advisor);
+  public OssSecurityRatingMarkdownFormatter(Advisor advisor) {
+    this.advisor = Objects.requireNonNull(advisor, "Oh no! Advisor is null!");
   }
 
   @Override
@@ -286,16 +277,6 @@ public class MarkdownFormatter extends CommonFormatter {
   }
 
   /**
-   * Formats a double.
-   *
-   * @param n The double to be formatted.
-   * @return A formatted string.
-   */
-  private static String formatted(double n) {
-    return DECIMAL_FORMAT.format(n);
-  }
-
-  /**
    * Build details about sub-scores in a specified score value.
    * Each sub-score is printed out in a separate section.
    * The method implements BFS, therefore it prints out the direct sub-scores first.
@@ -423,19 +404,5 @@ public class MarkdownFormatter extends CommonFormatter {
     }
 
     return super.actualValueOf(value);
-  }
-
-  /**
-   * Loads a resource.
-   *
-   * @param resource A name of the resource.
-   * @return The content of the resource.
-   */
-  static String loadFrom(String resource) {
-    try (InputStream is = CommonFormatter.class.getResourceAsStream(resource)) {
-      return IOUtils.toString(is, StandardCharsets.UTF_8);
-    } catch (IOException e) {
-      throw new UncheckedIOException("Holy moly! Could not load template!", e);
-    }
   }
 }

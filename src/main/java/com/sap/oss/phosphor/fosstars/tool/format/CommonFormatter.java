@@ -1,6 +1,5 @@
 package com.sap.oss.phosphor.fosstars.tool.format;
 
-import com.sap.oss.phosphor.fosstars.advice.Advisor;
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Value;
@@ -26,9 +25,14 @@ import com.sap.oss.phosphor.fosstars.model.score.oss.VulnerabilityLifetimeScore;
 import com.sap.oss.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.oss.phosphor.fosstars.model.value.OwaspDependencyCheckCvssThresholdValue;
 import com.sap.oss.phosphor.fosstars.model.value.OwaspDependencyCheckUsageValue;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UncheckedIOException;
+import java.nio.charset.StandardCharsets;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -107,17 +111,13 @@ public abstract class CommonFormatter implements Formatter {
   }
 
   /**
-   * An advisor for calculated ratings.
+   * A formatter for doubles.
    */
-  protected final Advisor advisor;
+  private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.#");
 
-  /**
-   * Initialize a new formatter.
-   *
-   * @param advisor An advisor for calculated ratings.
-   */
-  protected CommonFormatter(Advisor advisor) {
-    this.advisor = Objects.requireNonNull(advisor, "Oh no! Advisor is null!");
+  static {
+    DECIMAL_FORMAT.setMinimumFractionDigits(1);
+    DECIMAL_FORMAT.setMaximumFractionDigits(2);
   }
 
   /**
@@ -203,5 +203,30 @@ public abstract class CommonFormatter implements Formatter {
     }
 
     return value.get().toString();
+  }
+
+  /**
+   * Loads a resource.
+   *
+   * @param resource A name of the resource.
+   * @param clazz A class for loading the resource.
+   * @return The content of the resource.
+   */
+  static String loadFrom(String resource, Class<?> clazz) {
+    try (InputStream is = clazz.getResourceAsStream(resource)) {
+      return IOUtils.toString(is, StandardCharsets.UTF_8);
+    } catch (IOException e) {
+      throw new UncheckedIOException("Holy moly! Could not load template!", e);
+    }
+  }
+
+  /**
+   * Formats a double.
+   *
+   * @param n The double to be formatted.
+   * @return A formatted string.
+   */
+  static String formatted(double n) {
+    return DECIMAL_FORMAT.format(n);
   }
 }

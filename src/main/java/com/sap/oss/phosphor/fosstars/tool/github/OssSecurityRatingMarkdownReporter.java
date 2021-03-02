@@ -10,7 +10,7 @@ import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.oss.phosphor.fosstars.tool.format.Formatter;
-import com.sap.oss.phosphor.fosstars.tool.format.MarkdownFormatter;
+import com.sap.oss.phosphor.fosstars.tool.format.OssSecurityRatingMarkdownFormatter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -147,7 +147,7 @@ public class OssSecurityRatingMarkdownReporter extends AbstractReporter<GitHubPr
     this.outputDirectory = directory;
     this.extraProjects = loadProjects(extraSourceFileName);
     this.rating = rating;
-    this.formatter = new MarkdownFormatter(advisor);
+    this.formatter = new OssSecurityRatingMarkdownFormatter(advisor);
   }
 
   @Override
