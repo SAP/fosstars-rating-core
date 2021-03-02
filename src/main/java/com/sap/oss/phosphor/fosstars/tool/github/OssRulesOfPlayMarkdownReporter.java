@@ -1,5 +1,7 @@
 package com.sap.oss.phosphor.fosstars.tool.github;
 
+import static com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScore.findViolatedRules;
+
 import com.sap.oss.phosphor.fosstars.model.Label;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating.OssRulesOfPlayLabel;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
@@ -15,7 +17,7 @@ import java.util.stream.Collectors;
 
 /**
  * A Markdown reporter
- * for {@link com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating}s.
+ * for {@link com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating}.
  */
 public class OssRulesOfPlayMarkdownReporter extends AbstractReporter<GitHubProject> {
 
@@ -115,12 +117,24 @@ public class OssRulesOfPlayMarkdownReporter extends AbstractReporter<GitHubProje
     Files.write(path, content.getBytes());
   }
 
+  /**
+   * Builds a table with projects.
+   *
+   * @param projects The projects.
+   * @return A table with the projects.
+   */
   private static String tableOf(List<GitHubProject> projects) {
     return projects.stream()
         .map(OssRulesOfPlayMarkdownReporter::rowFor)
         .collect(Collectors.joining("\n"));
   }
 
+  /**
+   * Builds a table row for a project.
+   *
+   * @param project The project.
+   * @return A table row for the project.
+   */
   private static String rowFor(GitHubProject project) {
     return PROJECT_LINE_TEMPLATE
         .replace("%NAME%", nameOf(project))
@@ -128,17 +142,46 @@ public class OssRulesOfPlayMarkdownReporter extends AbstractReporter<GitHubProje
         .replace("%NUMBER_OF_VIOLATED_RULES%", numberOfViolatedRulesIn(project));
   }
 
+  /**
+   * Prints a name of a project.
+   *
+   * @param project The project.
+   * @return A formatted name of the project.
+   */
   private static String nameOf(GitHubProject project) {
     return String.format("[%s/%s](%s)",
         project.organization().name(), project.name(), project.scm().toString());
   }
 
+  /**
+   * Prints a status of a project.
+   *
+   * @param project The project.
+   * @return A status of the project.
+   */
   private static String statusOf(GitHubProject project) {
     return project.ratingValue().map(RatingValue::label).map(Label::name).orElse("UNKNOWN");
   }
 
+  /**
+   * Prints a formatted number of violated rules for a project.
+   *
+   * @param project The project.
+   * @return A formatted number of violated rules for the project.
+   */
   private static String numberOfViolatedRulesIn(GitHubProject project) {
-    return "TODO";
+    Optional<RatingValue> ratingValue = project.ratingValue();
+    if (!ratingValue.isPresent()) {
+      return "UNKNOWN";
+    }
+
+    int n = findViolatedRules(ratingValue.get().scoreValue().usedValues()).size();
+
+    if (n == 0) {
+      return "No violated rules";
+    }
+
+    return String.format("%d violated rule%s", n, n > 1 ? "s" : "");
   }
 
 }
