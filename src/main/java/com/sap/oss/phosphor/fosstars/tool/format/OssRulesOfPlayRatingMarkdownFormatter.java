@@ -82,6 +82,6 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
    * @return A formatted violated rule.
    */
   private static String formatViolatedRule(Value<Boolean> value) {
-    return String.format("1.  %s", nameOf(value.feature()));
+    return String.format("1.  %s %s", nameOf(value.feature()), value.get() ? "Yes" : "No");
   }
 }

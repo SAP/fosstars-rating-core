@@ -6,6 +6,8 @@ import com.sap.oss.phosphor.fosstars.model.Label;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating.OssRulesOfPlayLabel;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
+import com.sap.oss.phosphor.fosstars.tool.format.Formatter;
+import com.sap.oss.phosphor.fosstars.tool.format.OssRulesOfPlayRatingMarkdownFormatter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -49,6 +51,11 @@ public class OssRulesOfPlayMarkdownReporter extends AbstractReporter<GitHubProje
   private final Path outputDirectory;
 
   /**
+   * A formatter for rating values.
+   */
+  private final Formatter formatter;
+
+  /**
    * Initializes a new reporter.
    *
    * @param outputDirectory An output directory.
@@ -71,6 +78,7 @@ public class OssRulesOfPlayMarkdownReporter extends AbstractReporter<GitHubProje
     }
 
     this.outputDirectory = directory;
+    this.formatter = new OssRulesOfPlayRatingMarkdownFormatter();
   }
 
   @Override
@@ -96,6 +104,16 @@ public class OssRulesOfPlayMarkdownReporter extends AbstractReporter<GitHubProje
             String.format("Oh no! Unexpected label: %s", ratingValue.label()));
       }
       total++;
+
+      Path organizationDirectory = outputDirectory.resolve(project.organization().name());
+      if (!Files.isDirectory(organizationDirectory)) {
+        Files.createDirectories(organizationDirectory);
+      }
+
+      String projectReportFilename = String.format("%s.md", project.name());
+      Files.write(
+          organizationDirectory.resolve(projectReportFilename),
+          formatter.print(project).getBytes());
     }
 
     double percentOfPass = (double) numberOfPass / total * 100;
@@ -123,9 +141,9 @@ public class OssRulesOfPlayMarkdownReporter extends AbstractReporter<GitHubProje
    * @param projects The projects.
    * @return A table with the projects.
    */
-  private static String tableOf(List<GitHubProject> projects) {
+  private String tableOf(List<GitHubProject> projects) {
     return projects.stream()
-        .map(OssRulesOfPlayMarkdownReporter::rowFor)
+        .map(this::rowFor)
         .collect(Collectors.joining("\n"));
   }
 
@@ -135,7 +153,7 @@ public class OssRulesOfPlayMarkdownReporter extends AbstractReporter<GitHubProje
    * @param project The project.
    * @return A table row for the project.
    */
-  private static String rowFor(GitHubProject project) {
+  private String rowFor(GitHubProject project) {
     return PROJECT_LINE_TEMPLATE
         .replace("%NAME%", nameOf(project))
         .replace("%STATUS%", statusOf(project))
@@ -159,8 +177,11 @@ public class OssRulesOfPlayMarkdownReporter extends AbstractReporter<GitHubProje
    * @param project The project.
    * @return A status of the project.
    */
-  private static String statusOf(GitHubProject project) {
-    return project.ratingValue().map(RatingValue::label).map(Label::name).orElse("UNKNOWN");
+  private String statusOf(GitHubProject project) {
+    return String.format("[%s](%s/%s.md)",
+        project.ratingValue().map(RatingValue::label).map(Label::name).orElse("UNKNOWN"),
+        project.organization().name(),
+        project.name());
   }
 
   /**
