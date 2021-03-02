@@ -23,7 +23,8 @@ import com.sap.oss.phosphor.fosstars.tool.Reporter;
 import com.sap.oss.phosphor.fosstars.tool.YesNoQuestion;
 import com.sap.oss.phosphor.fosstars.tool.YesNoQuestion.Answer;
 import com.sap.oss.phosphor.fosstars.tool.format.Formatter;
-import com.sap.oss.phosphor.fosstars.tool.format.MarkdownFormatter;
+import com.sap.oss.phosphor.fosstars.tool.format.OssRulesOfPlayRatingMarkdownFormatter;
+import com.sap.oss.phosphor.fosstars.tool.format.OssSecurityRatingMarkdownFormatter;
 import com.sap.oss.phosphor.fosstars.tool.format.PrettyPrinter;
 import com.sap.oss.phosphor.fosstars.tool.github.Application.ReportConfig.ReportType;
 import com.sap.oss.phosphor.fosstars.util.Json;
@@ -454,7 +455,7 @@ public class Application {
    * @param commandLine Command-line options.
    * @throws IOException If something went wrong.
    */
-  private static void storeReportIfRequested(GitHubProject project, CommandLine commandLine)
+  private void storeReportIfRequested(GitHubProject project, CommandLine commandLine)
       throws IOException {
 
     if (!project.ratingValue().isPresent()) {
@@ -487,13 +488,18 @@ public class Application {
    * @return A formatter.
    * @throws IllegalArgumentException If the type is unknown.
    */
-  private static Formatter createFormatter(String type) {
+  private Formatter createFormatter(String type) {
     switch (type) {
       case "text":
         return PrettyPrinter.withVerboseOutput(ADVISOR);
       case "markdown":
-        // TODO: take into account rating
-        return new MarkdownFormatter(ADVISOR);
+        if (rating instanceof OssSecurityRating) {
+          return new OssSecurityRatingMarkdownFormatter(ADVISOR);
+        }
+        if (rating instanceof OssRulesOfPlayRating) {
+          return new OssRulesOfPlayRatingMarkdownFormatter();
+        }
+        throw new IllegalArgumentException("No markdown formatter for the rating!");
       default:
         throw new IllegalArgumentException(String.format("Unknown report type: %s", type));
     }
