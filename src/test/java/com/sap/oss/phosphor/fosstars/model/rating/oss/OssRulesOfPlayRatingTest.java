@@ -26,6 +26,7 @@ import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.oss.phosphor.fosstars.model.value.UnknownValue;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.oss.phosphor.fosstars.util.Json;
+import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
 import java.util.Set;
 import org.junit.Test;
@@ -48,8 +49,25 @@ public class OssRulesOfPlayRatingTest {
   }
 
   @Test
-  public void testSerialization() throws IOException {
+  public void testRatingJsonSerialization() throws IOException {
     assertEquals(RATING, Json.read(Json.toBytes(RATING), OssRulesOfPlayRating.class));
+  }
+
+  @Test
+  public void testRatingYamlSerialization() throws IOException {
+    assertEquals(RATING, Yaml.read(Yaml.toBytes(RATING), OssRulesOfPlayRating.class));
+  }
+
+  @Test
+  public void testRatingValueJsonSerialization() throws IOException {
+    RatingValue ratingValue = RATING.calculate(allRulesPassed());
+    assertEquals(ratingValue, Json.read(Json.toBytes(ratingValue), RatingValue.class));
+  }
+
+  @Test
+  public void testRatingValueYamlSerialization() throws IOException {
+    RatingValue ratingValue = RATING.calculate(allRulesPassed());
+    assertEquals(ratingValue, Yaml.read(Json.toBytes(ratingValue), RatingValue.class));
   }
 
   @Test
