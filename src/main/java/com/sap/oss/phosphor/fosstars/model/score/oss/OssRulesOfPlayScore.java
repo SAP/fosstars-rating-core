@@ -52,9 +52,7 @@ public class OssRulesOfPlayScore extends FeatureBasedScore {
         .map(feature -> find(feature, values))
         .collect(Collectors.toList());
 
-    List<Value<Boolean>> violatedRules = new ArrayList<>();
-    violatedRules.addAll(findViolatedRules(EXPECTED_FALSE, false, usedValues));
-    violatedRules.addAll(findViolatedRules(EXPECTED_TRUE, true, usedValues));
+    List<Value<Boolean>> violatedRules = findViolatedRules(usedValues);
 
     if (violatedRules.isEmpty()) {
       return scoreValue(MAX, usedValues).explain("No violated rules found.");
@@ -85,6 +83,19 @@ public class OssRulesOfPlayScore extends FeatureBasedScore {
         .map(BooleanValue.class::cast)
         .filter(value -> value.get() != expectedValue)
         .collect(Collectors.toList());
+  }
+
+  /**
+   * Looks for violated rules.
+   *
+   * @param usedValues A list of values to be checked.
+   * @return A list of violated rules.
+   */
+  public static List<Value<Boolean>> findViolatedRules(List<Value<?>> usedValues) {
+    List<Value<Boolean>> violatedRules = new ArrayList<>();
+    violatedRules.addAll(findViolatedRules(EXPECTED_FALSE, false, usedValues));
+    violatedRules.addAll(findViolatedRules(EXPECTED_TRUE, true, usedValues));
+    return violatedRules;
   }
 
   /**

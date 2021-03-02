@@ -492,6 +492,7 @@ public class Application {
       case "text":
         return PrettyPrinter.withVerboseOutput(ADVISOR);
       case "markdown":
+        // TODO: take into account rating
         return new MarkdownFormatter(ADVISOR);
       default:
         throw new IllegalArgumentException(String.format("Unknown report type: %s", type));
@@ -564,6 +565,10 @@ public class Application {
     if (reportConfig.type == ReportType.MARKDOWN && rating instanceof OssSecurityRating) {
       return new OssSecurityRatingMarkdownReporter(
           reportConfig.where, reportConfig.source, (OssSecurityRating) rating, ADVISOR);
+    }
+
+    if (reportConfig.type == ReportType.MARKDOWN && rating instanceof OssRulesOfPlayRating) {
+      return new OssRulesOfPlayMarkdownReporter(reportConfig.where);
     }
 
     throw new IllegalArgumentException(String.format(
