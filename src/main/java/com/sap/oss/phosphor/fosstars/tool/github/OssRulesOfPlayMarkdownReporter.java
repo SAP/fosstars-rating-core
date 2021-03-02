@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -143,6 +144,8 @@ public class OssRulesOfPlayMarkdownReporter extends AbstractReporter<GitHubProje
    */
   private String tableOf(List<GitHubProject> projects) {
     return projects.stream()
+        .filter(project -> project.ratingValue().isPresent())
+        .sorted(Comparator.comparing(project -> project.ratingValue().get().label().name()))
         .map(this::rowFor)
         .collect(Collectors.joining("\n"));
   }
