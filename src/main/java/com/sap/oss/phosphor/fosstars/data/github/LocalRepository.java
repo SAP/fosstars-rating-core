@@ -212,21 +212,11 @@ public class LocalRepository implements AutoCloseable {
   /**
    * Checks if the repository has a specified file.
    *
-   * @param path A path to the file.
-   * @return Ture if the repository contains the specified file, false otherwise.
-   */
-  public boolean hasFile(Path path) {
-    return Files.isRegularFile(info.path().resolve(path));
-  }
-
-  /**
-   * Checks if the repository has a specified file.
-   *
    * @param file A path to the file.
    * @return Ture if the repository contains the specified file, false otherwise.
    */
   public boolean hasFile(String file) {
-    return hasFile(info.path().resolve(Paths.get(file)));
+    return Files.isRegularFile(info.path().resolve(Paths.get(file)));
   }
 
   /**
