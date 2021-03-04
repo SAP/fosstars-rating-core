@@ -40,7 +40,6 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 cd ..
-echo fosstars-rating-core >> .gitignore
 
 # Generate a report
 java -jar fosstars-rating-core/target/fosstars-github-rating-calc.jar \
@@ -54,6 +53,8 @@ if [ $? -ne 0 ]; then
 fi
 
 # Commit the report
+echo fosstars-rating-core >> .gitignore
+echo .fosstars >> .gitignore
 git add --all
 git config --global user.name "Fosstars"
 git config --global user.email "fosstars@users.noreply.github.com"
