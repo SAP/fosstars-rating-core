@@ -233,6 +233,14 @@
         </plugins>
       </build>
     </profile>
+    <profile>
+      <id>develop</id>
+      <properties>
+        <checkstyle.skip>true</checkstyle.skip>
+        <maven.javadoc.skip>true</maven.javadoc.skip>
+        <skipAssembly>true</skipAssembly>
+      </properties>
+    </profile>
   </profiles>
 
   <dependencies>
