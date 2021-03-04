@@ -1,6 +1,8 @@
 package com.sap.oss.phosphor.fosstars.tool.github;
 
 import com.sap.oss.phosphor.fosstars.data.DataProvider;
+import com.sap.oss.phosphor.fosstars.data.github.ArtifactVersionUsed;
+import com.sap.oss.phosphor.fosstars.data.github.ArtifactVersionUsedGitHub;
 import com.sap.oss.phosphor.fosstars.data.github.CodeqlDataProvider;
 import com.sap.oss.phosphor.fosstars.data.github.FuzzedInOssFuzz;
 import com.sap.oss.phosphor.fosstars.data.github.GitHubDataFetcher;
@@ -19,6 +21,7 @@ import com.sap.oss.phosphor.fosstars.data.github.NumberOfWatchers;
 import com.sap.oss.phosphor.fosstars.data.github.OwaspSecurityLibraries;
 import com.sap.oss.phosphor.fosstars.data.github.PackageManagement;
 import com.sap.oss.phosphor.fosstars.data.github.ProgrammingLanguages;
+import com.sap.oss.phosphor.fosstars.data.github.ReleasesFromGitHub;
 import com.sap.oss.phosphor.fosstars.data.github.SignsJarArtifacts;
 import com.sap.oss.phosphor.fosstars.data.github.UseReuseDataProvider;
 import com.sap.oss.phosphor.fosstars.data.github.UsesDependabot;
@@ -88,6 +91,9 @@ public class DataProviderSelector {
         new SignsJarArtifacts(fetcher),
         new OwaspSecurityLibraries(fetcher),
         new UseReuseDataProvider(fetcher),
+        new ReleasesFromGitHub(fetcher),
+        new ArtifactVersionUsed<>(),
+        // new ArtifactVersionUsedGitHub(fetcher),
 
         // currently interactive data provider have to be added to the end, see issue #133
         new AskAboutSecurityTeam<>(),

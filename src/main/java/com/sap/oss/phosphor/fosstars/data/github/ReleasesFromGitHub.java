@@ -21,7 +21,7 @@ import org.kohsuke.github.GHRepository;
 /**
  * This data provider collects version information from GitHub releases.
  */
-public class ReleasesFromGitHub extends CachedSingleFeatureGitHubDataProvider {
+public class ReleasesFromGitHub extends CachedSingleFeatureGitHubDataProvider<ArtifactVersions> {
 
   /**
    * Initializes a data provider.

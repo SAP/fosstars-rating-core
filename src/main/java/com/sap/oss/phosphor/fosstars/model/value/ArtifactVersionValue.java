@@ -7,12 +7,12 @@ import com.sap.oss.phosphor.fosstars.model.Feature;
 import java.util.Objects;
 
 /**
- * A value for a feature that holds a set of programming languages.
+ * A value for a feature.... TODO
  */
 public class ArtifactVersionValue extends AbstractValue<String> {
 
   /**
-   * A language.
+   * A version.
    */
   private final String artifactVersions;
 
@@ -20,15 +20,15 @@ public class ArtifactVersionValue extends AbstractValue<String> {
    * Initializes a value for a feature.
    *
    * @param feature The feature.
-   * @param artifactVersions The versions.
+   * @param artifactVersion The versions.
    */
   @JsonCreator
   public ArtifactVersionValue(
       @JsonProperty("feature") Feature<String> feature,
-      @JsonProperty("versions") String artifactVersions) {
+      @JsonProperty("version") String artifactVersion) {
 
     super(feature);
-    this.artifactVersions = Objects.requireNonNull(artifactVersions, "Version can't be null!");
+    this.artifactVersions = Objects.requireNonNull(artifactVersion, "Version can't be null!");
   }
 
   @Override

@@ -71,6 +71,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <version.jackson>2.12.2</version.jackson>
+    <version.jackson-datatype>2.11.4</version.jackson-datatype>
     <version.commons-math3>3.6.1</version.commons-math3>
     <version.commons-cli>1.4</version.commons-cli>
     <version.github-api>1.124</version.github-api>
@@ -248,6 +249,11 @@
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
       <version>${version.jackson}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-jsr310</artifactId>
+      <version>${version.jackson-datatype}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>

@@ -2,6 +2,7 @@ package com.sap.oss.phosphor.fosstars.model;
 
 import com.sap.oss.phosphor.fosstars.model.other.MakeImmutable;
 import com.sap.oss.phosphor.fosstars.model.rating.example.SecurityRatingExample;
+import com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating.Thresholds;
@@ -63,6 +64,7 @@ public class RatingRepository {
     register(RatingRepository::securityRatingExample);
     register(RatingRepository::ossSecurityRating);
     register(RatingRepository::ossRulesOfPlayRating);
+    register(RatingRepository::ossArtifactSecurityRating);
   }
 
   /**
@@ -114,6 +116,15 @@ public class RatingRepository {
    */
   private static OssRulesOfPlayRating ossRulesOfPlayRating() {
     return new OssRulesOfPlayRating();
+  }
+
+  /**
+   * Loads a {@link OssArtifactSecurityRating}.
+   *
+   * @return An instance of {@link OssArtifactSecurityRating}.
+   */
+  private static OssArtifactSecurityRating ossArtifactSecurityRating() {
+    return new OssArtifactSecurityRating();
   }
 
   /**

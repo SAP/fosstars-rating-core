@@ -14,6 +14,7 @@ import com.sap.oss.phosphor.fosstars.data.UserCallback;
 import com.sap.oss.phosphor.fosstars.data.github.GitHubDataFetcher;
 import com.sap.oss.phosphor.fosstars.model.Rating;
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
+import com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
@@ -118,6 +119,12 @@ public class Application {
     RATINGS.put("oss-rules-of-play", ossRulesOfPlay);
     RATINGS.put(ossRulesOfPlay.getClass().getSimpleName(), ossRulesOfPlay);
     RATINGS.put(ossRulesOfPlay.getClass().getCanonicalName(), ossRulesOfPlay);
+
+    Rating ossArtifactSecurityRating =
+        RatingRepository.INSTANCE.rating(OssArtifactSecurityRating.class);
+    RATINGS.put("oss-artifact-security", ossArtifactSecurityRating);
+    RATINGS.put(ossArtifactSecurityRating.getClass().getSimpleName(), ossArtifactSecurityRating);
+    RATINGS.put(ossArtifactSecurityRating.getClass().getCanonicalName(), ossArtifactSecurityRating);
   }
 
   /**
@@ -182,7 +189,8 @@ public class Application {
         Option.builder("r")
             .longOpt("rating")
             .hasArg()
-            .desc("A rating to use: security, oss-rules-of-play (default, security)")
+            .desc("A rating to use: security, oss-artifact-security, oss-rules-of-play "
+                + "(default is security)")
             .build());
     options.addOption(
         Option.builder("t")

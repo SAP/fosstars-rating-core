@@ -7,7 +7,8 @@ import com.sap.oss.phosphor.fosstars.model.Feature;
 import java.util.Objects;
 
 /**
- * A value for a feature that holds a set of programming languages.
+ * A value for a feature that.
+ * TODO add proper javadoc
  */
 public class ArtifactVersionsValue extends AbstractValue<ArtifactVersions> {
 
