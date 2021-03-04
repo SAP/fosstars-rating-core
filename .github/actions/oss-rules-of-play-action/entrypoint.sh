@@ -40,22 +40,25 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 cd ..
+echo fosstars-rating-core >> .gitignore
 
 # Generate a report
 java -jar fosstars-rating-core/target/fosstars-github-rating-calc.jar \
-          --url $PROJECT_SCM_URL \
           --token $TOKEN \
           --verbose \
           --config config.yml \
           --rating oss-rules-of-play
-
-git add $REPORT_FILE
+if [ $? -ne 0 ]; then
+    echo "Oops! Could not run Fosstars!"
+    exit 1
+fi
 
 # Commit the report
+git add --all
 git config --global user.name "Fosstars"
 git config --global user.email "fosstars@users.noreply.github.com"
 
-git commit -m "Update Fosstars report" $REPORT_FILE
+git commit -am "Update Fosstars report"
 if [ $? -ne 0 ]; then
     echo "Could not commit anything"
     exit 0
