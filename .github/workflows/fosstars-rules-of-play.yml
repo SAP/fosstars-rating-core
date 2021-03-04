@@ -1,4 +1,4 @@
-name: "Fosstars (Security)"
+name: "Fosstars (OSS rules of play)"
 on:
   push:
   schedule:
@@ -7,10 +7,9 @@ on:
 jobs:
   create_fosstars_report:
     runs-on: ubuntu-latest
-    name: "Security rating"
+    name: "Open source rules of play"
     steps:
       - uses: actions/checkout@v2.3.4
-      - uses: SAP/fosstars-rating-core-action@v1.0.0
+      - uses: ./.github/actions/oss-rules-of-play-action
         with:
-          report-branch: fosstars-report
           token: "${{ secrets.GITHUB_TOKEN }}"
