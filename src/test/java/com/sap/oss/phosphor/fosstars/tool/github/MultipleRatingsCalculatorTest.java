@@ -26,8 +26,8 @@ public class MultipleRatingsCalculatorTest extends TestGitHubDataFetcherHolder {
   public void testCalculateFor() {
     Rating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
 
-    SingleSecurityRatingCalculator singleRatingCalculator
-        = new SingleSecurityRatingCalculator(rating, Collections.emptyList());
+    SingleRatingCalculator singleRatingCalculator
+        = new SingleRatingCalculator(rating, Collections.emptyList());
     singleRatingCalculator.set(NoUserCallback.INSTANCE);
 
     MultipleRatingsCalculator multipleRatingsCalculator

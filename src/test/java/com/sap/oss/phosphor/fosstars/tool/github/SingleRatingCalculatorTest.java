@@ -16,14 +16,14 @@ import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
 import java.util.Collections;
 import org.junit.Test;
 
-public class SingleSecurityRatingCalculatorTest extends TestGitHubDataFetcherHolder {
+public class SingleRatingCalculatorTest extends TestGitHubDataFetcherHolder {
 
   @Test
   public void testCalculateFor() {
     GitHubProject project = new GitHubProject("test", "project");
 
-    SingleSecurityRatingCalculator calculator
-        = new SingleSecurityRatingCalculator(
+    SingleRatingCalculator calculator
+        = new SingleRatingCalculator(
             RatingRepository.INSTANCE.rating(OssSecurityRating.class),
             Collections.emptyList());
     calculator.set(NoUserCallback.INSTANCE);

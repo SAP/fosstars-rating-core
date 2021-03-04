@@ -18,15 +18,15 @@ import org.apache.logging.log4j.Logger;
 /**
  * The class calculates a rating for a project.
  */
-public class SingleSecurityRatingCalculator implements RatingCalculator {
+public class SingleRatingCalculator implements RatingCalculator {
 
   /**
    * A logger.
    */
-  private static final Logger LOGGER = LogManager.getLogger(SingleSecurityRatingCalculator.class);
+  private static final Logger LOGGER = LogManager.getLogger(SingleRatingCalculator.class);
 
   /**
-   * Open source security rating.
+   * A rating.
    */
   private final Rating rating;
 
@@ -51,7 +51,7 @@ public class SingleSecurityRatingCalculator implements RatingCalculator {
    * @param rating A rating.
    * @param providers A list of data providers.
    */
-  SingleSecurityRatingCalculator(Rating rating, List<DataProvider<GitHubProject>> providers) {
+  SingleRatingCalculator(Rating rating, List<DataProvider<GitHubProject>> providers) {
     Objects.requireNonNull(rating, "Oh no! Rating can't be null!");
     Objects.requireNonNull(providers, "Oh no! A list of data providers can't be null!");
 
@@ -60,24 +60,24 @@ public class SingleSecurityRatingCalculator implements RatingCalculator {
   }
 
   @Override
-  public SingleSecurityRatingCalculator set(UserCallback callback) {
+  public SingleRatingCalculator set(UserCallback callback) {
     Objects.requireNonNull(callback, "Oh no! Callback can't be null!");
     this.callback = callback;
     return this;
   }
 
   @Override
-  public SingleSecurityRatingCalculator set(ValueCache<GitHubProject> cache) {
+  public SingleRatingCalculator set(ValueCache<GitHubProject> cache) {
     Objects.requireNonNull(cache, "Oh no! Cache can't be null!");
     this.cache = cache;
     return this;
   }
 
   @Override
-  public SingleSecurityRatingCalculator calculateFor(GitHubProject project) {
+  public SingleRatingCalculator calculateFor(GitHubProject project) {
     Objects.requireNonNull(project, "Oh no! Project can't be null!");
 
-    LOGGER.info("Let's gather info and calculate a security rating for:");
+    LOGGER.info("Let's gather info and calculate a rating for:");
     LOGGER.info("  {}", project.scm());
 
     ValueSet values = ValueHashSet.unknown(rating.allFeatures());

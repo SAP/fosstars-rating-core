@@ -159,7 +159,7 @@ public class Application {
   /**
    * A calculator for security ratings.
    */
-  private final SingleSecurityRatingCalculator calculator;
+  private final SingleRatingCalculator calculator;
 
   /**
    * A {@link PrettyPrinter} for printing out a security rating.
@@ -269,7 +269,7 @@ public class Application {
     List<DataProvider<GitHubProject>> providers
         = new DataProviderSelector(fetcher, new NVD()).providersFor(rating);
 
-    calculator = new SingleSecurityRatingCalculator(rating, providers);
+    calculator = new SingleRatingCalculator(rating, providers);
     calculator.set(VALUE_CACHE);
     calculator.set(callback);
 
