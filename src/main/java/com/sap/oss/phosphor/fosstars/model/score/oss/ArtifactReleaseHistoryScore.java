@@ -35,7 +35,7 @@ public class ArtifactReleaseHistoryScore extends FeatureBasedScore {
   }
 
   @Override
-  public ScoreValue calculate(Value... values) {
+  public ScoreValue calculate(Value<?>... values) {
     Value<ArtifactVersions> artifactVersions = find(RELEASED_ARTIFACT_VERSIONS, values);
 
     if (artifactVersions.get().size() <= 1) {

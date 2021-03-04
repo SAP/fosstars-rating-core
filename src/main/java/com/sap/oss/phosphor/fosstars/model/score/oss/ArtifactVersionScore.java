@@ -28,12 +28,12 @@ public class ArtifactVersionScore extends FeatureBasedScore {
   public ArtifactVersionScore() {
     // FIXME: name is only a working name and require change
     super("Maintenance effort score for an artifact of open-source project",
-        OssFeatures.RELEASED_ARTIFACT_VERSIONS,
+        RELEASED_ARTIFACT_VERSIONS,
         ARTIFACT_VERSION);
   }
 
   @Override
-  public ScoreValue calculate(Value... values) {
+  public ScoreValue calculate(Value<?>... values) {
     Value<ArtifactVersions> artifactVersionsValue = find(RELEASED_ARTIFACT_VERSIONS, values);
     Value<String> versionValue = find(ARTIFACT_VERSION, values);
 

@@ -15,6 +15,8 @@ import org.junit.Test;
 
 public class ArtifactReleaseHistoryScoreTest {
 
+  private static final double DELTA = 0.2;
+
   @Test
   public void smokeTest() {
     ArtifactVersion version100 =
@@ -46,7 +48,7 @@ public class ArtifactReleaseHistoryScoreTest {
     ScoreValue value = score.calculate(versions);
     System.out.println("\n\ncurrentReleasedVersionGoodHistory");
     System.out.printf("Available versions: %s;%nrating: %2.2f%n", versions, value.get());
-    Assert.assertEquals(Double.valueOf(9.5), value.get());
+    Assert.assertEquals(9.5, value.get(), DELTA);
   }
 
   @Test
@@ -63,7 +65,7 @@ public class ArtifactReleaseHistoryScoreTest {
     ScoreValue value = score.calculate(versions);
     System.out.println("\n\ncurrentReleasedVersionGoodHistory");
     System.out.printf("Available versions: %s;%nrating: %2.2f%n", versions, value.get());
-    Assert.assertEquals(Double.valueOf(6.5), value.get());
+    Assert.assertEquals(6.5, value.get(), DELTA);
   }
 
   @Test
@@ -80,7 +82,7 @@ public class ArtifactReleaseHistoryScoreTest {
     ScoreValue value = score.calculate(versions);
     System.out.println("\n\ncurrentReleasedVersionBadHistory");
     System.out.printf("Available versions: %s;%nrating: %2.2f%n", versions, value.get());
-    Assert.assertEquals(Double.valueOf(5.5), value.get());
+    Assert.assertEquals(5.5, value.get(), DELTA);
   }
 
   @Test
@@ -96,7 +98,7 @@ public class ArtifactReleaseHistoryScoreTest {
     ScoreValue value = score.calculate(versions);
     System.out.println("\n\ntwoMonthOldVersion");
     System.out.printf("Available versions: %s;%nrating: %2.2f%n", versions, value.get());
-    Assert.assertEquals(Double.valueOf(7.0), value.get());
+    Assert.assertEquals(7.0, value.get(), DELTA);
   }
 
   @Test
@@ -121,7 +123,7 @@ public class ArtifactReleaseHistoryScoreTest {
     ScoreValue value = score.calculate(versions);
     System.out.println("\n\ntwoMonthOldVersionStable");
     System.out.printf("Available versions: %s;%nrating: %2.2f%n", versions, value.get());
-    Assert.assertEquals(Double.valueOf(8.6), value.get());
+    Assert.assertEquals(7.6, value.get(), DELTA);
   }
 
   @Test
@@ -146,7 +148,7 @@ public class ArtifactReleaseHistoryScoreTest {
     ScoreValue value = score.calculate(versions);
     System.out.println("\n\ntwoMonthOldGoodVersionTrend");
     System.out.printf("Available versions: %s;%nrating: %2.2f%n", versions, value.get());
-    Assert.assertEquals(Double.valueOf(5.8), value.get());
+    Assert.assertEquals(5.8, value.get(), DELTA);
   }
 
   @Test
@@ -171,7 +173,7 @@ public class ArtifactReleaseHistoryScoreTest {
     ScoreValue value = score.calculate(versions);
     System.out.println("\n\ntwoMonthOldVersionDecrease");
     System.out.printf("Available versions: %s;%nrating: %2.2f%n", versions, value.get());
-    Assert.assertEquals(Double.valueOf(5.2), value.get());
+    Assert.assertEquals(5.2, value.get(), DELTA);
   }
 
   @Test
@@ -187,7 +189,7 @@ public class ArtifactReleaseHistoryScoreTest {
     ScoreValue value = score.calculate(versions);
     System.out.println("\n\neightMonthOldVersion");
     System.out.printf("Available versions: %s;%nrating: %2.2f%n", versions, value.get());
-    Assert.assertEquals(Double.valueOf(5.0), value.get());
+    Assert.assertEquals(5.0, value.get(), DELTA);
   }
 
   @Test
@@ -201,7 +203,7 @@ public class ArtifactReleaseHistoryScoreTest {
     ScoreValue value = score.calculate(versions);
     System.out.println("\n\nfourteenMonthOldSingleVersion");
     System.out.printf("Available versions: %s;%nrating: %2.2f%n", versions, value.get());
-    Assert.assertEquals(Double.valueOf(0.0), value.get());
+    Assert.assertEquals(0.0, value.get(), DELTA);
   }
 
   @Test(expected = IllegalArgumentException.class)

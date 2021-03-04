@@ -6,7 +6,7 @@ import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Label;
 import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.rating.AbstractRating;
-import com.sap.oss.phosphor.fosstars.model.score.oss.OssArtifactMaintenanceScore;
+import com.sap.oss.phosphor.fosstars.model.score.oss.OssArtifactSecurityScore;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import java.util.Objects;
 
@@ -19,7 +19,7 @@ public class OssArtifactSecurityRating extends AbstractRating {
   /**
    * A set of labels for the rating.
    */
-  public enum MaintenanceLabel implements Label {
+  public enum ArtifactSecurityLabel implements Label {
 
     BAD, MODERATE, GOOD, UNCLEAR
   }
@@ -33,7 +33,7 @@ public class OssArtifactSecurityRating extends AbstractRating {
    * Initializes a maintenance rating with defaults.
    */
   public OssArtifactSecurityRating() {
-    this(new OssArtifactMaintenanceScore(), Thresholds.DEFAULT);
+    this(new OssArtifactSecurityScore(), Thresholds.DEFAULT);
   }
 
   /**
@@ -44,7 +44,7 @@ public class OssArtifactSecurityRating extends AbstractRating {
    */
   @JsonCreator
   public OssArtifactSecurityRating(
-      @JsonProperty("score") OssArtifactMaintenanceScore score,
+      @JsonProperty("score") OssArtifactSecurityScore score,
       @JsonProperty("thresholds") Thresholds thresholds) {
 
     super("maintenance rating for open-source projects", score);
@@ -53,29 +53,29 @@ public class OssArtifactSecurityRating extends AbstractRating {
   }
 
   @Override
-  public OssArtifactMaintenanceScore score() {
-    return (OssArtifactMaintenanceScore) super.score();
+  public OssArtifactSecurityScore score() {
+    return (OssArtifactSecurityScore) super.score();
   }
 
   @Override
-  protected MaintenanceLabel label(ScoreValue scoreValue) {
+  protected ArtifactSecurityLabel label(ScoreValue scoreValue) {
     Objects.requireNonNull(scoreValue, "Oh no! Score value is null!");
 
     if (scoreValue.confidence() < thresholds.unclear) {
-      return MaintenanceLabel.UNCLEAR;
+      return ArtifactSecurityLabel.UNCLEAR;
     }
 
     double score = scoreValue.get();
 
     if (score < thresholds.moderate) {
-      return MaintenanceLabel.BAD;
+      return ArtifactSecurityLabel.BAD;
     }
 
     if (score < thresholds.good) {
-      return MaintenanceLabel.MODERATE;
+      return ArtifactSecurityLabel.MODERATE;
     }
 
-    return MaintenanceLabel.GOOD;
+    return ArtifactSecurityLabel.GOOD;
   }
 
   /**
