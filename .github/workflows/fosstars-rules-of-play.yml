@@ -13,4 +13,5 @@ jobs:
       - uses: ./.github/actions/oss-rules-of-play-action
         with:
           fosstars-version: oss-rules-of-play
+          report-branch: fosstars-oss-rules-of-play-test-report
           token: "${{ secrets.GITHUB_TOKEN }}"
