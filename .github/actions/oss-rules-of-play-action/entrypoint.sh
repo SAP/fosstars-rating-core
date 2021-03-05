@@ -37,7 +37,7 @@ export MAVEN_OPTS=-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf
 git clone https://github.com/SAP/fosstars-rating-core && \
     cd fosstars-rating-core && \
     git checkout $FOSSTARS_VERSION && \
-    mvn package -DskipTests -Dcheckstyle.skip -Dmaven.javadoc.skip=true && \
+    mvn package -ntp -DskipTests -Dcheckstyle.skip -Dmaven.javadoc.skip=true && \
 if [ $? -ne 0 ]; then
     echo "Oops! Could not build Fosstars!"
     exit 1
