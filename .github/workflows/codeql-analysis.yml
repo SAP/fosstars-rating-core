@@ -29,7 +29,9 @@ jobs:
       with:
         languages: ${{ matrix.language }}
 
-    - run: mvn clean package -DskipTests -Dcheckstyle.skip -Dmaven.javadoc.skip=true
+    - run: mvn clean package -ntp -DskipTests -Dcheckstyle.skip -Dmaven.javadoc.skip=true
+      env:
+        MAVEN_OPTS: -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
