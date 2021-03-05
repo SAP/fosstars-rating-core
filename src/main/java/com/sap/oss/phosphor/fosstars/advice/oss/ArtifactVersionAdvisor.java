@@ -42,7 +42,7 @@ public class ArtifactVersionAdvisor extends AbstractOssAdvisor {
     Optional<Value<ArtifactVersions>> releasedVersionsValue = findValue(usedValues,
         RELEASED_ARTIFACT_VERSIONS);
 
-    if (versionValue.isPresent() && releasedVersionsValue.isPresent()) {
+    if (isAllVersionInformationAvailable(versionValue, releasedVersionsValue)) {
       ArtifactVersion latestVersion = getLatestVersion(releasedVersionsValue.get());
       String usedVersion = versionValue.get().get();
 
@@ -58,6 +58,22 @@ public class ArtifactVersionAdvisor extends AbstractOssAdvisor {
       }
     }
     return Collections.emptyList();
+  }
+
+  private boolean isAllVersionInformationAvailable(
+      Optional<Value<String>> versionValue,
+      Optional<Value<ArtifactVersions>> releasedVersionsValue) {
+
+    if (versionValue.isPresent() && releasedVersionsValue.isPresent()) {
+      if (versionValue.get().isUnknown() || versionValue.get().get().isEmpty()) {
+        return false;
+      }
+      if (releasedVersionsValue.get().isUnknown() || releasedVersionsValue.get().get().empty()) {
+        return false;
+      }
+      return true;
+    }
+    return false;
   }
 
   private ArtifactVersion getLatestVersion(Value<ArtifactVersions> releasedVersionsValue) {

@@ -33,12 +33,17 @@ public class ArtifactAgeScore extends FeatureBasedScore {
   }
 
   @Override
-  public ScoreValue calculate(Value... values) {
+  public ScoreValue calculate(Value<?>... values) {
     Value<ArtifactVersions> artifactVersions = find(RELEASED_ARTIFACT_VERSIONS, values);
 
     ScoreValue scoreValue = scoreValue(Score.MIN, artifactVersions);
 
     Collection<ArtifactVersion> sortedByReleaseDate = sortByReleaseDate(artifactVersions);
+
+    if (sortedByReleaseDate.isEmpty()) {
+      logger.info("No release information was found.");
+      return scoreValue;
+    }
 
     ArtifactVersion latestVersion = sortedByReleaseDate.iterator().next();
     LocalDate oneMonthBack = LocalDate.now().minusMonths(1);

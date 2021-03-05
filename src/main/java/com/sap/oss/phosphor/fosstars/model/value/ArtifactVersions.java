@@ -47,7 +47,7 @@ public class ArtifactVersions implements Iterable<ArtifactVersion> {
    *
    * @return An empty set of versions.
    */
-  public static ArtifactVersions empty() {
+  public static ArtifactVersions ofNothing() {
     return new ArtifactVersions();
   }
 
@@ -78,6 +78,15 @@ public class ArtifactVersions implements Iterable<ArtifactVersion> {
    */
   public int size() {
     return elements.size();
+  }
+
+  /**
+   * Check if artifact versions set is empty.
+   *
+   * @return true if empty otherwise false.
+   */
+  public boolean empty() {
+    return elements.isEmpty();
   }
 
   /**
