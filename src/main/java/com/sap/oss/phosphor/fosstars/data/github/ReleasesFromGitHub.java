@@ -12,11 +12,13 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.kohsuke.github.GHOrganization;
 import org.kohsuke.github.GHRelease;
 import org.kohsuke.github.GHRepository;
+import org.kohsuke.github.GHTag;
 
 /**
  * This data provider collects version information from GitHub releases.
@@ -47,12 +49,30 @@ public class ReleasesFromGitHub extends CachedSingleFeatureGitHubDataProvider<Ar
     GHRepository repo = org.getRepository(project.name());
 
     List<GHRelease> releases = repo.listReleases().toList();
-
-    Set<ArtifactVersion> artifactVersions = releases.stream()
+    Set<ArtifactVersion> artifactVersions;
+    if (releases.isEmpty()) {
+      logger.info("No release information found. Try tags.");
+      artifactVersions = repo.listTags().toList().stream()
+          .filter(tag -> ArtifactVersion.isSemVer(tag.getName()))
+          .map(this::createArtifactVersion)
+          .filter(Objects::nonNull)
+          .collect(Collectors.toSet());
+    } else {
+      artifactVersions = releases.stream()
         .map(r -> new ArtifactVersion(r.getName(), convertToLocalDate(r.getPublished_at())))
         .collect(Collectors.toSet());
+    }
 
     return RELEASED_ARTIFACT_VERSIONS.value(new ArtifactVersions(artifactVersions));
+  }
+
+  private ArtifactVersion createArtifactVersion(GHTag tag) {
+    try {
+      return new ArtifactVersion(tag.getName(),
+          convertToLocalDate(tag.getCommit().getCommitDate()));
+    } catch (IOException e) {
+      return null;
+    }
   }
 
   private LocalDate convertToLocalDate(Date date) {

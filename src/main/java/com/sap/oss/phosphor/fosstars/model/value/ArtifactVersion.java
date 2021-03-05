@@ -54,6 +54,17 @@ public class ArtifactVersion {
     initSemVer(version);
   }
 
+  /**
+   * Check if given version is a semantic compatible version.
+   *
+   * @param version version to check
+   * @return true if version follows the semantic version
+   */
+  public static boolean isSemVer(String version) {
+    // TODO (mibo): Improve semVer handling
+    return new ArtifactVersion(version, LocalDate.MIN).isValidSemanticVersion();
+  }
+
   private void initSemVer(String version) {
     String[] versionSplit = version.split("\\.");
     if (versionSplit.length >= 3) {
