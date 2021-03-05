@@ -242,6 +242,15 @@
         <skipAssembly>true</skipAssembly>
       </properties>
     </profile>
+    <profile>
+      <id>quick-assemble</id>
+      <properties>
+        <checkstyle.skip>true</checkstyle.skip>
+        <maven.javadoc.skip>true</maven.javadoc.skip>
+        <skipAssembly>false</skipAssembly>
+        <skipTests>true</skipTests>
+      </properties>
+    </profile>
   </profiles>
 
   <dependencies>
