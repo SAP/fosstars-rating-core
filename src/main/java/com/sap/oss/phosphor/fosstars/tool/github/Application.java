@@ -24,6 +24,7 @@ import com.sap.oss.phosphor.fosstars.tool.Reporter;
 import com.sap.oss.phosphor.fosstars.tool.YesNoQuestion;
 import com.sap.oss.phosphor.fosstars.tool.YesNoQuestion.Answer;
 import com.sap.oss.phosphor.fosstars.tool.format.Formatter;
+import com.sap.oss.phosphor.fosstars.tool.format.OssArtifactSecurityRatingMarkdownFormatter;
 import com.sap.oss.phosphor.fosstars.tool.format.OssRulesOfPlayRatingMarkdownFormatter;
 import com.sap.oss.phosphor.fosstars.tool.format.OssSecurityRatingMarkdownFormatter;
 import com.sap.oss.phosphor.fosstars.tool.format.PrettyPrinter;
@@ -506,6 +507,9 @@ public class Application {
         }
         if (rating instanceof OssRulesOfPlayRating) {
           return new OssRulesOfPlayRatingMarkdownFormatter();
+        }
+        if (rating instanceof OssArtifactSecurityRating) {
+          return new OssArtifactSecurityRatingMarkdownFormatter(ADVISOR);
         }
         throw new IllegalArgumentException("No markdown formatter for the rating!");
       default:

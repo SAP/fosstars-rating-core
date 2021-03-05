@@ -28,20 +28,22 @@ import org.apache.commons.lang3.StringUtils;
 
 /**
  * The class prints a rating value
- * for {@link com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating} in Markdown.
+ * for {@link com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurityRating} in Markdown.
+ * // TODO: check as with c&p this case has a lot of duplicates
+ *          with the OssSecurityRatingMarkdownFormatter
  */
-public class OssSecurityRatingMarkdownFormatter extends CommonFormatter {
+public class OssArtifactSecurityRatingMarkdownFormatter extends CommonFormatter {
 
   /**
    * A resource with a Markdown template.
    */
-  private static final String RESOURCE = "OssSecurityRatingMarkdownRatingValueTemplate.md";
+  private static final String RESOURCE = "OssArtifactSecurityRatingMarkdownRatingValueTemplate.md";
 
   /**
    * A Markdown template for a rating value.
    */
   private static final String TEMPLATE
-      = loadFrom(RESOURCE, OssSecurityRatingMarkdownFormatter.class);
+      = loadFrom(RESOURCE, OssArtifactSecurityRatingMarkdownFormatter.class);
 
   /**
    * An indent for building nested lists.
@@ -63,7 +65,7 @@ public class OssSecurityRatingMarkdownFormatter extends CommonFormatter {
    *
    * @param advisor An advisor for calculated ratings.
    */
-  public OssSecurityRatingMarkdownFormatter(Advisor advisor) {
+  public OssArtifactSecurityRatingMarkdownFormatter(Advisor advisor) {
     this.advisor = Objects.requireNonNull(advisor, "Oh no! Advisor is null!");
   }
 
