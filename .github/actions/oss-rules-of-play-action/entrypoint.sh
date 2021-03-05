@@ -30,11 +30,14 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# Set Maven download logging to warn level
+export MAVEN_OPTS=-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+
 # Build Fosstars
 git clone https://github.com/SAP/fosstars-rating-core && \
     cd fosstars-rating-core && \
     git checkout $FOSSTARS_VERSION && \
-    mvn package -DskipTests && \
+    mvn package -ntp -DskipTests && \
 if [ $? -ne 0 ]; then
     echo "Oops! Could not build Fosstars!"
     exit 1
