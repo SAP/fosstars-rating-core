@@ -101,12 +101,13 @@ public class OssArtifactVersionScoreTest {
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(false)),
         ARTIFACT_VERSION.value("1.2.0"),
         SUPPORTED_BY_COMPANY.value(false),
+        VULNERABILITIES.value(new Vulnerabilities()),
         IS_APACHE.value(true),
         IS_ECLIPSE.value(false),
         PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertEquals(6.666666666666667, scoreValue.get(), DELTA);
+    assertEquals(8.470588235294118, scoreValue.get(), DELTA);
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }
@@ -121,6 +122,7 @@ public class OssArtifactVersionScoreTest {
         SUPPORTED_BY_COMPANY.value(false),
         IS_APACHE.value(true),
         IS_ECLIPSE.value(false),
+        VULNERABILITIES.value(new Vulnerabilities()),
         NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(50),
         NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(3),
         NUMBER_OF_GITHUB_STARS.value(10),
@@ -128,7 +130,7 @@ public class OssArtifactVersionScoreTest {
         PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertEquals(3.6666666666666665, scoreValue.get(), DELTA);
+    assertEquals(7.941176470588235, scoreValue.get(), DELTA);
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }
@@ -142,13 +144,14 @@ public class OssArtifactVersionScoreTest {
         SUPPORTED_BY_COMPANY.value(false),
         IS_APACHE.value(true),
         IS_ECLIPSE.value(false),
+        VULNERABILITIES.value(new Vulnerabilities()),
         NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(50),
         NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(3),
         NUMBER_OF_GITHUB_STARS.value(10),
         NUMBER_OF_WATCHERS_ON_GITHUB.value(5));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertEquals(7.75, scoreValue.get(), DELTA);
+    assertEquals(8.720588235294116, scoreValue.get(), DELTA);
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }
@@ -162,13 +165,14 @@ public class OssArtifactVersionScoreTest {
         SUPPORTED_BY_COMPANY.value(false),
         IS_APACHE.value(true),
         IS_ECLIPSE.value(false),
+        VULNERABILITIES.value(new Vulnerabilities()),
         NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(50),
         NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(3),
         NUMBER_OF_GITHUB_STARS.value(10),
         NUMBER_OF_WATCHERS_ON_GITHUB.value(5));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertEquals(8.75, scoreValue.get(), DELTA);
+    assertEquals(8.897058823529411, scoreValue.get(), DELTA);
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }

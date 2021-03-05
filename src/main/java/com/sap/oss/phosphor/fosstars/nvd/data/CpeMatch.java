@@ -62,6 +62,11 @@ public class CpeMatch {
     return versionEndIncluding;
   }
 
+  @JsonProperty("versionStartIncluding")
+  public String getVersionStartIncluding() {
+    return versionStartIncluding;
+  }
+
   @JsonProperty("cpe22Uri")
   public String getCpe22Uri() {
     return cpe22Uri;

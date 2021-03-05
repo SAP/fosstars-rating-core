@@ -160,10 +160,18 @@ public class ArtifactVersions implements Iterable<ArtifactVersion> {
 
   @Override
   public String toString() {
-    return getSortByReleaseDate().stream()
+    Collection<ArtifactVersion> sortByReleaseDate = getSortByReleaseDate();
+    final int limit = 5;
+    String message = sortByReleaseDate.stream()
+        .limit(limit)
         .map(v -> v.getVersion() + ":" + v.getReleaseDate())
         .collect(Collectors.joining(", "));
-    // return elements.stream().map(ArtifactVersion::toString).collect(Collectors.joining(", "));
+
+    if (sortByReleaseDate.size() > limit) {
+      return String.format(message + " (%s in total)...", sortByReleaseDate.size());
+    } else {
+      return message;
+    }
   }
 
   @Override

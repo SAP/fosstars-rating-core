@@ -15,7 +15,8 @@ import java.util.Collection;
 import java.util.Optional;
 
 /**
- * The scores assesses how well maintained an open source library is (in a specific version).
+ * The scores check how old a given artifact version is
+ * and if it is the latest available artifact version.
  * <ul>
  *   <li>{@link OssFeatures#RELEASED_ARTIFACT_VERSIONS}</li>
  * </ul>
@@ -27,7 +28,7 @@ public class ArtifactVersionScore extends FeatureBasedScore {
    */
   public ArtifactVersionScore() {
     // FIXME: name is only a working name and require change
-    super("Maintenance effort score for an artifact of open-source project",
+    super("How old is given version and is it the latest available artifact version",
         RELEASED_ARTIFACT_VERSIONS,
         ARTIFACT_VERSION);
   }

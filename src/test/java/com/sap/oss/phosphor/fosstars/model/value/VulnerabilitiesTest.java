@@ -19,7 +19,7 @@ import org.junit.Test;
 public class VulnerabilitiesTest {
 
   @Test
-  public void tstJsonSerializationAndDeserialization() throws IOException {
+  public void testJsonSerializationAndDeserialization() throws IOException {
     serializationAndDeserialization(Json.mapper(), vulnerabilities());
   }
 

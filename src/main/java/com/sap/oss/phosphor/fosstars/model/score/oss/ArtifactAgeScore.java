@@ -16,7 +16,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
- * The scores assesses how well maintained an open source library is (in a specific version).
+ * The scores check how old the latest available artifact version of the open-source project is.
  * <ul>
  *   <li>{@link OssFeatures#RELEASED_ARTIFACT_VERSIONS}</li>
  * </ul>

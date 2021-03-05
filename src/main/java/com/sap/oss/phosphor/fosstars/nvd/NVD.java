@@ -138,8 +138,12 @@ public class NVD {
     if (shouldDownload()) {
       download();
       updateTimestamp();
+    }
+    if (nvdEntries.isEmpty()) {
+      LOGGER.info("Parse NVD data...");
       parse();
     }
+    LOGGER.info("{} CVE entries available.", nvdEntries.size());
   }
 
   /**

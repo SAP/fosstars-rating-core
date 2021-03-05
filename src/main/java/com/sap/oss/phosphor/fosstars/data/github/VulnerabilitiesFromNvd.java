@@ -55,6 +55,7 @@ public class VulnerabilitiesFromNvd extends CachedSingleFeatureGitHubDataProvide
       vulnerabilities.add(Vulnerability.Builder.from(entry).make());
     }
 
+    logger.info("Got ... {}", vulnerabilities);
     return VULNERABILITIES_IN_NVD.value(vulnerabilities);
   }
 }

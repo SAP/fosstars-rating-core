@@ -106,7 +106,7 @@ public class OssArtifactSecurityScoreTest {
         ARTIFACT_VERSION.value("1.2.0"));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertEquals(6.918205128205129, scoreValue.get(), DELTA);
+    assertEquals(7.820165912518854, scoreValue.get(), DELTA);
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }
@@ -119,7 +119,7 @@ public class OssArtifactSecurityScoreTest {
         ARTIFACT_VERSION.value("1.0.0"));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertEquals(5.418205128205128, scoreValue.get(), DELTA);
+    assertEquals(7.5554600301659125, scoreValue.get(), DELTA);
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }
@@ -132,7 +132,7 @@ public class OssArtifactSecurityScoreTest {
         ARTIFACT_VERSION.value("1.2.0"));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertEquals(7.459871794871795, scoreValue.get(), DELTA);
+    assertEquals(7.945165912518853, scoreValue.get(), DELTA);
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }
