@@ -64,3 +64,9 @@ If an open-source project is included to OSS-Fuzz project:
     links:
       - name: The OSS-Fuzz project
         url: https://github.com/google/oss-fuzz
+Artifact version:
+  - advice: >
+      You should check the dependency version (${VERSION}) used as there is a newer version (${LATEST_VERSION}) available.
+    links:
+      - name: Get PR which updates to latest versions with Dependabot
+        url: https://github.com/marketplace/dependabot-preview

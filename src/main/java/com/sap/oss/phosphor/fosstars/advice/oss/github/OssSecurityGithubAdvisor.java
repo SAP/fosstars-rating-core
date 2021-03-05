@@ -2,6 +2,7 @@ package com.sap.oss.phosphor.fosstars.advice.oss.github;
 
 import com.sap.oss.phosphor.fosstars.advice.CompositeAdvisor;
 import com.sap.oss.phosphor.fosstars.advice.oss.AbstractOssAdvisor.OssAdviceContextFactory;
+import com.sap.oss.phosphor.fosstars.advice.oss.ArtifactVersionAdvisor;
 import com.sap.oss.phosphor.fosstars.advice.oss.CodeqlAdvisor;
 import com.sap.oss.phosphor.fosstars.advice.oss.FindSecBugsAdvisor;
 import com.sap.oss.phosphor.fosstars.advice.oss.FuzzingAdvisor;
@@ -58,6 +59,7 @@ public class OssSecurityGithubAdvisor extends CompositeAdvisor {
         new SecurityPolicyAdvisor(CONTEXT_FACTORY),
         new FindSecBugsAdvisor(CONTEXT_FACTORY),
         new MemorySafetyAdvisor(CONTEXT_FACTORY),
+        new ArtifactVersionAdvisor(CONTEXT_FACTORY),
         new FuzzingAdvisor(CONTEXT_FACTORY));
   }
 }

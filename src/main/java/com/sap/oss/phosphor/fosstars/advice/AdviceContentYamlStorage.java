@@ -71,7 +71,7 @@ public class AdviceContentYamlStorage {
    * @param context The context.
    * @return A list of advice.
    */
-  public List<AdviceContent> adviceFor(Feature<?> feature, AdviceContext context) {
+  public List<AdviceContent> advicesFor(Feature<?> feature, AdviceContext context) {
     return featureToContent.getOrDefault(feature, Collections.emptyList())
         .stream()
         .map(rawAdvice -> rawAdvice.transformFor(feature, context))

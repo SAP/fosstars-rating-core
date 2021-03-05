@@ -21,6 +21,8 @@ import java.util.Objects;
  */
 public class ArtifactVersion {
 
+  public static final ArtifactVersion EMPTY = new ArtifactVersion("", LocalDate.now());
+
   private final String version;
   @JsonDeserialize(using = LocalDateDeserializer.class)
   @JsonSerialize(using = LocalDateSerializer.class)

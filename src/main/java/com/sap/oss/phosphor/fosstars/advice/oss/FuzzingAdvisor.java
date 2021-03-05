@@ -29,7 +29,7 @@ public class FuzzingAdvisor extends AbstractOssAdvisor {
   }
 
   @Override
-  protected List<Advice> adviseFor(
+  protected List<Advice> advicesFor(
       Subject subject, List<Value<?>> usedValues, OssAdviceContext context) {
 
     Optional<ScoreValue> fuzzingScoreValue = findSubScoreValue(subject, FuzzingScore.class);

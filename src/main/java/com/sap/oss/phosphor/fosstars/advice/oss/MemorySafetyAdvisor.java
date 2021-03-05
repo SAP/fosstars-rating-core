@@ -38,7 +38,7 @@ public class MemorySafetyAdvisor extends AbstractOssAdvisor {
   }
 
   @Override
-  protected List<Advice> adviseFor(
+  protected List<Advice> advicesFor(
       Subject subject, List<Value<?>> usedValues, OssAdviceContext context) {
 
     Optional<ScoreValue> memorySafetyTestingScoreValue
