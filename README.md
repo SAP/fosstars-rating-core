@@ -261,7 +261,7 @@
 | [SAP/cf-cli-smsi-plugin](https://github.com/SAP/cf-cli-smsi-plugin) | [FAIL](SAP/cf-cli-smsi-plugin.md) | 1 violated rule |
 | [SAP/ui5-task-adaptation](https://github.com/SAP/ui5-task-adaptation) | [FAIL](SAP/ui5-task-adaptation.md) | 1 violated rule |
 | [SAP/xsk](https://github.com/SAP/xsk) | [FAIL](SAP/xsk.md) | 1 violated rule |
-| [SAP/cloud-sdk](https://github.com/SAP/cloud-sdk) | [FAIL](SAP/cloud-sdk.md) | 2 violated rules |
+| [SAP/cloud-sdk](https://github.com/SAP/cloud-sdk) | [FAIL](SAP/cloud-sdk.md) | 1 violated rule |
 | [SAP/cloud-sdk-currency-conversion](https://github.com/SAP/cloud-sdk-currency-conversion) | [FAIL](SAP/cloud-sdk-currency-conversion.md) | 2 violated rules |
 | [SAP/stewardci-log-forwarding](https://github.com/SAP/stewardci-log-forwarding) | [FAIL](SAP/stewardci-log-forwarding.md) | 1 violated rule |
 | [SAP/alert-notification-node-client](https://github.com/SAP/alert-notification-node-client) | [FAIL](SAP/alert-notification-node-client.md) | 1 violated rule |
