@@ -7,6 +7,7 @@ import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersions;
+import com.sap.oss.phosphor.fosstars.model.value.SemanticVersion;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -53,7 +54,7 @@ public class ReleasesFromGitHub extends CachedSingleFeatureGitHubDataProvider<Ar
     if (releases.isEmpty()) {
       logger.info("No release information found. Try tags.");
       artifactVersions = repo.listTags().toList().stream()
-          .filter(tag -> ArtifactVersion.isSemVer(tag.getName()))
+          .filter(tag -> SemanticVersion.isSemVer(tag.getName()))
           .map(this::createArtifactVersion)
           .filter(Objects::nonNull)
           .collect(Collectors.toSet());

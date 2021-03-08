@@ -21,7 +21,7 @@ public class OssArtifactSecurityRating extends AbstractRating {
    */
   public enum ArtifactSecurityLabel implements Label {
 
-    BAD, MODERATE, GOOD, UNCLEAR
+    BAD, MODERATE, GOOD, UNCLEAR, UNKNOWN;
   }
 
   /**
@@ -60,6 +60,10 @@ public class OssArtifactSecurityRating extends AbstractRating {
   @Override
   protected ArtifactSecurityLabel label(ScoreValue scoreValue) {
     Objects.requireNonNull(scoreValue, "Oh no! Score value is null!");
+
+    if (scoreValue.isUnknown()) {
+      return ArtifactSecurityLabel.UNKNOWN;
+    }
 
     if (scoreValue.confidence() < thresholds.unclear) {
       return ArtifactSecurityLabel.UNCLEAR;

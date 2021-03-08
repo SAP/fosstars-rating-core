@@ -97,7 +97,7 @@ public class OssArtifactSecurityRatingMarkdownFormatter extends CommonFormatter 
     return TEMPLATE
         .replaceAll("%MAX_SCORE%", formatted(Score.MAX))
         .replaceAll("%MAX_CONFIDENCE%", formatted(Confidence.MAX))
-        .replace("%SCORE_VALUE%", formatted(scoreValue.get()))
+        .replace("%SCORE_VALUE%", actualValueOf(scoreValue))
         .replace("%RATING_LABEL%", ratingValue.label().name())
         .replace("%CONFIDENCE_LABEL%", confidenceLabelFor(ratingValue.confidence()))
         .replace("%CONFIDENCE_VALUE%", formatted(ratingValue.confidence()))

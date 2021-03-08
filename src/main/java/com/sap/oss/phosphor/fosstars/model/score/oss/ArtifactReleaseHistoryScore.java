@@ -38,9 +38,17 @@ public class ArtifactReleaseHistoryScore extends FeatureBasedScore {
   public ScoreValue calculate(Value<?>... values) {
     Value<ArtifactVersions> artifactVersions = find(RELEASED_ARTIFACT_VERSIONS, values);
 
+    if (artifactVersions.isUnknown()) {
+      return scoreValue(0.0, artifactVersions)
+          .makeUnknown()
+          .explain("No versions are found. Hence, no release history score can be calculated")
+          .withMinConfidence();
+    }
+
     if (artifactVersions.get().size() <= 1) {
-      // FIXME: can not be calculated for a single version
-      return scoreValue(0.0, artifactVersions);
+      return scoreValue(0.0, artifactVersions)
+          .explain("Only one version is given. Hence, no release history score can be calculated")
+          .withMinConfidence();
     }
 
     ScoreValue scoreValue = scoreValue(7.0, artifactVersions);

@@ -28,7 +28,7 @@ public class ArtifactAgeScore extends FeatureBasedScore {
    */
   public ArtifactAgeScore() {
     // FIXME: name is only a working name and require change
-    super("How old the artifacts are",
+    super("How old the released artifacts are",
         OssFeatures.RELEASED_ARTIFACT_VERSIONS);
   }
 
@@ -40,9 +40,9 @@ public class ArtifactAgeScore extends FeatureBasedScore {
 
     Collection<ArtifactVersion> sortedByReleaseDate = sortByReleaseDate(artifactVersions);
 
-    if (sortedByReleaseDate.isEmpty()) {
+    if (artifactVersions.isUnknown() || sortedByReleaseDate.isEmpty()) {
       logger.info("No release information was found.");
-      return scoreValue;
+      return scoreValue.makeUnknown().withMinConfidence();
     }
 
     ArtifactVersion latestVersion = sortedByReleaseDate.iterator().next();

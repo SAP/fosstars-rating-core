@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Contains version tag and release date for an artifact version.
@@ -29,13 +30,7 @@ public class ArtifactVersion {
   private final LocalDate releaseDate;
 
   @JsonIgnore
-  private int major;
-  @JsonIgnore
-  private int minor;
-  @JsonIgnore
-  private int micro;
-  @JsonIgnore
-  private boolean validSemVer = false;
+  private Optional<SemanticVersion> semanticVersion;
 
   /**
    * Initialize the ArtifactVersion based on version tag and release date.
@@ -53,49 +48,18 @@ public class ArtifactVersion {
     this.releaseDate = releaseDate;
     initSemVer(version);
   }
-
-  /**
-   * Check if given version is a semantic compatible version.
-   *
-   * @param version version to check
-   * @return true if version follows the semantic version
-   */
-  public static boolean isSemVer(String version) {
-    // TODO (mibo): Improve semVer handling
-    return new ArtifactVersion(version, LocalDate.MIN).isValidSemanticVersion();
-  }
-
+  
   private void initSemVer(String version) {
-    String[] versionSplit = version.split("\\.");
-    if (versionSplit.length >= 3) {
-      // take first three as major/minor/micro if they are numbers
-      try {
-        major = Integer.parseInt(versionSplit[0]);
-        minor = Integer.parseInt(versionSplit[1]);
-        micro = Integer.parseInt(versionSplit[2]);
-        validSemVer = true;
-      } catch (NumberFormatException e) {
-        // FIXME: replace sout
-        System.out.printf("Unable to parse %s as a semantic version%n", version);
-      }
-    }
+    semanticVersion = SemanticVersion.parse(version);
   }
 
-  public int getMajor() {
-    return major;
-  }
-
-  public int getMinor() {
-    return minor;
-  }
-
-  public int getMicro() {
-    return micro;
+  public Optional<SemanticVersion> getSemanticVersion() {
+    return semanticVersion;
   }
 
   @JsonIgnore
   public boolean isValidSemanticVersion() {
-    return validSemVer;
+    return semanticVersion.isPresent();
   }
 
   public String getVersion() {

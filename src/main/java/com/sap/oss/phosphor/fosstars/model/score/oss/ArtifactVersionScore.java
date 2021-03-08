@@ -39,6 +39,9 @@ public class ArtifactVersionScore extends FeatureBasedScore {
     Value<String> versionValue = find(ARTIFACT_VERSION, values);
 
     ScoreValue scoreValue = scoreValue(Score.MIN, artifactVersionsValue, versionValue);
+    if (versionValue.isUnknown() || artifactVersionsValue.isUnknown()) {
+      return scoreValue.withMinConfidence().makeUnknown();
+    }
 
     ArtifactVersions artifactVersions = artifactVersionsValue.get();
     Collection<ArtifactVersion> sortedByReleaseDate = artifactVersions.getSortByReleaseDate();
