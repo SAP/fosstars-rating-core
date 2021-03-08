@@ -5,8 +5,8 @@
 |          | # or projects              |  % or projects               |
 | :------- | -------------------------: | ---------------------------: |
 | Total    |       284 |                         100% |
-| Fail     |   270 |   95.1% |
-| Pass     |   10 |   3.5% |
+| Fail     |   271 |   95.4% |
+| Pass     |   9 |   3.2% |
 | Unclear  |  4 |  1.4% |
 
 ## Projects
@@ -124,10 +124,11 @@
 | [SAP/ui5-automation-framework](https://github.com/SAP/ui5-automation-framework) | [FAIL](SAP/ui5-automation-framework.md) | 1 violated rule |
 | [SAP/InfraBox](https://github.com/SAP/InfraBox) | [FAIL](SAP/InfraBox.md) | 1 violated rule |
 | [SAP/ui5-builder](https://github.com/SAP/ui5-builder) | [FAIL](SAP/ui5-builder.md) | 1 violated rule |
+| [SAP/ui5-cli](https://github.com/SAP/ui5-cli) | [FAIL](SAP/ui5-cli.md) | 1 violated rule |
 | [SAP/ui5-project](https://github.com/SAP/ui5-project) | [FAIL](SAP/ui5-project.md) | 1 violated rule |
 | [SAP/InfraBox-cli](https://github.com/SAP/InfraBox-cli) | [FAIL](SAP/InfraBox-cli.md) | 1 violated rule |
 | [SAP/cloud-s4-sdk-book](https://github.com/SAP/cloud-s4-sdk-book) | [FAIL](SAP/cloud-s4-sdk-book.md) | 1 violated rule |
-| [SAP/fundamental-ngx](https://github.com/SAP/fundamental-ngx) | [FAIL](SAP/fundamental-ngx.md) | 1 violated rule |
+| [SAP/fundamental-ngx](https://github.com/SAP/fundamental-ngx) | [FAIL](SAP/fundamental-ngx.md) | 2 violated rules |
 | [SAP/angular-metaui](https://github.com/SAP/angular-metaui) | [FAIL](SAP/angular-metaui.md) | 3 violated rules |
 | [SAP/fiori-for-ios-workshop](https://github.com/SAP/fiori-for-ios-workshop) | [FAIL](SAP/fiori-for-ios-workshop.md) | 2 violated rules |
 | [SAP/commerce-gradle-plugin](https://github.com/SAP/commerce-gradle-plugin) | [FAIL](SAP/commerce-gradle-plugin.md) | 1 violated rule |
@@ -284,7 +285,6 @@
 | [SAP/project-sailor](https://github.com/SAP/project-sailor) | [FAIL](SAP/project-sailor.md) | 1 violated rule |
 | [SAP/sap.github.io](https://github.com/SAP/sap.github.io) | [FAIL](SAP/sap.github.io.md) | 2 violated rules |
 | [SAP/openui5](https://github.com/SAP/openui5) | [PASS](SAP/openui5.md) | No violated rules |
-| [SAP/ui5-cli](https://github.com/SAP/ui5-cli) | [PASS](SAP/ui5-cli.md) | No violated rules |
 | [SAP/ui5-server](https://github.com/SAP/ui5-server) | [PASS](SAP/ui5-server.md) | No violated rules |
 | [SAP/ui5-logger](https://github.com/SAP/ui5-logger) | [PASS](SAP/ui5-logger.md) | No violated rules |
 | [SAP/ui5-fs](https://github.com/SAP/ui5-fs) | [PASS](SAP/ui5-fs.md) | No violated rules |
