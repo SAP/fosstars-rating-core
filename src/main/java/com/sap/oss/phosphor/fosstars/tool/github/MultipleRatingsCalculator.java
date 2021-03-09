@@ -2,6 +2,7 @@ package com.sap.oss.phosphor.fosstars.tool.github;
 
 import com.sap.oss.phosphor.fosstars.data.UserCallback;
 import com.sap.oss.phosphor.fosstars.data.ValueCache;
+import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
 import java.io.IOException;
@@ -93,11 +94,14 @@ class MultipleRatingsCalculator implements RatingCalculator {
    * Calculate a rating for a project.
    *
    * @param project The project.
+   * @param knownValues MultipleRatingsCalculator does not support known values.
    * @return The same {@link MultipleRatingsCalculator}.
    * @throws IOException If something went wrong.
    */
   @Override
-  public MultipleRatingsCalculator calculateFor(GitHubProject project) throws IOException {
+  public MultipleRatingsCalculator calculateFor(GitHubProject project, ValueSet knownValues)
+      throws IOException {
+
     Optional<RatingValue> cachedRatingValue = projectCache.cachedRatingValueFor(project);
     if (cachedRatingValue.isPresent()) {
       project.set(cachedRatingValue.get());

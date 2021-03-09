@@ -92,7 +92,7 @@ public class DataProviderSelector {
         new OwaspSecurityLibraries(fetcher),
         new UseReuseDataProvider(fetcher),
         new ReleasesFromGitHub(fetcher),
-        new ArtifactVersionUsed<>(),
+        // new ArtifactVersionUsed<>(),
         // new ArtifactVersionUsedGitHub(fetcher),
 
         // currently interactive data provider have to be added to the end, see issue #133

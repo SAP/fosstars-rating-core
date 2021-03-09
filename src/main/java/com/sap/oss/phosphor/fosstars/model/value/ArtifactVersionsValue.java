@@ -7,13 +7,12 @@ import com.sap.oss.phosphor.fosstars.model.Feature;
 import java.util.Objects;
 
 /**
- * A value for a feature that.
- * TODO add proper javadoc
+ * A value for a feature that provide versions for an artifact.
  */
 public class ArtifactVersionsValue extends AbstractValue<ArtifactVersions> {
 
   /**
-   * A language.
+   * Versions of an artifact.
    */
   private final ArtifactVersions artifactVersions;
 
@@ -29,7 +28,7 @@ public class ArtifactVersionsValue extends AbstractValue<ArtifactVersions> {
       @JsonProperty("versions") ArtifactVersions artifactVersions) {
 
     super(feature);
-    this.artifactVersions = Objects.requireNonNull(artifactVersions, "Versions can't be null!");
+    this.artifactVersions = artifactVersions;
   }
 
   @Override

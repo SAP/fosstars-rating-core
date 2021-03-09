@@ -1,10 +1,13 @@
 package com.sap.oss.phosphor.fosstars.tool.github;
 
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ARTIFACT_VERSION;
 import static com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject.isOnGitHub;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.packageurl.MalformedPackageURLException;
+import com.github.packageurl.PackageURL;
 import com.sap.oss.phosphor.fosstars.advice.Advisor;
 import com.sap.oss.phosphor.fosstars.advice.oss.github.OssSecurityGithubAdvisor;
 import com.sap.oss.phosphor.fosstars.data.DataProvider;
@@ -14,10 +17,12 @@ import com.sap.oss.phosphor.fosstars.data.UserCallback;
 import com.sap.oss.phosphor.fosstars.data.github.GitHubDataFetcher;
 import com.sap.oss.phosphor.fosstars.model.Rating;
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
+import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
+import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.oss.phosphor.fosstars.nvd.NVD;
 import com.sap.oss.phosphor.fosstars.tool.InputString;
 import com.sap.oss.phosphor.fosstars.tool.Reporter;
@@ -43,10 +48,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
@@ -108,6 +115,7 @@ public class Application {
   private static final Advisor ADVISOR = new OssSecurityGithubAdvisor();
 
   private static final Map<String, Rating> RATINGS = new HashMap<>();
+  private static final Set<String> PURL_SUPPORTED_TYPES = new HashSet<>();
 
   static {
     Rating ossSecurityRating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
@@ -126,6 +134,9 @@ public class Application {
     RATINGS.put("oss-artifact-security", ossArtifactSecurityRating);
     RATINGS.put(ossArtifactSecurityRating.getClass().getSimpleName(), ossArtifactSecurityRating);
     RATINGS.put(ossArtifactSecurityRating.getClass().getCanonicalName(), ossArtifactSecurityRating);
+
+    PURL_SUPPORTED_TYPES.add("github");
+    PURL_SUPPORTED_TYPES.add("maven");
   }
 
   /**
@@ -240,6 +251,12 @@ public class Application {
         .desc("GAV coordinates of a jar artifact in the format 'G:A:V' or 'G:A' "
             + "where G is a group id, A is an artifact if, and V is an optional version.")
         .build());
+    group.addOption(Option.builder("p")
+        .required()
+        .hasArg()
+        .longOpt("purl")
+        .desc("The PURL of a project.")
+        .build());
     group.addOption(Option.builder("c")
         .longOpt("config")
         .hasArg()
@@ -315,6 +332,10 @@ public class Application {
       if (commandLine.hasOption("config")) {
         processConfig(commandLine.getOptionValue("config"));
       }
+
+      if (commandLine.hasOption("purl")) {
+        processPurl(commandLine.getOptionValue("purl"));
+      }
     } finally {
       VALUE_CACHE.store(PATH_TO_VALUE_CACHE);
     }
@@ -332,10 +353,10 @@ public class Application {
     }
 
     if (!commandLine.hasOption("url") && !commandLine.hasOption("config")
-        && !commandLine.hasOption("gav")) {
+        && !commandLine.hasOption("gav") && !commandLine.hasOption("purl")) {
 
       throw new IllegalArgumentException(
-          "You have to give me either --url, --gav or --config option!");
+          "You have to give me either --url, --gav, --purl or --config option!");
     }
 
     if (commandLine.hasOption("report-type") && !commandLine.hasOption("report-file")) {
@@ -358,8 +379,19 @@ public class Application {
    * @throws IOException If something went wrong.
    */
   private void processUrl(String url) throws IOException {
+    processUrl(url, ValueHashSet.empty());
+  }
+
+  /**
+   * Calculate a rating for a single project identified by a URL to its SCM.
+   *
+   * @param url A URL of the project repository.
+   * @param knownValues values which are known and should not be collected by a data provider
+   * @throws IOException If something went wrong.
+   */
+  private void processUrl(String url, ValueSet knownValues) throws IOException {
     GitHubProject project = GitHubProject.parse(url);
-    calculator.calculateFor(project);
+    calculator.calculateFor(project, knownValues);
 
     if (!project.ratingValue().isPresent()) {
       throw new IOException("Could not calculate a rating!");
@@ -379,6 +411,7 @@ public class Application {
    */
   private void processGav(String gav) throws IOException {
     MavenScmFinder finder = new MavenScmFinder();
+    LOGGER.info("Start with GAV {}", gav);
 
     Optional<String> scm = finder.findScmFor(gav);
     if (!scm.isPresent()) {
@@ -403,7 +436,13 @@ public class Application {
       LOGGER.info("  {}", url);
     }
 
-    processUrl(url);
+    // maybe the parsing of the GAV should be moved to separate class
+    // as it is also done in `finder.findScmFor(gav)`.
+    String[] parts = gav.trim().split(":");
+    String version = parts.length > 2 ? parts[2] : "";
+    ValueSet values = new ValueHashSet(ARTIFACT_VERSION.value(version));
+
+    processUrl(url, values);
   }
 
   /**
@@ -454,6 +493,42 @@ public class Application {
       for (Reporter<GitHubProject> reporter : reporters) {
         reporter.runFor(projects);
       }
+    }
+  }
+
+  /**
+   * Calculate a rating for a single project identified by a PURL (package url).
+   *
+   * @param purl The PURL.
+   * @throws IOException If something went wrong.
+   */
+  private void processPurl(String purl) throws IOException {
+    try {
+      LOGGER.info("Start with PURL {}", purl);
+      PackageURL parsedPurl = new PackageURL(purl);
+
+      if (PURL_SUPPORTED_TYPES.contains(parsedPurl.getType())) {
+        if ("github".equalsIgnoreCase(parsedPurl.getType())) {
+          String projectUrl = String.format("https://github.com/%s/%s",
+              parsedPurl.getNamespace(), parsedPurl.getName());
+          LOGGER.info("Found github PURL and start with {}", projectUrl);
+          ValueSet values = new ValueHashSet(ARTIFACT_VERSION.value(parsedPurl.getVersion()));
+          processUrl(projectUrl, values);
+        } else if ("maven".equalsIgnoreCase(parsedPurl.getType())) {
+          String gav = String.format("%s:%s%s",
+              parsedPurl.getNamespace(), parsedPurl.getName(),
+              parsedPurl.getVersion() == null ? "" : ":" + parsedPurl.getVersion());
+          processGav(gav);
+        } else {
+          throw new IOException(String.format(
+              "Oh no! Given PURL type %S is not supported!", parsedPurl.getType()));
+        }
+      } else {
+        throw new IOException(String.format(
+            "Oh no! Given PURL type %S is not supported!", parsedPurl.getType()));
+      }
+    } catch (MalformedPackageURLException e) {
+      throw new IOException("Oh no! Given PURL could not be parsed!");
     }
   }
 

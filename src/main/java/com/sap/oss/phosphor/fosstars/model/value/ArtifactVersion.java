@@ -53,8 +53,8 @@ public class ArtifactVersion {
     semanticVersion = SemanticVersion.parse(version);
   }
 
-  public Optional<SemanticVersion> getSemanticVersion() {
-    return semanticVersion;
+  public SemanticVersion getSemanticVersion() {
+    return semanticVersion.orElse(null);
   }
 
   @JsonIgnore

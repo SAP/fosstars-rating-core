@@ -7,14 +7,14 @@ import com.sap.oss.phosphor.fosstars.model.Feature;
 import java.util.Objects;
 
 /**
- * A value for a feature.... TODO
+ * A value for a feature that provide a version for an artifact.
  */
 public class ArtifactVersionValue extends AbstractValue<String> {
 
   /**
-   * A version.
+   * Version of an artifact.
    */
-  private final String artifactVersions;
+  private final String artifactVersion;
 
   /**
    * Initializes a value for a feature.
@@ -28,18 +28,18 @@ public class ArtifactVersionValue extends AbstractValue<String> {
       @JsonProperty("version") String artifactVersion) {
 
     super(feature);
-    this.artifactVersions = Objects.requireNonNull(artifactVersion, "Version can't be null!");
+    this.artifactVersion = artifactVersion;
   }
 
   @Override
   @JsonGetter("version")
   public String get() {
-    return artifactVersions;
+    return artifactVersion;
   }
 
   @Override
   public boolean isUnknown() {
-    return artifactVersions == null || artifactVersions.isEmpty();
+    return artifactVersion == null || artifactVersion.isEmpty();
   }
 
   @Override
@@ -54,16 +54,16 @@ public class ArtifactVersionValue extends AbstractValue<String> {
       return false;
     }
     ArtifactVersionValue that = (ArtifactVersionValue) o;
-    return Objects.equals(artifactVersions, that.artifactVersions);
+    return Objects.equals(artifactVersion, that.artifactVersion);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), artifactVersions);
+    return Objects.hash(super.hashCode(), artifactVersion);
   }
 
   @Override
   public String toString() {
-    return artifactVersions;
+    return artifactVersion;
   }
 }
