@@ -133,7 +133,7 @@
 | [SAP/fiori-for-ios-workshop](https://github.com/SAP/fiori-for-ios-workshop) | [FAIL](SAP/fiori-for-ios-workshop.md) | 2 violated rules |
 | [SAP/commerce-gradle-plugin](https://github.com/SAP/commerce-gradle-plugin) | [FAIL](SAP/commerce-gradle-plugin.md) | 1 violated rule |
 | [SAP/macOS-enterprise-privileges](https://github.com/SAP/macOS-enterprise-privileges) | [FAIL](SAP/macOS-enterprise-privileges.md) | 2 violated rules |
-| [SAP/luigi](https://github.com/SAP/luigi) | [FAIL](SAP/luigi.md) | 1 violated rule |
+| [SAP/luigi](https://github.com/SAP/luigi) | [FAIL](SAP/luigi.md) | 2 violated rules |
 | [SAP/cloud-mta-build-tool](https://github.com/SAP/cloud-mta-build-tool) | [FAIL](SAP/cloud-mta-build-tool.md) | 2 violated rules |
 | [SAP/pair-distribution-app](https://github.com/SAP/pair-distribution-app) | [FAIL](SAP/pair-distribution-app.md) | 1 violated rule |
 | [SAP/quality-continuous-traceability-monitor](https://github.com/SAP/quality-continuous-traceability-monitor) | [FAIL](SAP/quality-continuous-traceability-monitor.md) | 2 violated rules |
@@ -201,7 +201,7 @@
 | [SAP/apibusinesshub-integration-recipes](https://github.com/SAP/apibusinesshub-integration-recipes) | [FAIL](SAP/apibusinesshub-integration-recipes.md) | 3 violated rules |
 | [SAP/cloud-sdk-cli](https://github.com/SAP/cloud-sdk-cli) | [FAIL](SAP/cloud-sdk-cli.md) | 2 violated rules |
 | [SAP/python-metacli](https://github.com/SAP/python-metacli) | [FAIL](SAP/python-metacli.md) | 2 violated rules |
-| [SAP/vscode-webview-rpc-lib](https://github.com/SAP/vscode-webview-rpc-lib) | [FAIL](SAP/vscode-webview-rpc-lib.md) | 2 violated rules |
+| [SAP/vscode-webview-rpc-lib](https://github.com/SAP/vscode-webview-rpc-lib) | [FAIL](SAP/vscode-webview-rpc-lib.md) | 1 violated rule |
 | [SAP/data-synthesis-for-machine-learning](https://github.com/SAP/data-synthesis-for-machine-learning) | [FAIL](SAP/data-synthesis-for-machine-learning.md) | 1 violated rule |
 | [SAP/i40-aas-objects](https://github.com/SAP/i40-aas-objects) | [FAIL](SAP/i40-aas-objects.md) | 1 violated rule |
 | [SAP/xml-tools](https://github.com/SAP/xml-tools) | [FAIL](SAP/xml-tools.md) | 2 violated rules |
@@ -277,7 +277,7 @@
 | [SAP/kubernetes-deployment-orchestrator](https://github.com/SAP/kubernetes-deployment-orchestrator) | [FAIL](SAP/kubernetes-deployment-orchestrator.md) | 1 violated rule |
 | [SAP/pipeline-dsl](https://github.com/SAP/pipeline-dsl) | [FAIL](SAP/pipeline-dsl.md) | 1 violated rule |
 | [SAP/project-piper-action-utils](https://github.com/SAP/project-piper-action-utils) | [FAIL](SAP/project-piper-action-utils.md) | 1 violated rule |
-| [SAP/app-studio-toolkit](https://github.com/SAP/app-studio-toolkit) | [FAIL](SAP/app-studio-toolkit.md) | 2 violated rules |
+| [SAP/app-studio-toolkit](https://github.com/SAP/app-studio-toolkit) | [FAIL](SAP/app-studio-toolkit.md) | 1 violated rule |
 | [SAP/sap-btp-service-operator](https://github.com/SAP/sap-btp-service-operator) | [FAIL](SAP/sap-btp-service-operator.md) | 1 violated rule |
 | [SAP/transactional-storage-framework](https://github.com/SAP/transactional-storage-framework) | [FAIL](SAP/transactional-storage-framework.md) | 1 violated rule |
 | [SAP/neonbee](https://github.com/SAP/neonbee) | [FAIL](SAP/neonbee.md) | 1 violated rule |
