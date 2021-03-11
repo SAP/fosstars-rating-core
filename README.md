@@ -128,7 +128,7 @@
 | [SAP/ui5-project](https://github.com/SAP/ui5-project) | [FAIL](SAP/ui5-project.md) | 1 violated rule |
 | [SAP/InfraBox-cli](https://github.com/SAP/InfraBox-cli) | [FAIL](SAP/InfraBox-cli.md) | 1 violated rule |
 | [SAP/cloud-s4-sdk-book](https://github.com/SAP/cloud-s4-sdk-book) | [FAIL](SAP/cloud-s4-sdk-book.md) | 1 violated rule |
-| [SAP/fundamental-ngx](https://github.com/SAP/fundamental-ngx) | [FAIL](SAP/fundamental-ngx.md) | 2 violated rules |
+| [SAP/fundamental-ngx](https://github.com/SAP/fundamental-ngx) | [FAIL](SAP/fundamental-ngx.md) | 1 violated rule |
 | [SAP/angular-metaui](https://github.com/SAP/angular-metaui) | [FAIL](SAP/angular-metaui.md) | 3 violated rules |
 | [SAP/fiori-for-ios-workshop](https://github.com/SAP/fiori-for-ios-workshop) | [FAIL](SAP/fiori-for-ios-workshop.md) | 2 violated rules |
 | [SAP/commerce-gradle-plugin](https://github.com/SAP/commerce-gradle-plugin) | [FAIL](SAP/commerce-gradle-plugin.md) | 1 violated rule |
@@ -149,7 +149,7 @@
 | [SAP/ui5-uiveri5](https://github.com/SAP/ui5-uiveri5) | [FAIL](SAP/ui5-uiveri5.md) | 2 violated rules |
 | [SAP/python-pyodata](https://github.com/SAP/python-pyodata) | [FAIL](SAP/python-pyodata.md) | 2 violated rules |
 | [SAP/fundamental-vue](https://github.com/SAP/fundamental-vue) | [FAIL](SAP/fundamental-vue.md) | 2 violated rules |
-| [SAP/cloud-mta](https://github.com/SAP/cloud-mta) | [FAIL](SAP/cloud-mta.md) | 2 violated rules |
+| [SAP/cloud-mta](https://github.com/SAP/cloud-mta) | [FAIL](SAP/cloud-mta.md) | 1 violated rule |
 | [SAP/generator-easy-ui5](https://github.com/SAP/generator-easy-ui5) | [FAIL](SAP/generator-easy-ui5.md) | 1 violated rule |
 | [SAP/cf-html5-apps-repo-cli-plugin](https://github.com/SAP/cf-html5-apps-repo-cli-plugin) | [FAIL](SAP/cf-html5-apps-repo-cli-plugin.md) | 2 violated rules |
 | [SAP/openui5-website](https://github.com/SAP/openui5-website) | [FAIL](SAP/openui5-website.md) | 2 violated rules |
@@ -215,9 +215,9 @@
 | [SAP/yeoman-ui](https://github.com/SAP/yeoman-ui) | [FAIL](SAP/yeoman-ui.md) | 2 violated rules |
 | [SAP/Tracer](https://github.com/SAP/Tracer) | [FAIL](SAP/Tracer.md) | 2 violated rules |
 | [SAP/odata-vocabularies](https://github.com/SAP/odata-vocabularies) | [FAIL](SAP/odata-vocabularies.md) | 1 violated rule |
-| [SAP/vscode-mta-tools](https://github.com/SAP/vscode-mta-tools) | [FAIL](SAP/vscode-mta-tools.md) | 2 violated rules |
+| [SAP/vscode-mta-tools](https://github.com/SAP/vscode-mta-tools) | [FAIL](SAP/vscode-mta-tools.md) | 1 violated rule |
 | [SAP/spartacus-bootcamp](https://github.com/SAP/spartacus-bootcamp) | [FAIL](SAP/spartacus-bootcamp.md) | 3 violated rules |
-| [SAP/emobility-smart-charging](https://github.com/SAP/emobility-smart-charging) | [FAIL](SAP/emobility-smart-charging.md) | 1 violated rule |
+| [SAP/emobility-smart-charging](https://github.com/SAP/emobility-smart-charging) | [FAIL](SAP/emobility-smart-charging.md) | 2 violated rules |
 | [SAP/ui5-simple-require](https://github.com/SAP/ui5-simple-require) | [FAIL](SAP/ui5-simple-require.md) | 1 violated rule |
 | [SAP/vscode-logging](https://github.com/SAP/vscode-logging) | [FAIL](SAP/vscode-logging.md) | 2 violated rules |
 | [SAP/cloud-sdk-js](https://github.com/SAP/cloud-sdk-js) | [FAIL](SAP/cloud-sdk-js.md) | 2 violated rules |
@@ -228,7 +228,7 @@
 | [SAP/project-piper-action](https://github.com/SAP/project-piper-action) | [FAIL](SAP/project-piper-action.md) | 1 violated rule |
 | [SAP/ui5-language-assistant](https://github.com/SAP/ui5-language-assistant) | [FAIL](SAP/ui5-language-assistant.md) | 2 violated rules |
 | [SAP/credential-digger](https://github.com/SAP/credential-digger) | [FAIL](SAP/credential-digger.md) | 1 violated rule |
-| [SAP/feature-toggle-node](https://github.com/SAP/feature-toggle-node) | [FAIL](SAP/feature-toggle-node.md) | 2 violated rules |
+| [SAP/feature-toggle-node](https://github.com/SAP/feature-toggle-node) | [FAIL](SAP/feature-toggle-node.md) | 1 violated rule |
 | [SAP/fsm-sdk](https://github.com/SAP/fsm-sdk) | [FAIL](SAP/fsm-sdk.md) | 1 violated rule |
 | [SAP/cloud-foundry-tools-api](https://github.com/SAP/cloud-foundry-tools-api) | [FAIL](SAP/cloud-foundry-tools-api.md) | 2 violated rules |
 | [SAP/code-pal-for-abap](https://github.com/SAP/code-pal-for-abap) | [FAIL](SAP/code-pal-for-abap.md) | 2 violated rules |
@@ -262,7 +262,7 @@
 | [SAP/cf-cli-smsi-plugin](https://github.com/SAP/cf-cli-smsi-plugin) | [FAIL](SAP/cf-cli-smsi-plugin.md) | 1 violated rule |
 | [SAP/ui5-task-adaptation](https://github.com/SAP/ui5-task-adaptation) | [FAIL](SAP/ui5-task-adaptation.md) | 1 violated rule |
 | [SAP/xsk](https://github.com/SAP/xsk) | [FAIL](SAP/xsk.md) | 1 violated rule |
-| [SAP/cloud-sdk](https://github.com/SAP/cloud-sdk) | [FAIL](SAP/cloud-sdk.md) | 1 violated rule |
+| [SAP/cloud-sdk](https://github.com/SAP/cloud-sdk) | [FAIL](SAP/cloud-sdk.md) | 2 violated rules |
 | [SAP/cloud-sdk-currency-conversion](https://github.com/SAP/cloud-sdk-currency-conversion) | [FAIL](SAP/cloud-sdk-currency-conversion.md) | 2 violated rules |
 | [SAP/stewardci-log-forwarding](https://github.com/SAP/stewardci-log-forwarding) | [FAIL](SAP/stewardci-log-forwarding.md) | 1 violated rule |
 | [SAP/alert-notification-node-client](https://github.com/SAP/alert-notification-node-client) | [FAIL](SAP/alert-notification-node-client.md) | 1 violated rule |
