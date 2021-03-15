@@ -27,6 +27,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 /**
  * The class holds information about repository that was cloned with JGit.
  */
+// TODO: make sure that all methods accept and expect relative paths from the repository root
 public class LocalRepository implements AutoCloseable {
 
   /**
@@ -246,6 +247,17 @@ public class LocalRepository implements AutoCloseable {
     }
 
     return Optional.of(Files.newInputStream(path));
+  }
+
+  /**
+   * Read lines in a file.
+   *
+   * @param file A path to the file.
+   * @return A list of lines in the file if it exists.
+   * @throws IOException If something went wrong.
+   */
+  public Optional<List<String>> readLinesOf(String file) throws IOException {
+    return readLinesOf(Paths.get(file));
   }
 
   /**
