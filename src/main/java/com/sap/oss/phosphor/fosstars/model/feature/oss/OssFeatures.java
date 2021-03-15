@@ -308,4 +308,22 @@ public class OssFeatures {
    */
   public static final BooleanFeature USES_REUSE
       = new BooleanFeature("If a project uses Reuse tool");
+
+  /**
+   * Shows whether an open source project has a licence or not.
+   */
+  public static final BooleanFeature HAS_LICENSE
+      = new BooleanFeature("If a project has a license");
+
+  /**
+   * Shows whether an open source project has an allowed licence or not.
+   */
+  public static final BooleanFeature ALLOWED_LICENSE
+      = new BooleanFeature("If a project uses an allowed license");
+
+  /**
+   * Shows whether a licence has wrong text or not.
+   */
+  public static final BooleanFeature LICENSE_HAS_WRONG_CONTENT
+      = new BooleanFeature("If a license has wrong content");
 }
