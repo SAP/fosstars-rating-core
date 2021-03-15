@@ -128,7 +128,7 @@
 | [SAP/ui5-project](https://github.com/SAP/ui5-project) | [FAIL](SAP/ui5-project.md) | 1 violated rule |
 | [SAP/InfraBox-cli](https://github.com/SAP/InfraBox-cli) | [FAIL](SAP/InfraBox-cli.md) | 1 violated rule |
 | [SAP/cloud-s4-sdk-book](https://github.com/SAP/cloud-s4-sdk-book) | [FAIL](SAP/cloud-s4-sdk-book.md) | 1 violated rule |
-| [SAP/fundamental-ngx](https://github.com/SAP/fundamental-ngx) | [FAIL](SAP/fundamental-ngx.md) | 1 violated rule |
+| [SAP/fundamental-ngx](https://github.com/SAP/fundamental-ngx) | [FAIL](SAP/fundamental-ngx.md) | 2 violated rules |
 | [SAP/angular-metaui](https://github.com/SAP/angular-metaui) | [FAIL](SAP/angular-metaui.md) | 3 violated rules |
 | [SAP/fiori-for-ios-workshop](https://github.com/SAP/fiori-for-ios-workshop) | [FAIL](SAP/fiori-for-ios-workshop.md) | 2 violated rules |
 | [SAP/commerce-gradle-plugin](https://github.com/SAP/commerce-gradle-plugin) | [FAIL](SAP/commerce-gradle-plugin.md) | 1 violated rule |
@@ -262,7 +262,7 @@
 | [SAP/cf-cli-smsi-plugin](https://github.com/SAP/cf-cli-smsi-plugin) | [FAIL](SAP/cf-cli-smsi-plugin.md) | 1 violated rule |
 | [SAP/ui5-task-adaptation](https://github.com/SAP/ui5-task-adaptation) | [FAIL](SAP/ui5-task-adaptation.md) | 1 violated rule |
 | [SAP/xsk](https://github.com/SAP/xsk) | [FAIL](SAP/xsk.md) | 1 violated rule |
-| [SAP/cloud-sdk](https://github.com/SAP/cloud-sdk) | [FAIL](SAP/cloud-sdk.md) | 1 violated rule |
+| [SAP/cloud-sdk](https://github.com/SAP/cloud-sdk) | [FAIL](SAP/cloud-sdk.md) | 2 violated rules |
 | [SAP/cloud-sdk-currency-conversion](https://github.com/SAP/cloud-sdk-currency-conversion) | [FAIL](SAP/cloud-sdk-currency-conversion.md) | 2 violated rules |
 | [SAP/stewardci-log-forwarding](https://github.com/SAP/stewardci-log-forwarding) | [FAIL](SAP/stewardci-log-forwarding.md) | 1 violated rule |
 | [SAP/alert-notification-node-client](https://github.com/SAP/alert-notification-node-client) | [FAIL](SAP/alert-notification-node-client.md) | 1 violated rule |
@@ -277,7 +277,7 @@
 | [SAP/kubernetes-deployment-orchestrator](https://github.com/SAP/kubernetes-deployment-orchestrator) | [FAIL](SAP/kubernetes-deployment-orchestrator.md) | 1 violated rule |
 | [SAP/pipeline-dsl](https://github.com/SAP/pipeline-dsl) | [FAIL](SAP/pipeline-dsl.md) | 1 violated rule |
 | [SAP/project-piper-action-utils](https://github.com/SAP/project-piper-action-utils) | [FAIL](SAP/project-piper-action-utils.md) | 1 violated rule |
-| [SAP/app-studio-toolkit](https://github.com/SAP/app-studio-toolkit) | [FAIL](SAP/app-studio-toolkit.md) | 2 violated rules |
+| [SAP/app-studio-toolkit](https://github.com/SAP/app-studio-toolkit) | [FAIL](SAP/app-studio-toolkit.md) | 1 violated rule |
 | [SAP/sap-btp-service-operator](https://github.com/SAP/sap-btp-service-operator) | [FAIL](SAP/sap-btp-service-operator.md) | 1 violated rule |
 | [SAP/transactional-storage-framework](https://github.com/SAP/transactional-storage-framework) | [FAIL](SAP/transactional-storage-framework.md) | 1 violated rule |
 | [SAP/neonbee](https://github.com/SAP/neonbee) | [FAIL](SAP/neonbee.md) | 1 violated rule |
