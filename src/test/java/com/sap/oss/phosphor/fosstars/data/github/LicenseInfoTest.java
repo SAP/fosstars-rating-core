@@ -2,7 +2,7 @@ package com.sap.oss.phosphor.fosstars.data.github;
 
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ALLOWED_LICENSE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_LICENSE;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.LICENSE_HAS_WRONG_CONTENT;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.LICENSE_HAS_DISALLOWED_CONTENT;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -25,7 +25,7 @@ public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
   @Test
   public void testIsWrong() {
     LicenseInfo provider = new LicenseInfo(fetcher);
-    provider.wrongLicenseContentPatterns("stop word", "wrong");
+    provider.disallowedLicenseContentPatterns("stop word", "wrong");
     assertTrue(provider.isWrong("This is a stop word."));
     assertTrue(provider.isWrong("Wrong content"));
     assertFalse(provider.isWrong("This is okay"));
@@ -51,23 +51,23 @@ public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
   public void testInfoAboutLicense() {
     LicenseInfo provider = new LicenseInfo(fetcher);
     provider.allowedLicenseHeaders("Apache License");
-    provider.wrongLicenseContentPatterns("Don't trouble trouble till trouble troubles you");
+    provider.disallowedLicenseContentPatterns("Don't trouble trouble till trouble troubles you");
 
     ValueSet values = provider.infoAboutLicense(
         Arrays.asList("", "Apache License", "", "Here should be the text.", ""));
     checkValue(values, ALLOWED_LICENSE, true);
-    checkValue(values, LICENSE_HAS_WRONG_CONTENT, false);
+    checkValue(values, LICENSE_HAS_DISALLOWED_CONTENT, false);
 
     values = provider.infoAboutLicense(
         Arrays.asList("", "MIT License", "", "Here should be the text.", ""));
     checkValue(values, ALLOWED_LICENSE, false);
-    checkValue(values, LICENSE_HAS_WRONG_CONTENT, false);
+    checkValue(values, LICENSE_HAS_DISALLOWED_CONTENT, false);
 
     values = provider.infoAboutLicense(
         Arrays.asList("", "MIT License", "", "Here should be the text.",
             "Don't trouble trouble till trouble troubles you", ""));
     checkValue(values, ALLOWED_LICENSE, false);
-    checkValue(values, LICENSE_HAS_WRONG_CONTENT, true);
+    checkValue(values, LICENSE_HAS_DISALLOWED_CONTENT, true);
   }
 
   private static void checkValue(ValueSet values, Feature<Boolean> feature, boolean expected) {
@@ -82,7 +82,7 @@ public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
     LicenseInfo provider = new LicenseInfo(fetcher);
     assertTrue(provider.supportedFeatures().contains(HAS_LICENSE));
     assertTrue(provider.supportedFeatures().contains(ALLOWED_LICENSE));
-    assertTrue(provider.supportedFeatures().contains(LICENSE_HAS_WRONG_CONTENT));
+    assertTrue(provider.supportedFeatures().contains(LICENSE_HAS_DISALLOWED_CONTENT));
   }
 
   @Test
@@ -97,18 +97,18 @@ public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
     LicenseInfo provider = new LicenseInfo(fetcher);
 
     provider.allowedLicenseHeaders("Apache License");
-    provider.wrongLicenseContentPatterns("Don't trouble trouble till trouble troubles you");
+    provider.disallowedLicenseContentPatterns("Don't trouble trouble till trouble troubles you");
     ValueSet values = provider.fetchValuesFor(project);
     checkValue(values, HAS_LICENSE, true);
     checkValue(values, ALLOWED_LICENSE, true);
-    checkValue(values, LICENSE_HAS_WRONG_CONTENT, false);
+    checkValue(values, LICENSE_HAS_DISALLOWED_CONTENT, false);
 
     provider.allowedLicenseHeaders("MIT License");
-    provider.wrongLicenseContentPatterns("Extra text");
+    provider.disallowedLicenseContentPatterns("Extra text");
     values = provider.fetchValuesFor(project);
     checkValue(values, HAS_LICENSE, true);
     checkValue(values, ALLOWED_LICENSE, false);
-    checkValue(values, LICENSE_HAS_WRONG_CONTENT, true);
+    checkValue(values, LICENSE_HAS_DISALLOWED_CONTENT, true);
   }
 
   @Test
@@ -122,13 +122,13 @@ public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
 
     provider.knownLicenseFiles("LICENSE");
     provider.allowedLicenseHeaders("Apache License");
-    provider.wrongLicenseContentPatterns("Don't trouble trouble till trouble troubles you");
+    provider.disallowedLicenseContentPatterns("Don't trouble trouble till trouble troubles you");
     ValueSet values = provider.fetchValuesFor(project);
     checkValue(values, HAS_LICENSE, false);
     Optional<Value<Boolean>> something = values.of(ALLOWED_LICENSE);
     assertTrue(something.isPresent());
     assertTrue(something.get().isUnknown());
-    something = values.of(LICENSE_HAS_WRONG_CONTENT);
+    something = values.of(LICENSE_HAS_DISALLOWED_CONTENT);
     assertTrue(something.isPresent());
     assertTrue(something.get().isUnknown());
   }
