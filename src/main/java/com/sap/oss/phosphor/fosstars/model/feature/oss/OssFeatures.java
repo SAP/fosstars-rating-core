@@ -332,4 +332,16 @@ public class OssFeatures {
    */
   public static final BooleanFeature HAS_README
       = new BooleanFeature("If a project has a README file");
+
+  /**
+   * Shows whether an open source project has a contributing guideline or not.
+   */
+  public static final BooleanFeature HAS_CONTRIBUTING_GUIDELINE
+      = new BooleanFeature("If a project has a contributing guideline");
+
+  /**
+   * Shows whether a project's contributing guideline has required text or not.
+   */
+  public static final BooleanFeature HAS_REQUIRED_TEXT_IN_CONTRIBUTING_GUIDELINE
+      = new BooleanFeature("If a project's contributing guideline has required text");
 }
