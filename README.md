@@ -120,7 +120,7 @@
 | [SAP/devops-cm-client](https://github.com/SAP/devops-cm-client) | [FAIL](SAP/devops-cm-client.md) | 1 violated rule |
 | [SAP/cloud-businessrules-templates](https://github.com/SAP/cloud-businessrules-templates) | [FAIL](SAP/cloud-businessrules-templates.md) | 2 violated rules |
 | [SAP/iot-application-services-sdk-nodejs](https://github.com/SAP/iot-application-services-sdk-nodejs) | [FAIL](SAP/iot-application-services-sdk-nodejs.md) | 2 violated rules |
-| [SAP/webide-client-tools](https://github.com/SAP/webide-client-tools) | [FAIL](SAP/webide-client-tools.md) | 2 violated rules |
+| [SAP/webide-client-tools](https://github.com/SAP/webide-client-tools) | [FAIL](SAP/webide-client-tools.md) | 1 violated rule |
 | [SAP/ui5-automation-framework](https://github.com/SAP/ui5-automation-framework) | [FAIL](SAP/ui5-automation-framework.md) | 1 violated rule |
 | [SAP/InfraBox](https://github.com/SAP/InfraBox) | [FAIL](SAP/InfraBox.md) | 1 violated rule |
 | [SAP/ui5-builder](https://github.com/SAP/ui5-builder) | [FAIL](SAP/ui5-builder.md) | 1 violated rule |
@@ -133,8 +133,8 @@
 | [SAP/fiori-for-ios-workshop](https://github.com/SAP/fiori-for-ios-workshop) | [FAIL](SAP/fiori-for-ios-workshop.md) | 2 violated rules |
 | [SAP/commerce-gradle-plugin](https://github.com/SAP/commerce-gradle-plugin) | [FAIL](SAP/commerce-gradle-plugin.md) | 1 violated rule |
 | [SAP/macOS-enterprise-privileges](https://github.com/SAP/macOS-enterprise-privileges) | [FAIL](SAP/macOS-enterprise-privileges.md) | 2 violated rules |
-| [SAP/luigi](https://github.com/SAP/luigi) | [FAIL](SAP/luigi.md) | 1 violated rule |
-| [SAP/cloud-mta-build-tool](https://github.com/SAP/cloud-mta-build-tool) | [FAIL](SAP/cloud-mta-build-tool.md) | 2 violated rules |
+| [SAP/luigi](https://github.com/SAP/luigi) | [FAIL](SAP/luigi.md) | 2 violated rules |
+| [SAP/cloud-mta-build-tool](https://github.com/SAP/cloud-mta-build-tool) | [FAIL](SAP/cloud-mta-build-tool.md) | 1 violated rule |
 | [SAP/pair-distribution-app](https://github.com/SAP/pair-distribution-app) | [FAIL](SAP/pair-distribution-app.md) | 1 violated rule |
 | [SAP/quality-continuous-traceability-monitor](https://github.com/SAP/quality-continuous-traceability-monitor) | [FAIL](SAP/quality-continuous-traceability-monitor.md) | 2 violated rules |
 | [SAP/cloud-security-xsuaa-integration](https://github.com/SAP/cloud-security-xsuaa-integration) | [FAIL](SAP/cloud-security-xsuaa-integration.md) | 2 violated rules |
@@ -168,8 +168,8 @@
 | [SAP/ewm-cloud-robotics](https://github.com/SAP/ewm-cloud-robotics) | [FAIL](SAP/ewm-cloud-robotics.md) | 1 violated rule |
 | [SAP/ewm-cloud-robotics-s4](https://github.com/SAP/ewm-cloud-robotics-s4) | [FAIL](SAP/ewm-cloud-robotics-s4.md) | 2 violated rules |
 | [SAP/scimono](https://github.com/SAP/scimono) | [FAIL](SAP/scimono.md) | 1 violated rule |
-| [SAP/go-ase](https://github.com/SAP/go-ase) | [FAIL](SAP/go-ase.md) | 2 violated rules |
-| [SAP/openui5-fhir](https://github.com/SAP/openui5-fhir) | [FAIL](SAP/openui5-fhir.md) | 1 violated rule |
+| [SAP/go-ase](https://github.com/SAP/go-ase) | [FAIL](SAP/go-ase.md) | 1 violated rule |
+| [SAP/openui5-fhir](https://github.com/SAP/openui5-fhir) | [FAIL](SAP/openui5-fhir.md) | 2 violated rules |
 | [SAP/ui5-typescript](https://github.com/SAP/ui5-typescript) | [FAIL](SAP/ui5-typescript.md) | 2 violated rules |
 | [SAP/ui5-webcomponents-react](https://github.com/SAP/ui5-webcomponents-react) | [FAIL](SAP/ui5-webcomponents-react.md) | 1 violated rule |
 | [SAP/styleguides](https://github.com/SAP/styleguides) | [FAIL](SAP/styleguides.md) | 2 violated rules |
@@ -201,7 +201,7 @@
 | [SAP/apibusinesshub-integration-recipes](https://github.com/SAP/apibusinesshub-integration-recipes) | [FAIL](SAP/apibusinesshub-integration-recipes.md) | 3 violated rules |
 | [SAP/cloud-sdk-cli](https://github.com/SAP/cloud-sdk-cli) | [FAIL](SAP/cloud-sdk-cli.md) | 2 violated rules |
 | [SAP/python-metacli](https://github.com/SAP/python-metacli) | [FAIL](SAP/python-metacli.md) | 2 violated rules |
-| [SAP/vscode-webview-rpc-lib](https://github.com/SAP/vscode-webview-rpc-lib) | [FAIL](SAP/vscode-webview-rpc-lib.md) | 1 violated rule |
+| [SAP/vscode-webview-rpc-lib](https://github.com/SAP/vscode-webview-rpc-lib) | [FAIL](SAP/vscode-webview-rpc-lib.md) | 2 violated rules |
 | [SAP/data-synthesis-for-machine-learning](https://github.com/SAP/data-synthesis-for-machine-learning) | [FAIL](SAP/data-synthesis-for-machine-learning.md) | 1 violated rule |
 | [SAP/i40-aas-objects](https://github.com/SAP/i40-aas-objects) | [FAIL](SAP/i40-aas-objects.md) | 1 violated rule |
 | [SAP/xml-tools](https://github.com/SAP/xml-tools) | [FAIL](SAP/xml-tools.md) | 2 violated rules |
