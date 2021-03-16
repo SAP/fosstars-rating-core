@@ -8,6 +8,7 @@ import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.oss.phosphor.fosstars.model.weight.ImmutableWeight;
 import com.sap.oss.phosphor.fosstars.model.weight.ScoreWeights;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -74,6 +75,13 @@ public class OssArtifactVersionScore extends WeightedCompositeScore {
   @Override
   public ScoreValue calculate(Set<Value<?>> values) {
     ScoreValue scoreValue = super.calculate(values);
+
+    Optional<ScoreValue> versionScore =
+        scoreValue.findUsedSubScoreValue(ArtifactVersionScore.class);
+
+    if (versionScore.filter(ScoreValue::isUnknown).isPresent()) {
+      return scoreValue.makeUnknown().withMinConfidence();
+    }
 
     ScoreValue vulScore = calculateIfNecessary(
         new ArtifactVersionVulnerabilityScore(), new ValueHashSet(values));

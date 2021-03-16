@@ -45,6 +45,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sap.oss.phosphor.fosstars.TestUtils;
 import com.sap.oss.phosphor.fosstars.advice.Advisor;
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Score;
@@ -60,6 +61,7 @@ import com.sap.oss.phosphor.fosstars.model.value.PackageManagers;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
+import com.sap.oss.phosphor.fosstars.model.value.Vulnerability;
 import com.sap.oss.phosphor.fosstars.tool.format.PrettyPrinter;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -71,6 +73,7 @@ import org.junit.Test;
 public class OssArtifactVersionScoreTest {
 
   private static final double DELTA = 0.01;
+  private static final double CONFIDENCE_WO_CVE = 8.823529411764705;
 
   @Test
   @Ignore
@@ -107,8 +110,8 @@ public class OssArtifactVersionScoreTest {
         PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertEquals(8.470588235294118, scoreValue.get(), DELTA);
-    assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
+    assertEquals(7.294117647058823, scoreValue.get(), DELTA);
+    assertEquals(CONFIDENCE_WO_CVE, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }
 
@@ -130,8 +133,8 @@ public class OssArtifactVersionScoreTest {
         PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertEquals(7.941176470588235, scoreValue.get(), DELTA);
-    assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
+    assertEquals(6.76470588235294, scoreValue.get(), DELTA);
+    assertEquals(CONFIDENCE_WO_CVE, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }
 
@@ -151,8 +154,8 @@ public class OssArtifactVersionScoreTest {
         NUMBER_OF_WATCHERS_ON_GITHUB.value(5));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertEquals(8.720588235294116, scoreValue.get(), DELTA);
-    assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
+    assertEquals(7.5441176470588225, scoreValue.get(), DELTA);
+    assertEquals(CONFIDENCE_WO_CVE, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }
 
@@ -166,6 +169,72 @@ public class OssArtifactVersionScoreTest {
         IS_APACHE.value(true),
         IS_ECLIPSE.value(false),
         VULNERABILITIES.value(new Vulnerabilities()),
+        NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(50),
+        NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(3),
+        NUMBER_OF_GITHUB_STARS.value(10),
+        NUMBER_OF_WATCHERS_ON_GITHUB.value(5));
+
+    ScoreValue scoreValue = score.calculate(values);
+    assertEquals(7.720588235294117, scoreValue.get(), DELTA);
+    assertEquals(CONFIDENCE_WO_CVE, scoreValue.confidence(), DELTA);
+    checkUsedValues(scoreValue);
+  }
+
+  @Test
+  public void calculateWith20UsedAndHighVulnerability() {
+    OssArtifactVersionScore score = new OssArtifactVersionScore();
+    Vulnerability vulnerability = TestUtils.createBasicVulnerability(10.0, "2.0.0", "2.0.0");
+    Set<Value<?>> values = setOf(
+        RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(true)),
+        ARTIFACT_VERSION.value("2.0.0"),
+        SUPPORTED_BY_COMPANY.value(false),
+        IS_APACHE.value(true),
+        IS_ECLIPSE.value(false),
+        VULNERABILITIES.value(new Vulnerabilities(vulnerability)),
+        NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(50),
+        NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(3),
+        NUMBER_OF_GITHUB_STARS.value(10),
+        NUMBER_OF_WATCHERS_ON_GITHUB.value(5));
+
+    ScoreValue scoreValue = score.calculate(values);
+    assertEquals(0.0, scoreValue.get(), DELTA);
+    assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
+    checkUsedValues(scoreValue);
+  }
+
+  @Test
+  public void calculateWith20UsedAndLowVulnerability() {
+    OssArtifactVersionScore score = new OssArtifactVersionScore();
+    Vulnerability vulnerability = TestUtils.createBasicVulnerability(1.0, "2.0.0", "2.0.0");
+    Set<Value<?>> values = setOf(
+        RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(true)),
+        ARTIFACT_VERSION.value("2.0.0"),
+        SUPPORTED_BY_COMPANY.value(false),
+        IS_APACHE.value(true),
+        IS_ECLIPSE.value(false),
+        VULNERABILITIES.value(new Vulnerabilities(vulnerability)),
+        NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(50),
+        NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(3),
+        NUMBER_OF_GITHUB_STARS.value(10),
+        NUMBER_OF_WATCHERS_ON_GITHUB.value(5));
+
+    ScoreValue scoreValue = score.calculate(values);
+    assertEquals(7.720588235294117, scoreValue.get(), DELTA);
+    assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
+    checkUsedValues(scoreValue);
+  }
+
+  @Test
+  public void calculateWith20UsedAndOldVulnerability() {
+    OssArtifactVersionScore score = new OssArtifactVersionScore();
+    Vulnerability vulnerability = TestUtils.createBasicVulnerability(10.0, "1.0.0", "1.0.2");
+    Set<Value<?>> values = setOf(
+        RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(true)),
+        ARTIFACT_VERSION.value("2.0.0"),
+        SUPPORTED_BY_COMPANY.value(false),
+        IS_APACHE.value(true),
+        IS_ECLIPSE.value(false),
+        VULNERABILITIES.value(new Vulnerabilities(vulnerability)),
         NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(50),
         NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(3),
         NUMBER_OF_GITHUB_STARS.value(10),

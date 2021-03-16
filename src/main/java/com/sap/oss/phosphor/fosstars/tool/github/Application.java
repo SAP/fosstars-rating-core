@@ -90,7 +90,7 @@ public class Application {
    * A path to the cache.
    */
   private static final String PATH_TO_VALUE_CACHE
-      = FOSSTARS_DIRECTORY + File.separator + "github_project_value_cache.json";
+      = FOSSTARS_DIRECTORY + File.separator + "github_project_value_cache.json.210311";
 
   /**
    * A shared cache.

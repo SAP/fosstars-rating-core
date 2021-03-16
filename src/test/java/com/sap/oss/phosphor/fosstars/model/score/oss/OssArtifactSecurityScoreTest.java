@@ -1,5 +1,6 @@
 package com.sap.oss.phosphor.fosstars.model.score.oss;
 
+import static com.sap.oss.phosphor.fosstars.TestUtils.getDefaultValues;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ARTIFACT_VERSION;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.FUZZED_IN_OSS_FUZZ;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_BUG_BOUNTY_PROGRAM;
@@ -45,6 +46,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sap.oss.phosphor.fosstars.TestUtils;
 import com.sap.oss.phosphor.fosstars.advice.Advisor;
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Score;
@@ -54,18 +56,29 @@ import com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurityRating.Thresholds;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersions;
+import com.sap.oss.phosphor.fosstars.model.value.CVSS;
+import com.sap.oss.phosphor.fosstars.model.value.CVSS.Version;
 import com.sap.oss.phosphor.fosstars.model.value.Languages;
 import com.sap.oss.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.oss.phosphor.fosstars.model.value.PackageManagers;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
+import com.sap.oss.phosphor.fosstars.model.value.Reference;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
+import com.sap.oss.phosphor.fosstars.model.value.VersionRange;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
+import com.sap.oss.phosphor.fosstars.model.value.Vulnerability;
+import com.sap.oss.phosphor.fosstars.model.value.Vulnerability.Resolution;
 import com.sap.oss.phosphor.fosstars.tool.format.PrettyPrinter;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -75,6 +88,7 @@ import org.junit.Test;
 public class OssArtifactSecurityScoreTest {
 
   private static final double DELTA = 0.2;
+  private static final double CONFIDENCE_WO_CVE = 9.411764705882351;
 
   @Test
   @Ignore
@@ -106,8 +120,8 @@ public class OssArtifactSecurityScoreTest {
         ARTIFACT_VERSION.value("1.2.0"));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertEquals(6.790168929110106, scoreValue.get(), DELTA);
-    assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
+    assertEquals(5.946669683257918, scoreValue.get(), DELTA);
+    assertEquals(CONFIDENCE_WO_CVE, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }
 
@@ -119,8 +133,8 @@ public class OssArtifactSecurityScoreTest {
         ARTIFACT_VERSION.value("1.0.0"));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertEquals(6.410594268476622, scoreValue.get(), DELTA);
-    assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
+    assertEquals(5.567095022624433, scoreValue.get(), DELTA);
+    assertEquals(CONFIDENCE_WO_CVE, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }
 
@@ -132,8 +146,8 @@ public class OssArtifactSecurityScoreTest {
         ARTIFACT_VERSION.value("1.2.0"));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertEquals(6.969412518853694, scoreValue.get(), DELTA);
-    assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
+    assertEquals(6.125913273001508, scoreValue.get(), DELTA);
+    assertEquals(CONFIDENCE_WO_CVE, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }
 
@@ -145,9 +159,45 @@ public class OssArtifactSecurityScoreTest {
         ARTIFACT_VERSION.value("2.0.0"));
 
     ScoreValue scoreValue = score.calculate(values);
+    assertEquals(6.252438159879335, scoreValue.get(), DELTA);
+    assertEquals(CONFIDENCE_WO_CVE, scoreValue.confidence(), DELTA);
+    checkUsedValues(scoreValue);
+  }
+
+  @Test
+  public void calculateWith20UsedAndOldVulnerability() {
+    OssArtifactSecurityScore score = new OssArtifactSecurityScore();
+    Vulnerability vulnerability = createBasicVulnerability();
+
+    Set<Value<?>> values = getDefaultValues(
+        RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(true)),
+        VULNERABILITIES.value(new Vulnerabilities(vulnerability)),
+        ARTIFACT_VERSION.value("2.0.0"));
+
+    ScoreValue scoreValue = score.calculate(values);
     assertEquals(7.095937405731523, scoreValue.get(), DELTA);
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
+  }
+
+  @Test
+  public void calculateWith20UsedAndVulnerability() {
+    OssArtifactSecurityScore score = new OssArtifactSecurityScore();
+    Vulnerability vulnerability = TestUtils.createBasicVulnerability(10.0, "2.0.0", "2.0.0");
+
+    Set<Value<?>> values = getDefaultValues(
+        RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(true)),
+        VULNERABILITIES.value(new Vulnerabilities(vulnerability)),
+        ARTIFACT_VERSION.value("2.0.0"));
+
+    ScoreValue scoreValue = score.calculate(values);
+    assertEquals(0.716974358974359, scoreValue.get(), DELTA);
+    assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
+    checkUsedValues(scoreValue);
+  }
+
+  private Vulnerability createBasicVulnerability() {
+    return TestUtils.createBasicVulnerability(9.0, "1.0.0", "1.2.0");
   }
 
   private static ArtifactVersions testArtifactVersions(boolean with2xx) {
@@ -178,65 +228,5 @@ public class OssArtifactSecurityScoreTest {
         fail("Unexpected value: " + value.feature().getClass());
       }
     }
-  }
-
-  /**
-   * Create the default values and overwrite defaults with given values.
-   *
-   * @param values to be added to the default values set.
-   * @return A set of objects.
-   */
-  private Set<Value<?>> getDefaultValues(Value<?>... values) {
-    Set<Value<?>> defaultValues = getDefaultValues();
-    Map<String, Value<?>> name2Value = new HashMap<>();
-    for (Value<?> v : values) {
-      name2Value.put(v.feature().name(), v);
-    }
-
-    Set<Value<?>> resultValues = defaultValues.stream()
-        .filter(v -> !name2Value.containsKey(v.feature().name()))
-        .collect(Collectors.toSet());
-    resultValues.addAll(name2Value.values());
-
-    return resultValues;
-  }
-
-  private Set<Value<?>> getDefaultValues() {
-    return setOf(
-        RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(false)),
-        ARTIFACT_VERSION.value("1.2.0"),
-        SUPPORTED_BY_COMPANY.value(false),
-        IS_APACHE.value(true),
-        IS_ECLIPSE.value(false),
-        NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(50),
-        NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(3),
-        NUMBER_OF_GITHUB_STARS.value(10),
-        NUMBER_OF_WATCHERS_ON_GITHUB.value(5),
-        HAS_SECURITY_TEAM.value(false),
-        HAS_SECURITY_POLICY.value(false),
-        HAS_BUG_BOUNTY_PROGRAM.value(false),
-        SIGNS_ARTIFACTS.value(true),
-        VULNERABILITIES.value(new Vulnerabilities()),
-        PROJECT_START_DATE.value(new Date()),
-        USES_SIGNED_COMMITS.value(false),
-        RUNS_CODEQL_SCANS.value(false),
-        USES_CODEQL_CHECKS.value(false),
-        USES_LGTM_CHECKS.value(true),
-        WORST_LGTM_GRADE.value(LgtmGrade.B),
-        USES_NOHTTP.value(true),
-        USES_DEPENDABOT.value(true),
-        USES_GITHUB_FOR_DEVELOPMENT.value(true),
-        LANGUAGES.value(Languages.of(JAVA)),
-        USES_ADDRESS_SANITIZER.value(false),
-        USES_MEMORY_SANITIZER.value(false),
-        USES_UNDEFINED_BEHAVIOR_SANITIZER.value(false),
-        USES_OWASP_ESAPI.value(false),
-        USES_OWASP_JAVA_ENCODER.value(false),
-        USES_OWASP_JAVA_HTML_SANITIZER.value(false),
-        FUZZED_IN_OSS_FUZZ.value(false),
-        USES_FIND_SEC_BUGS.value(true),
-        OWASP_DEPENDENCY_CHECK_USAGE.value(MANDATORY),
-        OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.value(7.0),
-        PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)));
   }
 }

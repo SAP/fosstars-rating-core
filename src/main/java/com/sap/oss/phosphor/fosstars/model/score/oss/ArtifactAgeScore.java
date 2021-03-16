@@ -38,10 +38,14 @@ public class ArtifactAgeScore extends FeatureBasedScore {
 
     ScoreValue scoreValue = scoreValue(Score.MIN, artifactVersions);
 
+    if (artifactVersions.isUnknown()) {
+      logger.info("No release information was found (unknown artifact versions value).");
+      return scoreValue.makeUnknown().withMinConfidence();
+    }
     Collection<ArtifactVersion> sortedByReleaseDate = sortByReleaseDate(artifactVersions);
 
-    if (artifactVersions.isUnknown() || sortedByReleaseDate.isEmpty()) {
-      logger.info("No release information was found.");
+    if (sortedByReleaseDate.isEmpty()) {
+      logger.info("No release information was found (empty artifact versions value).");
       return scoreValue.makeUnknown().withMinConfidence();
     }
 

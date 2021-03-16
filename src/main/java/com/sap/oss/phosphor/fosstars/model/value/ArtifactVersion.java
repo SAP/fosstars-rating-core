@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -16,6 +15,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Contains version tag and release date for an artifact version.
@@ -82,6 +83,7 @@ public class ArtifactVersion {
   public static class LocalDateDeserializer extends StdDeserializer<LocalDate> {
 
     private static final long serialVersionUID = 1L;
+    private static final Pattern TEST_DATE_PATTERN = Pattern.compile("TEST([+-])(\\d{1,4})d");
 
     protected LocalDateDeserializer() {
       super(LocalDate.class);
@@ -91,7 +93,20 @@ public class ArtifactVersion {
     @Override
     public LocalDate deserialize(JsonParser jp, DeserializationContext ctxt)
         throws IOException {
-      return LocalDate.parse(jp.readValueAs(String.class));
+      // option to allow easier test cases
+      // we never expect that real dates matches the 'TEST_DATE_PATTERN'
+      String text = jp.readValueAs(String.class);
+      Matcher matcher = TEST_DATE_PATTERN.matcher(text);
+      if (matcher.matches()) {
+        String sign = matcher.group(1);
+        int value = Integer.parseInt(matcher.group(2));
+        if ("+".equals(sign)) {
+          return LocalDate.now().plusDays(value);
+        } else {
+          return LocalDate.now().minusDays(value);
+        }
+      }
+      return LocalDate.parse(text);
     }
 
   }
