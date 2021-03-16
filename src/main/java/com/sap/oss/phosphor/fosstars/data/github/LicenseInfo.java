@@ -2,11 +2,12 @@ package com.sap.oss.phosphor.fosstars.data.github;
 
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ALLOWED_LICENSE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_LICENSE;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.LICENSE_HAS_WRONG_CONTENT;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.LICENSE_HAS_DISALLOWED_CONTENT;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
+import com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import java.io.IOException;
@@ -20,11 +21,9 @@ import java.util.Set;
 /**
  * This data provider gathers info about project's license. It fills out the following features:
  * <ul>
- *   <li>{@link com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures#HAS_LICENSE}</li>
- *   <li>{@link com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures#ALLOWED_LICENSE}</li>
- *   <li>
- *     {@link com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures#LICENSE_HAS_WRONG_CONTENT}
- *   </li>
+ *   <li>{@link OssFeatures#HAS_LICENSE}</li>
+ *   <li>{@link OssFeatures#ALLOWED_LICENSE}</li>
+ *   <li>{@link OssFeatures#LICENSE_HAS_DISALLOWED_CONTENT}</li>
  * </ul>
  */
 public class LicenseInfo extends GitHubCachingDataProvider {
@@ -48,7 +47,7 @@ public class LicenseInfo extends GitHubCachingDataProvider {
   /**
    * A list of patterns that are not allowed in licenses.
    */
-  private final List<String> wrongLicenseContentPatterns = new ArrayList<>();
+  private final List<String> disallowedLicenseContentPatterns = new ArrayList<>();
 
   /**
    * Initializes a data provider.
@@ -98,16 +97,16 @@ public class LicenseInfo extends GitHubCachingDataProvider {
    * @param patterns The patterns.
    * @return This data provider.
    */
-  public LicenseInfo wrongLicenseContentPatterns(String... patterns) {
+  public LicenseInfo disallowedLicenseContentPatterns(String... patterns) {
     Objects.requireNonNull(patterns, "Oops! Patterns can't be null!");
-    wrongLicenseContentPatterns.clear();
-    wrongLicenseContentPatterns.addAll(Arrays.asList(patterns));
+    disallowedLicenseContentPatterns.clear();
+    disallowedLicenseContentPatterns.addAll(Arrays.asList(patterns));
     return this;
   }
 
   @Override
   public Set<Feature<?>> supportedFeatures() {
-    return setOf(HAS_LICENSE, ALLOWED_LICENSE, LICENSE_HAS_WRONG_CONTENT);
+    return setOf(HAS_LICENSE, ALLOWED_LICENSE, LICENSE_HAS_DISALLOWED_CONTENT);
   }
 
   @Override
@@ -116,8 +115,8 @@ public class LicenseInfo extends GitHubCachingDataProvider {
 
     Optional<List<String>> license = lookForLicenseIn(project);
     if (!license.isPresent()) {
-      return ValueHashSet.from(
-          HAS_LICENSE.value(false), ALLOWED_LICENSE.unknown(), LICENSE_HAS_WRONG_CONTENT.unknown());
+      return ValueHashSet.from(HAS_LICENSE.value(false), ALLOWED_LICENSE.unknown(),
+          LICENSE_HAS_DISALLOWED_CONTENT.unknown());
     }
 
     ValueSet values = new ValueHashSet();
@@ -155,12 +154,12 @@ public class LicenseInfo extends GitHubCachingDataProvider {
    */
   ValueSet infoAboutLicense(List<String> content) {
     ValueSet values = ValueHashSet.from(
-        ALLOWED_LICENSE.value(false), LICENSE_HAS_WRONG_CONTENT.value(false));
+        ALLOWED_LICENSE.value(false), LICENSE_HAS_DISALLOWED_CONTENT.value(false));
 
     String header = headerOf(content).toLowerCase();
     values.update(ALLOWED_LICENSE.value(
         allowedLicenseHeaders.stream().map(String::toLowerCase).anyMatch(header::contains)));
-    values.update(LICENSE_HAS_WRONG_CONTENT.value(content.stream().anyMatch(this::isWrong)));
+    values.update(LICENSE_HAS_DISALLOWED_CONTENT.value(content.stream().anyMatch(this::isWrong)));
 
     return values;
   }
@@ -183,13 +182,14 @@ public class LicenseInfo extends GitHubCachingDataProvider {
   }
 
   /**
-   * Checks if a line contains {@link #wrongLicenseContentPatterns disallowed patterns}.
+   * Checks if a line contains {@link #disallowedLicenseContentPatterns disallowed patterns}.
    *
    * @param line The line to check.
    * @return True if the line contains disallowed patterns, false otherwise.
    */
   boolean isWrong(String line) {
     line = line.toLowerCase();
-    return wrongLicenseContentPatterns.stream().map(String::toLowerCase).anyMatch(line::contains);
+    return disallowedLicenseContentPatterns.stream()
+        .map(String::toLowerCase).anyMatch(line::contains);
   }
 }

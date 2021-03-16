@@ -322,10 +322,10 @@ public class OssFeatures {
       = new BooleanFeature("If a project uses an allowed license");
 
   /**
-   * Shows whether a licence has wrong text or not.
+   * Shows whether a licence has disallowed text or not.
    */
-  public static final BooleanFeature LICENSE_HAS_WRONG_CONTENT
-      = new BooleanFeature("If a license has wrong content");
+  public static final BooleanFeature LICENSE_HAS_DISALLOWED_CONTENT
+      = new BooleanFeature("If a license has disallowed text");
 
   /**
    * Shows whether an open source project has a README file or not.
