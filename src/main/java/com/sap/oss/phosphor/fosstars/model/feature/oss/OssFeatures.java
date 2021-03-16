@@ -326,4 +326,10 @@ public class OssFeatures {
    */
   public static final BooleanFeature LICENSE_HAS_WRONG_CONTENT
       = new BooleanFeature("If a license has wrong content");
+
+  /**
+   * Shows whether an open source project has a README file or not.
+   */
+  public static final BooleanFeature HAS_README
+      = new BooleanFeature("If a project has a README file");
 }
