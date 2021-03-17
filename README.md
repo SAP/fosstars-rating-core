@@ -4,10 +4,10 @@
 
 |          | # or projects              |  % or projects               |
 | :------- | -------------------------: | ---------------------------: |
-| Total    |       284 |                         100% |
-| Fail     |   271 |   95.4% |
+| Total    |       285 |                         100% |
+| Fail     |   271 |   95.1% |
 | Pass     |   9 |   3.2% |
-| Unclear  |  4 |  1.4% |
+| Unclear  |  5 |  1.8% |
 
 ## Projects
 
@@ -169,7 +169,7 @@
 | [SAP/ewm-cloud-robotics-s4](https://github.com/SAP/ewm-cloud-robotics-s4) | [FAIL](SAP/ewm-cloud-robotics-s4.md) | 2 violated rules |
 | [SAP/scimono](https://github.com/SAP/scimono) | [FAIL](SAP/scimono.md) | 1 violated rule |
 | [SAP/go-ase](https://github.com/SAP/go-ase) | [FAIL](SAP/go-ase.md) | 1 violated rule |
-| [SAP/openui5-fhir](https://github.com/SAP/openui5-fhir) | [FAIL](SAP/openui5-fhir.md) | 2 violated rules |
+| [SAP/openui5-fhir](https://github.com/SAP/openui5-fhir) | [FAIL](SAP/openui5-fhir.md) | 1 violated rule |
 | [SAP/ui5-typescript](https://github.com/SAP/ui5-typescript) | [FAIL](SAP/ui5-typescript.md) | 2 violated rules |
 | [SAP/ui5-webcomponents-react](https://github.com/SAP/ui5-webcomponents-react) | [FAIL](SAP/ui5-webcomponents-react.md) | 1 violated rule |
 | [SAP/styleguides](https://github.com/SAP/styleguides) | [FAIL](SAP/styleguides.md) | 2 violated rules |
@@ -215,7 +215,7 @@
 | [SAP/yeoman-ui](https://github.com/SAP/yeoman-ui) | [FAIL](SAP/yeoman-ui.md) | 2 violated rules |
 | [SAP/Tracer](https://github.com/SAP/Tracer) | [FAIL](SAP/Tracer.md) | 2 violated rules |
 | [SAP/odata-vocabularies](https://github.com/SAP/odata-vocabularies) | [FAIL](SAP/odata-vocabularies.md) | 1 violated rule |
-| [SAP/vscode-mta-tools](https://github.com/SAP/vscode-mta-tools) | [FAIL](SAP/vscode-mta-tools.md) | 2 violated rules |
+| [SAP/vscode-mta-tools](https://github.com/SAP/vscode-mta-tools) | [FAIL](SAP/vscode-mta-tools.md) | 1 violated rule |
 | [SAP/spartacus-bootcamp](https://github.com/SAP/spartacus-bootcamp) | [FAIL](SAP/spartacus-bootcamp.md) | 3 violated rules |
 | [SAP/emobility-smart-charging](https://github.com/SAP/emobility-smart-charging) | [FAIL](SAP/emobility-smart-charging.md) | 2 violated rules |
 | [SAP/ui5-simple-require](https://github.com/SAP/ui5-simple-require) | [FAIL](SAP/ui5-simple-require.md) | 1 violated rule |
@@ -297,3 +297,4 @@
 | [SAP/test-repo](https://github.com/SAP/test-repo) | [UNCLEAR](SAP/test-repo.md) | No violated rules |
 | [SAP/abap-file-formats](https://github.com/SAP/abap-file-formats) | [UNCLEAR](SAP/abap-file-formats.md) | No violated rules |
 | [SAP/cloud-alm-analytics-grafana-plugin](https://github.com/SAP/cloud-alm-analytics-grafana-plugin) | [UNCLEAR](SAP/cloud-alm-analytics-grafana-plugin.md) | No violated rules |
+| [SAP/digital-aged-care-management](https://github.com/SAP/digital-aged-care-management) | [UNCLEAR](SAP/digital-aged-care-management.md) | No violated rules |
