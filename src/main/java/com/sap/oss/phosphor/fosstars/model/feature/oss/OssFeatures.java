@@ -374,4 +374,12 @@ public class OssFeatures {
    */
   public static final BooleanFeature HAS_ENOUGH_TEAM_MEMBERS_ON_GITHUB
       = new BooleanFeature("If a project has tool less members on GitHub");
+
+  /**
+   * Shows whether vulnerability alerts are enabled for a project on GitHub.
+   *
+   * @see <a href="https://docs.github.com/en/github/managing-security-vulnerabilities/about-alerts-for-vulnerable-dependencies">About alerts for vulnerable dependencies</a>
+   */
+  public static final BooleanFeature ENABLED_VULNERABILITY_ALERTS_ON_GITHUB
+      = new BooleanFeature("If vulnerability alerts are enabled for a project on GitHub");
 }
