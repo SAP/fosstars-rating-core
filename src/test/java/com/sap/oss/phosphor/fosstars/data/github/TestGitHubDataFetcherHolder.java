@@ -17,6 +17,7 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
+import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
 
 /**
@@ -70,6 +71,16 @@ public class TestGitHubDataFetcherHolder {
      */
     public TestGitHubDataFetcher(GitHub github) throws IOException {
       super(github);
+    }
+
+    /**
+     * Adds {@link GitHubProject} and its {@link GHRepository repository on Github} to the cache.
+     *
+     * @param project The {@link GitHubProject}.
+     * @param repository The {@link GHRepository repository on GitHub}.
+     */
+    void addForTesting(GitHubProject project, GHRepository repository) {
+      repositoryCache().put(project, repository);
     }
 
     /**

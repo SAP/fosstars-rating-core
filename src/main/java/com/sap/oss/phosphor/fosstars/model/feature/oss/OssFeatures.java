@@ -344,4 +344,34 @@ public class OssFeatures {
    */
   public static final BooleanFeature HAS_REQUIRED_TEXT_IN_CONTRIBUTING_GUIDELINE
       = new BooleanFeature("If a project's contributing guideline has required text");
+
+  /**
+   * Shows whether a project has enough teams on GitHub or not.
+   */
+  public static final BooleanFeature HAS_ENOUGH_TEAMS_ON_GITHUB
+      = new BooleanFeature("If a project has enough teams on GitHub");
+
+  /**
+   * Shows whether a project has an admin team on GitHub or not.
+   */
+  public static final BooleanFeature HAS_ADMIN_TEAM_ON_GITHUB
+      = new BooleanFeature("If a project has an admin team on GitHub");
+
+  /**
+   * Shows whether a project has enough admins on GitHub or not.
+   */
+  public static final BooleanFeature HAS_ENOUGH_ADMINS_ON_GITHUB
+      = new BooleanFeature("If a project has enough admins on GitHub");
+
+  /**
+   * Shows whether a project has a team with push privileges on GitHub.
+   */
+  public static final BooleanFeature HAS_TEAM_WITH_PUSH_PRIVILEGES_ON_GITHUB
+      = new BooleanFeature("If a project has a team with push privileges");
+
+  /**
+   * Shows whether a project has enough team members on GitHub.
+   */
+  public static final BooleanFeature HAS_ENOUGH_TEAM_MEMBERS_ON_GITHUB
+      = new BooleanFeature("If a project has tool less members on GitHub");
 }
