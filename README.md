@@ -201,7 +201,7 @@
 | [SAP/apibusinesshub-integration-recipes](https://github.com/SAP/apibusinesshub-integration-recipes) | [FAIL](SAP/apibusinesshub-integration-recipes.md) | 3 violated rules |
 | [SAP/cloud-sdk-cli](https://github.com/SAP/cloud-sdk-cli) | [FAIL](SAP/cloud-sdk-cli.md) | 2 violated rules |
 | [SAP/python-metacli](https://github.com/SAP/python-metacli) | [FAIL](SAP/python-metacli.md) | 2 violated rules |
-| [SAP/vscode-webview-rpc-lib](https://github.com/SAP/vscode-webview-rpc-lib) | [FAIL](SAP/vscode-webview-rpc-lib.md) | 2 violated rules |
+| [SAP/vscode-webview-rpc-lib](https://github.com/SAP/vscode-webview-rpc-lib) | [FAIL](SAP/vscode-webview-rpc-lib.md) | 1 violated rule |
 | [SAP/data-synthesis-for-machine-learning](https://github.com/SAP/data-synthesis-for-machine-learning) | [FAIL](SAP/data-synthesis-for-machine-learning.md) | 1 violated rule |
 | [SAP/i40-aas-objects](https://github.com/SAP/i40-aas-objects) | [FAIL](SAP/i40-aas-objects.md) | 1 violated rule |
 | [SAP/xml-tools](https://github.com/SAP/xml-tools) | [FAIL](SAP/xml-tools.md) | 2 violated rules |
@@ -215,7 +215,7 @@
 | [SAP/yeoman-ui](https://github.com/SAP/yeoman-ui) | [FAIL](SAP/yeoman-ui.md) | 2 violated rules |
 | [SAP/Tracer](https://github.com/SAP/Tracer) | [FAIL](SAP/Tracer.md) | 2 violated rules |
 | [SAP/odata-vocabularies](https://github.com/SAP/odata-vocabularies) | [FAIL](SAP/odata-vocabularies.md) | 1 violated rule |
-| [SAP/vscode-mta-tools](https://github.com/SAP/vscode-mta-tools) | [FAIL](SAP/vscode-mta-tools.md) | 1 violated rule |
+| [SAP/vscode-mta-tools](https://github.com/SAP/vscode-mta-tools) | [FAIL](SAP/vscode-mta-tools.md) | 2 violated rules |
 | [SAP/spartacus-bootcamp](https://github.com/SAP/spartacus-bootcamp) | [FAIL](SAP/spartacus-bootcamp.md) | 3 violated rules |
 | [SAP/emobility-smart-charging](https://github.com/SAP/emobility-smart-charging) | [FAIL](SAP/emobility-smart-charging.md) | 2 violated rules |
 | [SAP/ui5-simple-require](https://github.com/SAP/ui5-simple-require) | [FAIL](SAP/ui5-simple-require.md) | 1 violated rule |
