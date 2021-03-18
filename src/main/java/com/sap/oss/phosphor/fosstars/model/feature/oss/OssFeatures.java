@@ -382,4 +382,10 @@ public class OssFeatures {
    */
   public static final BooleanFeature ENABLED_VULNERABILITY_ALERTS_ON_GITHUB
       = new BooleanFeature("If vulnerability alerts are enabled for a project on GitHub");
+
+  /**
+   * Shows whether a project has unresolved vulnerability alerts or not.
+   */
+  public static final BooleanFeature HAS_UNRESOLVED_VULNERABILITY_ALERTS
+      = new BooleanFeature("If a project has unresolved vulnerability alerts");
 }
