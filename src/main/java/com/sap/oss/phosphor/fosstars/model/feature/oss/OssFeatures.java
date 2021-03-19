@@ -310,6 +310,32 @@ public class OssFeatures {
       = new BooleanFeature("If a project uses Reuse tool");
 
   /**
+   * Shows whether a project has info about Reuse in its README file or not.
+   */
+  public static final BooleanFeature README_HAS_REUSE_INFO
+      = new BooleanFeature("If project's README has info about Reuse");
+
+  /**
+   * Shows whether a project has a LICENSES folder with licenses or not.
+   */
+  public static final BooleanFeature HAS_REUSE_LICENSES
+      = new BooleanFeature("If a project has a LICENSES folder with licenses");
+
+  /**
+   * Shows whether a project is registered in Reuse or not.
+   *
+   * @see <a href="https://api.reuse.software/register">Register a project in Reuse</a>
+   */
+  public static final BooleanFeature REGISTERED_IN_REUSE
+      = new BooleanFeature("If a project is registered in Reuse");
+
+  /**
+   * Shows whether a project is compliant with Reuse rules or not.
+   */
+  public static final BooleanFeature IS_REUSE_COMPLIANT
+      = new BooleanFeature("If a project is compliant with Reuse rules");
+
+  /**
    * Shows whether an open source project has a licence or not.
    */
   public static final BooleanFeature HAS_LICENSE
