@@ -116,7 +116,12 @@ public class GitHubDataFetcher {
   /**
    * An interface to the GitHub API.
    */
-  private GitHub github;
+  private final GitHub github;
+
+  /**
+   * A token for accessing the GitHub API.
+   */
+  private final String token;
 
   /**
    * A limited capacity cache to store the repository of a {@link GitHubProject}.
@@ -127,10 +132,12 @@ public class GitHubDataFetcher {
    * Initializes a new data fetcher.
    *
    * @param github An interface to the GitHub API.
+   * @param token A token for accessing the GitHub API.
    * @throws IOException If something went wrong.
    */
-  public GitHubDataFetcher(GitHub github) throws IOException {
+  public GitHubDataFetcher(GitHub github, String token) throws IOException {
     Objects.requireNonNull(github, "Hey! An interface to GitHub can not be null!");
+    Objects.requireNonNull(token, "Hey! Token can't be null!");
 
     if (!Files.exists(REPOSITORIES_BASE_PATH)) {
       Files.createDirectories(REPOSITORIES_BASE_PATH);
@@ -141,6 +148,7 @@ public class GitHubDataFetcher {
     }
 
     this.github = github;
+    this.token = token;
   }
 
   /**
@@ -153,13 +161,12 @@ public class GitHubDataFetcher {
   }
 
   /**
-   * Set an interface to the GitHub API.
+   * Get a token for accessing the GitHub API.
    *
-   * @param github The interface to the GitHub API.
+   * @return A token for accessing the GitHub API.
    */
-  public synchronized void set(GitHub github) {
-    Objects.requireNonNull(github, "Hey! An interface to GitHub can not be null!");
-    this.github = github;
+  public synchronized String token() {
+    return token;
   }
 
   /**

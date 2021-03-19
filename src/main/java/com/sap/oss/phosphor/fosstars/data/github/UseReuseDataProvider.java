@@ -208,7 +208,7 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
     String token = args[0];
     String url = args[1];
     GitHub github = new GitHubBuilder().withOAuthToken(token).build();
-    GitHubDataFetcher fetcher = new GitHubDataFetcher(github);
+    GitHubDataFetcher fetcher = new GitHubDataFetcher(github, token);
     UseReuseDataProvider provider = new UseReuseDataProvider(fetcher);
     GitHubProject project = GitHubProject.parse(url);
     ValueSet values = provider.fetchValuesFor(project);
@@ -219,14 +219,16 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
     print(values, IS_REUSE_COMPLIANT);
   }
 
+  /**
+   * Looks for a feature in a set of values and prints it out.
+   *
+   * @param values The values.
+   * @param feature The feature.
+   */
   private static void print(ValueSet values, Feature<Boolean> feature) {
     String string;
     Optional<Value<Boolean>> something = values.of(feature);
-    if (!something.isPresent()) {
-      string = "not found";
-    } else {
-      string = something.get().toString();
-    }
-    System.out.printf("%s: %s%n", feature.name(), string);
+    System.out.printf("%s: %s%n",
+        feature.name(), something.map(Value::toString).orElse("not found"));
   }
 }

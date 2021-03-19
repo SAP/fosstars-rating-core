@@ -295,9 +295,9 @@ public class Application {
     UserCallback callback = commandLine.hasOption("interactive")
         ? new Terminal() : NoUserCallback.INSTANCE;
 
-    String githubToken = commandLine.getOptionValue("token");
+    String githubToken = commandLine.getOptionValue("token", "");
 
-    fetcher = new GitHubDataFetcher(connectToGithub(githubToken, callback));
+    fetcher = new GitHubDataFetcher(connectToGithub(githubToken, callback), githubToken);
     List<DataProvider<GitHubProject>> providers
         = new DataProviderSelector(fetcher, new NVD()).providersFor(rating);
 

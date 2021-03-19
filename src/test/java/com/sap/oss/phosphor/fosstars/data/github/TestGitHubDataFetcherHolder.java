@@ -70,7 +70,7 @@ public class TestGitHubDataFetcherHolder {
      * Test class constructor.
      */
     public TestGitHubDataFetcher(GitHub github) throws IOException {
-      super(github);
+      super(github, "test token");
     }
 
     /**
