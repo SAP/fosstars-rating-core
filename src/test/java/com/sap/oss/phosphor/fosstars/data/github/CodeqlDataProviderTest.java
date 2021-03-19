@@ -90,7 +90,7 @@ public class CodeqlDataProviderTest extends TestGitHubDataFetcherHolder {
 
     Path file = repositoryDirectory.resolve(filename);
     Files.createDirectories(file.getParent());
-    when(localRepository.hasDirectory(any())).thenReturn(true);
+    when(localRepository.hasDirectory(any(Path.class))).thenReturn(true);
     IOUtils.copy(content, Files.newOutputStream(file));
     when(localRepository.files(any(), any())).thenReturn(Collections.singletonList(file));
 
