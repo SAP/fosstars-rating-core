@@ -1,8 +1,23 @@
 package com.sap.oss.phosphor.fosstars.model.score.oss;
 
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ALLOWED_LICENSE;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ENABLED_VULNERABILITY_ALERTS_ON_GITHUB;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_ADMIN_TEAM_ON_GITHUB;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_CONTRIBUTING_GUIDELINE;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_ENOUGH_ADMINS_ON_GITHUB;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_ENOUGH_TEAMS_ON_GITHUB;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_ENOUGH_TEAM_MEMBERS_ON_GITHUB;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_LICENSE;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_README;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_REQUIRED_TEXT_IN_CONTRIBUTING_GUIDELINE;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_REUSE_LICENSES;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_REUSE;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_TEAM_WITH_PUSH_PRIVILEGES_ON_GITHUB;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_UNRESOLVED_VULNERABILITY_ALERTS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.IS_REUSE_COMPLIANT;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.LICENSE_HAS_DISALLOWED_CONTENT;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.README_HAS_REUSE_INFO;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.REGISTERED_IN_REUSE;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 
 import com.sap.oss.phosphor.fosstars.model.Feature;
@@ -27,14 +42,32 @@ public class OssRulesOfPlayScore extends FeatureBasedScore {
   /**
    * A list of features that are expected to be true.
    */
-  public static final Set<Feature<Boolean>> EXPECTED_TRUE
-      = Collections.unmodifiableSet(setOf(USES_REUSE, HAS_SECURITY_POLICY));
+  public static final Set<Feature<Boolean>> EXPECTED_TRUE = Collections.unmodifiableSet(setOf(
+      HAS_LICENSE,
+      ALLOWED_LICENSE,
+      HAS_README,
+      HAS_CONTRIBUTING_GUIDELINE,
+      HAS_REQUIRED_TEXT_IN_CONTRIBUTING_GUIDELINE,
+      HAS_ENOUGH_TEAMS_ON_GITHUB,
+      HAS_ADMIN_TEAM_ON_GITHUB,
+      HAS_ENOUGH_ADMINS_ON_GITHUB,
+      HAS_TEAM_WITH_PUSH_PRIVILEGES_ON_GITHUB,
+      HAS_ENOUGH_TEAM_MEMBERS_ON_GITHUB,
+      ENABLED_VULNERABILITY_ALERTS_ON_GITHUB,
+      HAS_SECURITY_POLICY,
+      README_HAS_REUSE_INFO,
+      HAS_REUSE_LICENSES,
+      REGISTERED_IN_REUSE,
+      IS_REUSE_COMPLIANT
+  ));
 
   /**
    * A list of features that are expected to be false.
    */
-  public static final Set<Feature<Boolean>> EXPECTED_FALSE
-      = Collections.singleton(HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT);
+  public static final Set<Feature<Boolean>> EXPECTED_FALSE = Collections.unmodifiableSet(setOf(
+      LICENSE_HAS_DISALLOWED_CONTENT,
+      HAS_UNRESOLVED_VULNERABILITY_ALERTS
+  ));
 
   /**
    * Initializes a new score.

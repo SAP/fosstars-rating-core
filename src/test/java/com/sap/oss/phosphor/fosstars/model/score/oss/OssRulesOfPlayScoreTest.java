@@ -1,8 +1,5 @@
 package com.sap.oss.phosphor.fosstars.model.score.oss;
 
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_REUSE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -126,11 +123,11 @@ public class OssRulesOfPlayScoreTest {
     }
   }
 
-  private static ValueSet allRulesPassed() {
-    return new ValueHashSet()
-        .update(USES_REUSE.value(true))
-        .update(HAS_SECURITY_POLICY.value(true))
-        .update(HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT.value(false));
+  public static ValueSet allRulesPassed() {
+    ValueSet values = new ValueHashSet();
+    OssRulesOfPlayScore.EXPECTED_TRUE.forEach(feature -> values.update(feature.value(true)));
+    OssRulesOfPlayScore.EXPECTED_FALSE.forEach(feature -> values.update(feature.value(false)));
+    return values;
   }
 
 }

@@ -1,8 +1,6 @@
 package com.sap.oss.phosphor.fosstars.model.rating.oss;
 
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_REUSE;
+import static com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScoreTest.allRulesPassed;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -24,7 +22,6 @@ import com.sap.oss.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.oss.phosphor.fosstars.model.value.UnknownValue;
-import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
@@ -165,12 +162,5 @@ public class OssRulesOfPlayRatingTest {
       assertTrue(scoreValue.confidence() < Confidence.MAX);
       assertEquals(OssRulesOfPlayLabel.UNCLEAR, ratingValue.label());
     }
-  }
-
-  private static ValueSet allRulesPassed() {
-    return new ValueHashSet()
-        .update(USES_REUSE.value(true))
-        .update(HAS_SECURITY_POLICY.value(true))
-        .update(HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT.value(false));
   }
 }
