@@ -102,12 +102,12 @@ public class GitHubDataFetcherTest extends TestGitHubDataFetcherHolder  {
   @Test
   public void testUpdateGithubInstance() throws IOException {
     GitHub github = mock(GitHub.class);
-    GitHubDataFetcher fetcher = new GitHubDataFetcher(github);
+    GitHubDataFetcher fetcher = new GitHubDataFetcher(github, "test token");
     assertEquals(fetcher.github(), github);
 
     // create the second GitHub mock bean
     GitHub anotherGithub = mock(GitHub.class);
-    fetcher = new GitHubDataFetcher(anotherGithub);
+    fetcher = new GitHubDataFetcher(anotherGithub, "test token");
     assertEquals(fetcher.github(), anotherGithub);
   }
 

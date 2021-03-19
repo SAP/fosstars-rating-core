@@ -2,9 +2,9 @@ package com.sap.oss.phosphor.fosstars.tool.github;
 
 import static com.sap.oss.phosphor.fosstars.tool.github.GitHubProjectFinder.EMPTY_EXCLUDE_LIST;
 import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 import com.sap.oss.phosphor.fosstars.tool.github.Application.ReportConfig;
@@ -12,7 +12,6 @@ import com.sap.oss.phosphor.fosstars.tool.github.GitHubProjectFinder.Organizatio
 import com.sap.oss.phosphor.fosstars.tool.github.GitHubProjectFinder.ProjectConfig;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Collections;
 import org.junit.Test;
@@ -20,12 +19,12 @@ import org.junit.Test;
 public class ApplicationTest {
 
   @Test(expected = IllegalArgumentException.class)
-  public void testNoParameters() throws IOException, URISyntaxException {
+  public void testNoParameters() throws IOException {
     new Application().run();
   }
 
   @Test
-  public void testHelp() throws IOException, URISyntaxException {
+  public void testHelp() throws IOException {
     new Application("-help").run();
     new Application("-h").run();
   }

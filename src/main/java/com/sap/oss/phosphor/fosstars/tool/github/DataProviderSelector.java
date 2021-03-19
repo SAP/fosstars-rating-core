@@ -2,6 +2,7 @@ package com.sap.oss.phosphor.fosstars.tool.github;
 
 import com.sap.oss.phosphor.fosstars.data.DataProvider;
 import com.sap.oss.phosphor.fosstars.data.github.CodeqlDataProvider;
+import com.sap.oss.phosphor.fosstars.data.github.ContributingGuidelineInfo;
 import com.sap.oss.phosphor.fosstars.data.github.FuzzedInOssFuzz;
 import com.sap.oss.phosphor.fosstars.data.github.GitHubDataFetcher;
 import com.sap.oss.phosphor.fosstars.data.github.HasBugBountyProgram;
@@ -12,6 +13,7 @@ import com.sap.oss.phosphor.fosstars.data.github.InfoAboutVulnerabilities;
 import com.sap.oss.phosphor.fosstars.data.github.IsApache;
 import com.sap.oss.phosphor.fosstars.data.github.IsEclipse;
 import com.sap.oss.phosphor.fosstars.data.github.LgtmDataProvider;
+import com.sap.oss.phosphor.fosstars.data.github.LicenseInfo;
 import com.sap.oss.phosphor.fosstars.data.github.NumberOfCommits;
 import com.sap.oss.phosphor.fosstars.data.github.NumberOfContributors;
 import com.sap.oss.phosphor.fosstars.data.github.NumberOfStars;
@@ -19,8 +21,10 @@ import com.sap.oss.phosphor.fosstars.data.github.NumberOfWatchers;
 import com.sap.oss.phosphor.fosstars.data.github.OwaspSecurityLibraries;
 import com.sap.oss.phosphor.fosstars.data.github.PackageManagement;
 import com.sap.oss.phosphor.fosstars.data.github.ProgrammingLanguages;
+import com.sap.oss.phosphor.fosstars.data.github.ReadmeInfo;
 import com.sap.oss.phosphor.fosstars.data.github.ReleasesFromGitHub;
 import com.sap.oss.phosphor.fosstars.data.github.SignsJarArtifacts;
+import com.sap.oss.phosphor.fosstars.data.github.TeamsInfo;
 import com.sap.oss.phosphor.fosstars.data.github.UseReuseDataProvider;
 import com.sap.oss.phosphor.fosstars.data.github.UsesDependabot;
 import com.sap.oss.phosphor.fosstars.data.github.UsesFindSecBugs;
@@ -29,6 +33,7 @@ import com.sap.oss.phosphor.fosstars.data.github.UsesNoHttpTool;
 import com.sap.oss.phosphor.fosstars.data.github.UsesOwaspDependencyCheck;
 import com.sap.oss.phosphor.fosstars.data.github.UsesSanitizers;
 import com.sap.oss.phosphor.fosstars.data.github.UsesSignedCommits;
+import com.sap.oss.phosphor.fosstars.data.github.VulnerabilityAlertsInfo;
 import com.sap.oss.phosphor.fosstars.data.interactive.AskAboutSecurityTeam;
 import com.sap.oss.phosphor.fosstars.data.interactive.AskAboutUnpatchedVulnerabilities;
 import com.sap.oss.phosphor.fosstars.model.Feature;
@@ -90,6 +95,11 @@ public class DataProviderSelector {
         new OwaspSecurityLibraries(fetcher),
         new UseReuseDataProvider(fetcher),
         new ReleasesFromGitHub(fetcher),
+        new LicenseInfo(fetcher),
+        new ReadmeInfo(fetcher),
+        new TeamsInfo(fetcher),
+        new ContributingGuidelineInfo(fetcher),
+        new VulnerabilityAlertsInfo(fetcher),
 
         // currently interactive data provider have to be added to the end, see issue #133
         new AskAboutSecurityTeam<>(),
