@@ -5,3 +5,4 @@
 ## Violated rules
 
 1.  Does it have a security policy? No
+1.  Does the project use Reuse? No

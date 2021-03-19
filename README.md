@@ -114,7 +114,7 @@
 | [SAP/business-one-register-to-sld](https://github.com/SAP/business-one-register-to-sld) | [FAIL](SAP/business-one-register-to-sld.md) | 2 violated rules |
 | [SAP/business-one-hana-chef-cookbook](https://github.com/SAP/business-one-hana-chef-cookbook) | [FAIL](SAP/business-one-hana-chef-cookbook.md) | 2 violated rules |
 | [SAP/SapMachine](https://github.com/SAP/SapMachine) | [FAIL](SAP/SapMachine.md) | 2 violated rules |
-| [SAP/cf-python-logging-support](https://github.com/SAP/cf-python-logging-support) | [FAIL](SAP/cf-python-logging-support.md) | 2 violated rules |
+| [SAP/cf-python-logging-support](https://github.com/SAP/cf-python-logging-support) | [FAIL](SAP/cf-python-logging-support.md) | 3 violated rules |
 | [SAP/utils-pptx-templater](https://github.com/SAP/utils-pptx-templater) | [FAIL](SAP/utils-pptx-templater.md) | 2 violated rules |
 | [SAP/SapMachine-infrastructure](https://github.com/SAP/SapMachine-infrastructure) | [FAIL](SAP/SapMachine-infrastructure.md) | 2 violated rules |
 | [SAP/devops-cm-client](https://github.com/SAP/devops-cm-client) | [FAIL](SAP/devops-cm-client.md) | 1 violated rule |
@@ -133,7 +133,7 @@
 | [SAP/fiori-for-ios-workshop](https://github.com/SAP/fiori-for-ios-workshop) | [FAIL](SAP/fiori-for-ios-workshop.md) | 2 violated rules |
 | [SAP/commerce-gradle-plugin](https://github.com/SAP/commerce-gradle-plugin) | [FAIL](SAP/commerce-gradle-plugin.md) | 1 violated rule |
 | [SAP/macOS-enterprise-privileges](https://github.com/SAP/macOS-enterprise-privileges) | [FAIL](SAP/macOS-enterprise-privileges.md) | 2 violated rules |
-| [SAP/luigi](https://github.com/SAP/luigi) | [FAIL](SAP/luigi.md) | 2 violated rules |
+| [SAP/luigi](https://github.com/SAP/luigi) | [FAIL](SAP/luigi.md) | 1 violated rule |
 | [SAP/cloud-mta-build-tool](https://github.com/SAP/cloud-mta-build-tool) | [FAIL](SAP/cloud-mta-build-tool.md) | 1 violated rule |
 | [SAP/pair-distribution-app](https://github.com/SAP/pair-distribution-app) | [FAIL](SAP/pair-distribution-app.md) | 1 violated rule |
 | [SAP/quality-continuous-traceability-monitor](https://github.com/SAP/quality-continuous-traceability-monitor) | [FAIL](SAP/quality-continuous-traceability-monitor.md) | 2 violated rules |
@@ -195,13 +195,13 @@
 | [SAP/elasticsearch-logs-plugin](https://github.com/SAP/elasticsearch-logs-plugin) | [FAIL](SAP/elasticsearch-logs-plugin.md) | 1 violated rule |
 | [SAP/stewardci-jenkinsfilerunner-image](https://github.com/SAP/stewardci-jenkinsfilerunner-image) | [FAIL](SAP/stewardci-jenkinsfilerunner-image.md) | 1 violated rule |
 | [SAP/spartacus-assets-builds](https://github.com/SAP/spartacus-assets-builds) | [FAIL](SAP/spartacus-assets-builds.md) | 2 violated rules |
-| [SAP/leonardo-iot-sdk-nodejs](https://github.com/SAP/leonardo-iot-sdk-nodejs) | [FAIL](SAP/leonardo-iot-sdk-nodejs.md) | 2 violated rules |
+| [SAP/sap-iot-sdk-nodejs](https://github.com/SAP/sap-iot-sdk-nodejs) | [FAIL](SAP/sap-iot-sdk-nodejs.md) | 2 violated rules |
 | [SAP/ui5-showcases](https://github.com/SAP/ui5-showcases) | [FAIL](SAP/ui5-showcases.md) | 1 violated rule |
 | [SAP/odfuzz](https://github.com/SAP/odfuzz) | [FAIL](SAP/odfuzz.md) | 2 violated rules |
 | [SAP/apibusinesshub-integration-recipes](https://github.com/SAP/apibusinesshub-integration-recipes) | [FAIL](SAP/apibusinesshub-integration-recipes.md) | 3 violated rules |
 | [SAP/cloud-sdk-cli](https://github.com/SAP/cloud-sdk-cli) | [FAIL](SAP/cloud-sdk-cli.md) | 2 violated rules |
 | [SAP/python-metacli](https://github.com/SAP/python-metacli) | [FAIL](SAP/python-metacli.md) | 2 violated rules |
-| [SAP/vscode-webview-rpc-lib](https://github.com/SAP/vscode-webview-rpc-lib) | [FAIL](SAP/vscode-webview-rpc-lib.md) | 1 violated rule |
+| [SAP/vscode-webview-rpc-lib](https://github.com/SAP/vscode-webview-rpc-lib) | [FAIL](SAP/vscode-webview-rpc-lib.md) | 2 violated rules |
 | [SAP/data-synthesis-for-machine-learning](https://github.com/SAP/data-synthesis-for-machine-learning) | [FAIL](SAP/data-synthesis-for-machine-learning.md) | 1 violated rule |
 | [SAP/i40-aas-objects](https://github.com/SAP/i40-aas-objects) | [FAIL](SAP/i40-aas-objects.md) | 1 violated rule |
 | [SAP/xml-tools](https://github.com/SAP/xml-tools) | [FAIL](SAP/xml-tools.md) | 2 violated rules |
@@ -262,7 +262,7 @@
 | [SAP/cf-cli-smsi-plugin](https://github.com/SAP/cf-cli-smsi-plugin) | [FAIL](SAP/cf-cli-smsi-plugin.md) | 1 violated rule |
 | [SAP/ui5-task-adaptation](https://github.com/SAP/ui5-task-adaptation) | [FAIL](SAP/ui5-task-adaptation.md) | 1 violated rule |
 | [SAP/xsk](https://github.com/SAP/xsk) | [FAIL](SAP/xsk.md) | 1 violated rule |
-| [SAP/cloud-sdk](https://github.com/SAP/cloud-sdk) | [FAIL](SAP/cloud-sdk.md) | 2 violated rules |
+| [SAP/cloud-sdk](https://github.com/SAP/cloud-sdk) | [FAIL](SAP/cloud-sdk.md) | 1 violated rule |
 | [SAP/cloud-sdk-currency-conversion](https://github.com/SAP/cloud-sdk-currency-conversion) | [FAIL](SAP/cloud-sdk-currency-conversion.md) | 2 violated rules |
 | [SAP/stewardci-log-forwarding](https://github.com/SAP/stewardci-log-forwarding) | [FAIL](SAP/stewardci-log-forwarding.md) | 1 violated rule |
 | [SAP/alert-notification-node-client](https://github.com/SAP/alert-notification-node-client) | [FAIL](SAP/alert-notification-node-client.md) | 1 violated rule |
