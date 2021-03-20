@@ -114,7 +114,7 @@
 | [SAP/business-one-register-to-sld](https://github.com/SAP/business-one-register-to-sld) | [FAIL](SAP/business-one-register-to-sld.md) | 2 violated rules |
 | [SAP/business-one-hana-chef-cookbook](https://github.com/SAP/business-one-hana-chef-cookbook) | [FAIL](SAP/business-one-hana-chef-cookbook.md) | 2 violated rules |
 | [SAP/SapMachine](https://github.com/SAP/SapMachine) | [FAIL](SAP/SapMachine.md) | 2 violated rules |
-| [SAP/cf-python-logging-support](https://github.com/SAP/cf-python-logging-support) | [FAIL](SAP/cf-python-logging-support.md) | 3 violated rules |
+| [SAP/cf-python-logging-support](https://github.com/SAP/cf-python-logging-support) | [FAIL](SAP/cf-python-logging-support.md) | 2 violated rules |
 | [SAP/utils-pptx-templater](https://github.com/SAP/utils-pptx-templater) | [FAIL](SAP/utils-pptx-templater.md) | 2 violated rules |
 | [SAP/SapMachine-infrastructure](https://github.com/SAP/SapMachine-infrastructure) | [FAIL](SAP/SapMachine-infrastructure.md) | 2 violated rules |
 | [SAP/devops-cm-client](https://github.com/SAP/devops-cm-client) | [FAIL](SAP/devops-cm-client.md) | 1 violated rule |
@@ -156,7 +156,7 @@
 | [SAP/fsm-shell](https://github.com/SAP/fsm-shell) | [FAIL](SAP/fsm-shell.md) | 2 violated rules |
 | [SAP/ui5-webcomponents](https://github.com/SAP/ui5-webcomponents) | [FAIL](SAP/ui5-webcomponents.md) | 2 violated rules |
 | [SAP/odbc-cpp-wrapper](https://github.com/SAP/odbc-cpp-wrapper) | [FAIL](SAP/odbc-cpp-wrapper.md) | 2 violated rules |
-| [SAP/project-kb](https://github.com/SAP/project-kb) | [FAIL](SAP/project-kb.md) | 1 violated rule |
+| [SAP/project-kb](https://github.com/SAP/project-kb) | [FAIL](SAP/project-kb.md) | 2 violated rules |
 | [SAP/jenkins-library-test](https://github.com/SAP/jenkins-library-test) | [FAIL](SAP/jenkins-library-test.md) | 2 violated rules |
 | [SAP/cloud-primetime](https://github.com/SAP/cloud-primetime) | [FAIL](SAP/cloud-primetime.md) | 3 violated rules |
 | [SAP/spartacus-core-builds](https://github.com/SAP/spartacus-core-builds) | [FAIL](SAP/spartacus-core-builds.md) | 2 violated rules |
