@@ -80,7 +80,7 @@
     <version.maven-model>3.6.2</version.maven-model>
     <version.httpclient>4.5.10</version.httpclient>
     <version.junit>4.13.1</version.junit>
-    <version.mockito-core>3.2.4</version.mockito-core>
+    <version.mockito-core>3.8.0</version.mockito-core>
     <version.commons-collections4>4.4</version.commons-collections4>
     <version.org.eclipse.jgit>5.7.0.202003110725-r</version.org.eclipse.jgit>
     <version.commons-text>1.8</version.commons-text>
