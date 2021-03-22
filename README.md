@@ -134,7 +134,7 @@
 | [SAP/commerce-gradle-plugin](https://github.com/SAP/commerce-gradle-plugin) | [FAIL](SAP/commerce-gradle-plugin.md) | 1 violated rule |
 | [SAP/macOS-enterprise-privileges](https://github.com/SAP/macOS-enterprise-privileges) | [FAIL](SAP/macOS-enterprise-privileges.md) | 2 violated rules |
 | [SAP/luigi](https://github.com/SAP/luigi) | [FAIL](SAP/luigi.md) | 1 violated rule |
-| [SAP/cloud-mta-build-tool](https://github.com/SAP/cloud-mta-build-tool) | [FAIL](SAP/cloud-mta-build-tool.md) | 1 violated rule |
+| [SAP/cloud-mta-build-tool](https://github.com/SAP/cloud-mta-build-tool) | [FAIL](SAP/cloud-mta-build-tool.md) | 2 violated rules |
 | [SAP/pair-distribution-app](https://github.com/SAP/pair-distribution-app) | [FAIL](SAP/pair-distribution-app.md) | 1 violated rule |
 | [SAP/quality-continuous-traceability-monitor](https://github.com/SAP/quality-continuous-traceability-monitor) | [FAIL](SAP/quality-continuous-traceability-monitor.md) | 2 violated rules |
 | [SAP/cloud-security-xsuaa-integration](https://github.com/SAP/cloud-security-xsuaa-integration) | [FAIL](SAP/cloud-security-xsuaa-integration.md) | 2 violated rules |
