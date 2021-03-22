@@ -1,0 +1,21 @@
+version: 2
+updates:
+
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    labels:
+      - "dependency"
+    reviewers:
+      - "SAP/fosstars-rating-core-team"
+
+  - package-ecosystem: "maven"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    labels:
+      - "dependency"
+    reviewers:
+      - "SAP/fosstars-rating-core-team"
