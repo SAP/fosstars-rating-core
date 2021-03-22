@@ -78,7 +78,7 @@
     <version.log4j-core>2.13.2</version.log4j-core>
     <version.nist-data-mirror>1.4.0</version.nist-data-mirror>
     <version.maven-model>3.6.2</version.maven-model>
-    <version.httpclient>4.5.10</version.httpclient>
+    <version.httpclient>4.5.13</version.httpclient>
     <version.junit>4.13.1</version.junit>
     <version.mockito-core>3.8.0</version.mockito-core>
     <version.commons-collections4>4.4</version.commons-collections4>
