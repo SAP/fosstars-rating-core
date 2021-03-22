@@ -67,3 +67,9 @@ If an open-source project is included to OSS-Fuzz project:
 Version string:
   - advice: >
       Update the dependency version ${VERSION} to ${LATEST_VERSION}.
+If a project uses Dependabot:
+  - advice: >
+      You can configure Dependabot by creating a configuration file.
+    links:
+      - name: Configuration options for dependency updates
+        url: https://docs.github.com/en/github/administering-a-repository/configuration-options-for-dependency-updates
