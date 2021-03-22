@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -53,7 +54,7 @@ public abstract class AbstractOssAdvisor implements Advisor {
   }
 
   @Override
-  public final List<Advice> adviseFor(Subject subject) {
+  public final List<Advice> adviceFor(Subject subject) {
     if (!subject.ratingValue().isPresent()) {
       return Collections.emptyList();
     }
@@ -76,7 +77,7 @@ public abstract class AbstractOssAdvisor implements Advisor {
       Subject subject, List<Value<?>> usedValues, OssAdviceContext context);
 
   /**
-   * Returns advice for a boolean feature from a list of values.
+   * Returns advice for a feature if it is present in a list of values.
    *
    * @param values The values.
    * @param feature The feature.
@@ -87,8 +88,24 @@ public abstract class AbstractOssAdvisor implements Advisor {
   protected List<Advice> adviseForBooleanFeature(
       List<Value<?>> values, Feature<Boolean> feature, Subject subject, AdviceContext context) {
 
+    return adviceForFeature(values, feature, subject, context, AbstractOssAdvisor::knownFalseValue);
+  }
+
+  /**
+   * Returns advice for a feature if it is present in a list of values.
+   *
+   * @param values The values.
+   * @param feature The feature.
+   * @param subject The subject for advice.
+   * @param context A context for advice.
+   * @param criteria A condition that shows whether a value needs an advice or not.
+   * @return A list of advice.
+   */
+  protected List<Advice> adviceForFeature(List<Value<?>> values, Feature<?> feature,
+      Subject subject, AdviceContext context, Predicate<Value<?>> criteria) {
+
     return findValue(values, feature)
-        .filter(AbstractOssAdvisor::knownFalseValue)
+        .filter(criteria)
         .map(value -> adviceStorage.adviceFor(value.feature(), context)
             .stream()
             .map(content -> new SimpleAdvice(subject, value, content))
@@ -103,8 +120,8 @@ public abstract class AbstractOssAdvisor implements Advisor {
    * @param value The value to be checked.
    * @return True if the value is known and false, false otherwise.
    */
-  protected static boolean knownFalseValue(Value<Boolean> value) {
-    return !value.isUnknown() && !value.get();
+  protected static boolean knownFalseValue(Value<?> value) {
+    return !value.isUnknown() && Boolean.FALSE.equals(value.get());
   }
 
   /**

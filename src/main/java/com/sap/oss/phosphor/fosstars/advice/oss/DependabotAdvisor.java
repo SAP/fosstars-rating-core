@@ -30,9 +30,9 @@ public class DependabotAdvisor extends AbstractOssAdvisor {
   protected List<Advice> adviseFor(
       Subject subject, List<Value<?>> usedValues, OssAdviceContext context) {
 
-    Optional<ScoreValue> fuzzingScoreValue = findSubScoreValue(subject, DependabotScore.class);
+    Optional<ScoreValue> dependabotScore = findSubScoreValue(subject, DependabotScore.class);
 
-    if (!fuzzingScoreValue.isPresent() || fuzzingScoreValue.get().isNotApplicable()) {
+    if (!dependabotScore.isPresent() || dependabotScore.get().isNotApplicable()) {
       return Collections.emptyList();
     }
 

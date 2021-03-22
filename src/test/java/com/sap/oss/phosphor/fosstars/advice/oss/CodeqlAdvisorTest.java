@@ -24,33 +24,33 @@ public class CodeqlAdvisorTest {
     GitHubProject project = new GitHubProject("org", "test");
 
     // no advice if no rating value is set
-    assertTrue(advisor.adviseFor(project).isEmpty());
+    assertTrue(advisor.adviceFor(project).isEmpty());
 
     Rating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
     ValueSet values = new ValueHashSet();
 
     // no advice for an unknown values
     values.update(allUnknown(rating.score().allFeatures()));
-    assertTrue(advisor.adviseFor(project).isEmpty());
+    assertTrue(advisor.adviceFor(project).isEmpty());
 
     // no advice if the LGTM checks are enabled
     values.update(USES_LGTM_CHECKS.value(true));
     project.set(rating.calculate(values));
-    assertTrue(advisor.adviseFor(project).isEmpty());
+    assertTrue(advisor.adviceFor(project).isEmpty());
 
     // expect an advice if the LGTM checks are not enabled
     values.update(USES_LGTM_CHECKS.value(false));
     project.set(rating.calculate(values));
-    assertEquals(1, advisor.adviseFor(project).size());
+    assertEquals(1, advisor.adviceFor(project).size());
 
     // expect an advice if the  checks are not enabled
     values.update(USES_CODEQL_CHECKS.value(false));
     project.set(rating.calculate(values));
-    assertEquals(2, advisor.adviseFor(project).size());
+    assertEquals(2, advisor.adviceFor(project).size());
 
     // expect an advice if the LGTM checks are not enabled
     values.update(RUNS_CODEQL_SCANS.value(false));
     project.set(rating.calculate(values));
-    assertEquals(3, advisor.adviseFor(project).size());
+    assertEquals(3, advisor.adviceFor(project).size());
   }
 }

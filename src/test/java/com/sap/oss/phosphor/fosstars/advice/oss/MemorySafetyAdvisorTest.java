@@ -27,36 +27,36 @@ public class MemorySafetyAdvisorTest {
     GitHubProject project = new GitHubProject("org", "test");
 
     // no advice if no rating value is set
-    assertTrue(advisor.adviseFor(project).isEmpty());
+    assertTrue(advisor.adviceFor(project).isEmpty());
 
     Rating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
     ValueSet values = new ValueHashSet();
 
     // no advice for an unknown values
     values.update(allUnknown(rating.score().allFeatures()));
-    assertTrue(advisor.adviseFor(project).isEmpty());
+    assertTrue(advisor.adviceFor(project).isEmpty());
 
     // no advice if sanitizers are enabled
     values.update(USES_ADDRESS_SANITIZER.value(true));
     values.update(USES_MEMORY_SANITIZER.value(true));
     values.update(USES_UNDEFINED_BEHAVIOR_SANITIZER.value(true));
     project.set(rating.calculate(values));
-    assertTrue(advisor.adviseFor(project).isEmpty());
+    assertTrue(advisor.adviceFor(project).isEmpty());
 
     // expect an advice if AddressSanitizer is not used
     values.update(USES_ADDRESS_SANITIZER.value(false));
     project.set(rating.calculate(values));
-    assertEquals(1, advisor.adviseFor(project).size());
+    assertEquals(1, advisor.adviceFor(project).size());
 
     // expect an advice if MemorySanitizer is not used
     values.update(USES_MEMORY_SANITIZER.value(false));
     project.set(rating.calculate(values));
-    assertEquals(2, advisor.adviseFor(project).size());
+    assertEquals(2, advisor.adviceFor(project).size());
 
     // expect an advice if UndefinedBehaviorSanitizer is not used
     values.update(USES_UNDEFINED_BEHAVIOR_SANITIZER.value(false));
     project.set(rating.calculate(values));
-    assertEquals(3, advisor.adviseFor(project).size());
+    assertEquals(3, advisor.adviceFor(project).size());
   }
 
   @Test
@@ -75,6 +75,6 @@ public class MemorySafetyAdvisorTest {
 
     // sanitizers are not applicable for projects that use only Java
     // therefore no advice are expected.
-    assertTrue(advisor.adviseFor(project).isEmpty());
+    assertTrue(advisor.adviceFor(project).isEmpty());
   }
 }

@@ -37,24 +37,24 @@ public class OssSecurityGithubAdvisorTest {
     GitHubProject project = new GitHubProject("org", "test");
 
     // no advice if no rating value is set
-    assertTrue(advisor.adviseFor(project).isEmpty());
+    assertTrue(advisor.adviceFor(project).isEmpty());
 
     Rating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
     ValueSet values = new ValueHashSet();
 
     // no advice for an unknown values
     values.update(allUnknown(rating.score().allFeatures()));
-    assertTrue(advisor.adviseFor(project).isEmpty());
+    assertTrue(advisor.adviceFor(project).isEmpty());
 
     // expect an advice if the LGTM checks are not enabled
     values.update(USES_LGTM_CHECKS.value(false));
     project.set(rating.calculate(values));
-    assertEquals(1, advisor.adviseFor(project).size());
+    assertEquals(1, advisor.adviceFor(project).size());
 
     // expect an advice if the LGTM grade is not the best
     values.update(WORST_LGTM_GRADE.value(B));
     project.set(rating.calculate(values));
-    assertEquals(2, advisor.adviseFor(project).size());
+    assertEquals(2, advisor.adviceFor(project).size());
   }
 
   @Test
@@ -69,7 +69,7 @@ public class OssSecurityGithubAdvisorTest {
     project.set(rating.calculate(values));
 
     // expect an advice if the LGTM grade is not the best
-    List<Advice> adviceList = advisor.adviseFor(project);
+    List<Advice> adviceList = advisor.adviceFor(project);
     assertEquals(1, adviceList.size());
     Advice advice = adviceList.get(0);
     assertFalse(advice.content().text().isEmpty());
@@ -90,7 +90,7 @@ public class OssSecurityGithubAdvisorTest {
     // expect an advice if the project doesn't have a security policy
     values.update(HAS_SECURITY_POLICY.value(false));
     project.set(rating.calculate(values));
-    List<Advice> adviceList = advisor.adviseFor(project);
+    List<Advice> adviceList = advisor.adviceFor(project);
     assertEquals(1, adviceList.size());
     Advice advice = adviceList.get(0);
     assertFalse(advice.content().text().isEmpty());
@@ -111,7 +111,7 @@ public class OssSecurityGithubAdvisorTest {
     // expect an advice if the project doesn't use FindSecBugs
     values.update(USES_FIND_SEC_BUGS.value(false));
     project.set(rating.calculate(values));
-    List<Advice> adviceList = advisor.adviseFor(project);
+    List<Advice> adviceList = advisor.adviceFor(project);
     assertEquals(1, adviceList.size());
     Advice advice = adviceList.get(0);
     assertFalse(advice.content().text().isEmpty());
@@ -134,7 +134,7 @@ public class OssSecurityGithubAdvisorTest {
     values.update(USES_MEMORY_SANITIZER.value(false));
     values.update(USES_UNDEFINED_BEHAVIOR_SANITIZER.value(false));
     project.set(rating.calculate(values));
-    List<Advice> adviceList = advisor.adviseFor(project);
+    List<Advice> adviceList = advisor.adviceFor(project);
     assertEquals(3, adviceList.size());
     for (Advice advice : adviceList) {
       assertFalse(advice.content().text().isEmpty());
@@ -154,7 +154,7 @@ public class OssSecurityGithubAdvisorTest {
     values.update(FUZZED_IN_OSS_FUZZ.value(false));
     values.update(LANGUAGES.value(Languages.of(C)));
     project.set(rating.calculate(values));
-    List<Advice> adviceList = advisor.adviseFor(project);
+    List<Advice> adviceList = advisor.adviceFor(project);
     Advice advice = adviceList.get(0);
     assertFalse(advice.content().text().isEmpty());
     assertFalse(advice.content().links().isEmpty());

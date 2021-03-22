@@ -25,24 +25,24 @@ public class FindSecBugsAdvisorTest {
     GitHubProject project = new GitHubProject("org", "test");
 
     // no advice if no rating value is set
-    assertTrue(advisor.adviseFor(project).isEmpty());
+    assertTrue(advisor.adviceFor(project).isEmpty());
 
     Rating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
     ValueSet values = new ValueHashSet();
 
     // no advice for an unknown values
     values.update(allUnknown(rating.score().allFeatures()));
-    assertTrue(advisor.adviseFor(project).isEmpty());
+    assertTrue(advisor.adviceFor(project).isEmpty());
 
     // no advice if the project already uses FindSecBugs
     values.update(USES_FIND_SEC_BUGS.value(true));
     project.set(rating.calculate(values));
-    assertTrue(advisor.adviseFor(project).isEmpty());
+    assertTrue(advisor.adviceFor(project).isEmpty());
 
     // expect an advice if the project doesn't use FindSecBugs
     values.update(USES_FIND_SEC_BUGS.value(false));
     project.set(rating.calculate(values));
-    List<Advice> adviceList = advisor.adviseFor(project);
+    List<Advice> adviceList = advisor.adviceFor(project);
     assertEquals(1, adviceList.size());
     Advice advice = adviceList.get(0);
     assertFalse(advice.content().text().isEmpty());

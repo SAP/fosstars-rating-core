@@ -179,7 +179,7 @@ public class OssSecurityRatingMarkdownFormatter extends CommonFormatter {
    * @return Advice to be displayed.
    */
   private String adviceFor(Subject subject) {
-    List<Advice> adviceList = advisor.adviseFor(subject);
+    List<Advice> adviceList = advisor.adviceFor(subject);
     if (adviceList.isEmpty()) {
       return StringUtils.EMPTY;
     }
