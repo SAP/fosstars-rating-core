@@ -1,45 +1,41 @@
 package com.sap.oss.phosphor.fosstars.advice.oss;
 
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.FUZZED_IN_OSS_FUZZ;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_DEPENDABOT;
 
 import com.sap.oss.phosphor.fosstars.advice.Advice;
 import com.sap.oss.phosphor.fosstars.advice.oss.OssAdviceContentYamlStorage.OssAdviceContext;
 import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.Value;
-import com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore;
+import com.sap.oss.phosphor.fosstars.model.score.oss.DependabotScore;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 /**
- * An advisor for features related to fuzzing.
+ * An advisor for features related to Dependabot.
  */
-public class FuzzingAdvisor extends AbstractOssAdvisor {
+public class DependabotAdvisor extends AbstractOssAdvisor {
 
   /**
    * Create a new advisor.
    *
    * @param contextFactory A factory that provides contexts for advice.
    */
-  public FuzzingAdvisor(OssAdviceContextFactory contextFactory) {
+  public DependabotAdvisor(OssAdviceContextFactory contextFactory) {
     super(OssAdviceContentYamlStorage.DEFAULT, contextFactory);
   }
 
   @Override
-  protected List<Advice> adviceFor(
+  protected List<Advice> adviseFor(
       Subject subject, List<Value<?>> usedValues, OssAdviceContext context) {
 
-    Optional<ScoreValue> fuzzingScoreValue = findSubScoreValue(subject, FuzzingScore.class);
+    Optional<ScoreValue> fuzzingScoreValue = findSubScoreValue(subject, DependabotScore.class);
 
-    if (!fuzzingScoreValue.isPresent()) {
+    if (!fuzzingScoreValue.isPresent() || fuzzingScoreValue.get().isNotApplicable()) {
       return Collections.emptyList();
     }
 
-    if (fuzzingScoreValue.get().isNotApplicable()) {
-      return Collections.emptyList();
-    }
-
-    return adviseForBooleanFeature(usedValues, FUZZED_IN_OSS_FUZZ, subject, context);
+    return adviseForBooleanFeature(usedValues, USES_DEPENDABOT, subject, context);
   }
 }

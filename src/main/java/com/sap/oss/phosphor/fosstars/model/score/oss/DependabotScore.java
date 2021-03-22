@@ -103,6 +103,15 @@ public class DependabotScore extends FeatureBasedScore {
     // then there is a chance that it takes advantage of security alerts
     // although we can't tell for sure
     if (usesGithub.orElse(false)) {
+      boolean dependabotCanBeUsed = packageManagers.orElse(PackageManagers.empty()).list().stream()
+          .anyMatch(SUPPORTED_LANGUAGES::containsKey);
+
+      // if the project does not use any package ecosystem that is supported by Dependabot,
+      // then a score is not applicable
+      if (!dependabotCanBeUsed) {
+        return scoreValue.makeNotApplicable();
+      }
+
       Languages usedLanguages = languages.orElse(Languages.empty());
       for (PackageManager packageManager : packageManagers.orElse(PackageManagers.empty())) {
         Languages supportedLanguages
