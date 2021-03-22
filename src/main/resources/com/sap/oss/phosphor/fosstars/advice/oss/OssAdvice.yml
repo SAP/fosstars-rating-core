@@ -91,3 +91,9 @@ A CVSS threshold for OWASP Dependency Check to fail the build:
         url: https://jeremylong.github.io/DependencyCheck/
       - name: Configuring OWASP Dependency Check
         url: https://jeremylong.github.io/DependencyCheck/dependency-check-maven/configuration.html
+If a project signs artifacts:
+  - advice: >
+      You can enable artifact signing in the project's build pipeline.
+    links:
+      - name: Apache Maven Jarsigner Plugin
+        url: https://maven.apache.org/plugins/maven-jarsigner-plugin/
