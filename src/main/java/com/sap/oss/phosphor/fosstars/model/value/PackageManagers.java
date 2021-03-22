@@ -119,9 +119,19 @@ public class PackageManagers implements Iterable<PackageManager> {
    * @return True if the collection contains at least one of the package managers, false otherwise.
    */
   public boolean containsAny(PackageManager... packageManagers) {
+    return containsAny(from(packageManagers));
+  }
+
+  /**
+   * Check if the collection has at least one of the specified package managers.
+   *
+   * @param packageManagers The package managers.
+   * @return True if the collection contains at least one of the package managers, false otherwise.
+   */
+  public boolean containsAny(PackageManagers packageManagers) {
     Objects.requireNonNull(packageManagers, "Package manager can't be null!");
 
-    if (packageManagers.length == 0) {
+    if (packageManagers.size() == 0) {
       throw new IllegalArgumentException("Package managers can't be empty!");
     }
 

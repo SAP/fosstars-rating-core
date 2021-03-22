@@ -20,5 +20,5 @@ public interface Advisor {
    * @param subject The subject.
    * @return A list of advice for the subject.
    */
-  List<Advice> adviseFor(Subject subject);
+  List<Advice> adviceFor(Subject subject);
 }

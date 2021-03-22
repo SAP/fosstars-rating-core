@@ -178,7 +178,7 @@ public class OssArtifactSecurityRatingMarkdownFormatter extends CommonFormatter 
    * @return Advice to be displayed.
    */
   private String adviceFor(Subject subject) {
-    List<Advice> adviseFor = advisor.adviseFor(subject);
+    List<Advice> adviseFor = advisor.adviceFor(subject);
     if (adviseFor.isEmpty()) {
       return StringUtils.EMPTY;
     }

@@ -32,9 +32,9 @@ public class CompositeAdvisor implements Advisor {
   }
 
   @Override
-  public List<Advice> adviseFor(Subject subject) {
+  public List<Advice> adviceFor(Subject subject) {
     return advisors.stream()
-        .map(advisor -> advisor.adviseFor(subject))
+        .map(advisor -> advisor.adviceFor(subject))
         .collect(ArrayList::new, List::addAll, List::addAll);
   }
 }

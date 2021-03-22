@@ -73,3 +73,21 @@ If a project uses Dependabot:
     links:
       - name: Configuration options for dependency updates
         url: https://docs.github.com/en/github/administering-a-repository/configuration-options-for-dependency-updates
+How OWASP Dependency Check is used:
+  - advice: >
+      You can add OWASP Dependency Check to the project's build pipeline.
+    links:
+      - name: OWASP Dependnecy Check
+        url: https://jeremylong.github.io/DependencyCheck/
+      - name: How to use OWASP Dependency Check with Maven
+        url: https://jeremylong.github.io/DependencyCheck/dependency-check-maven
+      - name: How to use OWASP Dependnecy Check with Gradle
+        url: https://github.com/dependency-check/dependency-check-gradle
+A CVSS threshold for OWASP Dependency Check to fail the build:
+  - advice: >
+      You can set a CVSS threshold for vulnerabilities reported by OWASP Dependency Check.
+    links:
+      - name: OWASP Dependnecy Check
+        url: https://jeremylong.github.io/DependencyCheck/
+      - name: Configuring OWASP Dependency Check
+        url: https://jeremylong.github.io/DependencyCheck/dependency-check-maven/configuration.html
