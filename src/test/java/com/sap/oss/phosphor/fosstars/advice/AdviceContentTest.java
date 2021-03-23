@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
+import com.sap.oss.phosphor.fosstars.util.Json;
 import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -13,6 +14,19 @@ import java.util.Arrays;
 import org.junit.Test;
 
 public class AdviceContentTest {
+
+  @Test
+  public void testJsonSerialization() throws IOException {
+    AdviceContent adviceContent = new AdviceContent(
+        SECURITY_REVIEW_DONE_EXAMPLE,
+        "test",
+        Arrays.asList(
+            new Link("first", new URL("https://test/1")),
+            new Link("second", new URL("https://test/info"))));
+
+    AdviceContent clone = Json.read(Json.toBytes(adviceContent), AdviceContent.class);
+    assertEquals(adviceContent, clone);
+  }
 
   @Test
   public void testYamlSerialization() throws IOException {
