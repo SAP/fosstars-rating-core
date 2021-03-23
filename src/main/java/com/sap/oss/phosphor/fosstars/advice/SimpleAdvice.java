@@ -1,5 +1,8 @@
 package com.sap.oss.phosphor.fosstars.advice;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import java.util.Objects;
@@ -31,7 +34,12 @@ public class SimpleAdvice implements Advice {
    * @param value A value for which the advice is given.
    * @param content A content of the advice.
    */
-  public SimpleAdvice(Subject subject, Value<?> value, AdviceContent content) {
+  @JsonCreator
+  public SimpleAdvice(
+      @JsonProperty("subject") Subject subject,
+      @JsonProperty("value") Value<?> value,
+      @JsonProperty("content") AdviceContent content) {
+
     Objects.requireNonNull(subject, "Oh no! Subject is null!");
     Objects.requireNonNull(value, "Oh no! Value is null!");
     Objects.requireNonNull(content, "Oh no! Content is null!");
@@ -46,16 +54,19 @@ public class SimpleAdvice implements Advice {
   }
 
   @Override
+  @JsonGetter("subject")
   public Subject subject() {
     return subject;
   }
 
   @Override
+  @JsonGetter("value")
   public Value<?> value() {
     return value;
   }
 
   @Override
+  @JsonGetter("content")
   public AdviceContent content() {
     return content;
   }

@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
+import com.sap.oss.phosphor.fosstars.util.Json;
 import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -11,6 +12,13 @@ import java.net.URL;
 import org.junit.Test;
 
 public class LinkTest {
+
+  @Test
+  public void testJsonSerialization() throws IOException {
+    Link link = new Link("test", new URL("https://test/path"));
+    Link clone = Json.read(Json.toBytes(link), Link.class);
+    assertEquals(link, clone);
+  }
 
   @Test
   public void testYamlSerialization() throws IOException {
