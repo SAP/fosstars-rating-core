@@ -82,7 +82,7 @@
     <version.junit>4.13.2</version.junit>
     <version.mockito-core>3.8.0</version.mockito-core>
     <version.commons-collections4>4.4</version.commons-collections4>
-    <version.org.eclipse.jgit>5.7.0.202003110725-r</version.org.eclipse.jgit>
+    <version.org.eclipse.jgit>5.11.0.202103091610-r</version.org.eclipse.jgit>
     <version.commons-text>1.9</version.commons-text>
   </properties>
 
