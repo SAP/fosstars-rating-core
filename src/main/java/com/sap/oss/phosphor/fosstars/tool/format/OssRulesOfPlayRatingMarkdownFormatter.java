@@ -21,13 +21,14 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
   /**
    * A resource with a Markdown template.
    */
-  private static final String RESOURCE = "OssSecurityRatingMarkdownRatingValueTemplate.md";
+  private static final String RATING_VALUE_TEMPLATE_RESOURCE
+      = "OssRulesOfPlayMarkdownRatingValueTemplate.md";
 
   /**
    * A Markdown template for a rating value.
    */
-  private static final String TEMPLATE
-      = loadFrom(RESOURCE, OssRulesOfPlayRatingMarkdownFormatter.class);
+  private static final String RATING_VALUE_TEMPLATE
+      = loadFrom(RATING_VALUE_TEMPLATE_RESOURCE, OssRulesOfPlayRatingMarkdownFormatter.class);
 
   @Override
   public String print(Subject subject) {
@@ -49,7 +50,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     Objects.requireNonNull(ratingValue, "Hey! Rating can't be null!");
 
     ScoreValue scoreValue = ratingValue.scoreValue();
-    return TEMPLATE
+    return RATING_VALUE_TEMPLATE
         .replaceAll("%MAX_CONFIDENCE%", formatted(Confidence.MAX))
         .replace("%STATUS%", ratingValue.label().name())
         .replace("%CONFIDENCE_LABEL%", confidenceLabelFor(ratingValue.confidence()))

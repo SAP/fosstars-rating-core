@@ -35,13 +35,14 @@ public class OssSecurityRatingMarkdownFormatter extends CommonFormatter {
   /**
    * A resource with a Markdown template.
    */
-  private static final String RESOURCE = "OssSecurityRatingMarkdownRatingValueTemplate.md";
+  private static final String RATING_VALUE_TEMPLATE_RESOURCE
+      = "OssSecurityRatingMarkdownRatingValueTemplate.md";
 
   /**
    * A Markdown template for a rating value.
    */
-  private static final String TEMPLATE
-      = loadFrom(RESOURCE, OssSecurityRatingMarkdownFormatter.class);
+  private static final String RATING_VALUE_TEMPLATE
+      = loadFrom(RATING_VALUE_TEMPLATE_RESOURCE, OssSecurityRatingMarkdownFormatter.class);
 
   /**
    * An indent for building nested lists.
@@ -92,7 +93,7 @@ public class OssSecurityRatingMarkdownFormatter extends CommonFormatter {
     Objects.requireNonNull(ratingValue, "Hey! Rating can't be null!");
 
     ScoreValue scoreValue = ratingValue.scoreValue();
-    return TEMPLATE
+    return RATING_VALUE_TEMPLATE
         .replaceAll("%MAX_SCORE%", formatted(Score.MAX))
         .replaceAll("%MAX_CONFIDENCE%", formatted(Confidence.MAX))
         .replace("%SCORE_VALUE%", formatted(scoreValue.get()))
