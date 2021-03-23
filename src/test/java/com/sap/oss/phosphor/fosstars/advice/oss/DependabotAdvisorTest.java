@@ -21,12 +21,13 @@ import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.Languages;
 import com.sap.oss.phosphor.fosstars.model.value.PackageManagers;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
+import java.net.MalformedURLException;
 import org.junit.Test;
 
 public class DependabotAdvisorTest {
 
   @Test
-  public void testAdviseForDependabot() {
+  public void testAdviseForDependabot() throws MalformedURLException {
     DependabotAdvisor advisor = new DependabotAdvisor(WITH_EMPTY_CONTEXT);
     GitHubProject project = new GitHubProject("org", "test");
 
@@ -53,7 +54,7 @@ public class DependabotAdvisorTest {
   }
 
   @Test
-  public void testAdviceWhenDependabotScoreIsNotApplicable() {
+  public void testAdviceWhenDependabotScoreIsNotApplicable() throws MalformedURLException {
     final DependabotAdvisor advisor = new DependabotAdvisor(WITH_EMPTY_CONTEXT);
     final GitHubProject project = new GitHubProject("org", "test");
 

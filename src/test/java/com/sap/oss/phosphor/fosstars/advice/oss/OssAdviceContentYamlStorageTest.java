@@ -7,13 +7,14 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.advice.AdviceContent;
+import java.net.MalformedURLException;
 import java.util.List;
 import org.junit.Test;
 
 public class OssAdviceContentYamlStorageTest {
 
   @Test
-  public void testDefault() {
+  public void testDefault() throws MalformedURLException {
     List<AdviceContent> advice = OssAdviceContentYamlStorage.DEFAULT.adviceFor(
         USES_LGTM_CHECKS, EMPTY_OSS_CONTEXT);
     assertFalse(advice.isEmpty());

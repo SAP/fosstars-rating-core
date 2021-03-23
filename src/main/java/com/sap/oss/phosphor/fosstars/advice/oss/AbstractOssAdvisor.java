@@ -2,6 +2,7 @@ package com.sap.oss.phosphor.fosstars.advice.oss;
 
 import static com.sap.oss.phosphor.fosstars.advice.oss.OssAdviceContentYamlStorage.OssAdviceContext.EMPTY_OSS_CONTEXT;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.findValue;
+import static java.util.Collections.emptyList;
 
 import com.sap.oss.phosphor.fosstars.advice.Advice;
 import com.sap.oss.phosphor.fosstars.advice.AdviceContext;
@@ -13,7 +14,7 @@ import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
-import java.util.Collections;
+import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -54,9 +55,9 @@ public abstract class AbstractOssAdvisor implements Advisor {
   }
 
   @Override
-  public final List<Advice> adviceFor(Subject subject) {
+  public final List<Advice> adviceFor(Subject subject) throws MalformedURLException {
     if (!subject.ratingValue().isPresent()) {
-      return Collections.emptyList();
+      return emptyList();
     }
 
     return adviceFor(
@@ -72,9 +73,11 @@ public abstract class AbstractOssAdvisor implements Advisor {
    * @param usedValues A list of value that were used to calculate a rating for the subject.
    * @param context An advice context.
    * @return A list of advice.
+   * @throws MalformedURLException If the method couldn't parse URLs.
    */
   protected abstract List<Advice> adviceFor(
-      Subject subject, List<Value<?>> usedValues, OssAdviceContext context);
+      Subject subject, List<Value<?>> usedValues, OssAdviceContext context)
+      throws MalformedURLException;
 
   /**
    * Returns advice for a feature if it is present in a list of values.
@@ -84,9 +87,11 @@ public abstract class AbstractOssAdvisor implements Advisor {
    * @param subject The subject for advice.
    * @param context A context for advice.
    * @return A list of advice.
+   * @throws MalformedURLException If the method couldn't parse URLs.
    */
-  protected List<Advice> adviseForBooleanFeature(
-      List<Value<?>> values, Feature<Boolean> feature, Subject subject, AdviceContext context) {
+  protected List<Advice> adviceForBooleanFeature(
+      List<Value<?>> values, Feature<Boolean> feature, Subject subject, OssAdviceContext context)
+      throws MalformedURLException {
 
     return adviceForFeature(values, feature, subject, context, AbstractOssAdvisor::knownFalseValue);
   }
@@ -99,19 +104,23 @@ public abstract class AbstractOssAdvisor implements Advisor {
    * @param subject The subject for advice.
    * @param context A context for advice.
    * @param criteria A condition that shows whether a value needs an advice or not.
+   * @param <T> Type of data held by the feature.
    * @return A list of advice.
+   * @throws MalformedURLException If the method couldn't parse URLs.
    */
-  protected List<Advice> adviceForFeature(List<Value<?>> values, Feature<?> feature,
-      Subject subject, AdviceContext context, Predicate<Value<?>> criteria) {
+  protected <T> List<Advice> adviceForFeature(List<Value<?>> values, Feature<T> feature,
+      Subject subject, AdviceContext context, Predicate<Value<T>> criteria)
+      throws MalformedURLException {
 
-    return findValue(values, feature)
-        .filter(criteria)
-        .map(value -> adviceStorage.adviceFor(value.feature(), context)
-            .stream()
-            .map(content -> new SimpleAdvice(subject, value, content))
-            .map(Advice.class::cast)
-            .collect(Collectors.toList()))
-        .orElse(Collections.emptyList());
+    Optional<Value<T>> value = findValue(values, feature).filter(criteria);
+    if (!value.isPresent()) {
+      return emptyList();
+    }
+
+    return adviceStorage.adviceFor(value.get().feature(), context).stream()
+        .map(content -> new SimpleAdvice(subject, value.get(), content))
+        .map(Advice.class::cast)
+        .collect(Collectors.toList());
   }
 
   /**

@@ -6,6 +6,7 @@ import com.sap.oss.phosphor.fosstars.advice.Advice;
 import com.sap.oss.phosphor.fosstars.advice.oss.OssAdviceContentYamlStorage.OssAdviceContext;
 import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.Value;
+import java.net.MalformedURLException;
 import java.util.List;
 
 /**
@@ -23,10 +24,11 @@ public class SigningAdvisor extends AbstractOssAdvisor {
   }
 
   @Override
-  protected List<Advice> adviseFor(
-      Subject subject, List<Value<?>> usedValues, OssAdviceContext context) {
+  protected List<Advice> adviceFor(
+      Subject subject, List<Value<?>> usedValues, OssAdviceContext context)
+      throws MalformedURLException {
 
-    return adviseForFeature(
+    return adviceForFeature(
         usedValues, SIGNS_ARTIFACTS, subject, context, SigningAdvisor::disabledArtifactSigning);
   }
 

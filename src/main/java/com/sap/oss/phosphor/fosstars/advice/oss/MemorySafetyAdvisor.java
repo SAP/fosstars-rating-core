@@ -11,6 +11,7 @@ import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -39,7 +40,8 @@ public class MemorySafetyAdvisor extends AbstractOssAdvisor {
 
   @Override
   protected List<Advice> adviceFor(
-      Subject subject, List<Value<?>> usedValues, OssAdviceContext context) {
+      Subject subject, List<Value<?>> usedValues, OssAdviceContext context)
+      throws MalformedURLException {
 
     Optional<ScoreValue> memorySafetyTestingScoreValue
         = findSubScoreValue(subject, MemorySafetyTestingScore.class);
@@ -52,8 +54,11 @@ public class MemorySafetyAdvisor extends AbstractOssAdvisor {
       return Collections.emptyList();
     }
 
-    return FEATURES.stream()
-        .map(feature -> adviseForBooleanFeature(usedValues, feature, subject, context))
-        .collect(ArrayList::new, ArrayList::addAll, ArrayList::addAll);
+    List<Advice> advice = new ArrayList<>();
+    for (Feature<Boolean> feature : FEATURES) {
+      advice.addAll(adviceForBooleanFeature(usedValues, feature, subject, context));
+    }
+
+    return advice;
   }
 }

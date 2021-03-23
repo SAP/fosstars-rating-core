@@ -1,6 +1,7 @@
 package com.sap.oss.phosphor.fosstars.advice;
 
 import com.sap.oss.phosphor.fosstars.model.Subject;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -32,9 +33,12 @@ public class CompositeAdvisor implements Advisor {
   }
 
   @Override
-  public List<Advice> adviceFor(Subject subject) {
-    return advisors.stream()
-        .map(advisor -> advisor.adviceFor(subject))
-        .collect(ArrayList::new, List::addAll, List::addAll);
+  public List<Advice> adviceFor(Subject subject) throws IOException {
+    List<Advice> advice = new ArrayList<>();
+    for (Advisor advisor : advisors) {
+      advice.addAll(advisor.adviceFor(subject));
+    }
+
+    return advice;
   }
 }
