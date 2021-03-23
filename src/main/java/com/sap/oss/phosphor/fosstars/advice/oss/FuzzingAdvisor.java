@@ -8,6 +8,7 @@ import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
+import java.net.MalformedURLException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +29,8 @@ public class FuzzingAdvisor extends AbstractOssAdvisor {
 
   @Override
   protected List<Advice> adviceFor(
-      Subject subject, List<Value<?>> usedValues, OssAdviceContext context) {
+      Subject subject, List<Value<?>> usedValues, OssAdviceContext context)
+      throws MalformedURLException {
 
     Optional<ScoreValue> fuzzingScoreValue = findSubScoreValue(subject, FuzzingScore.class);
 
@@ -40,6 +42,6 @@ public class FuzzingAdvisor extends AbstractOssAdvisor {
       return Collections.emptyList();
     }
 
-    return adviseForBooleanFeature(usedValues, FUZZED_IN_OSS_FUZZ, subject, context);
+    return adviceForBooleanFeature(usedValues, FUZZED_IN_OSS_FUZZ, subject, context);
   }
 }

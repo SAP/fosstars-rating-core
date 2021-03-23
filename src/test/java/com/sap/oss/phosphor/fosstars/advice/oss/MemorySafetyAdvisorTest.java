@@ -17,12 +17,13 @@ import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.Languages;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
+import java.net.MalformedURLException;
 import org.junit.Test;
 
 public class MemorySafetyAdvisorTest {
 
   @Test
-  public void testAdviseForMemorySanitizers() {
+  public void testAdviseForMemorySanitizers() throws MalformedURLException {
     MemorySafetyAdvisor advisor = new MemorySafetyAdvisor(WITH_EMPTY_CONTEXT);
     GitHubProject project = new GitHubProject("org", "test");
 
@@ -60,7 +61,7 @@ public class MemorySafetyAdvisorTest {
   }
 
   @Test
-  public void testAdviseWhenMemorySafetyTestingScoreIsNotApplicable() {
+  public void testAdviseWhenMemorySafetyTestingScoreIsNotApplicable() throws MalformedURLException {
     final MemorySafetyAdvisor advisor = new MemorySafetyAdvisor(WITH_EMPTY_CONTEXT);
     final GitHubProject project = new GitHubProject("org", "test");
 

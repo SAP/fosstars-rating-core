@@ -14,12 +14,13 @@ import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
+import java.net.MalformedURLException;
 import org.junit.Test;
 
 public class CodeqlAdvisorTest {
 
   @Test
-  public void testAdviseForCodeQl() {
+  public void testAdviseForCodeQl() throws MalformedURLException {
     CodeqlAdvisor advisor = new CodeqlAdvisor(OssAdviceContextFactory.WITH_EMPTY_CONTEXT);
     GitHubProject project = new GitHubProject("org", "test");
 

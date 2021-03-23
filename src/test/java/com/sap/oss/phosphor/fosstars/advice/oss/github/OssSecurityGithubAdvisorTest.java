@@ -25,13 +25,14 @@ import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.Languages;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
+import java.io.IOException;
 import java.util.List;
 import org.junit.Test;
 
 public class OssSecurityGithubAdvisorTest {
 
   @Test
-  public void testBasics() {
+  public void testBasics() throws IOException {
     OssSecurityGithubAdvisor advisor = new OssSecurityGithubAdvisor();
 
     GitHubProject project = new GitHubProject("org", "test");
@@ -58,7 +59,7 @@ public class OssSecurityGithubAdvisorTest {
   }
 
   @Test
-  public void testAdviceForLgtmGrade() {
+  public void testAdviceForLgtmGrade() throws IOException {
     final OssSecurityGithubAdvisor advisor = new OssSecurityGithubAdvisor();
     final GitHubProject project = new GitHubProject("org", "test");
 
@@ -80,7 +81,7 @@ public class OssSecurityGithubAdvisorTest {
   }
 
   @Test
-  public void testAdviseForSecurityPolicy() {
+  public void testAdviseForSecurityPolicy() throws IOException {
     final OssSecurityGithubAdvisor advisor = new OssSecurityGithubAdvisor();
     final GitHubProject project = new GitHubProject("org", "test");
     final Rating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
@@ -101,7 +102,7 @@ public class OssSecurityGithubAdvisorTest {
   }
 
   @Test
-  public void testAdviseForFindSecBugs() {
+  public void testAdviseForFindSecBugs() throws IOException {
     final OssSecurityGithubAdvisor advisor = new OssSecurityGithubAdvisor();
     final GitHubProject project = new GitHubProject("org", "test");
     final Rating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
@@ -122,7 +123,7 @@ public class OssSecurityGithubAdvisorTest {
   }
 
   @Test
-  public void testAdviseForSanitizers() {
+  public void testAdviseForSanitizers() throws IOException {
     final OssSecurityGithubAdvisor advisor = new OssSecurityGithubAdvisor();
     final GitHubProject project = new GitHubProject("org", "test");
     final Rating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
@@ -143,7 +144,7 @@ public class OssSecurityGithubAdvisorTest {
   }
 
   @Test
-  public void testAdviseForOssFuzz() {
+  public void testAdviseForOssFuzz() throws IOException {
     final OssSecurityGithubAdvisor advisor = new OssSecurityGithubAdvisor();
     final GitHubProject project = new GitHubProject("org", "test");
     final Rating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);

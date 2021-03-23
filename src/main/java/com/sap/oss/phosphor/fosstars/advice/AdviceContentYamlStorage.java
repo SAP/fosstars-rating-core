@@ -1,5 +1,7 @@
 package com.sap.oss.phosphor.fosstars.advice;
 
+import static java.util.Collections.emptyList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,7 +14,6 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -22,7 +23,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -71,12 +71,17 @@ public class AdviceContentYamlStorage {
    * @param feature The feature.
    * @param context The context.
    * @return A list of advice.
+   * @throws MalformedURLException If the method couldn't parse URLs.
    */
-  public List<AdviceContent> adviceFor(Feature<?> feature, AdviceContext context) {
-    return featureToContent.getOrDefault(feature, Collections.emptyList())
-        .stream()
-        .map(rawAdvice -> rawAdvice.transformFor(feature, context))
-        .collect(Collectors.toList());
+  public List<AdviceContent> adviceFor(Feature<?> feature, AdviceContext context)
+      throws MalformedURLException {
+
+    List<AdviceContent> adviceContents = new ArrayList<>();
+    for (RawAdviceContent rawAdvice : featureToContent.getOrDefault(feature, emptyList())) {
+      adviceContents.add(rawAdvice.transformFor(feature, context));
+    }
+
+    return adviceContents;
   }
 
   /**
@@ -261,7 +266,8 @@ public class AdviceContentYamlStorage {
      * @param context A context to put more details into the advice.
      * @return A new {@link AdviceContent}.
      */
-    AdviceContent transformFor(Feature<?> feature, AdviceContext context) {
+    AdviceContent transformFor(Feature<?> feature, AdviceContext context)
+        throws MalformedURLException {
 
       // first, look for all variables in the advice and resolve them using the context
       Map<String, Optional<String>> values = new HashMap<>();
@@ -270,14 +276,15 @@ public class AdviceContentYamlStorage {
       }
 
       // then, replace all variables in the advice
-      String advice = apply(this.advice, values);
+      String advice = resolve(this.advice, values);
       List<Link> links = new ArrayList<>();
       for (RawLink link : this.links) {
-        try {
-          links.add(new Link(apply(link.name, values), new URL(apply(link.url, values))));
-        } catch (MalformedURLException e) {
-          LOGGER.warn("Could not create a link for an advice! Skip it!", e);
+        String url = resolve(link.url, values);
+        if (VARIABLE_PATTERN.matcher(url).matches()) {
+          LOGGER.warn("Skip link because it still contains unresolved variables: {}", url);
+          continue;
         }
+        links.add(new Link(resolve(link.name, values), new URL(url)));
       }
 
       return new AdviceContent(feature, advice, links);
@@ -290,7 +297,7 @@ public class AdviceContentYamlStorage {
      * @param values Maps variable names to their values.
      * @return An updated string.
      */
-    private static String apply(String string, Map<String, Optional<String>> values) {
+    private static String resolve(String string, Map<String, Optional<String>> values) {
       for (Map.Entry<String, Optional<String>> entry : values.entrySet()) {
         if (entry.getValue().isPresent()) {
           string = string.replaceAll(

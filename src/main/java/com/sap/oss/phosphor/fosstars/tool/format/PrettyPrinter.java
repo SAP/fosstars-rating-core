@@ -10,6 +10,8 @@ import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.Weight;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
+import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -241,7 +243,13 @@ public class PrettyPrinter extends CommonFormatter {
       return StringUtils.EMPTY;
     }
 
-    List<Advice> adviceList = advisor.adviceFor(subject);
+    List<Advice> adviceList;
+    try {
+      adviceList = advisor.adviceFor(subject);
+    } catch (IOException e) {
+      throw new UncheckedIOException("Oops! Could not print advice!", e);
+    }
+
     if (adviceList.isEmpty()) {
       return StringUtils.EMPTY;
     }

@@ -1,6 +1,7 @@
 package com.sap.oss.phosphor.fosstars.advice;
 
 import com.sap.oss.phosphor.fosstars.model.Subject;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -19,6 +20,7 @@ public interface Advisor {
    *
    * @param subject The subject.
    * @return A list of advice for the subject.
+   * @throws IOException If something went wrong.
    */
-  List<Advice> adviceFor(Subject subject);
+  List<Advice> adviceFor(Subject subject) throws IOException;
 }

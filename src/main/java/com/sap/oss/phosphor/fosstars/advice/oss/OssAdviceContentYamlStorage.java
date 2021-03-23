@@ -9,6 +9,7 @@ import com.sap.oss.phosphor.fosstars.model.RatingRepository;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurityRating;
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -62,8 +63,11 @@ public class OssAdviceContentYamlStorage {
    * @param feature The feature.
    * @param context The context.
    * @return A list of advice.
+   * @throws MalformedURLException If the method couldn't parse URLs.
    */
-  public List<AdviceContent> adviceFor(Feature<?> feature, AdviceContext context) {
+  public List<AdviceContent> adviceFor(Feature<?> feature, AdviceContext context)
+      throws MalformedURLException {
+
     return adviceContentYamlStorage.adviceFor(feature, context);
   }
 

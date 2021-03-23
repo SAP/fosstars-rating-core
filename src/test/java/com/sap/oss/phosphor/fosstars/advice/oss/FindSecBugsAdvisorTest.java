@@ -14,13 +14,14 @@ import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
+import java.net.MalformedURLException;
 import java.util.List;
 import org.junit.Test;
 
 public class FindSecBugsAdvisorTest {
 
   @Test
-  public void testAdviseForFindSecBugs() {
+  public void testAdviseForFindSecBugs() throws MalformedURLException {
     FindSecBugsAdvisor advisor = new FindSecBugsAdvisor(WITH_EMPTY_CONTEXT);
     GitHubProject project = new GitHubProject("org", "test");
 

@@ -6,6 +6,7 @@ import com.sap.oss.phosphor.fosstars.advice.Advice;
 import com.sap.oss.phosphor.fosstars.advice.oss.OssAdviceContentYamlStorage.OssAdviceContext;
 import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.Value;
+import java.net.MalformedURLException;
 import java.util.List;
 
 /**
@@ -25,8 +26,9 @@ public class SecurityPolicyAdvisor extends AbstractOssAdvisor {
 
   @Override
   protected List<Advice> adviceFor(
-      Subject subject, List<Value<?>> usedValues, OssAdviceContext context) {
+      Subject subject, List<Value<?>> usedValues, OssAdviceContext context)
+      throws MalformedURLException {
 
-    return adviseForBooleanFeature(usedValues, HAS_SECURITY_POLICY, subject, context);
+    return adviceForBooleanFeature(usedValues, HAS_SECURITY_POLICY, subject, context);
   }
 }

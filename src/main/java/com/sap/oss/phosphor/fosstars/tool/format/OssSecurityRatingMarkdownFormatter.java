@@ -11,6 +11,8 @@ import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerability;
+import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -179,7 +181,13 @@ public class OssSecurityRatingMarkdownFormatter extends CommonFormatter {
    * @return Advice to be displayed.
    */
   private String adviceFor(Subject subject) {
-    List<Advice> adviceList = advisor.adviceFor(subject);
+    List<Advice> adviceList;
+    try {
+      adviceList = advisor.adviceFor(subject);
+    } catch (IOException e) {
+      throw new UncheckedIOException("Oops! Could not print advice!", e);
+    }
+
     if (adviceList.isEmpty()) {
       return StringUtils.EMPTY;
     }

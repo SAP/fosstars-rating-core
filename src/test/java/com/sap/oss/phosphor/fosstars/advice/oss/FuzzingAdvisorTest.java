@@ -16,12 +16,13 @@ import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.Languages;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
+import java.net.MalformedURLException;
 import org.junit.Test;
 
 public class FuzzingAdvisorTest {
 
   @Test
-  public void testAdviseForOssFuzz() {
+  public void testAdviseForOssFuzz() throws MalformedURLException {
     FuzzingAdvisor advisor = new FuzzingAdvisor(WITH_EMPTY_CONTEXT);
     GitHubProject project = new GitHubProject("org", "test");
 
@@ -48,7 +49,7 @@ public class FuzzingAdvisorTest {
   }
 
   @Test
-  public void testAdviceWhenFuzzingScoreIsNotApplicable() {
+  public void testAdviceWhenFuzzingScoreIsNotApplicable() throws MalformedURLException {
     final FuzzingAdvisor advisor = new FuzzingAdvisor(WITH_EMPTY_CONTEXT);
     final GitHubProject project = new GitHubProject("org", "test");
 

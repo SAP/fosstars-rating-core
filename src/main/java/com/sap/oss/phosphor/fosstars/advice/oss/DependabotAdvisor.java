@@ -8,6 +8,7 @@ import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.score.oss.DependabotScore;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
+import java.net.MalformedURLException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -27,8 +28,9 @@ public class DependabotAdvisor extends AbstractOssAdvisor {
   }
 
   @Override
-  protected List<Advice> adviseFor(
-      Subject subject, List<Value<?>> usedValues, OssAdviceContext context) {
+  protected List<Advice> adviceFor(
+      Subject subject, List<Value<?>> usedValues, OssAdviceContext context)
+      throws MalformedURLException {
 
     Optional<ScoreValue> dependabotScore = findSubScoreValue(subject, DependabotScore.class);
 
@@ -36,6 +38,6 @@ public class DependabotAdvisor extends AbstractOssAdvisor {
       return Collections.emptyList();
     }
 
-    return adviseForBooleanFeature(usedValues, USES_DEPENDABOT, subject, context);
+    return adviceForBooleanFeature(usedValues, USES_DEPENDABOT, subject, context);
   }
 }
