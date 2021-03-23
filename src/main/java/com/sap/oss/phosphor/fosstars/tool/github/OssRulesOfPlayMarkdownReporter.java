@@ -32,13 +32,14 @@ public class OssRulesOfPlayMarkdownReporter extends AbstractReporter<GitHubProje
   /**
    * A resource with a template for the report.
    */
-  private static final String RESOURCE = "OssRulesOfPlayMarkdownReporterTemplate.md";
+  private static final String REPORT_TEMPLATE_RESOURCE
+      = "OssRulesOfPlayMarkdownReporterTemplate.md";
 
   /**
    * A template for the report.
    */
-  private static final String TEMPLATE
-      = loadFrom(RESOURCE, OssSecurityRatingMarkdownReporter.class);
+  private static final String REPORT_TEMPLATE
+      = loadFrom(REPORT_TEMPLATE_RESOURCE, OssSecurityRatingMarkdownReporter.class);
 
   /**
    * A template for a table row in the report.
@@ -121,7 +122,7 @@ public class OssRulesOfPlayMarkdownReporter extends AbstractReporter<GitHubProje
     double percentOfFail = (double) numberOfFail / total * 100;
     double percentOfUnclear = (double) numberOfUnclear / total * 100;
 
-    String content = TEMPLATE
+    String content = REPORT_TEMPLATE
         .replace("%NUMBER_OF_PROJECTS%", String.valueOf(total))
         .replace("%NUMBER_FAILED_PROJECTS%", String.valueOf(numberOfFail))
         .replace("%NUMBER_PASSED_PROJECTS%", String.valueOf(numberOfPass))

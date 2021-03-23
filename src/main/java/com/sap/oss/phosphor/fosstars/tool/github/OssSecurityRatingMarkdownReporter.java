@@ -47,13 +47,14 @@ public class OssSecurityRatingMarkdownReporter extends AbstractReporter<GitHubPr
   /**
    * A resource with a template for the report.
    */
-  private static final String RESOURCE = "MarkdownProjectDetailsTemplate.md";
+  private static final String PROJECT_DETAILS_TEMPLATE_RESOURCE
+      = "MarkdownProjectDetailsTemplate.md";
 
   /**
    * A template for the report.
    */
-  private static final String TEMPLATE
-      = loadFrom(RESOURCE, OssSecurityRatingMarkdownReporter.class);
+  private static final String PROJECT_DETAILS_TEMPLATE
+      = loadFrom(PROJECT_DETAILS_TEMPLATE_RESOURCE, OssSecurityRatingMarkdownReporter.class);
 
   /**
    * A template for a table row in the report.
@@ -170,7 +171,7 @@ public class OssSecurityRatingMarkdownReporter extends AbstractReporter<GitHubPr
         Files.createDirectories(organizationDirectory);
       }
 
-      String details = TEMPLATE
+      String details = PROJECT_DETAILS_TEMPLATE
           .replace("%PROJECT_URL%", project.scm().toString())
           .replace("%UPDATED_DATE%",
               project.ratingValueDate().map(DATE_FORMAT::format).orElse(UNKNOWN))
@@ -256,7 +257,7 @@ public class OssSecurityRatingMarkdownReporter extends AbstractReporter<GitHubPr
    */
   private String buildReportWith(String table, Statistics statistics) throws IOException {
     try (InputStream is = OssSecurityRatingMarkdownReporter.class
-        .getResourceAsStream("MarkdownReporterMainTemplate.md")) {
+        .getResourceAsStream("OssSecurityRatingMarkdownReporterMainTemplate.md")) {
 
       String template = IOUtils.toString(is, StandardCharsets.UTF_8);
       return template
