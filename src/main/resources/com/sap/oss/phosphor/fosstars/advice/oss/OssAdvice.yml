@@ -97,3 +97,9 @@ If a project signs artifacts:
     links:
       - name: Apache Maven Jarsigner Plugin
         url: https://maven.apache.org/plugins/maven-jarsigner-plugin/
+If a project uses nohttp tool:
+  - advice: >
+      You can enable NoHttp tool in the project's build pipeline.
+    links:
+      - name: NoHttp tool home page
+        url: https://github.com/spring-io/nohttp
