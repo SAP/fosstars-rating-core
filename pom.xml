@@ -73,11 +73,11 @@
     <version.jackson>2.12.2</version.jackson>
     <version.commons-math3>3.6.1</version.commons-math3>
     <version.commons-cli>1.4</version.commons-cli>
-    <version.github-api>1.116</version.github-api>
+    <version.github-api>1.124</version.github-api>
     <version.log4j-api>2.14.1</version.log4j-api>
     <version.log4j-core>2.14.1</version.log4j-core>
-    <version.nist-data-mirror>1.4.0</version.nist-data-mirror>
-    <version.maven-model>3.6.2</version.maven-model>
+    <version.nist-data-mirror>1.5.1</version.nist-data-mirror>
+    <version.maven-model>3.6.3</version.maven-model>
     <version.httpclient>4.5.13</version.httpclient>
     <version.junit>4.13.2</version.junit>
     <version.mockito-core>3.8.0</version.mockito-core>
@@ -130,7 +130,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.22.0</version>
+        <version>2.22.2</version>
         <configuration>
           <trimStackTrace>false</trimStackTrace>
         </configuration>
@@ -208,7 +208,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
-            <version>1.5</version>
+            <version>1.6</version>
             <executions>
               <execution>
                 <id>sign-artifacts</id>
