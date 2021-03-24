@@ -277,7 +277,7 @@
 | [SAP/kubernetes-deployment-orchestrator](https://github.com/SAP/kubernetes-deployment-orchestrator) | [FAIL](SAP/kubernetes-deployment-orchestrator.md) | 1 violated rule |
 | [SAP/pipeline-dsl](https://github.com/SAP/pipeline-dsl) | [FAIL](SAP/pipeline-dsl.md) | 1 violated rule |
 | [SAP/project-piper-action-utils](https://github.com/SAP/project-piper-action-utils) | [FAIL](SAP/project-piper-action-utils.md) | 1 violated rule |
-| [SAP/app-studio-toolkit](https://github.com/SAP/app-studio-toolkit) | [FAIL](SAP/app-studio-toolkit.md) | 1 violated rule |
+| [SAP/app-studio-toolkit](https://github.com/SAP/app-studio-toolkit) | [FAIL](SAP/app-studio-toolkit.md) | 2 violated rules |
 | [SAP/sap-btp-service-operator](https://github.com/SAP/sap-btp-service-operator) | [FAIL](SAP/sap-btp-service-operator.md) | 1 violated rule |
 | [SAP/transactional-storage-framework](https://github.com/SAP/transactional-storage-framework) | [FAIL](SAP/transactional-storage-framework.md) | 1 violated rule |
 | [SAP/neonbee](https://github.com/SAP/neonbee) | [FAIL](SAP/neonbee.md) | 1 violated rule |
