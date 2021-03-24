@@ -15,10 +15,11 @@ import java.util.Collection;
 import java.util.Optional;
 
 /**
- * The scores check how old a given artifact version is
+ * The scores check how old the given artifact version is
  * and if it is the latest available artifact version.
  * <ul>
  *   <li>{@link OssFeatures#RELEASED_ARTIFACT_VERSIONS}</li>
+ *   <li>{@link OssFeatures#ARTIFACT_VERSION}</li>
  * </ul>
  */
 public class ArtifactVersionScore extends FeatureBasedScore {
@@ -27,8 +28,7 @@ public class ArtifactVersionScore extends FeatureBasedScore {
    * Initializes a new score.
    */
   public ArtifactVersionScore() {
-    // FIXME: name is only a working name and require change
-    super("How old is given version and is it the latest available artifact version",
+    super("How old the given version is and is it the latest available artifact version",
         RELEASED_ARTIFACT_VERSIONS,
         ARTIFACT_VERSION);
   }

@@ -79,8 +79,10 @@ public class ArtifactVersion {
         + '}';
   }
 
-  // FIXME: only for quick test -> refactor ASAP
-  public static class LocalDateDeserializer extends StdDeserializer<LocalDate> {
+  /**
+   * LocalDate to Date deserializer used by Jackson Databind for JSON parsing.
+   */
+  private static class LocalDateDeserializer extends StdDeserializer<LocalDate> {
 
     private static final long serialVersionUID = 1L;
     private static final Pattern TEST_DATE_PATTERN = Pattern.compile("TEST([+-])(\\d{1,4})d");
@@ -88,7 +90,6 @@ public class ArtifactVersion {
     protected LocalDateDeserializer() {
       super(LocalDate.class);
     }
-
 
     @Override
     public LocalDate deserialize(JsonParser jp, DeserializationContext ctxt)
@@ -111,7 +112,10 @@ public class ArtifactVersion {
 
   }
 
-  public static class LocalDateSerializer extends StdSerializer<LocalDate> {
+  /**
+   * LocalDate to Date serializer used by Jackson Databind for JSON writing.
+   */
+  private static class LocalDateSerializer extends StdSerializer<LocalDate> {
 
     private static final long serialVersionUID = 1L;
 

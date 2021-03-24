@@ -52,7 +52,7 @@ public class ReleasesFromGitHub extends CachedSingleFeatureGitHubDataProvider<Ar
     List<GHRelease> releases = repo.listReleases().toList();
     Set<ArtifactVersion> artifactVersions;
     if (releases.isEmpty()) {
-      logger.info("No release information found. Try tags.");
+      logger.info("No release information found. Extract version info from tags.");
       artifactVersions = repo.listTags().toList().stream()
           .filter(tag -> SemanticVersion.isSemVer(tag.getName()))
           .map(this::createArtifactVersion)
@@ -77,7 +77,6 @@ public class ReleasesFromGitHub extends CachedSingleFeatureGitHubDataProvider<Ar
   }
 
   private LocalDate convertToLocalDate(Date date) {
-    // TODO (mibo): check if this is correct with time zones
     return date.toInstant()
         .atZone(ZoneId.systemDefault())
         .toLocalDate();

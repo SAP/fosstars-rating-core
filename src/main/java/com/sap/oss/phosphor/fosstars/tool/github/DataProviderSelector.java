@@ -1,8 +1,6 @@
 package com.sap.oss.phosphor.fosstars.tool.github;
 
 import com.sap.oss.phosphor.fosstars.data.DataProvider;
-import com.sap.oss.phosphor.fosstars.data.github.ArtifactVersionUsed;
-import com.sap.oss.phosphor.fosstars.data.github.ArtifactVersionUsedGitHub;
 import com.sap.oss.phosphor.fosstars.data.github.CodeqlDataProvider;
 import com.sap.oss.phosphor.fosstars.data.github.FuzzedInOssFuzz;
 import com.sap.oss.phosphor.fosstars.data.github.GitHubDataFetcher;

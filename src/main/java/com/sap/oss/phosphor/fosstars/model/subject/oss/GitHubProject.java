@@ -149,11 +149,6 @@ public class GitHubProject extends AbstractSubject implements OpenSourceProject 
           String.format("The URL has not github.com as hostname: %s", urlString));
     }
     String[] parts = url.getPath().split("/");
-    // TODO (mibo): IMHO we must not be that strict here. Just take first two paths and ignore rest
-    // if (parts.length >= 3) {
-    // throw new IllegalArgumentException(
-    // String.format("The URL doesn't seem to be correct: %s", urlString));
-    // }
     String name = parts[2];
     if (name.endsWith(".git")) {
       name = name.substring(0, name.length() - 4);

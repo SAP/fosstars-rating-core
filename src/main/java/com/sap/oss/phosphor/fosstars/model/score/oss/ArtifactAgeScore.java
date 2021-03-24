@@ -27,7 +27,6 @@ public class ArtifactAgeScore extends FeatureBasedScore {
    * Initializes a new score.
    */
   public ArtifactAgeScore() {
-    // FIXME: name is only a working name and require change
     super("How old the released artifacts are",
         OssFeatures.RELEASED_ARTIFACT_VERSIONS);
   }

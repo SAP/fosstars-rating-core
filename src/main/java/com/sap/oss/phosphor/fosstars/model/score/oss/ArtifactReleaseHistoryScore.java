@@ -29,8 +29,7 @@ public class ArtifactReleaseHistoryScore extends FeatureBasedScore {
    * Initializes a new score.
    */
   public ArtifactReleaseHistoryScore() {
-    // FIXME: name is only a working name and require change
-    super("How the artifact releases history is",
+    super("How the releases history of the artifact is",
         OssFeatures.RELEASED_ARTIFACT_VERSIONS);
   }
 
@@ -79,14 +78,10 @@ public class ArtifactReleaseHistoryScore extends FeatureBasedScore {
       scoreValue.increase(stats.releaseCycleTrend);
     }
 
-    // FIXME (mibo): only for demo reason, remove before merge
-    System.out.println(stats);
-    //
     return scoreValue;
   }
 
   private VersionStats createVersionStats(Collection<VersionInfo> versionInfos) {
-    //
     IntSummaryStatistics stats = versionInfos.stream()
         .filter(v -> v.daysDiffToVersionBefore >= 0)
         .mapToInt(v -> v.daysDiffToVersionBefore)
