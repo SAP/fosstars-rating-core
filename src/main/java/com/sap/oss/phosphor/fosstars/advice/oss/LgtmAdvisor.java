@@ -29,13 +29,13 @@ public class LgtmAdvisor extends AbstractOssAdvisor {
   }
 
   @Override
-  protected List<Advice> advicesFor(
+  protected List<Advice> adviceFor(
       Subject subject, List<Value<?>> usedValues, OssAdviceContext context) {
 
     return findValue(usedValues, WORST_LGTM_GRADE)
         .filter(LgtmAdvisor::isKnown)
         .filter(LgtmAdvisor::notTheBest)
-        .map(value -> adviceStorage.advicesFor(value.feature(), context)
+        .map(value -> adviceStorage.adviceFor(value.feature(), context)
             .stream()
             .map(content -> new SimpleAdvice(subject, value, content))
             .map(Advice.class::cast)

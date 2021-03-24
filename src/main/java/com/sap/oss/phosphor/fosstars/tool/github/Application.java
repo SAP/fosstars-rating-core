@@ -90,7 +90,7 @@ public class Application {
    * A path to the cache.
    */
   private static final String PATH_TO_VALUE_CACHE
-      = FOSSTARS_DIRECTORY + File.separator + "github_project_value_cache.json.210311";
+      = FOSSTARS_DIRECTORY + File.separator + "github_project_value_cache.json";
 
   /**
    * A shared cache.
@@ -117,6 +117,11 @@ public class Application {
   private static final Map<String, Rating> RATINGS = new HashMap<>();
   private static final Set<String> PURL_SUPPORTED_TYPES = new HashSet<>();
 
+  // constants for supported purl types
+  // find more about purl types here: https://github.com/package-url/purl-spec#known-purl-types
+  private static final String PURL_TYPE_GITHUB = "github";
+  private static final String PURL_TYPE_MAVEN = "maven";
+
   static {
     Rating ossSecurityRating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
     RATINGS.put("default", ossSecurityRating);
@@ -135,8 +140,8 @@ public class Application {
     RATINGS.put(ossArtifactSecurityRating.getClass().getSimpleName(), ossArtifactSecurityRating);
     RATINGS.put(ossArtifactSecurityRating.getClass().getCanonicalName(), ossArtifactSecurityRating);
 
-    PURL_SUPPORTED_TYPES.add("github");
-    PURL_SUPPORTED_TYPES.add("maven");
+    PURL_SUPPORTED_TYPES.add(PURL_TYPE_GITHUB);
+    PURL_SUPPORTED_TYPES.add(PURL_TYPE_MAVEN);
   }
 
   /**
@@ -507,28 +512,27 @@ public class Application {
       LOGGER.info("Start with PURL {}", purl);
       PackageURL parsedPurl = new PackageURL(purl);
 
-      if (PURL_SUPPORTED_TYPES.contains(parsedPurl.getType())) {
-        if ("github".equalsIgnoreCase(parsedPurl.getType())) {
+      switch (parsedPurl.getType()) {
+        case PURL_TYPE_GITHUB:
           String projectUrl = String.format("https://github.com/%s/%s",
               parsedPurl.getNamespace(), parsedPurl.getName());
           LOGGER.info("Found github PURL and start with {}", projectUrl);
           ValueSet values = new ValueHashSet(ARTIFACT_VERSION.value(parsedPurl.getVersion()));
           processUrl(projectUrl, values);
-        } else if ("maven".equalsIgnoreCase(parsedPurl.getType())) {
+          break;
+        case PURL_TYPE_MAVEN:
           String gav = String.format("%s:%s%s",
               parsedPurl.getNamespace(), parsedPurl.getName(),
               parsedPurl.getVersion() == null ? "" : ":" + parsedPurl.getVersion());
           processGav(gav);
-        } else {
+          break;
+        default:
           throw new IOException(String.format(
-              "Oh no! Given PURL type %S is not supported!", parsedPurl.getType()));
-        }
-      } else {
-        throw new IOException(String.format(
-            "Oh no! Given PURL type %S is not supported!", parsedPurl.getType()));
+              "Oh no! Given PURL type '%s' is not supported! Supported types are %s",
+              parsedPurl.getType(), PURL_SUPPORTED_TYPES));
       }
     } catch (MalformedPackageURLException e) {
-      throw new IOException("Oh no! Given PURL could not be parsed!");
+      throw new IOException("Oh no! Given PURL could not be parsed!", e);
     }
   }
 

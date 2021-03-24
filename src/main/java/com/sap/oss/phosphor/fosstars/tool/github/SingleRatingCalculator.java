@@ -7,10 +7,8 @@ import com.sap.oss.phosphor.fosstars.data.UserCallback;
 import com.sap.oss.phosphor.fosstars.data.ValueCache;
 import com.sap.oss.phosphor.fosstars.model.Rating;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
-import com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
-import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -75,11 +73,6 @@ public class SingleRatingCalculator implements RatingCalculator {
     return this;
   }
 
-  /**
-   * {@inheritDoc}
-   *
-   * <p>Overwrite default method to get rid of {@link IOException}.
-   */
   @Override
   public SingleRatingCalculator calculateFor(GitHubProject project) {
     return calculateFor(project, ValueHashSet.empty());

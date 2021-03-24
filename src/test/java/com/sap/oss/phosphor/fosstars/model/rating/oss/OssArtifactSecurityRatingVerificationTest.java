@@ -8,11 +8,13 @@ import com.sap.oss.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.oss.phosphor.fosstars.model.qa.VerificationFailedException;
 import java.io.IOException;
 import java.io.InputStream;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class OssArtifactSecurityRatingVerificationTest {
 
   @Test
+  @Ignore("This must be migrated to a programmatic test")
   public void testVerification() throws VerificationFailedException, IOException {
     OssArtifactSecurityRating rating =
         RatingRepository.INSTANCE.rating(OssArtifactSecurityRating.class);
@@ -21,16 +23,17 @@ public class OssArtifactSecurityRatingVerificationTest {
   }
 
   /**
-   * This class implements a verification procedure for {@link OssSecurityRating}.
-   * The class loads test vectors, and provides methods to verify a {@link OssSecurityRating}
-   * against those test vectors.
+   * This class implements a verification procedure for {@link OssArtifactSecurityRating}.
+   * The class loads test vectors, and provides methods to verify a
+   * {@link OssArtifactSecurityRating} against those test vectors.
    */
   private static class OssArtifactSecurityRatingVerification extends RatingVerification {
 
     private static final String TEST_VECTORS_YAML = "OssArtifactSecurityRatingTestVectors.yml";
 
     /**
-     * Initializes a {@link OssArtifactSecurityRatingVerification} for an {@link OssSecurityRating}.
+     * Initializes a {@link OssArtifactSecurityRatingVerification} for an
+     * {@link OssArtifactSecurityRating}.
      *
      * @param rating A rating to be verified.
      * @param vectors A list of test vectors.
@@ -55,5 +58,4 @@ public class OssArtifactSecurityRatingVerificationTest {
       }
     }
   }
-
 }

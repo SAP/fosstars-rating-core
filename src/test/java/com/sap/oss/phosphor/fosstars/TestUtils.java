@@ -64,6 +64,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class TestUtils {
@@ -183,14 +184,13 @@ public class TestUtils {
   public static Vulnerability createBasicVulnerability(
       double cvssValue, String startVersion, String endVersion) {
 
-    String id = "CVE-2020-4711";
+    String id = UUID.randomUUID().toString();
     CVSS cvss = new CVSS(Version.V3, cvssValue);
     Date introduced = createDate("21-03-21");
     Date fixed = createDate("21-03-22");
     Date published = createDate("21-03-23");
     List<VersionRange> versions = new ArrayList<>();
-    String cpe = "cpe:2.3:a:vendor:product:version:*:*:*:*:*:*:*";
-    versions.add(new VersionRange(startVersion, endVersion, cpe));
+    versions.add(new VersionRange(startVersion, endVersion));
 
     return Vulnerability.Builder.newVulnerability(id)
         .set(cvss).published(published).introduced(introduced).fixed(fixed)

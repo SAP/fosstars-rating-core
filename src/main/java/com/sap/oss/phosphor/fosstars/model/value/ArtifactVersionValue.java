@@ -7,7 +7,7 @@ import com.sap.oss.phosphor.fosstars.model.Feature;
 import java.util.Objects;
 
 /**
- * A value for a feature that provide a version for an artifact.
+ * A value for a feature that holds a version of an artifact.
  */
 public class ArtifactVersionValue extends AbstractValue<String> {
 

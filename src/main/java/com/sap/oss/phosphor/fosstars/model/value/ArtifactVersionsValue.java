@@ -7,7 +7,7 @@ import com.sap.oss.phosphor.fosstars.model.Feature;
 import java.util.Objects;
 
 /**
- * A value for a feature that provide versions for an artifact.
+ * A value for a feature that holds versions for an artifact.
  */
 public class ArtifactVersionsValue extends AbstractValue<ArtifactVersions> {
 
@@ -28,7 +28,11 @@ public class ArtifactVersionsValue extends AbstractValue<ArtifactVersions> {
       @JsonProperty("versions") ArtifactVersions artifactVersions) {
 
     super(feature);
-    this.artifactVersions = artifactVersions;
+    if (artifactVersions == null) {
+      this.artifactVersions = ArtifactVersions.ofNothing();
+    } else {
+      this.artifactVersions = artifactVersions;
+    }
   }
 
   @Override
@@ -59,7 +63,7 @@ public class ArtifactVersionsValue extends AbstractValue<ArtifactVersions> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), artifactVersions);
+    return Objects.hash(artifactVersions);
   }
 
   @Override

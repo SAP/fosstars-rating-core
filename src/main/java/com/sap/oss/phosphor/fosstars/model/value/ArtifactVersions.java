@@ -5,27 +5,20 @@ import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sap.oss.phosphor.fosstars.model.Value;
 import java.util.Collection;
-import java.util.Comparator;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 /**
  * A set versions for an artifact.
  */
 public class ArtifactVersions implements Iterable<ArtifactVersion> {
-
-  /**
-   * Comparator for artifact versions release date.
-   */
-  private static final Comparator<ArtifactVersion> RELEASE_DATE_COMPARISON =
-      (a, b) -> b.getReleaseDate().compareTo(a.getReleaseDate());
 
   /**
    * A set of versions.
@@ -109,13 +102,27 @@ public class ArtifactVersions implements Iterable<ArtifactVersion> {
   /**
    * Get versions sorted by date.
    * First entry is the latest release.
+   * Creates a new collection with the sorted versions.
    *
    * @return versions sorted by date
    */
-  public Collection<ArtifactVersion> getSortByReleaseDate() {
-    SortedSet<ArtifactVersion> sortedArtifacts = new TreeSet<>(RELEASE_DATE_COMPARISON);
-    sortedArtifacts.addAll(elements);
-    return sortedArtifacts;
+  public Collection<ArtifactVersion> sortByReleaseDate() {
+    return ArtifactVersion.sortByReleaseDate(elements);
+  }
+
+  /**
+   * Sort artifact versions hold by ArtifactVersions by release date.
+   *
+   * @param artifactVersions the artifact versions
+   * @return sorted collection of ArtifactVersion
+   */
+  public static Collection<ArtifactVersion> sortByReleaseDate(
+      Value<ArtifactVersions> artifactVersions) {
+
+    if (artifactVersions.isUnknown()) {
+      return Collections.emptyList();
+    }
+    return ArtifactVersion.sortByReleaseDate(artifactVersions.get().elements);
   }
 
   /**
@@ -125,8 +132,8 @@ public class ArtifactVersions implements Iterable<ArtifactVersion> {
    * @param version to be searched version
    * @return found version or empty optional
    */
-  public Optional<ArtifactVersion> getArtifactVersion(String version) {
-    return elements.parallelStream()
+  public Optional<ArtifactVersion> get(String version) {
+    return elements.stream()
         .filter(v -> v.getVersion().equals(version))
         .findFirst();
   }
@@ -160,18 +167,20 @@ public class ArtifactVersions implements Iterable<ArtifactVersion> {
 
   @Override
   public String toString() {
-    Collection<ArtifactVersion> sortByReleaseDate = getSortByReleaseDate();
-    final int limit = 5;
+    if (elements.isEmpty()) {
+      return "No versions";
+    }
+    Collection<ArtifactVersion> sortByReleaseDate = sortByReleaseDate();
+    final int max = 5;
     String message = sortByReleaseDate.stream()
-        .limit(limit)
-        .map(v -> v.getVersion() + ":" + v.getReleaseDate())
+        .limit(max)
+        .map(v -> String.format("%s:%s", v.getVersion(), v.getReleaseDate()))
         .collect(Collectors.joining(", "));
 
-    if (sortByReleaseDate.size() > limit) {
-      return String.format(message + " (%s in total)...", sortByReleaseDate.size());
-    } else {
-      return message;
+    if (sortByReleaseDate.size() > max) {
+      return String.format("%s (%s in total) ...", message, sortByReleaseDate.size());
     }
+    return message;
   }
 
   @Override

@@ -58,7 +58,7 @@ public abstract class AbstractOssAdvisor implements Advisor {
       return Collections.emptyList();
     }
 
-    return advicesFor(
+    return adviceFor(
         subject,
         subject.ratingValue().get().scoreValue().usedFeatureValues(),
         contextFactory.contextFor(subject));
@@ -72,7 +72,7 @@ public abstract class AbstractOssAdvisor implements Advisor {
    * @param context An advice context.
    * @return A list of advice.
    */
-  protected abstract List<Advice> advicesFor(
+  protected abstract List<Advice> adviceFor(
       Subject subject, List<Value<?>> usedValues, OssAdviceContext context);
 
   /**
@@ -89,7 +89,7 @@ public abstract class AbstractOssAdvisor implements Advisor {
 
     return findValue(values, feature)
         .filter(AbstractOssAdvisor::knownFalseValue)
-        .map(value -> adviceStorage.advicesFor(value.feature(), context)
+        .map(value -> adviceStorage.adviceFor(value.feature(), context)
             .stream()
             .map(content -> new SimpleAdvice(subject, value, content))
             .map(Advice.class::cast)

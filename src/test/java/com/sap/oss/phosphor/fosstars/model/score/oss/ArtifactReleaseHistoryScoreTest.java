@@ -6,10 +6,14 @@ import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 
 import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.Value;
+import com.sap.oss.phosphor.fosstars.model.score.oss.ArtifactReleaseHistoryScore.VersionInfo;
+import com.sap.oss.phosphor.fosstars.model.score.oss.ArtifactReleaseHistoryScore.VersionStats;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersions;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -18,7 +22,7 @@ public class ArtifactReleaseHistoryScoreTest {
   private static final double DELTA = 0.2;
 
   @Test
-  public void smokeTest() {
+  public void testBasicFunctionality() {
     ArtifactVersion version100 =
         new ArtifactVersion("1.0.0", LocalDate.now().minusMonths(14));
     ArtifactVersion version110 =
@@ -35,7 +39,39 @@ public class ArtifactReleaseHistoryScoreTest {
   }
 
   @Test
-  public void currentReleasedVersionBestHistory() {
+  public void testCalculateVersionStatistics() {
+    Collection<VersionInfo> versionInfos = new ArrayList<>();
+    versionInfos.add(new VersionInfo(90,
+        new ArtifactVersion("3.0.0", LocalDate.now())));
+    versionInfos.add(new VersionInfo(180,
+        new ArtifactVersion("2.0.0", LocalDate.now().minusDays(90))));
+    versionInfos.add(new VersionInfo(250,
+        new ArtifactVersion("1.5.0", LocalDate.now().minusDays(180))));
+    versionInfos.add(new VersionInfo(-1,
+        new ArtifactVersion("1.0.0", LocalDate.now().minusDays(250))));
+
+    VersionStats stats = ArtifactReleaseHistoryScore.calculateVersionStats(versionInfos);
+    Assert.assertEquals(173.33333333333334, stats.averageDaysBetweenReleases, DELTA);
+    Assert.assertEquals(0.6666666666666666, stats.releaseCycleTrend, DELTA);
+  }
+
+  @Test
+  public void testCalculateVersionStatisticsFromArtifactVersions() {
+    Collection<ArtifactVersion> artifactVersions = new ArrayList<>();
+    artifactVersions.add(new ArtifactVersion("3.0.0", LocalDate.now()));
+    artifactVersions.add(new ArtifactVersion("2.0.0", LocalDate.now().minusDays(90)));
+    artifactVersions.add(new ArtifactVersion("1.5.0", LocalDate.now().minusDays(270)));
+    artifactVersions.add(new ArtifactVersion("1.0.0", LocalDate.now().minusDays(520)));
+
+    Collection<VersionInfo> versionInfos =
+        ArtifactReleaseHistoryScore.createVersionInfos(artifactVersions);
+    VersionStats stats = ArtifactReleaseHistoryScore.calculateVersionStats(versionInfos);
+    Assert.assertEquals(173.33333333333334, stats.averageDaysBetweenReleases, DELTA);
+    Assert.assertEquals(0.6666666666666666, stats.releaseCycleTrend, DELTA);
+  }
+
+  @Test
+  public void testCurrentReleasedVersionBestHistory() {
     ArtifactVersion version100 =
         new ArtifactVersion("1.0.0", LocalDate.now().minusMonths(2));
     ArtifactVersion version110 =
@@ -46,13 +82,11 @@ public class ArtifactReleaseHistoryScoreTest {
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
         ArtifactVersions.of(version100, version110, version120));
     ScoreValue value = score.calculate(versions);
-    System.out.println("\n\ncurrentReleasedVersionGoodHistory");
-    System.out.printf("Available versions: %s;%nrating: %2.2f%n", versions, value.get());
     Assert.assertEquals(9.5, value.get(), DELTA);
   }
 
   @Test
-  public void currentReleasedVersionGoodHistory() {
+  public void testCurrentReleasedVersionGoodHistory() {
     ArtifactVersion version100 =
         new ArtifactVersion("1.0.0", LocalDate.now().minusMonths(5));
     ArtifactVersion version110 =
@@ -63,13 +97,11 @@ public class ArtifactReleaseHistoryScoreTest {
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
         ArtifactVersions.of(version100, version110, version120));
     ScoreValue value = score.calculate(versions);
-    System.out.println("\n\ncurrentReleasedVersionGoodHistory");
-    System.out.printf("Available versions: %s;%nrating: %2.2f%n", versions, value.get());
     Assert.assertEquals(6.5, value.get(), DELTA);
   }
 
   @Test
-  public void currentReleasedVersionBadHistory() {
+  public void testCurrentReleasedVersionBadHistory() {
     ArtifactVersion version100 =
         new ArtifactVersion("1.0.0", LocalDate.now().minusMonths(14));
     ArtifactVersion version110 =
@@ -80,13 +112,11 @@ public class ArtifactReleaseHistoryScoreTest {
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
         ArtifactVersions.of(version100, version110, version120));
     ScoreValue value = score.calculate(versions);
-    System.out.println("\n\ncurrentReleasedVersionBadHistory");
-    System.out.printf("Available versions: %s;%nrating: %2.2f%n", versions, value.get());
     Assert.assertEquals(5.5, value.get(), DELTA);
   }
 
   @Test
-  public void twoMonthOldVersion() {
+  public void testTwoMonthOldVersion() {
     ArtifactVersion version100 =
         new ArtifactVersion("1.0.0", LocalDate.now().minusMonths(14));
     ArtifactVersion version110 =
@@ -96,13 +126,11 @@ public class ArtifactReleaseHistoryScoreTest {
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
         ArtifactVersions.of(version100, version110));
     ScoreValue value = score.calculate(versions);
-    System.out.println("\n\ntwoMonthOldVersion");
-    System.out.printf("Available versions: %s;%nrating: %2.2f%n", versions, value.get());
     Assert.assertEquals(7.0, value.get(), DELTA);
   }
 
   @Test
-  public void twoMonthOldVersionStable() {
+  public void testTwoMonthOldVersionStable() {
     ArtifactVersion version100 =
         new ArtifactVersion("1.0.0", LocalDate.now().minusMonths(7));
     ArtifactVersion version110 =
@@ -121,13 +149,11 @@ public class ArtifactReleaseHistoryScoreTest {
         ArtifactVersions
             .of(version100, version110, version120, version130, version140, version150));
     ScoreValue value = score.calculate(versions);
-    System.out.println("\n\ntwoMonthOldVersionStable");
-    System.out.printf("Available versions: %s;%nrating: %2.2f%n", versions, value.get());
     Assert.assertEquals(7.6, value.get(), DELTA);
   }
 
   @Test
-  public void twoMonthOldGoodVersionTrend() {
+  public void testTwoMonthOldGoodVersionTrend() {
     ArtifactVersion version100 =
         new ArtifactVersion("1.0.0", LocalDate.now().minusMonths(37));
     ArtifactVersion version110 =
@@ -146,13 +172,11 @@ public class ArtifactReleaseHistoryScoreTest {
         ArtifactVersions
             .of(version100, version110, version120, version130, version140, version150));
     ScoreValue value = score.calculate(versions);
-    System.out.println("\n\ntwoMonthOldGoodVersionTrend");
-    System.out.printf("Available versions: %s;%nrating: %2.2f%n", versions, value.get());
     Assert.assertEquals(5.8, value.get(), DELTA);
   }
 
   @Test
-  public void twoMonthOldVersionBadVersionTrend() {
+  public void testTwoMonthOldVersionBadVersionTrend() {
     ArtifactVersion version100 =
         new ArtifactVersion("1.0.0", LocalDate.now().minusMonths(18));
     ArtifactVersion version110 =
@@ -171,13 +195,11 @@ public class ArtifactReleaseHistoryScoreTest {
         ArtifactVersions
             .of(version100, version110, version120, version130, version140, version150));
     ScoreValue value = score.calculate(versions);
-    System.out.println("\n\ntwoMonthOldVersionDecrease");
-    System.out.printf("Available versions: %s;%nrating: %2.2f%n", versions, value.get());
     Assert.assertEquals(5.2, value.get(), DELTA);
   }
 
   @Test
-  public void eightMonthOldVersion() {
+  public void testEightMonthOldVersion() {
     ArtifactVersion version100 =
         new ArtifactVersion("1.0.0", LocalDate.now().minusMonths(14));
     ArtifactVersion version110 =
@@ -187,13 +209,11 @@ public class ArtifactReleaseHistoryScoreTest {
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
         ArtifactVersions.of(version100, version110));
     ScoreValue value = score.calculate(versions);
-    System.out.println("\n\neightMonthOldVersion");
-    System.out.printf("Available versions: %s;%nrating: %2.2f%n", versions, value.get());
     Assert.assertEquals(5.0, value.get(), DELTA);
   }
 
   @Test
-  public void fourteenMonthOldSingleVersion() {
+  public void testFourteenMonthOldSingleVersion() {
     ArtifactVersion version100 =
         new ArtifactVersion("1.0.0", LocalDate.now().minusMonths(14));
 
@@ -201,13 +221,11 @@ public class ArtifactReleaseHistoryScoreTest {
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
         ArtifactVersions.of(version100));
     ScoreValue value = score.calculate(versions);
-    System.out.println("\n\nfourteenMonthOldSingleVersion");
-    System.out.printf("Available versions: %s;%nrating: %2.2f%n", versions, value.get());
     Assert.assertEquals(0.0, value.get(), DELTA);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testWithNoInfo() {
-    new DependencyScanScore().calculate();
+    new ArtifactReleaseHistoryScore().calculate();
   }
 }

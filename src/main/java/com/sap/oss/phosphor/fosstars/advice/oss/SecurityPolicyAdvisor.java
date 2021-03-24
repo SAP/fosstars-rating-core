@@ -24,7 +24,7 @@ public class SecurityPolicyAdvisor extends AbstractOssAdvisor {
   }
 
   @Override
-  protected List<Advice> advicesFor(
+  protected List<Advice> adviceFor(
       Subject subject, List<Value<?>> usedValues, OssAdviceContext context) {
 
     return adviseForBooleanFeature(usedValues, HAS_SECURITY_POLICY, subject, context);

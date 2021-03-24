@@ -11,24 +11,18 @@ import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersions;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Comparator;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 /**
- * The scores check how old the latest available artifact version of the open-source project is.
- * <ul>
- *   <li>{@link OssFeatures#RELEASED_ARTIFACT_VERSIONS}</li>
- * </ul>
+ * The scores check how old the latest release artifact version of the open-source project is.
+ * The score uses {@link OssFeatures#RELEASED_ARTIFACT_VERSIONS} feature.
  */
-public class ArtifactAgeScore extends FeatureBasedScore {
+public class ArtifactLatestReleaseAgeScore extends FeatureBasedScore {
 
   /**
    * Initializes a new score.
    */
-  public ArtifactAgeScore() {
-    super("How old the released artifacts are",
-        OssFeatures.RELEASED_ARTIFACT_VERSIONS);
+  public ArtifactLatestReleaseAgeScore() {
+    super("How old the latest released artifact is", RELEASED_ARTIFACT_VERSIONS);
   }
 
   @Override
@@ -41,7 +35,8 @@ public class ArtifactAgeScore extends FeatureBasedScore {
       logger.info("No release information was found (unknown artifact versions value).");
       return scoreValue.makeUnknown().withMinConfidence();
     }
-    Collection<ArtifactVersion> sortedByReleaseDate = sortByReleaseDate(artifactVersions);
+    Collection<ArtifactVersion> sortedByReleaseDate =
+        ArtifactVersions.sortByReleaseDate(artifactVersions);
 
     if (sortedByReleaseDate.isEmpty()) {
       logger.info("No release information was found (empty artifact versions value).");
@@ -64,17 +59,5 @@ public class ArtifactAgeScore extends FeatureBasedScore {
 
     // otherwise, return the minimal score
     return scoreValue.set(Score.MIN);
-  }
-
-  private static final Comparator<ArtifactVersion> RELEASE_DATE_COMPARISON =
-      (a, b) -> b.getReleaseDate().compareTo(a.getReleaseDate());
-
-  private Collection<ArtifactVersion> sortByReleaseDate(Value<ArtifactVersions> artifactVersions) {
-    ArtifactVersions versions = artifactVersions.get();
-    SortedSet<ArtifactVersion> sortedArtifacts = new TreeSet<>(RELEASE_DATE_COMPARISON);
-    for (ArtifactVersion artifactVersion : versions) {
-      sortedArtifacts.add(artifactVersion);
-    }
-    return sortedArtifacts;
   }
 }

@@ -15,20 +15,20 @@ import java.util.Collection;
 import java.util.Optional;
 
 /**
- * The scores check how old the given artifact version is
- * and if it is the latest available artifact version.
+ * The scoring function checks if the given artifact version is up-to-date.
+ * The scoring functions uses the following features:
  * <ul>
  *   <li>{@link OssFeatures#RELEASED_ARTIFACT_VERSIONS}</li>
  *   <li>{@link OssFeatures#ARTIFACT_VERSION}</li>
  * </ul>
  */
-public class ArtifactVersionScore extends FeatureBasedScore {
+public class ArtifactVersionUpToDateScore extends FeatureBasedScore {
 
   /**
    * Initializes a new score.
    */
-  public ArtifactVersionScore() {
-    super("How old the given version is and is it the latest available artifact version",
+  public ArtifactVersionUpToDateScore() {
+    super("How up-to-date the given version is",
         RELEASED_ARTIFACT_VERSIONS,
         ARTIFACT_VERSION);
   }
@@ -44,9 +44,9 @@ public class ArtifactVersionScore extends FeatureBasedScore {
     }
 
     ArtifactVersions artifactVersions = artifactVersionsValue.get();
-    Collection<ArtifactVersion> sortedByReleaseDate = artifactVersions.getSortByReleaseDate();
+    Collection<ArtifactVersion> sortedByReleaseDate = artifactVersions.sortByReleaseDate();
     Optional<ArtifactVersion> mappedVersion =
-        artifactVersions.getArtifactVersion(versionValue.get());
+        artifactVersions.get(versionValue.get());
 
     if (mappedVersion.isPresent()) {
       ArtifactVersion latestVersion = sortedByReleaseDate.iterator().next();
@@ -73,8 +73,11 @@ public class ArtifactVersionScore extends FeatureBasedScore {
       return scoreValue;
     }
 
-
-    // otherwise, return the minimal score
-    return scoreValue.set(Score.MIN);
+    // otherwise, return minimal score
+    return scoreValue.withMinConfidence()
+        .explain(
+            String.format("Given version %s was not found in released artifact versions.",
+                versionValue.get()))
+        .makeUnknown();
   }
 }

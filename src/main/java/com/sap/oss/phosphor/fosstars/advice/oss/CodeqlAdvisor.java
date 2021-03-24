@@ -27,7 +27,7 @@ public class CodeqlAdvisor extends AbstractOssAdvisor {
   }
 
   @Override
-  protected List<Advice> advicesFor(
+  protected List<Advice> adviceFor(
       Subject subject, List<Value<?>> usedValues, OssAdviceContext context) {
 
     return Stream.of(USES_LGTM_CHECKS, USES_CODEQL_CHECKS, RUNS_CODEQL_SCANS)

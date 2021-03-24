@@ -302,7 +302,6 @@ elements:
               vulnerableVersions:
                 - versionStart: 1.0.0
                   versionEnd: 1.1.0
-                  cpe: "cpe:2.3:a:apache:tomcat:3.1:*:*:*:*:*:*:*"
     expectedScore:
       type: "DoubleInterval"
       from: 8.0
@@ -334,7 +333,6 @@ elements:
               vulnerableVersions:
                 - versionStart: 1.0.0
                   versionEnd: 2.1.0
-                  cpe: "cpe:2.3:a:apache:tomcat:3.1:*:*:*:*:*:*:*"
             - id: "VULN-124-2"
               cvss:
                 version: "V3"
@@ -347,7 +345,6 @@ elements:
               vulnerableVersions:
                 - versionStart: 1.1.0
                   versionEnd: 1.2.0
-                  cpe: "cpe:2.3:a:apache:tomcat:3.1:*:*:*:*:*:*:*"
     expectedScore:
       type: "DoubleInterval"
       from: 0.0
@@ -384,7 +381,6 @@ elements:
               vulnerableVersions:
                 - versionStart: 1.0.0
                   versionEnd: 2.1.0
-                  cpe: "cpe:2.3:a:apache:tomcat:3.1:*:*:*:*:*:*:*"
             - id: "VULN-124-2"
               cvss:
                 version: "V3"
@@ -397,7 +393,6 @@ elements:
               vulnerableVersions:
                 - versionStart: 1.1.0
                   versionEnd: 1.2.0
-                  cpe: "cpe:2.3:a:apache:tomcat:3.1:*:*:*:*:*:*:*"
     expectedScore:
       type: "DoubleInterval"
       from: 0.0
@@ -458,7 +453,6 @@ elements:
               vulnerableVersions:
                 - versionStart: 1.0.0
                   versionEnd: 1.1.0
-                  cpe: "cpe:2.3:a:apache:tomcat:3.1:*:*:*:*:*:*:*"
     expectedScore:
       type: "DoubleInterval"
       from: 5.0
@@ -525,7 +519,6 @@ elements:
               vulnerableVersions:
                 - versionStart: 1.0.0
                   versionEnd: 1.1.0
-                  cpe: "cpe:2.3:a:apache:tomcat:3.1:*:*:*:*:*:*:*"
     expectedScore:
       type: "DoubleInterval"
       from: 4.0

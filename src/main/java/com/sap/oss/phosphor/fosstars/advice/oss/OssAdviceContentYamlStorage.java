@@ -34,12 +34,8 @@ public class OssAdviceContentYamlStorage {
 
   static {
     try {
-      // FIXME (mibo): check if this could be done for all in OssFeatures defined
-      //                features instead of being based on a rating
       DEFAULT = OssAdviceContentYamlStorage.loadFromResource(
           RESOURCE_PATH, RatingRepository.INSTANCE.rating(OssArtifactSecurityRating.class));
-      //      DEFAULT = OssAdviceContentYamlStorage.loadFromResource(
-      //          RESOURCE_PATH, RatingRepository.INSTANCE.rating(OssSecurityRating.class));
     } catch (IOException e) {
       throw new UncheckedIOException("Could not load advice", e);
     }
@@ -67,8 +63,8 @@ public class OssAdviceContentYamlStorage {
    * @param context The context.
    * @return A list of advice.
    */
-  public List<AdviceContent> advicesFor(Feature<?> feature, AdviceContext context) {
-    return adviceContentYamlStorage.advicesFor(feature, context);
+  public List<AdviceContent> adviceFor(Feature<?> feature, AdviceContext context) {
+    return adviceContentYamlStorage.adviceFor(feature, context);
   }
 
   /**

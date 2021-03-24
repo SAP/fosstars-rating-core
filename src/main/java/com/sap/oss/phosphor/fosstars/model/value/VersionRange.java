@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Objects;
 
+/**
+ * The class holds a start and end version.
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class VersionRange {
 
@@ -19,25 +22,19 @@ public class VersionRange {
   private final String versionEnd;
 
   /**
-   * Related CPE.
-   */
-  private final String cpe;
-
-  /**
-   * Create a version range with start and end version and related CPE.
+   * Create a version range with start and end version.
    * Both versions are including.
+   * Start and end version may be null.
    *
    * @param versionStart start version (including)
    * @param versionEnd end version (including)
-   * @param cpe realted CPE
    */
   public VersionRange(
       @JsonProperty("versionStart") String versionStart,
-      @JsonProperty("versionEnd") String versionEnd,
-      @JsonProperty("cpe") String cpe) {
+      @JsonProperty("versionEnd") String versionEnd) {
+
     this.versionStart = versionStart;
     this.versionEnd = versionEnd;
-    this.cpe = cpe;
   }
 
   @JsonGetter("versionStart")
@@ -50,11 +47,6 @@ public class VersionRange {
     return versionEnd;
   }
 
-  @JsonGetter("cpe")
-  public String cpe() {
-    return cpe;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -64,12 +56,12 @@ public class VersionRange {
       return false;
     }
     VersionRange that = (VersionRange) o;
-    return Objects.equals(versionStart, that.versionStart) && Objects
-        .equals(versionEnd, that.versionEnd) && Objects.equals(cpe, that.cpe);
+    return Objects.equals(versionStart, that.versionStart)
+        && Objects.equals(versionEnd, that.versionEnd);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(versionStart, versionEnd, cpe);
+    return Objects.hash(versionStart, versionEnd);
   }
 }

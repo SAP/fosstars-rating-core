@@ -8,9 +8,10 @@ import com.sap.oss.phosphor.fosstars.model.score.WeightedCompositeScore;
 import com.sap.oss.phosphor.fosstars.model.score.example.ProjectActivityScoreExample;
 import com.sap.oss.phosphor.fosstars.model.score.example.SecurityScoreExample;
 import com.sap.oss.phosphor.fosstars.model.score.example.SecurityTestingScoreExample;
-import com.sap.oss.phosphor.fosstars.model.score.oss.ArtifactAgeScore;
+import com.sap.oss.phosphor.fosstars.model.score.oss.ArtifactLatestReleaseAgeScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.ArtifactReleaseHistoryScore;
-import com.sap.oss.phosphor.fosstars.model.score.oss.ArtifactVersionScore;
+import com.sap.oss.phosphor.fosstars.model.score.oss.ArtifactVersionUpToDateScore;
+import com.sap.oss.phosphor.fosstars.model.score.oss.ArtifactVersionVulnerabilityScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.CommunityCommitmentScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.DependabotScore;
@@ -72,8 +73,9 @@ import java.util.Set;
     @JsonSubTypes.Type(value = VulnerabilityDiscoveryAndSecurityTestingScore.class),
     @JsonSubTypes.Type(value = OssArtifactSecurityScore.class),
     @JsonSubTypes.Type(value = OssRulesOfPlayScore.class),
-    @JsonSubTypes.Type(value = ArtifactAgeScore.class),
-    @JsonSubTypes.Type(value = ArtifactVersionScore.class),
+    @JsonSubTypes.Type(value = ArtifactLatestReleaseAgeScore.class),
+    @JsonSubTypes.Type(value = ArtifactVersionUpToDateScore.class),
+    @JsonSubTypes.Type(value = ArtifactVersionVulnerabilityScore.class),
     @JsonSubTypes.Type(value = ArtifactReleaseHistoryScore.class)
 })
 public interface Score extends Feature<Double> {

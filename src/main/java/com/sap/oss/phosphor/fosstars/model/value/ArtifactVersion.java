@@ -13,25 +13,36 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
- * Contains version tag and release date for an artifact version.
+ * This class represents a specific version of an artifact that is produced by an open source
+ * project. For example, it may be a jar file.
  */
 public class ArtifactVersion {
 
   public static final ArtifactVersion EMPTY = new ArtifactVersion("", LocalDate.now());
 
+  /**
+   * Comparator for artifact versions release date.
+   */
+  private static final Comparator<ArtifactVersion> RELEASE_DATE_COMPARISON =
+      (a, b) -> b.getReleaseDate().compareTo(a.getReleaseDate());
+
   private final String version;
+
   @JsonDeserialize(using = LocalDateDeserializer.class)
   @JsonSerialize(using = LocalDateSerializer.class)
   private final LocalDate releaseDate;
 
   @JsonIgnore
-  private Optional<SemanticVersion> semanticVersion;
+  private final Optional<SemanticVersion> semanticVersion;
 
   /**
    * Initialize the ArtifactVersion based on version tag and release date.
@@ -47,15 +58,23 @@ public class ArtifactVersion {
 
     this.version = version;
     this.releaseDate = releaseDate;
-    initSemVer(version);
-  }
-  
-  private void initSemVer(String version) {
-    semanticVersion = SemanticVersion.parse(version);
+    this.semanticVersion = SemanticVersion.parse(version);
   }
 
-  public SemanticVersion getSemanticVersion() {
-    return semanticVersion.orElse(null);
+  /**
+   * Sort artifact versions by release date.
+   *
+   * @param versions the artifact versions
+   * @return sorted collection of ArtifactVersion
+   */
+  public static Collection<ArtifactVersion> sortByReleaseDate(Set<ArtifactVersion> versions) {
+    SortedSet<ArtifactVersion> sortedArtifacts = new TreeSet<>(RELEASE_DATE_COMPARISON);
+    sortedArtifacts.addAll(versions);
+    return sortedArtifacts;
+  }
+
+  public Optional<SemanticVersion> getSemanticVersion() {
+    return semanticVersion;
   }
 
   @JsonIgnore
@@ -79,37 +98,39 @@ public class ArtifactVersion {
         + '}';
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    ArtifactVersion compareVersion = (ArtifactVersion) o;
+    return version.equals(compareVersion.version) && releaseDate.equals(compareVersion.releaseDate);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(version, releaseDate);
+  }
+
   /**
    * LocalDate to Date deserializer used by Jackson Databind for JSON parsing.
    */
   private static class LocalDateDeserializer extends StdDeserializer<LocalDate> {
 
     private static final long serialVersionUID = 1L;
-    private static final Pattern TEST_DATE_PATTERN = Pattern.compile("TEST([+-])(\\d{1,4})d");
 
     protected LocalDateDeserializer() {
       super(LocalDate.class);
     }
 
     @Override
-    public LocalDate deserialize(JsonParser jp, DeserializationContext ctxt)
-        throws IOException {
-      // option to allow easier test cases
-      // we never expect that real dates matches the 'TEST_DATE_PATTERN'
+    public LocalDate deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       String text = jp.readValueAs(String.class);
-      Matcher matcher = TEST_DATE_PATTERN.matcher(text);
-      if (matcher.matches()) {
-        String sign = matcher.group(1);
-        int value = Integer.parseInt(matcher.group(2));
-        if ("+".equals(sign)) {
-          return LocalDate.now().plusDays(value);
-        } else {
-          return LocalDate.now().minusDays(value);
-        }
-      }
       return LocalDate.parse(text);
     }
-
   }
 
   /**

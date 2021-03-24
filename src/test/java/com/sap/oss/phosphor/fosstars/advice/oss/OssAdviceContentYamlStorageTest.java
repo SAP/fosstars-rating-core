@@ -14,13 +14,13 @@ public class OssAdviceContentYamlStorageTest {
 
   @Test
   public void testDefault() {
-    List<AdviceContent> advice = OssAdviceContentYamlStorage.DEFAULT.advicesFor(
+    List<AdviceContent> advice = OssAdviceContentYamlStorage.DEFAULT.adviceFor(
         USES_LGTM_CHECKS, EMPTY_OSS_CONTEXT);
     assertFalse(advice.isEmpty());
     assertFalse(advice.get(0).text().isEmpty());
     assertFalse(advice.get(0).links().isEmpty());
 
-    assertTrue(OssAdviceContentYamlStorage.DEFAULT.advicesFor(
+    assertTrue(OssAdviceContentYamlStorage.DEFAULT.adviceFor(
         NUMBER_OF_COLLABORATORS, EMPTY_OSS_CONTEXT).isEmpty());
   }
 }

@@ -1,43 +1,17 @@
 package com.sap.oss.phosphor.fosstars.model.score.oss;
 
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ARTIFACT_VERSION;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.FUZZED_IN_OSS_FUZZ;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_BUG_BOUNTY_PROGRAM;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_TEAM;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.IS_APACHE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.IS_ECLIPSE;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.LANGUAGES;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_COMMITS_LAST_THREE_MONTHS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_GITHUB_STARS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_WATCHERS_ON_GITHUB;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.OWASP_DEPENDENCY_CHECK_USAGE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.PACKAGE_MANAGERS;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.PROJECT_START_DATE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RELEASED_ARTIFACT_VERSIONS;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_CODEQL_SCANS;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SIGNS_ARTIFACTS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_ADDRESS_SANITIZER;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_CODEQL_CHECKS;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_DEPENDABOT;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_FIND_SEC_BUGS;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GITHUB_FOR_DEVELOPMENT;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM_CHECKS;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_MEMORY_SANITIZER;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_NOHTTP;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_OWASP_ESAPI;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_OWASP_JAVA_ENCODER;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_OWASP_JAVA_HTML_SANITIZER;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SIGNED_COMMITS;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_UNDEFINED_BEHAVIOR_SANITIZER;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
-import static com.sap.oss.phosphor.fosstars.model.value.Language.JAVA;
-import static com.sap.oss.phosphor.fosstars.model.value.OwaspDependencyCheckUsage.MANDATORY;
 import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.MAVEN;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -46,60 +20,49 @@ import static org.junit.Assert.fail;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.TestUtils;
-import com.sap.oss.phosphor.fosstars.advice.Advisor;
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.Value;
+import com.sap.oss.phosphor.fosstars.model.math.DoubleInterval;
 import com.sap.oss.phosphor.fosstars.model.other.Utils;
-import com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurityRating;
-import com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurityRating.Thresholds;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersions;
-import com.sap.oss.phosphor.fosstars.model.value.Languages;
-import com.sap.oss.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.oss.phosphor.fosstars.model.value.PackageManagers;
-import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerability;
-import com.sap.oss.phosphor.fosstars.tool.format.PrettyPrinter;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Set;
-import org.junit.Ignore;
 import org.junit.Test;
 
-public class OssArtifactVersionScoreTest {
+public class ArtifactVersionSecurityScoreTest {
 
   private static final double DELTA = 0.01;
-  private static final double CONFIDENCE_WO_CVE = 8.823529411764705;
+  private static final double CONFIDENCE_NO_VULNERABILITIES = 8.823529411764705;
 
   @Test
-  @Ignore
-  public void serializeAndDeserialize() throws IOException {
+  public void testSerializeAndDeserialize() throws IOException {
     ObjectMapper mapper = new ObjectMapper();
-    OssArtifactVersionScore score = new OssArtifactVersionScore();
+    ArtifactVersionSecurityScore score = new ArtifactVersionSecurityScore();
     byte[] bytes = mapper.writeValueAsBytes(score);
     assertNotNull(bytes);
     assertTrue(bytes.length > 0);
-    OssArtifactVersionScore clone = mapper.readValue(bytes, OssArtifactVersionScore.class);
+    ArtifactVersionSecurityScore clone =
+        mapper.readValue(bytes, ArtifactVersionSecurityScore.class);
     assertEquals(score, clone);
   }
 
   @Test
-  @Ignore
-  public void calculateForAllUnknown() {
-    Score score = new OssArtifactVersionScore();
+  public void testCalculateForAllUnknown() {
+    Score score = new ArtifactVersionSecurityScore();
     ScoreValue scoreValue = score.calculate(Utils.allUnknown(score.allFeatures()));
-    assertEquals(Score.MIN, scoreValue.get(), DELTA);
-    assertEquals(Confidence.MIN, scoreValue.confidence(), DELTA);
-    checkUsedValues(scoreValue);
+    assertTrue(scoreValue.isUnknown());
   }
 
   @Test
-  public void calculate() {
-    OssArtifactVersionScore score = new OssArtifactVersionScore();
+  public void testCalculate() {
+    ArtifactVersionSecurityScore score = new ArtifactVersionSecurityScore();
     Set<Value<?>> values = setOf(
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(false)),
         ARTIFACT_VERSION.value("1.2.0"),
@@ -110,15 +73,15 @@ public class OssArtifactVersionScoreTest {
         PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertEquals(7.294117647058823, scoreValue.get(), DELTA);
-    assertEquals(CONFIDENCE_WO_CVE, scoreValue.confidence(), DELTA);
+    assertTrue(DoubleInterval.closed(7,8).contains(scoreValue.get()));
+    assertEquals(CONFIDENCE_NO_VULNERABILITIES, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }
 
 
   @Test
-  public void calculateWithOldVersion() {
-    OssArtifactVersionScore score = new OssArtifactVersionScore();
+  public void testCalculateWithOldVersion() {
+    ArtifactVersionSecurityScore score = new ArtifactVersionSecurityScore();
     Set<Value<?>> values = setOf(
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(false)),
         ARTIFACT_VERSION.value("1.0.0"),
@@ -133,14 +96,14 @@ public class OssArtifactVersionScoreTest {
         PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertEquals(6.76470588235294, scoreValue.get(), DELTA);
-    assertEquals(CONFIDENCE_WO_CVE, scoreValue.confidence(), DELTA);
+    assertTrue(DoubleInterval.closed(6,7).contains(scoreValue.get()));
+    assertEquals(CONFIDENCE_NO_VULNERABILITIES, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }
 
   @Test
-  public void calculateWith20() {
-    OssArtifactVersionScore score = new OssArtifactVersionScore();
+  public void testCalculateWith20() {
+    ArtifactVersionSecurityScore score = new ArtifactVersionSecurityScore();
     Set<Value<?>> values = setOf(
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(true)),
         ARTIFACT_VERSION.value("1.2.0"),
@@ -154,14 +117,14 @@ public class OssArtifactVersionScoreTest {
         NUMBER_OF_WATCHERS_ON_GITHUB.value(5));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertEquals(7.5441176470588225, scoreValue.get(), DELTA);
-    assertEquals(CONFIDENCE_WO_CVE, scoreValue.confidence(), DELTA);
+    assertTrue(DoubleInterval.closed(7,8).contains(scoreValue.get()));
+    assertEquals(CONFIDENCE_NO_VULNERABILITIES, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }
 
   @Test
-  public void calculateWith20Used() {
-    OssArtifactVersionScore score = new OssArtifactVersionScore();
+  public void testCalculateWith20Used() {
+    ArtifactVersionSecurityScore score = new ArtifactVersionSecurityScore();
     Set<Value<?>> values = setOf(
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(true)),
         ARTIFACT_VERSION.value("2.0.0"),
@@ -175,14 +138,14 @@ public class OssArtifactVersionScoreTest {
         NUMBER_OF_WATCHERS_ON_GITHUB.value(5));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertEquals(7.720588235294117, scoreValue.get(), DELTA);
-    assertEquals(CONFIDENCE_WO_CVE, scoreValue.confidence(), DELTA);
+    assertTrue(DoubleInterval.closed(7,8).contains(scoreValue.get()));
+    assertEquals(CONFIDENCE_NO_VULNERABILITIES, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }
 
   @Test
-  public void calculateWith20UsedAndHighVulnerability() {
-    OssArtifactVersionScore score = new OssArtifactVersionScore();
+  public void testCalculateWith20UsedAndHighVulnerability() {
+    ArtifactVersionSecurityScore score = new ArtifactVersionSecurityScore();
     Vulnerability vulnerability = TestUtils.createBasicVulnerability(10.0, "2.0.0", "2.0.0");
     Set<Value<?>> values = setOf(
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(true)),
@@ -197,14 +160,14 @@ public class OssArtifactVersionScoreTest {
         NUMBER_OF_WATCHERS_ON_GITHUB.value(5));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertEquals(0.0, scoreValue.get(), DELTA);
+    assertEquals(Score.MIN, scoreValue.get(), DELTA);
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }
 
   @Test
-  public void calculateWith20UsedAndLowVulnerability() {
-    OssArtifactVersionScore score = new OssArtifactVersionScore();
+  public void testCalculateWith20UsedAndLowVulnerability() {
+    ArtifactVersionSecurityScore score = new ArtifactVersionSecurityScore();
     Vulnerability vulnerability = TestUtils.createBasicVulnerability(1.0, "2.0.0", "2.0.0");
     Set<Value<?>> values = setOf(
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(true)),
@@ -219,14 +182,14 @@ public class OssArtifactVersionScoreTest {
         NUMBER_OF_WATCHERS_ON_GITHUB.value(5));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertEquals(7.720588235294117, scoreValue.get(), DELTA);
+    assertTrue(DoubleInterval.closed(7,8).contains(scoreValue.get()));
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }
 
   @Test
-  public void calculateWith20UsedAndOldVulnerability() {
-    OssArtifactVersionScore score = new OssArtifactVersionScore();
+  public void testCalculateWith20UsedAndOldVulnerability() {
+    ArtifactVersionSecurityScore score = new ArtifactVersionSecurityScore();
     Vulnerability vulnerability = TestUtils.createBasicVulnerability(10.0, "1.0.0", "1.0.2");
     Set<Value<?>> values = setOf(
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(true)),
@@ -241,7 +204,7 @@ public class OssArtifactVersionScoreTest {
         NUMBER_OF_WATCHERS_ON_GITHUB.value(5));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertEquals(8.897058823529411, scoreValue.get(), DELTA);
+    assertTrue(DoubleInterval.closed(8,9).contains(scoreValue.get()));
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }
@@ -268,6 +231,7 @@ public class OssArtifactVersionScoreTest {
       for (Score subScore : scoreValue.score().subScores()) {
         if (value.feature().getClass() == subScore.getClass()) {
           found = true;
+          break;
         }
       }
       if (!found) {

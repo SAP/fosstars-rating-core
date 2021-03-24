@@ -24,18 +24,17 @@ import java.util.stream.Collectors;
  */
 public class ArtifactVersionAdvisor extends AbstractOssAdvisor {
 
-
   /**
    * Create a new advisor.
    *
-   * @param contextFactory A factory that provides contexts for advices.
+   * @param contextFactory A factory that provides contexts for advice.
    */
   public ArtifactVersionAdvisor(OssAdviceContextFactory contextFactory) {
     super(OssAdviceContentYamlStorage.DEFAULT, contextFactory);
   }
 
   @Override
-  protected List<Advice> advicesFor(
+  protected List<Advice> adviceFor(
       Subject subject, List<Value<?>> usedValues, OssAdviceContext context) {
 
     Optional<Value<String>> versionValue = findValue(usedValues, ARTIFACT_VERSION);
@@ -43,12 +42,13 @@ public class ArtifactVersionAdvisor extends AbstractOssAdvisor {
         RELEASED_ARTIFACT_VERSIONS);
 
     if (isAllVersionInformationAvailable(versionValue, releasedVersionsValue)) {
+      // isAllVersionInformationAvailable() checks that both values are present and known
       ArtifactVersion latestVersion = getLatestVersion(releasedVersionsValue.get());
       String usedVersion = versionValue.get().get();
 
       if (!latestVersion.getVersion().equals(usedVersion)) {
         List<AdviceContent> advice =
-            adviceStorage.advicesFor(versionValue.get().feature(),
+            adviceStorage.adviceFor(versionValue.get().feature(),
                 getAdviceContext(usedVersion, latestVersion.getVersion()));
 
         return advice.stream()
@@ -64,21 +64,19 @@ public class ArtifactVersionAdvisor extends AbstractOssAdvisor {
       Optional<Value<String>> versionValue,
       Optional<Value<ArtifactVersions>> releasedVersionsValue) {
 
-    if (versionValue.isPresent() && releasedVersionsValue.isPresent()) {
-      if (versionValue.get().isUnknown() || versionValue.get().get().isEmpty()) {
-        return false;
-      }
-      if (releasedVersionsValue.get().isUnknown() || releasedVersionsValue.get().get().empty()) {
-        return false;
-      }
-      return true;
+    if (!versionValue.isPresent() || !releasedVersionsValue.isPresent()) {
+      return false;
     }
-    return false;
+
+    Value<String> version = versionValue.get();
+    Value<ArtifactVersions> releasedVersions = releasedVersionsValue.get();
+    return !version.isUnknown() && !releasedVersions.isUnknown()
+        && !version.get().isEmpty() && !releasedVersions.get().empty();
   }
 
   private ArtifactVersion getLatestVersion(Value<ArtifactVersions> releasedVersionsValue) {
     Collection<ArtifactVersion> releasedVersions =
-        releasedVersionsValue.get().getSortByReleaseDate();
+        releasedVersionsValue.get().sortByReleaseDate();
     if (releasedVersions.isEmpty()) {
       return ArtifactVersion.EMPTY;
     }

@@ -26,9 +26,15 @@ public class OssFeatures {
 
   }
 
+  /**
+   * Holds a list of artifact versions released by an open source project.
+   */
   public static final Feature<ArtifactVersions> RELEASED_ARTIFACT_VERSIONS
       = new ArtifactVersionsFeature("Released artifact versions");
 
+  /**
+   * Holds a version of an artifact released by an open source project.
+   */
   public static final Feature<String> ARTIFACT_VERSION
       = new ArtifactVersionFeature("Artifact version");
 

@@ -143,7 +143,7 @@ public class NVD {
       LOGGER.info("Parse NVD data...");
       parse();
     }
-    LOGGER.info("{} CVE entries available.", nvdEntries.size());
+    LOGGER.info("Loaded {} CVE entries from NVD", nvdEntries.size());
   }
 
   /**

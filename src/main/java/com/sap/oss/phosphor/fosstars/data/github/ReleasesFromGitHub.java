@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.kohsuke.github.GHOrganization;
 import org.kohsuke.github.GHRelease;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GHTag;
@@ -44,17 +43,14 @@ public class ReleasesFromGitHub extends CachedSingleFeatureGitHubDataProvider<Ar
   protected Value<ArtifactVersions> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Fetching GitHub release information ...");
 
-    String orgName = project.organization().name();
-    logger.info("Get info from '{}' org and project '{}'...", orgName, project.name());
-    GHOrganization org = fetcher.github().getOrganization(orgName);
-    GHRepository repo = org.getRepository(project.name());
+    GHRepository repo = fetcher.repositoryFor(project);
 
     List<GHRelease> releases = repo.listReleases().toList();
     Set<ArtifactVersion> artifactVersions;
     if (releases.isEmpty()) {
-      logger.info("No release information found. Extract version info from tags.");
+      logger.info("No release information found. Let's try to extract version info from tags ...");
       artifactVersions = repo.listTags().toList().stream()
-          .filter(tag -> SemanticVersion.isSemVer(tag.getName()))
+          .filter(tag -> SemanticVersion.isSemanticVersion(tag.getName()))
           .map(this::createArtifactVersion)
           .filter(Objects::nonNull)
           .collect(Collectors.toSet());
@@ -72,6 +68,7 @@ public class ReleasesFromGitHub extends CachedSingleFeatureGitHubDataProvider<Ar
       return new ArtifactVersion(tag.getName(),
           convertToLocalDate(tag.getCommit().getCommitDate()));
     } catch (IOException e) {
+      logger.warn("Could not create artifact version!", e);
       return null;
     }
   }

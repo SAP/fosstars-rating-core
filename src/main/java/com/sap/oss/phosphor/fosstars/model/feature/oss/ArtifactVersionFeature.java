@@ -7,7 +7,7 @@ import com.sap.oss.phosphor.fosstars.model.feature.AbstractFeature;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersionValue;
 
 /**
- * This feature contains the version of the artifact for which the security rating is calculated.
+ * This feature holds a version of an artifact for which the security rating is calculated.
  */
 public class ArtifactVersionFeature extends AbstractFeature<String> {
 

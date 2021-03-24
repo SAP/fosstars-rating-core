@@ -3,9 +3,9 @@
 **Rating label**: %RATING_LABEL% (%SCORE_VALUE%, max score is %MAX_SCORE%)
 **Confidence**: %CONFIDENCE_LABEL% (%CONFIDENCE_VALUE%, max confidence value is %MAX_CONFIDENCE%)
 
-## Advices
+## Advice
 
-%ADVICES%
+%ADVICE%
 
 ## %MAIN_SCORE_NAME%
 

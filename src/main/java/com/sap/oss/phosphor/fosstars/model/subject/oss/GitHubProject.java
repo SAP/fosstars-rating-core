@@ -146,7 +146,7 @@ public class GitHubProject extends AbstractSubject implements OpenSourceProject 
     URL url = new URL(urlString);
     if (!url.getHost().equals("github.com")) {
       throw new IllegalArgumentException(
-          String.format("The URL has not github.com as hostname: %s", urlString));
+          String.format("The host name is not github.com: %s", urlString));
     }
     String[] parts = url.getPath().split("/");
     String name = parts[2];

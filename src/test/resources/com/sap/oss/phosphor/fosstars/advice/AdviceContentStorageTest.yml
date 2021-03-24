@@ -19,3 +19,6 @@ Static code analysis status (example):
         url: https://test/5
       - name: link6
         url: https://test/6
+  - advice: Advice with empty links
+    links: []
+  - advice: Advice with no links

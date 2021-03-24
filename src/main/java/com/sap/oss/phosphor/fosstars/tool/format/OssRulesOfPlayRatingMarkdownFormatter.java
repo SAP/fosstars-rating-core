@@ -39,7 +39,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
   }
 
   /**
-   * Print a rating value and advices.
+   * Print a rating value and advice.
    *
    * @param ratingValue The rating value.
    * @return A string to be displayed.

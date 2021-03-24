@@ -11,8 +11,9 @@ import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import java.util.Objects;
 
 /**
- * This is a security rating for artifacts of an open-source project
- * that is based on open-source artifact and project specific security score.
+ * This is a security rating for artifacts of an open-source project.
+ * The rating is based on {@link
+ * com.sap.oss.phosphor.fosstars.model.score.oss.OssArtifactSecurityScore}.
  */
 public class OssArtifactSecurityRating extends AbstractRating {
 
@@ -30,16 +31,17 @@ public class OssArtifactSecurityRating extends AbstractRating {
   private final Thresholds thresholds;
 
   /**
-   * Initializes a maintenance rating with defaults.
+   * Initializes a new rating.
    */
   public OssArtifactSecurityRating() {
     this(new OssArtifactSecurityScore(), Thresholds.DEFAULT);
   }
 
   /**
-   * Initializes a maintenance rating based on a maintenance score for open-source projects.
+   * Initializes a new rating.
    *
-   * @param score The maintenance score.
+   * @param score An instance of
+   *              {@link com.sap.oss.phosphor.fosstars.model.score.oss.OssArtifactSecurityScore}.
    * @param thresholds Thresholds for labels.
    */
   @JsonCreator
@@ -47,7 +49,7 @@ public class OssArtifactSecurityRating extends AbstractRating {
       @JsonProperty("score") OssArtifactSecurityScore score,
       @JsonProperty("thresholds") Thresholds thresholds) {
 
-    super("maintenance rating for open-source projects", score);
+    super("Security rating for artifact versions of an open-source project", score);
     Objects.requireNonNull(thresholds, "Oh no! Thresholds is null!");
     this.thresholds = thresholds;
   }
