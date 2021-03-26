@@ -4,10 +4,10 @@
 
 |          | # or projects              |  % or projects               |
 | :------- | -------------------------: | ---------------------------: |
-| Total    |       285 |                         100% |
-| Fail     |   271 |   95.1% |
-| Pass     |   9 |   3.2% |
-| Unclear  |  5 |  1.8% |
+| Total    |       290 |                         100% |
+| Fail     |   271 |   93.4% |
+| Pass     |   9 |   3.1% |
+| Unclear  |  10 |  3.4% |
 
 ## Projects
 
@@ -133,7 +133,7 @@
 | [SAP/fiori-for-ios-workshop](https://github.com/SAP/fiori-for-ios-workshop) | [FAIL](SAP/fiori-for-ios-workshop.md) | 2 violated rules |
 | [SAP/commerce-gradle-plugin](https://github.com/SAP/commerce-gradle-plugin) | [FAIL](SAP/commerce-gradle-plugin.md) | 1 violated rule |
 | [SAP/macOS-enterprise-privileges](https://github.com/SAP/macOS-enterprise-privileges) | [FAIL](SAP/macOS-enterprise-privileges.md) | 2 violated rules |
-| [SAP/luigi](https://github.com/SAP/luigi) | [FAIL](SAP/luigi.md) | 1 violated rule |
+| [SAP/luigi](https://github.com/SAP/luigi) | [FAIL](SAP/luigi.md) | 2 violated rules |
 | [SAP/cloud-mta-build-tool](https://github.com/SAP/cloud-mta-build-tool) | [FAIL](SAP/cloud-mta-build-tool.md) | 2 violated rules |
 | [SAP/pair-distribution-app](https://github.com/SAP/pair-distribution-app) | [FAIL](SAP/pair-distribution-app.md) | 1 violated rule |
 | [SAP/quality-continuous-traceability-monitor](https://github.com/SAP/quality-continuous-traceability-monitor) | [FAIL](SAP/quality-continuous-traceability-monitor.md) | 2 violated rules |
@@ -169,7 +169,7 @@
 | [SAP/ewm-cloud-robotics-s4](https://github.com/SAP/ewm-cloud-robotics-s4) | [FAIL](SAP/ewm-cloud-robotics-s4.md) | 2 violated rules |
 | [SAP/scimono](https://github.com/SAP/scimono) | [FAIL](SAP/scimono.md) | 1 violated rule |
 | [SAP/go-ase](https://github.com/SAP/go-ase) | [FAIL](SAP/go-ase.md) | 1 violated rule |
-| [SAP/openui5-fhir](https://github.com/SAP/openui5-fhir) | [FAIL](SAP/openui5-fhir.md) | 1 violated rule |
+| [SAP/openui5-fhir](https://github.com/SAP/openui5-fhir) | [FAIL](SAP/openui5-fhir.md) | 2 violated rules |
 | [SAP/ui5-typescript](https://github.com/SAP/ui5-typescript) | [FAIL](SAP/ui5-typescript.md) | 2 violated rules |
 | [SAP/ui5-webcomponents-react](https://github.com/SAP/ui5-webcomponents-react) | [FAIL](SAP/ui5-webcomponents-react.md) | 1 violated rule |
 | [SAP/styleguides](https://github.com/SAP/styleguides) | [FAIL](SAP/styleguides.md) | 2 violated rules |
@@ -197,7 +197,7 @@
 | [SAP/spartacus-assets-builds](https://github.com/SAP/spartacus-assets-builds) | [FAIL](SAP/spartacus-assets-builds.md) | 2 violated rules |
 | [SAP/sap-iot-sdk-nodejs](https://github.com/SAP/sap-iot-sdk-nodejs) | [FAIL](SAP/sap-iot-sdk-nodejs.md) | 2 violated rules |
 | [SAP/ui5-showcases](https://github.com/SAP/ui5-showcases) | [FAIL](SAP/ui5-showcases.md) | 1 violated rule |
-| [SAP/odfuzz](https://github.com/SAP/odfuzz) | [FAIL](SAP/odfuzz.md) | 2 violated rules |
+| [SAP/odfuzz](https://github.com/SAP/odfuzz) | [FAIL](SAP/odfuzz.md) | 3 violated rules |
 | [SAP/apibusinesshub-integration-recipes](https://github.com/SAP/apibusinesshub-integration-recipes) | [FAIL](SAP/apibusinesshub-integration-recipes.md) | 3 violated rules |
 | [SAP/cloud-sdk-cli](https://github.com/SAP/cloud-sdk-cli) | [FAIL](SAP/cloud-sdk-cli.md) | 2 violated rules |
 | [SAP/python-metacli](https://github.com/SAP/python-metacli) | [FAIL](SAP/python-metacli.md) | 2 violated rules |
@@ -238,7 +238,7 @@
 | [SAP/gigya-nSS](https://github.com/SAP/gigya-nSS) | [FAIL](SAP/gigya-nSS.md) | 1 violated rule |
 | [SAP/async-profiler](https://github.com/SAP/async-profiler) | [FAIL](SAP/async-profiler.md) | 2 violated rules |
 | [SAP/ytt-lint](https://github.com/SAP/ytt-lint) | [FAIL](SAP/ytt-lint.md) | 2 violated rules |
-| [SAP/contextual-ai](https://github.com/SAP/contextual-ai) | [FAIL](SAP/contextual-ai.md) | 2 violated rules |
+| [SAP/contextual-ai](https://github.com/SAP/contextual-ai) | [FAIL](SAP/contextual-ai.md) | 3 violated rules |
 | [SAP/software-documentation-data-set-for-machine-translation](https://github.com/SAP/software-documentation-data-set-for-machine-translation) | [FAIL](SAP/software-documentation-data-set-for-machine-translation.md) | 2 violated rules |
 | [SAP/spartacus-tua](https://github.com/SAP/spartacus-tua) | [FAIL](SAP/spartacus-tua.md) | 1 violated rule |
 | [SAP/cloud-security-client-go](https://github.com/SAP/cloud-security-client-go) | [FAIL](SAP/cloud-security-client-go.md) | 1 violated rule |
@@ -298,3 +298,8 @@
 | [SAP/abap-file-formats](https://github.com/SAP/abap-file-formats) | [UNCLEAR](SAP/abap-file-formats.md) | No violated rules |
 | [SAP/alm-plug-in-for-grafana](https://github.com/SAP/alm-plug-in-for-grafana) | [UNCLEAR](SAP/alm-plug-in-for-grafana.md) | No violated rules |
 | [SAP/digital-aged-care-management](https://github.com/SAP/digital-aged-care-management) | [UNCLEAR](SAP/digital-aged-care-management.md) | No violated rules |
+| [SAP/cloud-sdk-ios](https://github.com/SAP/cloud-sdk-ios) | [UNCLEAR](SAP/cloud-sdk-ios.md) | No violated rules |
+| [SAP/cloud-sdk-ios-common](https://github.com/SAP/cloud-sdk-ios-common) | [UNCLEAR](SAP/cloud-sdk-ios-common.md) | No violated rules |
+| [SAP/cloud-sdk-ios-foundation](https://github.com/SAP/cloud-sdk-ios-foundation) | [UNCLEAR](SAP/cloud-sdk-ios-foundation.md) | No violated rules |
+| [SAP/cloud-sdk-ios-fioriuikit](https://github.com/SAP/cloud-sdk-ios-fioriuikit) | [UNCLEAR](SAP/cloud-sdk-ios-fioriuikit.md) | No violated rules |
+| [SAP/cloud-sdk-ios-cai](https://github.com/SAP/cloud-sdk-ios-cai) | [UNCLEAR](SAP/cloud-sdk-ios-cai.md) | No violated rules |
