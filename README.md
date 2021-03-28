@@ -5,9 +5,9 @@
 |          | # or projects              |  % or projects               |
 | :------- | -------------------------: | ---------------------------: |
 | Total    |       290 |                         100% |
-| Fail     |   271 |   93.4% |
+| Fail     |   270 |   93.1% |
 | Pass     |   9 |   3.1% |
-| Unclear  |  10 |  3.4% |
+| Unclear  |  11 |  3.8% |
 
 ## Projects
 
@@ -246,7 +246,6 @@
 | [SAP/gigya-flutter-plugin](https://github.com/SAP/gigya-flutter-plugin) | [FAIL](SAP/gigya-flutter-plugin.md) | 1 violated rule |
 | [SAP/bayesian-network-builder](https://github.com/SAP/bayesian-network-builder) | [FAIL](SAP/bayesian-network-builder.md) | 1 violated rule |
 | [SAP/node-socketio-stream](https://github.com/SAP/node-socketio-stream) | [FAIL](SAP/node-socketio-stream.md) | 1 violated rule |
-| [SAP/cloud-sdk-ios-fiori-snapshot-references](https://github.com/SAP/cloud-sdk-ios-fiori-snapshot-references) | [FAIL](SAP/cloud-sdk-ios-fiori-snapshot-references.md) | 1 violated rule |
 | [SAP/project-odense](https://github.com/SAP/project-odense) | [FAIL](SAP/project-odense.md) | 1 violated rule |
 | [SAP/code-snippet](https://github.com/SAP/code-snippet) | [FAIL](SAP/code-snippet.md) | 2 violated rules |
 | [SAP/i40-aas-type2](https://github.com/SAP/i40-aas-type2) | [FAIL](SAP/i40-aas-type2.md) | 1 violated rule |
@@ -294,6 +293,7 @@
 | [SAP/data-attribute-recommendation-python-sdk](https://github.com/SAP/data-attribute-recommendation-python-sdk) | [PASS](SAP/data-attribute-recommendation-python-sdk.md) | No violated rules |
 | [SAP/fosstars-rating-core-action](https://github.com/SAP/fosstars-rating-core-action) | [PASS](SAP/fosstars-rating-core-action.md) | No violated rules |
 | [SAP/check-sap-cloud-readiness](https://github.com/SAP/check-sap-cloud-readiness) | [UNCLEAR](SAP/check-sap-cloud-readiness.md) | No violated rules |
+| [SAP/cloud-sdk-ios-fiori-snapshot-references](https://github.com/SAP/cloud-sdk-ios-fiori-snapshot-references) | [UNCLEAR](SAP/cloud-sdk-ios-fiori-snapshot-references.md) | No violated rules |
 | [SAP/test-repo](https://github.com/SAP/test-repo) | [UNCLEAR](SAP/test-repo.md) | No violated rules |
 | [SAP/abap-file-formats](https://github.com/SAP/abap-file-formats) | [UNCLEAR](SAP/abap-file-formats.md) | No violated rules |
 | [SAP/alm-plug-in-for-grafana](https://github.com/SAP/alm-plug-in-for-grafana) | [UNCLEAR](SAP/alm-plug-in-for-grafana.md) | No violated rules |
