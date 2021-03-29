@@ -29,8 +29,6 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * The class prints a rating value
  * for {@link com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurityRating} in Markdown.
- * // TODO: check as with copy/paste this case has a lot of duplicates
- *          with the OssSecurityRatingMarkdownFormatter
  */
 public class OssArtifactSecurityRatingMarkdownFormatter extends CommonFormatter {
 

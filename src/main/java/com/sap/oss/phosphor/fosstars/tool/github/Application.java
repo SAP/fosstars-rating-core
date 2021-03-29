@@ -17,6 +17,7 @@ import com.sap.oss.phosphor.fosstars.data.UserCallback;
 import com.sap.oss.phosphor.fosstars.data.github.GitHubDataFetcher;
 import com.sap.oss.phosphor.fosstars.model.Rating;
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
+import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating;
@@ -517,8 +518,13 @@ public class Application {
           String projectUrl = String.format("https://github.com/%s/%s",
               parsedPurl.getNamespace(), parsedPurl.getName());
           LOGGER.info("Found github PURL and start with {}", projectUrl);
-          ValueSet values = new ValueHashSet(VERSION.value(parsedPurl.getVersion()));
-          processUrl(projectUrl, values);
+          Value<String> versionValue;
+          if (parsedPurl.getVersion() == null) {
+            versionValue = VERSION.unknown();
+          } else {
+            versionValue = VERSION.value(parsedPurl.getVersion());
+          }
+          processUrl(projectUrl, new ValueHashSet(versionValue));
           break;
         case PURL_TYPE_MAVEN:
           String gav = String.format("%s:%s%s",

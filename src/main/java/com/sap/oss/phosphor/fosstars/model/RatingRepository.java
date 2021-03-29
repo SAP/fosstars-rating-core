@@ -6,6 +6,8 @@ import com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating.Thresholds;
+import com.sap.oss.phosphor.fosstars.model.score.oss.ArtifactVersionSecurityScore;
+import com.sap.oss.phosphor.fosstars.model.score.oss.OssArtifactSecurityScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.OssSecurityScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.ProjectSecurityTestingScore;
 import com.sap.oss.phosphor.fosstars.model.weight.ScoreWeights;
@@ -123,8 +125,25 @@ public class RatingRepository {
    *
    * @return An instance of {@link OssArtifactSecurityRating}.
    */
-  private static OssArtifactSecurityRating ossArtifactSecurityRating() {
-    return new OssArtifactSecurityRating();
+  private static OssArtifactSecurityRating ossArtifactSecurityRating() throws IOException {
+    OssArtifactSecurityScore ossArtifactSecurityScore = new OssArtifactSecurityScore();
+
+    ArtifactVersionSecurityScore artifactVersionSecurityScore =
+        ossArtifactSecurityScore.artifactVersionSecurityScore();
+    artifactVersionSecurityScore.weights().update(
+        loadScoreWeights("com/sap/oss/phosphor/fosstars/model/score/oss/"
+            + "OssArtifactSecurityScoreWeights.json"));
+
+    OssSecurityScore ossSecurityScore = ossArtifactSecurityScore.ossSecurityScore();
+    ossSecurityScore.weights().update(
+        loadScoreWeights("com/sap/oss/phosphor/fosstars/model/score/oss/"
+            + "OssSecurityScoreWeights.json"));
+
+    OssArtifactSecurityRating.Thresholds thresholds = load(
+        "com/sap/oss/phosphor/fosstars/model/rating/oss/"
+            + "OssArtifactSecurityRatingThresholds.json",
+        OssArtifactSecurityRating.Thresholds.class);
+    return new OssArtifactSecurityRating(ossArtifactSecurityScore, thresholds);
   }
 
   /**

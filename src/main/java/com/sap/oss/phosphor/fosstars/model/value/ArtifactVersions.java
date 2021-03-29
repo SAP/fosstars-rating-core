@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 /**
@@ -52,7 +53,8 @@ public class ArtifactVersions implements Iterable<ArtifactVersion> {
   @JsonCreator
   public ArtifactVersions(@JsonProperty("elements") Set<ArtifactVersion> versions) {
     Objects.requireNonNull(versions, "versions can't be null!");
-    this.elements = new HashSet<>(versions);
+    this.elements = new TreeSet<>(ArtifactVersion.RELEASE_DATE_COMPARISON);
+    this.elements.addAll(versions);
   }
 
   /**
@@ -107,7 +109,7 @@ public class ArtifactVersions implements Iterable<ArtifactVersion> {
    * @return versions sorted by date
    */
   public Collection<ArtifactVersion> sortByReleaseDate() {
-    return ArtifactVersion.sortByReleaseDate(elements);
+    return Collections.unmodifiableCollection(elements);
   }
 
   /**
@@ -122,7 +124,7 @@ public class ArtifactVersions implements Iterable<ArtifactVersion> {
     if (artifactVersions.isUnknown()) {
       return Collections.emptyList();
     }
-    return ArtifactVersion.sortByReleaseDate(artifactVersions.get().elements);
+    return artifactVersions.get().sortByReleaseDate();
   }
 
   /**

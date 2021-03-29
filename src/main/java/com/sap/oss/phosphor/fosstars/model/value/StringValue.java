@@ -28,18 +28,13 @@ public class StringValue extends AbstractValue<String> {
       @JsonProperty("content") String content) {
 
     super(feature);
-    this.content = content;
+    this.content = Objects.requireNonNull(content, "Content can't be null!");
   }
 
   @Override
   @JsonGetter("content")
   public String get() {
     return content;
-  }
-
-  @Override
-  public boolean isUnknown() {
-    return content == null || content.isEmpty();
   }
 
   @Override

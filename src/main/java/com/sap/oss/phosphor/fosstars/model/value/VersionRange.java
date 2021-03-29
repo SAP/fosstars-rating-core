@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * The class holds a start and end version.
@@ -38,13 +39,13 @@ public class VersionRange {
   }
 
   @JsonGetter("versionStart")
-  public String versionStart() {
-    return versionStart;
+  public Optional<String> versionStart() {
+    return Optional.ofNullable(versionStart);
   }
 
   @JsonGetter("versionEnd")
-  public String versionEnd() {
-    return versionEnd;
+  public Optional<String> versionEnd() {
+    return Optional.ofNullable(versionEnd);
   }
 
   @Override

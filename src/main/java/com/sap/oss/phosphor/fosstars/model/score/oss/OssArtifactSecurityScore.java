@@ -3,6 +3,7 @@ package com.sap.oss.phosphor.fosstars.model.score.oss;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Score;
@@ -11,11 +12,12 @@ import com.sap.oss.phosphor.fosstars.model.score.AbstractScore;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Set;
 
 /**
- * <p>This is a security score for open-source artifacts.
- * The score is based on the following sub-scores:</p>
+ * <p>This is a security scoring function for open-source artifact versions.
+ * The scoring function is based on the following sub-scores:</p>
  * <ul>
  *   <li>{@link ArtifactVersionSecurityScore}</li>
  *   <li>{@link OssSecurityScore}</li>
@@ -27,10 +29,10 @@ public class OssArtifactSecurityScore extends AbstractScore {
    * A description of the score.
    */
   private static final String DESCRIPTION
-      = "The security score for open-source artifacts evaluates how the artifact score of the given"
-      + "version is and merge it with the security score of the project the artifact belongs. "
-      + "If the artifact score for the given version is low, "
-      + "the security score for open-source artifacts will be very low.";
+      = "The security score for open source artifact versions shows how safe it is to use a "
+      + "specific version of an open source component. Besides information about the artifact "
+      + "version, the scoring functions takes into account the security score of the project "
+      + "to which the artifact belongs to.";
 
 
   private final ArtifactVersionSecurityScore artifactVersionSecurityScore;
@@ -55,8 +57,10 @@ public class OssArtifactSecurityScore extends AbstractScore {
       @JsonProperty("ossSecurityScore") OssSecurityScore ossSecurityScore) {
 
     super("Security score for an artifact of an open-source project", DESCRIPTION);
-    this.artifactVersionSecurityScore = artifactVersionSecurityScore;
-    this.ossSecurityScore = ossSecurityScore;
+    this.artifactVersionSecurityScore = Objects.requireNonNull(
+        artifactVersionSecurityScore, "Hey! ArtifactVersionSecurityScore can't be null!");
+    this.ossSecurityScore = Objects.requireNonNull(
+        ossSecurityScore, "Hey! OssSecurityScore can't be null!");
   }
 
   @Override
@@ -71,23 +75,44 @@ public class OssArtifactSecurityScore extends AbstractScore {
 
   @Override
   public ScoreValue calculate(Value<?>... values) {
-    ScoreValue artifactVersionScore = calculateIfNecessary(
+    ScoreValue artifactVersionSecurityScore = calculateIfNecessary(
         new ArtifactVersionSecurityScore(), new ValueHashSet(values));
     ScoreValue projectSecurityScore = calculateIfNecessary(
         new OssSecurityScore(), new ValueHashSet(values));
 
-    ScoreValue scoreValue = scoreValue(Score.MIN, artifactVersionScore, projectSecurityScore);
+    ScoreValue scoreValue =
+        scoreValue(Score.MIN, artifactVersionSecurityScore, projectSecurityScore);
 
-    if (artifactVersionScore.isUnknown()) {
+    if (artifactVersionSecurityScore.isUnknown()) {
       return scoreValue.withMinConfidence().makeUnknown();
     }
 
     final double updatedScore;
-    if (artifactVersionScore.get() >= 9.0) {
-      updatedScore = 0.11 * artifactVersionScore.get() * projectSecurityScore.get();
+    if (artifactVersionSecurityScore.get() >= 9.0) {
+      updatedScore = 0.11 * artifactVersionSecurityScore.get() * projectSecurityScore.get();
     } else {
-      updatedScore = 0.1 * (1 + artifactVersionScore.get()) * projectSecurityScore.get();
+      updatedScore = 0.1 * (0.9 + artifactVersionSecurityScore.get()) * projectSecurityScore.get();
     }
-    return scoreValue.set(updatedScore);
+    return scoreValue.set(Math.min(Score.MAX, updatedScore));
+  }
+
+  /**
+   * Get the ArtifactVersionSecurityScore used as sub-score.
+   *
+   * @return the ArtifactVersionSecurityScore used as sub-score
+   */
+  @JsonGetter("artifactVersionSecurityScore")
+  public ArtifactVersionSecurityScore artifactVersionSecurityScore() {
+    return artifactVersionSecurityScore;
+  }
+
+  /**
+   * Get the OssSecurityScore used as sub-score.
+   *
+   * @return the OssSecurityScore used as sub-score
+   */
+  @JsonGetter("ossSecurityScore")
+  public OssSecurityScore ossSecurityScore() {
+    return ossSecurityScore;
   }
 }

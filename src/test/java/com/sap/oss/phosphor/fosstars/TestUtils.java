@@ -46,6 +46,8 @@ import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Interval;
 import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.Value;
+import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
+import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersions;
 import com.sap.oss.phosphor.fosstars.model.value.CVSS;
 import com.sap.oss.phosphor.fosstars.model.value.CVSS.Version;
 import com.sap.oss.phosphor.fosstars.model.value.Languages;
@@ -58,7 +60,10 @@ import com.sap.oss.phosphor.fosstars.model.value.Vulnerability;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerability.Resolution;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -169,6 +174,65 @@ public class TestUtils {
         USES_FIND_SEC_BUGS.value(true),
         OWASP_DEPENDENCY_CHECK_USAGE.value(MANDATORY),
         OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.value(7.0),
+        PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)));
+  }
+
+  /**
+   * Create the default values.
+   *
+   * @return A set of values
+   */
+  public static Set<Value<?>> getBestValues() {
+    return setOf(
+        RELEASED_ARTIFACT_VERSIONS.value(
+            ArtifactVersions.of(
+                new ArtifactVersion("1.0.0", LocalDate.now().minusDays(30)),
+                new ArtifactVersion("1.5.0", LocalDate.now().minusDays(15)),
+                new ArtifactVersion("2.0.0", LocalDate.now())
+            )),
+        VERSION.value("2.0.0"),
+        SUPPORTED_BY_COMPANY.value(true),
+        IS_APACHE.value(true),
+        IS_ECLIPSE.value(false),
+        NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(500),
+        NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(30),
+        NUMBER_OF_GITHUB_STARS.value(100000),
+        NUMBER_OF_WATCHERS_ON_GITHUB.value(50),
+        HAS_SECURITY_TEAM.value(true),
+        HAS_SECURITY_POLICY.value(true),
+        HAS_BUG_BOUNTY_PROGRAM.value(true),
+        SIGNS_ARTIFACTS.value(true),
+        VULNERABILITIES.value(new Vulnerabilities(
+            Vulnerability.Builder.newVulnerability("ID-01")
+                .set(new CVSS(Version.V3, 3.0))
+                .set(Resolution.PATCHED)
+                .fixed(new Date())
+                .introduced(new Date())
+                .published(new Date())
+                .setVersionRanges(Collections.singletonList(
+                    new VersionRange("1.0.0", "1.0.0")))
+                .make()
+        )),
+        PROJECT_START_DATE.value(new Date()),
+        USES_SIGNED_COMMITS.value(true),
+        RUNS_CODEQL_SCANS.value(true),
+        USES_CODEQL_CHECKS.value(true),
+        USES_LGTM_CHECKS.value(true),
+        WORST_LGTM_GRADE.value(LgtmGrade.A_PLUS),
+        USES_NOHTTP.value(true),
+        USES_DEPENDABOT.value(true),
+        USES_GITHUB_FOR_DEVELOPMENT.value(true),
+        LANGUAGES.value(Languages.of(JAVA)),
+        USES_ADDRESS_SANITIZER.value(true),
+        USES_MEMORY_SANITIZER.value(true),
+        USES_UNDEFINED_BEHAVIOR_SANITIZER.value(true),
+        USES_OWASP_ESAPI.value(true),
+        USES_OWASP_JAVA_ENCODER.value(true),
+        USES_OWASP_JAVA_HTML_SANITIZER.value(true),
+        FUZZED_IN_OSS_FUZZ.value(true),
+        USES_FIND_SEC_BUGS.value(true),
+        OWASP_DEPENDENCY_CHECK_USAGE.value(MANDATORY),
+        OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.value(4.0),
         PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)));
   }
 

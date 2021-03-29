@@ -34,7 +34,10 @@ public class OssArtifactSecurityScoreTest {
   @Test
   public void testSerializeAndDeserialize() throws IOException {
     ObjectMapper mapper = new ObjectMapper();
-    OssArtifactSecurityScore score = new OssArtifactSecurityScore();
+    ArtifactVersionSecurityScore artifactVersionSecurityScore = new ArtifactVersionSecurityScore();
+    OssSecurityScore ossSecurityScore = new OssSecurityScore();
+    OssArtifactSecurityScore score =
+        new OssArtifactSecurityScore(artifactVersionSecurityScore, ossSecurityScore);
     byte[] bytes = mapper.writeValueAsBytes(score);
     assertNotNull(bytes);
     assertTrue(bytes.length > 0);
@@ -129,6 +132,17 @@ public class OssArtifactSecurityScoreTest {
 
     ScoreValue scoreValue = score.calculate(values);
     assertTrue(DoubleInterval.closed(0, 1).contains(scoreValue.get()));
+    assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
+    checkUsedValues(scoreValue);
+  }
+
+  @Test
+  public void testMaxScore() {
+    OssArtifactSecurityScore score = new OssArtifactSecurityScore();
+    Set<Value<?>> values = TestUtils.getBestValues();
+
+    ScoreValue scoreValue = score.calculate(values);
+    assertTrue(DoubleInterval.closed(10, 10).contains(scoreValue.get()));
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }

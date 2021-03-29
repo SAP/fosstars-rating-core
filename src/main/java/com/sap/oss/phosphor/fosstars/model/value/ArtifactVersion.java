@@ -32,7 +32,7 @@ public class ArtifactVersion {
   /**
    * Comparator for artifact versions release date.
    */
-  private static final Comparator<ArtifactVersion> RELEASE_DATE_COMPARISON =
+  static final Comparator<ArtifactVersion> RELEASE_DATE_COMPARISON =
       (a, b) -> b.getReleaseDate().compareTo(a.getReleaseDate());
 
   private final String version;
