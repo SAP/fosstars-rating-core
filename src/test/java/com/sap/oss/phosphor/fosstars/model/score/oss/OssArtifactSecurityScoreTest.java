@@ -1,8 +1,8 @@
 package com.sap.oss.phosphor.fosstars.model.score.oss;
 
 import static com.sap.oss.phosphor.fosstars.TestUtils.getDefaultValues;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ARTIFACT_VERSION;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RELEASED_ARTIFACT_VERSIONS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VERSION;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -54,7 +54,7 @@ public class OssArtifactSecurityScoreTest {
     OssArtifactSecurityScore score = new OssArtifactSecurityScore();
     Set<Value<?>> values = getDefaultValues(
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(false)),
-        ARTIFACT_VERSION.value("1.2.0"));
+        VERSION.value("1.2.0"));
 
     ScoreValue scoreValue = score.calculate(values);
     assertTrue(DoubleInterval.closed(5, 6).contains(scoreValue.get()));
@@ -67,7 +67,7 @@ public class OssArtifactSecurityScoreTest {
     OssArtifactSecurityScore score = new OssArtifactSecurityScore();
     Set<Value<?>> values = getDefaultValues(
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(false)),
-        ARTIFACT_VERSION.value("1.0.0"));
+        VERSION.value("1.0.0"));
 
     ScoreValue scoreValue = score.calculate(values);
     assertTrue(DoubleInterval.closed(5, 6).contains(scoreValue.get()));
@@ -80,7 +80,7 @@ public class OssArtifactSecurityScoreTest {
     OssArtifactSecurityScore score = new OssArtifactSecurityScore();
     Set<Value<?>> values = getDefaultValues(
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(true)),
-        ARTIFACT_VERSION.value("1.2.0"));
+        VERSION.value("1.2.0"));
 
     ScoreValue scoreValue = score.calculate(values);
     assertTrue(DoubleInterval.closed(6, 6.5).contains(scoreValue.get()));
@@ -93,7 +93,7 @@ public class OssArtifactSecurityScoreTest {
     OssArtifactSecurityScore score = new OssArtifactSecurityScore();
     Set<Value<?>> values = getDefaultValues(
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(true)),
-        ARTIFACT_VERSION.value("2.0.0"));
+        VERSION.value("2.0.0"));
 
     ScoreValue scoreValue = score.calculate(values);
     assertTrue(DoubleInterval.closed(6, 6.5).contains(scoreValue.get()));
@@ -109,7 +109,7 @@ public class OssArtifactSecurityScoreTest {
     Set<Value<?>> values = getDefaultValues(
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(true)),
         VULNERABILITIES.value(new Vulnerabilities(vulnerability)),
-        ARTIFACT_VERSION.value("2.0.0"));
+        VERSION.value("2.0.0"));
 
     ScoreValue scoreValue = score.calculate(values);
     assertTrue(DoubleInterval.closed(7, 7.5).contains(scoreValue.get()));
@@ -125,7 +125,7 @@ public class OssArtifactSecurityScoreTest {
     Set<Value<?>> values = getDefaultValues(
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(true)),
         VULNERABILITIES.value(new Vulnerabilities(vulnerability)),
-        ARTIFACT_VERSION.value("2.0.0"));
+        VERSION.value("2.0.0"));
 
     ScoreValue scoreValue = score.calculate(values);
     assertTrue(DoubleInterval.closed(0, 1).contains(scoreValue.get()));

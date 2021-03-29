@@ -64,6 +64,6 @@ If an open-source project is included to OSS-Fuzz project:
     links:
       - name: The OSS-Fuzz project
         url: https://github.com/google/oss-fuzz
-Artifact version:
+Version string:
   - advice: >
       Update the dependency version ${VERSION} to ${LATEST_VERSION}.

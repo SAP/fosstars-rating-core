@@ -1,7 +1,7 @@
 package com.sap.oss.phosphor.fosstars.model.score.oss;
 
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ARTIFACT_VERSION;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RELEASED_ARTIFACT_VERSIONS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VERSION;
 
 import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.Value;
@@ -19,7 +19,7 @@ import java.util.Optional;
  * The scoring functions uses the following features:
  * <ul>
  *   <li>{@link OssFeatures#RELEASED_ARTIFACT_VERSIONS}</li>
- *   <li>{@link OssFeatures#ARTIFACT_VERSION}</li>
+ *   <li>{@link OssFeatures#VERSION}</li>
  * </ul>
  */
 public class ArtifactVersionUpToDateScore extends FeatureBasedScore {
@@ -30,13 +30,13 @@ public class ArtifactVersionUpToDateScore extends FeatureBasedScore {
   public ArtifactVersionUpToDateScore() {
     super("How up-to-date the given version is",
         RELEASED_ARTIFACT_VERSIONS,
-        ARTIFACT_VERSION);
+        VERSION);
   }
 
   @Override
   public ScoreValue calculate(Value<?>... values) {
     Value<ArtifactVersions> artifactVersionsValue = find(RELEASED_ARTIFACT_VERSIONS, values);
-    Value<String> versionValue = find(ARTIFACT_VERSION, values);
+    Value<String> versionValue = find(VERSION, values);
 
     ScoreValue scoreValue = scoreValue(Score.MIN, artifactVersionsValue, versionValue);
     if (versionValue.isUnknown() || artifactVersionsValue.isUnknown()) {

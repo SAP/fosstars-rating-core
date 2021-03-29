@@ -4,12 +4,12 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.feature.AbstractFeature;
-import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersionValue;
+import com.sap.oss.phosphor.fosstars.model.value.StringValue;
 
 /**
- * This feature holds a version of an artifact for which the security rating is calculated.
+ * This feature holds a string.
  */
-public class ArtifactVersionFeature extends AbstractFeature<String> {
+public class StringFeature extends AbstractFeature<String> {
 
   /**
    * Initializes a feature.
@@ -17,17 +17,17 @@ public class ArtifactVersionFeature extends AbstractFeature<String> {
    * @param name The feature name.
    */
   @JsonCreator
-  public ArtifactVersionFeature(@JsonProperty("name") String name) {
+  public StringFeature(@JsonProperty("name") String name) {
     super(name);
   }
 
   @Override
-  public Value<String> value(String artifactVersions) {
-    return new ArtifactVersionValue(this, artifactVersions);
+  public Value<String> value(String content) {
+    return new StringValue(this, content);
   }
 
   @Override
   public Value<String> parse(String string) {
-    return new ArtifactVersionValue(this, string);
+    return new StringValue(this, string);
   }
 }

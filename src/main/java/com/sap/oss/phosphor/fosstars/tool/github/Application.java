@@ -1,6 +1,6 @@
 package com.sap.oss.phosphor.fosstars.tool.github;
 
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ARTIFACT_VERSION;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VERSION;
 import static com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject.isOnGitHub;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -445,7 +445,7 @@ public class Application {
     // as it is also done in `finder.findScmFor(gav)`.
     String[] parts = gav.trim().split(":");
     String version = parts.length > 2 ? parts[2] : "";
-    ValueSet values = new ValueHashSet(ARTIFACT_VERSION.value(version));
+    ValueSet values = new ValueHashSet(VERSION.value(version));
 
     processUrl(url, values);
   }
@@ -517,7 +517,7 @@ public class Application {
           String projectUrl = String.format("https://github.com/%s/%s",
               parsedPurl.getNamespace(), parsedPurl.getName());
           LOGGER.info("Found github PURL and start with {}", projectUrl);
-          ValueSet values = new ValueHashSet(ARTIFACT_VERSION.value(parsedPurl.getVersion()));
+          ValueSet values = new ValueHashSet(VERSION.value(parsedPurl.getVersion()));
           processUrl(projectUrl, values);
           break;
         case PURL_TYPE_MAVEN:

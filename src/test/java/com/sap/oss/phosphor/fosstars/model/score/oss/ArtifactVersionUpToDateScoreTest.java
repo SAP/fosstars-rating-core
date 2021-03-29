@@ -1,8 +1,8 @@
 package com.sap.oss.phosphor.fosstars.model.score.oss;
 
 import static com.sap.oss.phosphor.fosstars.TestUtils.assertScore;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ARTIFACT_VERSION;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RELEASED_ARTIFACT_VERSIONS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VERSION;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 
 import com.sap.oss.phosphor.fosstars.model.Score;
@@ -30,7 +30,7 @@ public class ArtifactVersionUpToDateScoreTest {
         setOf(
             RELEASED_ARTIFACT_VERSIONS.value(
                 ArtifactVersions.of(version100, version110, version120)),
-            ARTIFACT_VERSION.value("1.2.0")
+            VERSION.value("1.2.0")
         ));
   }
 
@@ -45,7 +45,7 @@ public class ArtifactVersionUpToDateScoreTest {
     ArtifactVersionUpToDateScore score = new ArtifactVersionUpToDateScore();
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
         ArtifactVersions.of(version100, version110, version120));
-    Value<String> version = ARTIFACT_VERSION.value("2.0.0");
+    Value<String> version = VERSION.value("2.0.0");
     ScoreValue value = score.calculate(versions, version);
     Assert.assertTrue(value.isUnknown());
   }
@@ -61,7 +61,7 @@ public class ArtifactVersionUpToDateScoreTest {
     ArtifactVersionUpToDateScore score = new ArtifactVersionUpToDateScore();
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
         ArtifactVersions.of(version100, version110, version120));
-    Value<String> version = ARTIFACT_VERSION.value("1.2.0");
+    Value<String> version = VERSION.value("1.2.0");
     ScoreValue value = score.calculate(versions, version);
     Assert.assertEquals(Double.valueOf(10.0), value.get());
   }
@@ -77,7 +77,7 @@ public class ArtifactVersionUpToDateScoreTest {
     ArtifactVersionUpToDateScore score = new ArtifactVersionUpToDateScore();
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
         ArtifactVersions.of(version100, version110, version120));
-    Value<String> version = ARTIFACT_VERSION.value("1.1.0");
+    Value<String> version = VERSION.value("1.1.0");
     ScoreValue value = score.calculate(versions, version);
     Assert.assertEquals(Double.valueOf(7.0), value.get());
   }
@@ -92,7 +92,7 @@ public class ArtifactVersionUpToDateScoreTest {
     ArtifactVersionUpToDateScore score = new ArtifactVersionUpToDateScore();
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
         ArtifactVersions.of(version100, version110));
-    Value<String> version = ARTIFACT_VERSION.value("1.1.0");
+    Value<String> version = VERSION.value("1.1.0");
     ScoreValue value = score.calculate(versions, version);
     Assert.assertEquals(Double.valueOf(9.0), value.get());
   }
@@ -107,7 +107,7 @@ public class ArtifactVersionUpToDateScoreTest {
     ArtifactVersionUpToDateScore score = new ArtifactVersionUpToDateScore();
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
         ArtifactVersions.of(version100, version110));
-    Value<String> version = ARTIFACT_VERSION.value("1.1.0");
+    Value<String> version = VERSION.value("1.1.0");
     ScoreValue value = score.calculate(versions, version);
     Assert.assertEquals(Double.valueOf(6.0), value.get());
   }
@@ -120,7 +120,7 @@ public class ArtifactVersionUpToDateScoreTest {
     ArtifactVersionUpToDateScore score = new ArtifactVersionUpToDateScore();
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
         ArtifactVersions.of(version100));
-    Value<String> version = ARTIFACT_VERSION.value("1.0.0");
+    Value<String> version = VERSION.value("1.0.0");
     ScoreValue value = score.calculate(versions, version);
     Assert.assertEquals(Double.valueOf(2.0), value.get());
   }
@@ -135,7 +135,7 @@ public class ArtifactVersionUpToDateScoreTest {
     ArtifactVersionUpToDateScore score = new ArtifactVersionUpToDateScore();
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
         ArtifactVersions.of(version100, version110));
-    Value<String> version = ARTIFACT_VERSION.value("1.0.0");
+    Value<String> version = VERSION.value("1.0.0");
     ScoreValue value = score.calculate(versions, version);
     Assert.assertEquals(Double.valueOf(0.0), value.get());
   }

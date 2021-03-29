@@ -33,10 +33,10 @@ public class OssFeatures {
       = new ArtifactVersionsFeature("Released artifact versions");
 
   /**
-   * Holds a version of an artifact released by an open source project.
+   * Holds a version string.
    */
-  public static final Feature<String> ARTIFACT_VERSION
-      = new ArtifactVersionFeature("Artifact version");
+  public static final Feature<String> VERSION
+      = new StringFeature("Version string");
 
   /**
    * Shows how many commits have been integrated in the last three months.

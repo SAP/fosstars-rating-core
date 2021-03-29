@@ -1,7 +1,7 @@
 package com.sap.oss.phosphor.fosstars.advice.oss;
 
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ARTIFACT_VERSION;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RELEASED_ARTIFACT_VERSIONS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VERSION;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.findValue;
 
 import com.sap.oss.phosphor.fosstars.advice.Advice;
@@ -37,7 +37,7 @@ public class ArtifactVersionAdvisor extends AbstractOssAdvisor {
   protected List<Advice> adviceFor(
       Subject subject, List<Value<?>> usedValues, OssAdviceContext context) {
 
-    Optional<Value<String>> versionValue = findValue(usedValues, ARTIFACT_VERSION);
+    Optional<Value<String>> versionValue = findValue(usedValues, VERSION);
     Optional<Value<ArtifactVersions>> releasedVersionsValue = findValue(usedValues,
         RELEASED_ARTIFACT_VERSIONS);
 

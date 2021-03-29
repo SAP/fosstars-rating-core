@@ -1,6 +1,5 @@
 package com.sap.oss.phosphor.fosstars.model.score.oss;
 
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ARTIFACT_VERSION;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.IS_APACHE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.IS_ECLIPSE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_COMMITS_LAST_THREE_MONTHS;
@@ -10,6 +9,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.PACKAGE_MANAGERS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RELEASED_ARTIFACT_VERSIONS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VERSION;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.MAVEN;
@@ -65,7 +65,7 @@ public class ArtifactVersionSecurityScoreTest {
     ArtifactVersionSecurityScore score = new ArtifactVersionSecurityScore();
     Set<Value<?>> values = setOf(
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(false)),
-        ARTIFACT_VERSION.value("1.2.0"),
+        VERSION.value("1.2.0"),
         SUPPORTED_BY_COMPANY.value(false),
         VULNERABILITIES.value(new Vulnerabilities()),
         IS_APACHE.value(true),
@@ -84,7 +84,7 @@ public class ArtifactVersionSecurityScoreTest {
     ArtifactVersionSecurityScore score = new ArtifactVersionSecurityScore();
     Set<Value<?>> values = setOf(
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(false)),
-        ARTIFACT_VERSION.value("1.0.0"),
+        VERSION.value("1.0.0"),
         SUPPORTED_BY_COMPANY.value(false),
         IS_APACHE.value(true),
         IS_ECLIPSE.value(false),
@@ -106,7 +106,7 @@ public class ArtifactVersionSecurityScoreTest {
     ArtifactVersionSecurityScore score = new ArtifactVersionSecurityScore();
     Set<Value<?>> values = setOf(
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(true)),
-        ARTIFACT_VERSION.value("1.2.0"),
+        VERSION.value("1.2.0"),
         SUPPORTED_BY_COMPANY.value(false),
         IS_APACHE.value(true),
         IS_ECLIPSE.value(false),
@@ -127,7 +127,7 @@ public class ArtifactVersionSecurityScoreTest {
     ArtifactVersionSecurityScore score = new ArtifactVersionSecurityScore();
     Set<Value<?>> values = setOf(
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(true)),
-        ARTIFACT_VERSION.value("2.0.0"),
+        VERSION.value("2.0.0"),
         SUPPORTED_BY_COMPANY.value(false),
         IS_APACHE.value(true),
         IS_ECLIPSE.value(false),
@@ -149,7 +149,7 @@ public class ArtifactVersionSecurityScoreTest {
     Vulnerability vulnerability = TestUtils.createBasicVulnerability(10.0, "2.0.0", "2.0.0");
     Set<Value<?>> values = setOf(
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(true)),
-        ARTIFACT_VERSION.value("2.0.0"),
+        VERSION.value("2.0.0"),
         SUPPORTED_BY_COMPANY.value(false),
         IS_APACHE.value(true),
         IS_ECLIPSE.value(false),
@@ -171,7 +171,7 @@ public class ArtifactVersionSecurityScoreTest {
     Vulnerability vulnerability = TestUtils.createBasicVulnerability(1.0, "2.0.0", "2.0.0");
     Set<Value<?>> values = setOf(
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(true)),
-        ARTIFACT_VERSION.value("2.0.0"),
+        VERSION.value("2.0.0"),
         SUPPORTED_BY_COMPANY.value(false),
         IS_APACHE.value(true),
         IS_ECLIPSE.value(false),
@@ -193,7 +193,7 @@ public class ArtifactVersionSecurityScoreTest {
     Vulnerability vulnerability = TestUtils.createBasicVulnerability(10.0, "1.0.0", "1.0.2");
     Set<Value<?>> values = setOf(
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(true)),
-        ARTIFACT_VERSION.value("2.0.0"),
+        VERSION.value("2.0.0"),
         SUPPORTED_BY_COMPANY.value(false),
         IS_APACHE.value(true),
         IS_ECLIPSE.value(false),
