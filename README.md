@@ -5,9 +5,9 @@
 |          | # or projects              |  % or projects               |
 | :------- | -------------------------: | ---------------------------: |
 | Total    |       290 |                         100% |
-| Fail     |   270 |   93.1% |
-| Pass     |   9 |   3.1% |
-| Unclear  |  11 |  3.8% |
+| Fail     |   274 |   94.5% |
+| Pass     |   6 |   2.1% |
+| Unclear  |  10 |  3.4% |
 
 ## Projects
 
@@ -125,7 +125,10 @@
 | [SAP/InfraBox](https://github.com/SAP/InfraBox) | [FAIL](SAP/InfraBox.md) | 1 violated rule |
 | [SAP/ui5-builder](https://github.com/SAP/ui5-builder) | [FAIL](SAP/ui5-builder.md) | 1 violated rule |
 | [SAP/ui5-cli](https://github.com/SAP/ui5-cli) | [FAIL](SAP/ui5-cli.md) | 1 violated rule |
+| [SAP/ui5-server](https://github.com/SAP/ui5-server) | [FAIL](SAP/ui5-server.md) | 1 violated rule |
+| [SAP/ui5-logger](https://github.com/SAP/ui5-logger) | [FAIL](SAP/ui5-logger.md) | 1 violated rule |
 | [SAP/ui5-project](https://github.com/SAP/ui5-project) | [FAIL](SAP/ui5-project.md) | 1 violated rule |
+| [SAP/ui5-fs](https://github.com/SAP/ui5-fs) | [FAIL](SAP/ui5-fs.md) | 1 violated rule |
 | [SAP/InfraBox-cli](https://github.com/SAP/InfraBox-cli) | [FAIL](SAP/InfraBox-cli.md) | 1 violated rule |
 | [SAP/cloud-s4-sdk-book](https://github.com/SAP/cloud-s4-sdk-book) | [FAIL](SAP/cloud-s4-sdk-book.md) | 1 violated rule |
 | [SAP/fundamental-ngx](https://github.com/SAP/fundamental-ngx) | [FAIL](SAP/fundamental-ngx.md) | 2 violated rules |
@@ -246,6 +249,7 @@
 | [SAP/gigya-flutter-plugin](https://github.com/SAP/gigya-flutter-plugin) | [FAIL](SAP/gigya-flutter-plugin.md) | 1 violated rule |
 | [SAP/bayesian-network-builder](https://github.com/SAP/bayesian-network-builder) | [FAIL](SAP/bayesian-network-builder.md) | 1 violated rule |
 | [SAP/node-socketio-stream](https://github.com/SAP/node-socketio-stream) | [FAIL](SAP/node-socketio-stream.md) | 1 violated rule |
+| [SAP/cloud-sdk-ios-fiori-snapshot-references](https://github.com/SAP/cloud-sdk-ios-fiori-snapshot-references) | [FAIL](SAP/cloud-sdk-ios-fiori-snapshot-references.md) | 1 violated rule |
 | [SAP/project-odense](https://github.com/SAP/project-odense) | [FAIL](SAP/project-odense.md) | 1 violated rule |
 | [SAP/code-snippet](https://github.com/SAP/code-snippet) | [FAIL](SAP/code-snippet.md) | 2 violated rules |
 | [SAP/i40-aas-type2](https://github.com/SAP/i40-aas-type2) | [FAIL](SAP/i40-aas-type2.md) | 1 violated rule |
@@ -284,16 +288,12 @@
 | [SAP/project-sailor](https://github.com/SAP/project-sailor) | [FAIL](SAP/project-sailor.md) | 1 violated rule |
 | [SAP/sap.github.io](https://github.com/SAP/sap.github.io) | [FAIL](SAP/sap.github.io.md) | 2 violated rules |
 | [SAP/openui5](https://github.com/SAP/openui5) | [PASS](SAP/openui5.md) | No violated rules |
-| [SAP/ui5-server](https://github.com/SAP/ui5-server) | [PASS](SAP/ui5-server.md) | No violated rules |
-| [SAP/ui5-logger](https://github.com/SAP/ui5-logger) | [PASS](SAP/ui5-logger.md) | No violated rules |
-| [SAP/ui5-fs](https://github.com/SAP/ui5-fs) | [PASS](SAP/ui5-fs.md) | No violated rules |
 | [SAP/ui5-tooling](https://github.com/SAP/ui5-tooling) | [PASS](SAP/ui5-tooling.md) | No violated rules |
 | [SAP/fosstars-rating-core](https://github.com/SAP/fosstars-rating-core) | [PASS](SAP/fosstars-rating-core.md) | No violated rules |
 | [SAP/cloud-sdk-ios-fiori](https://github.com/SAP/cloud-sdk-ios-fiori) | [PASS](SAP/cloud-sdk-ios-fiori.md) | No violated rules |
 | [SAP/data-attribute-recommendation-python-sdk](https://github.com/SAP/data-attribute-recommendation-python-sdk) | [PASS](SAP/data-attribute-recommendation-python-sdk.md) | No violated rules |
 | [SAP/fosstars-rating-core-action](https://github.com/SAP/fosstars-rating-core-action) | [PASS](SAP/fosstars-rating-core-action.md) | No violated rules |
 | [SAP/check-sap-cloud-readiness](https://github.com/SAP/check-sap-cloud-readiness) | [UNCLEAR](SAP/check-sap-cloud-readiness.md) | No violated rules |
-| [SAP/cloud-sdk-ios-fiori-snapshot-references](https://github.com/SAP/cloud-sdk-ios-fiori-snapshot-references) | [UNCLEAR](SAP/cloud-sdk-ios-fiori-snapshot-references.md) | No violated rules |
 | [SAP/test-repo](https://github.com/SAP/test-repo) | [UNCLEAR](SAP/test-repo.md) | No violated rules |
 | [SAP/abap-file-formats](https://github.com/SAP/abap-file-formats) | [UNCLEAR](SAP/abap-file-formats.md) | No violated rules |
 | [SAP/alm-plug-in-for-grafana](https://github.com/SAP/alm-plug-in-for-grafana) | [UNCLEAR](SAP/alm-plug-in-for-grafana.md) | No violated rules |

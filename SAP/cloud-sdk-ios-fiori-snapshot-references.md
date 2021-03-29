@@ -1,7 +1,7 @@
-**Status**: **UNCLEAR**
+**Status**: **FAIL**
 
-**Confidence**: Low (6.67, max confidence value is 10.0)
+**Confidence**: Max (10.0, max confidence value is 10.0)
 
 ## Violated rules
 
-No violated rules.
+1.  Does it have a security policy? No
