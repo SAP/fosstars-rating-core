@@ -73,7 +73,7 @@
     <version.jackson>2.12.2</version.jackson>
     <version.commons-math3>3.6.1</version.commons-math3>
     <version.commons-cli>1.4</version.commons-cli>
-    <version.github-api>1.124</version.github-api>
+    <version.github-api>1.125</version.github-api>
     <version.log4j-api>2.14.1</version.log4j-api>
     <version.log4j-core>2.14.1</version.log4j-core>
     <version.nist-data-mirror>1.5.1</version.nist-data-mirror>
@@ -101,7 +101,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
-        <version>3.2.0</version>
+        <version>3.2.1</version>
         <executions>
           <execution>
             <id>attach-sources</id>
@@ -139,7 +139,7 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.4</version>
+        <version>0.8.6</version>
         <executions>
           <execution>
             <goals>

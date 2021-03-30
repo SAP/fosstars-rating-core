@@ -10,13 +10,14 @@ import com.sap.oss.phosphor.fosstars.model.score.example.ExampleScores;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.oss.phosphor.fosstars.util.Json;
+import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
 import org.junit.Test;
 
 public class GitHubProjectTest {
 
   @Test
-  public void testSerialization() throws IOException {
+  public void testJsonSerialization() throws IOException {
     GitHubOrganization apache = new GitHubOrganization("apache");
     GitHubProject project = new GitHubProject(apache, "nifi");
     project.set(
@@ -30,6 +31,13 @@ public class GitHubProjectTest {
     assertNotNull(clone);
     assertEquals(project, clone);
     assertEquals(project.hashCode(), clone.hashCode());
+  }
+
+  @Test
+  public void testYamlSerialization() throws IOException {
+    GitHubProject project = new GitHubProject("org", "test");
+    GitHubProject clone = Yaml.read(Yaml.toBytes(project), GitHubProject.class);
+    assertEquals(project, clone);
   }
 
   @Test
@@ -59,6 +67,6 @@ public class GitHubProjectTest {
     assertNotEquals(firstProject, secondProject);
 
     GitHubProject thirdProject = new GitHubProject(new GitHubOrganization("another"), "first");
-    assertNotEquals(firstProject, secondProject);
+    assertNotEquals(firstProject, thirdProject);
   }
 }
