@@ -4,10 +4,10 @@
 
 |          | # or projects              |  % or projects               |
 | :------- | -------------------------: | ---------------------------: |
-| Total    |       290 |                         100% |
-| Fail     |   274 |   94.5% |
+| Total    |       292 |                         100% |
+| Fail     |   274 |   93.8% |
 | Pass     |   6 |   2.1% |
-| Unclear  |  10 |  3.4% |
+| Unclear  |  12 |  4.1% |
 
 ## Projects
 
@@ -27,7 +27,7 @@
 | [SAP/cloud-dirigible](https://github.com/SAP/cloud-dirigible) | [FAIL](SAP/cloud-dirigible.md) | 3 violated rules |
 | [SAP/mobilesdk-certificateprovider](https://github.com/SAP/mobilesdk-certificateprovider) | [FAIL](SAP/mobilesdk-certificateprovider.md) | 2 violated rules |
 | [SAP/go-hdb](https://github.com/SAP/go-hdb) | [FAIL](SAP/go-hdb.md) | 2 violated rules |
-| [SAP/node-rfc](https://github.com/SAP/node-rfc) | [FAIL](SAP/node-rfc.md) | 2 violated rules |
+| [SAP/node-rfc](https://github.com/SAP/node-rfc) | [FAIL](SAP/node-rfc.md) | 1 violated rule |
 | [SAP/STSOData](https://github.com/SAP/STSOData) | [FAIL](SAP/STSOData.md) | 2 violated rules |
 | [SAP/grunt-openui5](https://github.com/SAP/grunt-openui5) | [FAIL](SAP/grunt-openui5.md) | 1 violated rule |
 | [SAP/less-openui5](https://github.com/SAP/less-openui5) | [FAIL](SAP/less-openui5.md) | 1 violated rule |
@@ -228,7 +228,7 @@
 | [SAP/inquirer-gui](https://github.com/SAP/inquirer-gui) | [FAIL](SAP/inquirer-gui.md) | 2 violated rules |
 | [SAP/spartacus-docs-v1](https://github.com/SAP/spartacus-docs-v1) | [FAIL](SAP/spartacus-docs-v1.md) | 2 violated rules |
 | [SAP/document-classification-client](https://github.com/SAP/document-classification-client) | [FAIL](SAP/document-classification-client.md) | 1 violated rule |
-| [SAP/project-piper-action](https://github.com/SAP/project-piper-action) | [FAIL](SAP/project-piper-action.md) | 1 violated rule |
+| [SAP/project-piper-action](https://github.com/SAP/project-piper-action) | [FAIL](SAP/project-piper-action.md) | 2 violated rules |
 | [SAP/ui5-language-assistant](https://github.com/SAP/ui5-language-assistant) | [FAIL](SAP/ui5-language-assistant.md) | 2 violated rules |
 | [SAP/credential-digger](https://github.com/SAP/credential-digger) | [FAIL](SAP/credential-digger.md) | 1 violated rule |
 | [SAP/feature-toggle-node](https://github.com/SAP/feature-toggle-node) | [FAIL](SAP/feature-toggle-node.md) | 2 violated rules |
@@ -265,7 +265,7 @@
 | [SAP/cf-cli-smsi-plugin](https://github.com/SAP/cf-cli-smsi-plugin) | [FAIL](SAP/cf-cli-smsi-plugin.md) | 1 violated rule |
 | [SAP/ui5-task-adaptation](https://github.com/SAP/ui5-task-adaptation) | [FAIL](SAP/ui5-task-adaptation.md) | 1 violated rule |
 | [SAP/xsk](https://github.com/SAP/xsk) | [FAIL](SAP/xsk.md) | 1 violated rule |
-| [SAP/cloud-sdk](https://github.com/SAP/cloud-sdk) | [FAIL](SAP/cloud-sdk.md) | 1 violated rule |
+| [SAP/cloud-sdk](https://github.com/SAP/cloud-sdk) | [FAIL](SAP/cloud-sdk.md) | 2 violated rules |
 | [SAP/cloud-sdk-currency-conversion](https://github.com/SAP/cloud-sdk-currency-conversion) | [FAIL](SAP/cloud-sdk-currency-conversion.md) | 2 violated rules |
 | [SAP/stewardci-log-forwarding](https://github.com/SAP/stewardci-log-forwarding) | [FAIL](SAP/stewardci-log-forwarding.md) | 1 violated rule |
 | [SAP/alert-notification-node-client](https://github.com/SAP/alert-notification-node-client) | [FAIL](SAP/alert-notification-node-client.md) | 1 violated rule |
@@ -303,3 +303,5 @@
 | [SAP/cloud-sdk-ios-foundation](https://github.com/SAP/cloud-sdk-ios-foundation) | [UNCLEAR](SAP/cloud-sdk-ios-foundation.md) | No violated rules |
 | [SAP/cloud-sdk-ios-fioriuikit](https://github.com/SAP/cloud-sdk-ios-fioriuikit) | [UNCLEAR](SAP/cloud-sdk-ios-fioriuikit.md) | No violated rules |
 | [SAP/cloud-sdk-ios-cai](https://github.com/SAP/cloud-sdk-ios-cai) | [UNCLEAR](SAP/cloud-sdk-ios-cai.md) | No violated rules |
+| [SAP/sap-btp-service-operator-migration](https://github.com/SAP/sap-btp-service-operator-migration) | [UNCLEAR](SAP/sap-btp-service-operator-migration.md) | No violated rules |
+| [SAP/task-explorer](https://github.com/SAP/task-explorer) | [UNCLEAR](SAP/task-explorer.md) | No violated rules |
