@@ -217,7 +217,7 @@ public class AdviceContentYamlStorage {
       }
 
       this.advice = advice;
-      this.links = new ArrayList<>(links != null ? links : Collections.emptyList());
+      this.links = new ArrayList<>(links != null ? links : emptyList());
     }
 
     @JsonGetter("advice")

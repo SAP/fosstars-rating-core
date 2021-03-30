@@ -23,7 +23,7 @@ public class NoHttpAdvisorTest {
     GitHubProject project = new GitHubProject("org", "test");
 
     // no advice if no rating value is set
-    assertTrue(advisor.adviseFor(project).isEmpty());
+    assertTrue(advisor.adviceFor(project).isEmpty());
 
     Rating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
     ValueSet values = new ValueHashSet();
@@ -31,10 +31,10 @@ public class NoHttpAdvisorTest {
 
     values.update(USES_NOHTTP.value(true));
     project.set(rating.calculate(values));
-    assertTrue(advisor.adviseFor(project).isEmpty());
+    assertTrue(advisor.adviceFor(project).isEmpty());
 
     values.update(USES_NOHTTP.value(false));
     project.set(rating.calculate(values));
-    assertFalse(advisor.adviseFor(project).isEmpty());
+    assertFalse(advisor.adviceFor(project).isEmpty());
   }
 }

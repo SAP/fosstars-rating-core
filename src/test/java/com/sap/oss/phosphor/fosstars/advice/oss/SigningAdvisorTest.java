@@ -3,6 +3,7 @@ package com.sap.oss.phosphor.fosstars.advice.oss;
 import static com.sap.oss.phosphor.fosstars.advice.oss.AbstractOssAdvisor.OssAdviceContextFactory.WITH_EMPTY_CONTEXT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SIGNS_ARTIFACTS;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.allUnknown;
+import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.Rating;
@@ -22,7 +23,7 @@ public class SigningAdvisorTest {
     GitHubProject project = new GitHubProject("org", "test");
 
     // no advice if no rating value is set
-    assertTrue(advisor.adviseFor(project).isEmpty());
+    assertTrue(advisor.adviceFor(project).isEmpty());
 
     Rating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
     ValueSet values = new ValueHashSet();
@@ -30,10 +31,10 @@ public class SigningAdvisorTest {
 
     values.update(SIGNS_ARTIFACTS.value(true));
     project.set(rating.calculate(values));
-    assertTrue(advisor.adviseFor(project).isEmpty());
+    assertTrue(advisor.adviceFor(project).isEmpty());
 
     values.update(SIGNS_ARTIFACTS.value(false));
     project.set(rating.calculate(values));
-    assertFalse(advisor.adviseFor(project).isEmpty());
+    assertFalse(advisor.adviceFor(project).isEmpty());
   }
 }

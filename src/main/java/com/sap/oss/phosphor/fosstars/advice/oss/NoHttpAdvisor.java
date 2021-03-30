@@ -24,11 +24,11 @@ public class NoHttpAdvisor extends AbstractOssAdvisor {
   }
 
   @Override
-  protected List<Advice> adviseFor(
+  protected List<Advice> adviceFor(
       Subject subject, List<Value<?>> usedValues, OssAdviceContext context)
       throws MalformedURLException {
 
-    return adviseForFeature(usedValues, USES_NOHTTP, subject, context, NoHttpAdvisor::noHttpTool);
+    return adviceForFeature(usedValues, USES_NOHTTP, subject, context, NoHttpAdvisor::noHttpTool);
   }
 
   /**
