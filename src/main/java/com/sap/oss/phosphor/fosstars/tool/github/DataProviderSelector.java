@@ -41,6 +41,8 @@ import com.sap.oss.phosphor.fosstars.model.Rating;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.nvd.NVD;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -105,6 +107,29 @@ public class DataProviderSelector {
         new AskAboutSecurityTeam<>(),
         new AskAboutUnpatchedVulnerabilities<>()
     );
+  }
+
+  /**
+   * Configure data providers.
+   *
+   * @param configs A list of config files.
+   * @throws IOException If something went wrong.
+   */
+  public void configure(List<String> configs) throws IOException {
+    Objects.requireNonNull(configs, "Oops! Configs can't be null!");
+    for (String config : configs) {
+      loadConfigFrom(Paths.get(config));
+    }
+  }
+
+  /**
+   * Configure a data provider.
+   *
+   * @param path A config file
+   * @throws IOException If something went wrong.
+   */
+  private void loadConfigFrom(Path path) throws IOException {
+
   }
 
   /**

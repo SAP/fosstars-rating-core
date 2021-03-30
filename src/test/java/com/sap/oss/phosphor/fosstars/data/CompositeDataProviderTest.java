@@ -13,6 +13,7 @@ import com.sap.oss.phosphor.fosstars.model.feature.BooleanFeature;
 import com.sap.oss.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Collections;
 import java.util.Set;
 import org.junit.Test;
@@ -59,6 +60,11 @@ public class CompositeDataProviderTest {
     @Override
     public Set<Feature<?>> supportedFeatures() {
       return Collections.singleton(new BooleanFeature(featureName));
+    }
+
+    @Override
+    public DataProvider<Object> configure(Path config) {
+      return this;
     }
   }
 
@@ -128,6 +134,11 @@ public class CompositeDataProviderTest {
 
           @Override
           public Set<Feature<?>> supportedFeatures() {
+            throw new UnsupportedOperationException("This should not be called!");
+          }
+
+          @Override
+          public DataProvider<Object> configure(Path config) {
             throw new UnsupportedOperationException("This should not be called!");
           }
         }

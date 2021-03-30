@@ -4,6 +4,7 @@ import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -120,6 +121,11 @@ public class CompositeDataProvider<T> implements DataProvider<T> {
         .map(DataProvider::supportedFeatures)
         .flatMap(Set::stream)
         .collect(Collectors.toSet());
+  }
+
+  @Override
+  public DataProvider<T> configure(Path config) {
+    throw new UnsupportedOperationException("Oops! I don't support it!");
   }
 
   /**

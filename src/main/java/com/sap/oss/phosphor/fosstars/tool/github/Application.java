@@ -49,12 +49,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
@@ -115,13 +113,10 @@ public class Application {
    */
   private static final Advisor ADVISOR = new OssSecurityGithubAdvisor();
 
+  /**
+   * Maps an alias to a rating procedure.
+   */
   private static final Map<String, Rating> RATINGS = new HashMap<>();
-  private static final Set<String> PURL_SUPPORTED_TYPES = new HashSet<>();
-
-  // constants for supported purl types
-  // find more about purl types here: https://github.com/package-url/purl-spec#known-purl-types
-  private static final String PURL_TYPE_GITHUB = "github";
-  private static final String PURL_TYPE_MAVEN = "maven";
 
   static {
     Rating ossSecurityRating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
@@ -140,9 +135,15 @@ public class Application {
     RATINGS.put("oss-artifact-security", ossArtifactSecurityRating);
     RATINGS.put(ossArtifactSecurityRating.getClass().getSimpleName(), ossArtifactSecurityRating);
     RATINGS.put(ossArtifactSecurityRating.getClass().getCanonicalName(), ossArtifactSecurityRating);
+  }
 
-    PURL_SUPPORTED_TYPES.add(PURL_TYPE_GITHUB);
-    PURL_SUPPORTED_TYPES.add(PURL_TYPE_MAVEN);
+  /**
+   * A set of supported PURL types.
+   *
+   * @see <a href="https://github.com/package-url/purl-spec#known-purl-types">Known PURL types</a>
+   */
+  private enum SupportedPurlTypes {
+    GITHUB, MAVEN
   }
 
   /**
@@ -242,6 +243,13 @@ public class Application {
             .argName("path")
             .desc("Store a raw rating to a specified file.")
             .build());
+    options.addOption(
+        Option.builder()
+            .longOpt("data-provider-configs")
+            .hasArg()
+            .desc("A list of YAML config files for data providers, format: ProviderClassName.yaml")
+            .valueSeparator(',')
+            .build());
 
     OptionGroup group = new OptionGroup();
     group.addOption(Option.builder("u")
@@ -296,10 +304,14 @@ public class Application {
         ? new Terminal() : NoUserCallback.INSTANCE;
 
     String githubToken = commandLine.getOptionValue("token", "");
+    List<String> withConfigs = Arrays.asList(
+        commandLine.getOptionValue("data-provider-configs", "")
+            .split("\\s+,\\s+,"));
 
     fetcher = new GitHubDataFetcher(connectToGithub(githubToken, callback), githubToken);
-    List<DataProvider<GitHubProject>> providers
-        = new DataProviderSelector(fetcher, new NVD()).providersFor(rating);
+    DataProviderSelector dataProviderSelector = new DataProviderSelector(fetcher, new NVD());
+    dataProviderSelector.configure(withConfigs);
+    List<DataProvider<GitHubProject>> providers = dataProviderSelector.providersFor(rating);
 
     calculator = new SingleRatingCalculator(rating, providers);
     calculator.set(VALUE_CACHE);
@@ -513,8 +525,8 @@ public class Application {
       LOGGER.info("Start with PURL {}", purl);
       PackageURL parsedPurl = new PackageURL(purl);
 
-      switch (parsedPurl.getType()) {
-        case PURL_TYPE_GITHUB:
+      switch (SupportedPurlTypes.valueOf(parsedPurl.getType().toUpperCase())) {
+        case GITHUB:
           String projectUrl = String.format("https://github.com/%s/%s",
               parsedPurl.getNamespace(), parsedPurl.getName());
           LOGGER.info("Found github PURL and start with {}", projectUrl);
@@ -526,7 +538,7 @@ public class Application {
           }
           processUrl(projectUrl, new ValueHashSet(versionValue));
           break;
-        case PURL_TYPE_MAVEN:
+        case MAVEN:
           String gav = String.format("%s:%s%s",
               parsedPurl.getNamespace(), parsedPurl.getName(),
               parsedPurl.getVersion() == null ? "" : ":" + parsedPurl.getVersion());
@@ -534,8 +546,8 @@ public class Application {
           break;
         default:
           throw new IOException(String.format(
-              "Oh no! Given PURL type '%s' is not supported! Supported types are %s",
-              parsedPurl.getType(), PURL_SUPPORTED_TYPES));
+              "Oh no! Unexpected PURL type: '%s' is not supported! Supported types are %s",
+              parsedPurl.getType(), Arrays.toString(SupportedPurlTypes.values())));
       }
     } catch (MalformedPackageURLException e) {
       throw new IOException("Oh no! Given PURL could not be parsed!", e);
