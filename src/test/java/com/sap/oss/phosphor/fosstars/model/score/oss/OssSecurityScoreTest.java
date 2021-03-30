@@ -130,6 +130,7 @@ public class OssSecurityScoreTest {
       for (Score subScore : scoreValue.score().subScores()) {
         if (value.feature().getClass() == subScore.getClass()) {
           found = true;
+          break;
         }
       }
       if (!found) {

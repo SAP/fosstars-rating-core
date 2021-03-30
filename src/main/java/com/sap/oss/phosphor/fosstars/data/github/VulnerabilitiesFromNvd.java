@@ -23,7 +23,7 @@ public class VulnerabilitiesFromNvd extends CachedSingleFeatureGitHubDataProvide
    */
   private static final Feature<Vulnerabilities> VULNERABILITIES_IN_NVD
       = new VulnerabilitiesInProject(
-          "Info about vulnerabilities in an open-source project from NVD");
+      "Info about vulnerabilities in an open-source project from NVD");
 
   /**
    * An interface to NVD.
@@ -55,6 +55,8 @@ public class VulnerabilitiesFromNvd extends CachedSingleFeatureGitHubDataProvide
       vulnerabilities.add(Vulnerability.Builder.from(entry).make());
     }
 
+    logger.info("Found {} {}", vulnerabilities.size(),
+        vulnerabilities.size() == 1 ? "vulnerability" : "vulnerabilities");
     return VULNERABILITIES_IN_NVD.value(vulnerabilities);
   }
 }

@@ -6,7 +6,7 @@ import com.sap.oss.phosphor.fosstars.advice.AdviceContext;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Rating;
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
-import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
+import com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurityRating;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.List;
@@ -35,7 +35,7 @@ public class OssAdviceContentYamlStorage {
   static {
     try {
       DEFAULT = OssAdviceContentYamlStorage.loadFromResource(
-          RESOURCE_PATH, RatingRepository.INSTANCE.rating(OssSecurityRating.class));
+          RESOURCE_PATH, RatingRepository.INSTANCE.rating(OssArtifactSecurityRating.class));
     } catch (IOException e) {
       throw new UncheckedIOException("Could not load advice", e);
     }
@@ -63,7 +63,7 @@ public class OssAdviceContentYamlStorage {
    * @param context The context.
    * @return A list of advice.
    */
-  public List<AdviceContent> adviseFor(Feature<?> feature, OssAdviceContext context) {
+  public List<AdviceContent> adviceFor(Feature<?> feature, AdviceContext context) {
     return adviceContentYamlStorage.adviceFor(feature, context);
   }
 

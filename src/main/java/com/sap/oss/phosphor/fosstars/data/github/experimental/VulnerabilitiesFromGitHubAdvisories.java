@@ -139,6 +139,8 @@ public class VulnerabilitiesFromGitHubAdvisories
     Resolution resolution =
         node.getFirstPatchedVersion() != null ? Resolution.PATCHED : Resolution.UNPATCHED;
 
+    logger.info("Found a GitHub security advisory: {}", advisory);
+
     return newVulnerability(id)
         .description(advisory.getDescription())
         .set(resolution)

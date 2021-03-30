@@ -1,0 +1,533 @@
+---
+
+# default values for test vectors
+defaults:
+  - type: "StringValue"
+    feature:
+      type: "StringFeature"
+      name: "Version string"
+    content: "2.0.0"
+  - type: "ArtifactVersionsValue"
+    feature:
+      type: "ArtifactVersionsFeature"
+      name: "Released artifact versions"
+    versions:
+      elements:
+        - version: "1.0.0"
+          releaseDate: "TEST-300d"
+        - version: "1.1.0"
+          releaseDate: "TEST-200d"
+        - version: "1.2.0"
+          releaseDate: "TEST-100d"
+        - version: "1.3.0"
+          releaseDate: "TEST-50d"
+        - version: "2.0.0"
+          releaseDate: "TEST-10d"
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses Dependabot"
+    flag: true
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses GitHub as the main development platform"
+    flag: false
+  - type: "PackageManagersValue"
+    feature:
+      type: "PackageManagersFeature"
+      name: "A set of package managers"
+    packageManagers:
+      packageManagers:
+        - "MAVEN"
+  - type: "LanguagesValue"
+    feature:
+      type: "LanguagesFeature"
+      name: "A set of programming languages"
+    languages:
+      elements:
+        - "JAVA"
+  - type: "OwaspDependencyCheckUsageValue"
+    feature:
+      type: "OwaspDependencyCheckUsageFeature"
+      name: "How OWASP Dependency Check is used"
+    value: "NOT_USED"
+  - type: "OwaspDependencyCheckCvssThresholdValue"
+    feature:
+      type: "OwaspDependencyCheckCvssThreshold"
+      name: "A CVSS threshold for OWASP Dependency Check to fail the build"
+    number: 10.0
+    specified: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If an open-source project uses FindSecBugs"
+    flag: true
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If an open-source project uses MemorySanitizer"
+    flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If an open-source project uses UndefinedBehaviorSanitizer"
+    flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If an open-source project uses AddressSanitizer"
+    flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If an open-source project is included to OSS-Fuzz project"
+    flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project has a bug bounty program"
+    flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project signs artifacts"
+    flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses OWASP Enterprise Security API (ESAPI)"
+    flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses OWASP Java HTML Sanitizer"
+    flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses OWASP Java Encoder"
+    flag: true
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project runs CodeQL scans"
+    flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project runs CodeQL checks for commits"
+    flag: true
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If an open-source project has a security policy"
+    flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If an open-source project has a security team"
+    flag: true
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses signed commits"
+    flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses nohttp tool"
+    flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses LGTM checks for commits"
+    flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If an open-source project is supported by a company"
+    flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If an open-source project belongs to Apache Foundation"
+    flag: true
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If an open-source project belongs to Eclipse Foundation"
+    flag: false
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of contributors in the last three months"
+    number: 3
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of watchers for a GitHub repository"
+    number: 15
+  - type: "LgtmGradeValue"
+    feature:
+      type: "LgtmGradeFeature"
+      name: "The worst LGTM grade of a project"
+    value: "A+"
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of stars for a GitHub repository"
+    number: 15000
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of commits in the last three months"
+    number: 1000
+
+# test vectors
+elements:
+  - type: "StandardTestVector"
+    values:
+      - type: "UnknownValue"
+        feature:
+          type: "StringFeature"
+          name: "Version string"
+      - type: "UnknownValue"
+        feature:
+          type: "ArtifactVersionsFeature"
+          name: "Released artifact versions"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses Dependabot"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses GitHub as the main development platform"
+      - type: "UnknownValue"
+        feature:
+          type: "PackageManagersFeature"
+          name: "A set of package managers"
+      - type: "UnknownValue"
+        feature:
+          type: "LanguagesFeature"
+          name: "A set of programming languages"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project belongs to Eclipse Foundation"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses signed commits"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project has a security team"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses LGTM checks for commits"
+      - type: "UnknownValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of watchers for a GitHub repository"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project has a security policy"
+      - type: "UnknownValue"
+        feature:
+          type: "VulnerabilitiesInProject"
+          name: "Info about vulnerabilities in open-source project"
+      - type: "UnknownValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of stars for a GitHub repository"
+      - type: "UnknownValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of contributors in the last three months"
+      - type: "UnknownValue"
+        feature:
+          type: "LgtmGradeFeature"
+          name: "The worst LGTM grade of a project"
+      - type: "UnknownValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of commits in the last three months"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project belongs to Apache Foundation"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project is supported by a company"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses nohttp tool"
+      - type: "UnknownValue"
+        feature:
+          type: "PackageManagersFeature"
+          name: "A set of package managers"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 1.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    expectedUnknownScore: true
+    alias: "all_unknown"
+
+# Next: Good project security, good artifact security
+  - type: "StandardTestVector"
+    values:
+      - type: "VulnerabilitiesValue"
+        vulnerabilities:
+          entries:
+            - id: "VULN-123-1"
+              cvss:
+                version: "V3"
+                value: 9.0
+              references: []
+              resolution: "PATCHED"
+              introduced: "2019-01-01"
+              fixed: "2019-01-03"
+              published: "2019-01-03"
+              vulnerableVersions:
+                - versionStart: 1.0.0
+                  versionEnd: 1.1.0
+    expectedScore:
+      type: "DoubleInterval"
+      from: 8.0
+      openLeft: false
+      negativeInfinity: false
+      to: 9.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel:
+      - "OssArtifactSecurityRating$ArtifactSecurityLabel"
+      - "GOOD"
+    alias: "all_good_default"
+
+# Test vectors for: GOOD project security, BAD artifact security
+  - type: "StandardTestVector"
+    values:
+      - type: "VulnerabilitiesValue"
+        vulnerabilities:
+          entries:
+            - id: "VULN-123-1"
+              cvss:
+                version: "V3"
+                value: 9.0
+              references: []
+              resolution: "PATCHED"
+              introduced: "2019-01-01"
+              fixed: "2019-01-03"
+              published: "2019-01-03"
+              vulnerableVersions:
+                - versionStart: 1.0.0
+                  versionEnd: 2.1.0
+            - id: "VULN-124-2"
+              cvss:
+                version: "V3"
+                value: 7.0
+              references: []
+              resolution: "PATCHED"
+              introduced: "2018-11-28"
+              fixed: "2018-12-02"
+              published: "2019-01-03"
+              vulnerableVersions:
+                - versionStart: 1.1.0
+                  versionEnd: 1.2.0
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 1.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel:
+      - "OssArtifactSecurityRating$ArtifactSecurityLabel"
+      - "BAD"
+    alias: "good_project_bad_artifact"
+
+# Test vectors for: GOOD project security, UNKNOWN artifact security
+  - type: "StandardTestVector"
+    values:
+      - type: "StringValue"
+        feature:
+          type: "StringFeature"
+          name: "Version string"
+        content: ""
+      - type: "VulnerabilitiesValue"
+        vulnerabilities:
+          entries:
+            - id: "VULN-123-1"
+              cvss:
+                version: "V3"
+                value: 9.0
+              references: []
+              resolution: "PATCHED"
+              introduced: "2019-01-01"
+              fixed: "2019-01-03"
+              published: "2019-01-03"
+              vulnerableVersions:
+                - versionStart: 1.0.0
+                  versionEnd: 2.1.0
+            - id: "VULN-124-2"
+              cvss:
+                version: "V3"
+                value: 7.0
+              references: []
+              resolution: "PATCHED"
+              introduced: "2018-11-28"
+              fixed: "2018-12-02"
+              published: "2019-01-03"
+              vulnerableVersions:
+                - versionStart: 1.1.0
+                  versionEnd: 1.2.0
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 1.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    expectedUnknownScore: true
+    alias: "project_good_artifact_unknown"
+
+# Test vectors for: MODERATE project security, GOOD artifact security
+  - type: "StandardTestVector"
+    values:
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project uses FindSecBugs"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses OWASP Java Encoder"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs CodeQL checks for commits"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project has a security team"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project belongs to Apache Foundation"
+        flag: false
+      - type: "LgtmGradeValue"
+        feature:
+          type: "LgtmGradeFeature"
+          name: "The worst LGTM grade of a project"
+        value: "C"
+      - type: "VulnerabilitiesValue"
+        vulnerabilities:
+          entries:
+            - id: "VULN-123-1"
+              cvss:
+                version: "V3"
+                value: 9.0
+              references: []
+              resolution: "PATCHED"
+              introduced: "2019-01-01"
+              fixed: "2019-01-03"
+              published: "2019-01-03"
+              vulnerableVersions:
+                - versionStart: 1.0.0
+                  versionEnd: 1.1.0
+    expectedScore:
+      type: "DoubleInterval"
+      from: 5.0
+      openLeft: false
+      negativeInfinity: false
+      to: 6.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel:
+      - "OssArtifactSecurityRating$ArtifactSecurityLabel"
+      - "MODERATE"
+    alias: "moderate_project_good_artifact"
+
+  # Test vectors for: BAD project security, GOOD artifact security
+  - type: "StandardTestVector"
+    values:
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project uses FindSecBugs"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses OWASP Java Encoder"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs CodeQL checks for commits"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project has a security team"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project belongs to Apache Foundation"
+        flag: false
+      - type: "LgtmGradeValue"
+        feature:
+          type: "LgtmGradeFeature"
+          name: "The worst LGTM grade of a project"
+        value: "E"
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses Dependabot"
+        flag: false
+      - type: "VulnerabilitiesValue"
+        vulnerabilities:
+          entries:
+            - id: "VULN-123-1"
+              cvss:
+                version: "V3"
+                value: 9.0
+              references: []
+              resolution: "PATCHED"
+              introduced: "2019-01-01"
+              fixed: "2019-01-03"
+              published: "2019-01-03"
+              vulnerableVersions:
+                - versionStart: 1.0.0
+                  versionEnd: 1.1.0
+    expectedScore:
+      type: "DoubleInterval"
+      from: 4.0
+      openLeft: false
+      negativeInfinity: false
+      to: 5.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel:
+      - "OssArtifactSecurityRating$ArtifactSecurityLabel"
+      - "BAD"
+    alias: "bad_project_good_artifact"

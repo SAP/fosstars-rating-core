@@ -1,6 +1,7 @@
 package com.sap.oss.phosphor.fosstars.advice;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.sap.oss.phosphor.fosstars.model.Feature;
@@ -152,6 +153,23 @@ public class AdviceContentYamlStorage {
       this.name = name;
       this.url = url;
     }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (o.getClass() != getClass()) {
+        return false;
+      }
+      RawLink rawLink = (RawLink) o;
+      return Objects.equals(name, rawLink.name) && Objects.equals(url, rawLink.url);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(name, url);
+    }
   }
 
   /**
@@ -183,10 +201,10 @@ public class AdviceContentYamlStorage {
      */
     @JsonCreator
     RawAdviceContent(
-        @JsonProperty("advice") String advice, @JsonProperty("links") List<RawLink> links) {
+        @JsonProperty("advice") String advice,
+        @JsonProperty(value = "links") List<RawLink> links) {
 
       Objects.requireNonNull(advice, "Oh no! Advice is null!");
-      Objects.requireNonNull(advice, "Oh no! Links is null!");
 
       advice = advice.trim();
       if (advice.isEmpty()) {
@@ -194,7 +212,17 @@ public class AdviceContentYamlStorage {
       }
 
       this.advice = advice;
-      this.links = new ArrayList<>(links);
+      this.links = new ArrayList<>(links != null ? links : Collections.emptyList());
+    }
+
+    @JsonGetter("advice")
+    private String advice() {
+      return advice;
+    }
+
+    @JsonGetter("links")
+    private List<RawLink> links() {
+      return new ArrayList<>(links);
     }
 
     /**
@@ -273,5 +301,22 @@ public class AdviceContentYamlStorage {
       return string;
     }
 
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (o.getClass() != getClass()) {
+        return false;
+      }
+      RawAdviceContent content = (RawAdviceContent) o;
+      return Objects.equals(advice, content.advice)
+          && Objects.equals(links, content.links);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(advice, links);
+    }
   }
 }

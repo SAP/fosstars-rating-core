@@ -80,6 +80,15 @@ public class Vulnerabilities implements Iterable<Vulnerability> {
     this.entries.addAll(vulnerabilities.entries);
   }
 
+  /**
+   * Number of vulnerabilities.
+   *
+   * @return number of vulnerabilities
+   */
+  public int size() {
+    return this.entries.size();
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {

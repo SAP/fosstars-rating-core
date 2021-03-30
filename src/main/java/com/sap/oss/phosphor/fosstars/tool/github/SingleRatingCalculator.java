@@ -75,12 +75,18 @@ public class SingleRatingCalculator implements RatingCalculator {
 
   @Override
   public SingleRatingCalculator calculateFor(GitHubProject project) {
+    return calculateFor(project, ValueHashSet.empty());
+  }
+
+  @Override
+  public SingleRatingCalculator calculateFor(GitHubProject project, ValueSet knownValues) {
     Objects.requireNonNull(project, "Oh no! Project can't be null!");
 
     LOGGER.info("Let's gather info and calculate a rating for:");
     LOGGER.info("  {}", project.scm());
 
     ValueSet values = ValueHashSet.unknown(rating.allFeatures());
+    values.update(knownValues);
     for (DataProvider<GitHubProject> provider : providers) {
 
       // skip data providers that talk to users but the callback doesn't allow that

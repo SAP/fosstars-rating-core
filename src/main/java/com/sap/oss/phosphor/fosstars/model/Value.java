@@ -2,6 +2,7 @@ package com.sap.oss.phosphor.fosstars.model;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersionsValue;
 import com.sap.oss.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.oss.phosphor.fosstars.model.value.DateValue;
 import com.sap.oss.phosphor.fosstars.model.value.DoubleValue;
@@ -15,6 +16,7 @@ import com.sap.oss.phosphor.fosstars.model.value.OwaspDependencyCheckCvssThresho
 import com.sap.oss.phosphor.fosstars.model.value.OwaspDependencyCheckUsageValue;
 import com.sap.oss.phosphor.fosstars.model.value.PackageManagersValue;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
+import com.sap.oss.phosphor.fosstars.model.value.StringValue;
 import com.sap.oss.phosphor.fosstars.model.value.UnknownValue;
 import com.sap.oss.phosphor.fosstars.model.value.VulnerabilitiesValue;
 
@@ -38,6 +40,8 @@ import com.sap.oss.phosphor.fosstars.model.value.VulnerabilitiesValue;
     @JsonSubTypes.Type(value = LgtmGradeValue.class),
     @JsonSubTypes.Type(value = LanguagesValue.class),
     @JsonSubTypes.Type(value = PackageManagersValue.class),
+    @JsonSubTypes.Type(value = StringValue.class),
+    @JsonSubTypes.Type(value = ArtifactVersionsValue.class),
     @JsonSubTypes.Type(value = OwaspDependencyCheckUsageValue.class),
     @JsonSubTypes.Type(value = OwaspDependencyCheckCvssThresholdValue.class)
 })

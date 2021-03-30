@@ -19,6 +19,7 @@ import com.sap.oss.phosphor.fosstars.data.github.NumberOfWatchers;
 import com.sap.oss.phosphor.fosstars.data.github.OwaspSecurityLibraries;
 import com.sap.oss.phosphor.fosstars.data.github.PackageManagement;
 import com.sap.oss.phosphor.fosstars.data.github.ProgrammingLanguages;
+import com.sap.oss.phosphor.fosstars.data.github.ReleasesFromGitHub;
 import com.sap.oss.phosphor.fosstars.data.github.SignsJarArtifacts;
 import com.sap.oss.phosphor.fosstars.data.github.UseReuseDataProvider;
 import com.sap.oss.phosphor.fosstars.data.github.UsesDependabot;
@@ -88,6 +89,7 @@ public class DataProviderSelector {
         new SignsJarArtifacts(fetcher),
         new OwaspSecurityLibraries(fetcher),
         new UseReuseDataProvider(fetcher),
+        new ReleasesFromGitHub(fetcher),
 
         // currently interactive data provider have to be added to the end, see issue #133
         new AskAboutSecurityTeam<>(),

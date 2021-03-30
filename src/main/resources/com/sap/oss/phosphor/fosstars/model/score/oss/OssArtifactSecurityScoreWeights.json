@@ -1,0 +1,20 @@
+{
+  "values" : {
+    "com.sap.oss.phosphor.fosstars.model.score.oss.ArtifactVersionUpToDateScore" : {
+      "type" : "MutableWeight",
+      "value" : 0.1
+    },
+    "com.sap.oss.phosphor.fosstars.model.score.oss.ArtifactLatestReleaseAgeScore" : {
+      "type" : "MutableWeight",
+      "value" : 0.1
+    },
+    "com.sap.oss.phosphor.fosstars.model.score.oss.ArtifactReleaseHistoryScore" : {
+      "type" : "MutableWeight",
+      "value" : 0.5
+    },
+    "com.sap.oss.phosphor.fosstars.model.score.oss.ArtifactVersionVulnerabilityScore" : {
+      "type" : "MutableWeight",
+      "value" : 1.0
+    }
+  }
+}

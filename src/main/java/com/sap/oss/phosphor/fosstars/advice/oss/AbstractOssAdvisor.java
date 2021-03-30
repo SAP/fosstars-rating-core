@@ -4,6 +4,7 @@ import static com.sap.oss.phosphor.fosstars.advice.oss.OssAdviceContentYamlStora
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.findValue;
 
 import com.sap.oss.phosphor.fosstars.advice.Advice;
+import com.sap.oss.phosphor.fosstars.advice.AdviceContext;
 import com.sap.oss.phosphor.fosstars.advice.Advisor;
 import com.sap.oss.phosphor.fosstars.advice.SimpleAdvice;
 import com.sap.oss.phosphor.fosstars.advice.oss.OssAdviceContentYamlStorage.OssAdviceContext;
@@ -57,7 +58,7 @@ public abstract class AbstractOssAdvisor implements Advisor {
       return Collections.emptyList();
     }
 
-    return adviseFor(
+    return adviceFor(
         subject,
         subject.ratingValue().get().scoreValue().usedFeatureValues(),
         contextFactory.contextFor(subject));
@@ -71,7 +72,7 @@ public abstract class AbstractOssAdvisor implements Advisor {
    * @param context An advice context.
    * @return A list of advice.
    */
-  protected abstract List<Advice> adviseFor(
+  protected abstract List<Advice> adviceFor(
       Subject subject, List<Value<?>> usedValues, OssAdviceContext context);
 
   /**
@@ -84,11 +85,11 @@ public abstract class AbstractOssAdvisor implements Advisor {
    * @return A list of advice.
    */
   protected List<Advice> adviseForBooleanFeature(
-      List<Value<?>> values, Feature<Boolean> feature, Subject subject, OssAdviceContext context) {
+      List<Value<?>> values, Feature<Boolean> feature, Subject subject, AdviceContext context) {
 
     return findValue(values, feature)
         .filter(AbstractOssAdvisor::knownFalseValue)
-        .map(value -> adviceStorage.adviseFor(value.feature(), context)
+        .map(value -> adviceStorage.adviceFor(value.feature(), context)
             .stream()
             .map(content -> new SimpleAdvice(subject, value, content))
             .map(Advice.class::cast)

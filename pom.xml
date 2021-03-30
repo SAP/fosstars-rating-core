@@ -81,6 +81,7 @@
     <version.httpclient>4.5.13</version.httpclient>
     <version.junit>4.13.2</version.junit>
     <version.mockito-core>3.8.0</version.mockito-core>
+    <version.packageurl-java>1.2.0</version.packageurl-java>
     <version.commons-collections4>4.4</version.commons-collections4>
     <version.org.eclipse.jgit>5.11.0.202103091610-r</version.org.eclipse.jgit>
     <version.commons-text>1.9</version.commons-text>
@@ -233,6 +234,23 @@
         </plugins>
       </build>
     </profile>
+    <profile>
+      <id>develop</id>
+      <properties>
+        <checkstyle.skip>true</checkstyle.skip>
+        <maven.javadoc.skip>true</maven.javadoc.skip>
+        <skipAssembly>true</skipAssembly>
+      </properties>
+    </profile>
+    <profile>
+      <id>quick-assemble</id>
+      <properties>
+        <checkstyle.skip>true</checkstyle.skip>
+        <maven.javadoc.skip>true</maven.javadoc.skip>
+        <skipAssembly>false</skipAssembly>
+        <skipTests>true</skipTests>
+      </properties>
+    </profile>
   </profiles>
 
   <dependencies>
@@ -275,6 +293,11 @@
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-model</artifactId>
       <version>${version.maven-model}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.github.package-url</groupId>
+      <artifactId>packageurl-java</artifactId>
+      <version>${version.packageurl-java}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>

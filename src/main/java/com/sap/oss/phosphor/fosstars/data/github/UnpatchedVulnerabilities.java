@@ -89,6 +89,7 @@ public class UnpatchedVulnerabilities
   Vulnerabilities vulnerabilitiesFromNvdFor(GitHubProject project) throws IOException {
     Vulnerabilities vulnerabilities = new Vulnerabilities();
     for (NvdEntry entry : nvd.search(NvdEntryMatcher.entriesFor(project))) {
+      logger.debug("Found entry {}", entry.getCve());
       if (isUnpatched(entry, project)) {
         vulnerabilities.add(
             Vulnerability.Builder.from(entry)

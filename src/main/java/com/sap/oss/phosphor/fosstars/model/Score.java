@@ -8,6 +8,10 @@ import com.sap.oss.phosphor.fosstars.model.score.WeightedCompositeScore;
 import com.sap.oss.phosphor.fosstars.model.score.example.ProjectActivityScoreExample;
 import com.sap.oss.phosphor.fosstars.model.score.example.SecurityScoreExample;
 import com.sap.oss.phosphor.fosstars.model.score.example.SecurityTestingScoreExample;
+import com.sap.oss.phosphor.fosstars.model.score.oss.ArtifactLatestReleaseAgeScore;
+import com.sap.oss.phosphor.fosstars.model.score.oss.ArtifactReleaseHistoryScore;
+import com.sap.oss.phosphor.fosstars.model.score.oss.ArtifactVersionUpToDateScore;
+import com.sap.oss.phosphor.fosstars.model.score.oss.ArtifactVersionVulnerabilityScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.CommunityCommitmentScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.DependabotScore;
@@ -17,6 +21,7 @@ import com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore;
+import com.sap.oss.phosphor.fosstars.model.score.oss.OssArtifactSecurityScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.OssSecurityScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.OwaspDependencyScanScore;
@@ -66,7 +71,12 @@ import java.util.Set;
     @JsonSubTypes.Type(value = DependabotScore.class),
     @JsonSubTypes.Type(value = OwaspDependencyScanScore.class),
     @JsonSubTypes.Type(value = VulnerabilityDiscoveryAndSecurityTestingScore.class),
-    @JsonSubTypes.Type(value = OssRulesOfPlayScore.class)
+    @JsonSubTypes.Type(value = OssArtifactSecurityScore.class),
+    @JsonSubTypes.Type(value = OssRulesOfPlayScore.class),
+    @JsonSubTypes.Type(value = ArtifactLatestReleaseAgeScore.class),
+    @JsonSubTypes.Type(value = ArtifactVersionUpToDateScore.class),
+    @JsonSubTypes.Type(value = ArtifactVersionVulnerabilityScore.class),
+    @JsonSubTypes.Type(value = ArtifactReleaseHistoryScore.class)
 })
 public interface Score extends Feature<Double> {
 

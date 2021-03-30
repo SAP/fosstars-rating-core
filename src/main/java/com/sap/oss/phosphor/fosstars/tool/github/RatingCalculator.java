@@ -2,6 +2,7 @@ package com.sap.oss.phosphor.fosstars.tool.github;
 
 import com.sap.oss.phosphor.fosstars.data.UserCallback;
 import com.sap.oss.phosphor.fosstars.data.ValueCache;
+import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.io.IOException;
 
@@ -34,4 +35,14 @@ public interface RatingCalculator {
    * @throws IOException If something went wrong.
    */
   RatingCalculator calculateFor(GitHubProject project) throws IOException;
+
+  /**
+   * Calculate a rating and assign it to a project.
+   *
+   * @param project The project.
+   * @param knownValues Already known values.
+   * @return The same calculator.
+   * @throws IOException If something went wrong.
+   */
+  RatingCalculator calculateFor(GitHubProject project, ValueSet knownValues) throws IOException;
 }

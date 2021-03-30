@@ -73,7 +73,7 @@ public class OssSecurityRatingMarkdownFormatter extends CommonFormatter {
       return StringUtils.EMPTY;
     }
 
-    return print(subject.ratingValue().get(), adviseFor(subject));
+    return print(subject.ratingValue().get(), adviceFor(subject));
   }
 
   @Override
@@ -177,7 +177,7 @@ public class OssSecurityRatingMarkdownFormatter extends CommonFormatter {
    * @param subject The subject.
    * @return Advice to be displayed.
    */
-  private String adviseFor(Subject subject) {
+  private String adviceFor(Subject subject) {
     List<Advice> adviceList = advisor.adviseFor(subject);
     if (adviceList.isEmpty()) {
       return StringUtils.EMPTY;

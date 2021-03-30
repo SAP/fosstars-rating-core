@@ -144,11 +144,11 @@ public class GitHubProject extends AbstractSubject implements OpenSourceProject 
    */
   public static GitHubProject parse(String urlString) throws IOException {
     URL url = new URL(urlString);
-    String[] parts = url.getPath().split("/");
-    if (parts.length != 3) {
+    if (!url.getHost().equals("github.com")) {
       throw new IllegalArgumentException(
-          String.format("The URL doesn't seem to be correct: %s", urlString));
+          String.format("The host name is not github.com: %s", urlString));
     }
+    String[] parts = url.getPath().split("/");
     String name = parts[2];
     if (name.endsWith(".git")) {
       name = name.substring(0, name.length() - 4);
@@ -163,7 +163,8 @@ public class GitHubProject extends AbstractSubject implements OpenSourceProject 
    * @return True if the URL points to GitHub, false otherwise.
    */
   public static boolean isOnGitHub(String url) {
-    return url != null && url.startsWith("https://github.com/");
+    return url != null
+        && (url.startsWith("https://github.com/") || url.startsWith("http://github.com/"));
   }
 
   /**
