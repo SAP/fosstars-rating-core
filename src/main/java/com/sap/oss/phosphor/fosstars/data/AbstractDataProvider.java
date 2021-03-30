@@ -2,6 +2,7 @@ package com.sap.oss.phosphor.fosstars.data;
 
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Objects;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -74,6 +75,11 @@ public abstract class AbstractDataProvider<T> implements DataProvider<T> {
   @Override
   public AbstractDataProvider<T> set(ValueCache<T> cache) {
     this.cache = Objects.requireNonNull(cache, "Hey! Cache can't be null!");
+    return this;
+  }
+
+  @Override
+  public DataProvider<T> configure(Path config) {
     return this;
   }
 }

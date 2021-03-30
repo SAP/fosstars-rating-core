@@ -2,7 +2,9 @@ package com.sap.oss.phosphor.fosstars.data;
 
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
+import com.sap.oss.phosphor.fosstars.tool.github.DataProviderSelector;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Set;
 
 /**
@@ -63,4 +65,13 @@ public interface DataProvider<T> {
    * @return A set of features that the provider can fill out.
    */
   Set<Feature<?>> supportedFeatures();
+
+  /**
+   * Load a configuration from a file.
+   *
+   * @param config The config file.
+   * @return This data provider.
+   * @throws IOException If something went wrong.
+   */
+  DataProvider<T> configure(Path config) throws IOException;
 }
