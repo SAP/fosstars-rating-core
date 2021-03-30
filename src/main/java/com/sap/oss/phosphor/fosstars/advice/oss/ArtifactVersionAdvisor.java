@@ -13,6 +13,7 @@ import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersions;
+import java.net.MalformedURLException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -35,7 +36,8 @@ public class ArtifactVersionAdvisor extends AbstractOssAdvisor {
 
   @Override
   protected List<Advice> adviceFor(
-      Subject subject, List<Value<?>> usedValues, OssAdviceContext context) {
+      Subject subject, List<Value<?>> usedValues, OssAdviceContext context)
+      throws MalformedURLException {
 
     Optional<Value<String>> versionValue = findValue(usedValues, VERSION);
     Optional<Value<ArtifactVersions>> releasedVersionsValue = findValue(usedValues,
