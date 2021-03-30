@@ -1,7 +1,0 @@
-cache: .fosstars/project_rating_cache.json
-reports:
-  - type: markdown
-    where: ./
-finder:
-  organizations:
-    - name: SAP
