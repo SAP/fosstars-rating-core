@@ -5,3 +5,4 @@ reports:
 finder:
   organizations:
     - name: SAP
+      stars: 30
