@@ -4,15 +4,23 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ALLOWE
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_LICENSE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.LICENSE_HAS_DISALLOWED_CONTENT;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
+import static java.util.Collections.emptyList;
+import static java.util.Collections.singletonList;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
+import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -76,6 +84,15 @@ public class LicenseInfo extends GitHubCachingDataProvider {
     knownLicenseFiles.addAll(Arrays.asList(files));
 
     return this;
+  }
+
+  /**
+   * Returns a list of allowed license headers.
+   *
+   * @return A list of allowed license headers.
+   */
+  List<String> allowedLicenseHeaders() {
+    return new ArrayList<>(allowedLicenseHeaders);
   }
 
   /**
@@ -191,5 +208,69 @@ public class LicenseInfo extends GitHubCachingDataProvider {
     line = line.toLowerCase();
     return disallowedLicenseContentPatterns.stream()
         .map(String::toLowerCase).anyMatch(line::contains);
+  }
+
+  /**
+   * Reads a configuration from a YAML file.
+   *
+   * @param path A path to the YAML file.
+   * @return This data provider.
+   * @throws IOException If something went wrong.
+   */
+  @Override
+  public LicenseInfo configure(Path path) throws IOException {
+    return configure(Files.newInputStream(path));
+  }
+
+  /**
+   * Reads a configuration from YAML.
+   *
+   * @param is An input stream with YAML.
+   * @return This data provider.
+   * @throws IOException If something went wrong.
+   */
+  LicenseInfo configure(InputStream is) throws IOException {
+    JsonNode config = Yaml.mapper().readTree(is);
+
+    this.allowedLicenseHeaders.clear();
+    this.allowedLicenseHeaders.addAll(allowedLicenseHeadersIn(config));
+
+    return this;
+  }
+
+  /**
+   * Read allowed license header from a config.
+   *
+   * @param config The config.
+   * @return A list of allowed license headers if available.
+   * @throws IOException If the config is not correct, or something else went wrong.
+   */
+  static List<String> allowedLicenseHeadersIn(JsonNode config)
+      throws IOException {
+
+    if (!config.has("allowedLicenseHeaders")) {
+      return emptyList();
+    }
+
+    JsonNode node = config.get("allowedLicenseHeaders");
+    if (node.isTextual()) {
+      return singletonList(node.asText());
+    }
+
+    if (!node.isArray()) {
+      throw new IOException("Oops! allowedLicenseHeaders is not an array and not a string!");
+    }
+
+    List<String> headers = new ArrayList<>();
+    Iterator<JsonNode> iterator = node.elements();
+    while (iterator.hasNext()) {
+      JsonNode element = iterator.next();
+      if (!element.isTextual()) {
+        throw new IOException("Oops! Element of allowedLicenseHeaders is not a string!");
+      }
+      headers.add(element.asText());
+    }
+
+    return headers;
   }
 }

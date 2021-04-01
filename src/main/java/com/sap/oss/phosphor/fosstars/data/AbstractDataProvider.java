@@ -79,7 +79,7 @@ public abstract class AbstractDataProvider<T> implements DataProvider<T> {
   }
 
   @Override
-  public DataProvider<T> configure(Path config) {
+  public DataProvider<T> configure(Path config) throws IOException {
     return this;
   }
 }

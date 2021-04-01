@@ -3,6 +3,8 @@ package com.sap.oss.phosphor.fosstars.data.github;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ALLOWED_LICENSE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_LICENSE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.LICENSE_HAS_DISALLOWED_CONTENT;
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -18,6 +20,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
+import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
 public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
@@ -131,5 +134,58 @@ public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
     something = values.of(LICENSE_HAS_DISALLOWED_CONTENT);
     assertTrue(something.isPresent());
     assertTrue(something.get().isUnknown());
+  }
+
+  @Test
+  public void testConfigureWithCorrectConfig() throws IOException {
+    LicenseInfo provider = new LicenseInfo(fetcher);
+    provider.configure(IOUtils.toInputStream(
+              "---\n"
+            + "  allowedLicenseHeaders:\n"
+            + "    - Apache License 2.0\n"
+            + "    - MIT License"));
+    assertEquals(2, provider.allowedLicenseHeaders().size());
+    assertThat(provider.allowedLicenseHeaders(), hasItem("Apache License 2.0"));
+    assertThat(provider.allowedLicenseHeaders(), hasItem("MIT License"));
+  }
+
+  @Test
+  public void testConfigureWithEmptyAllowedLicenseHeaders() throws IOException {
+    LicenseInfo provider = new LicenseInfo(fetcher);
+    provider.configure(IOUtils.toInputStream(
+              "---\n"
+            + "  allowedLicenseHeaders: []"));
+    assertTrue(provider.allowedLicenseHeaders().isEmpty());
+  }
+
+  @Test
+  public void testConfigureWithNoAllowedLicenseHeaders() throws IOException {
+    LicenseInfo provider = new LicenseInfo(fetcher);
+    provider.configure(IOUtils.toInputStream(
+              "---\n"
+            + "  something: else"));
+    assertTrue(provider.allowedLicenseHeaders().isEmpty());
+  }
+
+  @Test
+  public void testConfigureWithOneAllowedLicenseHeader() throws IOException {
+    LicenseInfo provider = new LicenseInfo(fetcher);
+    provider.configure(IOUtils.toInputStream(
+              "---\n"
+            + "  allowedLicenseHeaders: Apache License 2.0"));
+    assertEquals(1, provider.allowedLicenseHeaders().size());
+    assertThat(provider.allowedLicenseHeaders(), hasItem("Apache License 2.0"));
+  }
+
+  @Test(expected = IOException.class)
+  public void testConfigureWithInvalidAllowedLicenseHeaders() throws IOException {
+    LicenseInfo provider = new LicenseInfo(fetcher);
+    provider.configure(IOUtils.toInputStream(
+              "---\n"
+            + "  allowedLicenseHeaders:\n"
+            + "    object:\n"
+            + "      something: else"));
+    assertEquals(1, provider.allowedLicenseHeaders().size());
+    assertThat(provider.allowedLicenseHeaders(), hasItem("Apache License 2.0"));
   }
 }
