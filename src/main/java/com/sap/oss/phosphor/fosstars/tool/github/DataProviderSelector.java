@@ -123,13 +123,22 @@ public class DataProviderSelector {
   }
 
   /**
-   * Configure a data provider.
+   * Look for a data provider that can accept a config, and pass the config to this data provider.
+   * The following condition is used to select a data provider:
+   * provider's simple or canonical class name is equal to the config's name without the extension.
    *
-   * @param path A config file
+   * @param path A config file.
    * @throws IOException If something went wrong.
    */
   private void loadConfigFrom(Path path) throws IOException {
-
+    String filename = path.getFileName().getFileName().toString();
+    String name = filename.contains(".") ? filename.split("\\.")[0] : filename;
+    for (DataProvider<GitHubProject> provider : providers) {
+      Class<?> clazz = provider.getClass();
+      if (clazz.getSimpleName().equals(name) || clazz.getCanonicalName().equals(name)) {
+        provider.configure(path);
+      }
+    }
   }
 
   /**

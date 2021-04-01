@@ -25,6 +25,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import org.apache.commons.io.IOUtils;
 
 /**
  * This data provider gathers info about project's license. It fills out the following features:
@@ -48,14 +52,14 @@ public class LicenseInfo extends GitHubCachingDataProvider {
   private final List<String> knownLicenseFiles = new ArrayList<>();
 
   /**
-   * A list of allowed license headers.
+   * A list of patterns for matching a valid license.
    */
-  private final List<String> allowedLicenseHeaders = new ArrayList<>();
+  private final List<Pattern> allowedLicensePatterns = new ArrayList<>();
 
   /**
    * A list of patterns that are not allowed in licenses.
    */
-  private final List<String> disallowedLicenseContentPatterns = new ArrayList<>();
+  private final List<Pattern> disallowedLicenseContentPatterns = new ArrayList<>();
 
   /**
    * Initializes a data provider.
@@ -91,25 +95,37 @@ public class LicenseInfo extends GitHubCachingDataProvider {
    *
    * @return A list of allowed license headers.
    */
-  List<String> allowedLicenseHeaders() {
-    return new ArrayList<>(allowedLicenseHeaders);
+  List<Pattern> allowedLicensePatterns() {
+    return new ArrayList<>(allowedLicensePatterns);
   }
 
   /**
-   * Set a list of allowed license headers.
+   * Set a list of patterns for matching an allowed licence.
    *
-   * @param headers The headers.
+   * @param patterns The patterns.
    * @return This data provider.
    */
-  public LicenseInfo allowedLicenseHeaders(String... headers) {
-    Objects.requireNonNull(headers, "Oops! Headers is null");
-    allowedLicenseHeaders.clear();
-    allowedLicenseHeaders.addAll(Arrays.asList(headers));
+  public LicenseInfo allowedLicensePatterns(String... patterns) {
+    return allowedLicensePatterns(Arrays.asList(patterns));
+  }
+
+  /**
+   * Set a list of patterns for matching an allowed licence.
+   *
+   * @param patterns The patterns.
+   * @return This data provider.
+   */
+  public LicenseInfo allowedLicensePatterns(List<String> patterns) {
+    Objects.requireNonNull(patterns, "Oops! Patterns is null");
+    allowedLicensePatterns.clear();
+    allowedLicensePatterns.addAll(
+        patterns.stream()
+            .map(pattern -> Pattern.compile(pattern, Pattern.DOTALL)).collect(Collectors.toList()));
     return this;
   }
 
   /**
-   * Set a list of patterns that are not allowed in licenses.
+   * Set a list of patterns for detecting not-allowed content in a license.
    *
    * @param patterns The patterns.
    * @return This data provider.
@@ -117,7 +133,9 @@ public class LicenseInfo extends GitHubCachingDataProvider {
   public LicenseInfo disallowedLicenseContentPatterns(String... patterns) {
     Objects.requireNonNull(patterns, "Oops! Patterns can't be null!");
     disallowedLicenseContentPatterns.clear();
-    disallowedLicenseContentPatterns.addAll(Arrays.asList(patterns));
+    disallowedLicenseContentPatterns.addAll(
+        Stream.of(patterns)
+            .map(pattern -> Pattern.compile(pattern, Pattern.DOTALL)).collect(Collectors.toList()));
     return this;
   }
 
@@ -130,9 +148,11 @@ public class LicenseInfo extends GitHubCachingDataProvider {
   protected ValueSet fetchValuesFor(GitHubProject project) throws IOException {
     logger.info("Gathering info about project's license ...");
 
-    Optional<List<String>> license = lookForLicenseIn(project);
+    Optional<String> license = lookForLicenseIn(project);
     if (!license.isPresent()) {
-      return ValueHashSet.from(HAS_LICENSE.value(false), ALLOWED_LICENSE.unknown(),
+      return ValueHashSet.from(
+          HAS_LICENSE.value(false),
+          ALLOWED_LICENSE.unknown(),
           LICENSE_HAS_DISALLOWED_CONTENT.unknown());
     }
 
@@ -150,13 +170,13 @@ public class LicenseInfo extends GitHubCachingDataProvider {
    * @return Content of the license if found.
    * @throws IOException If something went wrong.
    */
-  private Optional<List<String>> lookForLicenseIn(GitHubProject project) throws IOException {
+  private Optional<String> lookForLicenseIn(GitHubProject project) throws IOException {
     LocalRepository repository = GitHubDataFetcher.localRepositoryFor(project);
 
     for (String path : knownLicenseFiles) {
-      Optional<List<String>> content = repository.readLinesOf(path);
+      Optional<InputStream> content = repository.read(path);
       if (content.isPresent()) {
-        return content;
+        return Optional.of(IOUtils.toString(content.get()));
       }
     }
 
@@ -169,45 +189,18 @@ public class LicenseInfo extends GitHubCachingDataProvider {
    * @param content Content of the license.
    * @return A set of values.
    */
-  ValueSet infoAboutLicense(List<String> content) {
+  ValueSet infoAboutLicense(String content) {
     ValueSet values = ValueHashSet.from(
         ALLOWED_LICENSE.value(false), LICENSE_HAS_DISALLOWED_CONTENT.value(false));
 
-    String header = headerOf(content).toLowerCase();
     values.update(ALLOWED_LICENSE.value(
-        allowedLicenseHeaders.stream().map(String::toLowerCase).anyMatch(header::contains)));
-    values.update(LICENSE_HAS_DISALLOWED_CONTENT.value(content.stream().anyMatch(this::isWrong)));
+        allowedLicensePatterns.stream()
+            .allMatch(pattern -> pattern.matcher(content).find())));
+    values.update(LICENSE_HAS_DISALLOWED_CONTENT.value(
+        disallowedLicenseContentPatterns.stream()
+            .anyMatch(pattern -> pattern.matcher(content).find())));
 
     return values;
-  }
-
-  /**
-   * Looks for the first not-empty string in a text.
-   *
-   * @param content The text.
-   * @return The first not-empty string.
-   * @throws IllegalArgumentException If nothing found.
-   */
-  static String headerOf(List<String> content) {
-    for (String line : content) {
-      if (!line.trim().isEmpty()) {
-        return line;
-      }
-    }
-
-    throw new IllegalArgumentException("Oops! No header found!");
-  }
-
-  /**
-   * Checks if a line contains {@link #disallowedLicenseContentPatterns disallowed patterns}.
-   *
-   * @param line The line to check.
-   * @return True if the line contains disallowed patterns, false otherwise.
-   */
-  boolean isWrong(String line) {
-    line = line.toLowerCase();
-    return disallowedLicenseContentPatterns.stream()
-        .map(String::toLowerCase).anyMatch(line::contains);
   }
 
   /**
@@ -231,34 +224,32 @@ public class LicenseInfo extends GitHubCachingDataProvider {
    */
   LicenseInfo configure(InputStream is) throws IOException {
     JsonNode config = Yaml.mapper().readTree(is);
-
-    this.allowedLicenseHeaders.clear();
-    this.allowedLicenseHeaders.addAll(allowedLicenseHeadersIn(config));
-
+    allowedLicensePatterns(loadAllowedLicensePatternsFrom(config));
+    // TODO: load disallowed patterns as well
     return this;
   }
 
   /**
-   * Read allowed license header from a config.
+   * Read allowed license patterns from a config.
    *
    * @param config The config.
-   * @return A list of allowed license headers if available.
+   * @return A list of allowed license patterns if available.
    * @throws IOException If the config is not correct, or something else went wrong.
    */
-  static List<String> allowedLicenseHeadersIn(JsonNode config)
+  static List<String> loadAllowedLicensePatternsFrom(JsonNode config)
       throws IOException {
 
-    if (!config.has("allowedLicenseHeaders")) {
+    if (!config.has("allowedLicensePatterns")) {
       return emptyList();
     }
 
-    JsonNode node = config.get("allowedLicenseHeaders");
+    JsonNode node = config.get("allowedLicensePatterns");
     if (node.isTextual()) {
       return singletonList(node.asText());
     }
 
     if (!node.isArray()) {
-      throw new IOException("Oops! allowedLicenseHeaders is not an array and not a string!");
+      throw new IOException("Oops! allowedLicensePatterns is not an array and not a string!");
     }
 
     List<String> headers = new ArrayList<>();
@@ -266,7 +257,7 @@ public class LicenseInfo extends GitHubCachingDataProvider {
     while (iterator.hasNext()) {
       JsonNode element = iterator.next();
       if (!element.isTextual()) {
-        throw new IOException("Oops! Element of allowedLicenseHeaders is not a string!");
+        throw new IOException("Oops! Element of allowedLicensePatterns is not a string!");
       }
       headers.add(element.asText());
     }
