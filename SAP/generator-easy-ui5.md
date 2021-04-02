@@ -8,4 +8,3 @@
 1.  If vulnerability alerts are enabled for a project on GitHub No
 1.  If a project is registered in Reuse No
 1.  Does it have a security policy? No
-1.  If a project uses an allowed license No
