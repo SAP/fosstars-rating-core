@@ -1,9 +1,57 @@
 package com.sap.oss.phosphor.fosstars.tool.format;
 
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ALLOWED_LICENSE;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ENABLED_VULNERABILITY_ALERTS_ON_GITHUB;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.FUZZED_IN_OSS_FUZZ;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_ADMIN_TEAM_ON_GITHUB;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_BUG_BOUNTY_PROGRAM;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_CONTRIBUTING_GUIDELINE;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_ENOUGH_ADMINS_ON_GITHUB;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_ENOUGH_TEAMS_ON_GITHUB;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_ENOUGH_TEAM_MEMBERS_ON_GITHUB;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_LICENSE;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_README;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_REQUIRED_TEXT_IN_CONTRIBUTING_GUIDELINE;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_REUSE_LICENSES;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_TEAM;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_TEAM_WITH_PUSH_PRIVILEGES_ON_GITHUB;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_UNRESOLVED_VULNERABILITY_ALERTS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.IS_APACHE;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.IS_ECLIPSE;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.IS_REUSE_COMPLIANT;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.LANGUAGES;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.LICENSE_HAS_DISALLOWED_CONTENT;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.OWASP_DEPENDENCY_CHECK_USAGE;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.PACKAGE_MANAGERS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.README_HAS_REUSE_INFO;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.REGISTERED_IN_REUSE;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_CODEQL_SCANS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SIGNS_ARTIFACTS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_ADDRESS_SANITIZER;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_CODEQL_CHECKS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_DEPENDABOT;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_FIND_SEC_BUGS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GITHUB_FOR_DEVELOPMENT;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM_CHECKS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_MEMORY_SANITIZER;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_NOHTTP;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_OWASP_ESAPI;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_OWASP_JAVA_ENCODER;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_OWASP_JAVA_HTML_SANITIZER;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_REUSE;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SIGNED_COMMITS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_UNDEFINED_BEHAVIOR_SANITIZER;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
+
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Value;
-import com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.oss.phosphor.fosstars.model.score.oss.CommunityCommitmentScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.DependabotScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore;
@@ -47,25 +95,40 @@ public abstract class CommonFormatter implements Formatter {
       = new HashMap<>();
 
   static {
-    FEATURE_CLASS_TO_NAME.put(OssSecurityScore.class, "Security of project");
-    FEATURE_CLASS_TO_NAME.put(CommunityCommitmentScore.class, "Community commitment");
-    FEATURE_CLASS_TO_NAME.put(ProjectActivityScore.class, "Project activity");
-    FEATURE_CLASS_TO_NAME.put(ProjectPopularityScore.class, "Project popularity");
-    FEATURE_CLASS_TO_NAME.put(ProjectSecurityAwarenessScore.class, "Security awareness");
-    FEATURE_CLASS_TO_NAME.put(ProjectSecurityTestingScore.class, "Security testing");
-    FEATURE_CLASS_TO_NAME.put(UnpatchedVulnerabilitiesScore.class, "Unpatched vulnerabilities");
-    FEATURE_CLASS_TO_NAME.put(VulnerabilityLifetimeScore.class, "Vulnerability lifetime");
-    FEATURE_CLASS_TO_NAME.put(MemorySafetyTestingScore.class, "Memory-safety testing");
-    FEATURE_CLASS_TO_NAME.put(DependabotScore.class, "Dependabot score");
-    FEATURE_CLASS_TO_NAME.put(OwaspDependencyScanScore.class, "OWASP Dependency Check score");
-    FEATURE_CLASS_TO_NAME.put(DependencyScanScore.class, "Dependency testing");
-    FEATURE_CLASS_TO_NAME.put(FuzzingScore.class, "Fuzzing");
-    FEATURE_CLASS_TO_NAME.put(StaticAnalysisScore.class, "Static analysis");
-    FEATURE_CLASS_TO_NAME.put(NoHttpToolScore.class, "nohttp tool");
-    FEATURE_CLASS_TO_NAME.put(LgtmScore.class, "LGTM score");
-    FEATURE_CLASS_TO_NAME.put(FindSecBugsScore.class, "FindSecBugs score");
-    FEATURE_CLASS_TO_NAME.put(VulnerabilityDiscoveryAndSecurityTestingScore.class,
+    add(OssSecurityScore.class, "Security of project");
+    add(CommunityCommitmentScore.class, "Community commitment");
+    add(ProjectActivityScore.class, "Project activity");
+    add(ProjectPopularityScore.class, "Project popularity");
+    add(ProjectSecurityAwarenessScore.class, "Security awareness");
+    add(ProjectSecurityTestingScore.class, "Security testing");
+    add(UnpatchedVulnerabilitiesScore.class, "Unpatched vulnerabilities");
+    add(VulnerabilityLifetimeScore.class, "Vulnerability lifetime");
+    add(MemorySafetyTestingScore.class, "Memory-safety testing");
+    add(DependabotScore.class, "Dependabot score");
+    add(OwaspDependencyScanScore.class, "OWASP Dependency Check score");
+    add(DependencyScanScore.class, "Dependency testing");
+    add(FuzzingScore.class, "Fuzzing");
+    add(StaticAnalysisScore.class, "Static analysis");
+    add(NoHttpToolScore.class, "nohttp tool");
+    add(LgtmScore.class, "LGTM score");
+    add(FindSecBugsScore.class, "FindSecBugs score");
+    add(VulnerabilityDiscoveryAndSecurityTestingScore.class,
         "Vulnerability discovery and security testing");
+  }
+
+  /**
+   * Add a caption for a feature class to {@link #FEATURE_CLASS_TO_NAME}.
+   *
+   * @param clazz The feature class.
+   * @param caption The caption.
+   * @throws IllegalArgumentException If a caption for the feature has already been added.
+   */
+  private static void add(Class<? extends Feature<?>> clazz, String caption) {
+    if (FEATURE_CLASS_TO_NAME.containsKey(clazz)) {
+      throw new IllegalArgumentException(String.format(
+          "Oops! This feature class has already been added: %s", clazz.getSimpleName()));
+    }
+    FEATURE_CLASS_TO_NAME.put(clazz, caption);
   }
 
   /**
@@ -74,74 +137,73 @@ public abstract class CommonFormatter implements Formatter {
   private static final Map<Feature<?>, String> FEATURE_TO_NAME = new HashMap<>();
 
   static {
-    FEATURE_TO_NAME.put(OssFeatures.HAS_SECURITY_TEAM, "Does it have a security team?");
-    FEATURE_TO_NAME.put(OssFeatures.HAS_SECURITY_POLICY, "Does it have a security policy?");
-    FEATURE_TO_NAME.put(OssFeatures.USES_SIGNED_COMMITS, "Does it use verified signed commits?");
-    FEATURE_TO_NAME.put(OssFeatures.VULNERABILITIES, "Info about vulnerabilities");
-    FEATURE_TO_NAME.put(OssFeatures.IS_APACHE, "Does it belong to Apache?");
-    FEATURE_TO_NAME.put(OssFeatures.IS_ECLIPSE, "Does it belong to Eclipse?");
-    FEATURE_TO_NAME.put(OssFeatures.SUPPORTED_BY_COMPANY, "Is it supported by a company?");
-    FEATURE_TO_NAME.put(OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES,
-        "Does it scan for vulnerable dependencies?");
-    FEATURE_TO_NAME.put(OssFeatures.USES_GITHUB_FOR_DEVELOPMENT,
-        "Does it use GitHub as the main development platform?");
-    FEATURE_TO_NAME.put(OssFeatures.USES_ADDRESS_SANITIZER, "Does it use AddressSanitizer?");
-    FEATURE_TO_NAME.put(OssFeatures.USES_MEMORY_SANITIZER, "Does it use MemorySanitizer?");
-    FEATURE_TO_NAME.put(OssFeatures.USES_UNDEFINED_BEHAVIOR_SANITIZER,
-        "Does it use UndefinedBehaviorSanitizer?");
-    FEATURE_TO_NAME.put(OssFeatures.USES_NOHTTP, "Does it use nohttp?");
-    FEATURE_TO_NAME.put(OssFeatures.USES_FIND_SEC_BUGS, "Does it use FindSecBugs?");
-    FEATURE_TO_NAME.put(OssFeatures.USES_OWASP_ESAPI, "Does it use OWASP ESAPI?");
-    FEATURE_TO_NAME.put(OssFeatures.USES_OWASP_JAVA_ENCODER, "Does it use OWASP Java Encoder?");
-    FEATURE_TO_NAME.put(OssFeatures.USES_OWASP_JAVA_HTML_SANITIZER,
-        "Does it use OWASP Java HTML Sanitizer?");
-    FEATURE_TO_NAME.put(OssFeatures.USES_DEPENDABOT, "Does it use Dependabot?");
-    FEATURE_TO_NAME.put(OssFeatures.USES_LGTM_CHECKS, "Does it use LGTM checks?");
-    FEATURE_TO_NAME.put(OssFeatures.HAS_BUG_BOUNTY_PROGRAM, "Does it have a bug bounty program?");
-    FEATURE_TO_NAME.put(OssFeatures.SIGNS_ARTIFACTS, "Does it sign artifacts?");
-    FEATURE_TO_NAME.put(OssFeatures.WORST_LGTM_GRADE, "The worst LGTM grade of the project");
-    FEATURE_TO_NAME.put(OssFeatures.FUZZED_IN_OSS_FUZZ, "Is it included to OSS-Fuzz?");
-    FEATURE_TO_NAME.put(OssFeatures.OWASP_DEPENDENCY_CHECK_USAGE,
-        "How is OWASP Dependency Check used?");
-    FEATURE_TO_NAME.put(OssFeatures.OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD,
+    add(HAS_SECURITY_TEAM, "Does it have a security team?");
+    add(HAS_SECURITY_POLICY, "Does it have a security policy?");
+    add(USES_SIGNED_COMMITS, "Does it use verified signed commits?");
+    add(VULNERABILITIES, "Info about vulnerabilities");
+    add(IS_APACHE, "Does it belong to Apache?");
+    add(IS_ECLIPSE, "Does it belong to Eclipse?");
+    add(SUPPORTED_BY_COMPANY, "Is it supported by a company?");
+    add(SCANS_FOR_VULNERABLE_DEPENDENCIES, "Does it scan for vulnerable dependencies?");
+    add(USES_GITHUB_FOR_DEVELOPMENT, "Does it use GitHub as the main development platform?");
+    add(USES_ADDRESS_SANITIZER, "Does it use AddressSanitizer?");
+    add(USES_MEMORY_SANITIZER, "Does it use MemorySanitizer?");
+    add(USES_UNDEFINED_BEHAVIOR_SANITIZER, "Does it use UndefinedBehaviorSanitizer?");
+    add(USES_NOHTTP, "Does it use nohttp?");
+    add(USES_FIND_SEC_BUGS, "Does it use FindSecBugs?");
+    add(USES_OWASP_ESAPI, "Does it use OWASP ESAPI?");
+    add(USES_OWASP_JAVA_ENCODER, "Does it use OWASP Java Encoder?");
+    add(USES_OWASP_JAVA_HTML_SANITIZER, "Does it use OWASP Java HTML Sanitizer?");
+    add(USES_DEPENDABOT, "Does it use Dependabot?");
+    add(USES_LGTM_CHECKS, "Does it use LGTM checks?");
+    add(HAS_BUG_BOUNTY_PROGRAM, "Does it have a bug bounty program?");
+    add(SIGNS_ARTIFACTS, "Does it sign artifacts?");
+    add(WORST_LGTM_GRADE, "The worst LGTM grade of the project");
+    add(FUZZED_IN_OSS_FUZZ, "Is it included to OSS-Fuzz?");
+    add(OWASP_DEPENDENCY_CHECK_USAGE, "How is OWASP Dependency Check used?");
+    add(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD,
         "What is the threshold for OWASP Dependency Check?");
-    FEATURE_TO_NAME.put(OssFeatures.USES_REUSE, "Does the project use REUSE?");
-    FEATURE_TO_NAME.put(OssFeatures.README_HAS_REUSE_INFO, "Does README mention REUSE?");
-    FEATURE_TO_NAME.put(OssFeatures.HAS_REUSE_LICENSES,
-        "Does it have LICENSES directory with licenses?");
-    FEATURE_TO_NAME.put(OssFeatures.REGISTERED_IN_REUSE, "Is it registered in REUSE?");
-    FEATURE_TO_NAME.put(OssFeatures.IS_REUSE_COMPLIANT, "Is it compliant with REUSE rules?");
-    FEATURE_TO_NAME.put(OssFeatures.HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT,
+    add(USES_REUSE, "Does the project use REUSE?");
+    add(README_HAS_REUSE_INFO, "Does README mention REUSE?");
+    add(HAS_REUSE_LICENSES, "Does it have LICENSES directory with licenses?");
+    add(REGISTERED_IN_REUSE, "Is it registered in REUSE?");
+    add(IS_REUSE_COMPLIANT, "Is it compliant with REUSE rules?");
+    add(HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT,
         "Does the project have open pull requests from Dependabot?");
-    FEATURE_TO_NAME.put(OssFeatures.PACKAGE_MANAGERS, "Package managers");
-    FEATURE_TO_NAME.put(OssFeatures.LANGUAGES, "Programming languages");
-    FEATURE_TO_NAME.put(OssFeatures.RUNS_CODEQL_SCANS, "Does it run CodeQL scans?");
-    FEATURE_TO_NAME.put(OssFeatures.USES_CODEQL_CHECKS,
-        "Does it use CodeQL checks for pull requests?");
-    FEATURE_TO_NAME.put(OssFeatures.HAS_LICENSE, "Does it have a license file?");
-    FEATURE_TO_NAME.put(OssFeatures.ALLOWED_LICENSE, "Does it use an allowed license?");
-    FEATURE_TO_NAME.put(OssFeatures.LICENSE_HAS_DISALLOWED_CONTENT,
-        "Does the license have disallowed content?");
-    FEATURE_TO_NAME.put(OssFeatures.HAS_README, "Does it have a README file?");
-    FEATURE_TO_NAME.put(OssFeatures.HAS_CONTRIBUTING_GUIDELINE,
-        "Does it have a contributing guideline?");
-    FEATURE_TO_NAME.put(OssFeatures.HAS_REQUIRED_TEXT_IN_CONTRIBUTING_GUIDELINE,
+    add(PACKAGE_MANAGERS, "Package managers");
+    add(LANGUAGES, "Programming languages");
+    add(RUNS_CODEQL_SCANS, "Does it run CodeQL scans?");
+    add(USES_CODEQL_CHECKS, "Does it use CodeQL checks for pull requests?");
+    add(HAS_LICENSE, "Does it have a license file?");
+    add(ALLOWED_LICENSE, "Does it use an allowed license?");
+    add(LICENSE_HAS_DISALLOWED_CONTENT, "Does the license have disallowed content?");
+    add(HAS_README, "Does it have a README file?");
+    add(HAS_CONTRIBUTING_GUIDELINE, "Does it have a contributing guideline?");
+    add(HAS_REQUIRED_TEXT_IN_CONTRIBUTING_GUIDELINE,
         "Does the contributing guideline have required text?");
-    FEATURE_TO_NAME.put(OssFeatures.HAS_ADMIN_TEAM_ON_GITHUB,
-        "Does it have an admin team on GitHub?");
-    FEATURE_TO_NAME.put(OssFeatures.HAS_ENOUGH_ADMINS_ON_GITHUB,
-        "Does it have enough admins on GitHub?");
-    FEATURE_TO_NAME.put(OssFeatures.HAS_ENOUGH_TEAMS_ON_GITHUB,
-        "Does it have enough teams on GitHub?");
-    FEATURE_TO_NAME.put(OssFeatures.HAS_ENOUGH_TEAM_MEMBERS_ON_GITHUB,
-        "Does teams have enough members on GitHub?");
-    FEATURE_TO_NAME.put(OssFeatures.HAS_TEAM_WITH_PUSH_PRIVILEGES_ON_GITHUB,
+    add(HAS_ADMIN_TEAM_ON_GITHUB, "Does it have an admin team on GitHub?");
+    add(HAS_ENOUGH_ADMINS_ON_GITHUB, "Does it have enough admins on GitHub?");
+    add(HAS_ENOUGH_TEAMS_ON_GITHUB, "Does it have enough teams on GitHub?");
+    add(HAS_ENOUGH_TEAM_MEMBERS_ON_GITHUB, "Does teams have enough members on GitHub?");
+    add(HAS_TEAM_WITH_PUSH_PRIVILEGES_ON_GITHUB,
         "Does it have a team with push privileges on GitHub?");
-    FEATURE_TO_NAME.put(OssFeatures.HAS_UNRESOLVED_VULNERABILITY_ALERTS,
-        "Does it have unresolved vulnerability alerts?");
-    FEATURE_TO_NAME.put(OssFeatures.ENABLED_VULNERABILITY_ALERTS_ON_GITHUB,
-        "Are vulnerability alerts enabled?");
+    add(HAS_UNRESOLVED_VULNERABILITY_ALERTS, "Does it have unresolved vulnerability alerts?");
+    add(ENABLED_VULNERABILITY_ALERTS_ON_GITHUB, "Are vulnerability alerts enabled?");
+  }
 
+  /**
+   * Add a caption for a feature to {@link #FEATURE_TO_NAME}.
+   *
+   * @param feature The feature.
+   * @param caption The caption.
+   * @throws IllegalArgumentException If a caption for the feature has already been added.
+   */
+  private static void add(Feature<?> feature, String caption) {
+    if (FEATURE_TO_NAME.containsKey(feature)) {
+      throw new IllegalArgumentException(
+          String.format("Oops! This feature has already been added: %s", feature.name()));
+    }
+    FEATURE_TO_NAME.put(feature, caption);
   }
 
   /**
