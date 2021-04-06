@@ -14,4 +14,3 @@
 1.  Does it have a security policy? No
 1.  If a project has a contributing guideline No
 1.  If a project has tool less members on GitHub No
-1.  If a project uses an allowed license No
