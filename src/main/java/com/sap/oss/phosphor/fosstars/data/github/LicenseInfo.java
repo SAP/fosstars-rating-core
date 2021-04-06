@@ -27,7 +27,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import org.apache.commons.io.IOUtils;
 
 /**
@@ -59,7 +58,7 @@ public class LicenseInfo extends GitHubCachingDataProvider {
   /**
    * A list of patterns that are not allowed in licenses.
    */
-  private final List<Pattern> disallowedLicenseContentPatterns = new ArrayList<>();
+  private final List<Pattern> disallowedLicensePatterns = new ArrayList<>();
 
   /**
    * Initializes a data provider.
@@ -125,16 +124,35 @@ public class LicenseInfo extends GitHubCachingDataProvider {
   }
 
   /**
+   * Returns a list of disallowed license headers.
+   *
+   * @return A list of disallowed license headers.
+   */
+  List<Pattern> disallowedLicensePatterns() {
+    return new ArrayList<>(disallowedLicensePatterns);
+  }
+
+  /**
    * Set a list of patterns for detecting not-allowed content in a license.
    *
    * @param patterns The patterns.
    * @return This data provider.
    */
-  public LicenseInfo disallowedLicenseContentPatterns(String... patterns) {
+  public LicenseInfo disallowedLicensePatterns(String... patterns) {
+    return disallowedLicensePatterns(Arrays.asList(patterns));
+  }
+
+  /**
+   * Set a list of patterns for detecting not-allowed content in a license.
+   *
+   * @param patterns The patterns.
+   * @return This data provider.
+   */
+  public LicenseInfo disallowedLicensePatterns(List<String> patterns) {
     Objects.requireNonNull(patterns, "Oops! Patterns can't be null!");
-    disallowedLicenseContentPatterns.clear();
-    disallowedLicenseContentPatterns.addAll(
-        Stream.of(patterns)
+    disallowedLicensePatterns.clear();
+    disallowedLicensePatterns.addAll(
+        patterns.stream()
             .map(pattern -> Pattern.compile(pattern, Pattern.DOTALL)).collect(Collectors.toList()));
     return this;
   }
@@ -197,7 +215,7 @@ public class LicenseInfo extends GitHubCachingDataProvider {
         allowedLicensePatterns.stream()
             .allMatch(pattern -> pattern.matcher(content).find())));
     values.update(LICENSE_HAS_DISALLOWED_CONTENT.value(
-        disallowedLicenseContentPatterns.stream()
+        disallowedLicensePatterns.stream()
             .anyMatch(pattern -> pattern.matcher(content).find())));
 
     return values;
@@ -224,44 +242,44 @@ public class LicenseInfo extends GitHubCachingDataProvider {
    */
   LicenseInfo configure(InputStream is) throws IOException {
     JsonNode config = Yaml.mapper().readTree(is);
-    allowedLicensePatterns(loadAllowedLicensePatternsFrom(config));
-    // TODO: load disallowed patterns as well
+    allowedLicensePatterns(readListFrom(config, "allowedLicensePatterns"));
+    disallowedLicensePatterns(readListFrom(config, "disallowedLicensePatterns"));
     return this;
   }
 
   /**
-   * Read allowed license patterns from a config.
+   * Reads a list from a config.
    *
    * @param config The config.
-   * @return A list of allowed license patterns if available.
-   * @throws IOException If the config is not correct, or something else went wrong.
+   * @param property A field that has the list.
+   * @return A list of elements.
+   * @throws IOException If something went wrong.
    */
-  static List<String> loadAllowedLicensePatternsFrom(JsonNode config)
-      throws IOException {
-
-    if (!config.has("allowedLicensePatterns")) {
+  private static List<String> readListFrom(JsonNode config, String property) throws IOException {
+    if (!config.has(property)) {
       return emptyList();
     }
 
-    JsonNode node = config.get("allowedLicensePatterns");
+    JsonNode node = config.get(property);
     if (node.isTextual()) {
       return singletonList(node.asText());
     }
 
     if (!node.isArray()) {
-      throw new IOException("Oops! allowedLicensePatterns is not an array and not a string!");
+      throw new IOException(
+          String.format("Oops! '%s' is not an array and not a string!", property));
     }
 
-    List<String> headers = new ArrayList<>();
+    List<String> list = new ArrayList<>();
     Iterator<JsonNode> iterator = node.elements();
     while (iterator.hasNext()) {
       JsonNode element = iterator.next();
       if (!element.isTextual()) {
-        throw new IOException("Oops! Element of allowedLicensePatterns is not a string!");
+        throw new IOException(String.format("Oops! Element of '%s' is not a string!", property));
       }
-      headers.add(element.asText());
+      list.add(element.asText());
     }
 
-    return headers;
+    return list;
   }
 }

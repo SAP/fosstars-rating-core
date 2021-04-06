@@ -27,7 +27,7 @@ public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
   public void testInfoAboutLicense() {
     LicenseInfo provider = new LicenseInfo(fetcher);
     provider.allowedLicensePatterns("Apache License");
-    provider.disallowedLicenseContentPatterns("Don't trouble trouble till trouble troubles you");
+    provider.disallowedLicensePatterns("Don't trouble trouble till trouble troubles you");
 
     ValueSet values = provider.infoAboutLicense(
         String.join("\n", "", "Apache License", "", "Here should be the text.", ""));
@@ -75,7 +75,7 @@ public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
     LicenseInfo provider = new LicenseInfo(fetcher);
 
     provider.allowedLicensePatterns("^\\s*Apache License 2\\.0(.*)$");
-    provider.disallowedLicenseContentPatterns(
+    provider.disallowedLicensePatterns(
         "Don't trouble trouble till trouble troubles you");
     ValueSet values = provider.fetchValuesFor(project);
     checkValue(values, HAS_LICENSE, true);
@@ -83,7 +83,7 @@ public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
     checkValue(values, LICENSE_HAS_DISALLOWED_CONTENT, false);
 
     provider.allowedLicensePatterns("MIT License");
-    provider.disallowedLicenseContentPatterns("Extra text");
+    provider.disallowedLicensePatterns("Extra text");
     values = provider.fetchValuesFor(project);
     checkValue(values, HAS_LICENSE, true);
     checkValue(values, ALLOWED_LICENSE, false);
@@ -101,7 +101,7 @@ public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
 
     provider.knownLicenseFiles("LICENSE");
     provider.allowedLicensePatterns("Apache License");
-    provider.disallowedLicenseContentPatterns("Don't trouble trouble till trouble troubles you");
+    provider.disallowedLicensePatterns("Don't trouble trouble till trouble troubles you");
     ValueSet values = provider.fetchValuesFor(project);
     checkValue(values, HAS_LICENSE, false);
     Optional<Value<Boolean>> something = values.of(ALLOWED_LICENSE);
@@ -117,12 +117,16 @@ public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
     LicenseInfo provider = new LicenseInfo(fetcher);
     provider.configure(IOUtils.toInputStream(
               "---\n"
-            + "  allowedLicensePatterns:\n"
-            + "    - Apache License 2.0\n"
-            + "    - MIT License"));
+            + "allowedLicensePatterns:\n"
+            + "  - Apache License 2.0\n"
+            + "  - MIT License\n"
+            + "disallowedLicensePatterns:\n"
+            + "  - Disallowed text"));
     assertEquals(2, provider.allowedLicensePatterns().size());
     assertEquals(provider.allowedLicensePatterns().get(0).pattern(), "Apache License 2.0");
     assertEquals(provider.allowedLicensePatterns().get(1).pattern(), "MIT License");
+    assertEquals(1, provider.disallowedLicensePatterns().size());
+    assertEquals(provider.disallowedLicensePatterns().get(0).pattern(), "Disallowed text");
   }
 
   @Test
@@ -130,7 +134,7 @@ public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
     LicenseInfo provider = new LicenseInfo(fetcher);
     provider.configure(IOUtils.toInputStream(
               "---\n"
-            + "  allowedLicensePatterns: []"));
+            + "allowedLicensePatterns: []"));
     assertTrue(provider.allowedLicensePatterns().isEmpty());
   }
 
@@ -139,7 +143,7 @@ public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
     LicenseInfo provider = new LicenseInfo(fetcher);
     provider.configure(IOUtils.toInputStream(
               "---\n"
-            + "  something: else"));
+            + "something: else"));
     assertTrue(provider.allowedLicensePatterns().isEmpty());
   }
 
@@ -148,7 +152,7 @@ public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
     LicenseInfo provider = new LicenseInfo(fetcher);
     provider.configure(IOUtils.toInputStream(
               "---\n"
-            + "  allowedLicensePatterns: \".*Apache.*\""));
+            + "allowedLicensePatterns: \".*Apache.*\""));
     assertEquals(1, provider.allowedLicensePatterns().size());
     assertTrue(
         provider.allowedLicensePatterns().get(0).matcher("Apache License 2.0").matches());
@@ -159,10 +163,51 @@ public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
     LicenseInfo provider = new LicenseInfo(fetcher);
     provider.configure(IOUtils.toInputStream(
               "---\n"
-            + "  allowedLicensePatterns:\n"
-            + "    object:\n"
-            + "      something: else"));
+            + "allowedLicensePatterns:\n"
+            + "  object:\n"
+            + "    something: else"));
     assertEquals(1, provider.allowedLicensePatterns().size());
     assertThat(provider.allowedLicensePatterns(), hasItem(Pattern.compile("Apache License 2.0")));
+  }
+
+  @Test
+  public void testProviderWithLoadedConfig() throws IOException {
+    GitHubProject project = new GitHubProject("test", "project");
+    LocalRepository localRepository = mock(LocalRepository.class);
+    when(localRepository.read("LICENSE"))
+        .thenReturn(Optional.of(IOUtils.toInputStream("\n"
+            + "                                 Apache License\n"
+            + "                           Version 2.0, January 2004\n"
+            + "                        http://www.apache.org/licenses/\n"
+            + "\n"
+            + "   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION")))
+        .thenReturn(Optional.of(IOUtils.toInputStream("The MIT License (MIT)\n"
+            + "\n"
+            + "Copyright (c) 1851 Fedor Dostoevsky\n"
+            + "\n"
+            + "Permission is hereby granted, free of charge, to any person obtaining a copy\n"
+            + "of this software and associated documentation files (the \"Software\"), to deal\n"
+            + "in the Software without restriction, including without limitation the rights\n"
+            + "to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n"
+            + "copies of the Software, and to permit persons to whom the Software is\n"
+            + "furnished to do so, subject to the following conditions:")));
+    TestGitHubDataFetcher.addForTesting(project, localRepository);
+
+    LicenseInfo provider = new LicenseInfo(fetcher);
+
+    provider.configure(IOUtils.toInputStream(
+              "---\n"
+            + "allowedLicensePatterns: Apache License(\\s*)Version 2.0\n"
+            + "disallowedLicensePatterns: Fedor Dostoevsky\n"));
+
+    ValueSet values = provider.fetchValuesFor(project);
+    checkValue(values, HAS_LICENSE, true);
+    checkValue(values, ALLOWED_LICENSE, true);
+    checkValue(values, LICENSE_HAS_DISALLOWED_CONTENT, false);
+
+    values = provider.fetchValuesFor(project);
+    checkValue(values, HAS_LICENSE, true);
+    checkValue(values, ALLOWED_LICENSE, false);
+    checkValue(values, LICENSE_HAS_DISALLOWED_CONTENT, true);
   }
 }
