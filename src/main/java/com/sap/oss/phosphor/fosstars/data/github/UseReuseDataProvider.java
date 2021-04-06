@@ -30,7 +30,7 @@ import org.kohsuke.github.GitHub;
 import org.kohsuke.github.GitHubBuilder;
 
 /**
- * The data provider gathers info about how a project uses Reuse tool.
+ * The data provider gathers info about how a project uses REUSE tool.
  * It fills out the following features:
  * <ul>
  *   <li>{@link OssFeatures#USES_REUSE}</li>
@@ -43,12 +43,12 @@ import org.kohsuke.github.GitHubBuilder;
 public class UseReuseDataProvider extends GitHubCachingDataProvider {
 
   /**
-   * A path to a Reuse config.
+   * A path to a REUSE config.
    */
   static final String REUSE_CONFIG = ".reuse/dep5";
 
   /**
-   * A directory where Reuse stores all licenses.
+   * A directory where REUSE stores all licenses.
    */
   static final String REUSE_LICENCES_DIRECTORY = "LICENSES";
 
@@ -69,7 +69,7 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
 
   @Override
   protected ValueSet fetchValuesFor(GitHubProject project) throws IOException {
-    logger.info("Figuring out how the project uses Reuse ...");
+    logger.info("Figuring out how the project uses REUSE ...");
     ValueSet values = ValueHashSet.from(
         useReuse(project),
         readmeHasReuseInfo(project),
@@ -79,7 +79,7 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
   }
 
   /**
-   * Check whether a project uses Reuse or not.
+   * Check whether a project uses REUSE or not.
    *
    * @param project The project.
    * @return A value of {@link OssFeatures#USES_REUSE} feature.
@@ -90,7 +90,7 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
   }
 
   /**
-   * Checks whether project's README file contains info about Reuse or not.
+   * Checks whether project's README file contains info about REUSE or not.
    *
    * @param project The project.
    * @return A value of {@link OssFeatures#README_HAS_REUSE_INFO} feature.
@@ -133,7 +133,7 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
   }
 
   /**
-   * Check if a project is registered in Reuse and its status.
+   * Check if a project is registered in REUSE and its status.
    *
    * @param project The project.
    * @return A {@link ValueSet} with {@link OssFeatures#REGISTERED_IN_REUSE}
@@ -146,14 +146,14 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
       HttpGet request = new HttpGet(url);
       try (CloseableHttpResponse response = client.execute(request)) {
         if (response.getStatusLine().getStatusCode() != 200) {
-          logger.warn("Oops! Could not fetch info from Reuse API ({})",
+          logger.warn("Oops! Could not fetch info from REUSE API ({})",
               response.getStatusLine().getStatusCode());
           return ValueHashSet.from(REGISTERED_IN_REUSE.unknown(), IS_REUSE_COMPLIANT.unknown());
         }
 
         JsonNode root = Json.mapper().readTree(response.getEntity().getContent());
         if (!root.has("status")) {
-          logger.warn("Oops! Could not get Reuse status!");
+          logger.warn("Oops! Could not get REUSE status!");
           return ValueHashSet.from(REGISTERED_IN_REUSE.unknown(), IS_REUSE_COMPLIANT.unknown());
         }
 
