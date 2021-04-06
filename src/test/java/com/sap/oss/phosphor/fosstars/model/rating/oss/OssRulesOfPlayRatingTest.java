@@ -91,7 +91,7 @@ public class OssRulesOfPlayRatingTest {
         OssRulesOfPlayLabel.FAIL);
     assertEquals(
         RATING.label(new ScoreValue(RATING.score()).set(ScoreValue.MIN).confidence(5.0)),
-        OssRulesOfPlayLabel.UNCLEAR);
+        OssRulesOfPlayLabel.FAIL);
     assertEquals(
         RATING.label(new ScoreValue(RATING.score()).set(ScoreValue.MAX).confidence(5.0)),
         OssRulesOfPlayLabel.UNCLEAR);
