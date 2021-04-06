@@ -4,8 +4,8 @@
 
 ## Violated rules
 
-1.  If a project has an admin team on GitHub No
-1.  If a project has enough admins on GitHub No
+1.  Does it have an admin team on GitHub? No
+1.  Does it have enough admins on GitHub? No
 1.  Does it have a security policy? No
-1.  If a project has enough teams on GitHub No
-1.  If a project uses an allowed license No
+1.  Does it have enough teams on GitHub? No
+1.  Does it use an allowed license? No

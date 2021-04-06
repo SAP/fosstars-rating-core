@@ -4,8 +4,8 @@
 
 ## Violated rules
 
-1.  If a project is compliant with Reuse rules No
-1.  If project's README has info about Reuse No
-1.  If a project is registered in Reuse No
-1.  If a project has a LICENSES folder with licenses No
+1.  Does it have LICENSES directory with licenses? No
 1.  Does it have a security policy? No
+1.  Does README mention REUSE? No
+1.  Is it registered in REUSE? No
+1.  Is it compliant with REUSE rules? No

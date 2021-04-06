@@ -4,5 +4,5 @@
 
 ## Violated rules
 
-1.  If a project has enough admins on GitHub No
+1.  Does it have enough admins on GitHub? No
 1.  Does it have a security policy? No

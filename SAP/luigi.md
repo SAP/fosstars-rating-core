@@ -4,5 +4,5 @@
 
 ## Violated rules
 
-1.  If a project has unresolved vulnerability alerts Yes
+1.  Does it have unresolved vulnerability alerts? Yes
 1.  Does it have a security policy? No

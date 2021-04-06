@@ -4,7 +4,7 @@
 
 ## Violated rules
 
-1.  If a project has unresolved vulnerability alerts Yes
-1.  If a project's contributing guideline has required text No
+1.  Does it have unresolved vulnerability alerts? Yes
+1.  Does the contributing guideline have required text? No
 1.  Does it have a security policy? No
-1.  If a project has a contributing guideline No
+1.  Does it have a contributing guideline? No

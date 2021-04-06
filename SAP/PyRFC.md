@@ -4,7 +4,7 @@
 
 ## Violated rules
 
-1.  If a project has a license No
-1.  If a project has enough admins on GitHub No
+1.  Does teams have enough members on GitHub? No
+1.  Does it have a license file? No
+1.  Does it have enough admins on GitHub? No
 1.  Does it have a security policy? No
-1.  If a project has tool less members on GitHub No
