@@ -15,16 +15,19 @@ import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.regex.Pattern;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
 public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
 
   @Test
-  public void testInfoAboutLicense() {
+  public void testInfoAboutLicense() throws IOException {
     LicenseInfo provider = new LicenseInfo(fetcher);
     provider.allowedLicensePatterns("Apache License");
     provider.disallowedLicensePatterns("Don't trouble trouble till trouble troubles you");
@@ -54,7 +57,7 @@ public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
   }
 
   @Test
-  public void testSupportedFeatures() {
+  public void testSupportedFeatures() throws IOException {
     LicenseInfo provider = new LicenseInfo(fetcher);
     assertTrue(provider.supportedFeatures().contains(HAS_LICENSE));
     assertTrue(provider.supportedFeatures().contains(ALLOWED_LICENSE));
@@ -209,5 +212,28 @@ public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
     checkValue(values, HAS_LICENSE, true);
     checkValue(values, ALLOWED_LICENSE, false);
     checkValue(values, LICENSE_HAS_DISALLOWED_CONTENT, true);
+  }
+
+  @Test
+  public void testLoadingDefaultConfig() throws IOException {
+    Path config = Paths.get(String.format("%s.config.yml", LicenseInfo.class.getSimpleName()));
+    String content =
+        "---\n"
+          + "allowedLicensePatterns:\n"
+          + "  - Apache License 2.0\n"
+          + "  - MIT License\n"
+          + "disallowedLicensePatterns:\n"
+          + "  - Disallowed text";
+    Files.write(config, content.getBytes());
+    try {
+      LicenseInfo provider = new LicenseInfo(fetcher);
+      assertEquals(2, provider.allowedLicensePatterns().size());
+      assertEquals(provider.allowedLicensePatterns().get(0).pattern(), "Apache License 2.0");
+      assertEquals(provider.allowedLicensePatterns().get(1).pattern(), "MIT License");
+      assertEquals(1, provider.disallowedLicensePatterns().size());
+      assertEquals(provider.disallowedLicensePatterns().get(0).pattern(), "Disallowed text");
+    } finally {
+      FileUtils.forceDeleteOnExit(config.toFile());
+    }
   }
 }

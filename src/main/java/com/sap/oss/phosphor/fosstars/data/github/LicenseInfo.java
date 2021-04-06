@@ -61,13 +61,15 @@ public class LicenseInfo extends GitHubCachingDataProvider {
   private final List<Pattern> disallowedLicensePatterns = new ArrayList<>();
 
   /**
-   * Initializes a data provider.
+   * Initializes a data provider. The constructor searches for default configs for the provider.
    *
    * @param fetcher An interface to GitHub.
+   * @throws IOException If one of the default configs could not be loaded.
    */
-  public LicenseInfo(GitHubDataFetcher fetcher) {
+  public LicenseInfo(GitHubDataFetcher fetcher) throws IOException {
     super(fetcher);
-    this.knownLicenseFiles.addAll(DEFAULT_KNOWN_LICENSE_FILES);
+    knownLicenseFiles.addAll(DEFAULT_KNOWN_LICENSE_FILES);
+    loadDefaultConfigIfAvailable();
   }
 
   /**
