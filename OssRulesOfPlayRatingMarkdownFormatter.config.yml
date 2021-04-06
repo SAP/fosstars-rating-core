@@ -1,0 +1,20 @@
+---
+ruleIds:
+  rl-license_file-1: If a project has a license
+  rl-license_file-2: If a project uses an allowed license
+  rl-license_file-3: If a license has disallowed text
+  rl-readme_file-1: If a project has a README file
+  rl-contributor_file-1: If a project has a contributing guideline
+  rl-contributor_file-2: If a project's contributing guideline has required text
+  rl-assigned_teams-1: If a project has enough teams on GitHub
+  rl-assigned_teams-2: If a project has an admin team on GitHub
+  rl-assigned_teams-3: If a project has enough admins on GitHub
+  rl-assigned_teams-4: If a project has a team with push privileges
+  rl-assigned_teams-5: If a project has enough team members on GitHub
+  rl-vulnerability_alerts-1: If vulnerability alerts are enabled for a project on GitHub
+  rl-vulnerability_alerts-2: If a project has unresolved vulnerability alerts
+  rl-reuse_tool-1: If project's README has info about REUSE
+  rl-reuse_tool-2: If a project has a LICENSES folder with licenses
+  rl-reuse_tool-3: If a project is registered in REUSE
+  rl-reuse_tool-4: If a project is compliant with REUSE rules
+  rl-security_policy-1: If an open-source project has a security policy
