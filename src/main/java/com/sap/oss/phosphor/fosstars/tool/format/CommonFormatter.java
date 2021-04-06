@@ -105,7 +105,12 @@ public abstract class CommonFormatter implements Formatter {
         "How is OWASP Dependency Check used?");
     FEATURE_TO_NAME.put(OssFeatures.OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD,
         "What is the threshold for OWASP Dependency Check?");
-    FEATURE_TO_NAME.put(OssFeatures.USES_REUSE, "Does the project use Reuse?");
+    FEATURE_TO_NAME.put(OssFeatures.USES_REUSE, "Does the project use REUSE?");
+    FEATURE_TO_NAME.put(OssFeatures.README_HAS_REUSE_INFO, "Does README mention REUSE?");
+    FEATURE_TO_NAME.put(OssFeatures.HAS_REUSE_LICENSES,
+        "Does it have LICENSES directory with licenses?");
+    FEATURE_TO_NAME.put(OssFeatures.REGISTERED_IN_REUSE, "Is it registered in REUSE?");
+    FEATURE_TO_NAME.put(OssFeatures.IS_REUSE_COMPLIANT, "Is it compliant with REUSE rules?");
     FEATURE_TO_NAME.put(OssFeatures.HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT,
         "Does the project have open pull requests from Dependabot?");
     FEATURE_TO_NAME.put(OssFeatures.PACKAGE_MANAGERS, "Package managers");
@@ -113,6 +118,30 @@ public abstract class CommonFormatter implements Formatter {
     FEATURE_TO_NAME.put(OssFeatures.RUNS_CODEQL_SCANS, "Does it run CodeQL scans?");
     FEATURE_TO_NAME.put(OssFeatures.USES_CODEQL_CHECKS,
         "Does it use CodeQL checks for pull requests?");
+    FEATURE_TO_NAME.put(OssFeatures.HAS_LICENSE, "Does it have a license file?");
+    FEATURE_TO_NAME.put(OssFeatures.ALLOWED_LICENSE, "Does it use an allowed license?");
+    FEATURE_TO_NAME.put(OssFeatures.LICENSE_HAS_DISALLOWED_CONTENT,
+        "Does the license have disallowed content?");
+    FEATURE_TO_NAME.put(OssFeatures.HAS_README, "Does it have a README file?");
+    FEATURE_TO_NAME.put(OssFeatures.HAS_CONTRIBUTING_GUIDELINE,
+        "Does it have a contributing guideline?");
+    FEATURE_TO_NAME.put(OssFeatures.HAS_REQUIRED_TEXT_IN_CONTRIBUTING_GUIDELINE,
+        "Does the contributing guideline have required text?");
+    FEATURE_TO_NAME.put(OssFeatures.HAS_ADMIN_TEAM_ON_GITHUB,
+        "Does it have an admin team on GitHub?");
+    FEATURE_TO_NAME.put(OssFeatures.HAS_ENOUGH_ADMINS_ON_GITHUB,
+        "Does it have enough admins on GitHub?");
+    FEATURE_TO_NAME.put(OssFeatures.HAS_ENOUGH_TEAMS_ON_GITHUB,
+        "Does it have enough teams on GitHub?");
+    FEATURE_TO_NAME.put(OssFeatures.HAS_ENOUGH_TEAM_MEMBERS_ON_GITHUB,
+        "Does teams have enough members on GitHub?");
+    FEATURE_TO_NAME.put(OssFeatures.HAS_TEAM_WITH_PUSH_PRIVILEGES_ON_GITHUB,
+        "Does it have a team with push privileges on GitHub?");
+    FEATURE_TO_NAME.put(OssFeatures.HAS_UNRESOLVED_VULNERABILITY_ALERTS,
+        "Does it have unresolved vulnerability alerts?");
+    FEATURE_TO_NAME.put(OssFeatures.ENABLED_VULNERABILITY_ALERTS_ON_GITHUB,
+        "Are vulnerability alerts enabled?");
+
   }
 
   /**

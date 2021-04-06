@@ -91,12 +91,9 @@ public class OssRulesOfPlayScore extends FeatureBasedScore {
       return scoreValue(MAX, usedValues).explain("No violated rules found.");
     }
 
-    return scoreValue(MIN, usedValues).explain("Found %d violated rule%s:%n%s",
+    return scoreValue(MIN, usedValues).explain("Found %d violated rule%s",
         violatedRules.size(),
-        violatedRules.size() == 1 ? "" : "s",
-        violatedRules.stream()
-            .map(value -> String.format("  %s%n", value.feature().name()))
-            .collect(Collectors.joining("\n")));
+        violatedRules.size() == 1 ? "" : "s");
   }
 
   /**

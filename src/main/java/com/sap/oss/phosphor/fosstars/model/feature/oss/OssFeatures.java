@@ -302,18 +302,18 @@ public class OssFeatures {
       = new BooleanFeature("If a project uses OWASP Java Encoder");
 
   /**
-   * Shows if an open source project uses Reuse tool.
+   * Shows if an open source project uses REUSE tool.
    *
-   * @see <a href="https://reuse.software/">Reuse Software</a>
+   * @see <a href="https://REUSE.software/">REUSE Software</a>
    */
   public static final BooleanFeature USES_REUSE
-      = new BooleanFeature("If a project uses Reuse tool");
+      = new BooleanFeature("If a project uses REUSE tool");
 
   /**
-   * Shows whether a project has info about Reuse in its README file or not.
+   * Shows whether a project has info about REUSE in its README file or not.
    */
   public static final BooleanFeature README_HAS_REUSE_INFO
-      = new BooleanFeature("If project's README has info about Reuse");
+      = new BooleanFeature("If project's README has info about REUSE");
 
   /**
    * Shows whether a project has a LICENSES folder with licenses or not.
@@ -322,18 +322,18 @@ public class OssFeatures {
       = new BooleanFeature("If a project has a LICENSES folder with licenses");
 
   /**
-   * Shows whether a project is registered in Reuse or not.
+   * Shows whether a project is registered in REUSE or not.
    *
-   * @see <a href="https://api.reuse.software/register">Register a project in Reuse</a>
+   * @see <a href="https://api.REUSE.software/register">Register a project in REUSE</a>
    */
   public static final BooleanFeature REGISTERED_IN_REUSE
-      = new BooleanFeature("If a project is registered in Reuse");
+      = new BooleanFeature("If a project is registered in REUSE");
 
   /**
-   * Shows whether a project is compliant with Reuse rules or not.
+   * Shows whether a project is compliant with REUSE rules or not.
    */
   public static final BooleanFeature IS_REUSE_COMPLIANT
-      = new BooleanFeature("If a project is compliant with Reuse rules");
+      = new BooleanFeature("If a project is compliant with REUSE rules");
 
   /**
    * Shows whether an open source project has a licence or not.
@@ -399,7 +399,7 @@ public class OssFeatures {
    * Shows whether a project has enough team members on GitHub.
    */
   public static final BooleanFeature HAS_ENOUGH_TEAM_MEMBERS_ON_GITHUB
-      = new BooleanFeature("If a project has tool less members on GitHub");
+      = new BooleanFeature("If a project has enough team members on GitHub");
 
   /**
    * Shows whether vulnerability alerts are enabled for a project on GitHub.
