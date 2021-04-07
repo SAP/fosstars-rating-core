@@ -86,8 +86,9 @@ public class OssRulesOfPlayMarkdownReporter extends AbstractReporter<GitHubProje
   @Override
   public void runFor(List<GitHubProject> projects) throws IOException {
     int total = 0;
-    long numberOfPass = 0;
-    long numberOfFail = 0;
+    long numberOfPassed = 0;
+    long numberOfWarnings = 0;
+    long numberOfFailed = 0;
     long numberOfUnclear = 0;
     for (GitHubProject project : projects) {
       Optional<RatingValue> something = project.ratingValue();
@@ -95,16 +96,24 @@ public class OssRulesOfPlayMarkdownReporter extends AbstractReporter<GitHubProje
         continue;
       }
       RatingValue ratingValue = something.get();
-      if (ratingValue.label() == OssRulesOfPlayLabel.PASSED) {
-        numberOfPass++;
-      } else if (ratingValue.label() == OssRulesOfPlayLabel.FAILED) {
-        numberOfFail++;
-      } else if (ratingValue.label() == OssRulesOfPlayLabel.UNCLEAR) {
-        numberOfUnclear++;
-      } else {
-        throw new IllegalStateException(
-            String.format("Oh no! Unexpected label: %s", ratingValue.label()));
+      switch ((OssRulesOfPlayLabel) ratingValue.label()) {
+        case PASSED:
+          numberOfPassed++;
+          break;
+        case FAILED:
+          numberOfFailed++;
+          break;
+        case PASSED_WITH_WARNING:
+          numberOfWarnings++;
+          break;
+        case UNCLEAR:
+          numberOfUnclear++;
+          break;
+        default:
+          throw new IllegalStateException(
+              String.format("Oh no! Unexpected label: %s", ratingValue.label()));
       }
+
       total++;
 
       Path organizationDirectory = outputDirectory.resolve(project.organization().name());
@@ -118,17 +127,20 @@ public class OssRulesOfPlayMarkdownReporter extends AbstractReporter<GitHubProje
           formatter.print(project).getBytes());
     }
 
-    double percentOfPass = (double) numberOfPass / total * 100;
-    double percentOfFail = (double) numberOfFail / total * 100;
+    double percentOfPass = (double) numberOfPassed / total * 100;
+    double percentOfWarnings = (double) numberOfWarnings / total * 100;
+    double percentOfFail = (double) numberOfFailed / total * 100;
     double percentOfUnclear = (double) numberOfUnclear / total * 100;
 
     String content = REPORT_TEMPLATE
         .replace("%NUMBER_OF_PROJECTS%", String.valueOf(total))
-        .replace("%NUMBER_FAILED_PROJECTS%", String.valueOf(numberOfFail))
-        .replace("%NUMBER_PASSED_PROJECTS%", String.valueOf(numberOfPass))
+        .replace("%NUMBER_FAILED_PROJECTS%", String.valueOf(numberOfFailed))
+        .replace("%NUMBER_PASSED_PROJECTS%", String.valueOf(numberOfPassed))
+        .replace("%NUMBER_PROJECTS_WITH_WARNINGS%", String.valueOf(numberOfWarnings))
         .replace("%NUMBER_UNCLEAR_PROJECTS%", String.valueOf(numberOfUnclear))
         .replace("%PERCENT_FAILED_PROJECTS%", String.format("%2.1f", percentOfFail))
         .replace("%PERCENT_PASSED_PROJECTS%", String.format("%2.1f", percentOfPass))
+        .replace("%PERCENT_PROJECTS_WITH_WARNINGS%", String.format("%2.1f", percentOfWarnings))
         .replace("%PERCENT_UNCLEAR_PROJECTS%", String.format("%2.1f", percentOfUnclear))
         .replace("%PROJECT_TABLE%", tableOf(projects));
 
