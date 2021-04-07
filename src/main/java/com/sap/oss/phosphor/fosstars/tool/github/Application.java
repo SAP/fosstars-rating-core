@@ -594,7 +594,7 @@ public class Application {
    * @return A formatter.
    * @throws IllegalArgumentException If the type is unknown.
    */
-  private Formatter createFormatter(String type) {
+  private Formatter createFormatter(String type) throws IOException {
     switch (type) {
       case "text":
         return PrettyPrinter.withVerboseOutput(ADVISOR);

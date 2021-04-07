@@ -48,13 +48,33 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
   /**
    * Maps a rule to its identifier.
    */
-  private static final Map<Feature<Boolean>, String> DEFAULT_FEATURE_TO_RULE_ID = defaultRuleIds();
+  private final Map<Feature<Boolean>, String> featureToRuleId;
 
   /**
    * A Markdown template for a rating value.
    */
   private static final String RATING_VALUE_TEMPLATE
       = loadFrom(RATING_VALUE_TEMPLATE_RESOURCE, OssRulesOfPlayRatingMarkdownFormatter.class);
+
+  /**
+   * Initializes a new formatter. The constructor looks for a default file with rule IDs
+   * and tries to load it.
+   *
+   * @throws IOException If something went wrong.
+   */
+  public OssRulesOfPlayRatingMarkdownFormatter() throws IOException {
+    featureToRuleId = defaultRuleIds();
+  }
+
+  /**
+   * Initializes a new formatter.
+   *
+   * @param path A path to a file with rule IDs.
+   * @throws IOException If something went wrong.
+   */
+  public OssRulesOfPlayRatingMarkdownFormatter(Path path) throws IOException {
+    featureToRuleId = loadRuleIdsFrom(path);
+  }
 
   @Override
   public String print(Subject subject) {
@@ -101,7 +121,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     }
 
     String content = violatedRules.stream()
-        .map(OssRulesOfPlayRatingMarkdownFormatter::formatRule)
+        .map(this::formatRule)
         .sorted()
         .collect(Collectors.joining("\n"));
 
@@ -122,7 +142,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     }
 
     String content = warnings.stream()
-        .map(OssRulesOfPlayRatingMarkdownFormatter::formatRule)
+        .map(this::formatRule)
         .sorted()
         .collect(Collectors.joining("\n"));
 
@@ -142,7 +162,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
         .filter(rule -> !violatedRules.contains(rule))
         .filter(rule -> !rule.isUnknown())
         .map(BooleanValue.class::cast)
-        .map(OssRulesOfPlayRatingMarkdownFormatter::formatRule)
+        .map(this::formatRule)
         .sorted()
         .collect(Collectors.joining("\n"));
 
@@ -168,7 +188,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     }
 
     String content = unclearRules.stream()
-        .map(OssRulesOfPlayRatingMarkdownFormatter::formatRule)
+        .map(this::formatRule)
         .sorted()
         .collect(Collectors.joining("\n"));
 
@@ -181,7 +201,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
    * @param value The rule.
    * @return A formatted violated rule.
    */
-  private static String formatRule(Value<?> value) {
+  private String formatRule(Value<?> value) {
     return String.format("1.  %s %s **%s**",
         identifierOf(value.feature()),
         nameOf(value.feature()),
@@ -194,8 +214,8 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
    * @param rule The rule.
    * @return ID of the rule if available, an empty string otherwise.
    */
-  private static String identifierOf(Feature<?> rule) {
-    return Optional.ofNullable(DEFAULT_FEATURE_TO_RULE_ID.get(rule))
+  private String identifierOf(Feature<?> rule) {
+    return Optional.ofNullable(featureToRuleId.get(rule))
         .map(id -> String.format("**[%s]**", id))
         .orElse(StringUtils.EMPTY);
   }
@@ -206,17 +226,13 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
    * @return A map with rule IDs.
    * @throws UncheckedIOException If something went wrong.
    */
-  private static Map<Feature<Boolean>, String> defaultRuleIds() {
+  private static Map<Feature<Boolean>, String> defaultRuleIds() throws IOException {
     Class<?> clazz = OssRulesOfPlayRatingMarkdownFormatter.class;
     for (String name : asList(clazz.getSimpleName(), clazz.getCanonicalName())) {
       for (String suffix : asList("yml", "yaml")) {
         Path path = Paths.get(String.format("%s.config.%s", name, suffix));
         if (Files.isRegularFile(path)) {
-          try {
-            return loadRuleIdsFrom(path);
-          } catch (IOException e) {
-            throw new UncheckedIOException(e);
-          }
+          return loadRuleIdsFrom(path);
         }
       }
     }
