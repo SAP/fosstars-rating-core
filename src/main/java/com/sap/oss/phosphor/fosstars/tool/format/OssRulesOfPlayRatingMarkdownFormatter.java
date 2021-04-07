@@ -145,7 +145,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     }
 
     String content = unclearRules.stream()
-        .map(value -> String.format("1.  %s", nameOf(value.feature())))
+        .map(OssRulesOfPlayRatingMarkdownFormatter::formatRule)
         .sorted()
         .collect(Collectors.joining("\n"));
 
@@ -158,9 +158,11 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
    * @param value The rule.
    * @return A formatted violated rule.
    */
-  private static String formatRule(Value<Boolean> value) {
+  private static String formatRule(Value<?> value) {
     return String.format("1.  %s %s **%s**",
-        identifierOf(value.feature()), nameOf(value.feature()), value.get() ? "Yes" : "No");
+        identifierOf(value.feature()),
+        nameOf(value.feature()),
+        value.isUnknown() ? "unknown" : value.get().toString());
   }
 
   /**
@@ -169,7 +171,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
    * @param rule The rule.
    * @return ID of the rule if available, an empty string otherwise.
    */
-  private static String identifierOf(Feature<Boolean> rule) {
+  private static String identifierOf(Feature<?> rule) {
     return Optional.ofNullable(DEFAULT_FEATURE_TO_RULE_ID.get(rule))
         .map(id -> String.format("**[%s]**", id))
         .orElse(StringUtils.EMPTY);
