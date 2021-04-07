@@ -1,6 +1,7 @@
 package com.sap.oss.phosphor.fosstars.tool.format;
 
 import static com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScore.findViolatedRulesIn;
+import static com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScore.findWarningsIn;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyMap;
 
@@ -81,6 +82,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
         .replace("%CONFIDENCE_LABEL%", confidenceLabelFor(ratingValue.confidence()))
         .replace("%CONFIDENCE_VALUE%", formatted(ratingValue.confidence()))
         .replace("%VIOLATED_RULES%", violatedRulesFrom(scoreValue))
+        .replace("%WARNINGS%", warningsFrom(scoreValue))
         .replace("%PASSED_RULES%", passedRulesFrom(scoreValue))
         .replace("%UNCLEAR_RULES%", unclearRulesFrom(scoreValue));
   }
@@ -104,6 +106,27 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
         .collect(Collectors.joining("\n"));
 
     return String.format("## Violated rules%n%n%s%n", content);
+  }
+
+  /**
+   * Prints out warnings.
+   *
+   * @param scoreValue A score value.
+   * @return A formatted list of violated rules.
+   */
+  private String warningsFrom(ScoreValue scoreValue) {
+    List<Value<Boolean>> warnings = findWarningsIn(scoreValue.usedValues());
+
+    if (warnings.isEmpty()) {
+      return StringUtils.EMPTY;
+    }
+
+    String content = warnings.stream()
+        .map(OssRulesOfPlayRatingMarkdownFormatter::formatRule)
+        .sorted()
+        .collect(Collectors.joining("\n"));
+
+    return String.format("## Warnings%n%n%s%n", content);
   }
 
   /**

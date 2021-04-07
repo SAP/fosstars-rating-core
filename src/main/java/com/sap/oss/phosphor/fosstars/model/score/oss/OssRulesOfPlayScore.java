@@ -68,10 +68,8 @@ public class OssRulesOfPlayScore extends FeatureBasedScore {
   /**
    * A set of features that are expected to be false.
    */
-  public static final Set<Feature<Boolean>> EXPECTED_FALSE = Collections.unmodifiableSet(setOf(
-      LICENSE_HAS_DISALLOWED_CONTENT,
-      HAS_UNRESOLVED_VULNERABILITY_ALERTS
-  ));
+  public static final Set<Feature<Boolean>> EXPECTED_FALSE
+      = Collections.singleton(LICENSE_HAS_DISALLOWED_CONTENT);
 
   /**
    * A set of features that are recommended to be true.
@@ -109,12 +107,12 @@ public class OssRulesOfPlayScore extends FeatureBasedScore {
               violatedRules.size() == 1 ? "" : "s");
     }
 
-    List<Value<Boolean>> recommendations = findRecommendationsIn(usedValues);
-    if (!recommendations.isEmpty()) {
+    List<Value<Boolean>> warnings = findWarningsIn(usedValues);
+    if (!warnings.isEmpty()) {
       return scoreValue(SCORE_WITH_WARNING, usedValues)
           .explain("Found %d recommendations%s",
-              recommendations.size(),
-              recommendations.size() == 1 ? "" : "s");
+              warnings.size(),
+              warnings.size() == 1 ? "" : "s");
     }
 
     return scoreValue(MAX, usedValues).explain("No violated rules found.");
@@ -158,7 +156,7 @@ public class OssRulesOfPlayScore extends FeatureBasedScore {
    * @param usedValues A list of values to be checked.
    * @return A list of recommendations.
    */
-  public static List<Value<Boolean>> findRecommendationsIn(List<Value<?>> usedValues) {
+  public static List<Value<Boolean>> findWarningsIn(List<Value<?>> usedValues) {
     List<Value<Boolean>> violatedRules = new ArrayList<>();
     violatedRules.addAll(findViolatedRulesIn(RECOMMENDED_FALSE, false, usedValues));
     violatedRules.addAll(findViolatedRulesIn(RECOMMENDED_TRUE, true, usedValues));
