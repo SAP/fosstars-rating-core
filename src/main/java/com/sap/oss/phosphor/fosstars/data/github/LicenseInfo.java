@@ -4,8 +4,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ALLOWE
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_LICENSE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.LICENSE_HAS_DISALLOWED_CONTENT;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
-import static java.util.Collections.emptyList;
-import static java.util.Collections.singletonList;
+import static com.sap.oss.phosphor.fosstars.util.Deserialization.readListFrom;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.sap.oss.phosphor.fosstars.model.Feature;
@@ -20,7 +19,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -247,41 +245,5 @@ public class LicenseInfo extends GitHubCachingDataProvider {
     allowedLicensePatterns(readListFrom(config, "allowedLicensePatterns"));
     disallowedLicensePatterns(readListFrom(config, "disallowedLicensePatterns"));
     return this;
-  }
-
-  /**
-   * Reads a list from a config.
-   *
-   * @param config The config.
-   * @param property A field that has the list.
-   * @return A list of elements.
-   * @throws IOException If something went wrong.
-   */
-  private static List<String> readListFrom(JsonNode config, String property) throws IOException {
-    if (!config.has(property)) {
-      return emptyList();
-    }
-
-    JsonNode node = config.get(property);
-    if (node.isTextual()) {
-      return singletonList(node.asText());
-    }
-
-    if (!node.isArray()) {
-      throw new IOException(
-          String.format("Oops! '%s' is not an array and not a string!", property));
-    }
-
-    List<String> list = new ArrayList<>();
-    Iterator<JsonNode> iterator = node.elements();
-    while (iterator.hasNext()) {
-      JsonNode element = iterator.next();
-      if (!element.isTextual()) {
-        throw new IOException(String.format("Oops! Element of '%s' is not a string!", property));
-      }
-      list.add(element.asText());
-    }
-
-    return list;
   }
 }
