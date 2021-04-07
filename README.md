@@ -55,7 +55,7 @@
 | [SAP/macOS-enterprise-privileges](https://github.com/SAP/macOS-enterprise-privileges) | [FAIL](SAP/macOS-enterprise-privileges.md) | 9 violated rules |
 | [SAP/luigi](https://github.com/SAP/luigi) | [FAIL](SAP/luigi.md) | 2 violated rules |
 | [SAP/cloud-mta-build-tool](https://github.com/SAP/cloud-mta-build-tool) | [FAIL](SAP/cloud-mta-build-tool.md) | 4 violated rules |
-| [SAP/cloud-security-xsuaa-integration](https://github.com/SAP/cloud-security-xsuaa-integration) | [FAIL](SAP/cloud-security-xsuaa-integration.md) | 8 violated rules |
+| [SAP/cloud-security-xsuaa-integration](https://github.com/SAP/cloud-security-xsuaa-integration) | [FAIL](SAP/cloud-security-xsuaa-integration.md) | 9 violated rules |
 | [SAP/fundamental-react](https://github.com/SAP/fundamental-react) | [FAIL](SAP/fundamental-react.md) | 4 violated rules |
 | [SAP/spartacus](https://github.com/SAP/spartacus) | [FAIL](SAP/spartacus.md) | 7 violated rules |
 | [SAP/devops-docker-images](https://github.com/SAP/devops-docker-images) | [FAIL](SAP/devops-docker-images.md) | 2 violated rules |
