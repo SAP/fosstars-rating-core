@@ -1,6 +1,6 @@
 package com.sap.oss.phosphor.fosstars.tool.format;
 
-import static com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScore.findViolatedRules;
+import static com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScore.findViolatedRulesIn;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyMap;
 
@@ -92,7 +92,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
    * @return A formatted list of violated rules.
    */
   private String violatedRulesFrom(ScoreValue scoreValue) {
-    List<Value<Boolean>> violatedRules = findViolatedRules(scoreValue.usedValues());
+    List<Value<Boolean>> violatedRules = findViolatedRulesIn(scoreValue.usedValues());
 
     if (violatedRules.isEmpty()) {
       return StringUtils.EMPTY;
@@ -113,7 +113,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
    * @return A formatted list of passed rules.
    */
   private String passedRulesFrom(ScoreValue scoreValue) {
-    List<Value<Boolean>> violatedRules = findViolatedRules(scoreValue.usedValues());
+    List<Value<Boolean>> violatedRules = findViolatedRulesIn(scoreValue.usedValues());
 
     String content = scoreValue.usedValues().stream()
         .filter(rule -> !violatedRules.contains(rule))

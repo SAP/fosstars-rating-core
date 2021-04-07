@@ -2,7 +2,6 @@ package com.sap.oss.phosphor.fosstars.data;
 
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
-import com.sap.oss.phosphor.fosstars.tool.github.DataProviderSelector;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Set;

@@ -78,25 +78,6 @@ public class OssRulesOfPlayRatingTest {
     RATING.label(new ScoreValue(ExampleScores.SECURITY_SCORE_EXAMPLE));
   }
 
-  @Test
-  public void teslLabels() {
-    assertEquals(
-        RATING.label(new ScoreValue(RATING.score()).set(ScoreValue.MAX).confidence(Confidence.MAX)),
-        OssRulesOfPlayLabel.PASS);
-    assertEquals(
-        RATING.label(new ScoreValue(RATING.score()).set(ScoreValue.MIN).confidence(Confidence.MAX)),
-        OssRulesOfPlayLabel.FAIL);
-    assertEquals(
-        RATING.label(new ScoreValue(RATING.score()).set(8.0).confidence(Confidence.MAX)),
-        OssRulesOfPlayLabel.FAIL);
-    assertEquals(
-        RATING.label(new ScoreValue(RATING.score()).set(ScoreValue.MIN).confidence(5.0)),
-        OssRulesOfPlayLabel.FAIL);
-    assertEquals(
-        RATING.label(new ScoreValue(RATING.score()).set(ScoreValue.MAX).confidence(5.0)),
-        OssRulesOfPlayLabel.UNCLEAR);
-  }
-
   // the test cases below implement verification procedure for the rating
   // if necessary, they may be re-written using test vectors
 
@@ -123,7 +104,7 @@ public class OssRulesOfPlayRatingTest {
     assertFalse(ratingValue.scoreValue().isNotApplicable());
     assertEquals(Score.MAX, ratingValue.scoreValue().get(), DELTA);
     assertEquals(Confidence.MAX, ratingValue.scoreValue().confidence(), DELTA);
-    assertEquals(OssRulesOfPlayLabel.PASS, ratingValue.label());
+    assertEquals(OssRulesOfPlayLabel.PASSED, ratingValue.label());
   }
 
   @Test
@@ -131,10 +112,20 @@ public class OssRulesOfPlayRatingTest {
     for (Feature<?> feature : RATING.allFeatures()) {
       assertTrue(feature instanceof BooleanFeature);
       ValueSet values = allRulesPassed();
+      double expectedScore = Score.MIN;
+      OssRulesOfPlayLabel expectedLabel = OssRulesOfPlayLabel.FAILED;
       if (OssRulesOfPlayScore.EXPECTED_FALSE.contains(feature)) {
         values.update(new BooleanValue((BooleanFeature) feature, true));
       } else if (OssRulesOfPlayScore.EXPECTED_TRUE.contains(feature)) {
         values.update(new BooleanValue((BooleanFeature) feature, false));
+      } else if (OssRulesOfPlayScore.RECOMMENDED_FALSE.contains(feature)) {
+        values.update(new BooleanValue((BooleanFeature) feature, true));
+        expectedScore = OssRulesOfPlayScore.SCORE_WITH_WARNING;
+        expectedLabel = OssRulesOfPlayLabel.PASSED_WITH_WARNING;
+      } else if (OssRulesOfPlayScore.RECOMMENDED_TRUE.contains(feature)) {
+        values.update(new BooleanValue((BooleanFeature) feature, false));
+        expectedScore = OssRulesOfPlayScore.SCORE_WITH_WARNING;
+        expectedLabel = OssRulesOfPlayLabel.PASSED_WITH_WARNING;
       } else {
         fail("Unexpected feature: " + feature);
       }
@@ -142,9 +133,9 @@ public class OssRulesOfPlayRatingTest {
       ScoreValue scoreValue = ratingValue.scoreValue();
       assertFalse(scoreValue.isUnknown());
       assertFalse(scoreValue.isNotApplicable());
-      assertEquals(Score.MIN, scoreValue.get(), DELTA);
+      assertEquals(expectedScore, scoreValue.get(), DELTA);
       assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
-      assertEquals(OssRulesOfPlayLabel.FAIL, ratingValue.label());
+      assertEquals(expectedLabel, ratingValue.label());
     }
   }
 

@@ -1,6 +1,6 @@
 package com.sap.oss.phosphor.fosstars.tool.github;
 
-import static com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScore.findViolatedRules;
+import static com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScore.findViolatedRulesIn;
 
 import com.sap.oss.phosphor.fosstars.model.Label;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating.OssRulesOfPlayLabel;
@@ -95,9 +95,9 @@ public class OssRulesOfPlayMarkdownReporter extends AbstractReporter<GitHubProje
         continue;
       }
       RatingValue ratingValue = something.get();
-      if (ratingValue.label() == OssRulesOfPlayLabel.PASS) {
+      if (ratingValue.label() == OssRulesOfPlayLabel.PASSED) {
         numberOfPass++;
-      } else if (ratingValue.label() == OssRulesOfPlayLabel.FAIL) {
+      } else if (ratingValue.label() == OssRulesOfPlayLabel.FAILED) {
         numberOfFail++;
       } else if (ratingValue.label() == OssRulesOfPlayLabel.UNCLEAR) {
         numberOfUnclear++;
@@ -200,7 +200,7 @@ public class OssRulesOfPlayMarkdownReporter extends AbstractReporter<GitHubProje
       return "UNKNOWN";
     }
 
-    int n = findViolatedRules(ratingValue.get().scoreValue().usedValues()).size();
+    int n = findViolatedRulesIn(ratingValue.get().scoreValue().usedValues()).size();
 
     if (n == 0) {
       return "No violated rules";
