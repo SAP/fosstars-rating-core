@@ -8,7 +8,17 @@
 1.  **[rl-assigned_teams-5]** Does teams have enough members on GitHub? **false**
 1.  **[rl-license_file-1]** Does it have a license file? **false**
 1.  **[rl-security_policy-1]** Does it have a security policy? **false**
+
+
+## Warnings
+
 1.  **[rl-vulnerability_alerts-2]** Does it have unresolved vulnerability alerts? **true**
+
+
+## Unclear rules
+
+1.  **[rl-license_file-2]** Does it use an allowed license? **unknown**
+1.  **[rl-license_file-3]** Does the license have disallowed content? **unknown**
 
 
 ## Passed rules
@@ -24,10 +34,5 @@
 1.  **[rl-reuse_tool-3]** Is it registered in REUSE? **true**
 1.  **[rl-reuse_tool-4]** Is it compliant with REUSE rules? **true**
 1.  **[rl-vulnerability_alerts-1]** Are vulnerability alerts enabled? **true**
-
-
-## Unclear rules
-
-1.  **[rl-license_file-2]** Does it use an allowed license? **unknown**
-1.  **[rl-license_file-3]** Does the license have disallowed content? **unknown**
+1.  **[rl-vulnerability_alerts-2]** Does it have unresolved vulnerability alerts? **true**
 

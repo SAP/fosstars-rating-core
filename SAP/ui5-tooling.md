@@ -1,10 +1,14 @@
-**Status**: **FAILED**
+**Status**: **PASSED_WITH_WARNING**
 
 **Confidence**: Max (10.0, max confidence value is 10.0)
 
-## Violated rules
+
+
+## Warnings
 
 1.  **[rl-vulnerability_alerts-2]** Does it have unresolved vulnerability alerts? **true**
+
+
 
 
 ## Passed rules
@@ -26,6 +30,5 @@
 1.  **[rl-reuse_tool-4]** Is it compliant with REUSE rules? **true**
 1.  **[rl-security_policy-1]** Does it have a security policy? **true**
 1.  **[rl-vulnerability_alerts-1]** Are vulnerability alerts enabled? **true**
-
-
+1.  **[rl-vulnerability_alerts-2]** Does it have unresolved vulnerability alerts? **true**
 

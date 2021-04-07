@@ -6,7 +6,13 @@
 
 1.  **[rl-contributor_file-2]** Does the contributing guideline have required text? **false**
 1.  **[rl-security_policy-1]** Does it have a security policy? **false**
+
+
+## Warnings
+
 1.  **[rl-vulnerability_alerts-2]** Does it have unresolved vulnerability alerts? **true**
+
+
 
 
 ## Passed rules
@@ -26,6 +32,5 @@
 1.  **[rl-reuse_tool-3]** Is it registered in REUSE? **true**
 1.  **[rl-reuse_tool-4]** Is it compliant with REUSE rules? **true**
 1.  **[rl-vulnerability_alerts-1]** Are vulnerability alerts enabled? **true**
-
-
+1.  **[rl-vulnerability_alerts-2]** Does it have unresolved vulnerability alerts? **true**
 

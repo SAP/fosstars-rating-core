@@ -4,6 +4,10 @@
 
 
 
+
+
+
+
 ## Passed rules
 
 1.  **[rl-assigned_teams-1]** Does it have enough teams on GitHub? **true**
@@ -24,6 +28,4 @@
 1.  **[rl-security_policy-1]** Does it have a security policy? **true**
 1.  **[rl-vulnerability_alerts-1]** Are vulnerability alerts enabled? **true**
 1.  **[rl-vulnerability_alerts-2]** Does it have unresolved vulnerability alerts? **false**
-
-
 
