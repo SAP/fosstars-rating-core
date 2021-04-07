@@ -44,7 +44,7 @@ public class OssRulesOfPlayRatingMarkdownFormatterTest {
   @Test
   public void testPrintWithCompliantProject() {
     RatingValue ratingValue = RATING.calculate(allRulesPassed());
-    assertEquals(OssRulesOfPlayLabel.PASS, ratingValue.label());
+    assertEquals(OssRulesOfPlayLabel.PASSED, ratingValue.label());
     OssRulesOfPlayRatingMarkdownFormatter formatter = new OssRulesOfPlayRatingMarkdownFormatter();
     String text = formatter.print(ratingValue);
     assertNotNull(text);
@@ -63,7 +63,7 @@ public class OssRulesOfPlayRatingMarkdownFormatterTest {
     ValueSet values = allRulesPassed();
     values.update(OssRulesOfPlayScore.EXPECTED_FALSE.iterator().next().value(true));
     RatingValue ratingValue = RATING.calculate(values);
-    assertEquals(OssRulesOfPlayLabel.FAIL, ratingValue.label());
+    assertEquals(OssRulesOfPlayLabel.FAILED, ratingValue.label());
     OssRulesOfPlayRatingMarkdownFormatter formatter = new OssRulesOfPlayRatingMarkdownFormatter();
     String text = formatter.print(ratingValue);
     assertNotNull(text);

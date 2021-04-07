@@ -92,17 +92,24 @@ public class OssRulesOfPlayScoreTest {
     for (Feature<?> feature : SCORE.features()) {
       assertTrue(feature instanceof BooleanFeature);
       ValueSet values = allRulesPassed();
+      double expectedScore = Score.MIN;
       if (OssRulesOfPlayScore.EXPECTED_FALSE.contains(feature)) {
         values.update(new BooleanValue((BooleanFeature) feature, true));
       } else if (OssRulesOfPlayScore.EXPECTED_TRUE.contains(feature)) {
         values.update(new BooleanValue((BooleanFeature) feature, false));
+      } else if (OssRulesOfPlayScore.RECOMMENDED_FALSE.contains(feature)) {
+        values.update(new BooleanValue((BooleanFeature) feature, true));
+        expectedScore = OssRulesOfPlayScore.SCORE_WITH_WARNING;
+      } else if (OssRulesOfPlayScore.RECOMMENDED_TRUE.contains(feature)) {
+        values.update(new BooleanValue((BooleanFeature) feature, false));
+        expectedScore = OssRulesOfPlayScore.SCORE_WITH_WARNING;
       } else {
         fail("Unexpected feature: " + feature);
       }
       ScoreValue scoreValue = SCORE.calculate(values);
       assertFalse(scoreValue.isUnknown());
       assertFalse(scoreValue.isNotApplicable());
-      assertEquals(Score.MIN, scoreValue.get(), DELTA);
+      assertEquals(expectedScore, scoreValue.get(), DELTA);
       assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
       assertEquals(values.size(), scoreValue.usedValues().size());
     }
@@ -127,6 +134,8 @@ public class OssRulesOfPlayScoreTest {
     ValueSet values = new ValueHashSet();
     OssRulesOfPlayScore.EXPECTED_TRUE.forEach(feature -> values.update(feature.value(true)));
     OssRulesOfPlayScore.EXPECTED_FALSE.forEach(feature -> values.update(feature.value(false)));
+    OssRulesOfPlayScore.RECOMMENDED_TRUE.forEach(feature -> values.update(feature.value(true)));
+    OssRulesOfPlayScore.RECOMMENDED_FALSE.forEach(feature -> values.update(feature.value(false)));
     return values;
   }
 

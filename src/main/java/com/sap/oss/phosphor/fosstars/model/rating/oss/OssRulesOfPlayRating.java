@@ -2,7 +2,6 @@ package com.sap.oss.phosphor.fosstars.model.rating.oss;
 
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Label;
-import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.rating.AbstractRating;
 import com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScore;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
@@ -18,7 +17,7 @@ public class OssRulesOfPlayRating extends AbstractRating {
    */
   public enum OssRulesOfPlayLabel implements Label {
 
-    PASS, FAIL, UNCLEAR
+    PASSED, PASSED_WITH_WARNING, FAILED, UNCLEAR
   }
 
   /**
@@ -37,14 +36,18 @@ public class OssRulesOfPlayRating extends AbstractRating {
           String.format("Oh no! Invalid score value: %s", scoreValue.score().getClass()));
     }
 
-    if (Double.compare(scoreValue.get(), Score.MAX) != 0) {
-      return OssRulesOfPlayLabel.FAIL;
+    if (!OssRulesOfPlayScore.findViolatedRulesIn(scoreValue.usedValues()).isEmpty()) {
+      return OssRulesOfPlayLabel.FAILED;
     }
 
     if (scoreValue.isUnknown() || Double.compare(scoreValue.confidence(), Confidence.MAX) != 0) {
       return OssRulesOfPlayLabel.UNCLEAR;
     }
 
-    return OssRulesOfPlayLabel.PASS;
+    if (!OssRulesOfPlayScore.findRecommendationsIn(scoreValue.usedValues()).isEmpty()) {
+      return OssRulesOfPlayLabel.PASSED_WITH_WARNING;
+    }
+
+    return OssRulesOfPlayLabel.PASSED;
   }
 }

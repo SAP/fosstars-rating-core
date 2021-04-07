@@ -40,13 +40,17 @@ import java.util.stream.Collectors;
 public class OssRulesOfPlayScore extends FeatureBasedScore {
 
   /**
-   * A list of features that are expected to be true.
+   * A score that is assigned if recommendations found.
+   */
+  public static final double SCORE_WITH_WARNING = 9.0;
+
+  /**
+   * A set of features that are expected to be true.
    */
   public static final Set<Feature<Boolean>> EXPECTED_TRUE = Collections.unmodifiableSet(setOf(
       HAS_LICENSE,
       ALLOWED_LICENSE,
       HAS_README,
-      HAS_CONTRIBUTING_GUIDELINE,
       HAS_REQUIRED_TEXT_IN_CONTRIBUTING_GUIDELINE,
       HAS_ENOUGH_TEAMS_ON_GITHUB,
       HAS_ADMIN_TEAM_ON_GITHUB,
@@ -62,7 +66,7 @@ public class OssRulesOfPlayScore extends FeatureBasedScore {
   ));
 
   /**
-   * A list of features that are expected to be false.
+   * A set of features that are expected to be false.
    */
   public static final Set<Feature<Boolean>> EXPECTED_FALSE = Collections.unmodifiableSet(setOf(
       LICENSE_HAS_DISALLOWED_CONTENT,
@@ -70,13 +74,25 @@ public class OssRulesOfPlayScore extends FeatureBasedScore {
   ));
 
   /**
+   * A set of features that are recommended to be true.
+   */
+  public static final Set<Feature<Boolean>> RECOMMENDED_TRUE
+      = Collections.singleton(HAS_CONTRIBUTING_GUIDELINE);
+
+  /**
+   * A set of features that are recommended to be false.
+   */
+  public static final Set<Feature<Boolean>> RECOMMENDED_FALSE
+      = Collections.singleton(HAS_UNRESOLVED_VULNERABILITY_ALERTS);
+
+  /**
    * Initializes a new score.
    */
   public OssRulesOfPlayScore() {
     super(
         "Open source rules or play score",
-        "The score shows whether an open source project violates certain rules or not.",
-        merge(EXPECTED_TRUE, EXPECTED_FALSE));
+        "The score shows whether an open source project violates rules or not.",
+        merge(EXPECTED_TRUE, EXPECTED_FALSE, RECOMMENDED_TRUE, RECOMMENDED_FALSE));
   }
 
   @Override
@@ -85,15 +101,23 @@ public class OssRulesOfPlayScore extends FeatureBasedScore {
         .map(feature -> find(feature, values))
         .collect(Collectors.toList());
 
-    List<Value<Boolean>> violatedRules = findViolatedRules(usedValues);
-
-    if (violatedRules.isEmpty()) {
-      return scoreValue(MAX, usedValues).explain("No violated rules found.");
+    List<Value<Boolean>> violatedRules = findViolatedRulesIn(usedValues);
+    if (!violatedRules.isEmpty()) {
+      return scoreValue(MIN, usedValues)
+          .explain("Found %d violated rule%s",
+              violatedRules.size(),
+              violatedRules.size() == 1 ? "" : "s");
     }
 
-    return scoreValue(MIN, usedValues).explain("Found %d violated rule%s",
-        violatedRules.size(),
-        violatedRules.size() == 1 ? "" : "s");
+    List<Value<Boolean>> recommendations = findRecommendationsIn(usedValues);
+    if (!recommendations.isEmpty()) {
+      return scoreValue(SCORE_WITH_WARNING, usedValues)
+          .explain("Found %d recommendations%s",
+              recommendations.size(),
+              recommendations.size() == 1 ? "" : "s");
+    }
+
+    return scoreValue(MAX, usedValues).explain("No violated rules found.");
   }
 
   /**
@@ -104,7 +128,7 @@ public class OssRulesOfPlayScore extends FeatureBasedScore {
    * @param usedValues A list of values to be checked.
    * @return A list of violated rules.
    */
-  private static List<Value<Boolean>> findViolatedRules(
+  private static List<Value<Boolean>> findViolatedRulesIn(
       Set<Feature<Boolean>> rules, boolean expectedValue, List<Value<?>> usedValues) {
 
     return usedValues.stream()
@@ -121,10 +145,23 @@ public class OssRulesOfPlayScore extends FeatureBasedScore {
    * @param usedValues A list of values to be checked.
    * @return A list of violated rules.
    */
-  public static List<Value<Boolean>> findViolatedRules(List<Value<?>> usedValues) {
+  public static List<Value<Boolean>> findViolatedRulesIn(List<Value<?>> usedValues) {
     List<Value<Boolean>> violatedRules = new ArrayList<>();
-    violatedRules.addAll(findViolatedRules(EXPECTED_FALSE, false, usedValues));
-    violatedRules.addAll(findViolatedRules(EXPECTED_TRUE, true, usedValues));
+    violatedRules.addAll(findViolatedRulesIn(EXPECTED_FALSE, false, usedValues));
+    violatedRules.addAll(findViolatedRulesIn(EXPECTED_TRUE, true, usedValues));
+    return violatedRules;
+  }
+
+  /**
+   * Looks for recommendations.
+   *
+   * @param usedValues A list of values to be checked.
+   * @return A list of recommendations.
+   */
+  public static List<Value<Boolean>> findRecommendationsIn(List<Value<?>> usedValues) {
+    List<Value<Boolean>> violatedRules = new ArrayList<>();
+    violatedRules.addAll(findViolatedRulesIn(RECOMMENDED_FALSE, false, usedValues));
+    violatedRules.addAll(findViolatedRulesIn(RECOMMENDED_TRUE, true, usedValues));
     return violatedRules;
   }
 
