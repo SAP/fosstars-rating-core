@@ -1,4 +1,4 @@
-**Status**: **FAIL**
+**Status**: **FAILED**
 
 **Confidence**: Low (8.89, max confidence value is 10.0)
 
@@ -6,7 +6,6 @@
 
 1.  **[rl-assigned_teams-3]** Does it have enough admins on GitHub? **false**
 1.  **[rl-assigned_teams-5]** Does teams have enough members on GitHub? **false**
-1.  **[rl-contributor_file-1]** Does it have a contributing guideline? **false**
 1.  **[rl-contributor_file-2]** Does the contributing guideline have required text? **false**
 1.  **[rl-license_file-1]** Does it have a license file? **false**
 1.  **[rl-reuse_tool-1]** Does README mention REUSE? **false**
@@ -20,6 +19,7 @@
 1.  **[rl-assigned_teams-1]** Does it have enough teams on GitHub? **true**
 1.  **[rl-assigned_teams-2]** Does it have an admin team on GitHub? **true**
 1.  **[rl-assigned_teams-4]** Does it have a team with push privileges on GitHub? **true**
+1.  **[rl-contributor_file-1]** Does it have a contributing guideline? **false**
 1.  **[rl-readme_file-1]** Does it have a README file? **true**
 1.  **[rl-reuse_tool-2]** Does it have LICENSES directory with licenses? **true**
 1.  **[rl-vulnerability_alerts-1]** Are vulnerability alerts enabled? **true**
