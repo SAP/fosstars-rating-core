@@ -44,7 +44,7 @@ public class OssRulesOfPlayRating extends AbstractRating {
       return OssRulesOfPlayLabel.UNCLEAR;
     }
 
-    if (!OssRulesOfPlayScore.findRecommendationsIn(scoreValue.usedValues()).isEmpty()) {
+    if (!OssRulesOfPlayScore.findWarningsIn(scoreValue.usedValues()).isEmpty()) {
       return OssRulesOfPlayLabel.PASSED_WITH_WARNING;
     }
 

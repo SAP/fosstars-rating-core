@@ -59,6 +59,26 @@ public class OssRulesOfPlayRatingMarkdownFormatterTest {
   }
 
   @Test
+  public void testPrintWithWarnings() {
+    ValueSet values = allRulesPassed();
+    values.update(OssRulesOfPlayScore.RECOMMENDED_FALSE.iterator().next().value(true));
+    RatingValue ratingValue = RATING.calculate(values);
+    assertEquals(OssRulesOfPlayLabel.PASSED_WITH_WARNING, ratingValue.label());
+    OssRulesOfPlayRatingMarkdownFormatter formatter = new OssRulesOfPlayRatingMarkdownFormatter();
+    String text = formatter.print(ratingValue);
+    assertNotNull(text);
+    assertFalse(text.isEmpty());
+    String lowerCaseText = text.toLowerCase();
+    assertTrue(lowerCaseText.contains("status"));
+    assertTrue(lowerCaseText.contains("pass"));
+    assertTrue(lowerCaseText.contains("warning"));
+    assertFalse(lowerCaseText.contains("fail"));
+    assertFalse(lowerCaseText.contains("unclear"));
+    assertFalse(lowerCaseText.contains("unknown"));
+    checkRuleIds(text);
+  }
+
+  @Test
   public void testPrintWithNotCompliantProject() {
     ValueSet values = allRulesPassed();
     values.update(OssRulesOfPlayScore.EXPECTED_FALSE.iterator().next().value(true));
