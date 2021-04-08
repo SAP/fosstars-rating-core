@@ -12,8 +12,6 @@ import static org.junit.Assert.assertTrue;
 import com.sap.oss.phosphor.fosstars.advice.AdviceContentYamlStorage.RawAdviceContent;
 import com.sap.oss.phosphor.fosstars.advice.AdviceContentYamlStorage.RawLink;
 import com.sap.oss.phosphor.fosstars.advice.oss.OssAdviceContentYamlStorage.OssAdviceContext;
-import com.sap.oss.phosphor.fosstars.model.RatingRepository;
-import com.sap.oss.phosphor.fosstars.model.rating.example.SecurityRatingExample;
 import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.File;
 import java.io.IOException;
@@ -29,8 +27,7 @@ public class AdviceContentYamlStorageTest {
   @Test
   public void testLoadFromResource() throws IOException {
     AdviceContentYamlStorage storage = AdviceContentYamlStorage.loadFrom(
-        "com/sap/oss/phosphor/fosstars/advice/AdviceContentStorageTest.yml",
-        RatingRepository.INSTANCE.rating(SecurityRatingExample.class));
+        "com/sap/oss/phosphor/fosstars/advice/AdviceContentStorageTest.yml");
 
     List<AdviceContent> advice = storage.adviceFor(
         SECURITY_REVIEW_DONE_EXAMPLE, OssAdviceContext.EMPTY_ADVICE_CONTEXT);
@@ -70,8 +67,7 @@ public class AdviceContentYamlStorageTest {
         + "        url: https://test/5\n";
     Files.write(Paths.get(path), content.getBytes());
     try {
-      AdviceContentYamlStorage storage = AdviceContentYamlStorage.loadFrom(
-          path, RatingRepository.INSTANCE.rating(SecurityRatingExample.class));
+      AdviceContentYamlStorage storage = AdviceContentYamlStorage.loadFrom(path);
 
       List<AdviceContent> advice = storage.adviceFor(
           SECURITY_REVIEW_DONE_EXAMPLE, OssAdviceContext.EMPTY_ADVICE_CONTEXT);
@@ -96,9 +92,7 @@ public class AdviceContentYamlStorageTest {
 
   @Test(expected = IOException.class)
   public void testWithNotExistingPath() throws IOException {
-    AdviceContentYamlStorage.loadFrom(
-        "does_not_exist.yml",
-        RatingRepository.INSTANCE.rating(SecurityRatingExample.class));
+    AdviceContentYamlStorage.loadFrom("does_not_exist.yml");
   }
 
   @Test

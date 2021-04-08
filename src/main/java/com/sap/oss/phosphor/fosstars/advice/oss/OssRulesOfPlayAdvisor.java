@@ -53,7 +53,7 @@ public class OssRulesOfPlayAdvisor extends AbstractOssAdvisor {
   public OssRulesOfPlayAdvisor(String path, OssAdviceContextFactory contextFactory)
       throws IOException {
 
-    super(OssAdviceContentYamlStorage.loadFrom(path, RATING), contextFactory);
+    super(OssAdviceContentYamlStorage.loadFrom(path), contextFactory);
   }
 
   @Override
@@ -83,7 +83,7 @@ public class OssRulesOfPlayAdvisor extends AbstractOssAdvisor {
   private static OssAdviceContentYamlStorage storage() throws IOException {
     Optional<Path> path = loadDefaultYamlConfigIfAvailable(OssRulesOfPlayAdvisor.class);
     if (path.isPresent()) {
-      return OssAdviceContentYamlStorage.loadFrom(path.get().toString(), RATING);
+      return OssAdviceContentYamlStorage.loadFrom(path.get().toString());
     }
 
     return DEFAULT;
