@@ -4,9 +4,6 @@ import com.sap.oss.phosphor.fosstars.advice.AdviceContent;
 import com.sap.oss.phosphor.fosstars.advice.AdviceContentYamlStorage;
 import com.sap.oss.phosphor.fosstars.advice.AdviceContext;
 import com.sap.oss.phosphor.fosstars.model.Feature;
-import com.sap.oss.phosphor.fosstars.model.Rating;
-import com.sap.oss.phosphor.fosstars.model.RatingRepository;
-import com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurityRating;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.net.MalformedURLException;
@@ -35,8 +32,7 @@ public class OssAdviceContentYamlStorage {
 
   static {
     try {
-      DEFAULT = OssAdviceContentYamlStorage.loadFrom(
-          RESOURCE_PATH, RatingRepository.INSTANCE.rating(OssArtifactSecurityRating.class));
+      DEFAULT = OssAdviceContentYamlStorage.loadFrom(RESOURCE_PATH);
     } catch (IOException e) {
       throw new UncheckedIOException("Could not load advice", e);
     }
@@ -72,17 +68,14 @@ public class OssAdviceContentYamlStorage {
   }
 
   /**
-   * Loads advice from a resource or a file for a specified rating.
+   * Loads advice from a resource.
    *
-   * @param path A path to the resource or file.
-   * @param rating The rating.
+   * @param path A path to the resource.
    * @return An instance of {@link OssAdviceContentYamlStorage}.
    * @throws IOException If the advice couldn't be loaded.
    */
-  public static OssAdviceContentYamlStorage loadFrom(String path, Rating rating)
-      throws IOException {
-
-    return new OssAdviceContentYamlStorage(AdviceContentYamlStorage.loadFrom(path, rating));
+  public static OssAdviceContentYamlStorage loadFrom(String path) throws IOException {
+    return new OssAdviceContentYamlStorage(AdviceContentYamlStorage.loadFrom(path));
   }
 
   /**
