@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.packageurl.MalformedPackageURLException;
 import com.github.packageurl.PackageURL;
 import com.sap.oss.phosphor.fosstars.advice.Advisor;
+import com.sap.oss.phosphor.fosstars.advice.oss.OssRulesOfPlayAdvisor;
 import com.sap.oss.phosphor.fosstars.advice.oss.github.OssSecurityGithubAdvisor;
 import com.sap.oss.phosphor.fosstars.data.DataProvider;
 import com.sap.oss.phosphor.fosstars.data.NoUserCallback;
@@ -109,9 +110,9 @@ public class Application {
       "java -jar fosstars-github-rating-calc.jar [options]";
 
   /**
-   * An advisor for calculated ratings.
+   * An advisor for calculated security ratings.
    */
-  private static final Advisor ADVISOR = new OssSecurityGithubAdvisor();
+  private static final Advisor OSS_SECURITY_GITHUB_ADVISOR = new OssSecurityGithubAdvisor();
 
   /**
    * Maps an alias to a rating procedure.
@@ -318,7 +319,8 @@ public class Application {
     calculator.set(callback);
 
     prettyPrinter = commandLine.hasOption("v")
-        ? PrettyPrinter.withVerboseOutput(ADVISOR) : PrettyPrinter.withoutVerboseOutput();
+        ? PrettyPrinter.withVerboseOutput(OSS_SECURITY_GITHUB_ADVISOR)
+        : PrettyPrinter.withoutVerboseOutput();
   }
 
   /**
@@ -597,16 +599,16 @@ public class Application {
   private Formatter createFormatter(String type) throws IOException {
     switch (type) {
       case "text":
-        return PrettyPrinter.withVerboseOutput(ADVISOR);
+        return PrettyPrinter.withVerboseOutput(OSS_SECURITY_GITHUB_ADVISOR);
       case "markdown":
         if (rating instanceof OssSecurityRating) {
-          return new OssSecurityRatingMarkdownFormatter(ADVISOR);
+          return new OssSecurityRatingMarkdownFormatter(OSS_SECURITY_GITHUB_ADVISOR);
         }
         if (rating instanceof OssRulesOfPlayRating) {
-          return new OssRulesOfPlayRatingMarkdownFormatter();
+          return new OssRulesOfPlayRatingMarkdownFormatter(new OssRulesOfPlayAdvisor());
         }
         if (rating instanceof OssArtifactSecurityRating) {
-          return new OssArtifactSecurityRatingMarkdownFormatter(ADVISOR);
+          return new OssArtifactSecurityRatingMarkdownFormatter(OSS_SECURITY_GITHUB_ADVISOR);
         }
         throw new IllegalArgumentException("No markdown formatter for the rating!");
       default:
@@ -679,11 +681,12 @@ public class Application {
 
     if (reportConfig.type == ReportType.MARKDOWN && rating instanceof OssSecurityRating) {
       return new OssSecurityRatingMarkdownReporter(
-          reportConfig.where, reportConfig.source, (OssSecurityRating) rating, ADVISOR);
+          reportConfig.where, reportConfig.source, (OssSecurityRating) rating,
+          OSS_SECURITY_GITHUB_ADVISOR);
     }
 
     if (reportConfig.type == ReportType.MARKDOWN && rating instanceof OssRulesOfPlayRating) {
-      return new OssRulesOfPlayMarkdownReporter(reportConfig.where);
+      return new OssRulesOfPlayMarkdownReporter(reportConfig.where, new OssRulesOfPlayAdvisor());
     }
 
     throw new IllegalArgumentException(String.format(
