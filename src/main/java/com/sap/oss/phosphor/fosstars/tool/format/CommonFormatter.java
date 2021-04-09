@@ -49,6 +49,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_U
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 
+import com.sap.oss.phosphor.fosstars.advice.Advisor;
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Value;
@@ -80,6 +81,7 @@ import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -214,6 +216,25 @@ public abstract class CommonFormatter implements Formatter {
   static {
     DECIMAL_FORMAT.setMinimumFractionDigits(1);
     DECIMAL_FORMAT.setMaximumFractionDigits(2);
+  }
+
+  /**
+   * Print out an empty string if no advice is available for a rating.
+   */
+  static final String NO_ADVICE = StringUtils.EMPTY;
+
+  /**
+   * An advisor for calculated ratings.
+   */
+  protected final Advisor advisor;
+
+  /**
+   * Create a new formatter.
+   *
+   * @param advisor An advisor for calculated ratings.
+   */
+  protected CommonFormatter(Advisor advisor) {
+    this.advisor = Objects.requireNonNull(advisor, "Oh no! Advisor is null!");
   }
 
   /**
