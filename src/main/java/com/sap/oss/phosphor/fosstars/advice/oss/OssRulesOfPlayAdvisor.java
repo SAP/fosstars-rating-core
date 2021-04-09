@@ -1,5 +1,9 @@
 package com.sap.oss.phosphor.fosstars.advice.oss;
 
+import static com.sap.oss.phosphor.fosstars.advice.oss.AbstractOssAdvisor.OssAdviceContextFactory.WITH_EMPTY_CONTEXT;
+import static com.sap.oss.phosphor.fosstars.advice.oss.OssAdviceContentYamlStorage.DEFAULT;
+import static com.sap.oss.phosphor.fosstars.util.Config.loadDefaultYamlConfigIfAvailable;
+
 import com.sap.oss.phosphor.fosstars.advice.Advice;
 import com.sap.oss.phosphor.fosstars.advice.oss.OssAdviceContentYamlStorage.OssAdviceContext;
 import com.sap.oss.phosphor.fosstars.model.Feature;
@@ -10,8 +14,10 @@ import com.sap.oss.phosphor.fosstars.model.feature.BooleanFeature;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * An advisor for {@link com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating}.
@@ -24,13 +30,17 @@ public class OssRulesOfPlayAdvisor extends AbstractOssAdvisor {
   private static final OssRulesOfPlayRating RATING
       = RatingRepository.INSTANCE.rating(OssRulesOfPlayRating.class);
 
+  public OssRulesOfPlayAdvisor() throws IOException {
+    super(storage(), WITH_EMPTY_CONTEXT);
+  }
+
   /**
    * Create a new advisor with default advice.
    *
    * @param contextFactory A factory that provides contexts for advice.
    */
   public OssRulesOfPlayAdvisor(OssAdviceContextFactory contextFactory) {
-    super(OssAdviceContentYamlStorage.DEFAULT, contextFactory);
+    super(DEFAULT, contextFactory);
   }
 
   /**
@@ -62,5 +72,20 @@ public class OssRulesOfPlayAdvisor extends AbstractOssAdvisor {
     }
 
     return advice;
+  }
+
+  /**
+   * Load an advice storage.
+   *
+   * @return An advice storage.
+   * @throws IOException If an advice storage could not be loaded.
+   */
+  private static OssAdviceContentYamlStorage storage() throws IOException {
+    Optional<Path> path = loadDefaultYamlConfigIfAvailable(OssRulesOfPlayAdvisor.class);
+    if (path.isPresent()) {
+      return OssAdviceContentYamlStorage.loadFrom(path.get().toString(), RATING);
+    }
+
+    return DEFAULT;
   }
 }
