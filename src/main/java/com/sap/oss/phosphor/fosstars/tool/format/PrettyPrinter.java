@@ -20,7 +20,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
@@ -77,18 +76,13 @@ public class PrettyPrinter extends CommonFormatter {
   private final boolean verbose;
 
   /**
-   * An advisor for calculated ratings.
-   */
-  protected final Advisor advisor;
-
-  /**
    * Creates a new {@link PrettyPrinter}.
    *
    * @param verbose A flag that turns on verbose output.
    * @param advisor An advisor.
    */
   private PrettyPrinter(boolean verbose, Advisor advisor) {
-    this.advisor = Objects.requireNonNull(advisor, "Oh no! Advisor is null!");
+    super(advisor);
     this.verbose = verbose;
   }
 

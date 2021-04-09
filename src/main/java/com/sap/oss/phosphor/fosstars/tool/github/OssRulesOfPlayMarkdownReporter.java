@@ -2,6 +2,7 @@ package com.sap.oss.phosphor.fosstars.tool.github;
 
 import static com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScore.findViolatedRulesIn;
 
+import com.sap.oss.phosphor.fosstars.advice.Advisor;
 import com.sap.oss.phosphor.fosstars.model.Label;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating.OssRulesOfPlayLabel;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
@@ -61,10 +62,14 @@ public class OssRulesOfPlayMarkdownReporter extends AbstractReporter<GitHubProje
    * Initializes a new reporter.
    *
    * @param outputDirectory An output directory.
+   * @param advisor An advisor.
    * @throws IOException If something went wrong.
    */
-  public OssRulesOfPlayMarkdownReporter(String outputDirectory) throws IOException {
+  public OssRulesOfPlayMarkdownReporter(String outputDirectory, Advisor advisor)
+      throws IOException {
+
     Objects.requireNonNull(outputDirectory, "Oh no! Output directory is null!");
+    Objects.requireNonNull(advisor, "Oh no! Advisor is null!");
 
     Path directory = Paths.get(outputDirectory);
     if (Files.isSymbolicLink(directory) || Files.isRegularFile(directory)) {
@@ -80,7 +85,7 @@ public class OssRulesOfPlayMarkdownReporter extends AbstractReporter<GitHubProje
     }
 
     this.outputDirectory = directory;
-    this.formatter = new OssRulesOfPlayRatingMarkdownFormatter();
+    this.formatter = new OssRulesOfPlayRatingMarkdownFormatter(advisor);
   }
 
   @Override

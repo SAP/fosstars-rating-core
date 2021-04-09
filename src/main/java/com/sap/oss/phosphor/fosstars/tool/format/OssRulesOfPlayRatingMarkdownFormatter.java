@@ -5,11 +5,16 @@ import static com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScore.
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyMap;
 
+<<<<<<< HEAD
 import com.fasterxml.jackson.databind.JsonNode;
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
 import com.sap.oss.phosphor.fosstars.model.Subject;
+=======
+import com.sap.oss.phosphor.fosstars.advice.Advisor;
+import com.sap.oss.phosphor.fosstars.model.Confidence;
+>>>>>>> Refactor formatters
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.feature.BooleanFeature;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating;
@@ -31,13 +36,12 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * The class prints a rating value
  * for {@link com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating} in Markdown.
  */
-public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
+public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownFormatter {
 
   /**
    * A resource with a Markdown template.
@@ -86,13 +90,15 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
   }
 
   /**
-   * Print a rating value and advice.
+   * Create a new formatter.
    *
-   * @param ratingValue The rating value.
-   * @return A string to be displayed.
+   * @param advisor An advisor for calculated ratings.
    */
-  @Override
-  public String print(RatingValue ratingValue) {
+  public OssRulesOfPlayRatingMarkdownFormatter(Advisor advisor) {
+    super(advisor);
+  }
+
+  protected String print(RatingValue ratingValue, String advice) {
     Objects.requireNonNull(ratingValue, "Hey! Rating can't be null!");
 
     ScoreValue scoreValue = ratingValue.scoreValue();
@@ -104,7 +110,8 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
         .replace("%VIOLATED_RULES%", violatedRulesFrom(scoreValue))
         .replace("%WARNINGS%", warningsFrom(scoreValue))
         .replace("%PASSED_RULES%", passedRulesFrom(scoreValue))
-        .replace("%UNCLEAR_RULES%", unclearRulesFrom(scoreValue));
+        .replace("%UNCLEAR_RULES%", unclearRulesFrom(scoreValue))
+        .replace("%ADVICE%", advice);
   }
 
   /**
