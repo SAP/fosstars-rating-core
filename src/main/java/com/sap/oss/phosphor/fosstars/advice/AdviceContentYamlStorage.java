@@ -1,5 +1,6 @@
 package com.sap.oss.phosphor.fosstars.advice;
 
+import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
 import static java.util.Collections.emptyList;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -13,6 +14,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -85,43 +88,59 @@ public class AdviceContentYamlStorage {
   }
 
   /**
-   * Loads advice from a resource for a specified rating.
+   * Loads advice from a resource or a file for a specified rating.
    *
-   * @param path A path to the resource.
+   * @param path A path to the resource of file.
    * @param rating The rating.
    * @return An instance of {@link AdviceContentYamlStorage}.
    * @throws IOException If the advice couldn't be loaded.
    */
-  public static AdviceContentYamlStorage loadFromResource(String path, Rating rating)
-      throws IOException {
-
+  public static AdviceContentYamlStorage loadFrom(String path, Rating rating) throws IOException {
     InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
+    if (is == null && Files.isRegularFile(Paths.get(path), NOFOLLOW_LINKS)) {
+      is = Files.newInputStream(Paths.get(path));
+    }
+
     if (is != null) {
       try {
-        Map<String, Feature<?>> nameToFeature = new HashMap<>();
-        for (Feature<?> feature : rating.score().allFeatures()) {
-          nameToFeature.put(feature.name(), feature);
-        }
-
-        Map<String, List<RawAdviceContent>> map = Yaml.mapper().readValue(is, TYPE_REFERENCE);
-        Map<Feature<?>, List<RawAdviceContent>> featureToContent = new HashMap<>();
-        for (Map.Entry<String, List<RawAdviceContent>> entry : map.entrySet()) {
-          String name = entry.getKey();
-          Feature<?> feature = nameToFeature.get(name);
-          if (feature == null) {
-            throw new IOException(String.format("Could not find feature in the rating: %s", name));
-          }
-
-          featureToContent.put(feature, entry.getValue());
-        }
-
-        return new AdviceContentYamlStorage(featureToContent);
+        return loadFrom(is, rating);
       } finally {
         is.close();
       }
     }
 
-    throw new IOException(String.format("Resource '%s' not found!", path));
+    throw new IOException(String.format("'%s' not found!", path));
+  }
+
+  /**
+   * Loads advice from an input stream for a specified rating.
+   *
+   * @param is The input stream.
+   * @param rating The rating.
+   * @return An instance of {@link AdviceContentYamlStorage}.
+   * @throws IOException If the advice couldn't be loaded.
+   */
+  private static AdviceContentYamlStorage loadFrom(InputStream is, Rating rating)
+      throws IOException {
+
+    Map<String, Feature<?>> nameToFeature = new HashMap<>();
+    for (Feature<?> feature : rating.score().allFeatures()) {
+      nameToFeature.put(feature.name(), feature);
+    }
+
+    Map<String, List<RawAdviceContent>> map = Yaml.mapper().readValue(is, TYPE_REFERENCE);
+    Map<Feature<?>, List<RawAdviceContent>> featureToContent = new HashMap<>();
+    for (Map.Entry<String, List<RawAdviceContent>> entry : map.entrySet()) {
+      String name = entry.getKey();
+      Feature<?> feature = nameToFeature.get(name);
+      if (feature == null) {
+        throw new IOException(String.format("Could not find feature in the rating: %s", name));
+      }
+
+      featureToContent.put(feature, entry.getValue());
+    }
+
+    return new AdviceContentYamlStorage(featureToContent);
   }
 
   /**
