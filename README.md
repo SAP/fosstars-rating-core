@@ -66,7 +66,7 @@
 | [SAP/python-pyodata](https://github.com/SAP/python-pyodata) | [FAILED](SAP/python-pyodata.md) | 6 violated rules |
 | [SAP/fundamental-vue](https://github.com/SAP/fundamental-vue) | [FAILED](SAP/fundamental-vue.md) | 2 violated rules |
 | [SAP/generator-easy-ui5](https://github.com/SAP/generator-easy-ui5) | [FAILED](SAP/generator-easy-ui5.md) | 4 violated rules |
-| [SAP/ui5-webcomponents](https://github.com/SAP/ui5-webcomponents) | [FAILED](SAP/ui5-webcomponents.md) | 2 violated rules |
+| [SAP/ui5-webcomponents](https://github.com/SAP/ui5-webcomponents) | [FAILED](SAP/ui5-webcomponents.md) | 1 violated rule |
 | [SAP/project-kb](https://github.com/SAP/project-kb) | [FAILED](SAP/project-kb.md) | 3 violated rules |
 | [SAP/ui5-typescript](https://github.com/SAP/ui5-typescript) | [FAILED](SAP/ui5-typescript.md) | 3 violated rules |
 | [SAP/ui5-webcomponents-react](https://github.com/SAP/ui5-webcomponents-react) | [FAILED](SAP/ui5-webcomponents-react.md) | 1 violated rule |
