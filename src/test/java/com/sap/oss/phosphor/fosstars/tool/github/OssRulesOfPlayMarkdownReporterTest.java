@@ -9,6 +9,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import com.sap.oss.phosphor.fosstars.advice.oss.OssRulesOfPlayAdvisor;
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Label;
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
@@ -65,7 +66,8 @@ public class OssRulesOfPlayMarkdownReporterTest {
       );
 
       OssRulesOfPlayMarkdownReporter reporter
-          = new OssRulesOfPlayMarkdownReporter(outputDirectory.toString());
+          = new OssRulesOfPlayMarkdownReporter(
+              outputDirectory.toString(), new OssRulesOfPlayAdvisor());
       reporter.runFor(projects);
 
       Path reportFileName = outputDirectory.resolve(OssRulesOfPlayMarkdownReporter.REPORT_FILENAME);
