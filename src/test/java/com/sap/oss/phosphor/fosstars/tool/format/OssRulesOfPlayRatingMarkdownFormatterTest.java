@@ -7,6 +7,7 @@ import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
 
+import com.sap.oss.phosphor.fosstars.advice.oss.OssRulesOfPlayAdvisor;
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating;
@@ -44,7 +45,7 @@ public class OssRulesOfPlayRatingMarkdownFormatterTest {
       RatingValue ratingValue = RATING.calculate(allRulesPassed());
       assertEquals(OssRulesOfPlayLabel.PASSED, ratingValue.label());
       OssRulesOfPlayRatingMarkdownFormatter formatter
-          = new OssRulesOfPlayRatingMarkdownFormatter(CONFIG_PATH);
+          = new OssRulesOfPlayRatingMarkdownFormatter(CONFIG_PATH, new OssRulesOfPlayAdvisor());
       String text = formatter.print(ratingValue);
       assertNotNull(text);
       assertFalse(text.isEmpty());
@@ -69,7 +70,7 @@ public class OssRulesOfPlayRatingMarkdownFormatterTest {
       RatingValue ratingValue = RATING.calculate(values);
       assertEquals(OssRulesOfPlayLabel.PASSED_WITH_WARNING, ratingValue.label());
       OssRulesOfPlayRatingMarkdownFormatter formatter
-          = new OssRulesOfPlayRatingMarkdownFormatter(CONFIG_PATH);
+          = new OssRulesOfPlayRatingMarkdownFormatter(CONFIG_PATH, new OssRulesOfPlayAdvisor());
       String text = formatter.print(ratingValue);
       assertNotNull(text);
       assertFalse(text.isEmpty());
@@ -95,7 +96,7 @@ public class OssRulesOfPlayRatingMarkdownFormatterTest {
       RatingValue ratingValue = RATING.calculate(values);
       assertEquals(OssRulesOfPlayLabel.FAILED, ratingValue.label());
       OssRulesOfPlayRatingMarkdownFormatter formatter
-          = new OssRulesOfPlayRatingMarkdownFormatter(CONFIG_PATH);
+          = new OssRulesOfPlayRatingMarkdownFormatter(CONFIG_PATH, new OssRulesOfPlayAdvisor());
       String text = formatter.print(ratingValue);
       assertNotNull(text);
       assertFalse(text.isEmpty());
@@ -118,7 +119,7 @@ public class OssRulesOfPlayRatingMarkdownFormatterTest {
       RatingValue ratingValue = RATING.calculate(allUnknown(RATING.allFeatures()));
       assertEquals(OssRulesOfPlayLabel.UNCLEAR, ratingValue.label());
       OssRulesOfPlayRatingMarkdownFormatter formatter
-          = new OssRulesOfPlayRatingMarkdownFormatter(CONFIG_PATH);
+          = new OssRulesOfPlayRatingMarkdownFormatter(CONFIG_PATH, new OssRulesOfPlayAdvisor());
       String text = formatter.print(ratingValue);
       assertNotNull(text);
       assertFalse(text.isEmpty());

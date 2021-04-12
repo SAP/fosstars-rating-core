@@ -5,16 +5,12 @@ import static com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScore.
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyMap;
 
-<<<<<<< HEAD
 import com.fasterxml.jackson.databind.JsonNode;
+import com.sap.oss.phosphor.fosstars.advice.Advisor;
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
 import com.sap.oss.phosphor.fosstars.model.Subject;
-=======
-import com.sap.oss.phosphor.fosstars.advice.Advisor;
-import com.sap.oss.phosphor.fosstars.model.Confidence;
->>>>>>> Refactor formatters
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.feature.BooleanFeature;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating;
@@ -36,6 +32,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * The class prints a rating value
@@ -64,9 +61,11 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownForma
    * Initializes a new formatter. The constructor looks for a default file with rule IDs
    * and tries to load it.
    *
+   * @param advisor An advisor for calculated ratings.
    * @throws IOException If something went wrong.
    */
-  public OssRulesOfPlayRatingMarkdownFormatter() throws IOException {
+  public OssRulesOfPlayRatingMarkdownFormatter(Advisor advisor) throws IOException {
+    super(advisor);
     featureToRuleId = defaultRuleIds();
   }
 
@@ -74,9 +73,11 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownForma
    * Initializes a new formatter.
    *
    * @param path A path to a file with rule IDs.
+   * @param advisor An advisor for calculated ratings.
    * @throws IOException If something went wrong.
    */
-  public OssRulesOfPlayRatingMarkdownFormatter(Path path) throws IOException {
+  public OssRulesOfPlayRatingMarkdownFormatter(Path path, Advisor advisor) throws IOException {
+    super(advisor);
     featureToRuleId = loadRuleIdsFrom(path);
   }
 
@@ -87,15 +88,6 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownForma
     }
 
     return print(subject.ratingValue().get());
-  }
-
-  /**
-   * Create a new formatter.
-   *
-   * @param advisor An advisor for calculated ratings.
-   */
-  public OssRulesOfPlayRatingMarkdownFormatter(Advisor advisor) {
-    super(advisor);
   }
 
   protected String print(RatingValue ratingValue, String advice) {

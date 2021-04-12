@@ -26,7 +26,7 @@ public class OssRulesOfPlayAdvisorTest {
     Path path = Files.createTempFile(OssRulesOfPlayAdvisorTest.class.getName(), "test");
     String content =
           "---\n"
-        + "If a project is compliant with Reuse rules:\n"
+        + "If a project is compliant with REUSE rules:\n"
         + "  - advice: Text\n"
         + "    links:\n"
         + "      - name: Test link\n"
