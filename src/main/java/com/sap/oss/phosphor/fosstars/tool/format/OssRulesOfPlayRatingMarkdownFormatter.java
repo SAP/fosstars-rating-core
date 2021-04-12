@@ -201,10 +201,17 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownForma
    * @return A formatted violated rule.
    */
   private String formatRule(Value<?> value) {
+    String answer = "unknown";
+    if (!value.isUnknown()) {
+      if (value instanceof BooleanValue == false) {
+        throw new IllegalArgumentException("Oh no! Expected a boolean value!");
+      }
+      answer = ((BooleanValue) value).get() ? "Yes" : "No";
+    }
     return String.format("1.  %s %s **%s**",
         identifierOf(value.feature()),
         nameOf(value.feature()),
-        value.isUnknown() ? "unknown" : value.get().toString());
+        answer);
   }
 
   /**
