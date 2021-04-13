@@ -35,12 +35,13 @@ public class OssRulesOfPlayAdvisor extends AbstractOssAdvisor {
   }
 
   /**
-   * Create a new advisor with default advice.
+   * Create a new advisor.
    *
    * @param contextFactory A factory that provides contexts for advice.
+   * @throws IOException If advice could not be loaded.
    */
-  public OssRulesOfPlayAdvisor(OssAdviceContextFactory contextFactory) {
-    super(DEFAULT, contextFactory);
+  public OssRulesOfPlayAdvisor(OssAdviceContextFactory contextFactory) throws IOException {
+    super(storage(), contextFactory);
   }
 
   /**
@@ -83,6 +84,7 @@ public class OssRulesOfPlayAdvisor extends AbstractOssAdvisor {
   private static OssAdviceContentYamlStorage storage() throws IOException {
     Optional<Path> path = loadDefaultYamlConfigIfAvailable(OssRulesOfPlayAdvisor.class);
     if (path.isPresent()) {
+      // TODO: log it here
       return OssAdviceContentYamlStorage.loadFrom(path.get().toString());
     }
 

@@ -10,7 +10,6 @@ import com.sap.oss.phosphor.fosstars.advice.Advisor;
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
-import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.feature.BooleanFeature;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating;
@@ -79,15 +78,6 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownForma
   public OssRulesOfPlayRatingMarkdownFormatter(Path path, Advisor advisor) throws IOException {
     super(advisor);
     featureToRuleId = loadRuleIdsFrom(path);
-  }
-
-  @Override
-  public String print(Subject subject) {
-    if (!subject.ratingValue().isPresent()) {
-      return StringUtils.EMPTY;
-    }
-
-    return print(subject.ratingValue().get());
   }
 
   protected String print(RatingValue ratingValue, String advice) {
