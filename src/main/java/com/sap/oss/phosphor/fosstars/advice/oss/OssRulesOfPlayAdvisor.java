@@ -18,11 +18,18 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * An advisor for {@link com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating}.
  */
 public class OssRulesOfPlayAdvisor extends AbstractOssAdvisor {
+
+  /**
+   * A logger.
+   */
+  private static final Logger LOGGER = LogManager.getLogger(OssRulesOfPlayAdvisor.class);
 
   /**
    * OSS Rules of Play rating.
@@ -84,7 +91,7 @@ public class OssRulesOfPlayAdvisor extends AbstractOssAdvisor {
   private static OssAdviceContentYamlStorage storage() throws IOException {
     Optional<Path> path = loadDefaultYamlConfigIfAvailable(OssRulesOfPlayAdvisor.class);
     if (path.isPresent()) {
-      // TODO: log it here
+      LOGGER.info("Found a config for the advisor: {}", path.get());
       return OssAdviceContentYamlStorage.loadFrom(path.get().toString());
     }
 
