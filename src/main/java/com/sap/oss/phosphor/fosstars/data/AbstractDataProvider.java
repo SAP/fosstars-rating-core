@@ -1,12 +1,12 @@
 package com.sap.oss.phosphor.fosstars.data;
 
+import static com.sap.oss.phosphor.fosstars.util.Config.loadDefaultYamlConfigIfAvailable;
+
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.Objects;
+import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -48,14 +48,10 @@ public abstract class AbstractDataProvider<T> implements DataProvider<T> {
    */
   protected void loadDefaultConfigIfAvailable() throws IOException {
     Class<?> clazz = getClass();
-    for (String name : Arrays.asList(clazz.getSimpleName(), clazz.getCanonicalName())) {
-      for (String suffix : Arrays.asList("yml", "yaml")) {
-        Path path = Paths.get(String.format("%s.config.%s", name, suffix));
-        if (Files.isRegularFile(path)) {
-          logger.info("Found config for {} data provider: {}", clazz.getSimpleName(), path);
-          configure(path);
-        }
-      }
+    Optional<Path> path = loadDefaultYamlConfigIfAvailable(clazz);
+    if (path.isPresent()) {
+      logger.info("Found config for {} data provider: {}", clazz.getSimpleName(), path);
+      configure(path.get());
     }
   }
 
