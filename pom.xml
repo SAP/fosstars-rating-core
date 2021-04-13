@@ -70,7 +70,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <version.jackson>2.12.2</version.jackson>
+    <version.jackson>2.12.3</version.jackson>
     <version.commons-math3>3.6.1</version.commons-math3>
     <version.commons-cli>1.4</version.commons-cli>
     <version.github-api>1.127</version.github-api>
