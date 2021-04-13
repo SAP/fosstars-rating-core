@@ -1,4 +1,4 @@
-**Status**: **PASSED**
+**Status**: **Passed**
 
 **Confidence**: Max (10.0, max confidence value is 10.0)
 
@@ -30,4 +30,6 @@
 1.  **[rl-vulnerability_alerts-2]** Does it have unresolved vulnerability alerts? **No**
 
 
+## How to fix it
 
+1.  In earlier times, SAP requested projects to add an API usage section to the LICENSE file. As the LICENSE file should only contain the native license text and the API section has moved to the dep5 file of the REUSE project information, we ask all projects to remove the API section from the LICENSE file.
