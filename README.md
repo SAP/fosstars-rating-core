@@ -77,7 +77,7 @@
 | [SAP/odata-vocabularies](https://github.com/SAP/odata-vocabularies) | [FAILED](SAP/odata-vocabularies.md) | 1 violated rule |
 | [SAP/cloud-sdk-js](https://github.com/SAP/cloud-sdk-js) | [FAILED](SAP/cloud-sdk-js.md) | 5 violated rules |
 | [SAP/ui5-language-assistant](https://github.com/SAP/ui5-language-assistant) | [FAILED](SAP/ui5-language-assistant.md) | 3 violated rules |
-| [SAP/credential-digger](https://github.com/SAP/credential-digger) | [FAILED](SAP/credential-digger.md) | 2 violated rules |
+| [SAP/credential-digger](https://github.com/SAP/credential-digger) | [FAILED](SAP/credential-digger.md) | 1 violated rule |
 | [SAP/code-pal-for-abap](https://github.com/SAP/code-pal-for-abap) | [FAILED](SAP/code-pal-for-abap.md) | 6 violated rules |
 | [SAP/contextual-ai](https://github.com/SAP/contextual-ai) | [FAILED](SAP/contextual-ai.md) | 6 violated rules |
 | [SAP/machine-learning-lab](https://github.com/SAP/machine-learning-lab) | [FAILED](SAP/machine-learning-lab.md) | 3 violated rules |

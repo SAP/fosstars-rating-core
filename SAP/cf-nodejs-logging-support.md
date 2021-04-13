@@ -36,4 +36,11 @@
 1.  **[rl-vulnerability_alerts-2]** Does it have unresolved vulnerability alerts? **Yes**
 
 
+## How to improve the rating
+
+1.  Open a pull request to add a security policy for the project.
+    More info:
+    1.  [About adding a security policy to a repository on GitHub](https://docs.github.com/en/free-pro-team@latest/github/managing-security-vulnerabilities/adding-a-security-policy-to-your-repository)
+    2.  [An example of a security policy](https://github.com/apache/nifi/blob/main/SECURITY.md)
+    3.  [Suggest a security policy for the project](https://github.com/SAP/cf-nodejs-logging-support/security/policy)
 
