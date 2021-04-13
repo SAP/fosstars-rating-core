@@ -10,6 +10,7 @@ import com.github.packageurl.MalformedPackageURLException;
 import com.github.packageurl.PackageURL;
 import com.sap.oss.phosphor.fosstars.advice.Advisor;
 import com.sap.oss.phosphor.fosstars.advice.oss.OssRulesOfPlayAdvisor;
+import com.sap.oss.phosphor.fosstars.advice.oss.github.AdviceForGitHubContextFactory;
 import com.sap.oss.phosphor.fosstars.advice.oss.github.OssSecurityGithubAdvisor;
 import com.sap.oss.phosphor.fosstars.data.DataProvider;
 import com.sap.oss.phosphor.fosstars.data.NoUserCallback;
@@ -605,7 +606,8 @@ public class Application {
           return new OssSecurityRatingMarkdownFormatter(OSS_SECURITY_GITHUB_ADVISOR);
         }
         if (rating instanceof OssRulesOfPlayRating) {
-          return new OssRulesOfPlayRatingMarkdownFormatter(new OssRulesOfPlayAdvisor());
+          return new OssRulesOfPlayRatingMarkdownFormatter(
+              new OssRulesOfPlayAdvisor(AdviceForGitHubContextFactory.INSTANCE));
         }
         if (rating instanceof OssArtifactSecurityRating) {
           return new OssArtifactSecurityRatingMarkdownFormatter(OSS_SECURITY_GITHUB_ADVISOR);
@@ -686,7 +688,8 @@ public class Application {
     }
 
     if (reportConfig.type == ReportType.MARKDOWN && rating instanceof OssRulesOfPlayRating) {
-      return new OssRulesOfPlayMarkdownReporter(reportConfig.where, new OssRulesOfPlayAdvisor());
+      return new OssRulesOfPlayMarkdownReporter(
+          reportConfig.where, new OssRulesOfPlayAdvisor(AdviceForGitHubContextFactory.INSTANCE));
     }
 
     throw new IllegalArgumentException(String.format(
