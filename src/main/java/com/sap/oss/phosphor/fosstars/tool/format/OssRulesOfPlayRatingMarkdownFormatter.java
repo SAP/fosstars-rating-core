@@ -96,6 +96,11 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownForma
         .replace("%ADVICE%", advice);
   }
 
+  @Override
+  protected String markdownAdviceHeader() {
+    return "## How to fix it";
+  }
+
   /**
    * Prints out violated rules.
    *

@@ -69,6 +69,15 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
   }
 
   /**
+   * Returns a header for the advice section.
+   *
+   * @return A header for the advice section.
+   */
+  protected String markdownAdviceHeader() {
+    return "## How to improve the rating";
+  }
+
+  /**
    * Print out advice for a subject.
    *
    * @param subject The subject.
@@ -87,7 +96,7 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
     }
 
     StringBuilder sb = new StringBuilder();
-    sb.append("## How to improve the rating\n\n");
+    sb.append(markdownAdviceHeader()).append("\n\n");
     int i = 1;
     for (Advice advice : adviceList) {
       sb.append(String.format("%d.  %s", i++, advice.content().text()));
