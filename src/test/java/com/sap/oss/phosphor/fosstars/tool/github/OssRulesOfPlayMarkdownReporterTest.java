@@ -11,7 +11,6 @@ import static org.junit.Assert.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.advice.oss.OssRulesOfPlayAdvisor;
 import com.sap.oss.phosphor.fosstars.model.Confidence;
-import com.sap.oss.phosphor.fosstars.model.Label;
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
 import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating;
@@ -78,9 +77,10 @@ public class OssRulesOfPlayMarkdownReporterTest {
 
       assertFalse(report.isEmpty());
       assertTrue(report.contains("Total"));
-      for (Label label : OssRulesOfPlayRating.OssRulesOfPlayLabel.values()) {
-        assertTrue(report.contains(label.name()));
-      }
+      assertTrue(report.contains("Passed"));
+      assertTrue(report.contains("Failed"));
+      assertTrue(report.contains("Not clear"));
+      assertTrue(report.contains("Passed with warnings"));
       assertTrue(report.contains("org/passed"));
       assertTrue(report.contains("org/warnings"));
       assertTrue(report.contains("org/failed"));
