@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.sap.oss.phosphor.fosstars.advice.Advisor;
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Feature;
+import com.sap.oss.phosphor.fosstars.model.Label;
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.feature.BooleanFeature;
@@ -86,7 +87,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownForma
     ScoreValue scoreValue = ratingValue.scoreValue();
     return RATING_VALUE_TEMPLATE
         .replaceAll("%MAX_CONFIDENCE%", formatted(Confidence.MAX))
-        .replace("%STATUS%", ratingValue.label().name())
+        .replace("%STATUS%", format(ratingValue.label()))
         .replace("%CONFIDENCE_LABEL%", confidenceLabelFor(ratingValue.confidence()))
         .replace("%CONFIDENCE_VALUE%", formatted(ratingValue.confidence()))
         .replace("%VIOLATED_RULES%", violatedRulesFrom(scoreValue))
@@ -219,6 +220,32 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownForma
     return Optional.ofNullable(featureToRuleId.get(rule))
         .map(id -> String.format("**[%s]**", id))
         .orElse(StringUtils.EMPTY);
+  }
+
+  /**
+   * Prints our a label of the OSS Rules of Play rating.
+   *
+   * @param label The label to be printed.
+   * @return A formatted label.
+   * @throws IllegalArgumentException In case of unknown label.
+   */
+  public static String format(Label label) {
+    if (label instanceof OssRulesOfPlayRating.OssRulesOfPlayLabel == false) {
+      throw new IllegalArgumentException("Oops! Unknown label!");
+    }
+
+    switch ((OssRulesOfPlayRating.OssRulesOfPlayLabel) label) {
+      case FAILED:
+        return "Failed";
+      case PASSED:
+        return "Passed";
+      case PASSED_WITH_WARNING:
+        return "Passed with warnings";
+      case UNCLEAR:
+        return "Not clear";
+      default:
+        throw new IllegalArgumentException(String.format("Oops! Unexpected label: %s", label));
+    }
   }
 
   /**

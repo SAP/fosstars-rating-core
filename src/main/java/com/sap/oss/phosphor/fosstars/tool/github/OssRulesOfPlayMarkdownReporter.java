@@ -3,7 +3,6 @@ package com.sap.oss.phosphor.fosstars.tool.github;
 import static com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScore.findViolatedRulesIn;
 
 import com.sap.oss.phosphor.fosstars.advice.Advisor;
-import com.sap.oss.phosphor.fosstars.model.Label;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating.OssRulesOfPlayLabel;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
@@ -200,7 +199,10 @@ public class OssRulesOfPlayMarkdownReporter extends AbstractReporter<GitHubProje
    */
   private String statusOf(GitHubProject project) {
     return String.format("[%s](%s/%s.md)",
-        project.ratingValue().map(RatingValue::label).map(Label::name).orElse("UNKNOWN"),
+        project.ratingValue()
+            .map(RatingValue::label)
+            .map(OssRulesOfPlayRatingMarkdownFormatter::format)
+            .orElse("UNKNOWN"),
         project.organization().name(),
         project.name());
   }
