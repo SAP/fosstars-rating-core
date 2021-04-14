@@ -69,7 +69,7 @@
 | [SAP/ui5-webcomponents](https://github.com/SAP/ui5-webcomponents) | [Failed](SAP/ui5-webcomponents.md) | 1 violated rule |
 | [SAP/project-kb](https://github.com/SAP/project-kb) | [Failed](SAP/project-kb.md) | 3 violated rules |
 | [SAP/ui5-typescript](https://github.com/SAP/ui5-typescript) | [Failed](SAP/ui5-typescript.md) | 3 violated rules |
-| [SAP/ui5-webcomponents-react](https://github.com/SAP/ui5-webcomponents-react) | [Failed](SAP/ui5-webcomponents-react.md) | 1 violated rule |
+| [SAP/ui5-webcomponents-react](https://github.com/SAP/ui5-webcomponents-react) | [Failed](SAP/ui5-webcomponents-react.md) | 2 violated rules |
 | [SAP/styleguides](https://github.com/SAP/styleguides) | [Failed](SAP/styleguides.md) | 7 violated rules |
 | [SAP/fundamental-styles](https://github.com/SAP/fundamental-styles) | [Failed](SAP/fundamental-styles.md) | 2 violated rules |
 | [SAP/openui5-docs](https://github.com/SAP/openui5-docs) | [Failed](SAP/openui5-docs.md) | 6 violated rules |
