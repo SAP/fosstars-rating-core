@@ -63,10 +63,10 @@ public class RatingRepository {
    * This constructor loads all available ratings.
    */
   private RatingRepository() {
-    register(RatingRepository::securityRatingExample);
-    register(RatingRepository::ossSecurityRating);
-    register(RatingRepository::ossRulesOfPlayRating);
-    register(RatingRepository::ossArtifactSecurityRating);
+    register(this::securityRatingExample);
+    register(this::ossSecurityRating);
+    register(this::ossRulesOfPlayRating);
+    register(this::ossArtifactSecurityRating);
   }
 
   /**
@@ -75,7 +75,7 @@ public class RatingRepository {
    * @return An instance of {@link SecurityRatingExample};
    * @throws IOException If something went wrong.
    */
-  private static SecurityRatingExample securityRatingExample() throws IOException {
+  private SecurityRatingExample securityRatingExample() throws IOException {
     return load(
         "com/sap/oss/phosphor/fosstars/model/rating/example/SecurityRatingExample.json",
         SecurityRatingExample.class);
@@ -87,7 +87,7 @@ public class RatingRepository {
    * @return An instance of {@link OssSecurityRating};
    * @throws IOException If something went wrong.
    */
-  private static OssSecurityRating ossSecurityRating() throws IOException {
+  private OssSecurityRating ossSecurityRating() throws IOException {
     OssSecurityScore ossSecurityScore = new OssSecurityScore();
     ossSecurityScore.weights().update(
         loadScoreWeights("com/sap/oss/phosphor/fosstars/model/score/oss/"
@@ -116,7 +116,7 @@ public class RatingRepository {
    *
    * @return An instance of {@link OssRulesOfPlayRating}.
    */
-  private static OssRulesOfPlayRating ossRulesOfPlayRating() {
+  private OssRulesOfPlayRating ossRulesOfPlayRating() {
     return new OssRulesOfPlayRating();
   }
 
@@ -125,24 +125,21 @@ public class RatingRepository {
    *
    * @return An instance of {@link OssArtifactSecurityRating}.
    */
-  private static OssArtifactSecurityRating ossArtifactSecurityRating() throws IOException {
-    OssArtifactSecurityScore ossArtifactSecurityScore = new OssArtifactSecurityScore();
+  private OssArtifactSecurityRating ossArtifactSecurityRating() throws IOException {
+    OssSecurityScore ossSecurityScore = rating(OssSecurityRating.class).score();
 
-    ArtifactVersionSecurityScore artifactVersionSecurityScore =
-        ossArtifactSecurityScore.artifactVersionSecurityScore();
+    ArtifactVersionSecurityScore artifactVersionSecurityScore = new ArtifactVersionSecurityScore();
     artifactVersionSecurityScore.weights().update(
         loadScoreWeights("com/sap/oss/phosphor/fosstars/model/score/oss/"
             + "OssArtifactSecurityScoreWeights.json"));
 
-    OssSecurityScore ossSecurityScore = ossArtifactSecurityScore.ossSecurityScore();
-    ossSecurityScore.weights().update(
-        loadScoreWeights("com/sap/oss/phosphor/fosstars/model/score/oss/"
-            + "OssSecurityScoreWeights.json"));
+    OssArtifactSecurityScore ossArtifactSecurityScore =
+        new OssArtifactSecurityScore(artifactVersionSecurityScore, ossSecurityScore);
 
     OssArtifactSecurityRating.Thresholds thresholds = load(
-        "com/sap/oss/phosphor/fosstars/model/rating/oss/"
-            + "OssArtifactSecurityRatingThresholds.json",
+        "com/sap/oss/phosphor/fosstars/model/rating/oss/OssArtifactSecurityRatingThresholds.json",
         OssArtifactSecurityRating.Thresholds.class);
+
     return new OssArtifactSecurityRating(ossArtifactSecurityScore, thresholds);
   }
 
