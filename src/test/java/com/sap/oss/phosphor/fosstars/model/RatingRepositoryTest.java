@@ -1,13 +1,15 @@
 package com.sap.oss.phosphor.fosstars.model;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.other.ImmutabilityChecker;
 import com.sap.oss.phosphor.fosstars.model.rating.AbstractRating;
 import com.sap.oss.phosphor.fosstars.model.rating.example.SecurityRatingExample;
+import com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import org.junit.Test;
@@ -30,8 +32,18 @@ public class RatingRepositoryTest {
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void getByVersionAndClassWrongClass() {
+  public void testGetByVersionAndClassWrongClass() {
     RatingRepository.INSTANCE.rating(TestRating.class);
+  }
+
+  @Test
+  public void testNoDuplicateScores() {
+    OssSecurityRating ossSecurityRating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
+    assertNotNull(ossSecurityRating);
+    OssArtifactSecurityRating ossArtifactSecurityRating
+        = RatingRepository.INSTANCE.rating(OssArtifactSecurityRating.class);
+    assertNotNull(ossArtifactSecurityRating);
+    assertSame(ossSecurityRating.score(), ossArtifactSecurityRating.score().ossSecurityScore());
   }
 
   /**
@@ -45,7 +57,7 @@ public class RatingRepositoryTest {
 
     @Override
     public Label label(ScoreValue scoreValue) {
-      return null;
+      throw new UnsupportedOperationException("Oops! This should not be called!");
     }
   }
 }
