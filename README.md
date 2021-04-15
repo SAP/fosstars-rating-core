@@ -4,10 +4,10 @@
 
 |               | # or projects                    | % or projects                      |
 | :------------ | -------------------------------: | ---------------------------------: |
-| Total         |             73 |                               100% |
-| Failed        |         68 |         93.2% |
+| Total         |             72 |                               100% |
+| Failed        |         67 |         93.1% |
 | With warnings |  1 |  1.4% |
-| Passed        |         4 |         5.5% |
+| Passed        |         4 |         5.6% |
 | Unclear       |        0 |        0.0% |
 
 ## Projects
@@ -35,7 +35,6 @@
 | [SAP/openSAP-ui5-course](https://github.com/SAP/openSAP-ui5-course) | [Failed](SAP/openSAP-ui5-course.md) | 2 violated rules |
 | [SAP/cf-nodejs-logging-support](https://github.com/SAP/cf-nodejs-logging-support) | [Failed](SAP/cf-nodejs-logging-support.md) | 2 violated rules |
 | [SAP/apibusinesshub-api-recipes](https://github.com/SAP/apibusinesshub-api-recipes) | [Failed](SAP/apibusinesshub-api-recipes.md) | 7 violated rules |
-| [SAP/com.sap.openSAP.hana5.example](https://github.com/SAP/com.sap.openSAP.hana5.example) | [Failed](SAP/com.sap.openSAP.hana5.example.md) | 6 violated rules |
 | [SAP/hybris-commerce-eclipse-plugin](https://github.com/SAP/hybris-commerce-eclipse-plugin) | [Failed](SAP/hybris-commerce-eclipse-plugin.md) | 6 violated rules |
 | [SAP/olingo-jpa-processor-v4](https://github.com/SAP/olingo-jpa-processor-v4) | [Failed](SAP/olingo-jpa-processor-v4.md) | 8 violated rules |
 | [SAP/openui5-basic-template-app](https://github.com/SAP/openui5-basic-template-app) | [Failed](SAP/openui5-basic-template-app.md) | 2 violated rules |
@@ -69,7 +68,7 @@
 | [SAP/ui5-webcomponents](https://github.com/SAP/ui5-webcomponents) | [Failed](SAP/ui5-webcomponents.md) | 1 violated rule |
 | [SAP/project-kb](https://github.com/SAP/project-kb) | [Failed](SAP/project-kb.md) | 3 violated rules |
 | [SAP/ui5-typescript](https://github.com/SAP/ui5-typescript) | [Failed](SAP/ui5-typescript.md) | 3 violated rules |
-| [SAP/ui5-webcomponents-react](https://github.com/SAP/ui5-webcomponents-react) | [Failed](SAP/ui5-webcomponents-react.md) | 2 violated rules |
+| [SAP/ui5-webcomponents-react](https://github.com/SAP/ui5-webcomponents-react) | [Failed](SAP/ui5-webcomponents-react.md) | 1 violated rule |
 | [SAP/styleguides](https://github.com/SAP/styleguides) | [Failed](SAP/styleguides.md) | 7 violated rules |
 | [SAP/fundamental-styles](https://github.com/SAP/fundamental-styles) | [Failed](SAP/fundamental-styles.md) | 2 violated rules |
 | [SAP/openui5-docs](https://github.com/SAP/openui5-docs) | [Failed](SAP/openui5-docs.md) | 6 violated rules |
