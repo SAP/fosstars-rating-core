@@ -6,8 +6,8 @@
 | :------------ | -------------------------------: | ---------------------------------: |
 | Total         |             72 |                               100% |
 | Failed        |         67 |         93.1% |
-| With warnings |  1 |  1.4% |
-| Passed        |         4 |         5.6% |
+| With warnings |  0 |  0.0% |
+| Passed        |         5 |         6.9% |
 | Unclear       |        0 |        0.0% |
 
 ## Projects
@@ -82,7 +82,7 @@
 | [SAP/machine-learning-lab](https://github.com/SAP/machine-learning-lab) | [Failed](SAP/machine-learning-lab.md) | 3 violated rules |
 | [SAP/project-portal-for-innersource](https://github.com/SAP/project-portal-for-innersource) | [Failed](SAP/project-portal-for-innersource.md) | 3 violated rules |
 | [SAP/openui5](https://github.com/SAP/openui5) | [Passed](SAP/openui5.md) | No violated rules |
+| [SAP/ui5-tooling](https://github.com/SAP/ui5-tooling) | [Passed](SAP/ui5-tooling.md) | No violated rules |
 | [SAP/ui5-migration](https://github.com/SAP/ui5-migration) | [Passed](SAP/ui5-migration.md) | No violated rules |
 | [SAP/fosstars-rating-core](https://github.com/SAP/fosstars-rating-core) | [Passed](SAP/fosstars-rating-core.md) | No violated rules |
 | [SAP/cloud-sdk-ios-fiori](https://github.com/SAP/cloud-sdk-ios-fiori) | [Passed](SAP/cloud-sdk-ios-fiori.md) | No violated rules |
-| [SAP/ui5-tooling](https://github.com/SAP/ui5-tooling) | [Passed with warnings](SAP/ui5-tooling.md) | No violated rules |
