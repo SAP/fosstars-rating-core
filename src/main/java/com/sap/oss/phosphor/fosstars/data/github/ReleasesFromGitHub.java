@@ -9,7 +9,7 @@ import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersions;
 import com.sap.oss.phosphor.fosstars.model.value.SemanticVersion;
 import java.io.IOException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
@@ -73,9 +73,9 @@ public class ReleasesFromGitHub extends CachedSingleFeatureGitHubDataProvider<Ar
     }
   }
 
-  private LocalDate convertToLocalDate(Date date) {
+  private LocalDateTime convertToLocalDate(Date date) {
     return date.toInstant()
         .atZone(ZoneId.systemDefault())
-        .toLocalDate();
+        .toLocalDateTime();
   }
 }

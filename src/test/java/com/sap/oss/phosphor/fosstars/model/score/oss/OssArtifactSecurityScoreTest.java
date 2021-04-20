@@ -22,7 +22,7 @@ import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerability;
 import java.io.IOException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 import org.junit.Test;
 
@@ -153,14 +153,14 @@ public class OssArtifactSecurityScoreTest {
 
   private static ArtifactVersions testArtifactVersions(boolean with2xx) {
     ArtifactVersion version100 =
-        new ArtifactVersion("1.0.0", LocalDate.now().minusMonths(14));
+        new ArtifactVersion("1.0.0", LocalDateTime.now().minusMonths(14));
     ArtifactVersion version101 =
-        new ArtifactVersion("1.0.1", LocalDate.now().minusMonths(13));
+        new ArtifactVersion("1.0.1", LocalDateTime.now().minusMonths(13));
     ArtifactVersion version110 =
-        new ArtifactVersion("1.1.0", LocalDate.now().minusMonths(6));
-    ArtifactVersion version120 = new ArtifactVersion("1.2.0", LocalDate.now().minusDays(72));
+        new ArtifactVersion("1.1.0", LocalDateTime.now().minusMonths(6));
+    ArtifactVersion version120 = new ArtifactVersion("1.2.0", LocalDateTime.now().minusDays(72));
     if (with2xx) {
-      ArtifactVersion version200 = new ArtifactVersion("2.0.0", LocalDate.now().minusDays(7));
+      ArtifactVersion version200 = new ArtifactVersion("2.0.0", LocalDateTime.now().minusDays(7));
       return ArtifactVersions.of(version100, version101, version110, version120, version200);
     }
     return ArtifactVersions.of(version100, version101, version110, version120);

@@ -20,7 +20,7 @@ import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersions;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import java.io.IOException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -71,7 +71,7 @@ public class ReleaseInfoLoaderTest extends TestGitHubDataFetcherHolder {
     doAnswer(invocation -> {
       Object[] args = invocation.getArguments();
       ((ValueHashSet) args[1]).update(RELEASED_ARTIFACT_VERSIONS
-          .value(new ArtifactVersions(new ArtifactVersion("1.10.10", LocalDate.now()))));
+          .value(new ArtifactVersions(new ArtifactVersion("1.10.10", LocalDateTime.now()))));
       return null;
     }).when(releaseInfoFromMaven).update(MAVEN_ARTIFACT, values);
 
@@ -96,7 +96,7 @@ public class ReleaseInfoLoaderTest extends TestGitHubDataFetcherHolder {
     doAnswer(invocation -> {
       Object[] args = invocation.getArguments();
       ((ValueHashSet) args[1]).update(RELEASED_ARTIFACT_VERSIONS
-          .value(new ArtifactVersions(new ArtifactVersion("0.7.1", LocalDate.now()))));
+          .value(new ArtifactVersions(new ArtifactVersion("0.7.1", LocalDateTime.now()))));
       return null;
     }).when(releaseInfoFromNpm).update(NPM_ARTIFACT, values);
 
@@ -190,7 +190,7 @@ public class ReleaseInfoLoaderTest extends TestGitHubDataFetcherHolder {
   public void testIfValuesHasFeature() throws IOException {
     ValueHashSet values = new ValueHashSet();
     ArtifactVersions artifactVersions =
-        new ArtifactVersions(new ArtifactVersion("3.0.0", LocalDate.now()));
+        new ArtifactVersions(new ArtifactVersion("3.0.0", LocalDateTime.now()));
     values.update(RELEASED_ARTIFACT_VERSIONS.value(artifactVersions));
 
     assertEquals(1, values.size());

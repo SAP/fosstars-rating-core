@@ -60,7 +60,7 @@ import com.sap.oss.phosphor.fosstars.model.value.Vulnerability;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerability.Resolution;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -185,9 +185,9 @@ public class TestUtils {
     return setOf(
         RELEASED_ARTIFACT_VERSIONS.value(
             ArtifactVersions.of(
-                new ArtifactVersion("1.0.0", LocalDate.now().minusDays(30)),
-                new ArtifactVersion("1.5.0", LocalDate.now().minusDays(15)),
-                new ArtifactVersion("2.0.0", LocalDate.now())
+                new ArtifactVersion("1.0.0", LocalDateTime.now().minusDays(30)),
+                new ArtifactVersion("1.5.0", LocalDateTime.now().minusDays(15)),
+                new ArtifactVersion("2.0.0", LocalDateTime.now())
             )),
         VERSION.value("2.0.0"),
         SUPPORTED_BY_COMPANY.value(true),

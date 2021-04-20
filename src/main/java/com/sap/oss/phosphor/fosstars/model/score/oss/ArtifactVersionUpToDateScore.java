@@ -10,7 +10,7 @@ import com.sap.oss.phosphor.fosstars.model.score.FeatureBasedScore;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersions;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -52,9 +52,9 @@ public class ArtifactVersionUpToDateScore extends FeatureBasedScore {
       ArtifactVersion latestVersion = sortedByReleaseDate.iterator().next();
       ArtifactVersion checkVersion = mappedVersion.get();
 
-      LocalDate oneMonthBack = LocalDate.now().minusMonths(1);
-      LocalDate sixMonthBack = LocalDate.now().minusMonths(6);
-      LocalDate oneYearBack = LocalDate.now().minusYears(1);
+      LocalDateTime oneMonthBack = LocalDateTime.now().minusMonths(1);
+      LocalDateTime sixMonthBack = LocalDateTime.now().minusMonths(6);
+      LocalDateTime oneYearBack = LocalDateTime.now().minusYears(1);
 
       // check if used version is latest version
       if (latestVersion.equals(checkVersion)) {

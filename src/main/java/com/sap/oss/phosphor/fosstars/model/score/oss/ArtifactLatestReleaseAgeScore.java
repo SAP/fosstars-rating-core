@@ -9,7 +9,7 @@ import com.sap.oss.phosphor.fosstars.model.score.FeatureBasedScore;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersions;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 /**
@@ -44,9 +44,9 @@ public class ArtifactLatestReleaseAgeScore extends FeatureBasedScore {
     }
 
     ArtifactVersion latestVersion = sortedByReleaseDate.iterator().next();
-    LocalDate oneMonthBack = LocalDate.now().minusMonths(1);
-    LocalDate sixMonthBack = LocalDate.now().minusMonths(6);
-    LocalDate oneYearBack = LocalDate.now().minusYears(1);
+    LocalDateTime oneMonthBack = LocalDateTime.now().minusMonths(1);
+    LocalDateTime sixMonthBack = LocalDateTime.now().minusMonths(6);
+    LocalDateTime oneYearBack = LocalDateTime.now().minusYears(1);
 
     // check age of latest release
     if (latestVersion.getReleaseDate().isAfter(oneMonthBack)) {

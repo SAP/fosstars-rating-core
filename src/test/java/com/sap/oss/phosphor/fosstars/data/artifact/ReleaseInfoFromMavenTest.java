@@ -52,7 +52,7 @@ public class ReleaseInfoFromMavenTest {
       assertTrue(values.of(RELEASED_ARTIFACT_VERSIONS).isPresent());
       assertFalse(values.of(RELEASED_ARTIFACT_VERSIONS).get().isUnknown());
       assertFalse(values.of(RELEASED_ARTIFACT_VERSIONS).get().get().empty());
-      assertEquals(15, values.of(RELEASED_ARTIFACT_VERSIONS).get().get().size());
+      assertEquals(20, values.of(RELEASED_ARTIFACT_VERSIONS).get().get().size());
       assertTrue(values.of(RELEASED_ARTIFACT_VERSIONS).get().get().get("1.10.10").isPresent());
     }
   }

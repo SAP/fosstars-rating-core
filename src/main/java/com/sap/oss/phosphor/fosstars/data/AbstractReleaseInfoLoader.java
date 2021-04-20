@@ -8,7 +8,7 @@ import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.time.Instant;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Collections;
@@ -117,8 +117,8 @@ public abstract class AbstractReleaseInfoLoader<T> implements DataProvider<T> {
    * @param epoch The DateTime in milliseconds.
    * @return Local Date.
    */
-  protected LocalDate convertEpochToLocalDate(Long epoch) {
-    return Instant.ofEpochMilli(epoch).atZone(ZoneId.systemDefault()).toLocalDate();
+  protected LocalDateTime convertEpochToLocalDate(Long epoch) {
+    return Instant.ofEpochMilli(epoch).atZone(ZoneId.systemDefault()).toLocalDateTime();
   }
 
   /**
@@ -127,7 +127,7 @@ public abstract class AbstractReleaseInfoLoader<T> implements DataProvider<T> {
    * @param date in String.
    * @return Local Date.
    */
-  protected LocalDate convertToLocalDate(String date) {
-    return ZonedDateTime.parse(date).toLocalDate();
+  protected LocalDateTime convertToLocalDate(String date) {
+    return ZonedDateTime.parse(date).toLocalDateTime();
   }
 }
