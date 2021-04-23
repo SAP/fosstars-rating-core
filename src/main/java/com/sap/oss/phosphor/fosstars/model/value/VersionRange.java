@@ -1,6 +1,7 @@
 package com.sap.oss.phosphor.fosstars.model.value;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Objects;
@@ -10,42 +11,61 @@ import java.util.Optional;
  * The class holds a start and end version.
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class VersionRange {
 
   /**
    * First vulnerable version (including).
    */
-  private final String versionStart;
+  private final String versionStartIncluding;
 
   /**
    * Last vulnerable version (including).
    */
-  private final String versionEnd;
+  private final String versionEndIncluding;
 
   /**
-   * Create a version range with start and end version.
-   * Both versions are including.
-   * Start and end version may be null.
-   *
-   * @param versionStart start version (including)
-   * @param versionEnd end version (including)
+   * First vulnerable version (excluding).
    */
-  public VersionRange(
-      @JsonProperty("versionStart") String versionStart,
-      @JsonProperty("versionEnd") String versionEnd) {
+  private final String versionStartExcluding;
 
-    this.versionStart = versionStart;
-    this.versionEnd = versionEnd;
+  /**
+   * Last vulnerable version (excluding).
+   */
+  private final String versionEndExcluding;
+
+  /**
+   * Create a version range with start and end version. Version may be null.
+   *
+   * @param versionStartIncluding start version (including)
+   * @param versionStartExcluding start version (excluding)
+   * @param versionEndIncluding end version (including)
+   * @param versionEndExcluding end version (excluding)
+   */
+  public VersionRange(@JsonProperty("versionStartIncluding") String versionStartIncluding,
+      @JsonProperty("versionStartExcluding") String versionStartExcluding,
+      @JsonProperty("versionEndIncluding") String versionEndIncluding,
+      @JsonProperty("versionEndExcluding") String versionEndExcluding) {
+    this.versionStartIncluding = versionStartIncluding;
+    this.versionStartExcluding = versionStartExcluding;
+    this.versionEndIncluding = versionEndIncluding;
+    this.versionEndExcluding = versionEndExcluding;
   }
 
-  @JsonGetter("versionStart")
-  public Optional<String> versionStart() {
-    return Optional.ofNullable(versionStart);
+  public Optional<String> versionStartIncluding() {
+    return Optional.ofNullable(versionStartIncluding);
   }
 
-  @JsonGetter("versionEnd")
-  public Optional<String> versionEnd() {
-    return Optional.ofNullable(versionEnd);
+  public Optional<String> versionStartExcluding() {
+    return Optional.ofNullable(versionStartExcluding);
+  }
+
+  public Optional<String> versionEndIncluding() {
+    return Optional.ofNullable(versionEndIncluding);
+  }
+
+  public Optional<String> versionEndExcluding() {
+    return Optional.ofNullable(versionEndExcluding);
   }
 
   @Override
@@ -57,12 +77,15 @@ public class VersionRange {
       return false;
     }
     VersionRange that = (VersionRange) o;
-    return Objects.equals(versionStart, that.versionStart)
-        && Objects.equals(versionEnd, that.versionEnd);
+    return Objects.equals(versionStartIncluding, that.versionStartIncluding)
+        && Objects.equals(versionEndIncluding, that.versionEndIncluding)
+        && Objects.equals(versionStartExcluding, that.versionStartExcluding)
+        && Objects.equals(versionEndExcluding, that.versionEndExcluding);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(versionStart, versionEnd);
+    return Objects.hash(versionStartIncluding, versionStartExcluding, versionEndIncluding,
+        versionEndExcluding);
   }
 }

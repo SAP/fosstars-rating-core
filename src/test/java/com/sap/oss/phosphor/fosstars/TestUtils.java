@@ -58,6 +58,7 @@ import com.sap.oss.phosphor.fosstars.model.value.VersionRange;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerability;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerability.Resolution;
+import com.sap.oss.phosphor.fosstars.model.value.VulnerableArtifact;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -208,8 +209,11 @@ public class TestUtils {
                 .fixed(new Date())
                 .introduced(new Date())
                 .published(new Date())
-                .setVersionRanges(Collections.singletonList(
-                    new VersionRange("1.0.0", "1.0.0")))
+                .setVulnerableArtifacts(Collections.singletonList(
+                    new VulnerableArtifact(
+                        "vendor", 
+                        "product", 
+                        new VersionRange("1.0.0", null, "1.0.0", null))))
                 .make()
         )),
         PROJECT_START_DATE.value(new Date()),
@@ -252,12 +256,15 @@ public class TestUtils {
     Date introduced = createDate("21-03-21");
     Date fixed = createDate("21-03-22");
     Date published = createDate("21-03-23");
-    List<VersionRange> versions = new ArrayList<>();
-    versions.add(new VersionRange(startVersion, endVersion));
+    List<VulnerableArtifact> vulnerableArtifacts = new ArrayList<>();
+    vulnerableArtifacts.add(new VulnerableArtifact(
+        "vendor", 
+        "product", 
+        new VersionRange(startVersion, null, endVersion, null)));
 
     return Vulnerability.Builder.newVulnerability(id)
         .set(cvss).published(published).introduced(introduced).fixed(fixed)
-        .set(Resolution.PATCHED).setVersionRanges(versions)
+        .set(Resolution.PATCHED).setVulnerableArtifacts(vulnerableArtifacts)
         .make();
   }
 
