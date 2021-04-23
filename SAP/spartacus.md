@@ -13,9 +13,6 @@
 1.  **[rl-security_policy-1]** Does it have a security policy? **No**
 
 
-## Warnings
-
-1.  **[rl-vulnerability_alerts-2]** Does it have unresolved vulnerability alerts? **Yes**
 
 
 
@@ -32,7 +29,7 @@
 1.  **[rl-license_file-2]** Does it use an allowed license? **Yes**
 1.  **[rl-readme_file-1]** Does it have a README file? **Yes**
 1.  **[rl-vulnerability_alerts-1]** Are vulnerability alerts enabled? **Yes**
-1.  **[rl-vulnerability_alerts-2]** Does it have unresolved vulnerability alerts? **Yes**
+1.  **[rl-vulnerability_alerts-2]** Does it have unresolved vulnerability alerts? **No**
 
 
 ## How to fix it
