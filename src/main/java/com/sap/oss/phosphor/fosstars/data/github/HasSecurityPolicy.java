@@ -4,9 +4,14 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SE
 
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Value;
-import com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures;
+import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubOrganization;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.io.IOException;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 
 /**
  * This data provider check if an open-source project has a security policy which describes how
@@ -49,24 +54,53 @@ public class HasSecurityPolicy extends CachedSingleFeatureGitHubDataProvider<Boo
   @Override
   protected Value<Boolean> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out if the project has a security policy ...");
-    return hasSecurityPolicy(project);
+    return HAS_SECURITY_POLICY.value(
+        hasSecurityPolicy(project) || hasSecurityPolicy(project.organization()));
   }
 
   /**
    * Check if a project has a security policy.
+   *
    * @param project The project.
-   * @return A value of {@link OssFeatures#HAS_SECURITY_POLICY} feature.
+   * @return True if the project has a security policy, false otherwise.
    * @throws IOException If something went wrong.
    */
-  private Value<Boolean> hasSecurityPolicy(GitHubProject project) throws IOException {
+  private boolean hasSecurityPolicy(GitHubProject project) throws IOException {
     LocalRepository repository = GitHubDataFetcher.localRepositoryFor(project);
     for (String path : POLICY_LOCATIONS) {
       if (isPolicy(repository, path)) {
-        return HAS_SECURITY_POLICY.value(true);
+        return true;
       }
     }
 
-    return HAS_SECURITY_POLICY.value(false);
+    return false;
+  }
+
+  /**
+   * Check if an organization has a security policy.
+   *
+   * @param organization The organization.
+   * @return True if the organization has a security policy, false otherwise.
+   * @throws IOException If something went wrong.
+   */
+  private boolean hasSecurityPolicy(GitHubOrganization organization) throws IOException {
+    try (CloseableHttpClient client = httpClient()) {
+      String url = String.format(
+          "https://github.com/%s/.github/security/policy", organization.name());
+      HttpGet httpGetRequest = new HttpGet(url);
+      try (CloseableHttpResponse httpResponse = client.execute(httpGetRequest)) {
+        return httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK;
+      }
+    }
+  }
+
+  /**
+   * Creates an HTTP client.
+   *
+   * @return An HTTP client.
+   */
+  CloseableHttpClient httpClient() {
+    return HttpClients.createDefault();
   }
 
   /**

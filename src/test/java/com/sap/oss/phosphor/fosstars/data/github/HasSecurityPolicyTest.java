@@ -5,9 +5,12 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SE
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
+import com.sap.oss.phosphor.fosstars.data.NoValueCache;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
@@ -15,12 +18,16 @@ import com.sap.oss.phosphor.fosstars.tool.github.GitHubProjectValueCache;
 import java.io.IOException;
 import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.junit.Test;
 
 public class HasSecurityPolicyTest extends TestGitHubDataFetcherHolder {
 
   @Test
-  public void testHasPolicy() throws IOException {
+  public void testIfProjectHasPolicy() throws IOException {
     final LocalRepository repository = mock(LocalRepository.class);
     when(repository.file("SECURITY.md"))
         .thenReturn(Optional.of(StringUtils.repeat("x", 1000)));
@@ -32,6 +39,35 @@ public class HasSecurityPolicyTest extends TestGitHubDataFetcherHolder {
     HasSecurityPolicy provider = new HasSecurityPolicy(fetcher);
     provider.set(new GitHubProjectValueCache());
 
+    check(provider, true);
+  }
+
+  @Test
+  public void testIfOrganizationHasPolicy() throws IOException {
+    final LocalRepository repository = mock(LocalRepository.class);
+    when(repository.file("SECURITY.md")).thenReturn(Optional.empty());
+
+    GitHubProject project = new GitHubProject("org", "test");
+
+    addForTesting(project, repository);
+
+    StatusLine statusLine = mock(StatusLine.class);
+
+    CloseableHttpResponse response = mock(CloseableHttpResponse.class);
+    when(response.getStatusLine()).thenReturn(statusLine);
+
+    CloseableHttpClient client = mock(CloseableHttpClient.class);
+    when(client.execute(any())).thenReturn(response);
+
+    HasSecurityPolicy provider = new HasSecurityPolicy(fetcher);
+    provider.set(NoValueCache.create());
+    provider = spy(provider);
+    when(provider.httpClient()).thenReturn(client);
+
+    when(statusLine.getStatusCode()).thenReturn(HttpStatus.SC_NOT_FOUND);
+    check(provider, false);
+
+    when(statusLine.getStatusCode()).thenReturn(HttpStatus.SC_OK);
     check(provider, true);
   }
 
