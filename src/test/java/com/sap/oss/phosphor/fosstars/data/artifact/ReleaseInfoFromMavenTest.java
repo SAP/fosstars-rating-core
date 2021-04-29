@@ -23,7 +23,7 @@ import org.junit.Test;
 public class ReleaseInfoFromMavenTest {
 
   private static final MavenArtifact MAVEN_ARTIFACT =
-      new MavenArtifact("group", "artifact", new GitHubProject("org", "project"));
+      new MavenArtifact("group", "artifact", "1.0.0", new GitHubProject("org", "project"));
 
   @Test
   public void testIfMavenArtifactExist() throws IOException {
