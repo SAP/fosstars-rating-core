@@ -1,0 +1,363 @@
+{
+    "responseHeader": {
+        "status": 0,
+        "QTime": 2,
+        "params": {
+            "q": "g:\"org.apache.ant\" AND a:\"ant\"",
+            "core": "gav",
+            "indent": "off",
+            "fl": "id,g,a,v,p,ec,timestamp,tags",
+            "start": "",
+            "sort": "score desc,timestamp desc,g asc,a asc,v desc",
+            "rows": "20",
+            "wt": "json",
+            "version": "2.2"
+        }
+    },
+    "response": {
+        "numFound": 34,
+        "start": 0,
+        "docs": [
+            {
+                "id": "org.apache.ant:ant:1.10.10",
+                "g": "org.apache.ant",
+                "a": "ant",
+                "v": "1.10.10",
+                "p": "jar",
+                "timestamp": 1618200022000,
+                "ec": [
+                    "-sources.jar",
+                    "-javadoc.jar",
+                    ".jar",
+                    ".pom"
+                ],
+                "tags": [
+                    "master"
+                ]
+            },
+            {
+                "id": "org.apache.ant:ant:1.10.9",
+                "g": "org.apache.ant",
+                "a": "ant",
+                "v": "1.10.9",
+                "p": "jar",
+                "timestamp": 1601201332000,
+                "ec": [
+                    "-sources.jar",
+                    "-javadoc.jar",
+                    ".jar",
+                    ".pom"
+                ],
+                "tags": [
+                    "master"
+                ]
+            },
+            {
+                "id": "org.apache.ant:ant:1.10.8",
+                "g": "org.apache.ant",
+                "a": "ant",
+                "v": "1.10.8",
+                "p": "jar",
+                "timestamp": 1589121605000,
+                "ec": [
+                    "-sources.jar",
+                    "-javadoc.jar",
+                    ".jar",
+                    ".pom"
+                ],
+                "tags": [
+                    "master"
+                ]
+            },
+            {
+                "id": "org.apache.ant:ant:1.9.15",
+                "g": "org.apache.ant",
+                "a": "ant",
+                "v": "1.9.15",
+                "p": "jar",
+                "timestamp": 1589119028000,
+                "ec": [
+                    "-sources.jar",
+                    "-javadoc.jar",
+                    ".jar",
+                    ".pom"
+                ],
+                "tags": [
+                    "master"
+                ]
+            },
+            {
+                "id": "org.apache.ant:ant:1.10.7",
+                "g": "org.apache.ant",
+                "a": "ant",
+                "v": "1.10.7",
+                "p": "jar",
+                "timestamp": 1567320695000,
+                "ec": [
+                    "-sources.jar",
+                    "-javadoc.jar",
+                    ".jar",
+                    ".pom"
+                ],
+                "tags": [
+                    "master"
+                ]
+            },
+            {
+                "id": "org.apache.ant:ant:1.10.6",
+                "g": "org.apache.ant",
+                "a": "ant",
+                "v": "1.10.6",
+                "p": "jar",
+                "timestamp": 1556803659000,
+                "ec": [
+                    "-sources.jar",
+                    "-javadoc.jar",
+                    ".jar",
+                    ".pom"
+                ],
+                "tags": [
+                    "master"
+                ]
+            },
+            {
+                "id": "org.apache.ant:ant:1.9.14",
+                "g": "org.apache.ant",
+                "a": "ant",
+                "v": "1.9.14",
+                "p": "jar",
+                "timestamp": 1552383167000,
+                "ec": [
+                    "-javadoc.jar",
+                    "-sources.jar",
+                    ".jar",
+                    ".pom"
+                ],
+                "tags": [
+                    "master"
+                ]
+            },
+            {
+                "id": "org.apache.ant:ant:1.10.5",
+                "g": "org.apache.ant",
+                "a": "ant",
+                "v": "1.10.5",
+                "p": "jar",
+                "timestamp": 1531198443000,
+                "ec": [
+                    "-javadoc.jar",
+                    "-sources.jar",
+                    ".jar",
+                    ".pom"
+                ],
+                "tags": [
+                    "master"
+                ]
+            },
+            {
+                "id": "org.apache.ant:ant:1.9.13",
+                "g": "org.apache.ant",
+                "a": "ant",
+                "v": "1.9.13",
+                "p": "jar",
+                "timestamp": 1531196824000,
+                "ec": [
+                    "-javadoc.jar",
+                    "-sources.jar",
+                    ".jar",
+                    ".pom"
+                ],
+                "tags": [
+                    "master"
+                ]
+            },
+            {
+                "id": "org.apache.ant:ant:1.10.4",
+                "g": "org.apache.ant",
+                "a": "ant",
+                "v": "1.10.4",
+                "p": "jar",
+                "timestamp": 1529391053000,
+                "ec": [
+                    "-javadoc.jar",
+                    "-sources.jar",
+                    ".jar",
+                    ".pom"
+                ],
+                "tags": [
+                    "master"
+                ]
+            },
+            {
+                "id": "org.apache.ant:ant:1.9.12",
+                "g": "org.apache.ant",
+                "a": "ant",
+                "v": "1.9.12",
+                "p": "jar",
+                "timestamp": 1529381652000,
+                "ec": [
+                    "-javadoc.jar",
+                    "-sources.jar",
+                    ".jar",
+                    ".pom"
+                ],
+                "tags": [
+                    "master"
+                ]
+            },
+            {
+                "id": "org.apache.ant:ant:1.10.3",
+                "g": "org.apache.ant",
+                "a": "ant",
+                "v": "1.10.3",
+                "p": "jar",
+                "timestamp": 1521895287000,
+                "ec": [
+                    "-javadoc.jar",
+                    "-sources.jar",
+                    ".jar",
+                    ".pom"
+                ],
+                "tags": [
+                    "master"
+                ]
+            },
+            {
+                "id": "org.apache.ant:ant:1.9.11",
+                "g": "org.apache.ant",
+                "a": "ant",
+                "v": "1.9.11",
+                "p": "jar",
+                "timestamp": 1521825556000,
+                "ec": [
+                    "-javadoc.jar",
+                    "-sources.jar",
+                    ".jar",
+                    ".pom"
+                ],
+                "tags": [
+                    "master"
+                ]
+            },
+            {
+                "id": "org.apache.ant:ant:1.10.2",
+                "g": "org.apache.ant",
+                "a": "ant",
+                "v": "1.10.2",
+                "p": "jar",
+                "timestamp": 1517677119000,
+                "ec": [
+                    "-javadoc.jar",
+                    "-sources.jar",
+                    ".jar",
+                    ".pom"
+                ],
+                "tags": [
+                    "master"
+                ]
+            },
+            {
+                "id": "org.apache.ant:ant:1.9.10",
+                "g": "org.apache.ant",
+                "a": "ant",
+                "v": "1.9.10",
+                "p": "jar",
+                "timestamp": 1517674962000,
+                "ec": [
+                    "-sources.jar",
+                    "-javadoc.jar",
+                    ".jar",
+                    ".pom"
+                ],
+                "tags": [
+                    "master"
+                ]
+            },
+            {
+                "id": "org.apache.ant:ant:1.10.1",
+                "g": "org.apache.ant",
+                "a": "ant",
+                "v": "1.10.1",
+                "p": "jar",
+                "timestamp": 1486062520000,
+                "ec": [
+                    "-sources.jar",
+                    "-javadoc.jar",
+                    ".jar",
+                    ".pom"
+                ],
+                "tags": [
+                    "master"
+                ]
+            },
+            {
+                "id": "org.apache.ant:ant:1.9.9",
+                "g": "org.apache.ant",
+                "a": "ant",
+                "v": "1.9.9",
+                "p": "jar",
+                "timestamp": 1486060804000,
+                "ec": [
+                    "-sources.jar",
+                    "-javadoc.jar",
+                    ".jar",
+                    ".pom"
+                ],
+                "tags": [
+                    "master"
+                ]
+            },
+            {
+                "id": "org.apache.ant:ant:1.10.0",
+                "g": "org.apache.ant",
+                "a": "ant",
+                "v": "1.10.0",
+                "p": "jar",
+                "timestamp": 1482821765000,
+                "ec": [
+                    "-sources.jar",
+                    "-javadoc.jar",
+                    ".jar",
+                    ".pom"
+                ],
+                "tags": [
+                    "master"
+                ]
+            },
+            {
+                "id": "org.apache.ant:ant:1.9.8",
+                "g": "org.apache.ant",
+                "a": "ant",
+                "v": "1.9.8",
+                "p": "jar",
+                "timestamp": 1482689020000,
+                "ec": [
+                    "-sources.jar",
+                    "-javadoc.jar",
+                    ".jar",
+                    ".pom"
+                ],
+                "tags": [
+                    "master"
+                ]
+            },
+            {
+                "id": "org.apache.ant:ant:1.9.7",
+                "g": "org.apache.ant",
+                "a": "ant",
+                "v": "1.9.7",
+                "p": "jar",
+                "timestamp": 1460185720000,
+                "ec": [
+                    "-sources.jar",
+                    "-javadoc.jar",
+                    ".jar",
+                    ".pom"
+                ],
+                "tags": [
+                    "master"
+                ]
+            }
+        ]
+    }
+}
