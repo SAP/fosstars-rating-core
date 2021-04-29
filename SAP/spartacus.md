@@ -10,7 +10,6 @@
 1.  **[rl-reuse_tool-2]** Does it have LICENSES directory with licenses? **No**
 1.  **[rl-reuse_tool-3]** Is it registered in REUSE? **No**
 1.  **[rl-reuse_tool-4]** Is it compliant with REUSE rules? **No**
-1.  **[rl-security_policy-1]** Does it have a security policy? **No**
 
 
 
@@ -28,18 +27,14 @@
 1.  **[rl-license_file-1]** Does it have a license file? **Yes**
 1.  **[rl-license_file-2]** Does it use an allowed license? **Yes**
 1.  **[rl-readme_file-1]** Does it have a README file? **Yes**
+1.  **[rl-security_policy-1]** Does it have a security policy? **Yes**
 1.  **[rl-vulnerability_alerts-1]** Are vulnerability alerts enabled? **Yes**
 1.  **[rl-vulnerability_alerts-2]** Does it have unresolved vulnerability alerts? **No**
 
 
 ## How to fix it
 
-1.  You should add information about the Developer Certificate of Origin (DCO) to the contributions file. Moreover, be sure that there are no longer any references to the outdated contributor license agreement (CLA) in the file.2.  REUSE tool compliance requires that all used licenses are provided in a LICENSES folder on root level.3.  Open a pull request to add a security policy for the project.
-    More info:
-    1.  [About adding a security policy to a repository on GitHub](https://docs.github.com/en/free-pro-team@latest/github/managing-security-vulnerabilities/adding-a-security-policy-to-your-repository)
-    2.  [An example of a security policy](https://github.com/apache/nifi/blob/main/SECURITY.md)
-    3.  [Suggest a security policy for the project](https://github.com/SAP/spartacus/security/policy)
-4.  The README of your projects needs to include a link to the results of the REUSE tool scan as well as a licensing section.5.  A registration for the repository could not be found. Please verify that the repository is registered properly.
+1.  You should add information about the Developer Certificate of Origin (DCO) to the contributions file. Moreover, be sure that there are no longer any references to the outdated contributor license agreement (CLA) in the file.2.  REUSE tool compliance requires that all used licenses are provided in a LICENSES folder on root level.3.  The README of your projects needs to include a link to the results of the REUSE tool scan as well as a licensing section.4.  A registration for the repository could not be found. Please verify that the repository is registered properly.
     More info:
     1.  [Register a project in REUSE](https://api.reuse.software/register)
-6.  The latest REUSE tool compliance check resulted in errors. Please perform the check again on your repository and fix the issues.
+5.  The latest REUSE tool compliance check resulted in errors. Please perform the check again on your repository and fix the issues.

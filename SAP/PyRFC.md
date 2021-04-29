@@ -7,7 +7,6 @@
 1.  **[rl-assigned_teams-3]** Does it have enough admins on GitHub? **No**
 1.  **[rl-assigned_teams-5]** Does teams have enough members on GitHub? **No**
 1.  **[rl-license_file-1]** Does it have a license file? **No**
-1.  **[rl-security_policy-1]** Does it have a security policy? **No**
 
 
 
@@ -30,6 +29,7 @@
 1.  **[rl-reuse_tool-2]** Does it have LICENSES directory with licenses? **Yes**
 1.  **[rl-reuse_tool-3]** Is it registered in REUSE? **Yes**
 1.  **[rl-reuse_tool-4]** Is it compliant with REUSE rules? **Yes**
+1.  **[rl-security_policy-1]** Does it have a security policy? **Yes**
 1.  **[rl-vulnerability_alerts-1]** Are vulnerability alerts enabled? **Yes**
 1.  **[rl-vulnerability_alerts-2]** Does it have unresolved vulnerability alerts? **No**
 
@@ -39,9 +39,4 @@
 1.  A members team could be found, but it only contains one person or is even empty. If there is a maintainer in the team, please ask this person to add additional members or contact the OSPO to add the colleagues who are entitled to be members.2.  No license file could be found in your repository. Be sure to add a license that can be detected by GitHub.
     More info:
     1.  [Licensing a repository](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/licensing-a-repository#determining-the-location-of-your-license)
-3.  An admins team could be found, but it only contains one person or is even empty. If there is a maintainer in the team, please ask this person to add another administrator or contact the OSPO to add the colleagues who are entitled to be admins.4.  Open a pull request to add a security policy for the project.
-    More info:
-    1.  [About adding a security policy to a repository on GitHub](https://docs.github.com/en/free-pro-team@latest/github/managing-security-vulnerabilities/adding-a-security-policy-to-your-repository)
-    2.  [An example of a security policy](https://github.com/apache/nifi/blob/main/SECURITY.md)
-    3.  [Suggest a security policy for the project](https://github.com/SAP/PyRFC/security/policy)
-
+3.  An admins team could be found, but it only contains one person or is even empty. If there is a maintainer in the team, please ask this person to add another administrator or contact the OSPO to add the colleagues who are entitled to be admins.

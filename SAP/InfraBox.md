@@ -5,7 +5,6 @@
 ## Violated rules
 
 1.  **[rl-license_file-1]** Does it have a license file? **No**
-1.  **[rl-security_policy-1]** Does it have a security policy? **No**
 
 
 ## Warnings
@@ -33,6 +32,7 @@
 1.  **[rl-reuse_tool-2]** Does it have LICENSES directory with licenses? **Yes**
 1.  **[rl-reuse_tool-3]** Is it registered in REUSE? **Yes**
 1.  **[rl-reuse_tool-4]** Is it compliant with REUSE rules? **Yes**
+1.  **[rl-security_policy-1]** Does it have a security policy? **Yes**
 1.  **[rl-vulnerability_alerts-1]** Are vulnerability alerts enabled? **Yes**
 1.  **[rl-vulnerability_alerts-2]** Does it have unresolved vulnerability alerts? **Yes**
 
@@ -42,9 +42,4 @@
 1.  No license file could be found in your repository. Be sure to add a license that can be detected by GitHub.
     More info:
     1.  [Licensing a repository](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/licensing-a-repository#determining-the-location-of-your-license)
-2.  Open a pull request to add a security policy for the project.
-    More info:
-    1.  [About adding a security policy to a repository on GitHub](https://docs.github.com/en/free-pro-team@latest/github/managing-security-vulnerabilities/adding-a-security-policy-to-your-repository)
-    2.  [An example of a security policy](https://github.com/apache/nifi/blob/main/SECURITY.md)
-    3.  [Suggest a security policy for the project](https://github.com/SAP/InfraBox/security/policy)
 
