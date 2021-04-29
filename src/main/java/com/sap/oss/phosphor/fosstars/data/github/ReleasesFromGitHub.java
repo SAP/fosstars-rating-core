@@ -73,7 +73,13 @@ public class ReleasesFromGitHub extends CachedSingleFeatureGitHubDataProvider<Ar
     }
   }
 
-  private LocalDateTime convertToLocalDate(Date date) {
+  /**
+   * Convert a Date to a LocalDateTime instance using the system default ZoneId.
+   *
+   * @param date The date to be converted.
+   * @return The time as LocalDateTime.
+   */
+  private static LocalDateTime convertToLocalDate(Date date) {
     return date.toInstant()
         .atZone(ZoneId.systemDefault())
         .toLocalDateTime();

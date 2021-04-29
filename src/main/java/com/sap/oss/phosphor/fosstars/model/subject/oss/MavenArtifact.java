@@ -24,6 +24,9 @@ public class MavenArtifact implements Artifact {
   private final String artifact;
 
 
+  /**
+   * Maven artifact's version.
+   */
   private final String version;
 
   /**
@@ -36,6 +39,7 @@ public class MavenArtifact implements Artifact {
    *
    * @param group A group id of the artifact.
    * @param artifact An artifact id of the artifact.
+   * @param version The version of the artifact.
    * @param project A {@link GitHubProject}.
    */
   @JsonCreator

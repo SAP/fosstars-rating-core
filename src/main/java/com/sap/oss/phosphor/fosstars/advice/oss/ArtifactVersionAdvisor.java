@@ -1,7 +1,7 @@
 package com.sap.oss.phosphor.fosstars.advice.oss;
 
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ARTIFACT_VERSION;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RELEASED_ARTIFACT_VERSIONS;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VERSION;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.findValue;
 
 import com.sap.oss.phosphor.fosstars.advice.Advice;
@@ -39,14 +39,14 @@ public class ArtifactVersionAdvisor extends AbstractOssAdvisor {
       Subject subject, List<Value<?>> usedValues, OssAdviceContext context)
       throws MalformedURLException {
 
-    Optional<Value<String>> versionValue = findValue(usedValues, VERSION);
+    Optional<Value<ArtifactVersion>> versionValue = findValue(usedValues, ARTIFACT_VERSION);
     Optional<Value<ArtifactVersions>> releasedVersionsValue = findValue(usedValues,
         RELEASED_ARTIFACT_VERSIONS);
 
     if (isAllVersionInformationAvailable(versionValue, releasedVersionsValue)) {
       // isAllVersionInformationAvailable() checks that both values are present and known
       ArtifactVersion latestVersion = getLatestVersion(releasedVersionsValue.get());
-      String usedVersion = versionValue.get().get();
+      String usedVersion = versionValue.get().get().getVersion();
 
       if (!latestVersion.getVersion().equals(usedVersion)) {
         List<AdviceContent> advice =
@@ -63,17 +63,17 @@ public class ArtifactVersionAdvisor extends AbstractOssAdvisor {
   }
 
   private boolean isAllVersionInformationAvailable(
-      Optional<Value<String>> versionValue,
+      Optional<Value<ArtifactVersion>> versionValue,
       Optional<Value<ArtifactVersions>> releasedVersionsValue) {
 
     if (!versionValue.isPresent() || !releasedVersionsValue.isPresent()) {
       return false;
     }
 
-    Value<String> version = versionValue.get();
+    Value<ArtifactVersion> version = versionValue.get();
     Value<ArtifactVersions> releasedVersions = releasedVersionsValue.get();
     return !version.isUnknown() && !releasedVersions.isUnknown()
-        && !version.get().isEmpty() && !releasedVersions.get().empty();
+        && !version.get().getVersion().isEmpty() && !releasedVersions.get().empty();
   }
 
   private ArtifactVersion getLatestVersion(Value<ArtifactVersions> releasedVersionsValue) {

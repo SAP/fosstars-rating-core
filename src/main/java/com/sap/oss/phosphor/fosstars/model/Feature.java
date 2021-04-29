@@ -12,14 +12,15 @@ import com.sap.oss.phosphor.fosstars.model.feature.LgtmGradeFeature;
 import com.sap.oss.phosphor.fosstars.model.feature.OwaspDependencyCheckCvssThreshold;
 import com.sap.oss.phosphor.fosstars.model.feature.OwaspDependencyCheckUsageFeature;
 import com.sap.oss.phosphor.fosstars.model.feature.PositiveIntegerFeature;
+import com.sap.oss.phosphor.fosstars.model.feature.StringFeature;
 import com.sap.oss.phosphor.fosstars.model.feature.example.NumberOfCommitsLastMonthExample;
 import com.sap.oss.phosphor.fosstars.model.feature.example.NumberOfContributorsLastMonthExample;
 import com.sap.oss.phosphor.fosstars.model.feature.example.SecurityReviewDoneExample;
 import com.sap.oss.phosphor.fosstars.model.feature.example.StaticCodeAnalysisDoneExample;
+import com.sap.oss.phosphor.fosstars.model.feature.oss.ArtifactVersionFeature;
 import com.sap.oss.phosphor.fosstars.model.feature.oss.ArtifactVersionsFeature;
 import com.sap.oss.phosphor.fosstars.model.feature.oss.LanguagesFeature;
 import com.sap.oss.phosphor.fosstars.model.feature.oss.PackageManagersFeature;
-import com.sap.oss.phosphor.fosstars.model.feature.oss.StringFeature;
 import com.sap.oss.phosphor.fosstars.model.feature.oss.VulnerabilitiesInProject;
 
 /**
@@ -51,6 +52,7 @@ import com.sap.oss.phosphor.fosstars.model.feature.oss.VulnerabilitiesInProject;
     @JsonSubTypes.Type(value = LanguagesFeature.class),
     @JsonSubTypes.Type(value = PackageManagersFeature.class),
     @JsonSubTypes.Type(value = StringFeature.class),
+    @JsonSubTypes.Type(value = ArtifactVersionFeature.class),
     @JsonSubTypes.Type(value = ArtifactVersionsFeature.class),
     @JsonSubTypes.Type(value = OwaspDependencyCheckUsageFeature.class),
     @JsonSubTypes.Type(value = OwaspDependencyCheckCvssThreshold.class)

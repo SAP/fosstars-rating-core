@@ -14,10 +14,11 @@ public class NpmArtifactTest {
   public void testJsonSerialization() throws IOException {
     String group = "apache";
     String artifact = "nifi";
+    String version = "1.0";
     GitHubOrganization apache = new GitHubOrganization(group);
     GitHubProject project = new GitHubProject(apache, artifact);
 
-    NpmArtifact npmArtifact = new NpmArtifact(artifact, project);
+    NpmArtifact npmArtifact = new NpmArtifact(artifact, version, project);
     byte[] bytes = Json.toBytes(npmArtifact);
     assertNotNull(bytes);
     assertTrue(bytes.length > 0);
@@ -28,5 +29,6 @@ public class NpmArtifactTest {
     assertEquals(npmArtifact.identifier(), clone.identifier());
     assertTrue(npmArtifact.project().isPresent());
     assertEquals(npmArtifact.project().get(), clone.project().get());
+    assertEquals(npmArtifact.version().get(), clone.version().get());
   }
 }

@@ -1,5 +1,6 @@
 package com.sap.oss.phosphor.fosstars.data.artifact;
 
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ARTIFACT_VERSION;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RELEASED_ARTIFACT_VERSIONS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -11,9 +12,13 @@ import static org.mockito.Mockito.when;
 
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.MavenArtifact;
+import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -23,7 +28,7 @@ import org.junit.Test;
 public class ReleaseInfoFromMavenTest {
 
   private static final MavenArtifact MAVEN_ARTIFACT =
-      new MavenArtifact("group", "artifact", "1.0.0", new GitHubProject("org", "project"));
+      new MavenArtifact("group", "artifact", "1.10.10", new GitHubProject("org", "project"));
 
   @Test
   public void testIfMavenArtifactExist() throws IOException {
@@ -47,13 +52,17 @@ public class ReleaseInfoFromMavenTest {
 
       provider.update(MAVEN_ARTIFACT, values);
 
-      assertEquals(1, values.size());
+      assertEquals(2, values.size());
       assertTrue(values.has(RELEASED_ARTIFACT_VERSIONS));
       assertTrue(values.of(RELEASED_ARTIFACT_VERSIONS).isPresent());
       assertFalse(values.of(RELEASED_ARTIFACT_VERSIONS).get().isUnknown());
       assertFalse(values.of(RELEASED_ARTIFACT_VERSIONS).get().get().empty());
       assertEquals(20, values.of(RELEASED_ARTIFACT_VERSIONS).get().get().size());
       assertTrue(values.of(RELEASED_ARTIFACT_VERSIONS).get().get().get("1.10.10").isPresent());
+      assertFalse(values.of(ARTIFACT_VERSION).get().isUnknown());
+      ArtifactVersion foundArtifactVersion = values.of(ARTIFACT_VERSION).get().get();
+      assertEquals("1.10.10", foundArtifactVersion.getVersion());
+      assertEquals(asLocalDateTime(1618200022000L), foundArtifactVersion.getReleaseDate());
     }
   }
 
@@ -79,9 +88,16 @@ public class ReleaseInfoFromMavenTest {
 
     provider.update(MAVEN_ARTIFACT, values);
 
-    assertEquals(1, values.size());
+    assertEquals(2, values.size());
     assertTrue(values.has(RELEASED_ARTIFACT_VERSIONS));
     assertTrue(values.of(RELEASED_ARTIFACT_VERSIONS).isPresent());
     assertTrue(values.of(RELEASED_ARTIFACT_VERSIONS).get().isUnknown());
+    assertTrue(values.has(ARTIFACT_VERSION));
+    assertTrue(values.of(ARTIFACT_VERSION).isPresent());
+    assertTrue(values.of(ARTIFACT_VERSION).get().isUnknown());
+  }
+
+  private static LocalDateTime asLocalDateTime(long epochMilli) {
+    return Instant.ofEpochMilli(epochMilli).atZone(ZoneId.systemDefault()).toLocalDateTime();
   }
 }

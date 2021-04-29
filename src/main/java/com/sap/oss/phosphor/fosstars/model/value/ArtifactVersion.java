@@ -27,7 +27,11 @@ import java.util.TreeSet;
  */
 public class ArtifactVersion {
 
-  public static final ArtifactVersion EMPTY = new ArtifactVersion("", LocalDateTime.now());
+  /**
+   * Default immutable EMPTY artifact version.
+   */
+  public static final ArtifactVersion EMPTY =
+      new ArtifactVersion("-", LocalDateTime.parse("1970-01-01T01:00:00"));
 
   /**
    * Comparator for artifact versions release date.
@@ -35,8 +39,14 @@ public class ArtifactVersion {
   static final Comparator<ArtifactVersion> RELEASE_DATE_COMPARISON =
       (a, b) -> b.getReleaseDate().compareTo(a.getReleaseDate());
 
+  /**
+   * The version of an artifact.
+   */
   private final String version;
 
+  /**
+   * The release date of an artifact.
+   */
   @JsonDeserialize(using = LocalDateDeserializer.class)
   @JsonSerialize(using = LocalDateSerializer.class)
   private final LocalDateTime releaseDate;
@@ -92,10 +102,7 @@ public class ArtifactVersion {
 
   @Override
   public String toString() {
-    return "{"
-        + "version='" + version + '\''
-        + ", releaseDate=" + releaseDate
-        + '}';
+    return version + "@" + releaseDate.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
   }
 
   @Override

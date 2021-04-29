@@ -1,6 +1,8 @@
 package com.sap.oss.phosphor.fosstars.data;
 
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ARTIFACT_VERSION;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RELEASED_ARTIFACT_VERSIONS;
+import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.sap.oss.phosphor.fosstars.model.Feature;
@@ -11,7 +13,6 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Collections;
 import java.util.Set;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -50,7 +51,7 @@ public abstract class AbstractReleaseInfoLoader<T> implements DataProvider<T> {
    */
   @Override
   public Set<Feature<?>> supportedFeatures() {
-    return Collections.singleton(RELEASED_ARTIFACT_VERSIONS);
+    return setOf(RELEASED_ARTIFACT_VERSIONS, ARTIFACT_VERSION);
   }
 
   /**

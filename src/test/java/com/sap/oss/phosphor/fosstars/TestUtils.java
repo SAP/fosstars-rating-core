@@ -1,5 +1,6 @@
 package com.sap.oss.phosphor.fosstars;
 
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ARTIFACT_VERSION;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.FUZZED_IN_OSS_FUZZ;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_BUG_BOUNTY_PROGRAM;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
@@ -140,6 +141,7 @@ public class TestUtils {
   public static Set<Value<?>> getDefaultValues() {
     return setOf(
         RELEASED_ARTIFACT_VERSIONS.unknown(),
+        ARTIFACT_VERSION.unknown(),
         VERSION.unknown(),
         SUPPORTED_BY_COMPANY.value(false),
         IS_APACHE.value(true),
@@ -189,6 +191,7 @@ public class TestUtils {
                 new ArtifactVersion("1.5.0", LocalDateTime.now().minusDays(15)),
                 new ArtifactVersion("2.0.0", LocalDateTime.now())
             )),
+        ARTIFACT_VERSION.value(new ArtifactVersion("2.0.0", LocalDateTime.now())),
         VERSION.value("2.0.0"),
         SUPPORTED_BY_COMPANY.value(true),
         IS_APACHE.value(true),

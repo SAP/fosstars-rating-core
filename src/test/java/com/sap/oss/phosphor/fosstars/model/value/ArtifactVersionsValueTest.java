@@ -20,5 +20,6 @@ public class ArtifactVersionsValueTest {
     ArtifactVersionsValue clone = Json.read(Json.toBytes(value), ArtifactVersionsValue.class);
     assertTrue(value.equals(clone) && clone.equals(value));
     assertEquals(value.hashCode(), clone.hashCode());
+    assertEquals(value.get().sortByReleaseDate().size(), clone.get().sortByReleaseDate().size());
   }
 }

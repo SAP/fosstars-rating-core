@@ -37,7 +37,7 @@ public class ReleaseInfoLoaderTest extends TestGitHubDataFetcherHolder {
   private static final GitHubProject PROJECT = new GitHubProject("org", "project");
   private static final MavenArtifact MAVEN_ARTIFACT =
       new MavenArtifact("group", "artifact", "1.0.0", PROJECT);
-  private static final NpmArtifact NPM_ARTIFACT = new NpmArtifact("identifier", PROJECT);
+  private static final NpmArtifact NPM_ARTIFACT = new NpmArtifact("identifier", "1.1", PROJECT);
   private ReleaseInfoFromNpm releaseInfoFromNpm;
   private ReleaseInfoFromMaven releaseInfoFromMaven;
   private ReleasesFromGitHub releasesFromGitHub;
