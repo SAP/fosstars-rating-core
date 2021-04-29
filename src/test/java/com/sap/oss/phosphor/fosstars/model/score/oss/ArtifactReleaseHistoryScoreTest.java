@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class ArtifactReleaseHistoryScoreTest {
@@ -129,7 +130,13 @@ public class ArtifactReleaseHistoryScoreTest {
     Assert.assertEquals(7.0, value.get(), DELTA);
   }
 
+  /**
+   * Temporarily ignoring this test method.
+   * 
+   * @see <a href="https://github.com/SAP/fosstars-rating-core/issues/511">Issue 511</a>
+   */
   @Test
+  @Ignore
   public void testTwoMonthOldVersionStable() {
     ArtifactVersion version100 =
         new ArtifactVersion("1.0.0", LocalDate.now().minusMonths(7));
