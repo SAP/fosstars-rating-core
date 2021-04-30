@@ -8,7 +8,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
+import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersions;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import java.io.IOException;
 import java.util.Arrays;
@@ -118,6 +120,9 @@ public class ReleasesFromGitHubTest extends TestGitHubDataFetcherHolder {
     assertEquals(1, values.size());
     assertTrue(values.has(RELEASED_ARTIFACT_VERSIONS));
     assertTrue(values.of(RELEASED_ARTIFACT_VERSIONS).isPresent());
-    assertTrue(values.of(RELEASED_ARTIFACT_VERSIONS).get().isUnknown());
+
+    Value<ArtifactVersions> releasedArtifactVersions = values.of(RELEASED_ARTIFACT_VERSIONS).get();
+    assertFalse(releasedArtifactVersions.isUnknown());
+    assertTrue(releasedArtifactVersions.get().empty());
   }
 }
