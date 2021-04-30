@@ -36,11 +36,6 @@ public class ArtifactVersionsValue extends AbstractValue<ArtifactVersions> {
   }
 
   @Override
-  public boolean isUnknown() {
-    return artifactVersions == null || artifactVersions.empty();
-  }
-
-  @Override
   @JsonGetter("versions")
   public ArtifactVersions get() {
     return artifactVersions;
