@@ -52,7 +52,7 @@ public class ArtifactReleaseHistoryScore extends FeatureBasedScore {
         ArtifactVersions.sortByReleaseDate(artifactVersions);
 
     // check release frequency over time
-    Collection<VersionInfo> versionInfo = createVersionInfo(sortedByReleaseDate);
+    Collection<VersionInfo> versionInfo = versionInfo(sortedByReleaseDate);
     VersionStats stats = calculateVersionStats(versionInfo);
 
     if (stats.averageDaysBetweenReleases < 10) {
@@ -79,20 +79,20 @@ public class ArtifactReleaseHistoryScore extends FeatureBasedScore {
   }
 
   /**
-   * Calculate the VersionStatistics based on given version infos.
+   * Calculate statistics.
    *
-   * @param versionInfos used to calculate statistics
-   * @return calculated version statistics
+   * @param versionInfoCollection Information about artifact versions.
+   * @return Calculated statistics.
    */
-  static VersionStats calculateVersionStats(Collection<VersionInfo> versionInfos) {
-    IntSummaryStatistics stats = versionInfos.stream()
+  static VersionStats calculateVersionStats(Collection<VersionInfo> versionInfoCollection) {
+    IntSummaryStatistics stats = versionInfoCollection.stream()
         .filter(v -> v.daysDiffToVersionBefore >= 0)
         .mapToInt(v -> v.daysDiffToVersionBefore)
         .summaryStatistics();
 
     int releaseCycleTrend = 0;
     int lastDays = -1;
-    for (VersionInfo versionInfo : versionInfos) {
+    for (VersionInfo versionInfo : versionInfoCollection) {
       if (versionInfo.daysDiffToVersionBefore >= 0) {
         if (lastDays < 0) {
           lastDays = versionInfo.daysDiffToVersionBefore;
@@ -111,12 +111,12 @@ public class ArtifactReleaseHistoryScore extends FeatureBasedScore {
   }
 
   /**
-   * Create the version info based on list of sorted artifact versions.
+   * Extract additional information about artifact versions.
    *
    * @param artifactVersions A sorted collection of artifact versions.
-   * @return Version info.
+   * @return A collection of {@link VersionInfo}.
    */
-  static Collection<VersionInfo> createVersionInfo(Collection<ArtifactVersion> artifactVersions) {
+  static Collection<VersionInfo> versionInfo(Collection<ArtifactVersion> artifactVersions) {
     Collection<VersionInfo> versionInfo = new ArrayList<>();
     ArtifactVersion previousArtifact = null;
     Iterator<ArtifactVersion> iterator = artifactVersions.iterator();
@@ -139,10 +139,27 @@ public class ArtifactReleaseHistoryScore extends FeatureBasedScore {
     return versionInfo;
   }
 
+  /**
+   * Statistics about artifact versions.
+   */
   static class VersionStats {
+
+    /**
+     * Shows whether the release frequency is increasing or not.
+     */
     final double releaseCycleTrend;
+
+    /**
+     * An average number of days between releases.
+     */
     final double averageDaysBetweenReleases;
 
+    /**
+     * Initializes a new {@link VersionStats}.
+     *
+     * @param releaseCycleTrend Shows whether the release frequency is increasing or not.
+     * @param averageDaysBetweenReleases An average number of days between releases.
+     */
     public VersionStats(double releaseCycleTrend, double averageDaysBetweenReleases) {
       this.releaseCycleTrend = releaseCycleTrend;
       this.averageDaysBetweenReleases = averageDaysBetweenReleases;
@@ -157,10 +174,27 @@ public class ArtifactReleaseHistoryScore extends FeatureBasedScore {
     }
   }
 
+  /**
+   * Holds information about artifact version.
+   */
   static class VersionInfo {
+
+    /**
+     * A number of days since the previous version.
+     */
     final int daysDiffToVersionBefore;
+
+    /**
+     * A version string.
+     */
     final ArtifactVersion version;
 
+    /**
+     * Creates a new {@link VersionInfo}.
+     *
+     * @param daysDiffToVersionBefore A number of days since the previous version.
+     * @param version A version string.
+     */
     public VersionInfo(int daysDiffToVersionBefore, ArtifactVersion version) {
       this.daysDiffToVersionBefore = daysDiffToVersionBefore;
       this.version = version;
