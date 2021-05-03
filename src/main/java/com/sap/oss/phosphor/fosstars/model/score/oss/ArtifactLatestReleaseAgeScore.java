@@ -49,11 +49,11 @@ public class ArtifactLatestReleaseAgeScore extends FeatureBasedScore {
     LocalDate oneYearBack = LocalDate.now().minusYears(1);
 
     // check age of latest release
-    if (latestVersion.getReleaseDate().isAfter(oneMonthBack)) {
+    if (latestVersion.releaseDate().isAfter(oneMonthBack)) {
       return scoreValue.set(Score.MAX);
-    } else if (latestVersion.getReleaseDate().isAfter(sixMonthBack)) {
+    } else if (latestVersion.releaseDate().isAfter(sixMonthBack)) {
       return scoreValue.set(5.0);
-    } else if (latestVersion.getReleaseDate().isAfter(oneYearBack)) {
+    } else if (latestVersion.releaseDate().isAfter(oneYearBack)) {
       return scoreValue.set(2.0);
     }
 

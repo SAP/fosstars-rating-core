@@ -63,11 +63,11 @@ public class ArtifactVersionUpToDateScore extends FeatureBasedScore {
         scoreValue.set(8.0);
       }
 
-      if (checkVersion.getReleaseDate().isBefore(oneYearBack)) {
+      if (checkVersion.releaseDate().isBefore(oneYearBack)) {
         return scoreValue.decrease(8);
-      } else if (checkVersion.getReleaseDate().isBefore(sixMonthBack)) {
+      } else if (checkVersion.releaseDate().isBefore(sixMonthBack)) {
         return scoreValue.decrease(4);
-      } else if (checkVersion.getReleaseDate().isBefore(oneMonthBack)) {
+      } else if (checkVersion.releaseDate().isBefore(oneMonthBack)) {
         return scoreValue.decrease(1);
       }
       return scoreValue;

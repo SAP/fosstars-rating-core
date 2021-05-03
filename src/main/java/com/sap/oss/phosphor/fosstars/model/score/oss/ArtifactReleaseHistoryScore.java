@@ -128,7 +128,7 @@ public class ArtifactReleaseHistoryScore extends FeatureBasedScore {
       }
       if (iterator.hasNext()) {
         beforeVersion = iterator.next();
-        daysDiff = (int) DAYS.between(beforeVersion.getReleaseDate(), next.getReleaseDate());
+        daysDiff = (int) DAYS.between(beforeVersion.releaseDate(), next.releaseDate());
       }
       versionInfos.add(new VersionInfo(daysDiff, next));
     }

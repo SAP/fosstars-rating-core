@@ -2,19 +2,19 @@ package com.sap.oss.phosphor.fosstars.model.rating.oss;
 
 import static org.junit.Assert.assertNotNull;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
 import com.sap.oss.phosphor.fosstars.model.qa.RatingVerification;
 import com.sap.oss.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.oss.phosphor.fosstars.model.qa.VerificationFailedException;
+import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
 import java.io.InputStream;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class OssArtifactSecurityRatingVerificationTest {
 
   @Test
-  @Ignore("This must be migrated to a programmatic test")
   public void testVerification() throws VerificationFailedException, IOException {
     OssArtifactSecurityRating rating =
         RatingRepository.INSTANCE.rating(OssArtifactSecurityRating.class);
@@ -54,7 +54,11 @@ public class OssArtifactSecurityRatingVerificationTest {
       try (InputStream is = OssArtifactSecurityRatingVerification.class
           .getResourceAsStream(TEST_VECTORS_YAML)) {
 
-        return new OssArtifactSecurityRatingVerification(rating, TestVectors.loadFromYaml(is));
+        ObjectMapper mapper = Yaml.mapper();
+        mapper.registerSubtypes(TestArtifactVersion.class);
+        TestVectors testVectors = mapper.readValue(is, TestVectors.class);
+
+        return new OssArtifactSecurityRatingVerification(rating, testVectors);
       }
     }
   }

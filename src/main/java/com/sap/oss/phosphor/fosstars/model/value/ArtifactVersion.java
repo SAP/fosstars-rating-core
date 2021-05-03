@@ -1,7 +1,9 @@
 package com.sap.oss.phosphor.fosstars.model.value;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -25,32 +27,46 @@ import java.util.TreeSet;
  * This class represents a specific version of an artifact that is produced by an open source
  * project. For example, it may be a jar file.
  */
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public class ArtifactVersion {
 
+  /**
+   * An empty artifact version.
+   */
   public static final ArtifactVersion EMPTY = new ArtifactVersion("", LocalDate.now());
 
   /**
    * Comparator for artifact versions release date.
    */
   static final Comparator<ArtifactVersion> RELEASE_DATE_COMPARISON =
-      (a, b) -> b.getReleaseDate().compareTo(a.getReleaseDate());
+      (a, b) -> b.releaseDate().compareTo(a.releaseDate());
 
+  /**
+   * A version of the artifact.
+   */
   private final String version;
 
+  /**
+   * When the aftifact was released.
+   */
   @JsonDeserialize(using = LocalDateDeserializer.class)
   @JsonSerialize(using = LocalDateSerializer.class)
   private final LocalDate releaseDate;
 
+  /**
+   * A semantic version if available.
+   */
   @JsonIgnore
   private final Optional<SemanticVersion> semanticVersion;
 
   /**
-   * Initialize the ArtifactVersion based on version tag and release date.
+   * Initialize an artifact version based on version tag and release date.
    *
-   * @param version version tag
-   * @param releaseDate release date
+   * @param version The version tag.
+   * @param releaseDate The release date.
    */
-  public ArtifactVersion(@JsonProperty("version") String version,
+  public ArtifactVersion(
+      @JsonProperty("version") String version,
       @JsonProperty("releaseDate") LocalDate releaseDate) {
 
     Objects.requireNonNull(version, "Version must be set");
@@ -64,8 +80,8 @@ public class ArtifactVersion {
   /**
    * Sort artifact versions by release date.
    *
-   * @param versions the artifact versions
-   * @return sorted collection of ArtifactVersion
+   * @param versions The artifact versions
+   * @return A new sorted collection of artifact versions.
    */
   public static Collection<ArtifactVersion> sortByReleaseDate(Set<ArtifactVersion> versions) {
     SortedSet<ArtifactVersion> sortedArtifacts = new TreeSet<>(RELEASE_DATE_COMPARISON);
@@ -73,20 +89,42 @@ public class ArtifactVersion {
     return sortedArtifacts;
   }
 
+  /**
+   * Returns a semantic version.
+   *
+   * @return A semantic version if available.
+   */
   public Optional<SemanticVersion> getSemanticVersion() {
     return semanticVersion;
   }
 
+  /**
+   * Checks if the artifact versions has a semantic version.
+   *
+   * @return True if the version is semantic, false otherwise.
+   */
   @JsonIgnore
-  public boolean isValidSemanticVersion() {
+  public boolean hasValidSemanticVersion() {
     return semanticVersion.isPresent();
   }
 
-  public String getVersion() {
+  /**
+   * Returns a version string of the artifact.
+   *
+   * @return A version string of the artifact.
+   */
+  @JsonGetter("version")
+  public String version() {
     return version;
   }
 
-  public LocalDate getReleaseDate() {
+  /**
+   * Returns a release date of the artifact.
+   *
+   * @return A release date of the artifact.
+   */
+  @JsonGetter("releaseDate")
+  public LocalDate releaseDate() {
     return releaseDate;
   }
 
