@@ -516,7 +516,7 @@ elements:
               cvss:
                 version: "V3"
                 value: 9.0
-              references: [ ]
+              references: []
               resolution: "UNPATCHED"
               introduced: "2019-01-01"
               published: "2019-01-03"
