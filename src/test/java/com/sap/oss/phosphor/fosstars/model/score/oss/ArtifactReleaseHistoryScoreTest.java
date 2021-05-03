@@ -64,9 +64,9 @@ public class ArtifactReleaseHistoryScoreTest {
     artifactVersions.add(new ArtifactVersion("1.5.0", LocalDate.now().minusDays(270)));
     artifactVersions.add(new ArtifactVersion("1.0.0", LocalDate.now().minusDays(520)));
 
-    Collection<VersionInfo> versionInfos =
-        ArtifactReleaseHistoryScore.createVersionInfos(artifactVersions);
-    VersionStats stats = ArtifactReleaseHistoryScore.calculateVersionStats(versionInfos);
+    Collection<VersionInfo> versionInfo =
+        ArtifactReleaseHistoryScore.createVersionInfo(artifactVersions);
+    VersionStats stats = ArtifactReleaseHistoryScore.calculateVersionStats(versionInfo);
     Assert.assertEquals(173.33333333333334, stats.averageDaysBetweenReleases, DELTA);
     Assert.assertEquals(0.6666666666666666, stats.releaseCycleTrend, DELTA);
   }

@@ -52,8 +52,8 @@ public class ArtifactReleaseHistoryScore extends FeatureBasedScore {
         ArtifactVersions.sortByReleaseDate(artifactVersions);
 
     // check release frequency over time
-    Collection<VersionInfo> versionInfos = createVersionInfos(sortedByReleaseDate);
-    VersionStats stats = calculateVersionStats(versionInfos);
+    Collection<VersionInfo> versionInfo = createVersionInfo(sortedByReleaseDate);
+    VersionStats stats = calculateVersionStats(versionInfo);
 
     if (stats.averageDaysBetweenReleases < 10) {
       scoreValue.increase(3);
@@ -113,30 +113,30 @@ public class ArtifactReleaseHistoryScore extends FeatureBasedScore {
   /**
    * Create the version info based on list of sorted artifact versions.
    *
-   * @param artifactVersions sorted collection of artifact versions
-   * @return version infos
+   * @param artifactVersions A sorted collection of artifact versions.
+   * @return Version info.
    */
-  static Collection<VersionInfo> createVersionInfos(Collection<ArtifactVersion> artifactVersions) {
-    Collection<VersionInfo> versionInfos = new ArrayList<>();
-    ArtifactVersion beforeVersion = null;
+  static Collection<VersionInfo> createVersionInfo(Collection<ArtifactVersion> artifactVersions) {
+    Collection<VersionInfo> versionInfo = new ArrayList<>();
+    ArtifactVersion previousArtifact = null;
     Iterator<ArtifactVersion> iterator = artifactVersions.iterator();
     while (iterator.hasNext()) {
       int daysDiff = -1;
-      ArtifactVersion next = beforeVersion;
-      if (beforeVersion == null) {
-        next = iterator.next();
+      ArtifactVersion nextArtifact = previousArtifact;
+      if (previousArtifact == null) {
+        nextArtifact = iterator.next();
       }
       if (iterator.hasNext()) {
-        beforeVersion = iterator.next();
-        daysDiff = (int) DAYS.between(beforeVersion.releaseDate(), next.releaseDate());
+        previousArtifact = iterator.next();
+        daysDiff = (int) DAYS.between(previousArtifact.releaseDate(), nextArtifact.releaseDate());
       }
-      versionInfos.add(new VersionInfo(daysDiff, next));
+      versionInfo.add(new VersionInfo(daysDiff, nextArtifact));
     }
-    if (artifactVersions.size() != versionInfos.size()) {
-      versionInfos.add(new VersionInfo(-1, beforeVersion));
+    if (artifactVersions.size() != versionInfo.size()) {
+      versionInfo.add(new VersionInfo(-1, previousArtifact));
     }
 
-    return versionInfos;
+    return versionInfo;
   }
 
   static class VersionStats {

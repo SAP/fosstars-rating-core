@@ -80,7 +80,7 @@ public class ArtifactVersion {
   /**
    * Sort artifact versions by release date.
    *
-   * @param versions The artifact versions
+   * @param versions The artifact versions.
    * @return A new sorted collection of artifact versions.
    */
   public static Collection<ArtifactVersion> sortByReleaseDate(Set<ArtifactVersion> versions) {
