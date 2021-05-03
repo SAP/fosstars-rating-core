@@ -136,7 +136,7 @@ public class ArtifactVersions implements Iterable<ArtifactVersion> {
    */
   public Optional<ArtifactVersion> get(String version) {
     return elements.stream()
-        .filter(v -> v.getVersion().equals(version))
+        .filter(artifact -> artifact.version().equals(version))
         .findFirst();
   }
 
@@ -176,7 +176,7 @@ public class ArtifactVersions implements Iterable<ArtifactVersion> {
     final int max = 5;
     String message = sortByReleaseDate.stream()
         .limit(max)
-        .map(v -> String.format("%s:%s", v.getVersion(), v.getReleaseDate()))
+        .map(artifact -> String.format("%s:%s", artifact.version(), artifact.releaseDate()))
         .collect(Collectors.joining(", "));
 
     if (sortByReleaseDate.size() > max) {
