@@ -1,7 +1,11 @@
 package com.sap.oss.phosphor.fosstars.model.value;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
+import com.sap.oss.phosphor.fosstars.util.Json;
+import com.sap.oss.phosphor.fosstars.util.Yaml;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Collection;
 import org.junit.Test;
@@ -22,5 +26,25 @@ public class ArtifactVersionsTest {
     for (ArtifactVersion version : sorted) {
       assertEquals(expectedOrder[i++], version);
     }
+  }
+
+  @Test
+  public void testJsonSerialization() throws IOException {
+    ArtifactVersions versions = new ArtifactVersions(
+        new ArtifactVersion("1.0.0", LocalDate.now().minusDays(30)),
+        new ArtifactVersion("1.1.0", LocalDate.now().minusDays(20)));
+    ArtifactVersions clone = Json.read(Json.toBytes(versions), ArtifactVersions.class);
+    assertTrue(versions.equals(clone) && clone.equals(versions));
+    assertEquals(versions.hashCode(), clone.hashCode());
+  }
+
+  @Test
+  public void testYamlSerialization() throws IOException {
+    ArtifactVersions versions = new ArtifactVersions(
+        new ArtifactVersion("something", LocalDate.now().minusDays(30)),
+        new ArtifactVersion("something else", LocalDate.now().minusDays(20)));
+    ArtifactVersions clone = Yaml.read(Yaml.toBytes(versions), ArtifactVersions.class);
+    assertTrue(versions.equals(clone) && clone.equals(versions));
+    assertEquals(versions.hashCode(), clone.hashCode());
   }
 }
