@@ -147,33 +147,28 @@ public class ArtifactReleaseHistoryScoreTest {
     Assert.assertEquals(7.0, value.get(), DELTA);
   }
 
-  /**
-   * Temporarily ignoring this test method.
-   * 
-   * @see <a href="https://github.com/SAP/fosstars-rating-core/issues/511">Issue 511</a>
-   */
   @Test
-  @Ignore
   public void testTwoMonthOldVersionStable() {
+    LocalDateTime now = LocalDateTime.now();
     ArtifactVersion version100 =
-        new ArtifactVersion("1.0.0", LocalDateTime.now().minusMonths(7));
+        new ArtifactVersion("1.0.0", now.minusDays(31));
     ArtifactVersion version110 =
-        new ArtifactVersion("1.1.0", LocalDateTime.now().minusMonths(6));
+        new ArtifactVersion("1.1.0", now.minusDays(31));
     ArtifactVersion version120 =
-        new ArtifactVersion("1.2.0", LocalDateTime.now().minusMonths(5));
+        new ArtifactVersion("1.2.0", now.minusDays(31));
     ArtifactVersion version130 =
-        new ArtifactVersion("1.3.0", LocalDateTime.now().minusMonths(4));
+        new ArtifactVersion("1.3.0", now.minusDays(31));
     ArtifactVersion version140 =
-        new ArtifactVersion("1.4.0", LocalDateTime.now().minusMonths(3));
+        new ArtifactVersion("1.4.0", now.minusDays(31));
     ArtifactVersion version150 =
-        new ArtifactVersion("1.5.0", LocalDateTime.now().minusMonths(2));
+        new ArtifactVersion("1.5.0", now.minusDays(64));
 
     ArtifactReleaseHistoryScore score = new ArtifactReleaseHistoryScore();
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
         ArtifactVersions
             .of(version100, version110, version120, version130, version140, version150));
     ScoreValue value = score.calculate(versions);
-    Assert.assertEquals(7.6, value.get(), DELTA);
+    Assert.assertEquals(8.0, value.get(), DELTA);
   }
 
   @Test
@@ -201,18 +196,19 @@ public class ArtifactReleaseHistoryScoreTest {
 
   @Test
   public void testTwoMonthOldVersionBadVersionTrend() {
+    LocalDateTime now = LocalDateTime.now();
     ArtifactVersion version100 =
-        new ArtifactVersion("1.0.0", LocalDateTime.now().minusMonths(18));
+        new ArtifactVersion("1.0.0", now.minusDays(18 * 31));
     ArtifactVersion version110 =
-        new ArtifactVersion("1.1.0", LocalDateTime.now().minusMonths(17));
+        new ArtifactVersion("1.1.0", now.minusDays(17 * 31));
     ArtifactVersion version120 =
-        new ArtifactVersion("1.2.0", LocalDateTime.now().minusMonths(15));
+        new ArtifactVersion("1.2.0", now.minusDays(15 * 31));
     ArtifactVersion version130 =
-        new ArtifactVersion("1.3.0", LocalDateTime.now().minusMonths(14));
+        new ArtifactVersion("1.3.0", now.minusDays(14 * 31));
     ArtifactVersion version140 =
-        new ArtifactVersion("1.4.0", LocalDateTime.now().minusMonths(12));
+        new ArtifactVersion("1.4.0", now.minusDays(12 * 31));
     ArtifactVersion version150 =
-        new ArtifactVersion("1.5.0", LocalDateTime.now().minusMonths(2));
+        new ArtifactVersion("1.5.0", now.minusDays(2 * 31));
 
     ArtifactReleaseHistoryScore score = new ArtifactReleaseHistoryScore();
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
