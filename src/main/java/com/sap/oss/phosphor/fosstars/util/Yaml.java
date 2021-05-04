@@ -87,6 +87,6 @@ public class Yaml extends Deserialization {
     ObjectMapper mapper = JsonMapper.builder(YAML_FACTORY)
         .polymorphicTypeValidator(validator()).build();
     mapper.findAndRegisterModules();
-    return mapper;
+    return registerSubTypesIn(mapper);
   }
 }

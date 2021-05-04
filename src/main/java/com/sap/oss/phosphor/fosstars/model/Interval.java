@@ -1,16 +1,11 @@
 package com.sap.oss.phosphor.fosstars.model;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.sap.oss.phosphor.fosstars.model.math.DoubleInterval;
 
 /**
  * An interface which represents an interval.
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-@JsonSubTypes({
-    @JsonSubTypes.Type(value = DoubleInterval.class)
-})
 public interface Interval {
 
   /**

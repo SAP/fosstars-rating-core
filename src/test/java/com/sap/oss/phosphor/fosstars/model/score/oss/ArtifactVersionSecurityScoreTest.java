@@ -31,6 +31,7 @@ import com.sap.oss.phosphor.fosstars.model.value.PackageManagers;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerability;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -43,7 +44,7 @@ public class ArtifactVersionSecurityScoreTest {
 
   @Test
   public void testSerializeAndDeserialize() throws IOException {
-    ObjectMapper mapper = new ObjectMapper();
+    ObjectMapper mapper = Json.mapper();
     ArtifactVersionSecurityScore score = new ArtifactVersionSecurityScore();
     byte[] bytes = mapper.writeValueAsBytes(score);
     assertNotNull(bytes);
