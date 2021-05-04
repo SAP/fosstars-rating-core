@@ -1,6 +1,6 @@
 package com.sap.oss.phosphor.fosstars.tool.github;
 
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VERSION;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ARTIFACT_VERSION;
 import static com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject.isOnGitHub;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -25,6 +25,7 @@ import com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
+import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.oss.phosphor.fosstars.nvd.NVD;
 import com.sap.oss.phosphor.fosstars.tool.InputString;
@@ -47,6 +48,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -457,13 +459,7 @@ public class Application {
       LOGGER.info("  {}", url);
     }
 
-    // maybe the parsing of the GAV should be moved to separate class
-    // as it is also done in `finder.findScmFor(gav)`.
-    String[] parts = gav.trim().split(":");
-    String version = parts.length > 2 ? parts[2] : "";
-    ValueSet values = new ValueHashSet(VERSION.value(version));
-
-    processUrl(url, values);
+    processUrl(url);
   }
 
   /**
@@ -533,11 +529,13 @@ public class Application {
           String projectUrl = String.format("https://github.com/%s/%s",
               parsedPurl.getNamespace(), parsedPurl.getName());
           LOGGER.info("Found github PURL and start with {}", projectUrl);
-          Value<String> versionValue;
+          Value<ArtifactVersion> versionValue;
           if (parsedPurl.getVersion() == null) {
-            versionValue = VERSION.unknown();
+            versionValue = ARTIFACT_VERSION.unknown();
           } else {
-            versionValue = VERSION.value(parsedPurl.getVersion());
+            // use this LocalDateTime.now() as workaround till the MavenArtifact can be provided
+            versionValue = ARTIFACT_VERSION.value(
+                    new ArtifactVersion(parsedPurl.getVersion(), LocalDateTime.now()));
           }
           processUrl(projectUrl, new ValueHashSet(versionValue));
           break;
