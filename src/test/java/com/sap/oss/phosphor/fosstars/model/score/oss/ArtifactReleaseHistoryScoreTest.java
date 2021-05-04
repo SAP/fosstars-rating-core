@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class ArtifactReleaseHistoryScoreTest {
@@ -151,15 +150,15 @@ public class ArtifactReleaseHistoryScoreTest {
   public void testTwoMonthOldVersionStable() {
     LocalDateTime now = LocalDateTime.now();
     ArtifactVersion version100 =
-        new ArtifactVersion("1.0.0", now.minusDays(31));
+        new ArtifactVersion("1.0.0", now.minusDays(7 * 31));
     ArtifactVersion version110 =
-        new ArtifactVersion("1.1.0", now.minusDays(31));
+        new ArtifactVersion("1.1.0", now.minusDays(6 * 31));
     ArtifactVersion version120 =
-        new ArtifactVersion("1.2.0", now.minusDays(31));
+        new ArtifactVersion("1.2.0", now.minusDays(5 * 31));
     ArtifactVersion version130 =
-        new ArtifactVersion("1.3.0", now.minusDays(31));
+        new ArtifactVersion("1.3.0", now.minusDays(4 * 31));
     ArtifactVersion version140 =
-        new ArtifactVersion("1.4.0", now.minusDays(31));
+        new ArtifactVersion("1.4.0", now.minusDays(3 * 31));
     ArtifactVersion version150 =
         new ArtifactVersion("1.5.0", now.minusDays(64));
 
@@ -168,7 +167,7 @@ public class ArtifactReleaseHistoryScoreTest {
         ArtifactVersions
             .of(version100, version110, version120, version130, version140, version150));
     ScoreValue value = score.calculate(versions);
-    Assert.assertEquals(8.0, value.get(), DELTA);
+    Assert.assertEquals(8.8, value.get(), DELTA);
   }
 
   @Test

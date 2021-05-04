@@ -6,6 +6,9 @@ import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.sap.oss.phosphor.fosstars.model.Feature;
+import com.sap.oss.phosphor.fosstars.model.Value;
+import com.sap.oss.phosphor.fosstars.model.ValueSet;
+import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -13,6 +16,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Optional;
 import java.util.Set;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -101,6 +105,28 @@ public abstract class AbstractReleaseInfoLoader<T> implements DataProvider<T> {
         return Json.mapper().readTree(httpResponse.getEntity().getContent());
       }
     }
+  }
+
+  /**
+   * Update the {@link com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures#ARTIFACT_VERSION}
+   * value based on given parameters.
+   * If version is not in the set of artifact versions
+   * or the optional version is not the ARTIFACT_VERSION is set to unknown.
+   *
+   * @param version The artifact version.
+   * @param artifactVersions All found artifact versions.
+   * @param values The set of values to be updated.
+   */
+  protected static void updateArtifactVersion(Optional<String> version,
+      Set<ArtifactVersion> artifactVersions, ValueSet values) {
+
+    Value<ArtifactVersion> match = version
+        .flatMap(ver -> artifactVersions.stream()
+            .filter(v -> v.version().equals(ver))
+            .findFirst())
+        .map(ARTIFACT_VERSION::value)
+        .orElseGet(ARTIFACT_VERSION::unknown);
+    values.update(match);
   }
 
   /**
