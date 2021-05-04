@@ -1,10 +1,6 @@
 package com.sap.oss.phosphor.fosstars.model;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.sap.oss.phosphor.fosstars.model.rating.example.SecurityRatingExample;
-import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
-import com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScore;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
 import java.util.Set;
 
@@ -14,11 +10,6 @@ import java.util.Set;
  * All ratings have to support serialization to JSON with Jackson.
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-@JsonSubTypes({
-    @JsonSubTypes.Type(value = SecurityRatingExample.class),
-    @JsonSubTypes.Type(value = OssSecurityRating.class),
-    @JsonSubTypes.Type(value = OssRulesOfPlayScore.class),
-})
 public interface Rating {
 
   /**

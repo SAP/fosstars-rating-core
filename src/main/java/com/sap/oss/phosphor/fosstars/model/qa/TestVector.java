@@ -1,6 +1,5 @@
 package com.sap.oss.phosphor.fosstars.model.qa;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.sap.oss.phosphor.fosstars.model.Interval;
 import com.sap.oss.phosphor.fosstars.model.Label;
@@ -14,10 +13,6 @@ import java.util.Set;
  * and an optional expected label.
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-@JsonSubTypes({
-    @JsonSubTypes.Type(value = StandardTestVector.class),
-    @JsonSubTypes.Type(value = ScoreTestVector.class)
-})
 public interface TestVector {
 
   /**
