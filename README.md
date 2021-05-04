@@ -6,8 +6,8 @@
 | :------------ | -------------------------------: | ---------------------------------: |
 | Total         |             258 |                               100% |
 | Failed        |         238 |         92.2% |
-| With warnings |  5 |  1.9% |
-| Passed        |         15 |         5.8% |
+| With warnings |  4 |  1.6% |
+| Passed        |         16 |         6.2% |
 | Unclear       |        0 |        0.0% |
 
 ## Projects
@@ -70,7 +70,7 @@
 | [SAP/cf-cli-java-plugin](https://github.com/SAP/cf-cli-java-plugin) | [Failed](SAP/cf-cli-java-plugin.md) | 3 violated rules |
 | [SAP/openui5-basic-template-app](https://github.com/SAP/openui5-basic-template-app) | [Failed](SAP/openui5-basic-template-app.md) | 1 violated rule |
 | [SAP/cf-admin-ui-nozzle](https://github.com/SAP/cf-admin-ui-nozzle) | [Failed](SAP/cf-admin-ui-nozzle.md) | 5 violated rules |
-| [SAP/java-memory-assistant-tools](https://github.com/SAP/java-memory-assistant-tools) | [Failed](SAP/java-memory-assistant-tools.md) | 9 violated rules |
+| [SAP/java-memory-assistant-tools](https://github.com/SAP/java-memory-assistant-tools) | [Failed](SAP/java-memory-assistant-tools.md) | 7 violated rules |
 | [SAP/macOS-icon-generator](https://github.com/SAP/macOS-icon-generator) | [Failed](SAP/macOS-icon-generator.md) | 7 violated rules |
 | [SAP/kafka-connect-sap](https://github.com/SAP/kafka-connect-sap) | [Failed](SAP/kafka-connect-sap.md) | 6 violated rules |
 | [SAP/cloud-xsa-hybrid-deployment-tutorial](https://github.com/SAP/cloud-xsa-hybrid-deployment-tutorial) | [Failed](SAP/cloud-xsa-hybrid-deployment-tutorial.md) | 7 violated rules |
@@ -256,6 +256,7 @@
 | [SAP/ui5-tooling](https://github.com/SAP/ui5-tooling) | [Passed](SAP/ui5-tooling.md) | No violated rules |
 | [SAP/fundamental-ngx](https://github.com/SAP/fundamental-ngx) | [Passed](SAP/fundamental-ngx.md) | No violated rules |
 | [SAP/commerce-gradle-plugin](https://github.com/SAP/commerce-gradle-plugin) | [Passed](SAP/commerce-gradle-plugin.md) | No violated rules |
+| [SAP/ewm-cloud-robotics](https://github.com/SAP/ewm-cloud-robotics) | [Passed](SAP/ewm-cloud-robotics.md) | No violated rules |
 | [SAP/openui5-fhir](https://github.com/SAP/openui5-fhir) | [Passed](SAP/openui5-fhir.md) | No violated rules |
 | [SAP/ui5-webcomponents-react](https://github.com/SAP/ui5-webcomponents-react) | [Passed](SAP/ui5-webcomponents-react.md) | No violated rules |
 | [SAP/ui5-migration](https://github.com/SAP/ui5-migration) | [Passed](SAP/ui5-migration.md) | No violated rules |
@@ -270,5 +271,4 @@
 | [SAP/ui5-inspector](https://github.com/SAP/ui5-inspector) | [Passed with warnings](SAP/ui5-inspector.md) | No violated rules |
 | [SAP/luigi](https://github.com/SAP/luigi) | [Passed with warnings](SAP/luigi.md) | No violated rules |
 | [SAP/ui5-webcomponents](https://github.com/SAP/ui5-webcomponents) | [Passed with warnings](SAP/ui5-webcomponents.md) | No violated rules |
-| [SAP/ewm-cloud-robotics](https://github.com/SAP/ewm-cloud-robotics) | [Passed with warnings](SAP/ewm-cloud-robotics.md) | No violated rules |
 | [SAP/application-support-center](https://github.com/SAP/application-support-center) | [Passed with warnings](SAP/application-support-center.md) | No violated rules |
