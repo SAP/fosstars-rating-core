@@ -88,7 +88,7 @@ public class ReleaseInfoFromMaven extends AbstractReleaseInfoLoader<MavenArtifac
 
     Value<ArtifactVersion> match = mavenArtifact.version()
         .flatMap(version -> artifactVersions.stream()
-          .filter(v -> v.getVersion().equals(version))
+          .filter(v -> v.version().equals(version))
           .findFirst())
         .map(ARTIFACT_VERSION::value)
         .orElseGet(ARTIFACT_VERSION::unknown);

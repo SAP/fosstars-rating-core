@@ -4,7 +4,6 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNER
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Objects;
 
@@ -37,12 +36,6 @@ public class VulnerabilitiesValue extends AbstractValue<Vulnerabilities> {
 
     Objects.requireNonNull(vulnerabilities, "Vulnerabilities can't be null!");
     this.vulnerabilities = vulnerabilities;
-  }
-
-  @Override
-  @JsonIgnore
-  public final boolean isUnknown() {
-    return false;
   }
 
   @Override

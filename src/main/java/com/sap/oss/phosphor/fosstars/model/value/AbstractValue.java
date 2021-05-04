@@ -8,7 +8,8 @@ import com.sap.oss.phosphor.fosstars.model.Value;
 import java.util.Objects;
 
 /**
- * A base class for features values.
+ * A base class for known features values.
+ * Unknown values can be created with {@link Feature#unknown()} and {@link UnknownValue}.
  */
 public abstract class AbstractValue<T> implements Value<T> {
 
@@ -35,7 +36,7 @@ public abstract class AbstractValue<T> implements Value<T> {
 
   @Override
   @JsonIgnore
-  public boolean isUnknown() {
+  public final boolean isUnknown() {
     return false;
   }
 
@@ -48,18 +49,12 @@ public abstract class AbstractValue<T> implements Value<T> {
   @Override
   public Value<T> processIfKnown(Processor<T> processor) {
     Objects.requireNonNull(processor, "Processor can't be null!");
-    if (!isUnknown()) {
-      processor.process(get());
-    }
+    processor.process(get());
     return this;
   }
 
   @Override
   public Value<T> processIfUnknown(Runnable processor) {
-    Objects.requireNonNull(processor, "Processor can't be null!");
-    if (isUnknown()) {
-      processor.run();
-    }
     return this;
   }
 

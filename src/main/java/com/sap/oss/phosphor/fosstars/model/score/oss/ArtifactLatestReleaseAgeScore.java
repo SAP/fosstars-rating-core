@@ -43,17 +43,17 @@ public class ArtifactLatestReleaseAgeScore extends FeatureBasedScore {
       return scoreValue.makeUnknown().withMinConfidence();
     }
 
-    ArtifactVersion latestVersion = sortedByReleaseDate.iterator().next();
+    ArtifactVersion latestArtifact = sortedByReleaseDate.iterator().next();
     LocalDateTime oneMonthBack = LocalDateTime.now().minusMonths(1);
     LocalDateTime sixMonthBack = LocalDateTime.now().minusMonths(6);
     LocalDateTime oneYearBack = LocalDateTime.now().minusYears(1);
 
     // check age of latest release
-    if (latestVersion.getReleaseDate().isAfter(oneMonthBack)) {
+    if (latestArtifact.releaseDate().isAfter(oneMonthBack)) {
       return scoreValue.set(Score.MAX);
-    } else if (latestVersion.getReleaseDate().isAfter(sixMonthBack)) {
+    } else if (latestArtifact.releaseDate().isAfter(sixMonthBack)) {
       return scoreValue.set(5.0);
-    } else if (latestVersion.getReleaseDate().isAfter(oneYearBack)) {
+    } else if (latestArtifact.releaseDate().isAfter(oneYearBack)) {
       return scoreValue.set(2.0);
     }
 

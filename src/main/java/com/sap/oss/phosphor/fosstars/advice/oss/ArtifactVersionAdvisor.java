@@ -45,13 +45,13 @@ public class ArtifactVersionAdvisor extends AbstractOssAdvisor {
 
     if (isAllVersionInformationAvailable(versionValue, releasedVersionsValue)) {
       // isAllVersionInformationAvailable() checks that both values are present and known
-      ArtifactVersion latestVersion = getLatestVersion(releasedVersionsValue.get());
-      String usedVersion = versionValue.get().get().getVersion();
+      ArtifactVersion latestArtifact = getLatestVersion(releasedVersionsValue.get());
+      String usedVersion = versionValue.get().get().version();
 
-      if (!latestVersion.getVersion().equals(usedVersion)) {
+      if (!latestArtifact.version().equals(usedVersion)) {
         List<AdviceContent> advice =
             adviceStorage.adviceFor(versionValue.get().feature(),
-                getAdviceContext(usedVersion, latestVersion.getVersion()));
+                getAdviceContext(usedVersion, latestArtifact.version()));
 
         return advice.stream()
             .map(content -> new SimpleAdvice(subject, versionValue.get(), content))
@@ -73,7 +73,7 @@ public class ArtifactVersionAdvisor extends AbstractOssAdvisor {
     Value<ArtifactVersion> version = versionValue.get();
     Value<ArtifactVersions> releasedVersions = releasedVersionsValue.get();
     return !version.isUnknown() && !releasedVersions.isUnknown()
-        && !version.get().getVersion().isEmpty() && !releasedVersions.get().empty();
+        && !version.get().version().isEmpty() && !releasedVersions.get().empty();
   }
 
   private ArtifactVersion getLatestVersion(Value<ArtifactVersions> releasedVersionsValue) {

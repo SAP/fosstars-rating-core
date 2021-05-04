@@ -18,7 +18,6 @@ public class ArtifactVersionFeatureTest {
   public void testSerializationAndDeserialization() throws IOException {
     ArtifactVersionFeature feature = new ArtifactVersionFeature("ArtifactVersionFeature");
     ArtifactVersionFeature clone = Json.read(Json.toBytes(feature), ArtifactVersionFeature.class);
-    assertEquals(feature, clone);
     assertTrue(feature.equals(clone) && clone.equals(feature));
     assertEquals(feature.hashCode(), clone.hashCode());
   }

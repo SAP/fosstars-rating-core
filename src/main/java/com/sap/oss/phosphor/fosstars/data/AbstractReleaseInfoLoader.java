@@ -118,7 +118,7 @@ public abstract class AbstractReleaseInfoLoader<T> implements DataProvider<T> {
    * @param epoch The DateTime in milliseconds.
    * @return Local Date.
    */
-  protected LocalDateTime convertEpochToLocalDate(Long epoch) {
+  protected static LocalDateTime convertEpochToLocalDate(Long epoch) {
     return Instant.ofEpochMilli(epoch).atZone(ZoneId.systemDefault()).toLocalDateTime();
   }
 
@@ -128,7 +128,7 @@ public abstract class AbstractReleaseInfoLoader<T> implements DataProvider<T> {
    * @param date in String.
    * @return Local Date.
    */
-  protected LocalDateTime convertToLocalDate(String date) {
+  protected static LocalDateTime convertToLocalDate(String date) {
     return ZonedDateTime.parse(date).toLocalDateTime();
   }
 }

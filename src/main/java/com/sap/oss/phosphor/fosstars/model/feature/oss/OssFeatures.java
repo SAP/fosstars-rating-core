@@ -34,7 +34,7 @@ public class OssFeatures {
       = new ArtifactVersionsFeature("Released artifact versions");
 
   /**
-   * Holds a released artifact version.
+   * Holds a artifact version.
    */
   public static final Feature<ArtifactVersion> ARTIFACT_VERSION
       = new ArtifactVersionFeature("Artifact version");

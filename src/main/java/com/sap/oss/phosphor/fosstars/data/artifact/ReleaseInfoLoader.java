@@ -85,10 +85,13 @@ public class ReleaseInfoLoader extends AbstractReleaseInfoLoader<Artifact> {
   }
 
   /**
-   * Checks if the values contain the known feature {@link RELEASED_ARTIFACT_VERSIONS}.
-   * 
+   * Checks if the values contain the known feature
+   * {@link com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures#RELEASED_ARTIFACT_VERSIONS}.
+   *
    * @param values The {@link ValueSet}.
-   * @return true if the values has the feature {@link RELEASED_ARTIFACT_VERSIONS}. Otherwise false.
+   * @return true if the values has the feature
+   *          {@link com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures
+   *          #RELEASED_ARTIFACT_VERSIONS}. Otherwise false.
    */
   private static boolean hasFeatureIn(ValueSet values) {
     return values.has(RELEASED_ARTIFACT_VERSIONS)

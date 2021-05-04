@@ -2,6 +2,7 @@ package com.sap.oss.phosphor.fosstars.model;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersionValue;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersionsValue;
 import com.sap.oss.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.oss.phosphor.fosstars.model.value.DateValue;
@@ -41,6 +42,7 @@ import com.sap.oss.phosphor.fosstars.model.value.VulnerabilitiesValue;
     @JsonSubTypes.Type(value = LanguagesValue.class),
     @JsonSubTypes.Type(value = PackageManagersValue.class),
     @JsonSubTypes.Type(value = StringValue.class),
+    @JsonSubTypes.Type(value = ArtifactVersionValue.class),
     @JsonSubTypes.Type(value = ArtifactVersionsValue.class),
     @JsonSubTypes.Type(value = OwaspDependencyCheckUsageValue.class),
     @JsonSubTypes.Type(value = OwaspDependencyCheckCvssThresholdValue.class)

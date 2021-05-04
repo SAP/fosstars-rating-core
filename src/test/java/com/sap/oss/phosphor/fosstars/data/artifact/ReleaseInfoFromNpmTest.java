@@ -55,7 +55,7 @@ public class ReleaseInfoFromNpmTest {
       assertFalse(values.of(RELEASED_ARTIFACT_VERSIONS).get().get().empty());
       assertEquals(24, values.of(RELEASED_ARTIFACT_VERSIONS).get().get().size());
       assertTrue(values.of(RELEASED_ARTIFACT_VERSIONS).get().get().get("0.7.1").isPresent());
-      assertEquals("0.3.0", values.of(ARTIFACT_VERSION).get().get().getVersion());
+      assertEquals("0.3.0", values.of(ARTIFACT_VERSION).get().get().version());
     }
   }
 

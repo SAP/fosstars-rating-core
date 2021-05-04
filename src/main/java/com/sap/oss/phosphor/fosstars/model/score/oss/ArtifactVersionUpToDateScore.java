@@ -46,7 +46,7 @@ public class ArtifactVersionUpToDateScore extends FeatureBasedScore {
     ArtifactVersions artifactVersions = artifactVersionsValue.get();
     Collection<ArtifactVersion> sortedByReleaseDate = artifactVersions.sortByReleaseDate();
     Optional<ArtifactVersion> mappedVersion =
-        artifactVersions.get(versionValue.get().getVersion());
+        artifactVersions.get(versionValue.get().version());
 
     if (mappedVersion.isPresent()) {
       ArtifactVersion latestVersion = sortedByReleaseDate.iterator().next();
@@ -63,11 +63,11 @@ public class ArtifactVersionUpToDateScore extends FeatureBasedScore {
         scoreValue.set(8.0);
       }
 
-      if (checkVersion.getReleaseDate().isBefore(oneYearBack)) {
+      if (checkVersion.releaseDate().isBefore(oneYearBack)) {
         return scoreValue.decrease(8);
-      } else if (checkVersion.getReleaseDate().isBefore(sixMonthBack)) {
+      } else if (checkVersion.releaseDate().isBefore(sixMonthBack)) {
         return scoreValue.decrease(4);
-      } else if (checkVersion.getReleaseDate().isBefore(oneMonthBack)) {
+      } else if (checkVersion.releaseDate().isBefore(oneMonthBack)) {
         return scoreValue.decrease(1);
       }
       return scoreValue;

@@ -78,7 +78,7 @@ public class ReleaseInfoFromNpm extends AbstractReleaseInfoLoader<NpmArtifact> {
 
     Value<ArtifactVersion> match = npmArtifact.version()
         .flatMap(version -> artifactVersions.stream()
-            .filter(v -> v.getVersion().equals(version))
+            .filter(v -> v.version().equals(version))
             .findFirst())
         .map(ARTIFACT_VERSION::value)
         .orElseGet(ARTIFACT_VERSION::unknown);

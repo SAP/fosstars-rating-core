@@ -61,8 +61,8 @@ public class ReleaseInfoFromMavenTest {
       assertTrue(values.of(RELEASED_ARTIFACT_VERSIONS).get().get().get("1.10.10").isPresent());
       assertFalse(values.of(ARTIFACT_VERSION).get().isUnknown());
       ArtifactVersion foundArtifactVersion = values.of(ARTIFACT_VERSION).get().get();
-      assertEquals("1.10.10", foundArtifactVersion.getVersion());
-      assertEquals(asLocalDateTime(1618200022000L), foundArtifactVersion.getReleaseDate());
+      assertEquals("1.10.10", foundArtifactVersion.version());
+      assertEquals(asLocalDateTime(1618200022000L), foundArtifactVersion.releaseDate());
     }
   }
 
