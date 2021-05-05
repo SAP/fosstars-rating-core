@@ -90,7 +90,7 @@ public class ArtifactReleaseHistoryScoreTest {
   @Test
   public void testCurrentReleasedVersionBestHistory() {
     ArtifactVersion version100 =
-        new ArtifactVersion("1.0.0", LocalDateTime.now().minusMonths(2));
+        new ArtifactVersion("1.0.0", LocalDateTime.now().minusDays(60));
     ArtifactVersion version110 =
         new ArtifactVersion("1.1.0", LocalDateTime.now().minusDays(20));
     ArtifactVersion version120 = new ArtifactVersion("1.2.0", LocalDateTime.now().minusDays(7));
@@ -105,9 +105,9 @@ public class ArtifactReleaseHistoryScoreTest {
   @Test
   public void testCurrentReleasedVersionGoodHistory() {
     ArtifactVersion version100 =
-        new ArtifactVersion("1.0.0", LocalDateTime.now().minusMonths(5));
+        new ArtifactVersion("1.0.0", LocalDateTime.now().minusDays(150));
     ArtifactVersion version110 =
-        new ArtifactVersion("1.1.0", LocalDateTime.now().minusMonths(2));
+        new ArtifactVersion("1.1.0", LocalDateTime.now().minusDays(50));
     ArtifactVersion version120 = new ArtifactVersion("1.2.0", LocalDateTime.now().minusDays(7));
 
     ArtifactReleaseHistoryScore score = new ArtifactReleaseHistoryScore();
@@ -120,9 +120,9 @@ public class ArtifactReleaseHistoryScoreTest {
   @Test
   public void testCurrentReleasedVersionBadHistory() {
     ArtifactVersion version100 =
-        new ArtifactVersion("1.0.0", LocalDateTime.now().minusMonths(14));
+        new ArtifactVersion("1.0.0", LocalDateTime.now().minusDays(420));
     ArtifactVersion version110 =
-        new ArtifactVersion("1.1.0", LocalDateTime.now().minusMonths(2));
+        new ArtifactVersion("1.1.0", LocalDateTime.now().minusDays(50));
     ArtifactVersion version120 = new ArtifactVersion("1.2.0", LocalDateTime.now().minusDays(7));
 
     ArtifactReleaseHistoryScore score = new ArtifactReleaseHistoryScore();
@@ -135,9 +135,9 @@ public class ArtifactReleaseHistoryScoreTest {
   @Test
   public void testTwoMonthOldVersion() {
     ArtifactVersion version100 =
-        new ArtifactVersion("1.0.0", LocalDateTime.now().minusMonths(14));
+        new ArtifactVersion("1.0.0", LocalDateTime.now().minusDays(420));
     ArtifactVersion version110 =
-        new ArtifactVersion("1.1.0", LocalDateTime.now().minusMonths(2));
+        new ArtifactVersion("1.1.0", LocalDateTime.now().minusDays(50));
 
     ArtifactReleaseHistoryScore score = new ArtifactReleaseHistoryScore();
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
@@ -173,17 +173,17 @@ public class ArtifactReleaseHistoryScoreTest {
   @Test
   public void testTwoMonthOldGoodVersionTrend() {
     ArtifactVersion version100 =
-        new ArtifactVersion("1.0.0", LocalDateTime.now().minusMonths(37));
+        new ArtifactVersion("1.0.0", LocalDateTime.now().minusDays(1000));
     ArtifactVersion version110 =
-        new ArtifactVersion("1.1.0", LocalDateTime.now().minusMonths(26));
+        new ArtifactVersion("1.1.0", LocalDateTime.now().minusDays(780));
     ArtifactVersion version120 =
-        new ArtifactVersion("1.2.0", LocalDateTime.now().minusMonths(15));
+        new ArtifactVersion("1.2.0", LocalDateTime.now().minusDays(450));
     ArtifactVersion version130 =
-        new ArtifactVersion("1.3.0", LocalDateTime.now().minusMonths(10));
+        new ArtifactVersion("1.3.0", LocalDateTime.now().minusDays(300));
     ArtifactVersion version140 =
-        new ArtifactVersion("1.4.0", LocalDateTime.now().minusMonths(5));
+        new ArtifactVersion("1.4.0", LocalDateTime.now().minusDays(150));
     ArtifactVersion version150 =
-        new ArtifactVersion("1.5.0", LocalDateTime.now().minusMonths(2));
+        new ArtifactVersion("1.5.0", LocalDateTime.now().minusDays(60));
 
     ArtifactReleaseHistoryScore score = new ArtifactReleaseHistoryScore();
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
@@ -220,9 +220,9 @@ public class ArtifactReleaseHistoryScoreTest {
   @Test
   public void testEightMonthOldVersion() {
     ArtifactVersion version100 =
-        new ArtifactVersion("1.0.0", LocalDateTime.now().minusMonths(14));
+        new ArtifactVersion("1.0.0", LocalDateTime.now().minusDays(420));
     ArtifactVersion version110 =
-        new ArtifactVersion("1.1.0", LocalDateTime.now().minusMonths(8));
+        new ArtifactVersion("1.1.0", LocalDateTime.now().minusDays(240));
 
     ArtifactReleaseHistoryScore score = new ArtifactReleaseHistoryScore();
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
