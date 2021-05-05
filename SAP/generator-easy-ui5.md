@@ -4,7 +4,6 @@
 
 ## Violated rules
 
-1.  **[rl-assigned_teams-3]** Does it have enough admins on GitHub? **No**
 1.  **[rl-reuse_tool-3]** Is it registered in REUSE? **No**
 1.  **[rl-reuse_tool-4]** Is it compliant with REUSE rules? **No**
 
@@ -17,6 +16,7 @@
 
 1.  **[rl-assigned_teams-1]** Does it have enough teams on GitHub? **Yes**
 1.  **[rl-assigned_teams-2]** Does it have an admin team on GitHub? **Yes**
+1.  **[rl-assigned_teams-3]** Does it have enough admins on GitHub? **Yes**
 1.  **[rl-assigned_teams-4]** Does it have a team with push privileges on GitHub? **Yes**
 1.  **[rl-assigned_teams-5]** Does teams have enough members on GitHub? **Yes**
 1.  **[rl-contributor_file-1]** Does it have a contributing guideline? **Yes**
@@ -34,7 +34,7 @@
 
 ## How to fix it
 
-1.  An admins team could be found, but it only contains one person or is even empty. If there is a maintainer in the team, please ask this person to add another administrator or contact the OSPO to add the colleagues who are entitled to be admins.2.  In earlier times, SAP requested projects to add an API usage section to the LICENSE file. As the LICENSE file should only contain the native license text and the API section has moved to the dep5 file of the REUSE project information, we ask all projects to remove the API section from the LICENSE file.3.  A registration for the repository could not be found. Please verify that the repository is registered properly.
+1.  In earlier times, SAP requested projects to add an API usage section to the LICENSE file. As the LICENSE file should only contain the native license text and the API section has moved to the dep5 file of the REUSE project information, we ask all projects to remove the API section from the LICENSE file.2.  A registration for the repository could not be found. Please verify that the repository is registered properly.
     More info:
     1.  [Register a project in REUSE](https://api.reuse.software/register)
-4.  The latest REUSE tool compliance check resulted in errors. Please perform the check again on your repository and fix the issues.
+3.  The latest REUSE tool compliance check resulted in errors. Please perform the check again on your repository and fix the issues.

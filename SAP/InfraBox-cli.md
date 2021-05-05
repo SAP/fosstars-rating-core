@@ -4,6 +4,8 @@
 
 ## Violated rules
 
+1.  **[rl-assigned_teams-3]** Does it have enough admins on GitHub? **No**
+1.  **[rl-assigned_teams-5]** Does teams have enough members on GitHub? **No**
 1.  **[rl-contributor_file-2]** Does the contributing guideline have required text? **No**
 1.  **[rl-license_file-1]** Does it have a license file? **No**
 
@@ -23,9 +25,7 @@
 
 1.  **[rl-assigned_teams-1]** Does it have enough teams on GitHub? **Yes**
 1.  **[rl-assigned_teams-2]** Does it have an admin team on GitHub? **Yes**
-1.  **[rl-assigned_teams-3]** Does it have enough admins on GitHub? **Yes**
 1.  **[rl-assigned_teams-4]** Does it have a team with push privileges on GitHub? **Yes**
-1.  **[rl-assigned_teams-5]** Does teams have enough members on GitHub? **Yes**
 1.  **[rl-contributor_file-1]** Does it have a contributing guideline? **No**
 1.  **[rl-readme_file-1]** Does it have a README file? **Yes**
 1.  **[rl-reuse_tool-1]** Does README mention REUSE? **Yes**
@@ -39,10 +39,10 @@
 
 ## How to fix it
 
-1.  You should add information about the Developer Certificate of Origin (DCO) to the contributions file. Moreover, be sure that there are no longer any references to the outdated contributor license agreement (CLA) in the file.2.  No license file could be found in your repository. Be sure to add a license that can be detected by GitHub.
+1.  A members team could be found, but it only contains one person or is even empty. If there is a maintainer in the team, please ask this person to add additional members or contact the OSPO to add the colleagues who are entitled to be members.2.  You should add information about the Developer Certificate of Origin (DCO) to the contributions file. Moreover, be sure that there are no longer any references to the outdated contributor license agreement (CLA) in the file.3.  No license file could be found in your repository. Be sure to add a license that can be detected by GitHub.
     More info:
     1.  [Licensing a repository](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/licensing-a-repository#determining-the-location-of-your-license)
-3.  No contributing guideline file could be found in your repository. Though it's only a recommendation, we'd like to encourage you to add some information that can be detected by GitHub.
+4.  An admins team could be found, but it only contains one person or is even empty. If there is a maintainer in the team, please ask this person to add another administrator or contact the OSPO to add the colleagues who are entitled to be admins.5.  No contributing guideline file could be found in your repository. Though it's only a recommendation, we'd like to encourage you to add some information that can be detected by GitHub.
     More info:
     1.  [Setting guidelines for repository contributors](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/setting-guidelines-for-repository-contributors#adding-a-contributing-file)
 

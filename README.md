@@ -4,10 +4,10 @@
 
 |               | # or projects                    | % or projects                      |
 | :------------ | -------------------------------: | ---------------------------------: |
-| Total         |             258 |                               100% |
-| Failed        |         238 |         92.2% |
-| With warnings |  4 |  1.6% |
-| Passed        |         16 |         6.2% |
+| Total         |             259 |                               100% |
+| Failed        |         233 |         90.0% |
+| With warnings |  5 |  1.9% |
+| Passed        |         21 |         8.1% |
 | Unclear       |        0 |        0.0% |
 
 ## Projects
@@ -23,18 +23,18 @@
 | [SAP/cloud-personslist-scenario](https://github.com/SAP/cloud-personslist-scenario) | [Failed](SAP/cloud-personslist-scenario.md) | 5 violated rules |
 | [SAP/node-hdb](https://github.com/SAP/node-hdb) | [Failed](SAP/node-hdb.md) | 6 violated rules |
 | [SAP/cloud-cmis-workbench](https://github.com/SAP/cloud-cmis-workbench) | [Failed](SAP/cloud-cmis-workbench.md) | 5 violated rules |
-| [SAP/PyRFC](https://github.com/SAP/PyRFC) | [Failed](SAP/PyRFC.md) | 3 violated rules |
+| [SAP/PyRFC](https://github.com/SAP/PyRFC) | [Failed](SAP/PyRFC.md) | 2 violated rules |
 | [SAP/cloud-dirigible](https://github.com/SAP/cloud-dirigible) | [Failed](SAP/cloud-dirigible.md) | 6 violated rules |
 | [SAP/mobilesdk-certificateprovider](https://github.com/SAP/mobilesdk-certificateprovider) | [Failed](SAP/mobilesdk-certificateprovider.md) | 6 violated rules |
 | [SAP/go-hdb](https://github.com/SAP/go-hdb) | [Failed](SAP/go-hdb.md) | 7 violated rules |
-| [SAP/node-rfc](https://github.com/SAP/node-rfc) | [Failed](SAP/node-rfc.md) | 3 violated rules |
+| [SAP/node-rfc](https://github.com/SAP/node-rfc) | [Failed](SAP/node-rfc.md) | 2 violated rules |
 | [SAP/grunt-openui5](https://github.com/SAP/grunt-openui5) | [Failed](SAP/grunt-openui5.md) | 1 violated rule |
 | [SAP/less-openui5](https://github.com/SAP/less-openui5) | [Failed](SAP/less-openui5.md) | 1 violated rule |
 | [SAP/connect-openui5](https://github.com/SAP/connect-openui5) | [Failed](SAP/connect-openui5.md) | 1 violated rule |
 | [SAP/eslint-plugin-openui5](https://github.com/SAP/eslint-plugin-openui5) | [Failed](SAP/eslint-plugin-openui5.md) | 1 violated rule |
 | [SAP/karma-ui5](https://github.com/SAP/karma-ui5) | [Failed](SAP/karma-ui5.md) | 1 violated rule |
 | [SAP/openui5-sample-app](https://github.com/SAP/openui5-sample-app) | [Failed](SAP/openui5-sample-app.md) | 1 violated rule |
-| [SAP/PyHDB](https://github.com/SAP/PyHDB) | [Failed](SAP/PyHDB.md) | 6 violated rules |
+| [SAP/PyHDB](https://github.com/SAP/PyHDB) | [Failed](SAP/PyHDB.md) | 7 violated rules |
 | [SAP/sqlalchemy-hana](https://github.com/SAP/sqlalchemy-hana) | [Failed](SAP/sqlalchemy-hana.md) | 6 violated rules |
 | [SAP/techne](https://github.com/SAP/techne) | [Failed](SAP/techne.md) | 6 violated rules |
 | [SAP/Lapwing](https://github.com/SAP/Lapwing) | [Failed](SAP/Lapwing.md) | 7 violated rules |
@@ -46,7 +46,7 @@
 | [SAP/docker-redis](https://github.com/SAP/docker-redis) | [Failed](SAP/docker-redis.md) | 10 violated rules |
 | [SAP/openui5-worklist-app](https://github.com/SAP/openui5-worklist-app) | [Failed](SAP/openui5-worklist-app.md) | 1 violated rule |
 | [SAP/openui5-masterdetail-app](https://github.com/SAP/openui5-masterdetail-app) | [Failed](SAP/openui5-masterdetail-app.md) | 1 violated rule |
-| [SAP/gorfc](https://github.com/SAP/gorfc) | [Failed](SAP/gorfc.md) | 7 violated rules |
+| [SAP/gorfc](https://github.com/SAP/gorfc) | [Failed](SAP/gorfc.md) | 8 violated rules |
 | [SAP/cf-java-logging-support](https://github.com/SAP/cf-java-logging-support) | [Failed](SAP/cf-java-logging-support.md) | 1 violated rule |
 | [SAP/jcomigrationhelperplugin](https://github.com/SAP/jcomigrationhelperplugin) | [Failed](SAP/jcomigrationhelperplugin.md) | 1 violated rule |
 | [SAP/cloud-metricswatcher](https://github.com/SAP/cloud-metricswatcher) | [Failed](SAP/cloud-metricswatcher.md) | 7 violated rules |
@@ -64,13 +64,13 @@
 | [SAP/hybris-commerce-eclipse-plugin](https://github.com/SAP/hybris-commerce-eclipse-plugin) | [Failed](SAP/hybris-commerce-eclipse-plugin.md) | 5 violated rules |
 | [SAP/digitalboardroom-multidesktop-fullscreen-chrome](https://github.com/SAP/digitalboardroom-multidesktop-fullscreen-chrome) | [Failed](SAP/digitalboardroom-multidesktop-fullscreen-chrome.md) | 5 violated rules |
 | [SAP/olingo-jpa-processor-v4](https://github.com/SAP/olingo-jpa-processor-v4) | [Failed](SAP/olingo-jpa-processor-v4.md) | 7 violated rules |
-| [SAP/java-memory-assistant](https://github.com/SAP/java-memory-assistant) | [Failed](SAP/java-memory-assistant.md) | 3 violated rules |
+| [SAP/java-memory-assistant](https://github.com/SAP/java-memory-assistant) | [Failed](SAP/java-memory-assistant.md) | 1 violated rule |
 | [SAP/bosh-kubernetes-cpi-release](https://github.com/SAP/bosh-kubernetes-cpi-release) | [Failed](SAP/bosh-kubernetes-cpi-release.md) | 8 violated rules |
 | [SAP/bosh-cpi-haskell](https://github.com/SAP/bosh-cpi-haskell) | [Failed](SAP/bosh-cpi-haskell.md) | 7 violated rules |
 | [SAP/cf-cli-java-plugin](https://github.com/SAP/cf-cli-java-plugin) | [Failed](SAP/cf-cli-java-plugin.md) | 3 violated rules |
 | [SAP/openui5-basic-template-app](https://github.com/SAP/openui5-basic-template-app) | [Failed](SAP/openui5-basic-template-app.md) | 1 violated rule |
 | [SAP/cf-admin-ui-nozzle](https://github.com/SAP/cf-admin-ui-nozzle) | [Failed](SAP/cf-admin-ui-nozzle.md) | 5 violated rules |
-| [SAP/java-memory-assistant-tools](https://github.com/SAP/java-memory-assistant-tools) | [Failed](SAP/java-memory-assistant-tools.md) | 7 violated rules |
+| [SAP/java-memory-assistant-tools](https://github.com/SAP/java-memory-assistant-tools) | [Failed](SAP/java-memory-assistant-tools.md) | 5 violated rules |
 | [SAP/macOS-icon-generator](https://github.com/SAP/macOS-icon-generator) | [Failed](SAP/macOS-icon-generator.md) | 7 violated rules |
 | [SAP/kafka-connect-sap](https://github.com/SAP/kafka-connect-sap) | [Failed](SAP/kafka-connect-sap.md) | 6 violated rules |
 | [SAP/cloud-xsa-hybrid-deployment-tutorial](https://github.com/SAP/cloud-xsa-hybrid-deployment-tutorial) | [Failed](SAP/cloud-xsa-hybrid-deployment-tutorial.md) | 7 violated rules |
@@ -96,21 +96,20 @@
 | [SAP/iot-application-services-sdk-nodejs](https://github.com/SAP/iot-application-services-sdk-nodejs) | [Failed](SAP/iot-application-services-sdk-nodejs.md) | 9 violated rules |
 | [SAP/webide-client-tools](https://github.com/SAP/webide-client-tools) | [Failed](SAP/webide-client-tools.md) | 6 violated rules |
 | [SAP/ui5-automation-framework](https://github.com/SAP/ui5-automation-framework) | [Failed](SAP/ui5-automation-framework.md) | 1 violated rule |
-| [SAP/InfraBox](https://github.com/SAP/InfraBox) | [Failed](SAP/InfraBox.md) | 1 violated rule |
+| [SAP/InfraBox](https://github.com/SAP/InfraBox) | [Failed](SAP/InfraBox.md) | 3 violated rules |
 | [SAP/ui5-builder](https://github.com/SAP/ui5-builder) | [Failed](SAP/ui5-builder.md) | 1 violated rule |
 | [SAP/ui5-cli](https://github.com/SAP/ui5-cli) | [Failed](SAP/ui5-cli.md) | 1 violated rule |
 | [SAP/ui5-server](https://github.com/SAP/ui5-server) | [Failed](SAP/ui5-server.md) | 1 violated rule |
 | [SAP/ui5-logger](https://github.com/SAP/ui5-logger) | [Failed](SAP/ui5-logger.md) | 1 violated rule |
 | [SAP/ui5-project](https://github.com/SAP/ui5-project) | [Failed](SAP/ui5-project.md) | 1 violated rule |
 | [SAP/ui5-fs](https://github.com/SAP/ui5-fs) | [Failed](SAP/ui5-fs.md) | 1 violated rule |
-| [SAP/InfraBox-cli](https://github.com/SAP/InfraBox-cli) | [Failed](SAP/InfraBox-cli.md) | 2 violated rules |
+| [SAP/InfraBox-cli](https://github.com/SAP/InfraBox-cli) | [Failed](SAP/InfraBox-cli.md) | 4 violated rules |
 | [SAP/cloud-s4-sdk-book](https://github.com/SAP/cloud-s4-sdk-book) | [Failed](SAP/cloud-s4-sdk-book.md) | 4 violated rules |
 | [SAP/angular-metaui](https://github.com/SAP/angular-metaui) | [Failed](SAP/angular-metaui.md) | 8 violated rules |
 | [SAP/fiori-for-ios-workshop](https://github.com/SAP/fiori-for-ios-workshop) | [Failed](SAP/fiori-for-ios-workshop.md) | 8 violated rules |
 | [SAP/macOS-enterprise-privileges](https://github.com/SAP/macOS-enterprise-privileges) | [Failed](SAP/macOS-enterprise-privileges.md) | 7 violated rules |
 | [SAP/cloud-mta-build-tool](https://github.com/SAP/cloud-mta-build-tool) | [Failed](SAP/cloud-mta-build-tool.md) | 2 violated rules |
 | [SAP/pair-distribution-app](https://github.com/SAP/pair-distribution-app) | [Failed](SAP/pair-distribution-app.md) | 1 violated rule |
-| [SAP/quality-continuous-traceability-monitor](https://github.com/SAP/quality-continuous-traceability-monitor) | [Failed](SAP/quality-continuous-traceability-monitor.md) | 4 violated rules |
 | [SAP/cloud-security-xsuaa-integration](https://github.com/SAP/cloud-security-xsuaa-integration) | [Failed](SAP/cloud-security-xsuaa-integration.md) | 6 violated rules |
 | [SAP/webide-extension-command-example](https://github.com/SAP/webide-extension-command-example) | [Failed](SAP/webide-extension-command-example.md) | 6 violated rules |
 | [SAP/fundamental-react](https://github.com/SAP/fundamental-react) | [Failed](SAP/fundamental-react.md) | 1 violated rule |
@@ -124,7 +123,7 @@
 | [SAP/python-pyodata](https://github.com/SAP/python-pyodata) | [Failed](SAP/python-pyodata.md) | 5 violated rules |
 | [SAP/fundamental-vue](https://github.com/SAP/fundamental-vue) | [Failed](SAP/fundamental-vue.md) | 1 violated rule |
 | [SAP/cloud-mta](https://github.com/SAP/cloud-mta) | [Failed](SAP/cloud-mta.md) | 2 violated rules |
-| [SAP/generator-easy-ui5](https://github.com/SAP/generator-easy-ui5) | [Failed](SAP/generator-easy-ui5.md) | 3 violated rules |
+| [SAP/generator-easy-ui5](https://github.com/SAP/generator-easy-ui5) | [Failed](SAP/generator-easy-ui5.md) | 2 violated rules |
 | [SAP/cf-html5-apps-repo-cli-plugin](https://github.com/SAP/cf-html5-apps-repo-cli-plugin) | [Failed](SAP/cf-html5-apps-repo-cli-plugin.md) | 6 violated rules |
 | [SAP/openui5-website](https://github.com/SAP/openui5-website) | [Failed](SAP/openui5-website.md) | 1 violated rule |
 | [SAP/fsm-shell](https://github.com/SAP/fsm-shell) | [Failed](SAP/fsm-shell.md) | 5 violated rules |
@@ -159,7 +158,7 @@
 | [SAP/devops-docker-node-browsers](https://github.com/SAP/devops-docker-node-browsers) | [Failed](SAP/devops-docker-node-browsers.md) | 4 violated rules |
 | [SAP/devops-docker-xs-cli](https://github.com/SAP/devops-docker-xs-cli) | [Failed](SAP/devops-docker-xs-cli.md) | 2 violated rules |
 | [SAP/i40-aas](https://github.com/SAP/i40-aas) | [Failed](SAP/i40-aas.md) | 3 violated rules |
-| [SAP/openui5-docs](https://github.com/SAP/openui5-docs) | [Failed](SAP/openui5-docs.md) | 5 violated rules |
+| [SAP/openui5-docs](https://github.com/SAP/openui5-docs) | [Failed](SAP/openui5-docs.md) | 1 violated rule |
 | [SAP/stewardci-core](https://github.com/SAP/stewardci-core) | [Failed](SAP/stewardci-core.md) | 4 violated rules |
 | [SAP/elasticsearch-logs-plugin](https://github.com/SAP/elasticsearch-logs-plugin) | [Failed](SAP/elasticsearch-logs-plugin.md) | 4 violated rules |
 | [SAP/stewardci-jenkinsfilerunner-image](https://github.com/SAP/stewardci-jenkinsfilerunner-image) | [Failed](SAP/stewardci-jenkinsfilerunner-image.md) | 4 violated rules |
@@ -185,7 +184,7 @@
 | [SAP/Tracer](https://github.com/SAP/Tracer) | [Failed](SAP/Tracer.md) | 7 violated rules |
 | [SAP/vscode-mta-tools](https://github.com/SAP/vscode-mta-tools) | [Failed](SAP/vscode-mta-tools.md) | 2 violated rules |
 | [SAP/spartacus-bootcamp](https://github.com/SAP/spartacus-bootcamp) | [Failed](SAP/spartacus-bootcamp.md) | 9 violated rules |
-| [SAP/emobility-smart-charging](https://github.com/SAP/emobility-smart-charging) | [Failed](SAP/emobility-smart-charging.md) | 3 violated rules |
+| [SAP/emobility-smart-charging](https://github.com/SAP/emobility-smart-charging) | [Failed](SAP/emobility-smart-charging.md) | 1 violated rule |
 | [SAP/ui5-simple-require](https://github.com/SAP/ui5-simple-require) | [Failed](SAP/ui5-simple-require.md) | 1 violated rule |
 | [SAP/vscode-logging](https://github.com/SAP/vscode-logging) | [Failed](SAP/vscode-logging.md) | 2 violated rules |
 | [SAP/cloud-sdk-js](https://github.com/SAP/cloud-sdk-js) | [Failed](SAP/cloud-sdk-js.md) | 4 violated rules |
@@ -198,9 +197,7 @@
 | [SAP/feature-toggle-node](https://github.com/SAP/feature-toggle-node) | [Failed](SAP/feature-toggle-node.md) | 2 violated rules |
 | [SAP/fsm-sdk](https://github.com/SAP/fsm-sdk) | [Failed](SAP/fsm-sdk.md) | 1 violated rule |
 | [SAP/cloud-foundry-tools-api](https://github.com/SAP/cloud-foundry-tools-api) | [Failed](SAP/cloud-foundry-tools-api.md) | 1 violated rule |
-| [SAP/code-pal-for-abap](https://github.com/SAP/code-pal-for-abap) | [Failed](SAP/code-pal-for-abap.md) | 5 violated rules |
 | [SAP/ui5-flexibility-utils](https://github.com/SAP/ui5-flexibility-utils) | [Failed](SAP/ui5-flexibility-utils.md) | 1 violated rule |
-| [SAP/fundamental-tools](https://github.com/SAP/fundamental-tools) | [Failed](SAP/fundamental-tools.md) | 1 violated rule |
 | [SAP/fundamental-shelp](https://github.com/SAP/fundamental-shelp) | [Failed](SAP/fundamental-shelp.md) | 5 violated rules |
 | [SAP/gigya-nSS](https://github.com/SAP/gigya-nSS) | [Failed](SAP/gigya-nSS.md) | 4 violated rules |
 | [SAP/async-profiler](https://github.com/SAP/async-profiler) | [Failed](SAP/async-profiler.md) | 5 violated rules |
@@ -212,13 +209,11 @@
 | [SAP/ui5-manifest](https://github.com/SAP/ui5-manifest) | [Failed](SAP/ui5-manifest.md) | 1 violated rule |
 | [SAP/gigya-flutter-plugin](https://github.com/SAP/gigya-flutter-plugin) | [Failed](SAP/gigya-flutter-plugin.md) | 4 violated rules |
 | [SAP/bayesian-network-builder](https://github.com/SAP/bayesian-network-builder) | [Failed](SAP/bayesian-network-builder.md) | 5 violated rules |
-| [SAP/node-socketio-stream](https://github.com/SAP/node-socketio-stream) | [Failed](SAP/node-socketio-stream.md) | 4 violated rules |
 | [SAP/cloud-sdk-ios-fiori-snapshot-references](https://github.com/SAP/cloud-sdk-ios-fiori-snapshot-references) | [Failed](SAP/cloud-sdk-ios-fiori-snapshot-references.md) | 4 violated rules |
 | [SAP/project-odense](https://github.com/SAP/project-odense) | [Failed](SAP/project-odense.md) | 2 violated rules |
 | [SAP/code-snippet](https://github.com/SAP/code-snippet) | [Failed](SAP/code-snippet.md) | 2 violated rules |
 | [SAP/i40-aas-type2](https://github.com/SAP/i40-aas-type2) | [Failed](SAP/i40-aas-type2.md) | 3 violated rules |
 | [SAP/cloud-authorization-buildpack](https://github.com/SAP/cloud-authorization-buildpack) | [Failed](SAP/cloud-authorization-buildpack.md) | 4 violated rules |
-| [SAP/sap-hana-driver-for-sqltools](https://github.com/SAP/sap-hana-driver-for-sqltools) | [Failed](SAP/sap-hana-driver-for-sqltools.md) | 1 violated rule |
 | [SAP/machine-learning-lab](https://github.com/SAP/machine-learning-lab) | [Failed](SAP/machine-learning-lab.md) | 2 violated rules |
 | [SAP/odata-library](https://github.com/SAP/odata-library) | [Failed](SAP/odata-library.md) | 5 violated rules |
 | [SAP/guided-development](https://github.com/SAP/guided-development) | [Failed](SAP/guided-development.md) | 1 violated rule |
@@ -245,10 +240,10 @@
 | [SAP/sap-btp-service-operator](https://github.com/SAP/sap-btp-service-operator) | [Failed](SAP/sap-btp-service-operator.md) | 1 violated rule |
 | [SAP/transactional-storage-framework](https://github.com/SAP/transactional-storage-framework) | [Failed](SAP/transactional-storage-framework.md) | 4 violated rules |
 | [SAP/neonbee](https://github.com/SAP/neonbee) | [Failed](SAP/neonbee.md) | 2 violated rules |
+| [SAP/abap-file-formats](https://github.com/SAP/abap-file-formats) | [Failed](SAP/abap-file-formats.md) | 1 violated rule |
 | [SAP/chevrotain](https://github.com/SAP/chevrotain) | [Failed](SAP/chevrotain.md) | 10 violated rules |
 | [SAP/project-sailor](https://github.com/SAP/project-sailor) | [Failed](SAP/project-sailor.md) | 3 violated rules |
 | [SAP/sap.github.io](https://github.com/SAP/sap.github.io) | [Failed](SAP/sap.github.io.md) | 12 violated rules |
-| [SAP/task-explorer](https://github.com/SAP/task-explorer) | [Failed](SAP/task-explorer.md) | 1 violated rule |
 | [SAP/credential-digger-tests](https://github.com/SAP/credential-digger-tests) | [Failed](SAP/credential-digger-tests.md) | 1 violated rule |
 | [SAP/.github](https://github.com/SAP/.github) | [Failed](SAP/.github.md) | 11 violated rules |
 | [SAP/duplicate-crash-identifier](https://github.com/SAP/duplicate-crash-identifier) | [Failed](SAP/duplicate-crash-identifier.md) | 1 violated rule |
@@ -256,6 +251,7 @@
 | [SAP/ui5-tooling](https://github.com/SAP/ui5-tooling) | [Passed](SAP/ui5-tooling.md) | No violated rules |
 | [SAP/fundamental-ngx](https://github.com/SAP/fundamental-ngx) | [Passed](SAP/fundamental-ngx.md) | No violated rules |
 | [SAP/commerce-gradle-plugin](https://github.com/SAP/commerce-gradle-plugin) | [Passed](SAP/commerce-gradle-plugin.md) | No violated rules |
+| [SAP/quality-continuous-traceability-monitor](https://github.com/SAP/quality-continuous-traceability-monitor) | [Passed](SAP/quality-continuous-traceability-monitor.md) | No violated rules |
 | [SAP/ewm-cloud-robotics](https://github.com/SAP/ewm-cloud-robotics) | [Passed](SAP/ewm-cloud-robotics.md) | No violated rules |
 | [SAP/openui5-fhir](https://github.com/SAP/openui5-fhir) | [Passed](SAP/openui5-fhir.md) | No violated rules |
 | [SAP/ui5-webcomponents-react](https://github.com/SAP/ui5-webcomponents-react) | [Passed](SAP/ui5-webcomponents-react.md) | No violated rules |
@@ -264,11 +260,16 @@
 | [SAP/fosstars-rating-core](https://github.com/SAP/fosstars-rating-core) | [Passed](SAP/fosstars-rating-core.md) | No violated rules |
 | [SAP/cloud-sdk-ios-fiori](https://github.com/SAP/cloud-sdk-ios-fiori) | [Passed](SAP/cloud-sdk-ios-fiori.md) | No violated rules |
 | [SAP/credential-digger](https://github.com/SAP/credential-digger) | [Passed](SAP/credential-digger.md) | No violated rules |
+| [SAP/code-pal-for-abap](https://github.com/SAP/code-pal-for-abap) | [Passed](SAP/code-pal-for-abap.md) | No violated rules |
+| [SAP/fundamental-tools](https://github.com/SAP/fundamental-tools) | [Passed](SAP/fundamental-tools.md) | No violated rules |
 | [SAP/data-attribute-recommendation-python-sdk](https://github.com/SAP/data-attribute-recommendation-python-sdk) | [Passed](SAP/data-attribute-recommendation-python-sdk.md) | No violated rules |
+| [SAP/node-socketio-stream](https://github.com/SAP/node-socketio-stream) | [Passed](SAP/node-socketio-stream.md) | No violated rules |
 | [SAP/cloud-foundry-tools](https://github.com/SAP/cloud-foundry-tools) | [Passed](SAP/cloud-foundry-tools.md) | No violated rules |
 | [SAP/xsk](https://github.com/SAP/xsk) | [Passed](SAP/xsk.md) | No violated rules |
 | [SAP/fosstars-rating-core-action](https://github.com/SAP/fosstars-rating-core-action) | [Passed](SAP/fosstars-rating-core-action.md) | No violated rules |
+| [SAP/task-explorer](https://github.com/SAP/task-explorer) | [Passed](SAP/task-explorer.md) | No violated rules |
 | [SAP/ui5-inspector](https://github.com/SAP/ui5-inspector) | [Passed with warnings](SAP/ui5-inspector.md) | No violated rules |
 | [SAP/luigi](https://github.com/SAP/luigi) | [Passed with warnings](SAP/luigi.md) | No violated rules |
 | [SAP/ui5-webcomponents](https://github.com/SAP/ui5-webcomponents) | [Passed with warnings](SAP/ui5-webcomponents.md) | No violated rules |
+| [SAP/sap-hana-driver-for-sqltools](https://github.com/SAP/sap-hana-driver-for-sqltools) | [Passed with warnings](SAP/sap-hana-driver-for-sqltools.md) | No violated rules |
 | [SAP/application-support-center](https://github.com/SAP/application-support-center) | [Passed with warnings](SAP/application-support-center.md) | No violated rules |
