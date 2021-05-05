@@ -1,17 +1,22 @@
 package com.sap.oss.phosphor.fosstars.data;
 
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ARTIFACT_VERSION;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RELEASED_ARTIFACT_VERSIONS;
+import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.sap.oss.phosphor.fosstars.model.Feature;
+import com.sap.oss.phosphor.fosstars.model.Value;
+import com.sap.oss.phosphor.fosstars.model.ValueSet;
+import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.time.Instant;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Collections;
+import java.util.Optional;
 import java.util.Set;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -50,7 +55,7 @@ public abstract class AbstractReleaseInfoLoader<T> implements DataProvider<T> {
    */
   @Override
   public Set<Feature<?>> supportedFeatures() {
-    return Collections.singleton(RELEASED_ARTIFACT_VERSIONS);
+    return setOf(RELEASED_ARTIFACT_VERSIONS, ARTIFACT_VERSION);
   }
 
   /**
@@ -103,6 +108,28 @@ public abstract class AbstractReleaseInfoLoader<T> implements DataProvider<T> {
   }
 
   /**
+   * Update the {@link com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures#ARTIFACT_VERSION}
+   * value based on given parameters.
+   * If version is not in the set of artifact versions
+   * or the optional version is not the ARTIFACT_VERSION is set to unknown.
+   *
+   * @param version The artifact version.
+   * @param artifactVersions All found artifact versions.
+   * @param values The set of values to be updated.
+   */
+  protected static void updateArtifactVersion(Optional<String> version,
+      Set<ArtifactVersion> artifactVersions, ValueSet values) {
+
+    Value<ArtifactVersion> match = version
+        .flatMap(ver -> artifactVersions.stream()
+            .filter(v -> v.version().equals(ver))
+            .findFirst())
+        .map(ARTIFACT_VERSION::value)
+        .orElseGet(ARTIFACT_VERSION::unknown);
+    values.update(match);
+  }
+
+  /**
    * Creates an HTTP client.
    *
    * @return An HTTP client.
@@ -117,8 +144,8 @@ public abstract class AbstractReleaseInfoLoader<T> implements DataProvider<T> {
    * @param epoch The DateTime in milliseconds.
    * @return Local Date.
    */
-  protected LocalDate convertEpochToLocalDate(Long epoch) {
-    return Instant.ofEpochMilli(epoch).atZone(ZoneId.systemDefault()).toLocalDate();
+  protected static LocalDateTime convertEpochToLocalDate(Long epoch) {
+    return Instant.ofEpochMilli(epoch).atZone(ZoneId.systemDefault()).toLocalDateTime();
   }
 
   /**
@@ -127,7 +154,7 @@ public abstract class AbstractReleaseInfoLoader<T> implements DataProvider<T> {
    * @param date in String.
    * @return Local Date.
    */
-  protected LocalDate convertToLocalDate(String date) {
-    return ZonedDateTime.parse(date).toLocalDate();
+  protected static LocalDateTime convertToLocalDate(String date) {
+    return ZonedDateTime.parse(date).toLocalDateTime();
   }
 }

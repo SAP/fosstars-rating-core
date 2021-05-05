@@ -1,4 +1,4 @@
-package com.sap.oss.phosphor.fosstars.model.feature.oss;
+package com.sap.oss.phosphor.fosstars.model.feature;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

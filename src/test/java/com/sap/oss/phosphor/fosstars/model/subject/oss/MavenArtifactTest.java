@@ -14,10 +14,11 @@ public class MavenArtifactTest {
   public void testJsonSerialization() throws IOException {
     String group = "apache";
     String artifact = "nifi";
+    String version = "1.0.0";
     GitHubOrganization apache = new GitHubOrganization(group);
     GitHubProject project = new GitHubProject(apache, artifact);
 
-    MavenArtifact mavenArtifact = new MavenArtifact(group, artifact, project);
+    MavenArtifact mavenArtifact = new MavenArtifact(group, artifact, version, project);
     byte[] bytes = Json.toBytes(mavenArtifact);
     assertNotNull(bytes);
     assertTrue(bytes.length > 0);
@@ -26,6 +27,7 @@ public class MavenArtifactTest {
     assertEquals(mavenArtifact, clone);
     assertEquals(mavenArtifact.hashCode(), clone.hashCode());
     assertEquals(mavenArtifact.artifact(), clone.artifact());
+    assertEquals(mavenArtifact.version(), clone.version());
     assertEquals(mavenArtifact.group(), clone.group());
     assertTrue(mavenArtifact.project().isPresent());
     assertEquals(mavenArtifact.project().get(), clone.project().get());

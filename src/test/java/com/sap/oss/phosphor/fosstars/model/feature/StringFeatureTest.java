@@ -1,9 +1,10 @@
-package com.sap.oss.phosphor.fosstars.model.feature.oss;
+package com.sap.oss.phosphor.fosstars.model.feature;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.Value;
+import com.sap.oss.phosphor.fosstars.model.feature.StringFeature;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import org.junit.Test;

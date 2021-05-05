@@ -185,7 +185,7 @@ public class ArtifactReleaseHistoryScore extends FeatureBasedScore {
     final int daysDiffToVersionBefore;
 
     /**
-     * A version string.
+     * A {@link ArtifactVersion}.
      */
     final ArtifactVersion version;
 

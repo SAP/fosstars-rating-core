@@ -7,26 +7,27 @@ import static org.junit.Assert.assertTrue;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import org.junit.Test;
 
 public class ArtifactVersionTest {
 
   @Test
   public void testIsValidSemanticVersion() {
-    ArtifactVersion invalidVersion2 = new ArtifactVersion("MIGHTY-1.2", LocalDate.now());
+    ArtifactVersion invalidVersion2 = new ArtifactVersion("MIGHTY-1.2", LocalDateTime.now());
     assertFalse(invalidVersion2.hasValidSemanticVersion());
-    ArtifactVersion toLessDigits = new ArtifactVersion("2.0", LocalDate.now());
+    ArtifactVersion toLessDigits = new ArtifactVersion("2.0", LocalDateTime.now());
     assertFalse(toLessDigits.hasValidSemanticVersion());
 
-    ArtifactVersion validVersion = new ArtifactVersion("2.0.2", LocalDate.now());
+    ArtifactVersion validVersion = new ArtifactVersion("2.0.2", LocalDateTime.now());
     assertTrue(validVersion.hasValidSemanticVersion());
     SemanticVersion semVerValid = validVersion.getSemanticVersion().get();
     assertEquals(2, semVerValid.getMajor());
     assertEquals(0, semVerValid.getMinor());
     assertEquals(2, semVerValid.getMicro());
 
-    ArtifactVersion validVersionWithSuffix = new ArtifactVersion("1.0.0-MIGHTY", LocalDate.now());
+    ArtifactVersion validVersionWithSuffix =
+        new ArtifactVersion("1.0.0-MIGHTY", LocalDateTime.now());
     assertTrue(validVersionWithSuffix.hasValidSemanticVersion());
     SemanticVersion semVerSuffix = validVersionWithSuffix.getSemanticVersion().get();
     assertEquals(1, semVerSuffix.getMajor());
@@ -34,7 +35,7 @@ public class ArtifactVersionTest {
     assertEquals(0, semVerSuffix.getMicro());
 
     ArtifactVersion validVersionHighNumbers =
-        new ArtifactVersion("1232.2134234.23423", LocalDate.now());
+        new ArtifactVersion("1232.2134234.23423", LocalDateTime.now());
     assertTrue(validVersionHighNumbers.hasValidSemanticVersion());
 
     SemanticVersion semVerHigh = validVersionHighNumbers.getSemanticVersion().get();
@@ -45,7 +46,7 @@ public class ArtifactVersionTest {
 
   @Test
   public void testJsonSerialization() throws IOException  {
-    ArtifactVersion version = new ArtifactVersion("2.0.2", LocalDate.now());
+    ArtifactVersion version = new ArtifactVersion("2.0.2", LocalDateTime.now());
     ArtifactVersion clone = Json.read(Json.toBytes(version), ArtifactVersion.class);
     assertTrue(version.equals(clone) && clone.equals(version));
     assertEquals(version.hashCode(), clone.hashCode());
@@ -53,7 +54,7 @@ public class ArtifactVersionTest {
 
   @Test
   public void testYamlSerialization() throws IOException  {
-    ArtifactVersion version = new ArtifactVersion("MIGHTY-1.2", LocalDate.now());
+    ArtifactVersion version = new ArtifactVersion("MIGHTY-1.2", LocalDateTime.now());
     ArtifactVersion clone = Yaml.read(Yaml.toBytes(version), ArtifactVersion.class);
     assertTrue(version.equals(clone) && clone.equals(version));
     assertEquals(version.hashCode(), clone.hashCode());

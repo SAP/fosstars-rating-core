@@ -1,5 +1,6 @@
 package com.sap.oss.phosphor.fosstars.model.value;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -57,7 +58,7 @@ public class SemanticVersion {
         int micro = Integer.parseInt(matcher.group(3));
         return Optional.of(new SemanticVersion(major, minor, micro));
       } catch (NumberFormatException ignored) {
-        // not special handling required
+        // no special handling required
       }
     }
     return Optional.empty();
@@ -139,5 +140,22 @@ public class SemanticVersion {
       }
     }
     return false;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    SemanticVersion that = (SemanticVersion) o;
+    return major == that.major && minor == that.minor && micro == that.micro;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(major, minor, micro);
   }
 }

@@ -9,7 +9,7 @@ import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersions;
 import com.sap.oss.phosphor.fosstars.model.value.SemanticVersion;
 import java.io.IOException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
@@ -73,9 +73,15 @@ public class ReleasesFromGitHub extends CachedSingleFeatureGitHubDataProvider<Ar
     }
   }
 
-  private LocalDate convertToLocalDate(Date date) {
+  /**
+   * Convert a Date to a LocalDateTime instance using the system default ZoneId.
+   *
+   * @param date The date to be converted.
+   * @return The time as LocalDateTime.
+   */
+  private static LocalDateTime convertToLocalDate(Date date) {
     return date.toInstant()
         .atZone(ZoneId.systemDefault())
-        .toLocalDate();
+        .toLocalDateTime();
   }
 }

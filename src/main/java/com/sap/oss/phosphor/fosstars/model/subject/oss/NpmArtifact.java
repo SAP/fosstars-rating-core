@@ -8,42 +8,59 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * NPM module artifact.
+ * NPM package artifact.
  */
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class NpmArtifact implements Artifact {
 
   /**
-   * NPM module identifier.
+   * NPM package identifier.
    */
   private final String identifier;
 
   /**
-   * NPM artifact's GitHub project.
+   * NPM package version.
+   */
+  private final String version;
+
+  /**
+   * NPM package's GitHub project.
    */
   private final GitHubProject project;
 
   /**
    * Initializes a NPM artifact.
    *
-   * @param identifier An NPM identifier.
+   * @param identifier An NPM package identifier.
+   * @param version The NPM package version.
    * @param project A {@link GitHubProject}.
    */
   @JsonCreator
   public NpmArtifact(@JsonProperty("identifier") String identifier,
+      @JsonProperty("version") String version,
       @JsonProperty("project") GitHubProject project) {
     this.identifier = Objects.requireNonNull(identifier,
         "Oh no! You gave me a null instead of an NPM identifier!");
+    this.version = version;
     this.project = project;
   }
 
   /**
-   * Returns NPM's identifier.
+   * Returns NPM package's identifier.
    *
-   * @return NPM's identifier.
+   * @return NPM package's identifier.
    */
   public String identifier() {
     return identifier;
+  }
+
+  /**
+   * Returns NPM package's version.
+   *
+   * @return NPM package's version.
+   */
+  public Optional<String> version() {
+    return Optional.ofNullable(version);
   }
 
   @Override
@@ -55,17 +72,19 @@ public class NpmArtifact implements Artifact {
       return false;
     }
     NpmArtifact that = (NpmArtifact) o;
-    return Objects.equals(identifier, that.identifier) && Objects.equals(project, that.project);
+    return Objects.equals(identifier, that.identifier)
+        && Objects.equals(version, that.version)
+        && Objects.equals(project, that.project);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(identifier, project);
+    return Objects.hash(identifier, version, project);
   }
 
   @Override
   public String toString() {
-    return String.format("%s %s", identifier, project);
+    return String.format("%s@%s %s", identifier, version, project);
   }
 
   @Override

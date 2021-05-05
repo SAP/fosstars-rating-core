@@ -1,5 +1,6 @@
 package com.sap.oss.phosphor.fosstars.data.artifact;
 
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ARTIFACT_VERSION;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RELEASED_ARTIFACT_VERSIONS;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -18,6 +19,7 @@ import java.util.Set;
 /**
  * This data provider tries to fill out the
  * {@link com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures#RELEASED_ARTIFACT_VERSIONS}
+ * and {@link com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures#ARTIFACT_VERSION}
  * feature. This data provider gathers release info about {@link NpmArtifact}.
  */
 public class ReleaseInfoFromNpm extends AbstractReleaseInfoLoader<NpmArtifact> {
@@ -52,9 +54,11 @@ public class ReleaseInfoFromNpm extends AbstractReleaseInfoLoader<NpmArtifact> {
             new ArtifactVersion(field.getKey(), convertToLocalDate(field.getValue().asText())));
       }
       values.update(RELEASED_ARTIFACT_VERSIONS.value(new ArtifactVersions(artifactVersions)));
+      updateArtifactVersion(npmArtifact.version(), artifactVersions, values);
       return this;
     }
     values.update(RELEASED_ARTIFACT_VERSIONS.unknown());
+    values.update(ARTIFACT_VERSION.unknown());
     return this;
   }
 }

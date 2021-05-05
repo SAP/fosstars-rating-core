@@ -20,6 +20,6 @@ public class TestArtifactVersion extends ArtifactVersion {
       @JsonProperty("version") String version,
       @JsonProperty("age") String age) {
 
-    super(version, LocalDateTime.now().minus(Duration.parse(age)).toLocalDate());
+    super(version, LocalDateTime.now().minus(Duration.parse(age)));
   }
 }

@@ -1,5 +1,6 @@
 package com.sap.oss.phosphor.fosstars.data.artifact;
 
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ARTIFACT_VERSION;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RELEASED_ARTIFACT_VERSIONS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -23,7 +24,7 @@ import org.junit.Test;
 public class ReleaseInfoFromNpmTest {
 
   private static final NpmArtifact NPM_ARTIFACT =
-      new NpmArtifact("identifier", new GitHubProject("org", "project"));
+      new NpmArtifact("identifier", "0.3.0", new GitHubProject("org", "project"));
 
   @Test
   public void testIfNpmArtifactExist() throws IOException {
@@ -47,13 +48,14 @@ public class ReleaseInfoFromNpmTest {
 
       provider.update(NPM_ARTIFACT, values);
 
-      assertEquals(1, values.size());
+      assertEquals(2, values.size());
       assertTrue(values.has(RELEASED_ARTIFACT_VERSIONS));
       assertTrue(values.of(RELEASED_ARTIFACT_VERSIONS).isPresent());
       assertFalse(values.of(RELEASED_ARTIFACT_VERSIONS).get().isUnknown());
       assertFalse(values.of(RELEASED_ARTIFACT_VERSIONS).get().get().empty());
       assertEquals(24, values.of(RELEASED_ARTIFACT_VERSIONS).get().get().size());
       assertTrue(values.of(RELEASED_ARTIFACT_VERSIONS).get().get().get("0.7.1").isPresent());
+      assertEquals("0.3.0", values.of(ARTIFACT_VERSION).get().get().version());
     }
   }
 
@@ -79,9 +81,10 @@ public class ReleaseInfoFromNpmTest {
 
     provider.update(NPM_ARTIFACT, values);
 
-    assertEquals(1, values.size());
+    assertEquals(2, values.size());
     assertTrue(values.has(RELEASED_ARTIFACT_VERSIONS));
     assertTrue(values.of(RELEASED_ARTIFACT_VERSIONS).isPresent());
     assertTrue(values.of(RELEASED_ARTIFACT_VERSIONS).get().isUnknown());
+    assertTrue(values.of(ARTIFACT_VERSION).get().isUnknown());
   }
 }

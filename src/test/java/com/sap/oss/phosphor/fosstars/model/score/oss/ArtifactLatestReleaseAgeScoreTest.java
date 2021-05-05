@@ -9,7 +9,7 @@ import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersions;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -18,10 +18,10 @@ public class ArtifactLatestReleaseAgeScoreTest {
   @Test
   public void testBasicFunctionality() {
     ArtifactVersion version100 =
-        new ArtifactVersion("1.0.0", LocalDate.now().minusMonths(14));
+        new ArtifactVersion("1.0.0", LocalDateTime.now().minusMonths(14));
     ArtifactVersion version110 =
-        new ArtifactVersion("1.1.0", LocalDate.now().minusMonths(2));
-    ArtifactVersion version120 = new ArtifactVersion("1.2.0", LocalDate.now().minusDays(7));
+        new ArtifactVersion("1.1.0", LocalDateTime.now().minusMonths(2));
+    ArtifactVersion version120 = new ArtifactVersion("1.2.0", LocalDateTime.now().minusDays(7));
 
     assertScore(
         Score.INTERVAL,
@@ -35,10 +35,10 @@ public class ArtifactLatestReleaseAgeScoreTest {
   @Test
   public void testCurrentReleasedVersion() {
     ArtifactVersion version100 =
-        new ArtifactVersion("1.0.0", LocalDate.now().minusMonths(14));
+        new ArtifactVersion("1.0.0", LocalDateTime.now().minusMonths(14));
     ArtifactVersion version110 =
-        new ArtifactVersion("1.1.0", LocalDate.now().minusMonths(2));
-    ArtifactVersion version120 = new ArtifactVersion("1.2.0", LocalDate.now().minusDays(7));
+        new ArtifactVersion("1.1.0", LocalDateTime.now().minusMonths(2));
+    ArtifactVersion version120 = new ArtifactVersion("1.2.0", LocalDateTime.now().minusDays(7));
 
     ArtifactLatestReleaseAgeScore score = new ArtifactLatestReleaseAgeScore();
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
@@ -50,9 +50,9 @@ public class ArtifactLatestReleaseAgeScoreTest {
   @Test
   public void testTwoMonthOldVersion() {
     ArtifactVersion version100 =
-        new ArtifactVersion("1.0.0", LocalDate.now().minusMonths(14));
+        new ArtifactVersion("1.0.0", LocalDateTime.now().minusMonths(14));
     ArtifactVersion version110 =
-        new ArtifactVersion("1.1.0", LocalDate.now().minusMonths(2));
+        new ArtifactVersion("1.1.0", LocalDateTime.now().minusMonths(2));
 
     ArtifactLatestReleaseAgeScore score = new ArtifactLatestReleaseAgeScore();
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
@@ -64,9 +64,9 @@ public class ArtifactLatestReleaseAgeScoreTest {
   @Test
   public void testEightMonthOldVersion() {
     ArtifactVersion version100 =
-        new ArtifactVersion("1.0.0", LocalDate.now().minusMonths(14));
+        new ArtifactVersion("1.0.0", LocalDateTime.now().minusMonths(14));
     ArtifactVersion version110 =
-        new ArtifactVersion("1.1.0", LocalDate.now().minusMonths(8));
+        new ArtifactVersion("1.1.0", LocalDateTime.now().minusMonths(8));
 
     ArtifactLatestReleaseAgeScore score = new ArtifactLatestReleaseAgeScore();
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
@@ -78,7 +78,7 @@ public class ArtifactLatestReleaseAgeScoreTest {
   @Test
   public void testFourteenMonthOldVersion() {
     ArtifactVersion version100 =
-        new ArtifactVersion("1.0.0", LocalDate.now().minusMonths(14));
+        new ArtifactVersion("1.0.0", LocalDateTime.now().minusMonths(14));
 
     ArtifactLatestReleaseAgeScore score = new ArtifactLatestReleaseAgeScore();
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(

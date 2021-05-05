@@ -1,5 +1,6 @@
 package com.sap.oss.phosphor.fosstars.model.score.oss;
 
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ARTIFACT_VERSION;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.IS_APACHE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.IS_ECLIPSE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_COMMITS_LAST_THREE_MONTHS;
@@ -9,7 +10,6 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.PACKAGE_MANAGERS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RELEASED_ARTIFACT_VERSIONS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VERSION;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.MAVEN;
@@ -32,7 +32,7 @@ import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerability;
 import java.io.IOException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 import org.junit.Test;
 
@@ -65,7 +65,7 @@ public class ArtifactVersionSecurityScoreTest {
     ArtifactVersionSecurityScore score = new ArtifactVersionSecurityScore();
     Set<Value<?>> values = setOf(
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(false)),
-        VERSION.value("1.2.0"),
+        ARTIFACT_VERSION.value(new ArtifactVersion("1.2.0", LocalDateTime.now())),
         SUPPORTED_BY_COMPANY.value(false),
         VULNERABILITIES.value(new Vulnerabilities()),
         IS_APACHE.value(true),
@@ -84,7 +84,7 @@ public class ArtifactVersionSecurityScoreTest {
     ArtifactVersionSecurityScore score = new ArtifactVersionSecurityScore();
     Set<Value<?>> values = setOf(
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(false)),
-        VERSION.value("1.0.0"),
+        ARTIFACT_VERSION.value(new ArtifactVersion("1.0.0", LocalDateTime.now())),
         SUPPORTED_BY_COMPANY.value(false),
         IS_APACHE.value(true),
         IS_ECLIPSE.value(false),
@@ -106,7 +106,7 @@ public class ArtifactVersionSecurityScoreTest {
     ArtifactVersionSecurityScore score = new ArtifactVersionSecurityScore();
     Set<Value<?>> values = setOf(
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(true)),
-        VERSION.value("1.2.0"),
+        ARTIFACT_VERSION.value(new ArtifactVersion("1.2.0", LocalDateTime.now())),
         SUPPORTED_BY_COMPANY.value(false),
         IS_APACHE.value(true),
         IS_ECLIPSE.value(false),
@@ -127,7 +127,7 @@ public class ArtifactVersionSecurityScoreTest {
     ArtifactVersionSecurityScore score = new ArtifactVersionSecurityScore();
     Set<Value<?>> values = setOf(
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(true)),
-        VERSION.value("2.0.0"),
+        ARTIFACT_VERSION.value(new ArtifactVersion("2.0.0", LocalDateTime.now())),
         SUPPORTED_BY_COMPANY.value(false),
         IS_APACHE.value(true),
         IS_ECLIPSE.value(false),
@@ -149,7 +149,7 @@ public class ArtifactVersionSecurityScoreTest {
     Vulnerability vulnerability = TestUtils.createBasicVulnerability(10.0, "2.0.0", "2.0.0");
     Set<Value<?>> values = setOf(
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(true)),
-        VERSION.value("2.0.0"),
+        ARTIFACT_VERSION.value(new ArtifactVersion("2.0.0", LocalDateTime.now())),
         SUPPORTED_BY_COMPANY.value(false),
         IS_APACHE.value(true),
         IS_ECLIPSE.value(false),
@@ -171,7 +171,7 @@ public class ArtifactVersionSecurityScoreTest {
     Vulnerability vulnerability = TestUtils.createBasicVulnerability(1.0, "2.0.0", "2.0.0");
     Set<Value<?>> values = setOf(
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(true)),
-        VERSION.value("2.0.0"),
+        ARTIFACT_VERSION.value(new ArtifactVersion("2.0.0", LocalDateTime.now())),
         SUPPORTED_BY_COMPANY.value(false),
         IS_APACHE.value(true),
         IS_ECLIPSE.value(false),
@@ -193,7 +193,7 @@ public class ArtifactVersionSecurityScoreTest {
     Vulnerability vulnerability = TestUtils.createBasicVulnerability(10.0, "1.0.0", "1.0.2");
     Set<Value<?>> values = setOf(
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(true)),
-        VERSION.value("2.0.0"),
+        ARTIFACT_VERSION.value(new ArtifactVersion("2.0.0", LocalDateTime.now())),
         SUPPORTED_BY_COMPANY.value(false),
         IS_APACHE.value(true),
         IS_ECLIPSE.value(false),
@@ -211,14 +211,14 @@ public class ArtifactVersionSecurityScoreTest {
 
   private static ArtifactVersions testArtifactVersions(boolean with2xx) {
     ArtifactVersion version100 =
-        new ArtifactVersion("1.0.0", LocalDate.now().minusMonths(14));
+        new ArtifactVersion("1.0.0", LocalDateTime.now().minusMonths(14));
     ArtifactVersion version101 =
-        new ArtifactVersion("1.0.1", LocalDate.now().minusMonths(13));
+        new ArtifactVersion("1.0.1", LocalDateTime.now().minusMonths(13));
     ArtifactVersion version110 =
-        new ArtifactVersion("1.1.0", LocalDate.now().minusMonths(6));
-    ArtifactVersion version120 = new ArtifactVersion("1.2.0", LocalDate.now().minusDays(72));
+        new ArtifactVersion("1.1.0", LocalDateTime.now().minusMonths(6));
+    ArtifactVersion version120 = new ArtifactVersion("1.2.0", LocalDateTime.now().minusDays(72));
     if (with2xx) {
-      ArtifactVersion version200 = new ArtifactVersion("2.0.0", LocalDate.now().minusDays(7));
+      ArtifactVersion version200 = new ArtifactVersion("2.0.0", LocalDateTime.now().minusDays(7));
       return ArtifactVersions.of(version100, version101, version110, version120, version200);
     }
     return ArtifactVersions.of(version100, version101, version110, version120);

@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import java.io.IOException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Comparator;
@@ -31,9 +31,9 @@ import java.util.TreeSet;
 public class ArtifactVersion {
 
   /**
-   * An empty artifact version.
+   * An empty artifact version (immutable).
    */
-  public static final ArtifactVersion EMPTY = new ArtifactVersion("", LocalDate.now());
+  public static final ArtifactVersion EMPTY = new ArtifactVersion("", LocalDateTime.MIN);
 
   /**
    * Comparator for artifact versions release date.
@@ -47,11 +47,11 @@ public class ArtifactVersion {
   private final String version;
 
   /**
-   * When the aftifact was released.
+   * When the artifact was released.
    */
   @JsonDeserialize(using = LocalDateDeserializer.class)
   @JsonSerialize(using = LocalDateSerializer.class)
-  private final LocalDate releaseDate;
+  private final LocalDateTime releaseDate;
 
   /**
    * A semantic version if available.
@@ -67,7 +67,7 @@ public class ArtifactVersion {
    */
   public ArtifactVersion(
       @JsonProperty("version") String version,
-      @JsonProperty("releaseDate") LocalDate releaseDate) {
+      @JsonProperty("releaseDate") LocalDateTime releaseDate) {
 
     Objects.requireNonNull(version, "Version must be set");
     Objects.requireNonNull(releaseDate, "Release date must be set");
@@ -124,16 +124,13 @@ public class ArtifactVersion {
    * @return A release date of the artifact.
    */
   @JsonGetter("releaseDate")
-  public LocalDate releaseDate() {
+  public LocalDateTime releaseDate() {
     return releaseDate;
   }
 
   @Override
   public String toString() {
-    return "{"
-        + "version='" + version + '\''
-        + ", releaseDate=" + releaseDate
-        + '}';
+    return version + "@" + releaseDate.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
   }
 
   @Override
@@ -156,36 +153,36 @@ public class ArtifactVersion {
   /**
    * LocalDate to Date deserializer used by Jackson Databind for JSON parsing.
    */
-  private static class LocalDateDeserializer extends StdDeserializer<LocalDate> {
+  private static class LocalDateDeserializer extends StdDeserializer<LocalDateTime> {
 
     private static final long serialVersionUID = 1L;
 
     protected LocalDateDeserializer() {
-      super(LocalDate.class);
+      super(LocalDateTime.class);
     }
 
     @Override
-    public LocalDate deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
+    public LocalDateTime deserialize(JsonParser jp, DeserializationContext dc) throws IOException {
       String text = jp.readValueAs(String.class);
-      return LocalDate.parse(text);
+      return LocalDateTime.parse(text);
     }
   }
 
   /**
    * LocalDate to Date serializer used by Jackson Databind for JSON writing.
    */
-  private static class LocalDateSerializer extends StdSerializer<LocalDate> {
+  private static class LocalDateSerializer extends StdSerializer<LocalDateTime> {
 
     private static final long serialVersionUID = 1L;
 
     public LocalDateSerializer() {
-      super(LocalDate.class);
+      super(LocalDateTime.class);
     }
 
     @Override
-    public void serialize(LocalDate value, JsonGenerator gen, SerializerProvider sp)
+    public void serialize(LocalDateTime value, JsonGenerator gen, SerializerProvider sp)
         throws IOException {
-      gen.writeString(value.format(DateTimeFormatter.ISO_LOCAL_DATE));
+      gen.writeString(value.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
     }
   }
 }

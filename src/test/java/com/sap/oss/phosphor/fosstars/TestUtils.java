@@ -1,5 +1,6 @@
 package com.sap.oss.phosphor.fosstars;
 
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ARTIFACT_VERSION;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.FUZZED_IN_OSS_FUZZ;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_BUG_BOUNTY_PROGRAM;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
@@ -32,7 +33,6 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_O
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_OWASP_JAVA_HTML_SANITIZER;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SIGNED_COMMITS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_UNDEFINED_BEHAVIOR_SANITIZER;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VERSION;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
@@ -60,7 +60,7 @@ import com.sap.oss.phosphor.fosstars.model.value.Vulnerability;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerability.Resolution;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -140,7 +140,7 @@ public class TestUtils {
   public static Set<Value<?>> getDefaultValues() {
     return setOf(
         RELEASED_ARTIFACT_VERSIONS.unknown(),
-        VERSION.unknown(),
+        ARTIFACT_VERSION.unknown(),
         SUPPORTED_BY_COMPANY.value(false),
         IS_APACHE.value(true),
         IS_ECLIPSE.value(false),
@@ -185,11 +185,11 @@ public class TestUtils {
     return setOf(
         RELEASED_ARTIFACT_VERSIONS.value(
             ArtifactVersions.of(
-                new ArtifactVersion("1.0.0", LocalDate.now().minusDays(30)),
-                new ArtifactVersion("1.5.0", LocalDate.now().minusDays(15)),
-                new ArtifactVersion("2.0.0", LocalDate.now())
+                new ArtifactVersion("1.0.0", LocalDateTime.now().minusDays(30)),
+                new ArtifactVersion("1.5.0", LocalDateTime.now().minusDays(15)),
+                new ArtifactVersion("2.0.0", LocalDateTime.now())
             )),
-        VERSION.value("2.0.0"),
+        ARTIFACT_VERSION.value(new ArtifactVersion("2.0.0", LocalDateTime.now())),
         SUPPORTED_BY_COMPANY.value(true),
         IS_APACHE.value(true),
         IS_ECLIPSE.value(false),

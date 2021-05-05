@@ -2,11 +2,14 @@
 
 # default values for test vectors
 defaults:
-  - type: "StringValue"
+  - type: "ArtifactVersionValue"
     feature:
-      type: "StringFeature"
-      name: "Version string"
-    content: "2.0.0"
+      type: "ArtifactVersionFeature"
+      name: "Artifact version"
+    version:
+      type: "ArtifactVersion"
+      version: "2.0.0"
+      releaseDate: "1972-04-01T19:06:00"
   - type: "ArtifactVersionsValue"
     feature:
       type: "ArtifactVersionsFeature"
@@ -195,8 +198,8 @@ elements:
     values:
       - type: "UnknownValue"
         feature:
-          type: "StringFeature"
-          name: "Version string"
+          type: "ArtifactVersionFeature"
+          name: "Artifact version"
       - type: "UnknownValue"
         feature:
           type: "ArtifactVersionsFeature"
@@ -366,11 +369,14 @@ elements:
 # Test vectors for: GOOD project security, UNKNOWN artifact security
   - type: "StandardTestVector"
     values:
-      - type: "StringValue"
+      - type: "ArtifactVersionValue"
         feature:
-          type: "StringFeature"
-          name: "Version string"
-        content: ""
+          type: "ArtifactVersionFeature"
+          name: "Artifact version"
+        version:
+          type: "TestArtifactVersion"
+          version: ""
+          age: "p1d"
       - type: "VulnerabilitiesValue"
         vulnerabilities:
           entries:
