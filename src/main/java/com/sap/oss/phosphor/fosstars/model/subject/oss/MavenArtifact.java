@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sap.oss.phosphor.fosstars.model.subject.AbstractSubject;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -11,7 +12,7 @@ import java.util.Optional;
  * Maven artifact.
  */
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
-public class MavenArtifact implements Artifact {
+public class MavenArtifact extends AbstractSubject implements Artifact {
 
   /**
    * Maven artifact's group id.
@@ -22,7 +23,6 @@ public class MavenArtifact implements Artifact {
    * Maven artifact's artifact id.
    */
   private final String artifact;
-
 
   /**
    * Maven artifact's version.

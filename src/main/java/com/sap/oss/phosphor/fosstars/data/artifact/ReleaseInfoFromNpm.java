@@ -6,6 +6,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RELEAS
 import com.fasterxml.jackson.databind.JsonNode;
 import com.sap.oss.phosphor.fosstars.data.AbstractReleaseInfoLoader;
 import com.sap.oss.phosphor.fosstars.data.DataProvider;
+import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.NpmArtifact;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
@@ -34,6 +35,11 @@ public class ReleaseInfoFromNpm extends AbstractReleaseInfoLoader<NpmArtifact> {
   private JsonNode npmArtifactReleaseInfo(NpmArtifact npmArtifact) throws IOException {
     String url = String.format("https://registry.npmjs.org/%s", npmArtifact.identifier());
     return fetch(url);
+  }
+
+  @Override
+  public boolean supports(Subject type) {
+    return type instanceof NpmArtifact;
   }
 
   @Override

@@ -1,9 +1,9 @@
 package com.sap.oss.phosphor.fosstars.tool.github;
 
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ARTIFACT_VERSION;
 import static com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject.isOnGitHub;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.packageurl.MalformedPackageURLException;
@@ -19,13 +19,15 @@ import com.sap.oss.phosphor.fosstars.data.UserCallback;
 import com.sap.oss.phosphor.fosstars.data.github.GitHubDataFetcher;
 import com.sap.oss.phosphor.fosstars.model.Rating;
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
-import com.sap.oss.phosphor.fosstars.model.Value;
+import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
-import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
+import com.sap.oss.phosphor.fosstars.model.subject.oss.MavenArtifact;
+import com.sap.oss.phosphor.fosstars.model.subject.oss.NpmArtifact;
+import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.oss.phosphor.fosstars.nvd.NVD;
 import com.sap.oss.phosphor.fosstars.tool.InputString;
@@ -48,15 +50,16 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
@@ -64,6 +67,12 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.apache.http.HttpHeaders;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.entity.ContentType;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -147,7 +156,7 @@ public class Application {
    * @see <a href="https://github.com/package-url/purl-spec#known-purl-types">Known PURL types</a>
    */
   private enum SupportedPurlTypes {
-    GITHUB, MAVEN
+    GITHUB, MAVEN, NPM
   }
 
   /**
@@ -315,7 +324,7 @@ public class Application {
     fetcher = new GitHubDataFetcher(connectToGithub(githubToken, callback), githubToken);
     DataProviderSelector dataProviderSelector = new DataProviderSelector(fetcher, new NVD());
     dataProviderSelector.configure(withConfigs);
-    List<DataProvider<GitHubProject>> providers = dataProviderSelector.providersFor(rating);
+    List<DataProvider<? extends Subject>> providers = dataProviderSelector.providersFor(rating);
 
     calculator = new SingleRatingCalculator(rating, providers);
     calculator.set(VALUE_CACHE);
@@ -414,16 +423,30 @@ public class Application {
    */
   private void processUrl(String url, ValueSet knownValues) throws IOException {
     GitHubProject project = GitHubProject.parse(url);
-    calculator.calculateFor(project, knownValues);
+    processSubjects(project);
+//    GitHubProject project = GitHubProject.parse(url);
+//    calculator.calculateFor(project);
+//
+//    if (!project.ratingValue().isPresent()) {
+//      throw new IOException("Could not calculate a rating!");
+//    }
+//
+//    Arrays.stream(prettyPrinter.print(project).split("\n")).forEach(LOGGER::info);
+//    LOGGER.info("");
+//
+//    storeReportIfRequested(project, commandLine);
+  }
 
-    if (!project.ratingValue().isPresent()) {
-      throw new IOException("Could not calculate a rating!");
-    }
+  private void processSubjects(Subject... subjects) throws IOException {
+    RatingValue ratingValue = calculator.calculateFor(subjects);
 
-    Arrays.stream(prettyPrinter.print(project).split("\n")).forEach(LOGGER::info);
+    List<Subject> subjectList = Arrays.stream(subjects).collect(Collectors.toList());
+    Arrays.stream(prettyPrinter.print(subjectList, ratingValue)
+                                .split("\n"))
+                                .forEach(LOGGER::info);
     LOGGER.info("");
 
-    storeReportIfRequested(project, commandLine);
+    storeReportIfRequested(subjectList, ratingValue, commandLine);
   }
 
   /**
@@ -433,7 +456,27 @@ public class Application {
    * @throws IOException If something went wrong.
    */
   private void processGav(String gav) throws IOException {
+    // maybe the parsing of the GAV should be moved to separate class
+    // as it is also done in `finder.findScmFor(gav)`.
+    String[] parts = gav.trim().split(":");
+    String version = parts.length > 2 ? parts[2] : null;
+
+    processMaven(parts[0], parts[1], version);
+  }
+
+  /**
+   * Calculate a rating for a single project identified by GAV coordinates.
+   *
+   * @param groupId The group id
+   * @param artifactId The artifact id
+   * @param version The version
+   * @throws IOException If something went wrong.
+   */
+  private void processMaven(String groupId, String artifactId, String version) throws IOException {
     MavenScmFinder finder = new MavenScmFinder();
+    String gav = String.format("%s:%s%s",
+        groupId, artifactId, version == null ? "" : ":" + version);
+
     LOGGER.info("Start with GAV {}", gav);
 
     Optional<String> scm = finder.findScmFor(gav);
@@ -459,7 +502,9 @@ public class Application {
       LOGGER.info("  {}", url);
     }
 
-    processUrl(url);
+    GitHubProject project = GitHubProject.parse(url);
+    MavenArtifact mavenArtifact = new MavenArtifact(groupId, artifactId, version, project);
+    processSubjects(project, mavenArtifact);
   }
 
   /**
@@ -529,21 +574,13 @@ public class Application {
           String projectUrl = String.format("https://github.com/%s/%s",
               parsedPurl.getNamespace(), parsedPurl.getName());
           LOGGER.info("Found github PURL and start with {}", projectUrl);
-          Value<ArtifactVersion> versionValue;
-          if (parsedPurl.getVersion() == null) {
-            versionValue = ARTIFACT_VERSION.unknown();
-          } else {
-            // use this LocalDateTime.now() as workaround till the MavenArtifact can be provided
-            versionValue = ARTIFACT_VERSION.value(
-                    new ArtifactVersion(parsedPurl.getVersion(), LocalDateTime.now()));
-          }
-          processUrl(projectUrl, new ValueHashSet(versionValue));
+          processUrl(projectUrl);
           break;
         case MAVEN:
-          String gav = String.format("%s:%s%s",
-              parsedPurl.getNamespace(), parsedPurl.getName(),
-              parsedPurl.getVersion() == null ? "" : ":" + parsedPurl.getVersion());
-          processGav(gav);
+          processMaven(parsedPurl.getNamespace(), parsedPurl.getName(), parsedPurl.getVersion());
+          break;
+        case NPM:
+          processNpm(parsedPurl.getNamespace(), parsedPurl.getName(), parsedPurl.getVersion());
           break;
         default:
           throw new IOException(String.format(
@@ -555,19 +592,64 @@ public class Application {
     }
   }
 
+  private void processNpm(String scope, String name, String version) throws IOException {
+    // find scm
+    // FIXME (mibo): to be implemented
+    Optional<String> scm = npmArtifactReleaseInfo(name);
+
+    if (scm.isPresent()) {
+      // create NpmArtifact, create GitHubProject
+      GitHubProject githubProject = GitHubProject.parse(scm.get());
+      NpmArtifact npmArtifact = new NpmArtifact(name, version, githubProject);
+      // call processSubjects
+      processSubjects(npmArtifact, githubProject);
+    } else {
+      LOGGER.warn("Unable to find GitHub project for {}/{}", scope, name);
+    }
+  }
+
+  private Optional<String> npmArtifactReleaseInfo(String identifier) throws IOException {
+    String requestUrl = String.format("https://registry.npmjs.org/%s", identifier);
+    JsonNode infos = fetch(requestUrl);
+    // FIXME (mibo): fix and improve
+    JsonNode repo = infos.get("repository");
+    if (repo != null) {
+      String type = repo.get("type").asText();
+      String url = repo.get("url").asText();
+      if ("git".equalsIgnoreCase(type)) {
+        url = url.toLowerCase(Locale.US);
+        int index = url.indexOf("github.com/");
+        if (index >= 0) {
+          url = "https://" + url.substring(index);
+          System.out.println("URL: " + url);
+          return Optional.of(url);
+        }
+      }
+    }
+    return Optional.empty();
+  }
+
+  protected JsonNode fetch(String url) throws IOException {
+    try (CloseableHttpClient client = HttpClients.createDefault()) {
+      HttpGet httpGetRequest = new HttpGet(url);
+      httpGetRequest.addHeader(HttpHeaders.ACCEPT, ContentType.APPLICATION_JSON.getMimeType());
+      try (CloseableHttpResponse httpResponse = client.execute(httpGetRequest)) {
+        return Json.mapper().readTree(httpResponse.getEntity().getContent());
+      }
+    }
+  }
+
+
   /**
-   * Stores a rating of a project if a user asked about it.
+   * Stores a rating of a subjects if a user asked about it.
    *
-   * @param project The project.
+   * @param subjects The subjects.
    * @param commandLine Command-line options.
    * @throws IOException If something went wrong.
    */
-  private void storeReportIfRequested(GitHubProject project, CommandLine commandLine)
-      throws IOException {
-
-    if (!project.ratingValue().isPresent()) {
-      throw new IOException("Could not calculate a rating!");
-    }
+  private void storeReportIfRequested(List<Subject> subjects,
+      RatingValue ratingValue, CommandLine commandLine)
+        throws IOException {
 
     if (commandLine.hasOption("report-file")) {
       String type = commandLine.getOptionValue("report-type", "text");
@@ -578,13 +660,13 @@ public class Application {
 
       Files.write(
           Paths.get(file),
-          formatter.print(project).getBytes(StandardCharsets.UTF_8));
+          formatter.print(subjects, ratingValue).getBytes(StandardCharsets.UTF_8));
     }
 
     if (commandLine.hasOption("raw-rating-file")) {
       String file = commandLine.getOptionValue("raw-rating-file");
       LOGGER.info("Storing a raw rating to {}", file);
-      Files.write(Paths.get(file), Json.toBytes(project.ratingValue().get()));
+      Files.write(Paths.get(file), Json.toBytes(ratingValue));
     }
   }
 

@@ -1,6 +1,7 @@
 package com.sap.oss.phosphor.fosstars.data.interactive;
 
 import com.sap.oss.phosphor.fosstars.data.AbstractDataProvider;
+import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import java.io.IOException;
 
@@ -25,6 +26,11 @@ public abstract class AbstractInteractiveDataProvider<T> extends AbstractDataPro
     }
 
     return ask(object, values);
+  }
+
+  @Override
+  public boolean supports(Subject type) {
+    return true;
   }
 
   /**

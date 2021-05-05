@@ -1,6 +1,7 @@
 package com.sap.oss.phosphor.fosstars.data;
 
 import com.sap.oss.phosphor.fosstars.model.Feature;
+import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -64,6 +65,8 @@ public interface DataProvider<T> {
    * @return A set of features that the provider can fill out.
    */
   Set<Feature<?>> supportedFeatures();
+
+  boolean supports(Subject type);
 
   /**
    * Load a configuration from a file.

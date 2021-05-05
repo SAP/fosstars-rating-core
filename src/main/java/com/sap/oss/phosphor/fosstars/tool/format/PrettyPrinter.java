@@ -4,6 +4,7 @@ import com.sap.oss.phosphor.fosstars.advice.Advice;
 import com.sap.oss.phosphor.fosstars.advice.Advisor;
 import com.sap.oss.phosphor.fosstars.advice.Link;
 import com.sap.oss.phosphor.fosstars.model.Confidence;
+import com.sap.oss.phosphor.fosstars.model.Rating;
 import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.Value;
@@ -93,6 +94,15 @@ public class PrettyPrinter extends CommonFormatter {
     }
 
     return String.format("%s%n%s", print(subject.ratingValue().get()), printAdviceFor(subject));
+  }
+
+  @Override
+  public String print(List<Subject> subjects, RatingValue ratingValue) {
+    StringBuilder sb = new StringBuilder(String.format("%s%n", print(ratingValue)));
+    for (Subject subject : subjects) {
+      sb.append(String.format("%s%n", printAdviceFor(subject)));
+    }
+    return sb.toString();
   }
 
   @Override
@@ -232,7 +242,7 @@ public class PrettyPrinter extends CommonFormatter {
    * @param subject The project.
    * @return A string to be displayed.
    */
-  private String printAdviceFor(Subject subject) {
+  public String printAdviceFor(Subject subject) {
     if (!shouldPrintAdvice() || !subject.ratingValue().isPresent()) {
       return StringUtils.EMPTY;
     }

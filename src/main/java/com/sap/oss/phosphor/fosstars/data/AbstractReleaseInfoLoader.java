@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
+import com.sap.oss.phosphor.fosstars.model.subject.oss.Artifact;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
@@ -35,7 +36,7 @@ import org.apache.logging.log4j.Logger;
  *
  * @param <T> A type of the objects for which the data provider can fetch data.
  */
-public abstract class AbstractReleaseInfoLoader<T> implements DataProvider<T> {
+public abstract class AbstractReleaseInfoLoader<T extends Artifact> implements DataProvider<T> {
 
   /**
    * A logger.
