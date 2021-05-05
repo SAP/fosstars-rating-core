@@ -64,4 +64,9 @@ public class PackageManagersTest {
     assertNotEquals(one, three);
     assertNotEquals(two, three);
   }
+
+  @Test
+  public void testContainsAnyWithEmpty() {
+    assertFalse(PackageManagers.from(PIP, MAVEN).containsAny(PackageManagers.empty()));
+  }
 }

@@ -131,10 +131,6 @@ public class PackageManagers implements Iterable<PackageManager> {
   public boolean containsAny(PackageManagers packageManagers) {
     Objects.requireNonNull(packageManagers, "Package manager can't be null!");
 
-    if (packageManagers.size() == 0) {
-      throw new IllegalArgumentException("Package managers can't be empty!");
-    }
-
     for (PackageManager packageManager : packageManagers) {
       if (this.packageManagers.contains(packageManager)) {
         return true;
