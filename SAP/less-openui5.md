@@ -1,6 +1,6 @@
 **Status**: **Failed**
 
-**Confidence**: Low (8.89, max confidence value is 10.0)
+**Confidence**: Max (10.0, max confidence value is 10.0)
 
 ## Violated rules
 
@@ -9,10 +9,6 @@
 
 
 
-## Unclear rules
-
-1.  **[rl-reuse_tool-3]** Is it registered in REUSE? **unknown**
-1.  **[rl-reuse_tool-4]** Is it compliant with REUSE rules? **unknown**
 
 
 ## Passed rules
@@ -29,6 +25,8 @@
 1.  **[rl-readme_file-1]** Does it have a README file? **Yes**
 1.  **[rl-reuse_tool-1]** Does README mention REUSE? **Yes**
 1.  **[rl-reuse_tool-2]** Does it have LICENSES directory with licenses? **Yes**
+1.  **[rl-reuse_tool-3]** Is it registered in REUSE? **Yes**
+1.  **[rl-reuse_tool-4]** Is it compliant with REUSE rules? **Yes**
 1.  **[rl-security_policy-1]** Does it have a security policy? **Yes**
 1.  **[rl-vulnerability_alerts-1]** Are vulnerability alerts enabled? **Yes**
 1.  **[rl-vulnerability_alerts-2]** Does it have unresolved vulnerability alerts? **No**
