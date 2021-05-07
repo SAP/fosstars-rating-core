@@ -284,10 +284,13 @@ public class NvdEntryMatcher implements Matcher {
   private static boolean projectCheck(CpeMatch cpeMatch, boolean referenceMatch,
       GitHubProject project) {
 
-    CpeUri cpeUri = cpeMatch.getCpeUri();
+    Optional<CpeUri> cpeUri = cpeMatch.getCpeUri();
+    if (!cpeUri.isPresent()) {
+      return false;
+    }
 
-    boolean productMatch = match(cpeUri.getProduct(), project.name());
-    boolean vendorMatch = match(cpeUri.getVendor(), project.organization().name());
+    boolean productMatch = match(cpeUri.get().getProduct(), project.name());
+    boolean vendorMatch = match(cpeUri.get().getVendor(), project.organization().name());
 
     // check if product's name matches the project's name,
     // or at least one reference URL matches with the project's URL
