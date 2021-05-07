@@ -51,7 +51,6 @@ public class OssRulesOfPlayScore extends FeatureBasedScore {
       HAS_LICENSE,
       ALLOWED_LICENSE,
       HAS_README,
-      HAS_REQUIRED_TEXT_IN_CONTRIBUTING_GUIDELINE,
       HAS_ENOUGH_TEAMS_ON_GITHUB,
       HAS_ADMIN_TEAM_ON_GITHUB,
       HAS_ENOUGH_ADMINS_ON_GITHUB,
@@ -74,8 +73,8 @@ public class OssRulesOfPlayScore extends FeatureBasedScore {
   /**
    * A set of features that are recommended to be true.
    */
-  public static final Set<Feature<Boolean>> RECOMMENDED_TRUE
-      = Collections.singleton(HAS_CONTRIBUTING_GUIDELINE);
+  public static final Set<Feature<Boolean>> RECOMMENDED_TRUE = Collections.unmodifiableSet(
+      setOf(HAS_CONTRIBUTING_GUIDELINE, HAS_REQUIRED_TEXT_IN_CONTRIBUTING_GUIDELINE));
 
   /**
    * A set of features that are recommended to be false.
