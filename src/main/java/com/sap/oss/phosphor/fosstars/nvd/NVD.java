@@ -140,7 +140,7 @@ public class NVD {
       updateTimestamp();
     }
     if (nvdEntries.isEmpty()) {
-      LOGGER.info("Parse NVD data...");
+      LOGGER.info("Parse NVD data ...");
       parse();
     }
     LOGGER.info("Loaded {} CVE entries from NVD", nvdEntries.size());
