@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -78,12 +79,20 @@ public class CpeMatch {
   }
 
   /**
-   * Get the {@link CpeUri} instance. It will check which CPE URI format is applicable and returns
-   * the appropriate instance.
+   * Get the {@link CpeUri} instance if available.
+   * It will check which CPE URI format is applicable and return the appropriate instance.
    * 
-   * @return instance of a type {@link CpeUri}.
+   * @return A {@link CpeUri} if available.
    */
-  public CpeUri getCpeUri() {
-    return !StringUtils.isEmpty(cpe23Uri) ? new Cpe23Uri(cpe23Uri) : new Cpe22Uri(cpe22Uri);
+  public Optional<CpeUri> getCpeUri() {
+    if (!StringUtils.isEmpty(cpe23Uri)) {
+      return Optional.of(new Cpe23Uri(cpe23Uri));
+    }
+
+    if (!StringUtils.isEmpty(cpe22Uri)) {
+      return Optional.of(new Cpe22Uri(cpe22Uri));
+    }
+
+    return Optional.empty();
   }
 }
