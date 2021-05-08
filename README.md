@@ -4,10 +4,10 @@
 
 |               | # or projects                    | % or projects                      |
 | :------------ | -------------------------------: | ---------------------------------: |
-| Total         |             255 |                               100% |
-| Failed        |         223 |         87.5% |
+| Total         |             254 |                               100% |
+| Failed        |         222 |         87.4% |
 | With warnings |  10 |  3.9% |
-| Passed        |         22 |         8.6% |
+| Passed        |         22 |         8.7% |
 | Unclear       |        0 |        0.0% |
 
 ## Projects
@@ -114,7 +114,6 @@
 | [SAP/spartacus](https://github.com/SAP/spartacus) | [Failed](SAP/spartacus.md) | 6 violated rules |
 | [SAP/reason-markdown](https://github.com/SAP/reason-markdown) | [Failed](SAP/reason-markdown.md) | 8 violated rules |
 | [SAP/devops-docker-images](https://github.com/SAP/devops-docker-images) | [Failed](SAP/devops-docker-images.md) | 1 violated rule |
-| [SAP/node-rasp](https://github.com/SAP/node-rasp) | [Failed](SAP/node-rasp.md) | 10 violated rules |
 | [SAP/hana-my-thai-star-data-generator](https://github.com/SAP/hana-my-thai-star-data-generator) | [Failed](SAP/hana-my-thai-star-data-generator.md) | 7 violated rules |
 | [SAP/ui5-uiveri5](https://github.com/SAP/ui5-uiveri5) | [Failed](SAP/ui5-uiveri5.md) | 1 violated rule |
 | [SAP/python-pyodata](https://github.com/SAP/python-pyodata) | [Failed](SAP/python-pyodata.md) | 5 violated rules |
@@ -176,7 +175,7 @@
 | [SAP/yeoman-ui](https://github.com/SAP/yeoman-ui) | [Failed](SAP/yeoman-ui.md) | 2 violated rules |
 | [SAP/Tracer](https://github.com/SAP/Tracer) | [Failed](SAP/Tracer.md) | 7 violated rules |
 | [SAP/vscode-mta-tools](https://github.com/SAP/vscode-mta-tools) | [Failed](SAP/vscode-mta-tools.md) | 1 violated rule |
-| [SAP/spartacus-bootcamp](https://github.com/SAP/spartacus-bootcamp) | [Failed](SAP/spartacus-bootcamp.md) | 9 violated rules |
+| [SAP/spartacus-bootcamp](https://github.com/SAP/spartacus-bootcamp) | [Failed](SAP/spartacus-bootcamp.md) | 6 violated rules |
 | [SAP/ui5-simple-require](https://github.com/SAP/ui5-simple-require) | [Failed](SAP/ui5-simple-require.md) | 1 violated rule |
 | [SAP/vscode-logging](https://github.com/SAP/vscode-logging) | [Failed](SAP/vscode-logging.md) | 2 violated rules |
 | [SAP/cloud-sdk-js](https://github.com/SAP/cloud-sdk-js) | [Failed](SAP/cloud-sdk-js.md) | 4 violated rules |
