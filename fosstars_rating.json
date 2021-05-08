@@ -195,9 +195,9 @@
         }
       }
     },
-    "value" : 6.955034722222222,
+    "value" : 4.038368055555556,
     "weight" : 1.0,
-    "confidence" : 10.0,
+    "confidence" : 7.708333333333334,
     "usedValues" : [ {
       "type" : "ScoreValue",
       "score" : {
@@ -406,14 +406,11 @@
         },
         "name" : "Assesses security testing and vulnerability discovery"
       },
-      "value" : 10.0,
+      "value" : 0.0,
       "weight" : 0.6,
-      "confidence" : 10.0,
+      "confidence" : 5.0,
       "usedValues" : [ {
-        "type" : "VulnerabilitiesValue",
-        "vulnerabilities" : {
-          "entries" : [ ]
-        },
+        "type" : "UnknownValue",
         "feature" : {
           "type" : "VulnerabilitiesInProject",
           "name" : "Info about vulnerabilities in open-source project"
@@ -834,20 +831,17 @@
         "type" : "UnpatchedVulnerabilitiesScore",
         "name" : "How well vulnerabilities are patched"
       },
-      "value" : 10.0,
+      "value" : 0.0,
       "weight" : 0.8,
-      "confidence" : 10.0,
+      "confidence" : 0.0,
       "usedValues" : [ {
-        "type" : "VulnerabilitiesValue",
-        "vulnerabilities" : {
-          "entries" : [ ]
-        },
+        "type" : "UnknownValue",
         "feature" : {
           "type" : "VulnerabilitiesInProject",
           "name" : "Info about vulnerabilities in open-source project"
         }
       } ],
-      "explanation" : [ "No unpatched vulnerabilities found which is good" ],
+      "explanation" : [ ],
       "isUnknown" : false,
       "isNotApplicable" : false
     }, {
@@ -899,7 +893,7 @@
           "type" : "PositiveIntegerFeature",
           "name" : "Number of commits in the last three months"
         },
-        "number" : 145
+        "number" : 147
       }, {
         "type" : "IntegerValue",
         "feature" : {
@@ -908,7 +902,7 @@
         },
         "number" : 2
       } ],
-      "explanation" : [ "145 commits in the last 3 months results to 10.00 points", "2 contributors increase the score value from 10.00 to 10.50" ],
+      "explanation" : [ "147 commits in the last 3 months results to 10.00 points", "2 contributors increase the score value from 10.00 to 10.50" ],
       "isUnknown" : false,
       "isNotApplicable" : false
     }, {
@@ -1349,5 +1343,5 @@
     "isUnknown" : false,
     "isNotApplicable" : false
   },
-  "label" : [ "OssSecurityRating$SecurityLabel", "GOOD" ]
+  "label" : [ "OssSecurityRating$SecurityLabel", "UNCLEAR" ]
 }
