@@ -6,8 +6,8 @@
 | :------------ | -------------------------------: | ---------------------------------: |
 | Total         |             254 |                               100% |
 | Failed        |         222 |         87.4% |
-| With warnings |  10 |  3.9% |
-| Passed        |         22 |         8.7% |
+| With warnings |  11 |  4.3% |
+| Passed        |         21 |         8.3% |
 | Unclear       |        0 |        0.0% |
 
 ## Projects
@@ -236,7 +236,6 @@
 | [SAP/credential-digger-tests](https://github.com/SAP/credential-digger-tests) | [Failed](SAP/credential-digger-tests.md) | 1 violated rule |
 | [SAP/.github](https://github.com/SAP/.github) | [Failed](SAP/.github.md) | 11 violated rules |
 | [SAP/duplicate-crash-identifier](https://github.com/SAP/duplicate-crash-identifier) | [Failed](SAP/duplicate-crash-identifier.md) | 1 violated rule |
-| [SAP/fundamental-ngx](https://github.com/SAP/fundamental-ngx) | [Passed](SAP/fundamental-ngx.md) | No violated rules |
 | [SAP/commerce-gradle-plugin](https://github.com/SAP/commerce-gradle-plugin) | [Passed](SAP/commerce-gradle-plugin.md) | No violated rules |
 | [SAP/quality-continuous-traceability-monitor](https://github.com/SAP/quality-continuous-traceability-monitor) | [Passed](SAP/quality-continuous-traceability-monitor.md) | No violated rules |
 | [SAP/ewm-cloud-robotics](https://github.com/SAP/ewm-cloud-robotics) | [Passed](SAP/ewm-cloud-robotics.md) | No violated rules |
@@ -261,6 +260,7 @@
 | [SAP/openui5](https://github.com/SAP/openui5) | [Passed with warnings](SAP/openui5.md) | No violated rules |
 | [SAP/ui5-inspector](https://github.com/SAP/ui5-inspector) | [Passed with warnings](SAP/ui5-inspector.md) | No violated rules |
 | [SAP/ui5-tooling](https://github.com/SAP/ui5-tooling) | [Passed with warnings](SAP/ui5-tooling.md) | No violated rules |
+| [SAP/fundamental-ngx](https://github.com/SAP/fundamental-ngx) | [Passed with warnings](SAP/fundamental-ngx.md) | No violated rules |
 | [SAP/luigi](https://github.com/SAP/luigi) | [Passed with warnings](SAP/luigi.md) | No violated rules |
 | [SAP/ui5-webcomponents](https://github.com/SAP/ui5-webcomponents) | [Passed with warnings](SAP/ui5-webcomponents.md) | No violated rules |
 | [SAP/emobility-smart-charging](https://github.com/SAP/emobility-smart-charging) | [Passed with warnings](SAP/emobility-smart-charging.md) | No violated rules |
