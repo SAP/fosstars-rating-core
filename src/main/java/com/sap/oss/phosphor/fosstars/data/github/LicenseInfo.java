@@ -8,6 +8,7 @@ import static com.sap.oss.phosphor.fosstars.util.Deserialization.readListFrom;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.sap.oss.phosphor.fosstars.model.Feature;
+import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
@@ -25,6 +26,9 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import org.kohsuke.github.GHLicense;
+import org.kohsuke.github.GitHub;
+import org.kohsuke.github.GitHubBuilder;
 
 /**
  * This data provider gathers info about project's license. It fills out the following features:
@@ -35,6 +39,13 @@ import java.util.stream.Collectors;
  * </ul>
  */
 public class LicenseInfo extends GitHubCachingDataProvider {
+
+  /**
+   * Possible sources of information for the data provider.
+   */
+  enum Source {
+    LOCAL_REPOSITORY, GITHUB_API
+  }
 
   /**
    * A list of files that may be a license.
@@ -56,6 +67,16 @@ public class LicenseInfo extends GitHubCachingDataProvider {
    * A list of patterns that are not allowed in licenses.
    */
   private final List<Pattern> disallowedLicensePatterns = new ArrayList<>();
+
+  /**
+   * A list of allowed license names that are known on GitHub.
+   */
+  private final List<String> githubNamesOfAllowedLicenses = new ArrayList<>();
+
+  /**
+   * Preferred source of information for the data provider.
+   */
+  private Source preferredSource = Source.LOCAL_REPOSITORY;
 
   /**
    * Initializes a data provider. The constructor searches for default configs for the provider.
@@ -156,6 +177,50 @@ public class LicenseInfo extends GitHubCachingDataProvider {
     return this;
   }
 
+  /**
+   * Returns a list of allowed license names.
+   *
+   * @return A list of allowed license names.
+   */
+  List<String> githubNamesOfAllowedLicenses() {
+    return new ArrayList<>(githubNamesOfAllowedLicenses);
+  }
+
+  /**
+   * Set a list of allowed license names.
+   *
+   * @param names The license names.
+   * @return This data provider.
+   */
+  public LicenseInfo githubNamesOfAllowedLicenses(String... names) {
+    return githubNamesOfAllowedLicenses(Arrays.asList(names));
+  }
+
+  /**
+   * Set a list of allowed license names.
+   *
+   * @param names The license names.
+   * @return This data provider.
+   */
+  public LicenseInfo githubNamesOfAllowedLicenses(List<String> names) {
+    Objects.requireNonNull(names, "Oops! License names can't be null!");
+    githubNamesOfAllowedLicenses.clear();
+    githubNamesOfAllowedLicenses.addAll(names);
+    return this;
+  }
+
+  /**
+   * Set a preferred source of information for the provider.
+   *
+   * @param source The preferred source of information.
+   * @return This data provider.
+   */
+  LicenseInfo prefer(Source source) {
+    Objects.requireNonNull(source, "Oh no! Source can't be null!");
+    preferredSource = source;
+    return this;
+  }
+
   @Override
   public Set<Feature<?>> supportedFeatures() {
     return setOf(HAS_LICENSE, ALLOWED_LICENSE, LICENSE_HAS_DISALLOWED_CONTENT);
@@ -165,6 +230,25 @@ public class LicenseInfo extends GitHubCachingDataProvider {
   protected ValueSet fetchValuesFor(GitHubProject project) throws IOException {
     logger.info("Gathering info about project's license ...");
 
+    switch (preferredSource) {
+      case GITHUB_API:
+        return fetchValuesFromGitHubFor(project);
+      case LOCAL_REPOSITORY:
+        return fetchValuesFromLocalRepositoryFor(project);
+      default:
+        throw new IllegalStateException(
+            String.format("Oops! Unexpected preference: %s", preferredSource));
+    }
+  }
+
+  /**
+   * Fill out the supported features using a locally cloned repository of a project.
+   *
+   * @param project The project.
+   * @return A set of values.
+   * @throws IOException If something went wrong.
+   */
+  ValueSet fetchValuesFromLocalRepositoryFor(GitHubProject project) throws IOException {
     Optional<String> license = lookForLicenseIn(project);
     if (!license.isPresent()) {
       return ValueHashSet.from(
@@ -174,10 +258,68 @@ public class LicenseInfo extends GitHubCachingDataProvider {
     }
 
     ValueSet values = new ValueHashSet();
-    values.update(HAS_LICENSE.value(true));
-    values.update(infoAboutLicense(license.get()));
+    values.update(
+        HAS_LICENSE.value(true),
+        ALLOWED_LICENSE.value(false),
+        LICENSE_HAS_DISALLOWED_CONTENT.value(false));
+
+    values.update(ALLOWED_LICENSE.value(matchAllowedLicensePattern(license.get())));
+    values.update(LICENSE_HAS_DISALLOWED_CONTENT.value(hasDisallowedContent(license.get())));
 
     return values;
+  }
+
+  /**
+   * Fill out the supported features for a project using GitHub API.
+   *
+   * @param project The project.
+   * @return A set of values.
+   * @throws IOException If something went wrong.
+   * @see <a href="https://docs.github.com/en/rest/reference/licenses">GitHub Licenses API</a>
+   */
+  private ValueSet fetchValuesFromGitHubFor(GitHubProject project) throws IOException {
+    GHLicense license = fetcher.repositoryFor(project).getLicense();
+    if (license == null) {
+      return ValueHashSet.from(
+          HAS_LICENSE.value(false),
+          ALLOWED_LICENSE.unknown(),
+          LICENSE_HAS_DISALLOWED_CONTENT.unknown());
+    }
+
+    ValueSet values = new ValueHashSet();
+    values.update(HAS_LICENSE.value(true));
+
+    values.update(ALLOWED_LICENSE.value(
+        githubNamesOfAllowedLicenses.contains(license.getName())
+            || matchAllowedLicensePattern(license.getBody())));
+
+    values.update(LICENSE_HAS_DISALLOWED_CONTENT.value(hasDisallowedContent(license.getBody())));
+
+    return values;
+  }
+
+  /**
+   * Check if a license matches with any allowed pattern.
+   *
+   * @param content The license content.
+   * @return True if the license matches with any allowed pattern, false otherwise.
+   */
+  private boolean matchAllowedLicensePattern(String content) {
+    if (allowedLicensePatterns.isEmpty()) {
+      return false;
+    }
+
+    return allowedLicensePatterns.stream().allMatch(pattern -> pattern.matcher(content).find());
+  }
+
+  /**
+   * Check if a license has disallowed content.
+   *
+   * @param content The license content.
+   * @return True if the license has disallowed content, false otherwise.
+   */
+  private boolean hasDisallowedContent(String content) {
+    return disallowedLicensePatterns.stream().anyMatch(pattern -> pattern.matcher(content).find());
   }
 
   /**
@@ -198,26 +340,6 @@ public class LicenseInfo extends GitHubCachingDataProvider {
     }
 
     return Optional.empty();
-  }
-
-  /**
-   * Extract info about license.
-   *
-   * @param content Content of the license.
-   * @return A set of values.
-   */
-  ValueSet infoAboutLicense(String content) {
-    ValueSet values = ValueHashSet.from(
-        ALLOWED_LICENSE.value(false), LICENSE_HAS_DISALLOWED_CONTENT.value(false));
-
-    values.update(ALLOWED_LICENSE.value(
-        allowedLicensePatterns.stream()
-            .allMatch(pattern -> pattern.matcher(content).find())));
-    values.update(LICENSE_HAS_DISALLOWED_CONTENT.value(
-        disallowedLicensePatterns.stream()
-            .anyMatch(pattern -> pattern.matcher(content).find())));
-
-    return values;
   }
 
   /**
@@ -245,6 +367,36 @@ public class LicenseInfo extends GitHubCachingDataProvider {
     JsonNode config = Yaml.mapper().readTree(is);
     allowedLicensePatterns(readListFrom(config, "allowedLicensePatterns"));
     disallowedLicensePatterns(readListFrom(config, "disallowedLicensePatterns"));
+
+    if (config.has("preferredSource")) {
+      JsonNode node = config.get("preferredSource");
+      if (!node.isTextual()) {
+        throw new IOException("Oops! preferredSource is not a string!");
+      }
+
+      prefer(Source.valueOf(node.asText().toUpperCase()));
+    }
+
     return this;
+  }
+
+  /**
+   * This is for testing and demo purposes.
+   *
+   * @param args Command-line options.
+   * @throws Exception If something went wrong.
+   */
+  public static void main(String... args) throws Exception {
+    String token = args.length > 0 ? args[0] : "";
+    String url = args.length > 1 ? args[1] : "https://github.com/SAP/fosstars-rating-core";
+    GitHubProject project = GitHubProject.parse(url);
+    GitHub github = new GitHubBuilder().withOAuthToken(token).build();
+    LicenseInfo provider = new LicenseInfo(new GitHubDataFetcher(github, token));
+    provider.prefer(Source.GITHUB_API);
+    provider.githubNamesOfAllowedLicenses("Apache License 2.0");
+    ValueSet values = provider.fetchValuesFor(project);
+    for (Value<?> value : values) {
+      System.out.printf("%s: %s%n", value.feature().name(), value.get());
+    }
   }
 }

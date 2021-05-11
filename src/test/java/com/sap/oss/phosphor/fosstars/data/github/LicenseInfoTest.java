@@ -10,6 +10,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.sap.oss.phosphor.fosstars.data.github.LicenseInfo.Source;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
@@ -23,28 +24,70 @@ import java.util.regex.Pattern;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
+import org.kohsuke.github.GHLicense;
+import org.kohsuke.github.GHRepository;
 
 public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
 
   @Test
-  public void testInfoAboutLicense() throws IOException {
+  public void testFetchValuesFromGitHubAPI() throws IOException {
+    final LicenseInfo provider = new LicenseInfo(fetcher);
+    provider.prefer(Source.GITHUB_API);
+    final GitHubProject project = new GitHubProject("test", "project");
+
+    GHLicense license = mock(GHLicense.class);
+    when(license.getBody()).thenReturn(
+        String.join("\n", "", "Apache License 2.0", "", "Here should be the text.", ""));
+    when(license.getName()).thenReturn("Apache License 2.0");
+    GHRepository repository = mock(GHRepository.class);
+    when(repository.getLicense()).thenReturn(license);
+    fetcher.addForTesting(project, repository);
+
+    provider.githubNamesOfAllowedLicenses("MIT License");
+    ValueSet values = provider.fetchValuesFor(project);
+    assertEquals(3, values.size());
+    checkValue(values, HAS_LICENSE, true);
+    checkValue(values, ALLOWED_LICENSE, false);
+    checkValue(values, LICENSE_HAS_DISALLOWED_CONTENT, false);
+
+    provider.githubNamesOfAllowedLicenses("Apache License 2.0");
+    values = provider.fetchValuesFor(project);
+    assertEquals(3, values.size());
+    checkValue(values, HAS_LICENSE, true);
+    checkValue(values, ALLOWED_LICENSE, true);
+    checkValue(values, LICENSE_HAS_DISALLOWED_CONTENT, false);
+  }
+
+  @Test
+  public void testFetchValuesFromLocalRepository() throws IOException {
     LicenseInfo provider = new LicenseInfo(fetcher);
     provider.allowedLicensePatterns("Apache License");
     provider.disallowedLicensePatterns("Don't trouble trouble till trouble troubles you");
 
-    ValueSet values = provider.infoAboutLicense(
-        String.join("\n", "", "Apache License", "", "Here should be the text.", ""));
+    GitHubProject project = new GitHubProject("test", "project");
+    LocalRepository localRepository = mock(LocalRepository.class);
+    TestGitHubDataFetcher.addForTesting(project, localRepository);
+
+    when(localRepository.read("LICENSE"))
+        .thenReturn(Optional.of(IOUtils.toInputStream(
+            String.join("\n", "", "Apache License", "", "Here should be the text.", ""))));
+    ValueSet values = provider.fetchValuesFromLocalRepositoryFor(project);
     checkValue(values, ALLOWED_LICENSE, true);
     checkValue(values, LICENSE_HAS_DISALLOWED_CONTENT, false);
 
-    values = provider.infoAboutLicense(
-        String.join("\n", "MIT License", "", "Here should be the text.", ""));
+    when(localRepository.read("LICENSE"))
+        .thenReturn(Optional.of(IOUtils.toInputStream(
+            String.join("\n", "MIT License", "", "Here should be the text.", ""))));
+    values = provider.fetchValuesFromLocalRepositoryFor(project);
     checkValue(values, ALLOWED_LICENSE, false);
     checkValue(values, LICENSE_HAS_DISALLOWED_CONTENT, false);
 
-    values = provider.infoAboutLicense(
-        String.join("\n", "MIT License", "", "Here should be the text.",
-            "Don't trouble trouble till trouble troubles you", ""));
+    when(localRepository.read("LICENSE"))
+        .thenReturn(Optional.of(IOUtils.toInputStream(
+            String.join("\n",
+                "MIT License", "", "Here should be the text.",
+                "Don't trouble trouble till trouble troubles you", ""))));
+    values = provider.fetchValuesFromLocalRepositoryFor(project);
     checkValue(values, ALLOWED_LICENSE, false);
     checkValue(values, LICENSE_HAS_DISALLOWED_CONTENT, true);
   }
