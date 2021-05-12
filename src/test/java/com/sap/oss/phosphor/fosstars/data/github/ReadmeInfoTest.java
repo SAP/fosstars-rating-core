@@ -17,7 +17,6 @@ import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.Set;
-import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
 public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
@@ -41,33 +40,33 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
     provider.requiredContentPatterns("# Mandatory header", "^((?!Prohibited phrase).)*$");
     provider.set(NoValueCache.create());
 
-    when(localRepository.read("README"))
-        .thenReturn(Optional.of(IOUtils.toInputStream(String.join("\n",
+    when(localRepository.readTextFrom("README"))
+        .thenReturn(Optional.of(String.join("\n",
             "This is README",
             "",
             "# Mandatory header",
             "",
             "Don't trouble trouble till trouble troubles you."
-        ))));
+        )));
     checkValues(provider.fetchValuesFor(project), true, false);
 
-    when(localRepository.read("README"))
-        .thenReturn(Optional.of(IOUtils.toInputStream(String.join("\n",
+    when(localRepository.readTextFrom("README"))
+        .thenReturn(Optional.of(String.join("\n",
             "This is README",
             "",
             "# Another header"
-        ))));
+        )));
     checkValues(provider.fetchValuesFor(project), true, true);
 
-    when(localRepository.read("README"))
-        .thenReturn(Optional.of(IOUtils.toInputStream(String.join("\n",
+    when(localRepository.readTextFrom("README"))
+        .thenReturn(Optional.of(String.join("\n",
             "This is README",
             "",
             "# Mandatory header",
             "",
             "Prohibited phrase",
             ""
-        ))));
+        )));
     checkValues(provider.fetchValuesFor(project), true, true);
   }
 

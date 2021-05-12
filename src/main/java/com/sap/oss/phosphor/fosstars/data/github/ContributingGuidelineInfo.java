@@ -25,7 +25,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import org.apache.commons.io.IOUtils;
 
 /**
  * This data provider gathers info about project's contributing guidelines.
@@ -152,9 +151,9 @@ public class ContributingGuidelineInfo extends GitHubCachingDataProvider {
     LocalRepository repository = GitHubDataFetcher.localRepositoryFor(project);
 
     for (String path : knownContributingGuidelineFiles) {
-      Optional<InputStream> content = repository.read(path);
+      Optional<String> content = repository.readTextFrom(path);
       if (content.isPresent()) {
-        return Optional.of(IOUtils.toString(content.get()));
+        return content;
       }
     }
 
@@ -185,7 +184,9 @@ public class ContributingGuidelineInfo extends GitHubCachingDataProvider {
    */
   @Override
   public ContributingGuidelineInfo configure(Path path) throws IOException {
-    return configure(Files.newInputStream(path));
+    try (InputStream is = Files.newInputStream(path)) {
+      return configure(is);
+    }
   }
 
   /**

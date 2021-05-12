@@ -24,7 +24,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import org.apache.commons.io.IOUtils;
 
 /**
  * This data provider gathers info about project's README file.
@@ -62,7 +61,7 @@ public class ReadmeInfo extends GitHubCachingDataProvider {
   }
 
   /**
-   * Set a list of patterns that describe required content in REAME.
+   * Set a list of patterns that describe required content in README.
    *
    * @param patterns The patterns.
    * @return This data provider.
@@ -130,12 +129,7 @@ public class ReadmeInfo extends GitHubCachingDataProvider {
       return Optional.empty();
     }
 
-    Optional<InputStream> inputStream = repository.read(readme.get());
-    if (!inputStream.isPresent()) {
-      return Optional.empty();
-    }
-
-    return Optional.of(IOUtils.toString(inputStream.get()));
+    return repository.readTextFrom(readme.get());
   }
 
   /**
@@ -157,7 +151,9 @@ public class ReadmeInfo extends GitHubCachingDataProvider {
    */
   @Override
   public ReadmeInfo configure(Path path) throws IOException {
-    return configure(Files.newInputStream(path));
+    try (InputStream is = Files.newInputStream(path)) {
+      return configure(is);
+    }
   }
 
   /**
