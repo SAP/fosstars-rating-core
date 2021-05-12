@@ -1,6 +1,6 @@
 **Status**: **Failed**
 
-**Confidence**: Low (0.56, max confidence value is 10.0)
+**Confidence**: Low (0.53, max confidence value is 10.0)
 
 ## Violated rules
 
@@ -22,6 +22,7 @@
 1.  **[rl-license_file-2]** Does it use an allowed license? **unknown**
 1.  **[rl-license_file-3]** Does the license have disallowed content? **unknown**
 1.  **[rl-readme_file-1]** Does it have a README file? **unknown**
+1.  **[rl-readme_file-2]** If a project's README doesn't contain required info **unknown**
 1.  **[rl-reuse_tool-1]** Does README mention REUSE? **unknown**
 1.  **[rl-reuse_tool-2]** Does it have LICENSES directory with licenses? **unknown**
 1.  **[rl-reuse_tool-3]** Is it registered in REUSE? **unknown**

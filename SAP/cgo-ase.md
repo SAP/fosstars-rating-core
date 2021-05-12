@@ -24,6 +24,7 @@
 1.  **[rl-license_file-2]** Does it use an allowed license? **Yes**
 1.  **[rl-license_file-3]** Does the license have disallowed content? **No**
 1.  **[rl-readme_file-1]** Does it have a README file? **Yes**
+1.  **[rl-readme_file-2]** If a project's README doesn't contain required info **No**
 1.  **[rl-reuse_tool-1]** Does README mention REUSE? **Yes**
 1.  **[rl-reuse_tool-3]** Is it registered in REUSE? **Yes**
 1.  **[rl-reuse_tool-4]** Is it compliant with REUSE rules? **Yes**
