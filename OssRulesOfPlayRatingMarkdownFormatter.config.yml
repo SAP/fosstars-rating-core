@@ -4,6 +4,7 @@ ruleIds:
   rl-license_file-2: If a project uses an allowed license
   rl-license_file-3: If a license has disallowed text
   rl-readme_file-1: If a project has a README file
+  rl-readme_file-2: If a project's README doesn't contain required info
   rl-contributor_file-1: If a project has a contributing guideline
   rl-contributor_file-2: If a project's contributing guideline has required text
   rl-assigned_teams-1: If a project has enough teams on GitHub
