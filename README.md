@@ -228,7 +228,7 @@
 | [SAP/chevrotain](https://github.com/SAP/chevrotain) | [Failed](SAP/chevrotain.md) | 10 violated rules |
 | [SAP/project-sailor](https://github.com/SAP/project-sailor) | [Failed](SAP/project-sailor.md) | 3 violated rules |
 | [SAP/sap.github.io](https://github.com/SAP/sap.github.io) | [Failed](SAP/sap.github.io.md) | 12 violated rules |
-| [SAP/cloud-sdk-ios](https://github.com/SAP/cloud-sdk-ios) | [Failed](SAP/cloud-sdk-ios.md) | 5 violated rules |
+| [SAP/cloud-sdk-ios](https://github.com/SAP/cloud-sdk-ios) | [Failed](SAP/cloud-sdk-ios.md) | 7 violated rules |
 | [SAP/cloud-sdk-ios-cai](https://github.com/SAP/cloud-sdk-ios-cai) | [Failed](SAP/cloud-sdk-ios-cai.md) | 3 violated rules |
 | [SAP/credential-digger-tests](https://github.com/SAP/credential-digger-tests) | [Failed](SAP/credential-digger-tests.md) | 1 violated rule |
 | [SAP/.github](https://github.com/SAP/.github) | [Failed](SAP/.github.md) | 11 violated rules |
