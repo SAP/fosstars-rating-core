@@ -68,11 +68,11 @@ public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
   public void testProjectWithLicense() throws IOException {
     GitHubProject project = new GitHubProject("test", "project");
     LocalRepository localRepository = mock(LocalRepository.class);
-    when(localRepository.read("LICENSE"))
-        .thenReturn(Optional.of(IOUtils.toInputStream(String.join("\n",
-            "   ", "Apache License 2.0", "", "This is the text.", "Don't trouble"))))
-        .thenReturn(Optional.of(IOUtils.toInputStream(String.join("\n",
-            "   ", "Apache License", "", "This is the text.", "Extra text"))));
+    when(localRepository.readTextFrom("LICENSE"))
+        .thenReturn(Optional.of(String.join("\n",
+            "   ", "Apache License 2.0", "", "This is the text.", "Don't trouble")))
+        .thenReturn(Optional.of(String.join("\n",
+            "   ", "Apache License", "", "This is the text.", "Extra text")));
     TestGitHubDataFetcher.addForTesting(project, localRepository);
 
     LicenseInfo provider = new LicenseInfo(fetcher);
@@ -177,14 +177,14 @@ public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
   public void testProviderWithLoadedConfig() throws IOException {
     GitHubProject project = new GitHubProject("test", "project");
     LocalRepository localRepository = mock(LocalRepository.class);
-    when(localRepository.read("LICENSE"))
-        .thenReturn(Optional.of(IOUtils.toInputStream("\n"
+    when(localRepository.readTextFrom("LICENSE"))
+        .thenReturn(Optional.of("\n"
             + "                                 Apache License\n"
             + "                           Version 2.0, January 2004\n"
             + "                        http://www.apache.org/licenses/\n"
             + "\n"
-            + "   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION")))
-        .thenReturn(Optional.of(IOUtils.toInputStream("The MIT License (MIT)\n"
+            + "   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION"))
+        .thenReturn(Optional.of("The MIT License (MIT)\n"
             + "\n"
             + "Copyright (c) 1851 Fedor Dostoevsky\n"
             + "\n"
@@ -193,7 +193,7 @@ public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
             + "in the Software without restriction, including without limitation the rights\n"
             + "to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n"
             + "copies of the Software, and to permit persons to whom the Software is\n"
-            + "furnished to do so, subject to the following conditions:")));
+            + "furnished to do so, subject to the following conditions:"));
     TestGitHubDataFetcher.addForTesting(project, localRepository);
 
     LicenseInfo provider = new LicenseInfo(fetcher);

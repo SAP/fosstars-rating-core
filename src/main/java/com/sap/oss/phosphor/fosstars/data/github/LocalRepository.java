@@ -250,6 +250,24 @@ public class LocalRepository implements AutoCloseable {
   }
 
   /**
+   * Reads a file and returns its content as a string.
+   *
+   * @param file The file.
+   * @return Content of the file.
+   * @throws IOException If something went wrong.
+   */
+  public Optional<String> readTextFrom(String file) throws IOException {
+    Optional<InputStream> content = read(file);
+    if (content.isPresent()) {
+      try (InputStream is = content.get()) {
+        return Optional.of(IOUtils.toString(is));
+      }
+    }
+
+    return Optional.empty();
+  }
+
+  /**
    * Read lines in a file.
    *
    * @param file A path to the file.

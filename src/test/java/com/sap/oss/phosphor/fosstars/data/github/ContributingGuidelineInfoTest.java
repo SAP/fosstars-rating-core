@@ -34,9 +34,9 @@ public class ContributingGuidelineInfoTest extends TestGitHubDataFetcherHolder {
   public void testProjectWithContributingGuideline() throws IOException {
     GitHubProject project = new GitHubProject("test", "project");
     LocalRepository localRepository = mock(LocalRepository.class);
-    when(localRepository.read("CONTRIBUTING.md"))
-        .thenReturn(Optional.of(IOUtils.toInputStream(String.join("\n",
-            "Here is how to contribute to the project.", "This is the text.", "Extra text"))));
+    when(localRepository.readTextFrom("CONTRIBUTING.md"))
+        .thenReturn(Optional.of(String.join("\n",
+            "Here is how to contribute to the project.", "This is the text.", "Extra text")));
     TestGitHubDataFetcher.addForTesting(project, localRepository);
 
     ContributingGuidelineInfo provider = new ContributingGuidelineInfo(fetcher);
@@ -46,9 +46,9 @@ public class ContributingGuidelineInfoTest extends TestGitHubDataFetcherHolder {
     checkValue(values, HAS_CONTRIBUTING_GUIDELINE, true);
     checkValue(values, HAS_REQUIRED_TEXT_IN_CONTRIBUTING_GUIDELINE, true);
 
-    when(localRepository.read("HOW_TO_CONTRIBUTE.md"))
-        .thenReturn(Optional.of(IOUtils.toInputStream(String.join("\n",
-            "Here is how to contribute to the project.", "This is the text."))));
+    when(localRepository.readTextFrom("HOW_TO_CONTRIBUTE.md"))
+        .thenReturn(Optional.of(String.join("\n",
+            "Here is how to contribute to the project.", "This is the text.")));
 
     provider.knownContributingGuidelineFiles("HOW_TO_CONTRIBUTE.md");
     provider.requiredContentPatterns("Extra text.");
@@ -61,7 +61,7 @@ public class ContributingGuidelineInfoTest extends TestGitHubDataFetcherHolder {
   public void testProjectWithoutContributingGuideline() throws IOException {
     GitHubProject project = new GitHubProject("test", "project");
     LocalRepository localRepository = mock(LocalRepository.class);
-    when(localRepository.read(anyString())).thenReturn(Optional.empty());
+    when(localRepository.readTextFrom(anyString())).thenReturn(Optional.empty());
     TestGitHubDataFetcher.addForTesting(project, localRepository);
 
     ContributingGuidelineInfo provider = new ContributingGuidelineInfo(fetcher);
@@ -75,15 +75,15 @@ public class ContributingGuidelineInfoTest extends TestGitHubDataFetcherHolder {
   public void testLoadingConfig() throws IOException {
     GitHubProject project = new GitHubProject("test", "project");
     LocalRepository localRepository = mock(LocalRepository.class);
-    when(localRepository.read("CONTRIBUTING.md"))
-        .thenReturn(Optional.of(IOUtils.toInputStream(String.join("\n",
+    when(localRepository.readTextFrom("CONTRIBUTING.md"))
+        .thenReturn(Optional.of(String.join("\n",
             "Here is how to contribute to the project.",
             "## Contributor License Agreement",
-            "This is the text."))))
-        .thenReturn(Optional.of(IOUtils.toInputStream(String.join("\n",
+            "This is the text.")))
+        .thenReturn(Optional.of(String.join("\n",
             "Here is how to contribute to the project.",
             "## Developer Certificate of Origin",
-            "This is the text."))));
+            "This is the text.")));
     TestGitHubDataFetcher.addForTesting(project, localRepository);
 
     ContributingGuidelineInfo provider = new ContributingGuidelineInfo(fetcher);

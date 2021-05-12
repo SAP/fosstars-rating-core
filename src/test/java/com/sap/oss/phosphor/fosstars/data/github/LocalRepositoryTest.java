@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,7 +14,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.eclipse.jgit.api.CommitCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -57,11 +55,9 @@ public class LocalRepositoryTest {
       assertTrue(something.isPresent());
       assertEquals("test", something.get());
 
-      Optional<InputStream> file = localRepository.read("file");
-      assertTrue(file.isPresent());
-      try (InputStream is = file.get()) {
-        assertEquals("test", IOUtils.toString(is));
-      }
+      Optional<String> text = localRepository.readTextFrom("file");
+      assertTrue(text.isPresent());
+      assertEquals("test", text.get());
     } finally {
       FileUtils.forceDeleteOnExit(directory.toFile());
     }
