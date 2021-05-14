@@ -7,9 +7,6 @@
 1.  **[rl-license_file-1]** Does it have a license file? **No**
 
 
-## Warnings
-
-1.  **[rl-vulnerability_alerts-2]** Does it have unresolved vulnerability alerts? **Yes**
 
 
 ## Unclear rules
@@ -35,7 +32,7 @@
 1.  **[rl-reuse_tool-4]** Is it compliant with REUSE rules? **Yes**
 1.  **[rl-security_policy-1]** Does it have a security policy? **Yes**
 1.  **[rl-vulnerability_alerts-1]** Are vulnerability alerts enabled? **Yes**
-1.  **[rl-vulnerability_alerts-2]** Does it have unresolved vulnerability alerts? **Yes**
+1.  **[rl-vulnerability_alerts-2]** Does it have unresolved vulnerability alerts? **No**
 
 
 ## How to fix it
