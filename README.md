@@ -85,7 +85,7 @@
 | [SAP/cloud-mta-build-tool](https://github.com/SAP/cloud-mta-build-tool) | [Failed](SAP/cloud-mta-build-tool.md) | 1 violated rule |
 | [SAP/cloud-security-xsuaa-integration](https://github.com/SAP/cloud-security-xsuaa-integration) | [Failed](SAP/cloud-security-xsuaa-integration.md) | 5 violated rules |
 | [SAP/webide-extension-command-example](https://github.com/SAP/webide-extension-command-example) | [Failed](SAP/webide-extension-command-example.md) | 5 violated rules |
-| [SAP/spartacus](https://github.com/SAP/spartacus) | [Failed](SAP/spartacus.md) | 5 violated rules |
+| [SAP/spartacus](https://github.com/SAP/spartacus) | [Failed](SAP/spartacus.md) | 4 violated rules |
 | [SAP/reason-markdown](https://github.com/SAP/reason-markdown) | [Failed](SAP/reason-markdown.md) | 7 violated rules |
 | [SAP/devops-docker-images](https://github.com/SAP/devops-docker-images) | [Failed](SAP/devops-docker-images.md) | 1 violated rule |
 | [SAP/hana-my-thai-star-data-generator](https://github.com/SAP/hana-my-thai-star-data-generator) | [Failed](SAP/hana-my-thai-star-data-generator.md) | 6 violated rules |
