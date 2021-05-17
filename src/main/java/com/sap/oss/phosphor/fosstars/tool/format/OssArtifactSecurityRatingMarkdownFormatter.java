@@ -14,31 +14,47 @@ import java.util.Objects;
 public class OssArtifactSecurityRatingMarkdownFormatter extends AbstractMarkdownFormatter {
 
   /**
-   * A resource with a Markdown template.
+   * A resource with a default Markdown template.
    */
   private static final String RATING_VALUE_TEMPLATE_RESOURCE
       = "OssArtifactSecurityRatingMarkdownRatingValueTemplate.md";
 
   /**
-   * A Markdown template for a rating value.
+   * A default Markdown template for a rating value.
    */
-  private static final String RATING_VALUE_TEMPLATE
+  private static final String DEFAULT_RATING_VALUE_TEMPLATE
       = loadFrom(RATING_VALUE_TEMPLATE_RESOURCE, OssArtifactSecurityRatingMarkdownFormatter.class);
+
+  /**
+   * A Markdown template for reports.
+   */
+  private final String template;
+
+  /**
+   * Create a new formatter with the default report template.
+   *
+   * @param advisor An advisor for calculated ratings.
+   */
+  public OssArtifactSecurityRatingMarkdownFormatter(Advisor advisor) {
+    this(advisor, DEFAULT_RATING_VALUE_TEMPLATE);
+  }
 
   /**
    * Create a new formatter.
    *
    * @param advisor An advisor for calculated ratings.
+   * @param template A Markdown template for reports.
    */
-  public OssArtifactSecurityRatingMarkdownFormatter(Advisor advisor) {
+  public OssArtifactSecurityRatingMarkdownFormatter(Advisor advisor, String template) {
     super(advisor);
+    this.template = Objects.requireNonNull(template, "Oh no! Template can't be null!");
   }
 
   protected String print(RatingValue ratingValue, String advice) {
     Objects.requireNonNull(ratingValue, "Hey! Rating can't be null!");
 
     ScoreValue scoreValue = ratingValue.scoreValue();
-    return RATING_VALUE_TEMPLATE
+    return template
         .replaceAll("%MAX_SCORE%", formatted(Score.MAX))
         .replaceAll("%MAX_CONFIDENCE%", formatted(Confidence.MAX))
         .replace("%SCORE_VALUE%", actualValueOf(scoreValue))
