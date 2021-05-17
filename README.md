@@ -6,8 +6,8 @@
 | :------------ | -------------------------------: | ---------------------------------: |
 | Total         |             253 |                               100% |
 | Failed        |         179 |         70.8% |
-| With warnings |  50 |  19.8% |
-| Passed        |         24 |         9.5% |
+| With warnings |  49 |  19.4% |
+| Passed        |         25 |         9.9% |
 | Unclear       |        0 |        0.0% |
 
 ## Projects
@@ -194,6 +194,7 @@
 | [SAP/cloud-sdk-ios-cai](https://github.com/SAP/cloud-sdk-ios-cai) | [Failed](SAP/cloud-sdk-ios-cai.md) | 2 violated rules |
 | [SAP/.github](https://github.com/SAP/.github) | [Failed](SAP/.github.md) | 10 violated rules |
 | [SAP/openui5](https://github.com/SAP/openui5) | [Passed](SAP/openui5.md) | No violated rules |
+| [SAP/ui5-tooling](https://github.com/SAP/ui5-tooling) | [Passed](SAP/ui5-tooling.md) | No violated rules |
 | [SAP/fundamental-ngx](https://github.com/SAP/fundamental-ngx) | [Passed](SAP/fundamental-ngx.md) | No violated rules |
 | [SAP/commerce-gradle-plugin](https://github.com/SAP/commerce-gradle-plugin) | [Passed](SAP/commerce-gradle-plugin.md) | No violated rules |
 | [SAP/quality-continuous-traceability-monitor](https://github.com/SAP/quality-continuous-traceability-monitor) | [Passed](SAP/quality-continuous-traceability-monitor.md) | No violated rules |
@@ -240,7 +241,6 @@
 | [SAP/ui5-logger](https://github.com/SAP/ui5-logger) | [Passed with warnings](SAP/ui5-logger.md) | No violated rules |
 | [SAP/ui5-project](https://github.com/SAP/ui5-project) | [Passed with warnings](SAP/ui5-project.md) | No violated rules |
 | [SAP/ui5-fs](https://github.com/SAP/ui5-fs) | [Passed with warnings](SAP/ui5-fs.md) | No violated rules |
-| [SAP/ui5-tooling](https://github.com/SAP/ui5-tooling) | [Passed with warnings](SAP/ui5-tooling.md) | No violated rules |
 | [SAP/luigi](https://github.com/SAP/luigi) | [Passed with warnings](SAP/luigi.md) | No violated rules |
 | [SAP/pair-distribution-app](https://github.com/SAP/pair-distribution-app) | [Passed with warnings](SAP/pair-distribution-app.md) | No violated rules |
 | [SAP/fundamental-react](https://github.com/SAP/fundamental-react) | [Passed with warnings](SAP/fundamental-react.md) | No violated rules |
