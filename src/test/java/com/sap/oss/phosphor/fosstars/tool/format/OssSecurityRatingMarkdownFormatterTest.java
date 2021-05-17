@@ -126,6 +126,6 @@ public class OssSecurityRatingMarkdownFormatterTest {
     String text = formatter.print(project);
 
     assertNotNull(text);
-    assertEquals("BAD|4.09|10.0|High|10.0|10.0|security score for open-source projects||", text);
+    assertEquals("BAD|4.09|10.0|Max|10.0|10.0|security score for open-source projects||", text);
   }
 }

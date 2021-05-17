@@ -84,6 +84,7 @@ import java.util.Map;
 import java.util.Objects;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.math3.util.Precision;
 
 /**
  * The class contains common methods for formatters.
@@ -244,10 +245,10 @@ public abstract class CommonFormatter implements Formatter {
    * @return A human-readable label.
    */
   static String confidenceLabelFor(double confidence) {
-    if (Double.compare(confidence, Confidence.MAX) == 0) {
+    if (Precision.equals(confidence, Confidence.MAX)) {
       return "Max";
     }
-    if (Double.compare(confidence, Confidence.MIN) == 0) {
+    if (Precision.equals(confidence, Confidence.MIN)) {
       return "Min";
     }
     return confidence >= 9.0 ? "High" : "Low";
