@@ -16,13 +16,13 @@ It used the following sub-scores:
 
 %MAIN_SCORE_VALUE_DETAILS%
 
+%ADVICE%
+
 ## Sub-scores
 
 Below are the details about all the used sub-scores.
 
 %SUB_SCORE_DETAILS%
-
-%ADVICE%
 
 ## Known vulnerabilities
 
