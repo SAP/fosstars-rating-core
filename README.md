@@ -5,9 +5,9 @@
 |               | # or projects                    | % or projects                      |
 | :------------ | -------------------------------: | ---------------------------------: |
 | Total         |             253 |                               100% |
-| Failed        |         179 |         70.8% |
-| With warnings |  49 |  19.4% |
-| Passed        |         25 |         9.9% |
+| Failed        |         177 |         70.0% |
+| With warnings |  50 |  19.8% |
+| Passed        |         26 |         10.3% |
 | Unclear       |        0 |        0.0% |
 
 ## Projects
@@ -83,7 +83,6 @@
 | [SAP/fiori-for-ios-workshop](https://github.com/SAP/fiori-for-ios-workshop) | [Failed](SAP/fiori-for-ios-workshop.md) | 7 violated rules |
 | [SAP/macOS-enterprise-privileges](https://github.com/SAP/macOS-enterprise-privileges) | [Failed](SAP/macOS-enterprise-privileges.md) | 6 violated rules |
 | [SAP/cloud-mta-build-tool](https://github.com/SAP/cloud-mta-build-tool) | [Failed](SAP/cloud-mta-build-tool.md) | 1 violated rule |
-| [SAP/cloud-security-xsuaa-integration](https://github.com/SAP/cloud-security-xsuaa-integration) | [Failed](SAP/cloud-security-xsuaa-integration.md) | 5 violated rules |
 | [SAP/webide-extension-command-example](https://github.com/SAP/webide-extension-command-example) | [Failed](SAP/webide-extension-command-example.md) | 5 violated rules |
 | [SAP/spartacus](https://github.com/SAP/spartacus) | [Failed](SAP/spartacus.md) | 4 violated rules |
 | [SAP/reason-markdown](https://github.com/SAP/reason-markdown) | [Failed](SAP/reason-markdown.md) | 7 violated rules |
@@ -191,7 +190,6 @@
 | [SAP/project-sailor](https://github.com/SAP/project-sailor) | [Failed](SAP/project-sailor.md) | 2 violated rules |
 | [SAP/sap.github.io](https://github.com/SAP/sap.github.io) | [Failed](SAP/sap.github.io.md) | 11 violated rules |
 | [SAP/cloud-sdk-ios](https://github.com/SAP/cloud-sdk-ios) | [Failed](SAP/cloud-sdk-ios.md) | 6 violated rules |
-| [SAP/cloud-sdk-ios-cai](https://github.com/SAP/cloud-sdk-ios-cai) | [Failed](SAP/cloud-sdk-ios-cai.md) | 2 violated rules |
 | [SAP/.github](https://github.com/SAP/.github) | [Failed](SAP/.github.md) | 10 violated rules |
 | [SAP/openui5](https://github.com/SAP/openui5) | [Passed](SAP/openui5.md) | No violated rules |
 | [SAP/ui5-tooling](https://github.com/SAP/ui5-tooling) | [Passed](SAP/ui5-tooling.md) | No violated rules |
@@ -217,6 +215,7 @@
 | [SAP/cloud-foundry-tools](https://github.com/SAP/cloud-foundry-tools) | [Passed](SAP/cloud-foundry-tools.md) | No violated rules |
 | [SAP/xsk](https://github.com/SAP/xsk) | [Passed](SAP/xsk.md) | No violated rules |
 | [SAP/fosstars-rating-core-action](https://github.com/SAP/fosstars-rating-core-action) | [Passed](SAP/fosstars-rating-core-action.md) | No violated rules |
+| [SAP/cloud-sdk-ios-cai](https://github.com/SAP/cloud-sdk-ios-cai) | [Passed](SAP/cloud-sdk-ios-cai.md) | No violated rules |
 | [SAP/task-explorer](https://github.com/SAP/task-explorer) | [Passed](SAP/task-explorer.md) | No violated rules |
 | [SAP/grunt-openui5](https://github.com/SAP/grunt-openui5) | [Passed with warnings](SAP/grunt-openui5.md) | No violated rules |
 | [SAP/less-openui5](https://github.com/SAP/less-openui5) | [Passed with warnings](SAP/less-openui5.md) | No violated rules |
@@ -243,6 +242,7 @@
 | [SAP/ui5-fs](https://github.com/SAP/ui5-fs) | [Passed with warnings](SAP/ui5-fs.md) | No violated rules |
 | [SAP/luigi](https://github.com/SAP/luigi) | [Passed with warnings](SAP/luigi.md) | No violated rules |
 | [SAP/pair-distribution-app](https://github.com/SAP/pair-distribution-app) | [Passed with warnings](SAP/pair-distribution-app.md) | No violated rules |
+| [SAP/cloud-security-xsuaa-integration](https://github.com/SAP/cloud-security-xsuaa-integration) | [Passed with warnings](SAP/cloud-security-xsuaa-integration.md) | No violated rules |
 | [SAP/fundamental-react](https://github.com/SAP/fundamental-react) | [Passed with warnings](SAP/fundamental-react.md) | No violated rules |
 | [SAP/ui5-uiveri5](https://github.com/SAP/ui5-uiveri5) | [Passed with warnings](SAP/ui5-uiveri5.md) | No violated rules |
 | [SAP/fundamental-vue](https://github.com/SAP/fundamental-vue) | [Passed with warnings](SAP/fundamental-vue.md) | No violated rules |
