@@ -5,6 +5,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_LI
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.LICENSE_HAS_DISALLOWED_CONTENT;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 import static com.sap.oss.phosphor.fosstars.util.Deserialization.readListFrom;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Value;
@@ -56,6 +57,11 @@ public class LicenseInfo extends GitHubCachingDataProvider {
   private final List<String> allowedLicenses = new ArrayList<String>();
 
   /**
+   * A list of repository URLs this data provider is not used for.
+   */
+  private final List<String> repositoryExceptionUrls = new ArrayList<String>();
+
+  /**
    * A list of patterns that are not allowed in licenses.
    */
   private final List<Pattern> disallowedLicensePatterns = new ArrayList<>();
@@ -104,6 +110,38 @@ public class LicenseInfo extends GitHubCachingDataProvider {
   }
 
   /**
+   * Returns a list of repository URLs this rule data provider is not used for.
+   *
+   * @return A list of repository URLs.
+   */
+  List<String> repositoryExceptions() {
+    return new ArrayList<>(repositoryExceptionUrls);
+  }
+
+  /**
+   * Set a list of repository URLs this rule data provider is not used for.
+   *
+   * @param repositoryExceptions The repository URLs
+   * @return This data provider.
+   */
+  public LicenseInfo repositoryExceptions(String... repositoryExceptions) {
+    return repositoryExceptions(Arrays.asList(repositoryExceptions));
+  }
+
+  /**
+   * Set a list of repository URLs this data provider is not used for.
+   *
+   * @param repositoryExceptions The repository URLs
+   * @return This data provider.
+   */
+  public LicenseInfo repositoryExceptions(List<String> repositoryExceptions) {
+    Objects.requireNonNull(repositoryExceptions, "Oops! Repository URL list is null");
+    repositoryExceptionUrls.clear();
+    repositoryExceptionUrls.addAll(repositoryExceptions);
+    return this;
+  }
+
+  /**
    * Returns a list of disallowed license headers.
    *
    * @return A list of disallowed license headers.
@@ -144,6 +182,13 @@ public class LicenseInfo extends GitHubCachingDataProvider {
   @Override
   protected ValueSet fetchValuesFor(GitHubProject project) throws IOException {
     logger.info("Gathering info about project's license ...");
+
+    // Some repositories use normally disallowed licenses, but are well-known exceptions
+    // Those ones will reported as OK by this data provider
+    if (this.repositoryExceptionUrls.contains(project.toString())) {
+      return ValueHashSet.from(HAS_LICENSE.value(true), ALLOWED_LICENSE.value(true),
+          LICENSE_HAS_DISALLOWED_CONTENT.value(false));
+    }
 
     // The GitHub API library doesn't support getting the SPDX entry and the _actual_ content of the
     // license. We need both to perform proper checks and therefore are querying the API manually
@@ -257,6 +302,7 @@ public class LicenseInfo extends GitHubCachingDataProvider {
     JsonNode config = Yaml.mapper().readTree(is);
     allowedLicenses(readListFrom(config, "allowedLicenses"));
     disallowedLicensePatterns(readListFrom(config, "disallowedLicensePatterns"));
+    repositoryExceptions(readListFrom(config, "repositoryExceptions"));
     return this;
   }
 
@@ -272,6 +318,9 @@ public class LicenseInfo extends GitHubCachingDataProvider {
     GitHubProject project = GitHubProject.parse(url);
     GitHub github = new GitHubBuilder().withOAuthToken(token).build();
     LicenseInfo provider = new LicenseInfo(new GitHubDataFetcher(github, token));
+    provider.configure(IOUtils.toInputStream("---\n" + "allowedLicenses:\n" + "  - Apache-2.0\n"
+        + "  - CC-BY-4.0\n" + "  - MIT\n" + "  - EPL-2.0\n" + "disallowedLicensePatterns:\n"
+        + "  - API\n" + "repositoryExceptions:\n" + "  - https://github.com/SAP/SapMachine\n"));
     ValueSet values = provider.fetchValuesFor(project);
     for (Value<?> value : values) {
       System.out.printf("%s: %s%n", value.feature().name(), value.get());

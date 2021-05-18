@@ -138,7 +138,8 @@ public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
     LicenseInfo provider = new LicenseInfo(fetcher);
     provider.configure(IOUtils.toInputStream(
         "---\n" + "allowedLicenses:\n" + "  - Apache-2.0\n" + "  - CC-BY-4.0\n" + "  - MIT\n"
-            + "  - EPL-2.0\n" + "disallowedLicensePatterns:\n" + "  - Disallowed text"));
+            + "  - EPL-2.0\n" + "disallowedLicensePatterns:\n" + "  - Disallowed text\n"
+            + "repositoryExceptions:\n" + "  - https://github.com/SAP/SapMachine\n"));
     assertEquals(4, provider.allowedLicenses().size());
     assertEquals(provider.allowedLicenses().get(0), "Apache-2.0");
     assertEquals(provider.allowedLicenses().get(1), "CC-BY-4.0");
@@ -146,6 +147,8 @@ public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
     assertEquals(provider.allowedLicenses().get(3), "EPL-2.0");
     assertEquals(1, provider.disallowedLicensePatterns().size());
     assertEquals(provider.disallowedLicensePatterns().get(0).pattern(), "Disallowed text");
+    assertEquals(1, provider.repositoryExceptions().size());
+    assertEquals(provider.repositoryExceptions().get(0), "https://github.com/SAP/SapMachine");
   }
 
   @Test
@@ -210,6 +213,34 @@ public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
     checkValue(values, HAS_LICENSE, true);
     checkValue(values, ALLOWED_LICENSE, false);
     checkValue(values, LICENSE_HAS_DISALLOWED_CONTENT, true);
+  }
+
+  @Test
+  public void testRepositoryException() throws IOException {
+    GitHubProject project = new GitHubProject("test", "project");
+    LocalRepository localRepository = mock(LocalRepository.class);
+    when(localRepository.read("LICENSE"))
+        .thenReturn(Optional.of(IOUtils.toInputStream("\n" + "General Public License...\n")));
+    TestGitHubDataFetcher.addForTesting(project, localRepository);
+
+    LicenseInfoMock provider = new LicenseInfoMock(fetcher);
+    provider.setLicensePath("LICENSE");
+    provider.setSpdxId("GPL-3.0-only");
+
+    provider.configure(IOUtils.toInputStream("---\n" + "allowedLicenses: Apache-2.0\n"));
+
+    ValueSet values = provider.fetchValuesFor(project);
+    checkValue(values, HAS_LICENSE, true);
+    checkValue(values, ALLOWED_LICENSE, false);
+    checkValue(values, LICENSE_HAS_DISALLOWED_CONTENT, false);
+
+    provider.configure(IOUtils.toInputStream("---\n" + "allowedLicenses: Apache-2.0\n"
+        + "repositoryExceptions: https://github.com/test/project\n"));
+
+    values = provider.fetchValuesFor(project);
+    checkValue(values, HAS_LICENSE, true);
+    checkValue(values, ALLOWED_LICENSE, true);
+    checkValue(values, LICENSE_HAS_DISALLOWED_CONTENT, false);
   }
 
   @Test
