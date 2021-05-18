@@ -219,9 +219,9 @@ public class LicenseInfo extends GitHubCachingDataProvider {
       throws IOException {
     LocalRepository repository = GitHubDataFetcher.localRepositoryFor(project);
 
-    Optional<InputStream> content = repository.read(path);
+    Optional<String> content = repository.readTextFrom(path);
     if (content.isPresent()) {
-      return Optional.of(IOUtils.toString(content.get()));
+      return content;
     }
 
     return Optional.empty();
@@ -288,7 +288,9 @@ public class LicenseInfo extends GitHubCachingDataProvider {
    */
   @Override
   public LicenseInfo configure(Path path) throws IOException {
-    return configure(Files.newInputStream(path));
+    try (InputStream is = Files.newInputStream(path)) {
+      return configure(is);
+    }
   }
 
   /**

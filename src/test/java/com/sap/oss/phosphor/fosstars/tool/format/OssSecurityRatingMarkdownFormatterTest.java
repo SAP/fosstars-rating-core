@@ -38,6 +38,7 @@ import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.C;
 import static com.sap.oss.phosphor.fosstars.model.value.OwaspDependencyCheckUsage.NOT_USED;
 import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.MAVEN;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
@@ -97,7 +98,7 @@ public class OssSecurityRatingMarkdownFormatterTest {
       PACKAGE_MANAGERS.value(new PackageManagers(MAVEN)));
 
   @Test
-  public void testPrint() {
+  public void testWithDefaultTemplate() {
     RatingValue ratingValue = RATING.calculate(TEST_VALUES);
     GitHubProject project = new GitHubProject("org", "test");
     project.set(ratingValue);
@@ -108,6 +109,23 @@ public class OssSecurityRatingMarkdownFormatterTest {
 
     assertNotNull(text);
     assertFalse(text.isEmpty());
-    System.out.println(text);
+  }
+
+  @Test
+  public void testWithCustomTemplate() {
+    RatingValue ratingValue = RATING.calculate(TEST_VALUES);
+    GitHubProject project = new GitHubProject("org", "test");
+    project.set(ratingValue);
+
+    String template = "%RATING_LABEL%|%SCORE_VALUE%|%MAX_SCORE%|%CONFIDENCE_LABEL%"
+        + "|%CONFIDENCE_VALUE%|%MAX_CONFIDENCE%|%MAIN_SCORE_NAME%"
+        + "|%MAIN_SCORE_DESCRIPTION%|%MAIN_SCORE_EXPLANATION%";
+
+    OssSecurityRatingMarkdownFormatter formatter
+        = new OssSecurityRatingMarkdownFormatter(new OssSecurityGithubAdvisor(), template);
+    String text = formatter.print(project);
+
+    assertNotNull(text);
+    assertEquals("BAD|4.09|10.0|Max|10.0|10.0|security score for open-source projects||", text);
   }
 }

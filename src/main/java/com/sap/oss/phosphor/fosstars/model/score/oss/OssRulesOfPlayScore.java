@@ -14,6 +14,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_RE
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_TEAM_WITH_PUSH_PRIVILEGES_ON_GITHUB;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_UNRESOLVED_VULNERABILITY_ALERTS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.INCOMPLETE_README;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.IS_REUSE_COMPLIANT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.LICENSE_HAS_DISALLOWED_CONTENT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.README_HAS_REUSE_INFO;
@@ -79,8 +80,8 @@ public class OssRulesOfPlayScore extends FeatureBasedScore {
   /**
    * A set of features that are recommended to be false.
    */
-  public static final Set<Feature<Boolean>> RECOMMENDED_FALSE
-      = Collections.singleton(HAS_UNRESOLVED_VULNERABILITY_ALERTS);
+  public static final Set<Feature<Boolean>> RECOMMENDED_FALSE = Collections.unmodifiableSet(
+      setOf(HAS_UNRESOLVED_VULNERABILITY_ALERTS, INCOMPLETE_README));
 
   /**
    * Initializes a new score.
