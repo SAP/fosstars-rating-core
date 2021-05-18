@@ -1,6 +1,7 @@
 package com.sap.oss.phosphor.fosstars.model.score.oss;
 
 import static com.sap.oss.phosphor.fosstars.TestUtils.assertScore;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ARTIFACT_VERSION;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RELEASED_ARTIFACT_VERSIONS;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 
@@ -34,7 +35,8 @@ public class ArtifactReleaseHistoryScoreTest {
         new ArtifactReleaseHistoryScore(),
         setOf(
             RELEASED_ARTIFACT_VERSIONS.value(
-                ArtifactVersions.of(version100, version110, version120))
+                ArtifactVersions.of(version100, version110, version120)),
+            ARTIFACT_VERSION.unknown()
         ));
   }
 
@@ -98,8 +100,8 @@ public class ArtifactReleaseHistoryScoreTest {
     ArtifactReleaseHistoryScore score = new ArtifactReleaseHistoryScore();
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
         ArtifactVersions.of(version100, version110, version120));
-    ScoreValue value = score.calculate(versions);
-    Assert.assertEquals(9.5, value.get(), DELTA);
+    ScoreValue value = score.calculate(versions, ARTIFACT_VERSION.unknown());
+    Assert.assertEquals(8.5, value.get(), DELTA);
   }
 
   @Test
@@ -113,8 +115,8 @@ public class ArtifactReleaseHistoryScoreTest {
     ArtifactReleaseHistoryScore score = new ArtifactReleaseHistoryScore();
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
         ArtifactVersions.of(version100, version110, version120));
-    ScoreValue value = score.calculate(versions);
-    Assert.assertEquals(6.5, value.get(), DELTA);
+    ScoreValue value = score.calculate(versions, ARTIFACT_VERSION.unknown());
+    Assert.assertEquals(5.5, value.get(), DELTA);
   }
 
   @Test
@@ -128,8 +130,8 @@ public class ArtifactReleaseHistoryScoreTest {
     ArtifactReleaseHistoryScore score = new ArtifactReleaseHistoryScore();
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
         ArtifactVersions.of(version100, version110, version120));
-    ScoreValue value = score.calculate(versions);
-    Assert.assertEquals(5.5, value.get(), DELTA);
+    ScoreValue value = score.calculate(versions, ARTIFACT_VERSION.unknown());
+    Assert.assertEquals(4.5, value.get(), DELTA);
   }
 
   @Test
@@ -142,8 +144,8 @@ public class ArtifactReleaseHistoryScoreTest {
     ArtifactReleaseHistoryScore score = new ArtifactReleaseHistoryScore();
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
         ArtifactVersions.of(version100, version110));
-    ScoreValue value = score.calculate(versions);
-    Assert.assertEquals(7.0, value.get(), DELTA);
+    ScoreValue value = score.calculate(versions, ARTIFACT_VERSION.unknown());
+    Assert.assertEquals(6.0, value.get(), DELTA);
   }
 
   @Test
@@ -166,8 +168,8 @@ public class ArtifactReleaseHistoryScoreTest {
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
         ArtifactVersions
             .of(version100, version110, version120, version130, version140, version150));
-    ScoreValue value = score.calculate(versions);
-    Assert.assertEquals(8.8, value.get(), DELTA);
+    ScoreValue value = score.calculate(versions, ARTIFACT_VERSION.unknown());
+    Assert.assertEquals(7.8, value.get(), DELTA);
   }
 
   @Test
@@ -189,8 +191,8 @@ public class ArtifactReleaseHistoryScoreTest {
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
         ArtifactVersions
             .of(version100, version110, version120, version130, version140, version150));
-    ScoreValue value = score.calculate(versions);
-    Assert.assertEquals(5.8, value.get(), DELTA);
+    ScoreValue value = score.calculate(versions, ARTIFACT_VERSION.unknown());
+    Assert.assertEquals(4.8, value.get(), DELTA);
   }
 
   @Test
@@ -213,8 +215,8 @@ public class ArtifactReleaseHistoryScoreTest {
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
         ArtifactVersions
             .of(version100, version110, version120, version130, version140, version150));
-    ScoreValue value = score.calculate(versions);
-    Assert.assertEquals(5.2, value.get(), DELTA);
+    ScoreValue value = score.calculate(versions, ARTIFACT_VERSION.unknown());
+    Assert.assertEquals(4.2, value.get(), DELTA);
   }
 
   @Test
@@ -227,8 +229,8 @@ public class ArtifactReleaseHistoryScoreTest {
     ArtifactReleaseHistoryScore score = new ArtifactReleaseHistoryScore();
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
         ArtifactVersions.of(version100, version110));
-    ScoreValue value = score.calculate(versions);
-    Assert.assertEquals(5.0, value.get(), DELTA);
+    ScoreValue value = score.calculate(versions, ARTIFACT_VERSION.unknown());
+    Assert.assertEquals(4.0, value.get(), DELTA);
   }
 
   @Test
@@ -239,12 +241,33 @@ public class ArtifactReleaseHistoryScoreTest {
     ArtifactReleaseHistoryScore score = new ArtifactReleaseHistoryScore();
     Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(
         ArtifactVersions.of(version100));
-    ScoreValue value = score.calculate(versions);
+    ScoreValue value = score.calculate(versions, ARTIFACT_VERSION.unknown());
     Assert.assertEquals(0.0, value.get(), DELTA);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testWithNoInfo() {
     new ArtifactReleaseHistoryScore().calculate();
+  }
+
+  @Test
+  public void testVersionRangeSelection() {
+    LocalDateTime now = LocalDateTime.now();
+    ArtifactVersion version100 = new ArtifactVersion("1.0.0", now.minusDays(7 * 31));
+    ArtifactVersion version110 = new ArtifactVersion("1.1.0", now.minusDays(6 * 31));
+    ArtifactVersion version120 = new ArtifactVersion("1.2.0", now.minusDays(5 * 31));
+    ArtifactVersion version130 = new ArtifactVersion("1.3.0", now.minusDays(4 * 31));
+    ArtifactVersion version140 = new ArtifactVersion("1.4.0", now.minusDays(3 * 31));
+    ArtifactVersion version150 = new ArtifactVersion("1.5.0", now.minusDays(64));
+    ArtifactVersion version200 = new ArtifactVersion("2.0.0", now.minusDays(31));
+    ArtifactVersion version210 = new ArtifactVersion("2.1.0", now);
+
+    ArtifactReleaseHistoryScore score = new ArtifactReleaseHistoryScore();
+    Value<ArtifactVersions> versions =
+        RELEASED_ARTIFACT_VERSIONS.value(ArtifactVersions.of(version100, version110, version120,
+            version130, version140, version150, version200, version210));
+    Value<ArtifactVersion> version = ARTIFACT_VERSION.value(version120);
+    ScoreValue value = score.calculate(versions, version);
+    Assert.assertEquals(8.8, value.get(), DELTA);
   }
 }

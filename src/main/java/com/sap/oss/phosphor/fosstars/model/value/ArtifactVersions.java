@@ -15,6 +15,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
+import org.apache.maven.artifact.versioning.ComparableVersion;
 
 /**
  * A set versions for an artifact.
@@ -125,6 +126,54 @@ public class ArtifactVersions implements Iterable<ArtifactVersion> {
       return Collections.emptyList();
     }
     return artifactVersions.get().sortByReleaseDate();
+  }
+
+  /**
+   * Filter {@link ArtifactVersions} by major version.
+   *
+   * @param version The artifact version.
+   * @return Filtered {@link ArtifactVersions}.
+   */
+  public ArtifactVersions filterArtifactsByMajorVersion(String version) {
+    Optional<SemanticVersion> currentVersion = SemanticVersion.parse(version);
+    if (!currentVersion.isPresent()) {
+      return ArtifactVersions.ofNothing();
+    }
+
+    String currentMajorVersion = buildMajorVersion(currentVersion.get().getMajor());
+    Optional<String> nextMajorVersion = nextMajorVersionOf(version);
+
+    return new ArtifactVersions(elements.stream().filter(v -> v.hasValidSemanticVersion())
+        .filter(v -> new ComparableVersion(v.version())
+            .compareTo(new ComparableVersion(currentMajorVersion)) >= 0
+            && new ComparableVersion(v.version())
+                .compareTo(new ComparableVersion(nextMajorVersion.get())) < 0)
+        .collect(Collectors.toSet()));
+  }
+
+  /**
+   * Determine next major semantic version from the given version.
+   * 
+   * @param version from which the next major version should be determined.
+   * @return the determined next possible major version.
+   */
+  private static Optional<String> nextMajorVersionOf(String version) {
+    Optional<SemanticVersion> semanticVersion = SemanticVersion.parse(version);
+    if (!semanticVersion.isPresent()) {
+      return Optional.empty();
+    }
+
+    return Optional.of(buildMajorVersion(semanticVersion.get().getMajor() + 1));
+  }
+
+  /**
+   * Build major version release semantic format.
+   * 
+   * @param major Number to build the semantic version.
+   * @return Semantic version format.
+   */
+  private static String buildMajorVersion(int major) {
+    return String.format("%s.0.0", major);
   }
 
   /**

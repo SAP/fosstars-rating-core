@@ -1,5 +1,6 @@
 package com.sap.oss.phosphor.fosstars.model.score.oss;
 
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ARTIFACT_VERSION;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RELEASED_ARTIFACT_VERSIONS;
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -22,16 +23,23 @@ import java.util.Iterator;
 public class ArtifactReleaseHistoryScore extends FeatureBasedScore {
 
   /**
+   * The artifact versions list should have size greater than the threshold.
+   */
+  private static final int ARTIFACT_VERSIONS_SIZE_THRESHOLD = 1;
+
+  /**
    * Initializes a new score.
    */
   public ArtifactReleaseHistoryScore() {
     super("How frequent an open source project releases new versions",
-        OssFeatures.RELEASED_ARTIFACT_VERSIONS);
+        RELEASED_ARTIFACT_VERSIONS,
+        ARTIFACT_VERSION);
   }
 
   @Override
   public ScoreValue calculate(Value<?>... values) {
     Value<ArtifactVersions> artifactVersions = find(RELEASED_ARTIFACT_VERSIONS, values);
+    Value<ArtifactVersion> artifactVersion = find(ARTIFACT_VERSION, values);
 
     if (artifactVersions.isUnknown()) {
       return scoreValue(0.0, artifactVersions)
@@ -40,19 +48,19 @@ public class ArtifactReleaseHistoryScore extends FeatureBasedScore {
           .explain("No versions are found. Hence, no release history score can be calculated");
     }
 
-    if (artifactVersions.get().size() <= 1) {
+    if (artifactVersions.get().size() <= ARTIFACT_VERSIONS_SIZE_THRESHOLD) {
       return scoreValue(0.0, artifactVersions)
           .explain("Only one version is given. Hence, no release history score can be calculated")
           .withMinConfidence();
     }
 
-    ScoreValue scoreValue = scoreValue(7.0, artifactVersions);
+    ScoreValue scoreValue = scoreValue(6.0, artifactVersions, artifactVersion);
 
-    Collection<ArtifactVersion> sortedByReleaseDate =
-        ArtifactVersions.sortByReleaseDate(artifactVersions);
+    final Collection<ArtifactVersion> artifactCollection =
+        filter(artifactVersions, artifactVersion, scoreValue);
 
     // check release frequency over time
-    Collection<VersionInfo> versionInfo = versionInfo(sortedByReleaseDate);
+    Collection<VersionInfo> versionInfo = versionInfo(artifactCollection);
     VersionStats stats = calculateVersionStats(versionInfo);
 
     if (stats.averageDaysBetweenReleases < 10) {
@@ -137,6 +145,30 @@ public class ArtifactReleaseHistoryScore extends FeatureBasedScore {
     }
 
     return versionInfo;
+  }
+
+  /**
+   * Filter the artifact versions matching with the major version of the given
+   * {@link ArtifactVersion}. Return the filtered list if size > 1.
+   * 
+   * @param artifactVersions {@link ArtifactVersions} to be filtered.
+   * @param artifactVersion {@link ArtifactVersion} provided by the user.
+   * @param scoreValue Increment the score if a filtered list is found.
+   * @return A collection of {@link ArtifactVersion}.
+   */
+  private static Collection<ArtifactVersion> filter(Value<ArtifactVersions> artifactVersions,
+      Value<ArtifactVersion> artifactVersion, ScoreValue scoreValue) {
+    if (!artifactVersion.isUnknown() && artifactVersion.get().hasValidSemanticVersion()) {
+      ArtifactVersions filteredArtifactVersions =
+          artifactVersions.get().filterArtifactsByMajorVersion(
+              artifactVersion.get().getSemanticVersion().get().toString());
+
+      if (filteredArtifactVersions.size() > ARTIFACT_VERSIONS_SIZE_THRESHOLD) {
+        scoreValue.increase(1);
+        return filteredArtifactVersions.sortByReleaseDate();
+      }
+    }
+    return artifactVersions.get().sortByReleaseDate();
   }
 
   /**

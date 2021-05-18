@@ -4,6 +4,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.codehaus.plexus.util.StringUtils;
 
 /**
  * The class represents a semantic version (see: https://semver.org/).
@@ -46,7 +47,7 @@ public class SemanticVersion {
    * @return the parsed SemanticVersion or an empty optional
    */
   public static Optional<SemanticVersion> parse(String version) {
-    if (version == null) {
+    if (StringUtils.isEmpty(version)) {
       return Optional.empty();
     }
     Matcher matcher = SEMANTIC_VERSION_PATTERN.matcher(version);
@@ -106,7 +107,6 @@ public class SemanticVersion {
    * @return true if in range, otherwise false
    */
   public boolean isInRange(SemanticVersion startVersion, SemanticVersion endVersion) {
-
     return checkStartVersion(startVersion) && checkEndVersion(endVersion);
   }
 
@@ -157,5 +157,15 @@ public class SemanticVersion {
   @Override
   public int hashCode() {
     return Objects.hash(major, minor, micro);
+  }
+
+  @Override
+  public String toString() {
+    if (micro > -1) {
+      return String.format("%s.%s.%s", major, minor, micro);
+    } else if (minor > -1) {
+      return String.format("%s.%s", major, minor);
+    }
+    return String.format("%s", major);
   }
 }
