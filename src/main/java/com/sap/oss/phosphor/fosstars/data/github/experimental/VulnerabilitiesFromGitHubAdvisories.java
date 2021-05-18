@@ -144,7 +144,7 @@ public class VulnerabilitiesFromGitHubAdvisories
     return newVulnerability(id)
         .description(advisory.getDescription())
         .set(resolution)
-        .set(referencesFrom(advisory.getReferences()))
+        .references(referencesFrom(advisory.getReferences()))
         .fixed(date(advisory.getPublishedAt()))
         .make();
   }

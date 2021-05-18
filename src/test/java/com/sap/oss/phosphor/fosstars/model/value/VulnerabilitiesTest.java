@@ -49,7 +49,7 @@ public class VulnerabilitiesTest {
         newVulnerability("https://bugtracker/2")
             .description("test")
             .set(CVSS.v2(5.0))
-            .set(Arrays.asList(
+            .references(Arrays.asList(
                 new Reference("text1", new URL("https://vuln.com/1")),
                 new Reference("text2", new URL("https://vuln.com/2"))))
             .set(Resolution.PATCHED)
