@@ -67,6 +67,7 @@ import com.sap.oss.phosphor.fosstars.model.score.oss.StaticAnalysisScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.UnpatchedVulnerabilitiesScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.VulnerabilityLifetimeScore;
+import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubOrganization;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.MavenArtifact;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.NpmArtifact;
@@ -293,7 +294,8 @@ public abstract class Deserialization {
     mapper.registerSubtypes(MavenArtifact.class, NpmArtifact.class);
 
     // other
-    mapper.registerSubtypes(DoubleInterval.class, GitHubProject.class, ValueHashSet.class);
+    mapper.registerSubtypes(
+        GitHubProject.class, GitHubOrganization.class, DoubleInterval.class, ValueHashSet.class);
 
     return mapper;
   }
