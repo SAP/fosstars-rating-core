@@ -40,6 +40,8 @@ public class MergedJsonReporter extends AbstractReporter<GitHubProject> {
 
     logger.info("Storing info about projects to {}", filename);
     allProjects.sort(Comparator.comparing(project -> project.scm().toString()));
-    Files.write(filename, Json.toBytes(allProjects));
+    byte[] content = Json.mapper().writerFor(LIST_OF_GITHUB_PROJECTS_TYPE)
+        .writeValueAsBytes(allProjects);
+    Files.write(filename, content);
   }
 }
