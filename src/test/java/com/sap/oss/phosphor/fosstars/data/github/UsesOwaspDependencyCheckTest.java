@@ -183,6 +183,38 @@ public class UsesOwaspDependencyCheckTest extends TestGitHubDataFetcherHolder {
     }
   }
 
+  @Test
+  public void testWithBigFailBuildOnCVSS() throws IOException {
+    String pom = ""
+        + "<project>\n"
+        + "  <build>\n"
+        + "    <plugins>\n"
+        + "      <plugin>\n"
+        + "        <groupId>org.owasp</groupId>\n"
+        + "        <artifactId>dependency-check-maven</artifactId>\n"
+        + "        <version>5.3.2</version>\n"
+        + "        <configuration>\n"
+        + "            <failBuildOnCVSS>11</failBuildOnCVSS>\n"
+        + "        </configuration>"
+        + "        <executions>\n"
+        + "          <execution>\n"
+        + "            <goals>\n"
+        + "              <goal>check</goal>\n"
+        + "            </goals>\n"
+        + "          </execution>\n"
+        + "        </executions>\n"
+        + "      </plugin>\n"
+        + "    </plugins>\n"
+        + "  </build>\n"
+        + "</project>";
+
+    try (InputStream is = IOUtils.toInputStream(pom)) {
+      ValueSet values = values(createProvider(is, "pom.xml"));
+      checkUsage(MANDATORY, values);
+      checkThreshold(NOT_SPECIFIED, values);
+    }
+  }
+
   private UsesOwaspDependencyCheck createProvider(InputStream is, String filename)
       throws IOException {
 
