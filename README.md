@@ -25,7 +25,7 @@
 | [SAP/cloud-cmis-workbench](https://github.com/SAP/cloud-cmis-workbench) | [Failed](SAP/cloud-cmis-workbench.md) | 4 violated rules |
 | [SAP/PyRFC](https://github.com/SAP/PyRFC) | [Failed](SAP/PyRFC.md) | 2 violated rules |
 | [SAP/cloud-dirigible](https://github.com/SAP/cloud-dirigible) | [Failed](SAP/cloud-dirigible.md) | 5 violated rules |
-| [SAP/mobilesdk-certificateprovider](https://github.com/SAP/mobilesdk-certificateprovider) | [Failed](SAP/mobilesdk-certificateprovider.md) | 5 violated rules |
+| [SAP/mobilesdk-certificateprovider](https://github.com/SAP/mobilesdk-certificateprovider) | [Failed](SAP/mobilesdk-certificateprovider.md) | 4 violated rules |
 | [SAP/go-hdb](https://github.com/SAP/go-hdb) | [Failed](SAP/go-hdb.md) | 6 violated rules |
 | [SAP/node-rfc](https://github.com/SAP/node-rfc) | [Failed](SAP/node-rfc.md) | 2 violated rules |
 | [SAP/sqlalchemy-hana](https://github.com/SAP/sqlalchemy-hana) | [Failed](SAP/sqlalchemy-hana.md) | 5 violated rules |
