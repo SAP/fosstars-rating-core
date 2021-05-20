@@ -1,3 +1,7 @@
 ---
-allowedLicensePatterns: "Apache(\\s+)License(\\s+)Version(\\s+)2\\.0"
-disallowedLicensePatterns: "This(\\s+)project(\\s+)may(\\s+)include(\\s+)APIs(\\s+)to(\\s+)SAP"
+allowedLicenses: 
+  - Apache-2.0
+  - CC-BY-4.0
+  - MIT
+  - EPL-2.0
+disallowedLicensePatterns: "API"
