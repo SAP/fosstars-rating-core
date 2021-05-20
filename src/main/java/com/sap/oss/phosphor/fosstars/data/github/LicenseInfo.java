@@ -48,18 +48,25 @@ import org.kohsuke.github.GitHubBuilder;
  */
 public class LicenseInfo extends GitHubCachingDataProvider {
 
+  /**
+   * A key for SPDX identifier in metadata.
+   */
   static final String SPDX_ID = "spdxId";
+  
+  /**
+   * A key to a license path in metadata.
+   */
   static final String LICENSE_PATH = "licensePath";
 
   /**
    * A list of SPDX IDs of allowed licenses.
    */
-  private final List<String> allowedLicenses = new ArrayList<String>();
+  private final List<String> allowedLicenses = new ArrayList<>();
 
   /**
-   * A list of repository URLs this data provider is not used for.
+   * A list of repositories that are already known to be compliant.
    */
-  private final List<String> repositoryExceptionUrls = new ArrayList<String>();
+  private final List<String> repositoryExceptionUrls = new ArrayList<>();
 
   /**
    * A list of patterns that are not allowed in licenses.
@@ -110,7 +117,7 @@ public class LicenseInfo extends GitHubCachingDataProvider {
   }
 
   /**
-   * Returns a list of repository URLs this rule data provider is not used for.
+   * Returns a list of repositories that are known to be compliant.
    *
    * @return A list of repository URLs.
    */
@@ -119,7 +126,7 @@ public class LicenseInfo extends GitHubCachingDataProvider {
   }
 
   /**
-   * Set a list of repository URLs this rule data provider is not used for.
+   * Set a list of repositories that are known to be compliant.
    *
    * @param repositoryExceptions The repository URLs
    * @return This data provider.
@@ -129,7 +136,7 @@ public class LicenseInfo extends GitHubCachingDataProvider {
   }
 
   /**
-   * Set a list of repository URLs this data provider is not used for.
+   * Set a list of repositories. that are known to be compliant.
    *
    * @param repositoryExceptions The repository URLs
    * @return This data provider.
@@ -253,7 +260,7 @@ public class LicenseInfo extends GitHubCachingDataProvider {
   }
 
   Map<String, String> licenseMetadata(GitHubProject project) {
-    HashMap<String, String> licenseMetadata = new HashMap<String, String>();
+    HashMap<String, String> licenseMetadata = new HashMap<>();
 
     try (CloseableHttpClient client = httpClient()) {
       String url = String.format("https://api.github.com/repos/%s/%s/license",

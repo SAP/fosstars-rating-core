@@ -27,7 +27,7 @@ public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
 
   private class LicenseInfoMock extends LicenseInfo {
 
-    protected Map<String, String> licenseMetadataMock = new HashMap<String, String>();
+    protected Map<String, String> licenseMetadataMock = new HashMap<>();
 
     public LicenseInfoMock(GitHubDataFetcher fetcher) throws IOException {
       super(fetcher);

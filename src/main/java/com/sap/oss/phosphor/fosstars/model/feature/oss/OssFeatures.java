@@ -7,7 +7,6 @@ import com.sap.oss.phosphor.fosstars.model.feature.LgtmGradeFeature;
 import com.sap.oss.phosphor.fosstars.model.feature.OwaspDependencyCheckCvssThreshold;
 import com.sap.oss.phosphor.fosstars.model.feature.OwaspDependencyCheckUsageFeature;
 import com.sap.oss.phosphor.fosstars.model.feature.PositiveIntegerFeature;
-import com.sap.oss.phosphor.fosstars.model.feature.StringFeature;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersions;
 import com.sap.oss.phosphor.fosstars.model.value.Languages;
@@ -342,7 +341,6 @@ public class OssFeatures {
    */
   public static final BooleanFeature HAS_LICENSE
       = new BooleanFeature("If a project has a license");
-  
   /**
    * Shows whether an open source project has an allowed licence or not.
    */
