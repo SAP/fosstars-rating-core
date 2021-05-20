@@ -44,7 +44,7 @@ Instead of setting the thresholds directly, the experts gives a list of well-kno
 a desired fraction for the labels. At the moment, it is 20-50-30 that looks like a normal distribution.
 As a result, the thresholds don't set a bar totally based on someone's opinion.
 Instead, other open source projects are compared with the real, well-known and trusted ones.
-The procedure for re-calculating the thresholds is described [here](oss_security_rating_thresholds.md).
+The procedure for re-calculating the thresholds is described [here](oss_security_rating_tuning.md).
 
 ## What the security rating takes into account
 
