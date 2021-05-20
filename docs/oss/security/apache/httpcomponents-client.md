@@ -2,11 +2,11 @@
 
 https://github.com/apache/httpcomponents-client
 
-Last updated on Feb 16, 2021
+Last updated on May 19, 2021
 
 **Rating**: **BAD**
 
-**Score**: **4.11**, max score value is 10.0
+**Score**: **4.24**, max score value is 10.0
 
 **Confidence**: Max (10.0, max confidence value is 10.0)
 
@@ -46,8 +46,21 @@ It used the following sub-scores:
             1.  **[FindSecBugs score](#findsecbugs-score)**: **0.0** (weight is 0.5)
         1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.5)
 1.  **[Community commitment](#community-commitment)**: **7.0** (weight is 0.5)
-1.  **[Project activity](#project-activity)**: **5.58** (weight is 0.5)
-1.  **[Project popularity](#project-popularity)**: **1.36** (weight is 0.5)
+1.  **[Project activity](#project-activity)**: **6.77** (weight is 0.5)
+1.  **[Project popularity](#project-popularity)**: **1.41** (weight is 0.5)
+
+
+## How to improve the rating
+
+1.  You can ask the project maintainers to enable LGTM checks for pull requests in the project.
+    More info:
+    1.  [How to enable LGTM checks for pull requests](https://lgtm.com/help/lgtm/about-automated-code-review)
+2.  You can fix the issues reported by LGTM for the project.
+    More info:
+    1.  [List of issues on LGTM](https://lgtm.com/projects/g/apache/httpcomponents-client)
+3.  You can open a pull request to enable FindSecBugs for the project.
+    More info:
+    1.  [FindSecBugs home page](https://find-sec-bugs.github.io/)
 
 
 ## Sub-scores
@@ -158,21 +171,21 @@ This sub-score is based on 3 features:
 
 ### Project activity
 
-Score: **5.58**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **6.77**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-33 commits in the last 3 months results to 5.08 points
-4 contributors increase the score value from 5.08 to 5.58
+40 commits in the last 3 months results to 6.15 points
+3 contributors increase the score value from 6.15 to 6.77
 
 This sub-score is based on 2 features:
 
-1.  Number of commits in the last three months: **33**
-1.  Number of contributors in the last three months: **4**
+1.  Number of commits in the last three months: **40**
+1.  Number of contributors in the last three months: **3**
 
 ### Project popularity
 
-Score: **1.36**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **1.41**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score is based on number of stars and watchers.
 Here is how a number of stars contributes to the score:
@@ -184,8 +197,8 @@ Here is how a number of watchers contributes to the score:
 
 This sub-score is based on 2 features:
 
-1.  Number of stars for a GitHub repository: **1021**
-1.  Number of watchers for a GitHub repository: **103**
+1.  Number of stars for a GitHub repository: **1068**
+1.  Number of watchers for a GitHub repository: **104**
 
 ### Dependency testing
 
@@ -211,8 +224,8 @@ Score: **N/A**, confidence is 10.0 (max), weight is 1.0 (high)
 
 This sub-score is based on 2 features:
 
-1.  A set of programming languages: **JAVA, OTHER**
 1.  Is it included to OSS-Fuzz? **No**
+1.  Programming languages: **JAVA, OTHER**
 
 ### Memory-safety testing
 
@@ -224,10 +237,10 @@ Score: **N/A**, confidence is 10.0 (max), weight is 1.0 (high)
 
 This sub-score is based on 4 features:
 
-1.  A set of programming languages: **JAVA, OTHER**
 1.  Does it use AddressSanitizer? **No**
 1.  Does it use MemorySanitizer? **No**
 1.  Does it use UndefinedBehaviorSanitizer? **No**
+1.  Programming languages: **JAVA, OTHER**
 
 ### Static analysis
 
@@ -254,8 +267,8 @@ Score: **0.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 This sub-score is based on 2 features:
 
-1.  A set of package managers: **MAVEN**
 1.  Does it use nohttp? **No**
+1.  Package managers: **MAVEN**
 
 ### Dependabot score
 
@@ -267,10 +280,10 @@ Score: **6.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 This sub-score is based on 4 features:
 
-1.  A set of package managers: **MAVEN**
-1.  A set of programming languages: **JAVA, OTHER**
 1.  Does it use Dependabot? **No**
 1.  Does it use GitHub as the main development platform? **Yes**
+1.  Package managers: **MAVEN**
+1.  Programming languages: **JAVA, OTHER**
 
 ### OWASP Dependency Check score
 
@@ -280,9 +293,10 @@ Score: **0.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
-This sub-score is based on 2 features:
+This sub-score is based on 3 features:
 
 1.  How is OWASP Dependency Check used? **Not used**
+1.  Package managers: **MAVEN**
 1.  What is the threshold for OWASP Dependency Check? **Not specified**
 
 ### LGTM score
@@ -295,7 +309,7 @@ Score: **9.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 This sub-score is based on 2 features:
 
-1.  A set of programming languages: **JAVA, OTHER**
+1.  Programming languages: **JAVA, OTHER**
 1.  The worst LGTM grade of the project: **A**
 
 ### How a project uses CodeQL
@@ -308,10 +322,10 @@ Score: **10.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 This sub-score is based on 4 features:
 
-1.  A set of programming languages: **JAVA, OTHER**
+1.  Does it run CodeQL scans? **Yes**
+1.  Does it use CodeQL checks for pull requests? **Yes**
 1.  Does it use LGTM checks? **No**
-1.  If a project runs CodeQL checks for commits: **Yes**
-1.  If a project runs CodeQL scans: **Yes**
+1.  Programming languages: **JAVA, OTHER**
 
 ### FindSecBugs score
 
@@ -323,22 +337,9 @@ Score: **0.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 This sub-score is based on 2 features:
 
-1.  A set of programming languages: **JAVA, OTHER**
 1.  Does it use FindSecBugs? **No**
+1.  Programming languages: **JAVA, OTHER**
 
-
-
-## How to improve the rating
-
-1.  You can ask the project maintainers to enable LGTM checks for pull requests in the project.
-    More info:
-    1.  [How to enable LGTM checks for pull requests](https://lgtm.com/help/lgtm/about-automated-code-review)
-2.  You can fix the issues reported by LGTM for the project.
-    More info:
-    1.  [List of issues on LGTM](https://lgtm.com/projects/g/apache/httpcomponents-client)
-3.  You can open a pull request to enable FindSecBugs for the project.
-    More info:
-    1.  [FindSecBugs home page](https://find-sec-bugs.github.io/)
 
 
 ## Known vulnerabilities

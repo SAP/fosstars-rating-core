@@ -2,11 +2,11 @@
 
 https://github.com/apache/commons-lang
 
-Last updated on Feb 16, 2021
+Last updated on May 19, 2021
 
 **Rating**: **GOOD**
 
-**Score**: **6.22**, max score value is 10.0
+**Score**: **6.23**, max score value is 10.0
 
 **Confidence**: Max (10.0, max confidence value is 10.0)
 
@@ -47,7 +47,26 @@ It used the following sub-scores:
         1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.5)
 1.  **[Community commitment](#community-commitment)**: **7.0** (weight is 0.5)
 1.  **[Project activity](#project-activity)**: **10.0** (weight is 0.5)
-1.  **[Project popularity](#project-popularity)**: **2.68** (weight is 0.5)
+1.  **[Project popularity](#project-popularity)**: **2.73** (weight is 0.5)
+
+
+## How to improve the rating
+
+1.  You can ask the project maintainers to enable LGTM checks for pull requests in the project.
+    More info:
+    1.  [How to enable LGTM checks for pull requests](https://lgtm.com/help/lgtm/about-automated-code-review)
+2.  You can open a pull request to enable CodeQL scans in the project. Make sure that the scans are run on pull requests.
+    More info:
+    1.  [How to enable CodeQL checks for pull requests](https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#enabling-code-scanning-using-actions)
+3.  You can open a pull request to enable CodeQL scans in the project.
+    More info:
+    1.  [How to enable CodeQL checks](https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#enabling-code-scanning-using-actions)
+4.  You can fix the issues reported by LGTM for the project.
+    More info:
+    1.  [List of issues on LGTM](https://lgtm.com/projects/g/apache/commons-lang)
+5.  You can open a pull request to enable FindSecBugs for the project.
+    More info:
+    1.  [FindSecBugs home page](https://find-sec-bugs.github.io/)
 
 
 ## Sub-scores
@@ -162,17 +181,17 @@ Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-140 commits in the last 3 months results to 10.00 points
-4 contributors increase the score value from 10.00 to 11.00
+103 commits in the last 3 months results to 10.00 points
+3 contributors increase the score value from 10.00 to 11.00
 
 This sub-score is based on 2 features:
 
-1.  Number of commits in the last three months: **140**
-1.  Number of contributors in the last three months: **4**
+1.  Number of commits in the last three months: **103**
+1.  Number of contributors in the last three months: **3**
 
 ### Project popularity
 
-Score: **2.68**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **2.73**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score is based on number of stars and watchers.
 Here is how a number of stars contributes to the score:
@@ -184,8 +203,8 @@ Here is how a number of watchers contributes to the score:
 
 This sub-score is based on 2 features:
 
-1.  Number of stars for a GitHub repository: **2065**
-1.  Number of watchers for a GitHub repository: **184**
+1.  Number of stars for a GitHub repository: **2115**
+1.  Number of watchers for a GitHub repository: **185**
 
 ### Dependency testing
 
@@ -211,8 +230,8 @@ Score: **N/A**, confidence is 10.0 (max), weight is 1.0 (high)
 
 This sub-score is based on 2 features:
 
-1.  A set of programming languages: **JAVA, OTHER**
 1.  Is it included to OSS-Fuzz? **No**
+1.  Programming languages: **JAVA, OTHER**
 
 ### Memory-safety testing
 
@@ -224,10 +243,10 @@ Score: **N/A**, confidence is 10.0 (max), weight is 1.0 (high)
 
 This sub-score is based on 4 features:
 
-1.  A set of programming languages: **JAVA, OTHER**
 1.  Does it use AddressSanitizer? **No**
 1.  Does it use MemorySanitizer? **No**
 1.  Does it use UndefinedBehaviorSanitizer? **No**
+1.  Programming languages: **JAVA, OTHER**
 
 ### Static analysis
 
@@ -254,8 +273,8 @@ Score: **0.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 This sub-score is based on 2 features:
 
-1.  A set of package managers: **MAVEN**
 1.  Does it use nohttp? **No**
+1.  Package managers: **MAVEN**
 
 ### Dependabot score
 
@@ -267,10 +286,10 @@ Score: **10.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 This sub-score is based on 4 features:
 
-1.  A set of package managers: **MAVEN**
-1.  A set of programming languages: **JAVA, OTHER**
 1.  Does it use Dependabot? **Yes**
 1.  Does it use GitHub as the main development platform? **Yes**
+1.  Package managers: **MAVEN**
+1.  Programming languages: **JAVA, OTHER**
 
 ### OWASP Dependency Check score
 
@@ -280,9 +299,10 @@ Score: **0.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
-This sub-score is based on 2 features:
+This sub-score is based on 3 features:
 
 1.  How is OWASP Dependency Check used? **Not used**
+1.  Package managers: **MAVEN**
 1.  What is the threshold for OWASP Dependency Check? **Not specified**
 
 ### LGTM score
@@ -295,7 +315,7 @@ Score: **9.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 This sub-score is based on 2 features:
 
-1.  A set of programming languages: **JAVA, OTHER**
+1.  Programming languages: **JAVA, OTHER**
 1.  The worst LGTM grade of the project: **A**
 
 ### How a project uses CodeQL
@@ -308,10 +328,10 @@ Score: **0.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 This sub-score is based on 4 features:
 
-1.  A set of programming languages: **JAVA, OTHER**
+1.  Does it run CodeQL scans? **No**
+1.  Does it use CodeQL checks for pull requests? **No**
 1.  Does it use LGTM checks? **No**
-1.  If a project runs CodeQL checks for commits: **No**
-1.  If a project runs CodeQL scans: **No**
+1.  Programming languages: **JAVA, OTHER**
 
 ### FindSecBugs score
 
@@ -323,28 +343,9 @@ Score: **0.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 This sub-score is based on 2 features:
 
-1.  A set of programming languages: **JAVA, OTHER**
 1.  Does it use FindSecBugs? **No**
+1.  Programming languages: **JAVA, OTHER**
 
-
-
-## How to improve the rating
-
-1.  You can ask the project maintainers to enable LGTM checks for pull requests in the project.
-    More info:
-    1.  [How to enable LGTM checks for pull requests](https://lgtm.com/help/lgtm/about-automated-code-review)
-2.  You can open a pull request to enable CodeQL scans in the project. Make sure that the scans are run on pull requests.
-    More info:
-    1.  [How to enable CodeQL checks for pull requests](https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#enabling-code-scanning-using-actions)
-3.  You can open a pull request to enable CodeQL scans in the project.
-    More info:
-    1.  [How to enable CodeQL checks](https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#enabling-code-scanning-using-actions)
-4.  You can fix the issues reported by LGTM for the project.
-    More info:
-    1.  [List of issues on LGTM](https://lgtm.com/projects/g/apache/commons-lang)
-5.  You can open a pull request to enable FindSecBugs for the project.
-    More info:
-    1.  [FindSecBugs home page](https://find-sec-bugs.github.io/)
 
 
 ## Known vulnerabilities
