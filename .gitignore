@@ -189,3 +189,6 @@ fosstars-rating-core
 fosstars-rating-core
 .fosstars
 /target/
+.settings
+.classpath
+.project
