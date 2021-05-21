@@ -4,7 +4,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.codehaus.plexus.util.StringUtils;
 
 /**
  * The class represents a semantic version (see: https://semver.org/).
@@ -47,7 +46,7 @@ public class SemanticVersion {
    * @return the parsed SemanticVersion or an empty optional
    */
   public static Optional<SemanticVersion> parse(String version) {
-    if (StringUtils.isEmpty(version)) {
+    if (version == null) {
       return Optional.empty();
     }
     Matcher matcher = SEMANTIC_VERSION_PATTERN.matcher(version);
