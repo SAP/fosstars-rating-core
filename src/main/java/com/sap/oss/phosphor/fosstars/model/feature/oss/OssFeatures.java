@@ -341,7 +341,6 @@ public class OssFeatures {
    */
   public static final BooleanFeature HAS_LICENSE
       = new BooleanFeature("If a project has a license");
-
   /**
    * Shows whether an open source project has an allowed licence or not.
    */

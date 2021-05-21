@@ -8,10 +8,12 @@ import static com.sap.oss.phosphor.fosstars.util.Deserialization.readListFrom;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.sap.oss.phosphor.fosstars.model.Feature;
+import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,38 +21,52 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpHeaders;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.kohsuke.github.GitHub;
+import org.kohsuke.github.GitHubBuilder;
 
 /**
  * This data provider gathers info about project's license. It fills out the following features:
  * <ul>
- *   <li>{@link OssFeatures#HAS_LICENSE}</li>
- *   <li>{@link OssFeatures#ALLOWED_LICENSE}</li>
- *   <li>{@link OssFeatures#LICENSE_HAS_DISALLOWED_CONTENT}</li>
+ * <li>{@link OssFeatures#HAS_LICENSE}</li>
+ * <li>{@link OssFeatures#ALLOWED_LICENSE}</li>
+ * <li>{@link OssFeatures#LICENSE_HAS_DISALLOWED_CONTENT}</li>
  * </ul>
  */
 public class LicenseInfo extends GitHubCachingDataProvider {
 
   /**
-   * A list of files that may be a license.
+   * A key for SPDX identifier in metadata.
    */
-  private static final List<String> DEFAULT_KNOWN_LICENSE_FILES
-      = Arrays.asList("LICENSE", "LICENSE.txt");
+  static final String SPDX_ID = "spdxId";
+  
+  /**
+   * A key to a license path in metadata.
+   */
+  static final String LICENSE_PATH = "licensePath";
 
   /**
-   * A list of paths to licenses.
+   * A list of SPDX IDs of allowed licenses.
    */
-  private final List<String> knownLicenseFiles = new ArrayList<>();
+  private final List<String> allowedLicenses = new ArrayList<>();
 
   /**
-   * A list of patterns for matching a valid license.
+   * A list of repositories that are already known to be compliant.
    */
-  private final List<Pattern> allowedLicensePatterns = new ArrayList<>();
+  private final List<String> repositoryExceptionUrls = new ArrayList<>();
 
   /**
    * A list of patterns that are not allowed in licenses.
@@ -65,60 +81,70 @@ public class LicenseInfo extends GitHubCachingDataProvider {
    */
   public LicenseInfo(GitHubDataFetcher fetcher) throws IOException {
     super(fetcher);
-    knownLicenseFiles.addAll(DEFAULT_KNOWN_LICENSE_FILES);
     loadDefaultConfigIfAvailable();
   }
 
   /**
-   * Set a list of file that may be a license.
+   * Returns a list of SPDX IDs of allowed licenses.
    *
-   * @param files The files.
+   * @return A list of SPDX IDs of allowed licenses.
+   */
+  List<String> allowedLicenses() {
+    return new ArrayList<>(allowedLicenses);
+  }
+
+  /**
+   * Set a list of SPDX IDs for allowed licenses.
+   *
+   * @param spdxIds The SPDX IDs.
    * @return This data provider.
    */
-  public LicenseInfo knownLicenseFiles(String... files) {
-    Objects.requireNonNull(files, "Oops! Files can't be null");
+  public LicenseInfo allowedLicenses(String... spdxIds) {
+    return allowedLicenses(Arrays.asList(spdxIds));
+  }
 
-    if (files.length == 0) {
-      throw new IllegalArgumentException("Oops! Files can't be empty!");
-    }
-
-    knownLicenseFiles.clear();
-    knownLicenseFiles.addAll(Arrays.asList(files));
-
+  /**
+   * Set a list of SPDX IDs for allowed licences.
+   *
+   * @param spdxIds The SPDX IDs.
+   * @return This data provider.
+   */
+  public LicenseInfo allowedLicenses(List<String> spdxIds) {
+    Objects.requireNonNull(spdxIds, "Oops! License list is null");
+    allowedLicenses.clear();
+    allowedLicenses.addAll(spdxIds);
     return this;
   }
 
   /**
-   * Returns a list of allowed license headers.
+   * Returns a list of repositories that are known to be compliant.
    *
-   * @return A list of allowed license headers.
+   * @return A list of repository URLs.
    */
-  List<Pattern> allowedLicensePatterns() {
-    return new ArrayList<>(allowedLicensePatterns);
+  List<String> repositoryExceptions() {
+    return new ArrayList<>(repositoryExceptionUrls);
   }
 
   /**
-   * Set a list of patterns for matching an allowed licence.
+   * Set a list of repositories that are known to be compliant.
    *
-   * @param patterns The patterns.
+   * @param repositoryExceptions The repository URLs
    * @return This data provider.
    */
-  public LicenseInfo allowedLicensePatterns(String... patterns) {
-    return allowedLicensePatterns(Arrays.asList(patterns));
+  public LicenseInfo repositoryExceptions(String... repositoryExceptions) {
+    return repositoryExceptions(Arrays.asList(repositoryExceptions));
   }
 
   /**
-   * Set a list of patterns for matching an allowed licence.
+   * Set a list of repositories. that are known to be compliant.
    *
-   * @param patterns The patterns.
+   * @param repositoryExceptions The repository URLs
    * @return This data provider.
    */
-  public LicenseInfo allowedLicensePatterns(List<String> patterns) {
-    Objects.requireNonNull(patterns, "Oops! Patterns is null");
-    allowedLicensePatterns.clear();
-    allowedLicensePatterns.addAll(
-        patterns.stream()
-            .map(pattern -> Pattern.compile(pattern, Pattern.DOTALL)).collect(Collectors.toList()));
+  public LicenseInfo repositoryExceptions(List<String> repositoryExceptions) {
+    Objects.requireNonNull(repositoryExceptions, "Oops! Repository URL list is null");
+    repositoryExceptionUrls.clear();
+    repositoryExceptionUrls.addAll(repositoryExceptions);
     return this;
   }
 
@@ -150,9 +176,8 @@ public class LicenseInfo extends GitHubCachingDataProvider {
   public LicenseInfo disallowedLicensePatterns(List<String> patterns) {
     Objects.requireNonNull(patterns, "Oops! Patterns can't be null!");
     disallowedLicensePatterns.clear();
-    disallowedLicensePatterns.addAll(
-        patterns.stream()
-            .map(pattern -> Pattern.compile(pattern, Pattern.DOTALL)).collect(Collectors.toList()));
+    disallowedLicensePatterns.addAll(patterns.stream()
+        .map(pattern -> Pattern.compile(pattern, Pattern.DOTALL)).collect(Collectors.toList()));
     return this;
   }
 
@@ -165,59 +190,100 @@ public class LicenseInfo extends GitHubCachingDataProvider {
   protected ValueSet fetchValuesFor(GitHubProject project) throws IOException {
     logger.info("Gathering info about project's license ...");
 
-    Optional<String> license = lookForLicenseIn(project);
-    if (!license.isPresent()) {
-      return ValueHashSet.from(
-          HAS_LICENSE.value(false),
-          ALLOWED_LICENSE.unknown(),
+    // Some repositories use normally disallowed licenses, but are well-known exceptions
+    // Those ones will reported as OK by this data provider
+    if (this.repositoryExceptionUrls.contains(project.toString())) {
+      return ValueHashSet.from(HAS_LICENSE.value(true), ALLOWED_LICENSE.value(true),
+          LICENSE_HAS_DISALLOWED_CONTENT.value(false));
+    }
+
+    // The GitHub API library doesn't support getting the SPDX entry and the _actual_ content of the
+    // license. We need both to perform proper checks and therefore are querying the API manually
+    Map<String, String> licenseMetadata = licenseMetadata(project);
+
+    if (licenseMetadata.isEmpty()) {
+      return ValueHashSet.from(HAS_LICENSE.value(false), ALLOWED_LICENSE.unknown(),
           LICENSE_HAS_DISALLOWED_CONTENT.unknown());
     }
 
     ValueSet values = new ValueHashSet();
     values.update(HAS_LICENSE.value(true));
-    values.update(infoAboutLicense(license.get()));
+    values.update(
+        analyzeLicenseContent(retrieveLicenseIn(project, licenseMetadata.get(LICENSE_PATH)).get()));
+    values.update(ALLOWED_LICENSE.value(allowedLicenses.contains(licenseMetadata.get(SPDX_ID))));
 
     return values;
   }
 
   /**
-   * Looks for license in a project.
+   * Retrieves the license in a project.
    *
    * @param project The project.
    * @return Content of the license if found.
    * @throws IOException If something went wrong.
    */
-  private Optional<String> lookForLicenseIn(GitHubProject project) throws IOException {
+  private Optional<String> retrieveLicenseIn(GitHubProject project, String path)
+      throws IOException {
     LocalRepository repository = GitHubDataFetcher.localRepositoryFor(project);
 
-    for (String path : knownLicenseFiles) {
-      Optional<String> content = repository.readTextFrom(path);
-      if (content.isPresent()) {
-        return content;
-      }
+    Optional<String> content = repository.readTextFrom(path);
+    if (content.isPresent()) {
+      return content;
     }
 
     return Optional.empty();
   }
 
   /**
-   * Extract info about license.
+   * Analyze license content.
    *
    * @param content Content of the license.
    * @return A set of values.
    */
-  ValueSet infoAboutLicense(String content) {
-    ValueSet values = ValueHashSet.from(
-        ALLOWED_LICENSE.value(false), LICENSE_HAS_DISALLOWED_CONTENT.value(false));
+  ValueSet analyzeLicenseContent(String content) {
+    ValueSet values = ValueHashSet.from(ALLOWED_LICENSE.value(false),
+        LICENSE_HAS_DISALLOWED_CONTENT.value(false));
 
-    values.update(ALLOWED_LICENSE.value(
-        allowedLicensePatterns.stream()
-            .allMatch(pattern -> pattern.matcher(content).find())));
     values.update(LICENSE_HAS_DISALLOWED_CONTENT.value(
-        disallowedLicensePatterns.stream()
-            .anyMatch(pattern -> pattern.matcher(content).find())));
+        disallowedLicensePatterns.stream().anyMatch(pattern -> pattern.matcher(content).find())));
 
     return values;
+  }
+
+  /**
+   * Creates an HTTP client.
+   *
+   * @return A new HTTP client.
+   */
+  CloseableHttpClient httpClient() {
+    return HttpClients.createDefault();
+  }
+
+  Map<String, String> licenseMetadata(GitHubProject project) {
+    HashMap<String, String> licenseMetadata = new HashMap<>();
+
+    try (CloseableHttpClient client = httpClient()) {
+      String url = String.format("https://api.github.com/repos/%s/%s/license",
+          project.organization().name(), project.name());
+      HttpGet request = new HttpGet(url);
+      request.addHeader(HttpHeaders.ACCEPT, "application/vnd.github.v3+json");
+      request.addHeader(HttpHeaders.AUTHORIZATION, "token " + fetcher.token());
+      try (CloseableHttpResponse response = client.execute(request)) {
+        if (response.getStatusLine().getStatusCode() != 200) {
+          logger.warn("Oops! Could not fetch license metadata from GitHub API ({})",
+              response.getStatusLine().getStatusCode());
+          return licenseMetadata;
+        }
+
+        JsonNode root = Json.mapper().readTree(response.getEntity().getContent());
+        licenseMetadata.put(LICENSE_PATH, root.at("/path").asText());
+        licenseMetadata.put(SPDX_ID, root.at("/license/spdx_id").asText());
+      }
+    } catch (IOException e) {
+      logger.warn("Oops! Could not fetch license metadata from GitHub API", e);
+    }
+
+    return licenseMetadata;
   }
 
   /**
@@ -243,8 +309,31 @@ public class LicenseInfo extends GitHubCachingDataProvider {
    */
   LicenseInfo configure(InputStream is) throws IOException {
     JsonNode config = Yaml.mapper().readTree(is);
-    allowedLicensePatterns(readListFrom(config, "allowedLicensePatterns"));
+    allowedLicenses(readListFrom(config, "allowedLicenses"));
     disallowedLicensePatterns(readListFrom(config, "disallowedLicensePatterns"));
+    repositoryExceptions(readListFrom(config, "repositoryExceptions"));
     return this;
   }
+
+  /**
+   * This is for testing and demo purposes.
+   *
+   * @param args Command-line options (option 1: API token, option 2: project URL).
+   * @throws Exception If something went wrong.
+   */
+  public static void main(String... args) throws Exception {
+    String token = args.length > 0 ? args[0] : "";
+    String url = args.length > 1 ? args[1] : "https://github.com/SAP/fosstars-rating-core";
+    GitHubProject project = GitHubProject.parse(url);
+    GitHub github = new GitHubBuilder().withOAuthToken(token).build();
+    LicenseInfo provider = new LicenseInfo(new GitHubDataFetcher(github, token));
+    provider.configure(IOUtils.toInputStream("---\n" + "allowedLicenses:\n" + "  - Apache-2.0\n"
+        + "  - CC-BY-4.0\n" + "  - MIT\n" + "  - EPL-2.0\n" + "disallowedLicensePatterns:\n"
+        + "  - API\n" + "repositoryExceptions:\n" + "  - https://github.com/SAP/SapMachine\n"));
+    ValueSet values = provider.fetchValuesFor(project);
+    for (Value<?> value : values) {
+      System.out.printf("%s: %s%n", value.feature().name(), value.get());
+    }
+  }
+
 }
