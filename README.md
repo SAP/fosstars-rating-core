@@ -4,8 +4,8 @@
 
 |               | # or projects                    | % or projects                      |
 | :------------ | -------------------------------: | ---------------------------------: |
-| Total         |             253 |                               100% |
-| Failed        |         177 |         70.0% |
+| Total         |             252 |                               100% |
+| Failed        |         176 |         69.8% |
 | With warnings |  50 |  19.8% |
 | Passed        |         26 |         10.3% |
 | Unclear       |        0 |        0.0% |
@@ -137,7 +137,6 @@
 | [SAP/gigya-dotnet-sdk](https://github.com/SAP/gigya-dotnet-sdk) | [Failed](SAP/gigya-dotnet-sdk.md) | 3 violated rules |
 | [SAP/clm-sl-alert-notification-client](https://github.com/SAP/clm-sl-alert-notification-client) | [Failed](SAP/clm-sl-alert-notification-client.md) | 5 violated rules |
 | [SAP/yeoman-ui](https://github.com/SAP/yeoman-ui) | [Failed](SAP/yeoman-ui.md) | 1 violated rule |
-| [SAP/Tracer](https://github.com/SAP/Tracer) | [Failed](SAP/Tracer.md) | 6 violated rules |
 | [SAP/spartacus-bootcamp](https://github.com/SAP/spartacus-bootcamp) | [Failed](SAP/spartacus-bootcamp.md) | 5 violated rules |
 | [SAP/vscode-logging](https://github.com/SAP/vscode-logging) | [Failed](SAP/vscode-logging.md) | 2 violated rules |
 | [SAP/cloud-sdk-js](https://github.com/SAP/cloud-sdk-js) | [Failed](SAP/cloud-sdk-js.md) | 4 violated rules |
