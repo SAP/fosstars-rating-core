@@ -259,8 +259,11 @@ public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider<Mav
 
     return Builder.newVulnerability(owaspDependencyCheckVuln.getName())
         .description(owaspDependencyCheckVuln.getDescription())
-        .set(cvssFrom(owaspDependencyCheckVuln)).set(referencesFrom(owaspDependencyCheckVuln))
-        .set(Resolution.PATCHED).setVersionRanges(extractVersions(owaspDependencyCheckVuln)).make();
+        .set(cvssFrom(owaspDependencyCheckVuln))
+        .references(referencesFrom(owaspDependencyCheckVuln))
+        .set(Resolution.PATCHED)
+        .versionRanges(extractVersions(owaspDependencyCheckVuln))
+        .make();
   }
 
   /**
