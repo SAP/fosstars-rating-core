@@ -32,7 +32,7 @@ abstract class AbstractReporter<T extends OpenSourceProject> implements Reporter
   /**
    * A type reference of a list of {@link GitHubProject}s for deserialization.
    */
-  private static final TypeReference<List<GitHubProject>> LIST_OF_GITHUB_PROJECTS_TYPE
+  static final TypeReference<List<GitHubProject>> LIST_OF_GITHUB_PROJECTS_TYPE
       = new TypeReference<List<GitHubProject>>() {};
 
   /**

@@ -5,6 +5,8 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.model.rating.example.SecurityRatingExample.SecurityLabelExample;
 import com.sap.oss.phosphor.fosstars.model.score.example.ExampleScores;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
@@ -12,6 +14,8 @@ import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 import org.junit.Test;
 
 public class GitHubProjectTest {
@@ -31,6 +35,18 @@ public class GitHubProjectTest {
     assertNotNull(clone);
     assertEquals(project, clone);
     assertEquals(project.hashCode(), clone.hashCode());
+  }
+
+  @Test
+  public void testJsonSerializationWithList() throws IOException {
+    GitHubProject org = new GitHubProject("org", "test");
+    List<GitHubProject> list = Collections.singletonList(org);
+    ObjectMapper mapper = Json.mapper();
+    TypeReference<List<GitHubProject>> typeReference
+        = new TypeReference<List<GitHubProject>>() {};
+    byte[] bytes = mapper.writerFor(typeReference).writeValueAsBytes(list);
+    List<GitHubProject> clone = mapper.readValue(bytes, typeReference);
+    assertEquals(list, clone);
   }
 
   @Test

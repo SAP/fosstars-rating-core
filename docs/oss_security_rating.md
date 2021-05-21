@@ -14,9 +14,9 @@ Here is a list of labels:
 1.  `BAD`: looks like the project doesn't care well about security.
 1.  `UNCLEAR`: there is no enough data to reliably calculate a score and a label for the project.
 
-The security rating uses
+The rating procedure uses
 [thresholds](https://github.com/SAP/fosstars-rating-core/blob/master/src/main/java/com/sap/oss/phosphor/fosstars/model/rating/oss/OssSecurityRating.java#L84)
-for score and confidence to assign one of the labels to an open source project.
+for score and confidence to select one of the labels for an open source project.
 If a confidence score is lower than a certain value, then the project gets the `UNCLEAR` label.
 If a calculated score is higher than a certain threshold, then the project gets `GOOD`, `MODERATE` or `BAD` label.
 
@@ -44,9 +44,7 @@ Instead of setting the thresholds directly, the experts gives a list of well-kno
 a desired fraction for the labels. At the moment, it is 20-50-30 that looks like a normal distribution.
 As a result, the thresholds don't set a bar totally based on someone's opinion.
 Instead, other open source projects are compared with the real, well-known and trusted ones.
-
-The procedure for calculating the thresholds is implemented in 
-[SecurityRatingAnalysis notebook](https://github.com/SAP/fosstars-rating-core/blob/master/src/main/jupyter/oss/security/SecurityRatingAnalysis.ipynb).
+The procedure for re-calculating the thresholds is described [here](oss_security_rating_tuning.md).
 
 ## What the security rating takes into account
 

@@ -18,6 +18,7 @@ import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
+import com.sap.oss.phosphor.fosstars.model.value.CVSS;
 import com.sap.oss.phosphor.fosstars.model.value.OwaspDependencyCheckCvssThresholdValue;
 import com.sap.oss.phosphor.fosstars.model.value.OwaspDependencyCheckUsage;
 import com.sap.oss.phosphor.fosstars.model.value.OwaspDependencyCheckUsageValue;
@@ -139,6 +140,7 @@ public class UsesOwaspDependencyCheck extends GitHubCachingDataProvider {
         OwaspDependencyCheckUsageValue usage = OWASP_DEPENDENCY_CHECK_USAGE.value(visitor.usage());
 
         OwaspDependencyCheckCvssThresholdValue threshold = visitor.threshold()
+            .filter(value -> CVSS.MIN <= value && value <= CVSS.MAX)
             .map(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD::value)
             .orElse(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.notSpecifiedValue());
 
@@ -175,6 +177,7 @@ public class UsesOwaspDependencyCheck extends GitHubCachingDataProvider {
             = OWASP_DEPENDENCY_CHECK_USAGE.value(isMainFile ? MANDATORY : OPTIONAL);
 
         OwaspDependencyCheckCvssThresholdValue threshold = lookForThresholdInGradle(file)
+            .filter(value -> CVSS.MIN <= value && value <= CVSS.MAX)
             .map(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD::value)
             .orElse(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.notSpecifiedValue());
 

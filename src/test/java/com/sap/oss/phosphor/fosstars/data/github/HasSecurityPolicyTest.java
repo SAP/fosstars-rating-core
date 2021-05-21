@@ -21,6 +21,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.junit.Test;
 
@@ -79,7 +80,18 @@ public class HasSecurityPolicyTest extends TestGitHubDataFetcherHolder {
     GitHubProject project = new GitHubProject("org", "test");
     addForTesting(project, repository);
 
-    HasSecurityPolicy provider = new HasSecurityPolicy(fetcher);
+    HasSecurityPolicy provider = spy(new HasSecurityPolicy(fetcher));
+
+    CloseableHttpClient client = mock(CloseableHttpClient.class);
+    when(provider.httpClient()).thenReturn(client);
+
+    CloseableHttpResponse response = mock(CloseableHttpResponse.class);
+    when(client.execute(any(HttpGet.class))).thenReturn(response);
+
+    StatusLine statusLine = mock(StatusLine.class);
+    when(response.getStatusLine()).thenReturn(statusLine);
+    when(statusLine.getStatusCode()).thenReturn(HttpStatus.SC_NOT_FOUND);
+
     provider.set(new GitHubProjectValueCache());
 
     check(provider, false);
