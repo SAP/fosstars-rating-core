@@ -5,3 +5,6 @@ allowedLicenses:
   - MIT
   - EPL-2.0
 disallowedLicensePatterns: "API"
+repositoryExceptions:
+  - https://github.com/SAP/SapMachine
+  - https://github.com/SAP/styleguides
