@@ -1,9 +1,0 @@
----
-allowedLicenses:
-  - Apache-2.0
-  - MIT
-disallowedLicensePatterns:
-  - Disallowed text
-repositoryExceptions:
-  - https://github.com/SAP/SapMachine
-  - https://github.com/SAP/styleguides
