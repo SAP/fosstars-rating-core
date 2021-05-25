@@ -44,6 +44,16 @@ It used the following sub-scores:
 1.  **[Project popularity](#project-popularity)**: **0.07** (weight is 0.5)
 
 
+## How to improve the rating
+
+1.  You can ask the project maintainers to enable LGTM checks for pull requests in the project.
+    More info:
+    1.  [How to enable LGTM checks for pull requests](https://lgtm.com/help/lgtm/about-automated-code-review)
+2.  You can open a pull request to enable FindSecBugs for the project.
+    More info:
+    1.  [FindSecBugs home page](https://find-sec-bugs.github.io/)
+
+
 ## Sub-scores
 
 Below are the details about all the used sub-scores.
@@ -156,12 +166,12 @@ Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-150 commits in the last 3 months results to 10.00 points
+152 commits in the last 3 months results to 10.00 points
 2 contributors increase the score value from 10.00 to 10.50
 
 This sub-score is based on 2 features:
 
-1.  Number of commits in the last three months: **150**
+1.  Number of commits in the last three months: **152**
 1.  Number of contributors in the last three months: **2**
 
 ### Project popularity
@@ -220,8 +230,8 @@ Score: **N/A**, confidence is 10.0 (max), weight is 1.0 (high)
 
 This sub-score is based on 2 features:
 
-1.  A set of programming languages: **JAVA, PYTHON, OTHER**
 1.  Is it included to OSS-Fuzz? **No**
+1.  Programming languages: **JAVA, PYTHON, OTHER**
 
 ### Memory-safety testing
 
@@ -233,10 +243,10 @@ Score: **N/A**, confidence is 10.0 (max), weight is 1.0 (high)
 
 This sub-score is based on 4 features:
 
-1.  A set of programming languages: **JAVA, PYTHON, OTHER**
 1.  Does it use AddressSanitizer? **No**
 1.  Does it use MemorySanitizer? **No**
 1.  Does it use UndefinedBehaviorSanitizer? **No**
+1.  Programming languages: **JAVA, PYTHON, OTHER**
 
 ### nohttp tool
 
@@ -248,8 +258,8 @@ Score: **0.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 This sub-score is based on 2 features:
 
-1.  A set of package managers: **MAVEN**
 1.  Does it use nohttp? **No**
+1.  Package managers: **MAVEN**
 
 ### Dependabot score
 
@@ -261,10 +271,10 @@ Score: **10.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 This sub-score is based on 4 features:
 
-1.  A set of package managers: **MAVEN**
-1.  A set of programming languages: **JAVA, PYTHON, OTHER**
 1.  Does it use Dependabot? **Yes**
 1.  Does it use GitHub as the main development platform? **Yes**
+1.  Package managers: **MAVEN**
+1.  Programming languages: **JAVA, PYTHON, OTHER**
 
 ### OWASP Dependency Check score
 
@@ -274,9 +284,10 @@ Score: **0.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
-This sub-score is based on 2 features:
+This sub-score is based on 3 features:
 
 1.  How is OWASP Dependency Check used? **Not used**
+1.  Package managers: **MAVEN**
 1.  What is the threshold for OWASP Dependency Check? **Not specified**
 
 ### LGTM score
@@ -289,8 +300,8 @@ Score: **10.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 This sub-score is based on 2 features:
 
-1.  A set of programming languages: **JAVA, PYTHON, OTHER**
-1.  The worst LGTM grade of the project: **A_PLUS**
+1.  Programming languages: **JAVA, PYTHON, OTHER**
+1.  The worst LGTM grade of the project: **A+**
 
 ### How a project uses CodeQL
 
@@ -302,10 +313,10 @@ Score: **10.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 This sub-score is based on 4 features:
 
-1.  A set of programming languages: **JAVA, PYTHON, OTHER**
+1.  Does it run CodeQL scans? **Yes**
+1.  Does it use CodeQL checks for pull requests? **Yes**
 1.  Does it use LGTM checks? **No**
-1.  If a project runs CodeQL checks for commits: **Yes**
-1.  If a project runs CodeQL scans: **Yes**
+1.  Programming languages: **JAVA, PYTHON, OTHER**
 
 ### FindSecBugs score
 
@@ -317,19 +328,9 @@ Score: **0.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 This sub-score is based on 2 features:
 
-1.  A set of programming languages: **JAVA, PYTHON, OTHER**
 1.  Does it use FindSecBugs? **No**
+1.  Programming languages: **JAVA, PYTHON, OTHER**
 
-
-
-## How to improve the rating
-
-1.  You can ask the project maintainers to enable LGTM checks for pull requests in the project.
-    More info:
-    1.  [How to enable LGTM checks for pull requests](https://lgtm.com/help/lgtm/about-automated-code-review)
-2.  You can open a pull request to enable FindSecBugs for the project.
-    More info:
-    1.  [FindSecBugs home page](https://find-sec-bugs.github.io/)
 
 
 ## Known vulnerabilities

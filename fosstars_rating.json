@@ -30,15 +30,15 @@
             } ],
             "weights" : {
               "values" : {
+                "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
+                  "type" : "ImmutableWeight",
+                  "value" : 1.0
+                },
                 "com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore" : {
                   "type" : "ImmutableWeight",
                   "value" : 0.5
                 },
                 "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
-                  "type" : "ImmutableWeight",
-                  "value" : 1.0
-                },
-                "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
                   "type" : "ImmutableWeight",
                   "value" : 1.0
                 }
@@ -56,7 +56,11 @@
           } ],
           "weights" : {
             "values" : {
-              "com.sap.oss.phosphor.fosstars.model.score.oss.StaticAnalysisScore" : {
+              "com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore" : {
+                "type" : "ImmutableWeight",
+                "value" : 0.5
+              },
+              "com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore" : {
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               },
@@ -64,15 +68,11 @@
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore" : {
+              "com.sap.oss.phosphor.fosstars.model.score.oss.StaticAnalysisScore" : {
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore" : {
-                "type" : "ImmutableWeight",
-                "value" : 0.5
-              },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore" : {
+              "com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore" : {
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               }
@@ -110,15 +110,15 @@
           } ],
           "weights" : {
             "values" : {
+              "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
+                "type" : "ImmutableWeight",
+                "value" : 1.0
+              },
               "com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore" : {
                 "type" : "ImmutableWeight",
                 "value" : 0.5
               },
               "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
-                "type" : "ImmutableWeight",
-                "value" : 1.0
-              },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               }
@@ -136,7 +136,11 @@
         } ],
         "weights" : {
           "values" : {
-            "com.sap.oss.phosphor.fosstars.model.score.oss.StaticAnalysisScore" : {
+            "com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore" : {
+              "type" : "ImmutableWeight",
+              "value" : 0.5
+            },
+            "com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore" : {
               "type" : "ImmutableWeight",
               "value" : 1.0
             },
@@ -144,15 +148,11 @@
               "type" : "ImmutableWeight",
               "value" : 1.0
             },
-            "com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore" : {
+            "com.sap.oss.phosphor.fosstars.model.score.oss.StaticAnalysisScore" : {
               "type" : "ImmutableWeight",
               "value" : 1.0
             },
-            "com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore" : {
-              "type" : "ImmutableWeight",
-              "value" : 0.5
-            },
-            "com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore" : {
+            "com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore" : {
               "type" : "ImmutableWeight",
               "value" : 1.0
             }
@@ -164,6 +164,18 @@
       } ],
       "weights" : {
         "values" : {
+          "com.sap.oss.phosphor.fosstars.model.score.oss.CommunityCommitmentScore" : {
+            "type" : "ImmutableWeight",
+            "value" : 0.5
+          },
+          "com.sap.oss.phosphor.fosstars.model.score.oss.ProjectSecurityTestingScore" : {
+            "type" : "ImmutableWeight",
+            "value" : 1.0
+          },
+          "com.sap.oss.phosphor.fosstars.model.score.oss.ProjectPopularityScore" : {
+            "type" : "ImmutableWeight",
+            "value" : 0.5
+          },
           "com.sap.oss.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore" : {
             "type" : "ImmutableWeight",
             "value" : 0.6
@@ -172,14 +184,6 @@
             "type" : "ImmutableWeight",
             "value" : 0.9
           },
-          "com.sap.oss.phosphor.fosstars.model.score.oss.ProjectPopularityScore" : {
-            "type" : "ImmutableWeight",
-            "value" : 0.5
-          },
-          "com.sap.oss.phosphor.fosstars.model.score.oss.CommunityCommitmentScore" : {
-            "type" : "ImmutableWeight",
-            "value" : 0.5
-          },
           "com.sap.oss.phosphor.fosstars.model.score.oss.UnpatchedVulnerabilitiesScore" : {
             "type" : "ImmutableWeight",
             "value" : 0.8
@@ -187,10 +191,6 @@
           "com.sap.oss.phosphor.fosstars.model.score.oss.ProjectActivityScore" : {
             "type" : "ImmutableWeight",
             "value" : 0.5
-          },
-          "com.sap.oss.phosphor.fosstars.model.score.oss.ProjectSecurityTestingScore" : {
-            "type" : "ImmutableWeight",
-            "value" : 1.0
           }
         }
       }
@@ -355,15 +355,15 @@
             } ],
             "weights" : {
               "values" : {
+                "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
+                  "type" : "ImmutableWeight",
+                  "value" : 1.0
+                },
                 "com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore" : {
                   "type" : "ImmutableWeight",
                   "value" : 0.5
                 },
                 "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
-                  "type" : "ImmutableWeight",
-                  "value" : 1.0
-                },
-                "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
                   "type" : "ImmutableWeight",
                   "value" : 1.0
                 }
@@ -381,7 +381,11 @@
           } ],
           "weights" : {
             "values" : {
-              "com.sap.oss.phosphor.fosstars.model.score.oss.StaticAnalysisScore" : {
+              "com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore" : {
+                "type" : "ImmutableWeight",
+                "value" : 0.5
+              },
+              "com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore" : {
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               },
@@ -389,15 +393,11 @@
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore" : {
+              "com.sap.oss.phosphor.fosstars.model.score.oss.StaticAnalysisScore" : {
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore" : {
-                "type" : "ImmutableWeight",
-                "value" : 0.5
-              },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore" : {
+              "com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore" : {
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               }
@@ -441,15 +441,15 @@
             } ],
             "weights" : {
               "values" : {
+                "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
+                  "type" : "ImmutableWeight",
+                  "value" : 1.0
+                },
                 "com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore" : {
                   "type" : "ImmutableWeight",
                   "value" : 0.5
                 },
                 "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
-                  "type" : "ImmutableWeight",
-                  "value" : 1.0
-                },
-                "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
                   "type" : "ImmutableWeight",
                   "value" : 1.0
                 }
@@ -467,7 +467,11 @@
           } ],
           "weights" : {
             "values" : {
-              "com.sap.oss.phosphor.fosstars.model.score.oss.StaticAnalysisScore" : {
+              "com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore" : {
+                "type" : "ImmutableWeight",
+                "value" : 0.5
+              },
+              "com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore" : {
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               },
@@ -475,15 +479,11 @@
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore" : {
+              "com.sap.oss.phosphor.fosstars.model.score.oss.StaticAnalysisScore" : {
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore" : {
-                "type" : "ImmutableWeight",
-                "value" : 0.5
-              },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore" : {
+              "com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore" : {
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               }
@@ -571,6 +571,15 @@
               },
               "number" : 0.0,
               "specified" : false
+            }, {
+              "type" : "PackageManagersValue",
+              "feature" : {
+                "type" : "PackageManagersFeature",
+                "name" : "A set of package managers"
+              },
+              "packageManagers" : {
+                "packageManagers" : [ "MAVEN" ]
+              }
             } ],
             "explanation" : [ ],
             "isUnknown" : false,
@@ -596,15 +605,15 @@
             } ],
             "weights" : {
               "values" : {
+                "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
+                  "type" : "ImmutableWeight",
+                  "value" : 1.0
+                },
                 "com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore" : {
                   "type" : "ImmutableWeight",
                   "value" : 0.5
                 },
                 "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
-                  "type" : "ImmutableWeight",
-                  "value" : 1.0
-                },
-                "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
                   "type" : "ImmutableWeight",
                   "value" : 1.0
                 }
@@ -899,7 +908,7 @@
           "type" : "PositiveIntegerFeature",
           "name" : "Number of commits in the last three months"
         },
-        "number" : 150
+        "number" : 152
       }, {
         "type" : "IntegerValue",
         "feature" : {
@@ -908,7 +917,7 @@
         },
         "number" : 2
       } ],
-      "explanation" : [ "150 commits in the last 3 months results to 10.00 points", "2 contributors increase the score value from 10.00 to 10.50" ],
+      "explanation" : [ "152 commits in the last 3 months results to 10.00 points", "2 contributors increase the score value from 10.00 to 10.50" ],
       "isUnknown" : false,
       "isNotApplicable" : false
     }, {
@@ -934,15 +943,15 @@
           } ],
           "weights" : {
             "values" : {
+              "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
+                "type" : "ImmutableWeight",
+                "value" : 1.0
+              },
               "com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore" : {
                 "type" : "ImmutableWeight",
                 "value" : 0.5
               },
               "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
-                "type" : "ImmutableWeight",
-                "value" : 1.0
-              },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               }
@@ -960,7 +969,11 @@
         } ],
         "weights" : {
           "values" : {
-            "com.sap.oss.phosphor.fosstars.model.score.oss.StaticAnalysisScore" : {
+            "com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore" : {
+              "type" : "ImmutableWeight",
+              "value" : 0.5
+            },
+            "com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore" : {
               "type" : "ImmutableWeight",
               "value" : 1.0
             },
@@ -968,15 +981,11 @@
               "type" : "ImmutableWeight",
               "value" : 1.0
             },
-            "com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore" : {
+            "com.sap.oss.phosphor.fosstars.model.score.oss.StaticAnalysisScore" : {
               "type" : "ImmutableWeight",
               "value" : 1.0
             },
-            "com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore" : {
-              "type" : "ImmutableWeight",
-              "value" : 0.5
-            },
-            "com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore" : {
+            "com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore" : {
               "type" : "ImmutableWeight",
               "value" : 1.0
             }
@@ -1064,6 +1073,15 @@
             },
             "number" : 0.0,
             "specified" : false
+          }, {
+            "type" : "PackageManagersValue",
+            "feature" : {
+              "type" : "PackageManagersFeature",
+              "name" : "A set of package managers"
+            },
+            "packageManagers" : {
+              "packageManagers" : [ "MAVEN" ]
+            }
           } ],
           "explanation" : [ ],
           "isUnknown" : false,
@@ -1089,15 +1107,15 @@
           } ],
           "weights" : {
             "values" : {
+              "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
+                "type" : "ImmutableWeight",
+                "value" : 1.0
+              },
               "com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore" : {
                 "type" : "ImmutableWeight",
                 "value" : 0.5
               },
               "com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore" : {
-                "type" : "ImmutableWeight",
-                "value" : 1.0
-              },
-              "com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore" : {
                 "type" : "ImmutableWeight",
                 "value" : 1.0
               }
