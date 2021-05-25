@@ -4,10 +4,10 @@
 
 |               | # or projects                    | % or projects                      |
 | :------------ | -------------------------------: | ---------------------------------: |
-| Total         |             252 |                               100% |
-| Failed        |         174 |         69.0% |
-| With warnings |  51 |  20.2% |
-| Passed        |         27 |         10.7% |
+| Total         |             251 |                               100% |
+| Failed        |         173 |         68.9% |
+| With warnings |  51 |  20.3% |
+| Passed        |         27 |         10.8% |
 | Unclear       |        0 |        0.0% |
 
 ## Projects
@@ -60,7 +60,6 @@
 | [SAP/kafka-connect-sap](https://github.com/SAP/kafka-connect-sap) | [Failed](SAP/kafka-connect-sap.md) | 5 violated rules |
 | [SAP/cloud-xsa-hybrid-deployment-tutorial](https://github.com/SAP/cloud-xsa-hybrid-deployment-tutorial) | [Failed](SAP/cloud-xsa-hybrid-deployment-tutorial.md) | 6 violated rules |
 | [SAP/ase-nodejs-async-odbc-interface](https://github.com/SAP/ase-nodejs-async-odbc-interface) | [Failed](SAP/ase-nodejs-async-odbc-interface.md) | 7 violated rules |
-| [SAP/openui5-generic-app-testing](https://github.com/SAP/openui5-generic-app-testing) | [Failed](SAP/openui5-generic-app-testing.md) | 3 violated rules |
 | [SAP/cf-language-server-buildpack](https://github.com/SAP/cf-language-server-buildpack) | [Failed](SAP/cf-language-server-buildpack.md) | 2 violated rules |
 | [SAP/cloud-language-servers-container](https://github.com/SAP/cloud-language-servers-container) | [Failed](SAP/cloud-language-servers-container.md) | 4 violated rules |
 | [SAP/cloud-s4-sdk-pipeline](https://github.com/SAP/cloud-s4-sdk-pipeline) | [Failed](SAP/cloud-s4-sdk-pipeline.md) | 4 violated rules |
