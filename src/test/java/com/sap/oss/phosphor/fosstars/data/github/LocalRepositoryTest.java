@@ -119,7 +119,7 @@ public class LocalRepositoryTest {
       assertEquals("Mr. White", firstCommit.get().authorName());
       assertEquals("Mr. White", firstCommit.get().committerName());
     } finally {
-      FileUtils.deleteDirectory(directory.toFile());
+      FileUtils.forceDeleteOnExit(directory.toFile());
     }
   }
 }
