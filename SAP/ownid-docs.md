@@ -1,9 +1,10 @@
 **Status**: **Failed**
 
-**Confidence**: Low (0.53, max confidence value is 10.0)
+**Confidence**: Low (1.05, max confidence value is 10.0)
 
 ## Violated rules
 
+1.  **[rl-license_file-1]** Does it have a license file? **No**
 1.  **[rl-vulnerability_alerts-1]** Are vulnerability alerts enabled? **No**
 
 
@@ -18,7 +19,6 @@
 1.  **[rl-assigned_teams-5]** Does teams have enough members on GitHub? **unknown**
 1.  **[rl-contributor_file-1]** Does it have a contributing guideline? **unknown**
 1.  **[rl-contributor_file-2]** Does the contributing guideline have required text? **unknown**
-1.  **[rl-license_file-1]** Does it have a license file? **unknown**
 1.  **[rl-license_file-2]** Does it use an allowed license? **unknown**
 1.  **[rl-license_file-3]** Does the license have disallowed content? **unknown**
 1.  **[rl-readme_file-1]** Does it have a README file? **unknown**
@@ -38,4 +38,7 @@
 1.  Vulnerability alerts are disabled for your repository. An administrator should enable these alerts via Settings. Please see the GitHub documentation for details or contact the OSPO for more information.
     More info:
     1.  [Managing vulnerabilities in your project's dependencies](https://docs.github.com/en/code-security/supply-chain-security/managing-vulnerabilities-in-your-projects-dependencies)
+2.  No license file could be found in your repository. Be sure to add a license that can be detected by GitHub.
+    More info:
+    1.  [Licensing a repository](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/licensing-a-repository#determining-the-location-of-your-license)
 
