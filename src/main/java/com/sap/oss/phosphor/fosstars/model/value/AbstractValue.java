@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  * A base class for feature values.
@@ -85,6 +86,24 @@ public abstract class AbstractValue<T, V extends AbstractValue<T, V>> implements
     }
     explanation.add(String.format(note, params));
     return (V) this;
+  }
+
+  @Override
+  public Value<T> explainIf(Predicate<T> condition, String note, Object... params) {
+    Objects.requireNonNull(condition, "Condition can't be null!");
+    if (!isUnknown() && condition.test(get())) {
+      explain(note, params);
+    }
+    return this;
+  }
+
+  @Override
+  public Value<T> explainIf(T value, String note, Object... params) {
+    Objects.requireNonNull(value, "Value can't be null!");
+    if (!isUnknown() && get().equals(value)) {
+      explain(note, params);
+    }
+    return this;
   }
 
   @Override
