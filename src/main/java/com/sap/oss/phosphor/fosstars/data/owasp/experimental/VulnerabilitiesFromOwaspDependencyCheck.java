@@ -1,4 +1,4 @@
-package com.sap.oss.phosphor.fosstars.data.github;
+package com.sap.oss.phosphor.fosstars.data.owasp.experimental;
 
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
@@ -8,14 +8,14 @@ import com.sap.oss.phosphor.fosstars.data.DataProvider;
 import com.sap.oss.phosphor.fosstars.data.NoValueCache;
 import com.sap.oss.phosphor.fosstars.data.UserCallback;
 import com.sap.oss.phosphor.fosstars.data.ValueCache;
-import com.sap.oss.phosphor.fosstars.data.github.experimental.owasp.data.Dependency;
-import com.sap.oss.phosphor.fosstars.data.github.experimental.owasp.data.OwaspDependencyCheckEntry;
-import com.sap.oss.phosphor.fosstars.data.github.experimental.owasp.data.OwaspDependencyCheckReference;
-import com.sap.oss.phosphor.fosstars.data.github.experimental.owasp.data.OwaspDependencyCheckVuln;
-import com.sap.oss.phosphor.fosstars.data.github.experimental.owasp.data.Software;
-import com.sap.oss.phosphor.fosstars.data.github.experimental.owasp.data.VulnerableSoftware;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
+import com.sap.oss.phosphor.fosstars.model.owasp.experimental.Dependency;
+import com.sap.oss.phosphor.fosstars.model.owasp.experimental.OwaspDependencyCheckEntry;
+import com.sap.oss.phosphor.fosstars.model.owasp.experimental.OwaspDependencyCheckReference;
+import com.sap.oss.phosphor.fosstars.model.owasp.experimental.OwaspDependencyCheckVuln;
+import com.sap.oss.phosphor.fosstars.model.owasp.experimental.Software;
+import com.sap.oss.phosphor.fosstars.model.owasp.experimental.VulnerableSoftware;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.MavenArtifact;
 import com.sap.oss.phosphor.fosstars.model.value.CVSS;
 import com.sap.oss.phosphor.fosstars.model.value.Reference;
