@@ -193,24 +193,27 @@ public class LicenseInfo extends GitHubCachingDataProvider {
     // Some repositories use normally disallowed licenses, but are well-known exceptions
     // Those ones will reported as OK by this data provider
     if (this.repositoryExceptionUrls.contains(project.toString())) {
-      return ValueHashSet.from(HAS_LICENSE.value(true), ALLOWED_LICENSE.value(true),
+      return ValueHashSet.from(
+          HAS_LICENSE.value(true),
+          ALLOWED_LICENSE.value(true),
           LICENSE_HAS_DISALLOWED_CONTENT.value(false));
     }
 
     // The GitHub API library doesn't support getting the SPDX entry and the _actual_ content of the
-    // license. We need both to perform proper checks and therefore are querying the API manually
-    Map<String, String> licenseMetadata = licenseMetadata(project);
+    // license. We need both to perform proper checks and therefore are querying the API manually.
+    Map<String, String> metadata = licenseMetadata(project);
+    Optional<String> content = retrieveLicenseIn(project, metadata.get(LICENSE_PATH));
 
-    if (licenseMetadata.isEmpty()) {
-      return ValueHashSet.from(HAS_LICENSE.value(false), ALLOWED_LICENSE.unknown(),
+    if (metadata.isEmpty() || !content.isPresent()) {
+      return ValueHashSet.from(
+          HAS_LICENSE.value(false).explain("No license found in the project"),
+          ALLOWED_LICENSE.unknown(),
           LICENSE_HAS_DISALLOWED_CONTENT.unknown());
     }
 
     ValueSet values = new ValueHashSet();
     values.update(HAS_LICENSE.value(true));
-    values.update(
-        analyzeLicenseContent(retrieveLicenseIn(project, licenseMetadata.get(LICENSE_PATH)).get()));
-    values.update(ALLOWED_LICENSE.value(allowedLicenses.contains(licenseMetadata.get(SPDX_ID))));
+    values.update(analyzeLicense(content.get(), metadata.get(SPDX_ID)));
 
     return values;
   }
@@ -224,30 +227,24 @@ public class LicenseInfo extends GitHubCachingDataProvider {
    */
   private Optional<String> retrieveLicenseIn(GitHubProject project, String path)
       throws IOException {
-    LocalRepository repository = GitHubDataFetcher.localRepositoryFor(project);
 
-    Optional<String> content = repository.readTextFrom(path);
-    if (content.isPresent()) {
-      return content;
-    }
-
-    return Optional.empty();
+    return GitHubDataFetcher.localRepositoryFor(project).readTextFrom(path);
   }
 
   /**
-   * Analyze license content.
+   * Analyze a license.
    *
    * @param content Content of the license.
+   * @param spdxId SPDX ID of the license.
    * @return A set of values.
    */
-  ValueSet analyzeLicenseContent(String content) {
-    ValueSet values = ValueHashSet.from(ALLOWED_LICENSE.value(false),
-        LICENSE_HAS_DISALLOWED_CONTENT.value(false));
-
-    values.update(LICENSE_HAS_DISALLOWED_CONTENT.value(
-        disallowedLicensePatterns.stream().anyMatch(pattern -> pattern.matcher(content).find())));
-
-    return values;
+  ValueSet analyzeLicense(String content, String spdxId) {
+    return ValueHashSet.from(
+        ALLOWED_LICENSE.value(allowedLicenses.contains(spdxId))
+            .explainIf(false, "%s is not allowed", spdxId),
+        LICENSE_HAS_DISALLOWED_CONTENT.value(
+            disallowedLicensePatterns.stream().anyMatch(pattern -> pattern.matcher(content).find()))
+            .explainIf(true, "The license contains disallowed text"));
   }
 
   /**
@@ -259,6 +256,12 @@ public class LicenseInfo extends GitHubCachingDataProvider {
     return HttpClients.createDefault();
   }
 
+  /**
+   * Retrieves metadata of the license that is used in a project on GitHub.
+   *
+   * @param project The project
+   * @return Metadata of the license.
+   */
   Map<String, String> licenseMetadata(GitHubProject project) {
     HashMap<String, String> licenseMetadata = new HashMap<>();
 
@@ -327,9 +330,18 @@ public class LicenseInfo extends GitHubCachingDataProvider {
     GitHubProject project = GitHubProject.parse(url);
     GitHub github = new GitHubBuilder().withOAuthToken(token).build();
     LicenseInfo provider = new LicenseInfo(new GitHubDataFetcher(github, token));
-    provider.configure(IOUtils.toInputStream("---\n" + "allowedLicenses:\n" + "  - Apache-2.0\n"
-        + "  - CC-BY-4.0\n" + "  - MIT\n" + "  - EPL-2.0\n" + "disallowedLicensePatterns:\n"
-        + "  - API\n" + "repositoryExceptions:\n" + "  - https://github.com/SAP/SapMachine\n"));
+    provider.configure(IOUtils.toInputStream(
+        "---\n"
+            + "allowedLicenses:\n"
+            + "  - Apache-2.0\n"
+            + "  - CC-BY-4.0\n"
+            + "  - MIT\n"
+            + "  - EPL-2.0\n"
+            + "disallowedLicensePatterns:\n"
+            + "  - API\n"
+            + "repositoryExceptions:\n"
+            + "  - https://github.com/SAP/SapMachine\n",
+        "UTF-8"));
     ValueSet values = provider.fetchValuesFor(project);
     for (Value<?> value : values) {
       System.out.printf("%s: %s%n", value.feature().name(), value.get());
