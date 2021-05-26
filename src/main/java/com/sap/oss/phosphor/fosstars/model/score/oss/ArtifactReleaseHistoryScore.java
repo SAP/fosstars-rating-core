@@ -57,7 +57,13 @@ public class ArtifactReleaseHistoryScore extends FeatureBasedScore {
     ScoreValue scoreValue = scoreValue(6.0, artifactVersions, artifactVersion);
 
     final Collection<ArtifactVersion> artifactCollection =
-        filter(artifactVersions, artifactVersion, scoreValue);
+        filter(artifactVersions, artifactVersion);
+
+    // If the artifact collection is filtered, then a cluster of versions have been obtained.
+    // Increase the score value.
+    if (artifactCollection.size() < artifactVersions.get().size()) {
+      scoreValue.increase(1);
+    }
 
     // check release frequency over time
     Collection<VersionInfo> versionInfo = versionInfo(artifactCollection);
@@ -153,18 +159,16 @@ public class ArtifactReleaseHistoryScore extends FeatureBasedScore {
    * 
    * @param artifactVersions {@link ArtifactVersions} to be filtered.
    * @param artifactVersion {@link ArtifactVersion} provided by the user.
-   * @param scoreValue Increment the score if a filtered list is found.
    * @return A collection of {@link ArtifactVersion}.
    */
   private static Collection<ArtifactVersion> filter(Value<ArtifactVersions> artifactVersions,
-      Value<ArtifactVersion> artifactVersion, ScoreValue scoreValue) {
+      Value<ArtifactVersion> artifactVersion) {
     if (!artifactVersion.isUnknown() && artifactVersion.get().hasValidSemanticVersion()) {
       ArtifactVersions filteredArtifactVersions =
           artifactVersions.get().filterArtifactsByMajorVersion(
               artifactVersion.get().getSemanticVersion().get().toString());
 
       if (filteredArtifactVersions.size() > ARTIFACT_VERSIONS_SIZE_THRESHOLD) {
-        scoreValue.increase(1);
         return filteredArtifactVersions.sortByReleaseDate();
       }
     }
