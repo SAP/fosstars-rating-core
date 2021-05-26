@@ -306,17 +306,18 @@ public class ArtifactReleaseHistoryScoreTest {
   @Test
   public void testVersionsSelectionIfNonSemanticVersionExists() {
     LocalDateTime now = LocalDateTime.now();
-    ArtifactVersion version100 = new ArtifactVersion("1.0.0", now.minusDays(6 * 31));
-    ArtifactVersion nonSematicVersion = new ArtifactVersion("MIGHTY-1.0", now.minusDays(4 * 31));
-    ArtifactVersion version110 = new ArtifactVersion("1.1.0", now.minusDays(3 * 31));
+    ArtifactVersion version100 = new ArtifactVersion("1.0.0", now.minusDays(4 * 29));
+    ArtifactVersion nonSematicVersion = new ArtifactVersion("MIGHTY-1.0", now.minusDays(5 * 29));
+    ArtifactVersion version110 = new ArtifactVersion("1.1.0", now.minusDays(2 * 29));
+    ArtifactVersion version120 = new ArtifactVersion("1.2.0", now.minusDays(29));
     ArtifactVersion version200 = new ArtifactVersion("2.0.0", now.minusDays(2 * 31));
 
     ArtifactVersions artifactVersions =
-        ArtifactVersions.of(version100, nonSematicVersion, version110, version200);
+        ArtifactVersions.of(version100, nonSematicVersion, version110, version120, version200);
     ArtifactReleaseHistoryScore score = new ArtifactReleaseHistoryScore();
     ScoreValue value = score.calculate(RELEASED_ARTIFACT_VERSIONS.value(artifactVersions),
         ARTIFACT_VERSION.value(version110));
-    assertEquals(6.0, value.get(), DELTA);
+    assertEquals(8.5, value.get(), DELTA);
 
     final Optional<Value<?>> versionsValue =
         value.usedValues().stream().filter(v -> v instanceof ArtifactVersionsValue).findFirst();
