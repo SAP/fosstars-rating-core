@@ -288,7 +288,7 @@ public class PrettyPrinter extends CommonFormatter {
    * @return True if the pretty printer should print a description, false otherwise.
    */
   private boolean shouldPrintDescriptionFor(ScoreValue scoreValue) {
-    return verbose && !scoreValue.feature().description().isEmpty();
+    return verbose && !scoreValue.score().description().isEmpty();
   }
 
   /**

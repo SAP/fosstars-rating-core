@@ -9,7 +9,7 @@ import java.util.Objects;
 /**
  * A value of a feature which provides a double number.
  */
-public class DoubleValue extends AbstractValue<Double> {
+public class DoubleValue extends AbstractKnownValue<Double> {
 
   /**
    * A double value.

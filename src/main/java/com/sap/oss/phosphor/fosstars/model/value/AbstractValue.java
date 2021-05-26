@@ -1,17 +1,22 @@
 package com.sap.oss.phosphor.fosstars.model.value;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Value;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 /**
- * A base class for known features values.
- * Unknown values can be created with {@link Feature#unknown()} and {@link UnknownValue}.
+ * A base class for feature values.
+ *
+ * @param <T> Type of data the the feature holds.
+ * @param <V> Type of value.
  */
-public abstract class AbstractValue<T> implements Value<T> {
+public abstract class AbstractValue<T, V extends AbstractValue<T, V>> implements Value<T>  {
 
   /**
    * A corresponding feature.
@@ -19,13 +24,31 @@ public abstract class AbstractValue<T> implements Value<T> {
   private final Feature<T> feature;
 
   /**
+   * A list of notes that explain the value.
+   */
+  private final List<String> explanation;
+
+  /**
    * Initializes a value for a feature.
    *
    * @param feature The feature.
    */
-  AbstractValue(@JsonProperty("feature") Feature<T> feature) {
+  AbstractValue(Feature<T> feature) {
+    this(feature, Collections.emptyList());
+  }
+
+  /**
+   * Initializes a value for a feature.
+   *
+   * @param feature The feature.
+   * @param explanation A list of notes that explain the value.
+   */
+  AbstractValue(Feature<T> feature, List<String> explanation) {
     Objects.requireNonNull(feature, "Feature can't be null!");
+    Objects.requireNonNull(explanation, "Explanation can't be null!");
+
     this.feature = feature;
+    this.explanation = new ArrayList<>(explanation);
   }
 
   @Override
@@ -34,33 +57,34 @@ public abstract class AbstractValue<T> implements Value<T> {
     return feature;
   }
 
-  @Override
-  @JsonIgnore
-  public final boolean isUnknown() {
-    return false;
+  /**
+   * Set a list of explanations.
+   *
+   * @param explanation The explanations.
+   * @return The same value.
+   */
+  @JsonSetter(value = "explanation", nulls = Nulls.AS_EMPTY)
+  public V explanation(List<String> explanation) {
+    this.explanation.clear();
+    this.explanation.addAll(explanation);
+    return (V) this;
   }
 
   @Override
-  @JsonIgnore
-  public boolean isNotApplicable() {
-    return false;
+  @JsonGetter("explanation")
+  public List<String> explanation() {
+    return new ArrayList<>(explanation);
   }
 
   @Override
-  public Value<T> processIfKnown(Processor<T> processor) {
-    Objects.requireNonNull(processor, "Processor can't be null!");
-    processor.process(get());
-    return this;
-  }
-
-  @Override
-  public Value<T> processIfUnknown(Runnable processor) {
-    return this;
-  }
-
-  @Override
-  public T orElse(T other) {
-    return isUnknown() || isNotApplicable() ? other : get();
+  public V explain(String note, Object... params) {
+    Objects.requireNonNull(note, "Note can't be null!");
+    note = note.trim();
+    if (note.isEmpty()) {
+      throw new IllegalArgumentException("Note can't be empty!");
+    }
+    explanation.add(String.format(note, params));
+    return (V) this;
   }
 
   @Override
@@ -68,15 +92,15 @@ public abstract class AbstractValue<T> implements Value<T> {
     if (this == o) {
       return true;
     }
-    if (o instanceof AbstractValue == false) {
+    if (o == null || !AbstractValue.class.isAssignableFrom(o.getClass())) {
       return false;
     }
-    AbstractValue<?> that = (AbstractValue<?>) o;
-    return Objects.equals(feature, that.feature);
+    AbstractValue<?, ?> that = (AbstractValue<?, ?>) o;
+    return Objects.equals(feature, that.feature) && Objects.equals(explanation, that.explanation);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(feature);
+    return Objects.hash(feature, explanation);
   }
 }

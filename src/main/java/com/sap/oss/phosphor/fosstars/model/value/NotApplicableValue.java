@@ -7,7 +7,7 @@ import com.sap.oss.phosphor.fosstars.model.Feature;
 /**
  * A not-applicable value of a feature.
  */
-public final class NotApplicableValue<T> extends AbstractValue<T> {
+public final class NotApplicableValue<T> extends AbstractKnownValue<T> {
 
   /**
    * This factory method returns a not-applicable value of a specified feature.

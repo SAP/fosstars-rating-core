@@ -1,6 +1,5 @@
 package com.sap.oss.phosphor.fosstars.model.value;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.oss.phosphor.fosstars.model.Feature;
@@ -10,12 +9,7 @@ import java.util.Objects;
 /**
  * An unknown value for a feature.
  */
-public final class UnknownValue<T> implements Value<T> {
-
-  /**
-   * A feature.
-   */
-  private final Feature<T> feature;
+public final class UnknownValue<T> extends AbstractValue<T, UnknownValue<T>> {
 
   /**
    * This factory method returns an unknown values of a specified feature.
@@ -34,14 +28,7 @@ public final class UnknownValue<T> implements Value<T> {
    * @param feature The feature.
    */
   public UnknownValue(@JsonProperty("feature") Feature<T> feature) {
-    Objects.requireNonNull(feature, "Feature can't be null!");
-    this.feature = feature;
-  }
-
-  @Override
-  @JsonGetter("feature")
-  public final Feature<T> feature() {
-    return feature;
+    super(feature);
   }
 
   @Override
@@ -84,16 +71,10 @@ public final class UnknownValue<T> implements Value<T> {
     if (this == o) {
       return true;
     }
-    if (o instanceof UnknownValue == false) {
+    if (o == null || !UnknownValue.class.isAssignableFrom(o.getClass())) {
       return false;
     }
-    UnknownValue<?> that = (UnknownValue<?>) o;
-    return Objects.equals(feature, that.feature);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hashCode(feature);
+    return super.equals(o);
   }
 
   @Override

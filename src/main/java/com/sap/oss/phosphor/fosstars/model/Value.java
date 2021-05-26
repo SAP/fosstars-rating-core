@@ -1,11 +1,12 @@
 package com.sap.oss.phosphor.fosstars.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import java.util.List;
 
 /**
  * An interface for a feature value of specific type.
  *
- * @param <T> Type of date that the feature provides.
+ * @param <T> Type of data that the feature holds.
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public interface Value<T> {
@@ -30,6 +31,22 @@ public interface Value<T> {
    * @return True if the value is not applicable in the current context, false otherwise.
    */
   boolean isNotApplicable();
+
+  /**
+   * Get explanations for the value.
+   *
+   * @return A list of notes that explain the value.
+   */
+  List<String> explanation();
+
+  /**
+   * Add a note that explains the value.
+   *
+   * @param note The note to be added. That may be a format string.
+   * @param params A number of parameters if a format string is passed.
+   * @return The same value.
+   */
+  Value<T> explain(String note, Object... params);
 
   /**
    * Get the value.

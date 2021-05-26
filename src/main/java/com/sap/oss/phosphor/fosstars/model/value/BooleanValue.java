@@ -10,7 +10,7 @@ import java.util.Objects;
 /**
  * A value of a feature which answers a yes/no question.
  */
-public class BooleanValue extends AbstractValue<Boolean> {
+public class BooleanValue extends AbstractKnownValue<Boolean> {
 
   /**
    * A boolean value.

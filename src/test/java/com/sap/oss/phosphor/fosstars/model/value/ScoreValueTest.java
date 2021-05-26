@@ -176,25 +176,33 @@ public class ScoreValueTest {
   }
 
   @Test
-  public void testSerializeAndDeserialize() throws IOException {
+  public void testJsonSerialization() throws IOException {
     List<Value<?>> usedValues = Arrays.asList(
         NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE.value(10),
         NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE.value(3));
 
-    ScoreValue value = new ScoreValue(
+    ScoreValue valueWithExplanation = new ScoreValue(
         PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.1, 1.0, 7.2, usedValues);
-    byte[] bytes = Json.toBytes(value);
-    assertNotNull(bytes);
-    assertTrue(bytes.length > 0);
+    valueWithExplanation.explain("this is an explanation");
+    ScoreValue clone = Json.read(Json.toBytes(valueWithExplanation), ScoreValue.class);
+    assertEquals(valueWithExplanation, clone);
+    assertEquals(valueWithExplanation.hashCode(), clone.hashCode());
+    assertEquals(1, clone.explanation().size());
+    assertEquals("this is an explanation", clone.explanation().get(0));
 
-    ScoreValue clone = Json.read(bytes, ScoreValue.class);
-    assertNotNull(clone);
-    assertEquals(value, clone);
-    assertEquals(value.hashCode(), clone.hashCode());
+    ScoreValue valueWithoutExplanation = new ScoreValue(
+        PROJECT_ACTIVITY_SCORE_EXAMPLE, 5.1, 1.0, 7.2, usedValues);
+
+    assertNotEquals(valueWithExplanation, valueWithoutExplanation);
+
+    clone = Json.read(Json.toBytes(valueWithoutExplanation), ScoreValue.class);
+    assertEquals(valueWithoutExplanation, clone);
+    assertEquals(valueWithoutExplanation.hashCode(), clone.hashCode());
+    assertTrue(valueWithoutExplanation.explanation().isEmpty());
   }
 
   @Test
-  public void testSerializeAndDeserializeUnknown() throws IOException {
+  public void testJsonSerializationWithUnknownScoreValue() throws IOException {
     ScoreValue value = new ScoreValue(PROJECT_ACTIVITY_SCORE_EXAMPLE).makeUnknown();
 
     byte[] bytes = Json.toBytes(value);

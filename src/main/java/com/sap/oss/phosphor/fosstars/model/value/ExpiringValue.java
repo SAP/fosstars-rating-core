@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -59,6 +60,17 @@ public class ExpiringValue<T> implements Value<T> {
   @JsonIgnore
   public boolean isNotApplicable() {
     return value.isNotApplicable();
+  }
+
+  @Override
+  public List<String> explanation() {
+    return value.explanation();
+  }
+
+  @Override
+  public Value<T> explain(String note, Object... params) {
+    value.explain(note, params);
+    return this;
   }
 
   @Override

@@ -11,7 +11,7 @@ import java.util.Objects;
  * This is a value for the
  * {@link com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures#VULNERABILITIES} feature.
  */
-public class VulnerabilitiesValue extends AbstractValue<Vulnerabilities> {
+public class VulnerabilitiesValue extends AbstractKnownValue<Vulnerabilities> {
 
   /**
    * Vulnerabilities.

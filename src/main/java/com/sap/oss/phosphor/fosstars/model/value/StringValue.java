@@ -9,7 +9,7 @@ import java.util.Objects;
 /**
  * A value for a feature that holds a string.
  */
-public class StringValue extends AbstractValue<String> {
+public class StringValue extends AbstractKnownValue<String> {
 
   /**
    * Version of an artifact.
