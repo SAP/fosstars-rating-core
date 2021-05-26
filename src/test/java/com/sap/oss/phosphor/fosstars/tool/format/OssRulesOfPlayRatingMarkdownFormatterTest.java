@@ -55,6 +55,7 @@ public class OssRulesOfPlayRatingMarkdownFormatterTest {
       assertFalse(lowerCaseText.contains("fail"));
       assertFalse(lowerCaseText.contains("unclear"));
       assertFalse(lowerCaseText.contains("unknown"));
+      assertFalse(lowerCaseText.contains("explanation"));
       checkRuleIds(text);
     } finally {
       FileUtils.forceDeleteOnExit(CONFIG_PATH.toFile());
@@ -106,6 +107,7 @@ public class OssRulesOfPlayRatingMarkdownFormatterTest {
       assertTrue(lowerCaseText.contains("violated"));
       assertFalse(lowerCaseText.contains("unclear"));
       assertFalse(lowerCaseText.contains("unknown"));
+      assertFalse(lowerCaseText.contains("explanation"));
       checkRuleIds(text);
     } finally {
       FileUtils.forceDeleteOnExit(CONFIG_PATH.toFile());
