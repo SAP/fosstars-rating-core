@@ -8,6 +8,7 @@ import com.sap.oss.phosphor.fosstars.model.Value;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  * This is a wrapper for a feature value which adds an expiration date for the value.
@@ -70,6 +71,18 @@ public class ExpiringValue<T> implements Value<T> {
   @Override
   public Value<T> explain(String note, Object... params) {
     value.explain(note, params);
+    return this;
+  }
+
+  @Override
+  public Value<T> explainIf(Predicate<T> condition, String note, Object... params) {
+    value.explainIf(condition, note, params);
+    return this;
+  }
+
+  @Override
+  public Value<T> explainIf(T value, String note, Object... params) {
+    this.value.explainIf(value, note, params);
     return this;
   }
 

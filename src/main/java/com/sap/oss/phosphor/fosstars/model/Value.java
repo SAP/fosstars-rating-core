@@ -2,6 +2,7 @@ package com.sap.oss.phosphor.fosstars.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * An interface for a feature value of specific type.
@@ -42,11 +43,32 @@ public interface Value<T> {
   /**
    * Add a note that explains the value.
    *
-   * @param note The note to be added. That may be a format string.
+   * @param note The note to be added. It may be a format string.
    * @param params A number of parameters if a format string is passed.
    * @return The same value.
    */
   Value<T> explain(String note, Object... params);
+
+  /**
+   * Add a note that explains the value if a condition is satisfied.
+   *
+   * @param condition The condition.
+   * @param note The note to be added if the condition is satisfied. It may be a format string.
+   * @param params A number of parameters if a format string is passed.
+   * @return The same value.
+   */
+  Value<T> explainIf(Predicate<T> condition, String note, Object... params);
+
+  /**
+   * Add a note that explains the value if it is equal to the expected data.
+   *
+   * @param value The expected data.
+   * @param note The note to be added if the value is equal to the specified one.
+   *             It may be a format string.
+   * @param params A number of parameters if a format string is passed.
+   * @return The same value.
+   */
+  Value<T> explainIf(T value, String note, Object... params);
 
   /**
    * Get the value.
