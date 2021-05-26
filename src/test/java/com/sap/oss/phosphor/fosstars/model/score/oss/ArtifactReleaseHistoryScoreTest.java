@@ -7,18 +7,17 @@ import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.score.oss.ArtifactReleaseHistoryScore.VersionInfo;
 import com.sap.oss.phosphor.fosstars.model.score.oss.ArtifactReleaseHistoryScore.VersionStats;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersions;
-import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersionsValue;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Optional;
 import org.junit.Test;
 
 public class ArtifactReleaseHistoryScoreTest {
@@ -57,8 +56,8 @@ public class ArtifactReleaseHistoryScoreTest {
         new ArtifactVersion("1.0.0", now.minusDays(250))));
 
     VersionStats stats = ArtifactReleaseHistoryScore.calculateVersionStats(versionInfos);
-    assertEquals(173.33333333333334, stats.averageDaysBetweenReleases, DELTA);
-    assertEquals(0.6666666666666666, stats.releaseCycleTrend, DELTA);
+    assertEquals(173.33, stats.averageDaysBetweenReleases, DELTA);
+    assertEquals(0.66, stats.releaseCycleTrend, DELTA);
   }
 
   @Test
@@ -73,8 +72,8 @@ public class ArtifactReleaseHistoryScoreTest {
     Collection<VersionInfo> versionInfo =
         ArtifactReleaseHistoryScore.versionInfo(artifactVersions);
     VersionStats stats = ArtifactReleaseHistoryScore.calculateVersionStats(versionInfo);
-    assertEquals(173.33333333333334, stats.averageDaysBetweenReleases, DELTA);
-    assertEquals(0.6666666666666666, stats.releaseCycleTrend, DELTA);
+    assertEquals(173.33, stats.averageDaysBetweenReleases, DELTA);
+    assertEquals(0.66, stats.releaseCycleTrend, DELTA);
   }
 
   @Test
@@ -271,11 +270,8 @@ public class ArtifactReleaseHistoryScoreTest {
     Value<ArtifactVersion> version = ARTIFACT_VERSION.value(version120);
     ScoreValue value = score.calculate(versions, version);
     assertEquals(8.8, value.get(), DELTA);
-
-    final Optional<Value<?>> versionsValue =
-        value.usedValues().stream().filter(v -> v instanceof ArtifactVersionsValue).findFirst();
-    assertTrue(versionsValue.isPresent());
-    assertTrue(((ArtifactVersions) versionsValue.get().get()).containsAllOf(artifactVersions));
+    assertTrue(value.usedValues().contains(versions));
+    assertTrue(value.usedValues().contains(version));
   }
 
   @Test
@@ -296,15 +292,12 @@ public class ArtifactReleaseHistoryScoreTest {
     Value<ArtifactVersion> version = ARTIFACT_VERSION.value(version200);
     ScoreValue value = score.calculate(versions, version);
     assertEquals(6.1, value.get(), DELTA);
-
-    final Optional<Value<?>> versionsValue =
-        value.usedValues().stream().filter(v -> v instanceof ArtifactVersionsValue).findFirst();
-    assertTrue(versionsValue.isPresent());
-    assertTrue(((ArtifactVersions) versionsValue.get().get()).containsAllOf(artifactVersions));
+    assertTrue(value.usedValues().contains(versions));
+    assertTrue(value.usedValues().contains(version));
   }
 
   @Test
-  public void testVersionsSelectionIfNonSemanticVersionExists() {
+  public void testVersionsSelectionIfNotSemanticVersionExists() {
     LocalDateTime now = LocalDateTime.now();
     ArtifactVersion version100 = new ArtifactVersion("1.0.0", now.minusDays(4 * 29));
     ArtifactVersion nonSematicVersion = new ArtifactVersion("MIGHTY-1.0", now.minusDays(5 * 29));
@@ -315,35 +308,38 @@ public class ArtifactReleaseHistoryScoreTest {
     ArtifactVersions artifactVersions =
         ArtifactVersions.of(version100, nonSematicVersion, version110, version120, version200);
     ArtifactReleaseHistoryScore score = new ArtifactReleaseHistoryScore();
-    ScoreValue value = score.calculate(RELEASED_ARTIFACT_VERSIONS.value(artifactVersions),
-        ARTIFACT_VERSION.value(version110));
+    Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(artifactVersions);
+    Value<ArtifactVersion> version = ARTIFACT_VERSION.value(version110);
+    ScoreValue value = score.calculate(versions, version);
     assertEquals(8.5, value.get(), DELTA);
-
-    final Optional<Value<?>> versionsValue =
-        value.usedValues().stream().filter(v -> v instanceof ArtifactVersionsValue).findFirst();
-    assertTrue(versionsValue.isPresent());
-    assertTrue(((ArtifactVersions) versionsValue.get().get()).containsAllOf(artifactVersions));
+    assertTrue(value.usedValues().contains(versions));
+    assertTrue(value.usedValues().contains(version));
   }
 
   @Test
-  public void testVersionsSelectionIfArtifactIsNonSemantic() {
+  public void testVersionsSelectionIfArtifactIsNotSemantic() {
     LocalDateTime now = LocalDateTime.now();
     ArtifactVersion version100 = new ArtifactVersion("1.0.0", now.minusDays(6 * 31));
-    ArtifactVersion nonSematicVersion = new ArtifactVersion("MIGHTY-1.0", now.minusDays(4 * 31));
+    ArtifactVersion versionMighty = new ArtifactVersion("MIGHTY-1.0", now.minusDays(4 * 31));
     ArtifactVersion version110 = new ArtifactVersion("1.1.0", now.minusDays(3 * 31));
     ArtifactVersion version200 = new ArtifactVersion("2.0.0", now.minusDays(2 * 31));
 
     ArtifactVersions artifactVersions =
-        ArtifactVersions.of(version100, nonSematicVersion, version110, version200);
+        ArtifactVersions.of(version100, versionMighty, version110, version200);
     ArtifactReleaseHistoryScore score = new ArtifactReleaseHistoryScore();
-    ScoreValue value = score.calculate(RELEASED_ARTIFACT_VERSIONS.value(artifactVersions),
-        ARTIFACT_VERSION.value(nonSematicVersion));
-    assertEquals(7.3, value.get(), DELTA);
+    Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(artifactVersions);
 
-    final Optional<Value<?>> versionsValue =
-        value.usedValues().stream().filter(v -> v instanceof ArtifactVersionsValue).findFirst();
-    assertTrue(versionsValue.isPresent());
-    assertTrue(((ArtifactVersions) versionsValue.get().get()).containsAllOf(artifactVersions));
+    Value<ArtifactVersion> notSemanticVersion = ARTIFACT_VERSION.value(versionMighty);
+    ScoreValue valueForNotSemanticVersion = score.calculate(versions, notSemanticVersion);
+    assertEquals(7.3, valueForNotSemanticVersion.get(), DELTA);
+    assertTrue(valueForNotSemanticVersion.usedValues().contains(versions));
+    assertTrue(valueForNotSemanticVersion.usedValues().contains(notSemanticVersion));
+
+    Value<ArtifactVersion> semanticVersion = ARTIFACT_VERSION.value(version200);
+    ScoreValue valueForSemanticVersion = score.calculate(versions, semanticVersion);
+    assertEquals(7.3, valueForSemanticVersion.get(), DELTA);
+    assertTrue(valueForSemanticVersion.usedValues().contains(versions));
+    assertTrue(valueForSemanticVersion.usedValues().contains(semanticVersion));
   }
 
   @Test
@@ -354,6 +350,7 @@ public class ArtifactReleaseHistoryScoreTest {
     ScoreValue value =
         score.calculate(RELEASED_ARTIFACT_VERSIONS.unknown(), ARTIFACT_VERSION.value(version100));
     assertTrue(value.isUnknown());
+    assertEquals(Confidence.MIN, value.confidence(), DELTA);
   }
 
   @Test
@@ -362,6 +359,7 @@ public class ArtifactReleaseHistoryScoreTest {
     ScoreValue value =
         score.calculate(RELEASED_ARTIFACT_VERSIONS.unknown(), ARTIFACT_VERSION.unknown());
     assertTrue(value.isUnknown());
+    assertEquals(Confidence.MIN, value.confidence(), DELTA);
   }
 
   @Test
@@ -373,13 +371,10 @@ public class ArtifactReleaseHistoryScoreTest {
 
     ArtifactVersions artifactVersions = ArtifactVersions.of(version100, version110, version200);
     ArtifactReleaseHistoryScore score = new ArtifactReleaseHistoryScore();
-    ScoreValue value = score.calculate(RELEASED_ARTIFACT_VERSIONS.value(artifactVersions),
-        ARTIFACT_VERSION.unknown());
+    Value<ArtifactVersions> versions = RELEASED_ARTIFACT_VERSIONS.value(artifactVersions);
+    ScoreValue value = score.calculate(versions, ARTIFACT_VERSION.unknown());
     assertEquals(5.0, value.get(), DELTA);
-
-    final Optional<Value<?>> versionsValue =
-        value.usedValues().stream().filter(v -> v instanceof ArtifactVersionsValue).findFirst();
-    assertTrue(versionsValue.isPresent());
-    assertTrue(((ArtifactVersions) versionsValue.get().get()).containsAllOf(artifactVersions));
+    assertTrue(value.confidence() < Confidence.MAX);
+    assertTrue(value.usedValues().contains(versions));
   }
 }

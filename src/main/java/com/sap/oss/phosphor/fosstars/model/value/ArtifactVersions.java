@@ -112,7 +112,7 @@ public class ArtifactVersions implements Iterable<ArtifactVersion> {
    *
    * @param versions The other versions.
    * @return True if all the other versions is present in the collection,
-   *          false otherwise.
+   *         false otherwise.
    */
   public boolean containsAllOf(ArtifactVersions versions) {
     for (ArtifactVersion version : versions) {
@@ -153,22 +153,16 @@ public class ArtifactVersions implements Iterable<ArtifactVersion> {
   /**
    * Filter {@link ArtifactVersions} by major version.
    *
-   * @param version The artifact version.
+   * @param version The {@link SemanticVersion}.
    * @return Filtered {@link ArtifactVersions}.
    */
-  public ArtifactVersions filterArtifactsByMajorVersion(String version) {
-    Optional<SemanticVersion> currentVersion = SemanticVersion.parse(version);
-    if (!currentVersion.isPresent()) {
-      return ArtifactVersions.ofNothing();
-    }
-
-    int major = currentVersion.get().getMajor();
+  public ArtifactVersions filterArtifactsByMajorVersion(SemanticVersion version) {
+    final int major = version.getMajor();
     ComparableVersion currentMajorVersion =
         new ComparableVersion(String.format(MAJOR_VERSION_TEMPLATE, major));
     ComparableVersion nextMajorVersion =
         new ComparableVersion(String.format(MAJOR_VERSION_TEMPLATE, major + 1));
 
-    // If a non-semantic version exists, do not consider it for score calculation.
     return new ArtifactVersions(
         elements.stream()
           .filter(v -> v.hasValidSemanticVersion())

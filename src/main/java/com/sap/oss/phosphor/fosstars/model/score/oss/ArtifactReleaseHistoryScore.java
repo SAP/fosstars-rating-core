@@ -166,7 +166,7 @@ public class ArtifactReleaseHistoryScore extends FeatureBasedScore {
     if (!artifactVersion.isUnknown() && artifactVersion.get().hasValidSemanticVersion()) {
       ArtifactVersions filteredArtifactVersions =
           artifactVersions.get().filterArtifactsByMajorVersion(
-              artifactVersion.get().getSemanticVersion().get().toString());
+              artifactVersion.get().getSemanticVersion().get());
 
       if (filteredArtifactVersions.size() > ARTIFACT_VERSIONS_SIZE_THRESHOLD) {
         return filteredArtifactVersions.sortByReleaseDate();

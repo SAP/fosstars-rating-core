@@ -66,10 +66,11 @@ public class ArtifactVersionsTest {
 
     ArtifactVersions v = new ArtifactVersions(v1, v2, v3, v4, v5, v6, v7, v8, v9, v10);
 
-    ArtifactVersions filteredRange = v.filterArtifactsByMajorVersion("2.3.0");
+    ArtifactVersions filteredRange =
+        v.filterArtifactsByMajorVersion(SemanticVersion.parse("2.3.0").get());
     assertTrue(Arrays.asList(v4, v5, v6).containsAll(filteredRange.get()));
 
-    filteredRange = v.filterArtifactsByMajorVersion("1.3.0");
+    filteredRange = v.filterArtifactsByMajorVersion(SemanticVersion.parse("1.3.0").get());
     assertTrue(Arrays.asList(v1, v2, v3, v7, v8).containsAll(filteredRange.get()));
   }
 }
