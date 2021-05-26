@@ -118,6 +118,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownForma
         .replace("%WARNINGS%", warningsFrom(scoreValue))
         .replace("%PASSED_RULES%", passedRulesFrom(scoreValue))
         .replace("%UNCLEAR_RULES%", unclearRulesFrom(scoreValue))
+        .replace("%EXPLANATION%", valueExplanationsIn(scoreValue))
         .replace("%ADVICE%", advice);
   }
 
@@ -215,6 +216,27 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownForma
   }
 
   /**
+   * Print out a list of explanations for a score value.
+   *
+   * @param scoreValue The score value.
+   * @return A formatted list of explanations.
+   */
+  private String valueExplanationsIn(ScoreValue scoreValue) {
+    StringBuilder content = new StringBuilder();
+    for (Value<?> value : scoreValue.usedFeatureValues()) {
+      for (String note : value.explanation()) {
+        content.append(String.format("1.  %s%n", note));
+      }
+    }
+
+    if (content.length() == 0) {
+      return StringUtils.EMPTY;
+    }
+
+    return String.format("## Explanation%n%n%s%n", content);
+  }
+
+  /**
    * Prints a formatted violated rule.
    *
    * @param value The rule.
@@ -223,7 +245,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownForma
   private String formatRule(Value<?> value) {
     String answer = "unknown";
     if (!value.isUnknown()) {
-      if (value instanceof BooleanValue == false) {
+      if (!BooleanValue.class.equals(value.getClass())) {
         throw new IllegalArgumentException("Oh no! Expected a boolean value!");
       }
       answer = ((BooleanValue) value).get() ? "Yes" : "No";
@@ -254,7 +276,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownForma
    * @throws IllegalArgumentException In case of unknown label.
    */
   public static String format(Label label) {
-    if (label instanceof OssRulesOfPlayRating.OssRulesOfPlayLabel == false) {
+    if (!OssRulesOfPlayRating.OssRulesOfPlayLabel.class.equals(label.getClass())) {
       throw new IllegalArgumentException("Oops! Unknown label!");
     }
 
@@ -330,7 +352,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownForma
       String featureName = node.asText();
       boolean found = false;
       for (Feature<?> feature : rating.allFeatures()) {
-        if (feature instanceof BooleanFeature == false) {
+        if (!BooleanFeature.class.equals(feature.getClass())) {
           throw new IOException(String.format("Oops! Not a boolean feature: %s", featureName));
         }
 
