@@ -11,7 +11,7 @@ import java.util.Objects;
 /**
  * A value of a feature which provides a date.
  */
-public class DateValue extends AbstractValue<Date> {
+public class DateValue extends AbstractKnownValue<Date> {
 
   /**
    * The date.

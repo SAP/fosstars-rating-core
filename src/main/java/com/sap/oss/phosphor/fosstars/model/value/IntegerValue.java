@@ -9,7 +9,7 @@ import java.util.Objects;
 /**
  * A value of a feature which provides an integer number.
  */
-public class IntegerValue extends AbstractValue<Integer> {
+public class IntegerValue extends AbstractKnownValue<Integer> {
 
   /**
    * The integer.

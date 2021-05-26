@@ -9,7 +9,7 @@ import java.util.Objects;
 /**
  * A value for a feature that holds versions for an artifact.
  */
-public class ArtifactVersionsValue extends AbstractValue<ArtifactVersions> {
+public class ArtifactVersionsValue extends AbstractKnownValue<ArtifactVersions> {
 
   /**
    * Versions of an artifact.

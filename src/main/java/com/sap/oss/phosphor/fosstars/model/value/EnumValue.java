@@ -12,7 +12,7 @@ import java.util.Objects;
  *
  * @param <T> Enum type.
  */
-public class EnumValue<T extends Enum<T>> extends AbstractValue<T> {
+public class EnumValue<T extends Enum<T>> extends AbstractKnownValue<T> {
 
   /**
    * The value item.

@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import java.util.Objects;
 
-public class LgtmGradeValue extends AbstractValue<LgtmGrade> {
+public class LgtmGradeValue extends AbstractKnownValue<LgtmGrade> {
 
   /**
    * The value.

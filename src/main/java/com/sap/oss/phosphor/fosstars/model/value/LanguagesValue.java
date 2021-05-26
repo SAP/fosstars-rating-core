@@ -9,7 +9,7 @@ import java.util.Objects;
 /**
  * A value for a feature that holds a set of programming languages.
  */
-public class LanguagesValue extends AbstractValue<Languages> {
+public class LanguagesValue extends AbstractKnownValue<Languages> {
 
   /**
    * A language.

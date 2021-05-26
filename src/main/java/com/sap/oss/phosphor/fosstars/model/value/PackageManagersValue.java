@@ -9,7 +9,7 @@ import java.util.Objects;
 /**
  * A value for a feature that holds a set of package managers.
  */
-public class PackageManagersValue extends AbstractValue<PackageManagers> {
+public class PackageManagersValue extends AbstractKnownValue<PackageManagers> {
 
   /**
    * A set of package managers.

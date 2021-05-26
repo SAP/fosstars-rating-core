@@ -16,7 +16,7 @@ import java.util.Optional;
 /**
  * The class holds a score value produced by {@link Score}.
  */
-public class ScoreValue implements Value<Double>, Confidence {
+public class ScoreValue extends AbstractValue<Double, ScoreValue> implements Confidence {
 
   /**
    * A score.
@@ -42,11 +42,6 @@ public class ScoreValue implements Value<Double>, Confidence {
    * A list of values which were used to build the score value.
    */
   private final List<Value<?>> usedValues;
-
-  /**
-   * A list of notes which explain how the score value was calculated.
-   */
-  private final List<String> explanation;
 
   /**
    * A flag that tells if the score value is unknown.
@@ -76,8 +71,8 @@ public class ScoreValue implements Value<Double>, Confidence {
    * @param confidence The confidence.
    * @param usedValues A list of values which were used to produce the score value.
    */
-  public ScoreValue(Score score, double value, double weight, double confidence,
-      List<Value<?>> usedValues) {
+  public ScoreValue(
+      Score score, double value, double weight, double confidence, List<Value<?>> usedValues) {
 
     this(score, value, weight, confidence, usedValues, Collections.emptyList(), false, false);
   }
@@ -105,15 +100,15 @@ public class ScoreValue implements Value<Double>, Confidence {
       @JsonProperty(value = "isUnknown", defaultValue = "false") boolean isUnknown,
       @JsonProperty(value = "isNotApplicable", defaultValue = "false") boolean isNotApplicable) {
 
-    this.score = Objects.requireNonNull(score, "Score can't be null!");
-    Objects.requireNonNull(usedValues, "Values can't be null!");
-    Objects.requireNonNull(explanation, "Explanation can't be null!");
+    super(score, explanation);
 
+    Objects.requireNonNull(usedValues, "Values can't be null!");
+
+    this.score = score;
     this.value = Score.check(value);
     this.weight = Weight.check(weight);
     this.confidence = Confidence.check(confidence);
-    this.usedValues = new ArrayList(usedValues);
-    this.explanation = new ArrayList<>(explanation);
+    this.usedValues = new ArrayList<>(usedValues);
     this.isUnknown = isUnknown;
     this.isNotApplicable = isNotApplicable;
   }
@@ -121,11 +116,6 @@ public class ScoreValue implements Value<Double>, Confidence {
   @JsonGetter("score")
   public Score score() {
     return score;
-  }
-
-  @Override
-  public Score feature() {
-    return score();
   }
 
   @Override
@@ -180,9 +170,7 @@ public class ScoreValue implements Value<Double>, Confidence {
    */
   public ScoreValue usedValues(Value<?>... values) {
     Objects.requireNonNull(values, "Hey! Values can't be null!");
-    for (Value<?> value : values) {
-      usedValues.add(value);
-    }
+    Collections.addAll(usedValues, values);
     return this;
   }
 
@@ -274,33 +262,6 @@ public class ScoreValue implements Value<Double>, Confidence {
    */
   public ScoreValue weight(double value) {
     this.weight = Weight.check(value);
-    return this;
-  }
-
-  /**
-   * Get explanations.
-   *
-   * @return A list of explanation which explain how the score value was calculated.
-   */
-  @JsonGetter("explanation")
-  public List<String> explanation() {
-    return new ArrayList<>(explanation);
-  }
-
-  /**
-   * Add a note which explains how the score value was calculated.
-   *
-   * @param note The note to be added. That may be a format string.
-   * @param params A number of parameters if a format string is passed.
-   * @return The same score value.
-   */
-  public ScoreValue explain(String note, Object... params) {
-    Objects.requireNonNull(note, "Note can't be null!");
-    note = note.trim();
-    if (note.isEmpty()) {
-      throw new IllegalArgumentException("Note can't be empty!");
-    }
-    explanation.add(String.format(note, params));
     return this;
   }
 
@@ -425,23 +386,23 @@ public class ScoreValue implements Value<Double>, Confidence {
     if (this == o) {
       return true;
     }
-    if (o instanceof ScoreValue == false) {
+    if (o == null || !ScoreValue.class.isAssignableFrom(o.getClass())) {
+      return false;
+    }
+    if (!super.equals(o)) {
       return false;
     }
     ScoreValue that = (ScoreValue) o;
-    return isUnknown == that.isUnknown
-        && isNotApplicable == that.isNotApplicable
-        && Double.compare(that.value, value) == 0
+    return Double.compare(that.value, value) == 0
         && Double.compare(that.confidence, confidence) == 0
-        && Double.compare(that.weight, weight) == 0
-        && Objects.equals(score, that.score)
-        && Objects.equals(usedValues, that.usedValues)
-        && Objects.equals(explanation, that.explanation);
+        && Double.compare(that.weight, weight) == 0 && isUnknown == that.isUnknown
+        && isNotApplicable == that.isNotApplicable
+        && score.equals(that.score) && usedValues.equals(that.usedValues);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(score, value, confidence, weight,
-        usedValues, explanation, isUnknown, isNotApplicable);
+    return Objects.hash(
+        super.hashCode(), score, value, confidence, weight, usedValues, isUnknown, isNotApplicable);
   }
 }

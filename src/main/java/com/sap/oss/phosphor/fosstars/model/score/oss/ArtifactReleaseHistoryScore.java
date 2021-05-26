@@ -36,8 +36,8 @@ public class ArtifactReleaseHistoryScore extends FeatureBasedScore {
     if (artifactVersions.isUnknown()) {
       return scoreValue(0.0, artifactVersions)
           .makeUnknown()
-          .explain("No versions are found. Hence, no release history score can be calculated")
-          .withMinConfidence();
+          .withMinConfidence()
+          .explain("No versions are found. Hence, no release history score can be calculated");
     }
 
     if (artifactVersions.get().size() <= 1) {

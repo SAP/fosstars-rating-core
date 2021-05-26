@@ -10,7 +10,7 @@ import java.util.Objects;
  * The value for
  * {@link com.sap.oss.phosphor.fosstars.model.feature.OwaspDependencyCheckUsageFeature}.
  */
-public class OwaspDependencyCheckUsageValue extends AbstractValue<OwaspDependencyCheckUsage> {
+public class OwaspDependencyCheckUsageValue extends AbstractKnownValue<OwaspDependencyCheckUsage> {
 
   /**
    * A usage status value of type {@link OwaspDependencyCheckUsage}.
