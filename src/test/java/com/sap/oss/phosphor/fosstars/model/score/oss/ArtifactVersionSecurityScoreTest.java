@@ -74,7 +74,7 @@ public class ArtifactVersionSecurityScoreTest {
         PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertTrue(DoubleInterval.closed(6.75, 7.25).contains(scoreValue.get()));
+    assertTrue(DoubleInterval.closed(7, 7.50).contains(scoreValue.get()));
     assertEquals(CONFIDENCE_NO_VULNERABILITIES, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }
