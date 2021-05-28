@@ -19,7 +19,7 @@ public abstract class AbstractKnownValue<T> extends AbstractValue<T, AbstractKno
    *
    * @param feature The feature.
    */
-  AbstractKnownValue(@JsonProperty("feature") Feature<T> feature) {
+  public AbstractKnownValue(@JsonProperty("feature") Feature<T> feature) {
     super(feature);
   }
 
