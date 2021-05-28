@@ -1,5 +1,6 @@
 package com.sap.oss.phosphor.fosstars.data.github.experimental;
 
+import static com.sap.oss.phosphor.fosstars.data.github.experimental.SecurityReviewsFromOpenSSF.DATE_FORMAT;
 import static com.sap.oss.phosphor.fosstars.data.github.experimental.SecurityReviewsFromOpenSSF.SECURITY_REVIEWS_PROJECT;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -133,7 +134,7 @@ public class SecurityReviewsFromOpenSSFTest extends TestGitHubDataFetcherHolder 
 
     Optional<Date> date = provider.readReviewDateFrom(Yaml.mapper().readTree(content));
     assertTrue(date.isPresent());
-    assertEquals("Fri Sep 30 00:00:00 CEST 2016", date.get().toString());
+    assertEquals("2016-09-30", DATE_FORMAT.format(date.get()));
 
     String wrongContent = "---\n"
         + "Package-URLs:\n"
@@ -197,7 +198,7 @@ public class SecurityReviewsFromOpenSSFTest extends TestGitHubDataFetcherHolder 
       SecurityReviews reviews = value.get();
       assertEquals(1, reviews.size());
       SecurityReview review = reviews.iterator().next();
-      assertEquals("Fri Dec 25 00:00:00 CET 2020", review.date().toString());
+      assertEquals("2020-12-25", DATE_FORMAT.format(review.date()));
       assertEquals(project, review.subject());
 
       when(repository.files(any(), any())).thenReturn(Collections.emptyList());
