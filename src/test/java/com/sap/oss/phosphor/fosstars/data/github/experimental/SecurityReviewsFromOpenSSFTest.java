@@ -1,7 +1,9 @@
 package com.sap.oss.phosphor.fosstars.data.github.experimental;
 
 import static com.sap.oss.phosphor.fosstars.data.github.experimental.SecurityReviewsFromOpenSSF.SECURITY_REVIEWS_PROJECT;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -12,6 +14,8 @@ import com.sap.oss.phosphor.fosstars.data.github.LocalRepository;
 import com.sap.oss.phosphor.fosstars.data.github.TestGitHubDataFetcherHolder;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
+import com.sap.oss.phosphor.fosstars.model.value.SecurityReview;
+import com.sap.oss.phosphor.fosstars.model.value.SecurityReviews;
 import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -152,7 +156,6 @@ public class SecurityReviewsFromOpenSSFTest extends TestGitHubDataFetcherHolder 
     Path repositoryDirectory
         = Files.createTempDirectory(SecurityReviewsFromOpenSSFTest.class.getName());
     try {
-      GitHubProject project = new GitHubProject("org", "test");
       LocalRepository repository = mock(LocalRepository.class);
       TestGitHubDataFetcher.addForTesting(SECURITY_REVIEWS_PROJECT, repository);
 
@@ -185,6 +188,8 @@ public class SecurityReviewsFromOpenSSFTest extends TestGitHubDataFetcherHolder 
           + "Some text here.\n";
       Files.write(reviewFile, content.getBytes());
       when(repository.files(any(), any())).thenReturn(Collections.singletonList(reviewFile));
+
+      GitHubProject project = new GitHubProject("org", "test");
 
       Value<SecurityReviews> value = provider.fetchValueFor(project);
       assertFalse(value.isUnknown());
