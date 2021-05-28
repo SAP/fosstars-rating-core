@@ -1,7 +1,6 @@
 package com.sap.oss.phosphor.fosstars.data.github.experimental;
 
 import static java.lang.String.format;
-import static java.util.Arrays.asList;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.github.packageurl.MalformedPackageURLException;
@@ -10,11 +9,12 @@ import com.sap.oss.phosphor.fosstars.data.github.CachedSingleFeatureGitHubDataPr
 import com.sap.oss.phosphor.fosstars.data.github.GitHubDataFetcher;
 import com.sap.oss.phosphor.fosstars.data.github.LocalRepository;
 import com.sap.oss.phosphor.fosstars.model.Feature;
-import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.Value;
-import com.sap.oss.phosphor.fosstars.model.feature.AbstractFeature;
+import com.sap.oss.phosphor.fosstars.model.feature.oss.SecurityReviewsFeature;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
-import com.sap.oss.phosphor.fosstars.model.value.AbstractKnownValue;
+import com.sap.oss.phosphor.fosstars.model.value.SecurityReview;
+import com.sap.oss.phosphor.fosstars.model.value.SecurityReviews;
+import com.sap.oss.phosphor.fosstars.model.value.SecurityReviewsValue;
 import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,14 +24,10 @@ import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.StreamSupport;
 
 /**
@@ -153,11 +149,11 @@ public class SecurityReviewsFromOpenSSF
    */
   boolean purlBelongsTo(GitHubProject project, String purl) {
     try {
-      PackageURL packageURL = new PackageURL(purl);
-      return "github".equalsIgnoreCase(packageURL.getType())
-          && packageURL.getNamespace() != null
-          && packageURL.getName() != null
-          && project.equals(new GitHubProject(packageURL.getNamespace(), packageURL.getName()));
+      PackageURL packageUrl = new PackageURL(purl);
+      return "github".equalsIgnoreCase(packageUrl.getType())
+          && packageUrl.getNamespace() != null
+          && packageUrl.getName() != null
+          && project.equals(new GitHubProject(packageUrl.getNamespace(), packageUrl.getName()));
     } catch (MalformedPackageURLException e) {
       logger.warn(() -> format("Oops! Could not parse package URL: %s", purl), e);
     }
@@ -211,196 +207,3 @@ public class SecurityReviewsFromOpenSSF
   }
 }
 
-/**
- * A security review.
- */
-class SecurityReview {
-
-  /**
-   * What was reviewed.
-   */
-  private final Subject subject;
-
-  /**
-   * When the review was done.
-   */
-  private final Date date;
-
-  /**
-   * Create a new review.
-   *
-   * @param subject What was reviewed.
-   * @param date Whe the review wes done.
-   */
-  SecurityReview(Subject subject, Date date) {
-    this.subject = Objects.requireNonNull(subject, "Subject can't be null!");
-    this.date = Objects.requireNonNull(date, "Date can't be null!");
-  }
-
-  /**
-   * Returns what was reviewed.
-   *
-   * @return What was reviewed.
-   */
-  public Subject subject() {
-    return subject;
-  }
-
-  /**
-   * Returns a date when the review was done.
-   *
-   * @return A date of review.
-   */
-  public Date date() {
-    return date;
-  }
-}
-
-/**
- * A set of security reviews.
- */
-class SecurityReviews implements Set<SecurityReview> {
-
-  /**
-   * Security reviews.
-   */
-  private final Set<SecurityReview> elements = new HashSet<>();
-
-  /**
-   * Create a set of security reviews.
-   *
-   * @param elements Reviews to be added to the new set.
-   */
-  public SecurityReviews(SecurityReview... elements) {
-    Objects.requireNonNull(elements, "Elements can't be null!");
-    this.elements.addAll(asList(elements));
-  }
-
-  /**
-   * Create a set of security reviews.
-   *
-   * @param reviews Reviews to be added to the new set.
-   */
-  public SecurityReviews(SecurityReviews reviews) {
-    Objects.requireNonNull(reviews, "Reviews can't be null!");
-    this.elements.addAll(reviews.elements);
-  }
-
-  @Override
-  public int size() {
-    return elements.size();
-  }
-
-  @Override
-  public boolean isEmpty() {
-    return elements.isEmpty();
-  }
-
-  @Override
-  public boolean contains(Object o) {
-    return elements.contains(o);
-  }
-
-  @Override
-  public Iterator<SecurityReview> iterator() {
-    return elements.iterator();
-  }
-
-  @Override
-  public Object[] toArray() {
-    return elements.toArray();
-  }
-
-  @Override
-  public <T> T[] toArray(T[] a) {
-    return elements.toArray(a);
-  }
-
-  @Override
-  public boolean add(SecurityReview review) {
-    return elements.add(review);
-  }
-
-  @Override
-  public boolean remove(Object element) {
-    return elements.remove(element);
-  }
-
-  @Override
-  public boolean containsAll(Collection<?> elements) {
-    return this.elements.containsAll(elements);
-  }
-
-  @Override
-  public boolean addAll(Collection<? extends SecurityReview> elements) {
-    return this.elements.addAll(elements);
-  }
-
-  @Override
-  public boolean retainAll(Collection<?> elements) {
-    return this.elements.retainAll(elements);
-  }
-
-  @Override
-  public boolean removeAll(Collection<?> elements) {
-    return this.elements.removeAll(elements);
-  }
-
-  @Override
-  public void clear() {
-    elements.clear();
-  }
-}
-
-/**
- * A features that holds security reviews.
- */
-class SecurityReviewsFeature extends AbstractFeature<SecurityReviews> {
-
-  /**
-   * Initializes a feature.
-   *
-   * @param name The feature name.
-   */
-  public SecurityReviewsFeature(String name) {
-    super(name);
-  }
-
-  @Override
-  public Value<SecurityReviews> value(SecurityReviews reviews) {
-    return new SecurityReviewsValue(this, reviews);
-  }
-
-  @Override
-  public Value<SecurityReviews> parse(String string) {
-    throw new UnsupportedOperationException("Unfortunately I can't parse security reviews");
-  }
-}
-
-/**
- * A value that holds security reviews.
- */
-class SecurityReviewsValue extends AbstractKnownValue<SecurityReviews> {
-
-  /**
-   * A set of security reviews.
-   */
-  private final SecurityReviews reviews;
-
-  /**
-   * Create a value with security reviews.
-   *
-   * @param feature A features for the value.
-   * @param reviews A set of security reviews.
-   */
-  public SecurityReviewsValue(SecurityReviewsFeature feature, SecurityReviews reviews) {
-    super(feature);
-    Objects.requireNonNull(reviews, "Reviews can't be null!");
-    this.reviews = new SecurityReviews(reviews);
-  }
-
-  @Override
-  public SecurityReviews get() {
-    return new SecurityReviews(reviews);
-  }
-}
