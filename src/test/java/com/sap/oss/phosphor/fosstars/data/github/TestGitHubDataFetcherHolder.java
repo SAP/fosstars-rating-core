@@ -89,7 +89,7 @@ public class TestGitHubDataFetcherHolder {
      * @param project The {@link GitHubProject}.
      * @param repository The {@link LocalRepository}.
      */
-    static void addForTesting(GitHubProject project, LocalRepository repository) {
+    public static void addForTesting(GitHubProject project, LocalRepository repository) {
       LOCAL_REPOSITORIES.put(project.scm(), repository);
     }
     
