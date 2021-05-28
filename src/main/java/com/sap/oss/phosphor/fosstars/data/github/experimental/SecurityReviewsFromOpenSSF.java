@@ -53,7 +53,7 @@ public class SecurityReviewsFromOpenSSF
   /**
    * A parser for dates.
    */
-  private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+  static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
   /**
    * Initializes a data provider.
