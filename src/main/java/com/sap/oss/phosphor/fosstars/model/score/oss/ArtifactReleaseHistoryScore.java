@@ -26,6 +26,12 @@ public class ArtifactReleaseHistoryScore extends FeatureBasedScore {
    * The artifact versions list should have size greater than the threshold.
    */
   private static final int ARTIFACT_VERSIONS_SIZE_THRESHOLD = 1;
+  
+  /**
+   * The artifact versions list to be considered as a cluster should have size greater than the
+   * threshold.
+   */
+  private static final int VERSIONS_CLUSTER_SIZE_THRESHOLD = 2;
 
   /**
    * Initializes a new score.
@@ -54,10 +60,10 @@ public class ArtifactReleaseHistoryScore extends FeatureBasedScore {
           .withMinConfidence();
     }
 
-    ScoreValue scoreValue = scoreValue(6.0, artifactVersions, artifactVersion);
+    ScoreValue scoreValue = scoreValue(7.0, artifactVersions, artifactVersion);
 
     final Collection<ArtifactVersion> artifactCollection =
-        filter(artifactVersions, artifactVersion, scoreValue);
+        filter(artifactVersions, artifactVersion);
 
     // check release frequency over time
     Collection<VersionInfo> versionInfo = versionInfo(artifactCollection);
@@ -149,22 +155,21 @@ public class ArtifactReleaseHistoryScore extends FeatureBasedScore {
 
   /**
    * Filter the artifact versions matching with the major version of the given
-   * {@link ArtifactVersion}. Return the filtered list if size > 1.
+   * {@link ArtifactVersion}. Return the filtered list if size >
+   * {@link #VERSIONS_CLUSTER_SIZE_THRESHOLD}.
    * 
    * @param artifactVersions {@link ArtifactVersions} to be filtered.
    * @param artifactVersion {@link ArtifactVersion} provided by the user.
-   * @param scoreValue {@link ScoreValue} to be updated on finding a cluster of versions.
    * @return A collection of {@link ArtifactVersion}.
    */
   private static Collection<ArtifactVersion> filter(Value<ArtifactVersions> artifactVersions,
-      Value<ArtifactVersion> artifactVersion, ScoreValue scoreValue) {
+      Value<ArtifactVersion> artifactVersion) {
     if (!artifactVersion.isUnknown() && artifactVersion.get().hasValidSemanticVersion()) {
       ArtifactVersions filteredArtifactVersions = artifactVersions.get()
           .filterArtifactsByMajorVersion(artifactVersion.get().getSemanticVersion().get());
 
-      // If a cluster of versions has been obtained. Increase the score value.
-      if (filteredArtifactVersions.size() > ARTIFACT_VERSIONS_SIZE_THRESHOLD) {
-        scoreValue.increase(1);
+      // If a cluster of versions has been obtained, return the clustered artifact versions.
+      if (filteredArtifactVersions.size() > VERSIONS_CLUSTER_SIZE_THRESHOLD) {
         return filteredArtifactVersions.sortByReleaseDate();
       }
     }
