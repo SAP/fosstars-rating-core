@@ -74,7 +74,7 @@ public class ArtifactVersionSecurityScoreTest {
         PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertTrue(DoubleInterval.closed(7,8).contains(scoreValue.get()));
+    assertTrue(DoubleInterval.closed(7, 7.50).contains(scoreValue.get()));
     assertEquals(CONFIDENCE_NO_VULNERABILITIES, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }
@@ -97,7 +97,7 @@ public class ArtifactVersionSecurityScoreTest {
         PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertTrue(DoubleInterval.closed(6,7).contains(scoreValue.get()));
+    assertTrue(DoubleInterval.closed(6, 7).contains(scoreValue.get()));
     assertEquals(CONFIDENCE_NO_VULNERABILITIES, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }
@@ -118,7 +118,7 @@ public class ArtifactVersionSecurityScoreTest {
         NUMBER_OF_WATCHERS_ON_GITHUB.value(5));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertTrue(DoubleInterval.closed(7,8).contains(scoreValue.get()));
+    assertTrue(DoubleInterval.closed(7, 8).contains(scoreValue.get()));
     assertEquals(CONFIDENCE_NO_VULNERABILITIES, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }
@@ -139,7 +139,7 @@ public class ArtifactVersionSecurityScoreTest {
         NUMBER_OF_WATCHERS_ON_GITHUB.value(5));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertTrue(DoubleInterval.closed(7,8).contains(scoreValue.get()));
+    assertTrue(DoubleInterval.closed(7, 8).contains(scoreValue.get()));
     assertEquals(CONFIDENCE_NO_VULNERABILITIES, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }
@@ -183,7 +183,7 @@ public class ArtifactVersionSecurityScoreTest {
         NUMBER_OF_WATCHERS_ON_GITHUB.value(5));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertTrue(DoubleInterval.closed(7,8).contains(scoreValue.get()));
+    assertTrue(DoubleInterval.closed(7, 8).contains(scoreValue.get()));
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }
@@ -205,7 +205,7 @@ public class ArtifactVersionSecurityScoreTest {
         NUMBER_OF_WATCHERS_ON_GITHUB.value(5));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertTrue(DoubleInterval.closed(8,9).contains(scoreValue.get()));
+    assertTrue(DoubleInterval.closed(8, 9).contains(scoreValue.get()));
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }

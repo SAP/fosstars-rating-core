@@ -7,7 +7,9 @@ import com.sap.oss.phosphor.fosstars.util.Json;
 import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import org.junit.Test;
 
 public class ArtifactVersionsTest {
@@ -46,5 +48,29 @@ public class ArtifactVersionsTest {
     ArtifactVersions clone = Yaml.read(Yaml.toBytes(versions), ArtifactVersions.class);
     assertTrue(versions.equals(clone) && clone.equals(versions));
     assertEquals(versions.hashCode(), clone.hashCode());
+  }
+
+  @Test
+  public void testGetRangeOfVersionsByMajor() {
+    ArtifactVersion v1 = new ArtifactVersion("1.0.0", LocalDateTime.now().minusDays(30));
+    ArtifactVersion v2 = new ArtifactVersion("1.1.0", LocalDateTime.now().minusDays(20));
+    ArtifactVersion v3 = new ArtifactVersion("1.2.0", LocalDateTime.now().minusDays(10));
+    ArtifactVersion v4 = new ArtifactVersion("2.0.0", LocalDateTime.now());
+    ArtifactVersion v5 = new ArtifactVersion("2.0.1", LocalDateTime.now().plusDays(1));
+    ArtifactVersion v6 = new ArtifactVersion("2.2.1.4-NANO", LocalDateTime.now().plusDays(3));
+    ArtifactVersion v7 = new ArtifactVersion("1.2.0.1", LocalDateTime.now().plusDays(10));
+    ArtifactVersion v8 = new ArtifactVersion("1.0.0-MIGHTY", LocalDateTime.now().plusDays(20));
+    ArtifactVersion v9 = new ArtifactVersion("3.2", LocalDateTime.now().plusDays(30));
+    ArtifactVersion v10 =
+        new ArtifactVersion("1232.2134234.23423", LocalDateTime.now().plusDays(60));
+
+    ArtifactVersions v = new ArtifactVersions(v1, v2, v3, v4, v5, v6, v7, v8, v9, v10);
+
+    ArtifactVersions filteredRange =
+        v.filterArtifactsByMajorVersion(SemanticVersion.parse("2.3.0").get());
+    assertTrue(Arrays.asList(v4, v5, v6).containsAll(filteredRange.get()));
+
+    filteredRange = v.filterArtifactsByMajorVersion(SemanticVersion.parse("1.3.0").get());
+    assertTrue(Arrays.asList(v1, v2, v3, v7, v8).containsAll(filteredRange.get()));
   }
 }

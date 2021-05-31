@@ -87,7 +87,7 @@ public class OssArtifactSecurityScoreTest {
         ARTIFACT_VERSION.value(new ArtifactVersion("1.2.0", LocalDateTime.now())));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertTrue(DoubleInterval.closed(6, 6.5).contains(scoreValue.get()));
+    assertTrue(DoubleInterval.closed(5.75, 6.25).contains(scoreValue.get()));
     assertEquals(CONFIDENCE_NO_VULNERABILITY, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }
