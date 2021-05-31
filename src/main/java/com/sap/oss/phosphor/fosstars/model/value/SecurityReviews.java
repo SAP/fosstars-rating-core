@@ -2,10 +2,7 @@ package com.sap.oss.phosphor.fosstars.model.value;
 
 import static java.util.Arrays.asList;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;

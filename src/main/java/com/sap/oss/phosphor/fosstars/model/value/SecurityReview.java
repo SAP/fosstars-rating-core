@@ -25,7 +25,7 @@ public class SecurityReview {
    * Create a new review.
    *
    * @param subject What was reviewed.
-   * @param date Whe the review wes done.
+   * @param date When the review was done.
    */
   public SecurityReview(
       @JsonProperty("subject") Subject subject,
