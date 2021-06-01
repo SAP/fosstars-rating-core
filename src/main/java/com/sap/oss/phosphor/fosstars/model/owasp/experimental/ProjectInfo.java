@@ -81,12 +81,7 @@ public class ProjectInfo implements Serializable {
     sb.append("credits");
     sb.append('=');
     sb.append(((this.credits == null) ? "<null>" : this.credits));
-    sb.append(',');
-    if (sb.charAt((sb.length() - 1)) == ',') {
-      sb.setCharAt((sb.length() - 1), ']');
-    } else {
-      sb.append(']');
-    }
+    sb.append(']');
     return sb.toString();
   }
 }

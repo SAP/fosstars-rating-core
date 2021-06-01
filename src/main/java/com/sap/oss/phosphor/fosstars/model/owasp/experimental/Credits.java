@@ -104,12 +104,7 @@ public class Credits implements Serializable {
     sb.append("ossindex");
     sb.append('=');
     sb.append(((this.ossindex == null) ? "<null>" : this.ossindex));
-    sb.append(',');
-    if (sb.charAt((sb.length() - 1)) == ',') {
-      sb.setCharAt((sb.length() - 1), ']');
-    } else {
-      sb.append(']');
-    }
+    sb.append(']');
     return sb.toString();
   }
 }

@@ -49,6 +49,9 @@ public class Cvssv2 implements Serializable {
   @JsonProperty("userInteractionRequired")
   private boolean userInteractionRequired;
 
+  @JsonProperty("acInsufInfo")
+  private boolean acInsufInfo;
+
   @JsonProperty("score")
   public float getScore() {
     return score;
@@ -214,6 +217,21 @@ public class Cvssv2 implements Serializable {
     return this;
   }
 
+  @JsonProperty("acInsufInfo")
+  public boolean acInsufInfo() {
+    return userInteractionRequired;
+  }
+
+  @JsonProperty("acInsufInfo")
+  public void setAcInsufInfo(boolean acInsufInfo) {
+    this.acInsufInfo = acInsufInfo;
+  }
+
+  public Cvssv2 withAcInsufInfo(boolean acInsufInfo) {
+    this.acInsufInfo = acInsufInfo;
+    return this;
+  }
+
   @JsonProperty("userInteractionRequired")
   public boolean getUserInteractionRequired() {
     return userInteractionRequired;
@@ -280,13 +298,12 @@ public class Cvssv2 implements Serializable {
     sb.append(',');
     sb.append("userInteractionRequired");
     sb.append('=');
-    sb.append(((this.userInteractionRequired) ? "false" : this.userInteractionRequired));
+    sb.append(this.userInteractionRequired);
     sb.append(',');
-    if (sb.charAt((sb.length() - 1)) == ',') {
-      sb.setCharAt((sb.length() - 1), ']');
-    } else {
-      sb.append(']');
-    }
+    sb.append("acInsufInfo");
+    sb.append('=');
+    sb.append(this.acInsufInfo);
+    sb.append(']');
     return sb.toString();
   }
 }

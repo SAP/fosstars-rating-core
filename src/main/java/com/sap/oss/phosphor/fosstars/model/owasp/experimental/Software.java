@@ -30,6 +30,9 @@ public class Software implements Serializable {
   @JsonProperty("versionEndIncluding")
   private String versionEndIncluding;
 
+  @JsonProperty("vulnerable")
+  private boolean vulnerable;
+
   @JsonProperty("id")
   public String getId() {
     return id;
@@ -120,6 +123,21 @@ public class Software implements Serializable {
     return this;
   }
 
+  @JsonProperty("vulnerable")
+  public boolean getVulnerable() {
+    return vulnerable;
+  }
+
+  @JsonProperty("vulnerable")
+  public void setVulnerable(boolean vulnerable) {
+    this.vulnerable = vulnerable;
+  }
+
+  public Software withVulnerable(boolean vulnerable) {
+    this.vulnerable = vulnerable;
+    return this;
+  }
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -149,11 +167,10 @@ public class Software implements Serializable {
     sb.append('=');
     sb.append(((this.versionEndIncluding == null) ? "<null>" : this.versionEndIncluding));
     sb.append(',');
-    if (sb.charAt((sb.length() - 1)) == ',') {
-      sb.setCharAt((sb.length() - 1), ']');
-    } else {
-      sb.append(']');
-    }
+    sb.append("vulnerable");
+    sb.append('=');
+    sb.append(this.vulnerable);
+    sb.append(']');
     return sb.toString();
   }
 }

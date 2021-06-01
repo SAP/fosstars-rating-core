@@ -238,12 +238,7 @@ public class OwaspDependencyCheckVuln implements Serializable {
     sb.append("vulnerableSoftware");
     sb.append('=');
     sb.append(((this.vulnerableSoftware == null) ? "<null>" : this.vulnerableSoftware));
-    sb.append(',');
-    if (sb.charAt((sb.length() - 1)) == ',') {
-      sb.setCharAt((sb.length() - 1), ']');
-    } else {
-      sb.append(']');
-    }
+    sb.append(']');
     return sb.toString();
   }
 }

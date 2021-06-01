@@ -19,7 +19,6 @@ import com.sap.oss.phosphor.fosstars.model.owasp.experimental.VulnerableSoftware
 import com.sap.oss.phosphor.fosstars.model.subject.oss.MavenArtifact;
 import com.sap.oss.phosphor.fosstars.model.value.CVSS;
 import com.sap.oss.phosphor.fosstars.model.value.Reference;
-import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.oss.phosphor.fosstars.model.value.VersionRange;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerability;
@@ -167,6 +166,10 @@ public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider<Mav
 
     Vulnerabilities vulnerabilities = new Vulnerabilities();
     for (Dependency dependency : owaspDependencyCheckEntry.get().getDependencies()) {
+      if (dependency.getVulnerabilities() == null) {
+        continue;
+      }
+
       for (OwaspDependencyCheckVuln owaspDependencyCheckvuln : dependency.getVulnerabilities()) {
         vulnerabilities.add(from(owaspDependencyCheckvuln));
       }
@@ -397,19 +400,5 @@ public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider<Mav
    */
   private static Optional<Path> createDirectory(String directory) throws IOException {
     return Optional.ofNullable(Files.createDirectories(Paths.get(directory)));
-  }
-
-  /**
-   * Main method. For running tests only.
-   * 
-   * @param args Arguments to main method.
-   * @throws IOException If something went wrong.
-   */
-  public static void main(String[] args) throws IOException {
-    VulnerabilitiesFromOwaspDependencyCheck owasp = new VulnerabilitiesFromOwaspDependencyCheck();
-    MavenArtifact artifact =
-        new MavenArtifact("com.fasterxml.jackson.core", "jackson-databind", "2.9.1", null);
-    ValueSet values = new ValueHashSet();
-    owasp.update(artifact, values);
   }
 }

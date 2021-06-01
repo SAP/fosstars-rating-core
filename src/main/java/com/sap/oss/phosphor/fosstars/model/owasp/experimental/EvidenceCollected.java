@@ -82,12 +82,7 @@ public class EvidenceCollected implements Serializable {
     sb.append("versionEvidence");
     sb.append('=');
     sb.append(((this.versionEvidence == null) ? "<null>" : this.versionEvidence));
-    sb.append(',');
-    if (sb.charAt((sb.length() - 1)) == ',') {
-      sb.setCharAt((sb.length() - 1), ']');
-    } else {
-      sb.append(']');
-    }
+    sb.append(']');
     return sb.toString();
   }
 }

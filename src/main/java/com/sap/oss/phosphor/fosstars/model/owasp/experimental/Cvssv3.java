@@ -303,12 +303,7 @@ public class Cvssv3 implements Serializable {
     sb.append("version");
     sb.append('=');
     sb.append(((this.version == null) ? "<null>" : this.version));
-    sb.append(',');
-    if (sb.charAt((sb.length() - 1)) == ',') {
-      sb.setCharAt((sb.length() - 1), ']');
-    } else {
-      sb.append(']');
-    }
+    sb.append(']');
     return sb.toString();
   }
 }

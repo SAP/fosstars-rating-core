@@ -60,12 +60,7 @@ public class ScanInfo implements Serializable {
     sb.append("dataSource");
     sb.append('=');
     sb.append(((this.dataSource == null) ? "<null>" : this.dataSource));
-    sb.append(',');
-    if (sb.charAt((sb.length() - 1)) == ',') {
-      sb.setCharAt((sb.length() - 1), ']');
-    } else {
-      sb.append(']');
-    }
+    sb.append(']');
     return sb.toString();
   }
 }

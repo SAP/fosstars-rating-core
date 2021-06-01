@@ -125,12 +125,7 @@ public class VendorEvidence implements Serializable {
     sb.append("value");
     sb.append('=');
     sb.append(((this.value == null) ? "<null>" : this.value));
-    sb.append(',');
-    if (sb.charAt((sb.length() - 1)) == ',') {
-      sb.setCharAt((sb.length() - 1), ']');
-    } else {
-      sb.append(']');
-    }
+    sb.append(']');
     return sb.toString();
   }
 }

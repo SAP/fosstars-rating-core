@@ -281,12 +281,7 @@ public class Dependency implements Serializable {
     sb.append("vulnerabilities");
     sb.append('=');
     sb.append(((this.vulnerabilities == null) ? "<null>" : this.vulnerabilities));
-    sb.append(',');
-    if (sb.charAt((sb.length() - 1)) == ',') {
-      sb.setCharAt((sb.length() - 1), ']');
-    } else {
-      sb.append(']');
-    }
+    sb.append(']');
     return sb.toString();
   }
 }

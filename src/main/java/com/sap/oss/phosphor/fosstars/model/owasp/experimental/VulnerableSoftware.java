@@ -37,12 +37,7 @@ public class VulnerableSoftware implements Serializable {
     sb.append("software");
     sb.append('=');
     sb.append(((this.software == null) ? "<null>" : this.software));
-    sb.append(',');
-    if (sb.charAt((sb.length() - 1)) == ',') {
-      sb.setCharAt((sb.length() - 1), ']');
-    } else {
-      sb.append(']');
-    }
+    sb.append(']');
     return sb.toString();
   }
 }
