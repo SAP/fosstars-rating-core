@@ -1,5 +1,6 @@
 package com.sap.oss.phosphor.fosstars.data.github;
 
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SECURITY_REVIEWS;
 import static java.lang.String.format;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -7,7 +8,6 @@ import com.github.packageurl.MalformedPackageURLException;
 import com.github.packageurl.PackageURL;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Value;
-import com.sap.oss.phosphor.fosstars.model.feature.oss.SecurityReviewsFeature;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.SecurityReview;
 import com.sap.oss.phosphor.fosstars.model.value.SecurityReviews;
@@ -36,12 +36,6 @@ public class SecurityReviewsFromOpenSSF
     extends CachedSingleFeatureGitHubDataProvider<SecurityReviews> {
 
   /**
-   * A feature that holds security reviews.
-   */
-  public static final SecurityReviewsFeature FEATURE
-      = new SecurityReviewsFeature("Security reviews from OpenSSF");
-
-  /**
    * A repository that stores security review.
    */
   static final GitHubProject SECURITY_REVIEWS_PROJECT
@@ -63,7 +57,7 @@ public class SecurityReviewsFromOpenSSF
 
   @Override
   protected Feature<SecurityReviews> supportedFeature() {
-    return FEATURE;
+    return SECURITY_REVIEWS;
   }
 
   @Override
@@ -93,7 +87,7 @@ public class SecurityReviewsFromOpenSSF
       }
     }
 
-    return new SecurityReviewsValue(FEATURE, reviews);
+    return new SecurityReviewsValue(SECURITY_REVIEWS, reviews);
   }
 
   /**
