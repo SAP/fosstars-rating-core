@@ -12,6 +12,7 @@ import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersions;
 import com.sap.oss.phosphor.fosstars.model.value.Languages;
 import com.sap.oss.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.oss.phosphor.fosstars.model.value.PackageManagers;
+import com.sap.oss.phosphor.fosstars.model.value.SecurityReviews;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
 import java.util.Date;
 
@@ -426,4 +427,10 @@ public class OssFeatures {
    */
   public static final BooleanFeature HAS_UNRESOLVED_VULNERABILITY_ALERTS
       = new BooleanFeature("If a project has unresolved vulnerability alerts");
+
+  /**
+   * Contains a set of security reviews that have been done for an open source project.
+   */
+  public static final SecurityReviewsFeature SECURITY_REVIEWS
+      = new SecurityReviewsFeature("Security reviews for a project");
 }
