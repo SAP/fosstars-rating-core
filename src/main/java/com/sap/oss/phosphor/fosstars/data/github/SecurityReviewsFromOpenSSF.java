@@ -1,13 +1,10 @@
-package com.sap.oss.phosphor.fosstars.data.github.experimental;
+package com.sap.oss.phosphor.fosstars.data.github;
 
 import static java.lang.String.format;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.github.packageurl.MalformedPackageURLException;
 import com.github.packageurl.PackageURL;
-import com.sap.oss.phosphor.fosstars.data.github.CachedSingleFeatureGitHubDataProvider;
-import com.sap.oss.phosphor.fosstars.data.github.GitHubDataFetcher;
-import com.sap.oss.phosphor.fosstars.data.github.LocalRepository;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.feature.oss.SecurityReviewsFeature;

@@ -1,7 +1,7 @@
-package com.sap.oss.phosphor.fosstars.data.github.experimental;
+package com.sap.oss.phosphor.fosstars.data.github;
 
-import static com.sap.oss.phosphor.fosstars.data.github.experimental.SecurityReviewsFromOpenSSF.DATE_FORMAT;
-import static com.sap.oss.phosphor.fosstars.data.github.experimental.SecurityReviewsFromOpenSSF.SECURITY_REVIEWS_PROJECT;
+import static com.sap.oss.phosphor.fosstars.data.github.SecurityReviewsFromOpenSSF.DATE_FORMAT;
+import static com.sap.oss.phosphor.fosstars.data.github.SecurityReviewsFromOpenSSF.SECURITY_REVIEWS_PROJECT;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -11,8 +11,6 @@ import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.sap.oss.phosphor.fosstars.data.github.LocalRepository;
-import com.sap.oss.phosphor.fosstars.data.github.TestGitHubDataFetcherHolder;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.SecurityReview;
