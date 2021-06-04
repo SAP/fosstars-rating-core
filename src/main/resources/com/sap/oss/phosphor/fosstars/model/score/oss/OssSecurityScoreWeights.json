@@ -27,6 +27,10 @@
     "com.sap.oss.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore" : {
       "type" : "MutableWeight",
       "value" : 0.6
+    },
+    "com.sap.oss.phosphor.fosstars.model.score.oss.SecurityReviewScore" : {
+      "type" : "MutableWeight",
+      "value" : 0.3
     }
   }
 }

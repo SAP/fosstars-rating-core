@@ -70,7 +70,7 @@ public class ScoreVerificationTest {
     }
 
     @Override
-    public void visit(Feature feature) {
+    public void visit(Feature<?> feature) {
       // do nothing
     }
 

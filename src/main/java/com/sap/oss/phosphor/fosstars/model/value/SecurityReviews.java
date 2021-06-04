@@ -15,6 +15,15 @@ import java.util.Set;
 public class SecurityReviews implements Set<SecurityReview> {
 
   /**
+   * Returns an empty set of security reviews.
+   *
+   * @return An empty set of security reviews.
+   */
+  public static SecurityReviews noReviews() {
+    return new SecurityReviews();
+  }
+
+  /**
    * Security reviews.
    */
   private final Set<SecurityReview> elements = new HashSet<>();

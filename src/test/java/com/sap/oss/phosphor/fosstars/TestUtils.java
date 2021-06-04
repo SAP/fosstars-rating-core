@@ -18,6 +18,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.PACKAG
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.PROJECT_START_DATE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RELEASED_ARTIFACT_VERSIONS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_CODEQL_SCANS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SECURITY_REVIEWS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SIGNS_ARTIFACTS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_ADDRESS_SANITIZER;
@@ -39,6 +40,7 @@ import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.JAVA;
 import static com.sap.oss.phosphor.fosstars.model.value.OwaspDependencyCheckUsage.MANDATORY;
 import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.MAVEN;
+import static com.sap.oss.phosphor.fosstars.model.value.SecurityReviews.noReviews;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -46,6 +48,7 @@ import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Interval;
 import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.Value;
+import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersions;
 import com.sap.oss.phosphor.fosstars.model.value.CVSS;
@@ -54,6 +57,8 @@ import com.sap.oss.phosphor.fosstars.model.value.Languages;
 import com.sap.oss.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.oss.phosphor.fosstars.model.value.PackageManagers;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
+import com.sap.oss.phosphor.fosstars.model.value.SecurityReview;
+import com.sap.oss.phosphor.fosstars.model.value.SecurityReviews;
 import com.sap.oss.phosphor.fosstars.model.value.VersionRange;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerability;
@@ -74,6 +79,8 @@ import java.util.stream.Collectors;
 public class TestUtils {
 
   private static final double DELTA = 0.01;
+
+  public static final GitHubProject PROJECT = new GitHubProject("org", "test");
 
   /**
    * The method checks if a score calculates an expected score value for a specified set of values.
@@ -173,7 +180,8 @@ public class TestUtils {
         USES_FIND_SEC_BUGS.value(true),
         OWASP_DEPENDENCY_CHECK_USAGE.value(MANDATORY),
         OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.value(7.0),
-        PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)));
+        PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)),
+        SECURITY_REVIEWS.value(noReviews()));
   }
 
   /**
@@ -232,7 +240,8 @@ public class TestUtils {
         USES_FIND_SEC_BUGS.value(true),
         OWASP_DEPENDENCY_CHECK_USAGE.value(MANDATORY),
         OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.value(4.0),
-        PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)));
+        PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)),
+        SECURITY_REVIEWS.value(new SecurityReviews(new SecurityReview(PROJECT, new Date()))));
   }
 
   /**

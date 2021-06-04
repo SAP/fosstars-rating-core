@@ -191,6 +191,11 @@ defaults:
       type: "PositiveIntegerFeature"
       name: "Number of commits in the last three months"
     number: 1000
+  - type: "SecurityReviewsValue"
+    feature:
+      type: "SecurityReviewsFeature"
+      name: "Security reviews for a project"
+    reviews: []
 
 # test vectors
 elements:
@@ -310,6 +315,19 @@ elements:
               vulnerableVersions:
                 - versionStart: 1.0.0
                   versionEnd: 1.1.0
+      - type: "SecurityReviewsValue"
+        feature:
+          type: "SecurityReviewsFeature"
+          name: "Security reviews for a project"
+        reviews:
+          - subject:
+              type: "GitHubProject"
+              name: "test"
+              url: "https://github.com/org/test"
+              organization:
+                type: "GitHubOrganization"
+                name: "org"
+            date: "2020-01-02"
     expectedScore:
       type: "DoubleInterval"
       from: 8.0
@@ -464,6 +482,19 @@ elements:
               vulnerableVersions:
                 - versionStart: 1.0.0
                   versionEnd: 1.1.0
+      - type: "SecurityReviewsValue"
+        feature:
+          type: "SecurityReviewsFeature"
+          name: "Security reviews for a project"
+        reviews:
+          - subject:
+              type: "GitHubProject"
+              name: "test"
+              url: "https://github.com/org/test"
+              organization:
+                type: "GitHubOrganization"
+                name: "org"
+            date: "2020-01-02"
     expectedScore:
       type: "DoubleInterval"
       from: 5.0

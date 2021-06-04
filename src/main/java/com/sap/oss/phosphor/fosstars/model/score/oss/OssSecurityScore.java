@@ -35,6 +35,7 @@ public class OssSecurityScore extends WeightedCompositeScore {
     SUB_SCORES.add(new ProjectSecurityAwarenessScore());
     SUB_SCORES.add(new UnpatchedVulnerabilitiesScore());
     SUB_SCORES.add(new VulnerabilityDiscoveryAndSecurityTestingScore(securityTestingScore));
+    SUB_SCORES.add(new SecurityReviewScore());
   }
 
   /**
