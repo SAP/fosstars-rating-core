@@ -17,6 +17,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.OWASP_
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.PACKAGE_MANAGERS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.PROJECT_START_DATE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_CODEQL_SCANS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SECURITY_REVIEWS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SIGNS_ARTIFACTS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_ADDRESS_SANITIZER;
@@ -51,12 +52,16 @@ import com.sap.oss.phosphor.fosstars.model.value.Languages;
 import com.sap.oss.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.oss.phosphor.fosstars.model.value.PackageManagers;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
+import com.sap.oss.phosphor.fosstars.model.value.SecurityReview;
+import com.sap.oss.phosphor.fosstars.model.value.SecurityReviews;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
 import java.util.Date;
 import java.util.Set;
 import org.junit.Test;
 
 public class OssSecurityRatingMarkdownFormatterTest {
+
+  private static final GitHubProject PROJECT = new GitHubProject("org", "test");
 
   private static final OssSecurityRating RATING
       = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
@@ -95,17 +100,18 @@ public class OssSecurityRatingMarkdownFormatterTest {
       USES_OWASP_JAVA_HTML_SANITIZER.value(false),
       OWASP_DEPENDENCY_CHECK_USAGE.value(NOT_USED),
       OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.notSpecifiedValue(),
-      PACKAGE_MANAGERS.value(new PackageManagers(MAVEN)));
+      PACKAGE_MANAGERS.value(new PackageManagers(MAVEN)),
+      SECURITY_REVIEWS.value(new SecurityReviews(new SecurityReview(PROJECT, new Date())))
+  );
 
   @Test
   public void testWithDefaultTemplate() {
     RatingValue ratingValue = RATING.calculate(TEST_VALUES);
-    GitHubProject project = new GitHubProject("org", "test");
-    project.set(ratingValue);
+    PROJECT.set(ratingValue);
 
     OssSecurityRatingMarkdownFormatter formatter
         = new OssSecurityRatingMarkdownFormatter(new OssSecurityGithubAdvisor());
-    String text = formatter.print(project);
+    String text = formatter.print(PROJECT);
 
     assertNotNull(text);
     assertFalse(text.isEmpty());
@@ -126,6 +132,6 @@ public class OssSecurityRatingMarkdownFormatterTest {
     String text = formatter.print(project);
 
     assertNotNull(text);
-    assertEquals("BAD|4.09|10.0|Max|10.0|10.0|security score for open-source projects||", text);
+    assertEquals("BAD|4.44|10.0|Max|10.0|10.0|security score for open-source projects||", text);
   }
 }

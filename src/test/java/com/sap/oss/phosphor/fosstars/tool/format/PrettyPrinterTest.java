@@ -17,6 +17,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.OWASP_
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.PACKAGE_MANAGERS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.PROJECT_START_DATE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_CODEQL_SCANS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SECURITY_REVIEWS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SIGNS_ARTIFACTS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_ADDRESS_SANITIZER;
@@ -39,6 +40,7 @@ import static com.sap.oss.phosphor.fosstars.model.score.example.ExampleScores.SE
 import static com.sap.oss.phosphor.fosstars.model.value.Language.C;
 import static com.sap.oss.phosphor.fosstars.model.value.OwaspDependencyCheckUsage.NOT_USED;
 import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.MAVEN;
+import static com.sap.oss.phosphor.fosstars.model.value.SecurityReviews.noReviews;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -54,6 +56,7 @@ import com.sap.oss.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.oss.phosphor.fosstars.model.value.PackageManagers;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
+import com.sap.oss.phosphor.fosstars.model.value.SecurityReviews;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
 import java.util.Date;
 import java.util.Locale;
@@ -101,7 +104,8 @@ public class PrettyPrinterTest {
       USES_OWASP_JAVA_HTML_SANITIZER.value(false),
       OWASP_DEPENDENCY_CHECK_USAGE.value(NOT_USED),
       OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.notSpecifiedValue(),
-      PACKAGE_MANAGERS.value(new PackageManagers(MAVEN)));
+      PACKAGE_MANAGERS.value(new PackageManagers(MAVEN)),
+      SECURITY_REVIEWS.value(noReviews()));
 
   private static Locale savedLocale;
 
