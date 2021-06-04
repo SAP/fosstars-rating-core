@@ -1,0 +1,36 @@
+---
+defaults: []
+elements:
+  - type: "StandardTestVector"
+    values:
+      - type: "UnknownValue"
+        feature:
+          type: "SecurityReviewsFeature"
+          name: "Security reviews for a project"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 0.1
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "unknown_reviews"
+  - type: "StandardTestVector"
+    values:
+      - type: "SecurityReviewsValue"
+        feature:
+          type: "SecurityReviewsFeature"
+          name: "Security reviews for a project"
+        reviews: []
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 1.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "no_reviews"
