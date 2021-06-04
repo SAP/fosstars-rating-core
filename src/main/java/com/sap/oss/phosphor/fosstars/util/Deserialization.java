@@ -28,6 +28,7 @@ import com.sap.oss.phosphor.fosstars.model.feature.oss.ArtifactVersionFeature;
 import com.sap.oss.phosphor.fosstars.model.feature.oss.ArtifactVersionsFeature;
 import com.sap.oss.phosphor.fosstars.model.feature.oss.LanguagesFeature;
 import com.sap.oss.phosphor.fosstars.model.feature.oss.PackageManagersFeature;
+import com.sap.oss.phosphor.fosstars.model.feature.oss.SecurityReviewsFeature;
 import com.sap.oss.phosphor.fosstars.model.feature.oss.VulnerabilitiesInProject;
 import com.sap.oss.phosphor.fosstars.model.math.DoubleInterval;
 import com.sap.oss.phosphor.fosstars.model.qa.ScoreTestVector;
@@ -63,6 +64,7 @@ import com.sap.oss.phosphor.fosstars.model.score.oss.ProjectActivityScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.ProjectPopularityScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.ProjectSecurityAwarenessScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.ProjectSecurityTestingScore;
+import com.sap.oss.phosphor.fosstars.model.score.oss.SecurityReviewScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.StaticAnalysisScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.UnpatchedVulnerabilitiesScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore;
@@ -86,6 +88,8 @@ import com.sap.oss.phosphor.fosstars.model.value.OwaspDependencyCheckCvssThresho
 import com.sap.oss.phosphor.fosstars.model.value.OwaspDependencyCheckUsageValue;
 import com.sap.oss.phosphor.fosstars.model.value.PackageManagersValue;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
+import com.sap.oss.phosphor.fosstars.model.value.SecurityReviews;
+import com.sap.oss.phosphor.fosstars.model.value.SecurityReviewsValue;
 import com.sap.oss.phosphor.fosstars.model.value.StringValue;
 import com.sap.oss.phosphor.fosstars.model.value.UnknownValue;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
@@ -209,7 +213,8 @@ public abstract class Deserialization {
         ArtifactVersionFeature.class,
         ArtifactVersionsFeature.class,
         OwaspDependencyCheckUsageFeature.class,
-        OwaspDependencyCheckCvssThreshold.class
+        OwaspDependencyCheckCvssThreshold.class,
+        SecurityReviewsFeature.class
     );
 
     // values
@@ -231,7 +236,8 @@ public abstract class Deserialization {
         ArtifactVersionValue.class,
         ArtifactVersionsValue.class,
         OwaspDependencyCheckUsageValue.class,
-        OwaspDependencyCheckCvssThresholdValue.class
+        OwaspDependencyCheckCvssThresholdValue.class,
+        SecurityReviewsValue.class
     );
 
     // labels
@@ -269,6 +275,7 @@ public abstract class Deserialization {
         DependabotScore.class,
         OwaspDependencyScanScore.class,
         VulnerabilityDiscoveryAndSecurityTestingScore.class,
+        SecurityReviewScore.class,
         OssArtifactSecurityScore.class,
         OssRulesOfPlayScore.class,
         ArtifactLatestReleaseAgeScore.class,
