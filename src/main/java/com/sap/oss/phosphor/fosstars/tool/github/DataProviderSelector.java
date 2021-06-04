@@ -25,6 +25,7 @@ import com.sap.oss.phosphor.fosstars.data.github.PackageManagement;
 import com.sap.oss.phosphor.fosstars.data.github.ProgrammingLanguages;
 import com.sap.oss.phosphor.fosstars.data.github.ReadmeInfo;
 import com.sap.oss.phosphor.fosstars.data.github.ReleasesFromGitHub;
+import com.sap.oss.phosphor.fosstars.data.github.SecurityReviewsFromOpenSSF;
 import com.sap.oss.phosphor.fosstars.data.github.SignsJarArtifacts;
 import com.sap.oss.phosphor.fosstars.data.github.TeamsInfo;
 import com.sap.oss.phosphor.fosstars.data.github.UseReuseDataProvider;
@@ -105,6 +106,7 @@ public class DataProviderSelector {
         new TeamsInfo(fetcher),
         new ContributingGuidelineInfo(fetcher),
         new VulnerabilityAlertsInfo(fetcher),
+        new SecurityReviewsFromOpenSSF(fetcher),
 
         // currently interactive data provider have to be added to the end, see issue #133
         new AskAboutSecurityTeam(),
