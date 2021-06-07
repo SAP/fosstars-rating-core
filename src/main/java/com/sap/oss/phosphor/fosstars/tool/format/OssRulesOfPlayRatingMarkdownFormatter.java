@@ -4,6 +4,7 @@ import static com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScore.
 import static com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScore.findWarningsIn;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyMap;
+import static java.util.Collections.unmodifiableMap;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.sap.oss.phosphor.fosstars.advice.Advisor;
@@ -41,10 +42,16 @@ import org.apache.commons.lang3.StringUtils;
 public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownFormatter {
 
   /**
-   * A resource with a Markdown template.
+   * A resource with a default Markdown template.
    */
   private static final String RATING_VALUE_TEMPLATE_RESOURCE
       = "OssRulesOfPlayMarkdownRatingValueTemplate.md";
+
+  /**
+   * A default Markdown template for a rating value.
+   */
+  private static final String DEFAULT_RATING_VALUE_TEMPLATE
+      = loadFrom(RATING_VALUE_TEMPLATE_RESOURCE, OssRulesOfPlayRatingMarkdownFormatter.class);
 
   /**
    * Maps a rule to its identifier.
@@ -52,10 +59,9 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownForma
   private final Map<Feature<Boolean>, String> featureToRuleId;
 
   /**
-   * A Markdown template for a rating value.
+   * A Markdown template for reports.
    */
-  private static final String RATING_VALUE_TEMPLATE
-      = loadFrom(RATING_VALUE_TEMPLATE_RESOURCE, OssRulesOfPlayRatingMarkdownFormatter.class);
+  private final String template;
 
   /**
    * Initializes a new formatter. The constructor looks for a default file with rule IDs
@@ -65,8 +71,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownForma
    * @throws IOException If something went wrong.
    */
   public OssRulesOfPlayRatingMarkdownFormatter(Advisor advisor) throws IOException {
-    super(advisor);
-    featureToRuleId = defaultRuleIds();
+    this(advisor, defaultRuleIds(), DEFAULT_RATING_VALUE_TEMPLATE);
   }
 
   /**
@@ -77,15 +82,34 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownForma
    * @throws IOException If something went wrong.
    */
   public OssRulesOfPlayRatingMarkdownFormatter(Path path, Advisor advisor) throws IOException {
+    this(advisor, loadRuleIdsFrom(path), DEFAULT_RATING_VALUE_TEMPLATE);
+  }
+
+  /**
+   * Initializes a new formatter. The constructor looks for a default file with rule IDs
+   * and tries to load it.
+   *
+   * @param advisor An advisor for calculated ratings.
+   * @param featureToRuleId Maps a rule to its identifier.
+   * @param template A Markdown template for reports.
+   */
+  public OssRulesOfPlayRatingMarkdownFormatter(
+      Advisor advisor, Map<Feature<Boolean>, String> featureToRuleId, String template) {
+
     super(advisor);
-    featureToRuleId = loadRuleIdsFrom(path);
+
+    Objects.requireNonNull(featureToRuleId, "Oh no! Rule IDs can't be null!");
+    Objects.requireNonNull(template, "Oh no! Template can't be null!");
+
+    this.featureToRuleId = unmodifiableMap(featureToRuleId);
+    this.template = template;
   }
 
   protected String print(RatingValue ratingValue, String advice) {
     Objects.requireNonNull(ratingValue, "Hey! Rating can't be null!");
 
     ScoreValue scoreValue = ratingValue.scoreValue();
-    return RATING_VALUE_TEMPLATE
+    return template
         .replaceAll("%MAX_CONFIDENCE%", formatted(Confidence.MAX))
         .replace("%STATUS%", format(ratingValue.label()))
         .replace("%CONFIDENCE_LABEL%", confidenceLabelFor(ratingValue.confidence()))

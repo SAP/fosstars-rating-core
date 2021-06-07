@@ -3,7 +3,6 @@ package com.sap.oss.phosphor.fosstars.model.feature;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.oss.phosphor.fosstars.model.Value;
-import com.sap.oss.phosphor.fosstars.model.feature.AbstractFeature;
 import com.sap.oss.phosphor.fosstars.model.value.StringValue;
 
 /**

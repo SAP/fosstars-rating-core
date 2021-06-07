@@ -1,27 +1,6 @@
 package com.sap.oss.phosphor.fosstars.model;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.sap.oss.phosphor.fosstars.model.feature.BooleanFeature;
-import com.sap.oss.phosphor.fosstars.model.feature.BoundedDoubleFeature;
-import com.sap.oss.phosphor.fosstars.model.feature.BoundedIntegerFeature;
-import com.sap.oss.phosphor.fosstars.model.feature.DateFeature;
-import com.sap.oss.phosphor.fosstars.model.feature.DoubleFeature;
-import com.sap.oss.phosphor.fosstars.model.feature.EnumFeature;
-import com.sap.oss.phosphor.fosstars.model.feature.LgtmGradeFeature;
-import com.sap.oss.phosphor.fosstars.model.feature.OwaspDependencyCheckCvssThreshold;
-import com.sap.oss.phosphor.fosstars.model.feature.OwaspDependencyCheckUsageFeature;
-import com.sap.oss.phosphor.fosstars.model.feature.PositiveIntegerFeature;
-import com.sap.oss.phosphor.fosstars.model.feature.StringFeature;
-import com.sap.oss.phosphor.fosstars.model.feature.example.NumberOfCommitsLastMonthExample;
-import com.sap.oss.phosphor.fosstars.model.feature.example.NumberOfContributorsLastMonthExample;
-import com.sap.oss.phosphor.fosstars.model.feature.example.SecurityReviewDoneExample;
-import com.sap.oss.phosphor.fosstars.model.feature.example.StaticCodeAnalysisDoneExample;
-import com.sap.oss.phosphor.fosstars.model.feature.oss.ArtifactVersionFeature;
-import com.sap.oss.phosphor.fosstars.model.feature.oss.ArtifactVersionsFeature;
-import com.sap.oss.phosphor.fosstars.model.feature.oss.LanguagesFeature;
-import com.sap.oss.phosphor.fosstars.model.feature.oss.PackageManagersFeature;
-import com.sap.oss.phosphor.fosstars.model.feature.oss.VulnerabilitiesInProject;
 
 /**
  * An interface for a feature.
@@ -35,28 +14,6 @@ import com.sap.oss.phosphor.fosstars.model.feature.oss.VulnerabilitiesInProject;
  * @param <T> Type of data of a feature
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-@JsonSubTypes({
-    @JsonSubTypes.Type(value = PositiveIntegerFeature.class),
-    @JsonSubTypes.Type(value = DoubleFeature.class),
-    @JsonSubTypes.Type(value = BooleanFeature.class),
-    @JsonSubTypes.Type(value = BoundedIntegerFeature.class),
-    @JsonSubTypes.Type(value = BoundedDoubleFeature.class),
-    @JsonSubTypes.Type(value = DateFeature.class),
-    @JsonSubTypes.Type(value = EnumFeature.class),
-    @JsonSubTypes.Type(value = VulnerabilitiesInProject.class),
-    @JsonSubTypes.Type(value = SecurityReviewDoneExample.class),
-    @JsonSubTypes.Type(value = StaticCodeAnalysisDoneExample.class),
-    @JsonSubTypes.Type(value = NumberOfCommitsLastMonthExample.class),
-    @JsonSubTypes.Type(value = NumberOfContributorsLastMonthExample.class),
-    @JsonSubTypes.Type(value = LgtmGradeFeature.class),
-    @JsonSubTypes.Type(value = LanguagesFeature.class),
-    @JsonSubTypes.Type(value = PackageManagersFeature.class),
-    @JsonSubTypes.Type(value = StringFeature.class),
-    @JsonSubTypes.Type(value = ArtifactVersionFeature.class),
-    @JsonSubTypes.Type(value = ArtifactVersionsFeature.class),
-    @JsonSubTypes.Type(value = OwaspDependencyCheckUsageFeature.class),
-    @JsonSubTypes.Type(value = OwaspDependencyCheckCvssThreshold.class)
-})
 public interface Feature<T> {
 
   /**

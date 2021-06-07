@@ -208,7 +208,7 @@ public class TestUtils {
                 .fixed(new Date())
                 .introduced(new Date())
                 .published(new Date())
-                .setVersionRanges(Collections.singletonList(
+                .versionRanges(Collections.singletonList(
                     new VersionRange("1.0.0", "1.0.0")))
                 .make()
         )),
@@ -257,7 +257,7 @@ public class TestUtils {
 
     return Vulnerability.Builder.newVulnerability(id)
         .set(cvss).published(published).introduced(introduced).fixed(fixed)
-        .set(Resolution.PATCHED).setVersionRanges(versions)
+        .set(Resolution.PATCHED).versionRanges(versions)
         .make();
   }
 

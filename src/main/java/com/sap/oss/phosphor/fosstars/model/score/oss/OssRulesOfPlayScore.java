@@ -14,6 +14,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_RE
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_TEAM_WITH_PUSH_PRIVILEGES_ON_GITHUB;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_UNRESOLVED_VULNERABILITY_ALERTS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.INCOMPLETE_README;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.IS_REUSE_COMPLIANT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.LICENSE_HAS_DISALLOWED_CONTENT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.README_HAS_REUSE_INFO;
@@ -51,7 +52,6 @@ public class OssRulesOfPlayScore extends FeatureBasedScore {
       HAS_LICENSE,
       ALLOWED_LICENSE,
       HAS_README,
-      HAS_REQUIRED_TEXT_IN_CONTRIBUTING_GUIDELINE,
       HAS_ENOUGH_TEAMS_ON_GITHUB,
       HAS_ADMIN_TEAM_ON_GITHUB,
       HAS_ENOUGH_ADMINS_ON_GITHUB,
@@ -74,14 +74,14 @@ public class OssRulesOfPlayScore extends FeatureBasedScore {
   /**
    * A set of features that are recommended to be true.
    */
-  public static final Set<Feature<Boolean>> RECOMMENDED_TRUE
-      = Collections.singleton(HAS_CONTRIBUTING_GUIDELINE);
+  public static final Set<Feature<Boolean>> RECOMMENDED_TRUE = Collections.unmodifiableSet(
+      setOf(HAS_CONTRIBUTING_GUIDELINE, HAS_REQUIRED_TEXT_IN_CONTRIBUTING_GUIDELINE));
 
   /**
    * A set of features that are recommended to be false.
    */
-  public static final Set<Feature<Boolean>> RECOMMENDED_FALSE
-      = Collections.singleton(HAS_UNRESOLVED_VULNERABILITY_ALERTS);
+  public static final Set<Feature<Boolean>> RECOMMENDED_FALSE = Collections.unmodifiableSet(
+      setOf(HAS_UNRESOLVED_VULNERABILITY_ALERTS, INCOMPLETE_README));
 
   /**
    * Initializes a new score.

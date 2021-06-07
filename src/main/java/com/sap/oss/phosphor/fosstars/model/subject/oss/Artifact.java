@@ -1,6 +1,5 @@
 package com.sap.oss.phosphor.fosstars.model.subject.oss;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.sap.oss.phosphor.fosstars.model.Subject;
 import java.util.Optional;
@@ -10,10 +9,6 @@ import java.util.Optional;
  * can be downloaded from a Maven repository.
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-@JsonSubTypes({
-    @JsonSubTypes.Type(value = MavenArtifact.class),
-    @JsonSubTypes.Type(value = NpmArtifact.class)
-})
 public interface Artifact extends Subject {
 
   /**

@@ -2,7 +2,7 @@
 
 https://github.com/google/gvisor
 
-Last updated on Feb 16, 2021
+Last updated on May 19, 2021
 
 **Rating**: **GOOD**
 
@@ -23,7 +23,7 @@ It used the following sub-scores:
 1.  **[Security testing](#security-testing)**: **3.33** (weight is 1.0)
     1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
         1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
-        1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
+        1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
     1.  **[Static analysis](#static-analysis)**: **5.0** (weight is 1.0)
         1.  **[LGTM score](#lgtm-score)**: **10.0** (weight is 1.0)
         1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
@@ -37,7 +37,7 @@ It used the following sub-scores:
     1.  **[Security testing](#security-testing)**: **3.33** (weight is 1.0)
         1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
             1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
-            1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
+            1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
         1.  **[Static analysis](#static-analysis)**: **5.0** (weight is 1.0)
             1.  **[LGTM score](#lgtm-score)**: **10.0** (weight is 1.0)
             1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
@@ -48,6 +48,34 @@ It used the following sub-scores:
 1.  **[Community commitment](#community-commitment)**: **8.0** (weight is 0.5)
 1.  **[Project activity](#project-activity)**: **10.0** (weight is 0.5)
 1.  **[Project popularity](#project-popularity)**: **10.0** (weight is 0.5)
+
+
+## How to improve the rating
+
+1.  You can ask the project maintainers to enable LGTM checks for pull requests in the project.
+    More info:
+    1.  [How to enable LGTM checks for pull requests](https://lgtm.com/help/lgtm/about-automated-code-review)
+2.  You can open a pull request to enable CodeQL scans in the project. Make sure that the scans are run on pull requests.
+    More info:
+    1.  [How to enable CodeQL checks for pull requests](https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#enabling-code-scanning-using-actions)
+3.  You can open a pull request to enable CodeQL scans in the project.
+    More info:
+    1.  [How to enable CodeQL checks](https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#enabling-code-scanning-using-actions)
+4.  You can open a pull request to enable FindSecBugs for the project.
+    More info:
+    1.  [FindSecBugs home page](https://find-sec-bugs.github.io/)
+5.  You can open a pull request to enable AddressSanitizer for the project.
+    More info:
+    1.  [About AddressSanitizer](https://github.com/google/sanitizers/wiki/AddressSanitizer)
+6.  You can open a pull request to enable MemorySanitizer for the project.
+    More info:
+    1.  [About MemorySanitizer](https://github.com/google/sanitizers/wiki/MemorySanitizer)
+7.  You can open a pull request to enable UndefinedBehaviorSanitizer for the project.
+    More info:
+    1.  [About UndefinedBehaviorSanitizer](https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html)
+8.  You can include the project to OSS-Fuzz. Then, the project is going to be regularly fuzzed.
+    More info:
+    1.  [The OSS-Fuzz project](https://github.com/google/oss-fuzz)
 
 
 ## Sub-scores
@@ -66,7 +94,7 @@ This sub-score is based on the following sub-scores:
 
 1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
     1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
-    1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
+    1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
 1.  **[Static analysis](#static-analysis)**: **5.0** (weight is 1.0)
     1.  **[LGTM score](#lgtm-score)**: **10.0** (weight is 1.0)
     1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
@@ -114,7 +142,7 @@ No unpatched vulnerabilities found which is good
 
 This sub-score is based on 1 feature:
 
-1.  Info about vulnerabilities: **Not found**
+1.  Info about vulnerabilities: **4 vulnerabilities, [details below](#known-vulnerabilities)**
 
 ### Vulnerability discovery and security testing
 
@@ -129,7 +157,7 @@ This sub-score is based on the following sub-score:
 1.  **[Security testing](#security-testing)**: **3.33** (weight is 1.0)
     1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
         1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
-        1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
+        1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
     1.  **[Static analysis](#static-analysis)**: **5.0** (weight is 1.0)
         1.  **[LGTM score](#lgtm-score)**: **10.0** (weight is 1.0)
         1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
@@ -140,7 +168,7 @@ This sub-score is based on the following sub-score:
 
 This sub-score is based on 1 feature:
 
-1.  Info about vulnerabilities: **Not found**
+1.  Info about vulnerabilities: **4 vulnerabilities, [details below](#known-vulnerabilities)**
 
 ### Community commitment
 
@@ -162,13 +190,13 @@ Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-507 commits in the last 3 months results to 10.00 points
-14 contributors increase the score value from 10.00 to 12.00
+352 commits in the last 3 months results to 10.00 points
+11 contributors increase the score value from 10.00 to 12.00
 
 This sub-score is based on 2 features:
 
-1.  Number of commits in the last three months: **507**
-1.  Number of contributors in the last three months: **14**
+1.  Number of commits in the last three months: **352**
+1.  Number of contributors in the last three months: **11**
 
 ### Project popularity
 
@@ -184,8 +212,8 @@ Here is how a number of watchers contributes to the score:
 
 This sub-score is based on 2 features:
 
-1.  Number of stars for a GitHub repository: **10942**
-1.  Number of watchers for a GitHub repository: **324**
+1.  Number of stars for a GitHub repository: **11309**
+1.  Number of watchers for a GitHub repository: **320**
 
 ### Dependency testing
 
@@ -198,7 +226,7 @@ Score: **10.0**, confidence is 10.0 (max), weight is 1.0 (high)
 This sub-score is based on the following sub-scores:
 
 1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
-1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
+1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
 
 
 ### Static analysis
@@ -226,8 +254,8 @@ Score: **0.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 This sub-score is based on 2 features:
 
-1.  A set of programming languages: **C, CPP, RUBY, PYTHON, JAVASCRIPT, GO, OTHER**
 1.  Is it included to OSS-Fuzz? **No**
+1.  Programming languages: **C, CPP, RUBY, PYTHON, JAVASCRIPT, GO, OTHER**
 
 ### Memory-safety testing
 
@@ -239,10 +267,10 @@ Score: **0.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 This sub-score is based on 4 features:
 
-1.  A set of programming languages: **C, CPP, RUBY, PYTHON, JAVASCRIPT, GO, OTHER**
 1.  Does it use AddressSanitizer? **No**
 1.  Does it use MemorySanitizer? **No**
 1.  Does it use UndefinedBehaviorSanitizer? **No**
+1.  Programming languages: **C, CPP, RUBY, PYTHON, JAVASCRIPT, GO, OTHER**
 
 ### nohttp tool
 
@@ -254,8 +282,8 @@ Score: **0.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 This sub-score is based on 2 features:
 
-1.  A set of package managers: **NPM, YARN, RUBYGEMS**
 1.  Does it use nohttp? **No**
+1.  Package managers: **NPM, YARN, RUBYGEMS**
 
 ### Dependabot score
 
@@ -267,22 +295,23 @@ Score: **10.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 This sub-score is based on 4 features:
 
-1.  A set of package managers: **NPM, YARN, RUBYGEMS**
-1.  A set of programming languages: **C, CPP, RUBY, PYTHON, JAVASCRIPT, GO, OTHER**
 1.  Does it use Dependabot? **Yes**
 1.  Does it use GitHub as the main development platform? **Yes**
+1.  Package managers: **NPM, YARN, RUBYGEMS**
+1.  Programming languages: **C, CPP, RUBY, PYTHON, JAVASCRIPT, GO, OTHER**
 
 ### OWASP Dependency Check score
 
-Score: **0.0**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **N/A**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
 
 
-This sub-score is based on 2 features:
+This sub-score is based on 3 features:
 
 1.  How is OWASP Dependency Check used? **Not used**
+1.  Package managers: **NPM, YARN, RUBYGEMS**
 1.  What is the threshold for OWASP Dependency Check? **Not specified**
 
 ### LGTM score
@@ -295,8 +324,8 @@ Score: **10.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 This sub-score is based on 2 features:
 
-1.  A set of programming languages: **C, CPP, RUBY, PYTHON, JAVASCRIPT, GO, OTHER**
-1.  The worst LGTM grade of the project: **A_PLUS**
+1.  Programming languages: **C, CPP, RUBY, PYTHON, JAVASCRIPT, GO, OTHER**
+1.  The worst LGTM grade of the project: **A+**
 
 ### How a project uses CodeQL
 
@@ -308,10 +337,10 @@ Score: **0.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 This sub-score is based on 4 features:
 
-1.  A set of programming languages: **C, CPP, RUBY, PYTHON, JAVASCRIPT, GO, OTHER**
+1.  Does it run CodeQL scans? **No**
+1.  Does it use CodeQL checks for pull requests? **No**
 1.  Does it use LGTM checks? **No**
-1.  If a project runs CodeQL checks for commits: **No**
-1.  If a project runs CodeQL scans: **No**
+1.  Programming languages: **C, CPP, RUBY, PYTHON, JAVASCRIPT, GO, OTHER**
 
 ### FindSecBugs score
 
@@ -323,40 +352,16 @@ Score: **N/A**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 This sub-score is based on 2 features:
 
-1.  A set of programming languages: **C, CPP, RUBY, PYTHON, JAVASCRIPT, GO, OTHER**
 1.  Does it use FindSecBugs? **No**
+1.  Programming languages: **C, CPP, RUBY, PYTHON, JAVASCRIPT, GO, OTHER**
 
-
-
-## How to improve the rating
-
-1.  You can ask the project maintainers to enable LGTM checks for pull requests in the project.
-    More info:
-    1.  [How to enable LGTM checks for pull requests](https://lgtm.com/help/lgtm/about-automated-code-review)
-2.  You can open a pull request to enable CodeQL scans in the project. Make sure that the scans are run on pull requests.
-    More info:
-    1.  [How to enable CodeQL checks for pull requests](https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#enabling-code-scanning-using-actions)
-3.  You can open a pull request to enable CodeQL scans in the project.
-    More info:
-    1.  [How to enable CodeQL checks](https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#enabling-code-scanning-using-actions)
-4.  You can open a pull request to enable FindSecBugs for the project.
-    More info:
-    1.  [FindSecBugs home page](https://find-sec-bugs.github.io/)
-5.  You can open a pull request to enable AddressSanitizer for the project.
-    More info:
-    1.  [About AdddressSanitizer](https://github.com/google/sanitizers/wiki/AddressSanitizer)
-6.  You can open a pull request to enable MemorySanitizer for the project.
-    More info:
-    1.  [About AdddressSanitizer](https://github.com/google/sanitizers/wiki/MemorySanitizer)
-7.  You can open a pull request to enable UndefinedBehaviorSanitizer for the project.
-    More info:
-    1.  [About AdddressSanitizer](https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html)
-8.  You can include the project to OSS-Fuzz. Then, the project is going to be regularly fuzzed.
-    More info:
-    1.  [The OSS-Fuzz project](https://github.com/google/oss-fuzz)
 
 
 ## Known vulnerabilities
 
-No vulnerabilities found
+1.  [CVE-2001-1438](https://nvd.nist.gov/vuln/detail/CVE-2001-1438)
+1.  [CVE-2018-16359](https://nvd.nist.gov/vuln/detail/CVE-2018-16359)
+1.  [CVE-2018-19333](https://nvd.nist.gov/vuln/detail/CVE-2018-19333)
+1.  [CVE-2018-20168](https://nvd.nist.gov/vuln/detail/CVE-2018-20168)
+
 

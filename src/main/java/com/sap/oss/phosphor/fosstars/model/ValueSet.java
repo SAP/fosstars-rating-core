@@ -1,17 +1,12 @@
 package com.sap.oss.phosphor.fosstars.model;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import java.util.Optional;
 import java.util.Set;
 
 /**
  * A set of feature values. The set contains only unique features.
  */
-@JsonSubTypes({
-    @JsonSubTypes.Type(value = ValueHashSet.class, name = "ValueHashSet")
-})
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 public interface ValueSet extends Iterable<Value<?>> {
 

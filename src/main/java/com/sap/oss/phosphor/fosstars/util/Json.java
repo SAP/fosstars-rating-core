@@ -60,6 +60,6 @@ public class Json extends Deserialization {
    * @return A shared {@link ObjectMapper} for JSON.
    */
   public static ObjectMapper mapper() {
-    return JsonMapper.builder().polymorphicTypeValidator(validator()).build();
+    return registerSubTypesIn(JsonMapper.builder().polymorphicTypeValidator(validator()).build());
   }
 }

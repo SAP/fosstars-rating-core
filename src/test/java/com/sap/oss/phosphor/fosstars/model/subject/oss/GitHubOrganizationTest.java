@@ -5,8 +5,12 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 import org.junit.Test;
 
 public class GitHubOrganizationTest {
@@ -23,7 +27,7 @@ public class GitHubOrganizationTest {
   }
 
   @Test
-  public void testSerialization() throws IOException {
+  public void testJsonSerialization() throws IOException {
     GitHubOrganization org = new GitHubOrganization("test");
     byte[] bytes = Json.toBytes(org);
     assertNotNull(bytes);
@@ -32,6 +36,18 @@ public class GitHubOrganizationTest {
     assertNotNull(clone);
     assertEquals(org, clone);
     assertEquals(org.hashCode(), clone.hashCode());
+  }
+
+  @Test
+  public void testJsonSerializationWithList() throws IOException {
+    GitHubOrganization org = new GitHubOrganization("test");
+    List<GitHubOrganization> list = Collections.singletonList(org);
+    ObjectMapper mapper = Json.mapper();
+    TypeReference<List<GitHubOrganization>> typeReference
+        = new TypeReference<List<GitHubOrganization>>() {};
+    byte[] bytes = mapper.writerFor(typeReference).writeValueAsBytes(list);
+    List<GitHubOrganization> clone = mapper.readValue(bytes, typeReference);
+    assertEquals(list, clone);
   }
 
 }

@@ -16,7 +16,7 @@ if [ "${CLEAN}" = "yes" ]; then
   rm -rf .fosstars/project_rating_cache.json
   echo "[]" > docs/oss/security/github_projects.json
 
-  for file in $(find docs/oss/security -name "*.md" | grep -v README)
+  for file in $(find docs/oss/security -name "*.md" | grep -v README | grep -v improvements)
   do
     rm $file
   done

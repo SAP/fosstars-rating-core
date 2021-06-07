@@ -1,38 +1,7 @@
 package com.sap.oss.phosphor.fosstars.model;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.sap.oss.phosphor.fosstars.model.math.DoubleInterval;
-import com.sap.oss.phosphor.fosstars.model.score.AverageCompositeScore;
-import com.sap.oss.phosphor.fosstars.model.score.WeightedCompositeScore;
-import com.sap.oss.phosphor.fosstars.model.score.example.ProjectActivityScoreExample;
-import com.sap.oss.phosphor.fosstars.model.score.example.SecurityScoreExample;
-import com.sap.oss.phosphor.fosstars.model.score.example.SecurityTestingScoreExample;
-import com.sap.oss.phosphor.fosstars.model.score.oss.ArtifactLatestReleaseAgeScore;
-import com.sap.oss.phosphor.fosstars.model.score.oss.ArtifactReleaseHistoryScore;
-import com.sap.oss.phosphor.fosstars.model.score.oss.ArtifactVersionUpToDateScore;
-import com.sap.oss.phosphor.fosstars.model.score.oss.ArtifactVersionVulnerabilityScore;
-import com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore;
-import com.sap.oss.phosphor.fosstars.model.score.oss.CommunityCommitmentScore;
-import com.sap.oss.phosphor.fosstars.model.score.oss.DependabotScore;
-import com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore;
-import com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore;
-import com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore;
-import com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore;
-import com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore;
-import com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore;
-import com.sap.oss.phosphor.fosstars.model.score.oss.OssArtifactSecurityScore;
-import com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScore;
-import com.sap.oss.phosphor.fosstars.model.score.oss.OssSecurityScore;
-import com.sap.oss.phosphor.fosstars.model.score.oss.OwaspDependencyScanScore;
-import com.sap.oss.phosphor.fosstars.model.score.oss.ProjectActivityScore;
-import com.sap.oss.phosphor.fosstars.model.score.oss.ProjectPopularityScore;
-import com.sap.oss.phosphor.fosstars.model.score.oss.ProjectSecurityAwarenessScore;
-import com.sap.oss.phosphor.fosstars.model.score.oss.ProjectSecurityTestingScore;
-import com.sap.oss.phosphor.fosstars.model.score.oss.StaticAnalysisScore;
-import com.sap.oss.phosphor.fosstars.model.score.oss.UnpatchedVulnerabilitiesScore;
-import com.sap.oss.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore;
-import com.sap.oss.phosphor.fosstars.model.score.oss.VulnerabilityLifetimeScore;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import java.util.Set;
 
@@ -46,38 +15,6 @@ import java.util.Set;
  * for a specific score.</p>
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-@JsonSubTypes({
-    @JsonSubTypes.Type(value = SecurityScoreExample.class),
-    @JsonSubTypes.Type(value = ProjectActivityScoreExample.class),
-    @JsonSubTypes.Type(value = SecurityTestingScoreExample.class),
-    @JsonSubTypes.Type(value = WeightedCompositeScore.class),
-    @JsonSubTypes.Type(value = AverageCompositeScore.class),
-    @JsonSubTypes.Type(value = ProjectActivityScore.class),
-    @JsonSubTypes.Type(value = ProjectPopularityScore.class),
-    @JsonSubTypes.Type(value = CommunityCommitmentScore.class),
-    @JsonSubTypes.Type(value = ProjectSecurityAwarenessScore.class),
-    @JsonSubTypes.Type(value = ProjectSecurityTestingScore.class),
-    @JsonSubTypes.Type(value = UnpatchedVulnerabilitiesScore.class),
-    @JsonSubTypes.Type(value = VulnerabilityLifetimeScore.class),
-    @JsonSubTypes.Type(value = OssSecurityScore.class),
-    @JsonSubTypes.Type(value = DependencyScanScore.class),
-    @JsonSubTypes.Type(value = LgtmScore.class),
-    @JsonSubTypes.Type(value = CodeqlScore.class),
-    @JsonSubTypes.Type(value = NoHttpToolScore.class),
-    @JsonSubTypes.Type(value = MemorySafetyTestingScore.class),
-    @JsonSubTypes.Type(value = FindSecBugsScore.class),
-    @JsonSubTypes.Type(value = FuzzingScore.class),
-    @JsonSubTypes.Type(value = StaticAnalysisScore.class),
-    @JsonSubTypes.Type(value = DependabotScore.class),
-    @JsonSubTypes.Type(value = OwaspDependencyScanScore.class),
-    @JsonSubTypes.Type(value = VulnerabilityDiscoveryAndSecurityTestingScore.class),
-    @JsonSubTypes.Type(value = OssArtifactSecurityScore.class),
-    @JsonSubTypes.Type(value = OssRulesOfPlayScore.class),
-    @JsonSubTypes.Type(value = ArtifactLatestReleaseAgeScore.class),
-    @JsonSubTypes.Type(value = ArtifactVersionUpToDateScore.class),
-    @JsonSubTypes.Type(value = ArtifactVersionVulnerabilityScore.class),
-    @JsonSubTypes.Type(value = ArtifactReleaseHistoryScore.class)
-})
 public interface Score extends Feature<Double> {
 
   /**

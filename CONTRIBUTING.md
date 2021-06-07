@@ -32,13 +32,21 @@ fashion during the submission process. SAP uses
 
 # Add JUnit test cases
 
-Please make sure you added unit tests for the changes you introduce. The more tests you add the better.
+Please make sure you added unit tests for the changes you introduce. The more tests you add, the better.
 Please search the codebase to find related unit tests and add additional `@Test` methods within.
 
 # Add Javadoc
 
-Please make sure all new classes and methods have a simple Javadoc class comment
-with at least a short note which describes what the class or the method is for.
+Please make sure all new classes and methods have Javadoc comments
+with at least a short note which describes what the class or the method does.
+Please make sure there is no Javadoc warnings by running `mvn javadoc:javadoc`.
+
+# Code formatting
+
+Please follow [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html).
+Many of popular IDEs allow importing the ruleset.
+To make sure that the code is formatted correctly, we run Maven Checkstyle plugin in the build pipeline.
+You can run it with `mvn checkstyle:check`.
 
 # Commit the changes
 
@@ -63,6 +71,6 @@ The instructions are available in [the README file](src/test/shell/tool/github/R
 
 # Submit your pull request
 
-*  Please explain the changes you introduce.
-*  Please add any additional information.
+*  Please explain the changes.
+*  Please add any additional information that you think is useful for reviewers.
 *  Please expect discussion and rework.

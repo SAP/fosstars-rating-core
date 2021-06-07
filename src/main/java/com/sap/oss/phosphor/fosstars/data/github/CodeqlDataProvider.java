@@ -78,13 +78,14 @@ public class CodeqlDataProvider extends GitHubCachingDataProvider {
     // ideally, we're looking for a GitHub action that runs CodeQL scan on pull requests
     // but if we just find an action that runs CodeQL scans, that's also fine
     for (Path configPath : findGitHubActionsIn(repository)) {
-      InputStream content = Files.newInputStream(configPath);
-      Map<String, Object> githubAction = Yaml.readMap(content);
-      if (triggersCodeqlScan(githubAction)) {
-        runsCodeqlScans = RUNS_CODEQL_SCANS.value(true);
-        if (runsOnPullRequests(githubAction)) {
-          usesCodeqlChecks = USES_CODEQL_CHECKS.value(true);
-          break;
+      try (InputStream content = Files.newInputStream(configPath)) {
+        Map<String, Object> githubAction = Yaml.readMap(content);
+        if (triggersCodeqlScan(githubAction)) {
+          runsCodeqlScans = RUNS_CODEQL_SCANS.value(true);
+          if (runsOnPullRequests(githubAction)) {
+            usesCodeqlChecks = USES_CODEQL_CHECKS.value(true);
+            break;
+          }
         }
       }
     }

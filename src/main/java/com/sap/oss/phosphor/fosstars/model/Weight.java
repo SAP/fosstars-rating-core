@@ -1,20 +1,13 @@
 package com.sap.oss.phosphor.fosstars.model;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.sap.oss.phosphor.fosstars.model.math.DoubleInterval;
-import com.sap.oss.phosphor.fosstars.model.weight.ImmutableWeight;
-import com.sap.oss.phosphor.fosstars.model.weight.MutableWeight;
 
 /**
  * An interface for a weight.
  * All implementations have to support serialization to JSON with Jackson.
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-@JsonSubTypes({
-    @JsonSubTypes.Type(value = MutableWeight.class),
-    @JsonSubTypes.Type(value = ImmutableWeight.class)
-})
 public interface Weight extends Parameter {
 
   /**

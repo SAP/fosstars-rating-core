@@ -1,25 +1,6 @@
 package com.sap.oss.phosphor.fosstars.model;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersionValue;
-import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersionsValue;
-import com.sap.oss.phosphor.fosstars.model.value.BooleanValue;
-import com.sap.oss.phosphor.fosstars.model.value.DateValue;
-import com.sap.oss.phosphor.fosstars.model.value.DoubleValue;
-import com.sap.oss.phosphor.fosstars.model.value.EnumValue;
-import com.sap.oss.phosphor.fosstars.model.value.ExpiringValue;
-import com.sap.oss.phosphor.fosstars.model.value.IntegerValue;
-import com.sap.oss.phosphor.fosstars.model.value.LanguagesValue;
-import com.sap.oss.phosphor.fosstars.model.value.LgtmGradeValue;
-import com.sap.oss.phosphor.fosstars.model.value.NotApplicableValue;
-import com.sap.oss.phosphor.fosstars.model.value.OwaspDependencyCheckCvssThresholdValue;
-import com.sap.oss.phosphor.fosstars.model.value.OwaspDependencyCheckUsageValue;
-import com.sap.oss.phosphor.fosstars.model.value.PackageManagersValue;
-import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
-import com.sap.oss.phosphor.fosstars.model.value.StringValue;
-import com.sap.oss.phosphor.fosstars.model.value.UnknownValue;
-import com.sap.oss.phosphor.fosstars.model.value.VulnerabilitiesValue;
 
 /**
  * An interface for a feature value of specific type.
@@ -27,26 +8,6 @@ import com.sap.oss.phosphor.fosstars.model.value.VulnerabilitiesValue;
  * @param <T> Type of date that the feature provides.
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-@JsonSubTypes({
-    @JsonSubTypes.Type(value = IntegerValue.class),
-    @JsonSubTypes.Type(value = DoubleValue.class),
-    @JsonSubTypes.Type(value = BooleanValue.class),
-    @JsonSubTypes.Type(value = DateValue.class),
-    @JsonSubTypes.Type(value = ScoreValue.class),
-    @JsonSubTypes.Type(value = ExpiringValue.class),
-    @JsonSubTypes.Type(value = VulnerabilitiesValue.class),
-    @JsonSubTypes.Type(value = UnknownValue.class),
-    @JsonSubTypes.Type(value = NotApplicableValue.class),
-    @JsonSubTypes.Type(value = EnumValue.class),
-    @JsonSubTypes.Type(value = LgtmGradeValue.class),
-    @JsonSubTypes.Type(value = LanguagesValue.class),
-    @JsonSubTypes.Type(value = PackageManagersValue.class),
-    @JsonSubTypes.Type(value = StringValue.class),
-    @JsonSubTypes.Type(value = ArtifactVersionValue.class),
-    @JsonSubTypes.Type(value = ArtifactVersionsValue.class),
-    @JsonSubTypes.Type(value = OwaspDependencyCheckUsageValue.class),
-    @JsonSubTypes.Type(value = OwaspDependencyCheckCvssThresholdValue.class)
-})
 public interface Value<T> {
 
   /**
