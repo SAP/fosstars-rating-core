@@ -6,6 +6,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RELEAS
 import com.fasterxml.jackson.databind.JsonNode;
 import com.sap.oss.phosphor.fosstars.data.AbstractReleaseInfoLoader;
 import com.sap.oss.phosphor.fosstars.data.DataProvider;
+import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.MavenArtifact;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
@@ -70,5 +71,10 @@ public class ReleaseInfoFromMaven extends AbstractReleaseInfoLoader<MavenArtifac
     values.update(RELEASED_ARTIFACT_VERSIONS.unknown());
     values.update(ARTIFACT_VERSION.unknown());
     return this;
+  }
+
+  @Override
+  public boolean supports(Subject type) {
+    return type instanceof MavenArtifact;
   }
 }

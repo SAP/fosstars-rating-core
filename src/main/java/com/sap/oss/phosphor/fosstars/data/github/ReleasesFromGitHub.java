@@ -79,7 +79,7 @@ public class ReleasesFromGitHub extends CachedSingleFeatureGitHubDataProvider<Ar
    * @param date The date to be converted.
    * @return The time as LocalDateTime.
    */
-  private static LocalDateTime convertToLocalDate(Date date) {
+  private LocalDateTime convertToLocalDate(Date date) {
     return date.toInstant()
         .atZone(ZoneId.systemDefault())
         .toLocalDateTime();

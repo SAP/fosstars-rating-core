@@ -5,6 +5,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RELEAS
 import com.sap.oss.phosphor.fosstars.data.AbstractReleaseInfoLoader;
 import com.sap.oss.phosphor.fosstars.data.DataProvider;
 import com.sap.oss.phosphor.fosstars.data.github.ReleasesFromGitHub;
+import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.Artifact;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.MavenArtifact;
@@ -96,5 +97,10 @@ public class ReleaseInfoLoader extends AbstractReleaseInfoLoader<Artifact> {
   private static boolean hasFeatureIn(ValueSet values) {
     return values.has(RELEASED_ARTIFACT_VERSIONS)
         && !values.of(RELEASED_ARTIFACT_VERSIONS).get().isUnknown();
+  }
+
+  @Override
+  public boolean supports(Subject type) {
+    return type instanceof Artifact;
   }
 }
