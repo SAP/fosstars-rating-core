@@ -51,46 +51,48 @@ The procedure for re-calculating the thresholds is described [here](oss_security
 The security rating assesses the following factors of an open source project:
 
 1.  How well the project implements security testing.
-1.  Whether the project has vulnerabilities that have not been fixed.
-1.  How well the community is aware about security.
+1.  Unpatched vulnerabilities.
+1.  Security reviews.
+1.  How well the community is aware of security.
 1.  How the project is active.
 1.  How the project is popular.
 1.  How the community commits to support the project.
 
 To assess these factors, the security rating uses the following info about the open source project:
 
-1.  Whether the project runs CodeQL checks
-1.  Whether the project runs CodeQL scans
-1.  Whether the project uses LGTM checks for commits
-1.  The worst LGTM grade for the project
-1.  Whether the project uses FindSecBugs
-1.  Whether the project uses Dependabot
-1.  Whether the project uses OWASP Dependency Check
-1.  Whether the project has a CVSS threshold for OWASP Dependency Check to fail the build
-1.  Whether the project uses AddressSanitizer
-1.  Whether the project uses MemorySanitizer
-1.  Whether the project uses UndefinedBehaviorSanitizer
-1.  Whether the project uses OWASP Enterprise Security API (ESAPI)
-1.  Whether the project uses OWASP Java Encoder
-1.  Whether the project uses OWASP Java HTML Sanitizer
-1.  Whether the project uses nohttp tool
-1.  Info about vulnerabilities in the project
-1.  Whether the project is included to OSS-Fuzz project
-1.  Whether the project signs artifacts
-1.  Whether the project uses signed commits
-1.  Whether the project has a security policy
-1.  Whether the project has a security team
-1.  Whether the project has a bug bounty program
-1.  Whether the project belongs to Apache Foundation
-1.  Whether the project belongs to Eclipse Foundation
-1.  Whether the project is supported by a company
-1.  Whether the project uses GitHub for development
-1.  Programming languages used in the project
-1.  Package managers used in the project
-1.  Number of commits in the last three months
-1.  Number of contributors in the last three months
-1.  Number of stars in the GitHub repository
-1.  Number of watchers in the GitHub repository
+1.  Whether the project runs CodeQL checks or not.
+1.  Whether the project runs CodeQL scans or not.
+1.  Whether the project uses LGTM checks for commits or not.
+1.  The worst LGTM grade for the project.
+1.  Whether the project uses FindSecBugs or not.
+1.  Whether the project uses Dependabot or not.
+1.  Whether the project uses OWASP Dependency Check or not.
+1.  Whether the project has a CVSS threshold for OWASP Dependency Check to fail the build or not.
+1.  Whether the project uses AddressSanitizer or not.
+1.  Whether the project uses MemorySanitizer or not.
+1.  Whether the project uses UndefinedBehaviorSanitizer or not.
+1.  Whether the project uses OWASP Enterprise Security API (ESAPI) or not.
+1.  Whether the project uses OWASP Java Encoder or not.
+1.  Whether the project uses OWASP Java HTML Sanitizer or not.
+1.  Whether the project uses NoHTTP tool or not.
+1.  Info about security reviews that have been done for the project.
+1.  Info about vulnerabilities in the project.
+1.  Whether the project is included to OSS-Fuzz project or not.
+1.  Whether the project signs artifacts or not.
+1.  Whether the project uses signed commits or not.
+1.  Whether the project has a security policy or not.
+1.  Whether the project has a security team or not.
+1.  Whether the project has a bug bounty program or not.
+1.  Whether the project belongs to Apache Foundation or not.
+1.  Whether the project belongs to Eclipse Foundation or not.
+1.  Whether the project is supported by a company or not.
+1.  Whether the project uses GitHub for development or not.
+1.  Programming languages used in the project.
+1.  Package managers used in the project.
+1.  Number of commits in the last three months.
+1.  Number of contributors in the last three months.
+1.  Number of stars in the GitHub repository.
+1.  Number of watchers in the GitHub repository.
 
 For example, here is a [detailed report](oss/security/curl/curl.md)
 that shows all sub-scores, structure and data that were used to calculate the security rating for curl.
