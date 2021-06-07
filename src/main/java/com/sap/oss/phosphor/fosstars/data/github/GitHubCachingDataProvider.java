@@ -1,6 +1,7 @@
 package com.sap.oss.phosphor.fosstars.data.github;
 
 import com.sap.oss.phosphor.fosstars.data.AbstractCachingDataProvider;
+import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.util.Objects;
 
@@ -28,5 +29,10 @@ public abstract class GitHubCachingDataProvider extends AbstractCachingDataProvi
   @Override
   public final boolean interactive() {
     return false;
+  }
+
+  @Override
+  public boolean supports(Subject type) {
+    return type instanceof GitHubProject;
   }
 }

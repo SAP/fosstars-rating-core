@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sap.oss.phosphor.fosstars.model.subject.AbstractSubject;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -11,7 +12,7 @@ import java.util.Optional;
  * NPM package artifact.
  */
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
-public class NpmArtifact implements Artifact {
+public class NpmArtifact extends AbstractSubject implements Artifact {
 
   /**
    * NPM package identifier.

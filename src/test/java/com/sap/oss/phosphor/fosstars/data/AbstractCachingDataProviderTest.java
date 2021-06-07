@@ -8,6 +8,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.Feature;
+import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
@@ -104,6 +105,11 @@ public class AbstractCachingDataProviderTest {
     }
 
     @Override
+    public boolean supports(Subject type) {
+      return type instanceof GitHubProject;
+    }
+
+    @Override
     protected ValueSet fetchValuesFor(GitHubProject object) {
       counter++;
       return ValueHashSet.from(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE.value(42));
@@ -123,6 +129,11 @@ public class AbstractCachingDataProviderTest {
     @Override
     public Set<Feature<?>> supportedFeatures() {
       return setOf(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, SECURITY_REVIEW_DONE_EXAMPLE);
+    }
+
+    @Override
+    public boolean supports(Subject type) {
+      return type instanceof GitHubProject;
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.sap.oss.phosphor.fosstars.tool.github;
 
 import com.sap.oss.phosphor.fosstars.data.DataProvider;
+import com.sap.oss.phosphor.fosstars.data.artifact.ReleaseInfoFromMaven;
+import com.sap.oss.phosphor.fosstars.data.artifact.ReleaseInfoFromNpm;
 import com.sap.oss.phosphor.fosstars.data.github.CodeqlDataProvider;
 import com.sap.oss.phosphor.fosstars.data.github.ContributingGuidelineInfo;
 import com.sap.oss.phosphor.fosstars.data.github.FuzzedInOssFuzz;
@@ -38,7 +40,7 @@ import com.sap.oss.phosphor.fosstars.data.interactive.AskAboutSecurityTeam;
 import com.sap.oss.phosphor.fosstars.data.interactive.AskAboutUnpatchedVulnerabilities;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Rating;
-import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
+import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.nvd.NVD;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -56,7 +58,7 @@ public class DataProviderSelector {
   /**
    * A list of available data providers.
    */
-  private final List<DataProvider<GitHubProject>> providers;
+  private final List<DataProvider<? extends Subject>> providers;
 
   /**
    * Initializes a new selector and providers.
@@ -96,7 +98,9 @@ public class DataProviderSelector {
         new SignsJarArtifacts(fetcher),
         new OwaspSecurityLibraries(fetcher),
         new UseReuseDataProvider(fetcher),
-        new ReleasesFromGitHub(fetcher),
+//        new ReleasesFromGitHub(fetcher),
+        new ReleaseInfoFromMaven(),
+        new ReleaseInfoFromNpm(),
         new LicenseInfo(fetcher),
         new ReadmeInfo(fetcher),
         new TeamsInfo(fetcher),
@@ -133,7 +137,7 @@ public class DataProviderSelector {
   private void loadConfigFrom(Path path) throws IOException {
     String filename = path.getFileName().getFileName().toString();
     String name = filename.contains(".") ? filename.split("\\.")[0] : filename;
-    for (DataProvider<GitHubProject> provider : providers) {
+    for (DataProvider<? extends Subject> provider : providers) {
       Class<?> clazz = provider.getClass();
       if (clazz.getSimpleName().equals(name) || clazz.getCanonicalName().equals(name)) {
         provider.configure(path);
@@ -147,7 +151,7 @@ public class DataProviderSelector {
    * @param rating The rating.
    * @return A list of providers.
    */
-  public List<DataProvider<GitHubProject>> providersFor(Rating rating) {
+  public List<DataProvider<? extends Subject>> providersFor(Rating rating) {
     return rating.allFeatures().stream()
         .map(this::providersFor)
         .flatMap(List::stream)
@@ -160,7 +164,7 @@ public class DataProviderSelector {
    * @param feature The feature.
    * @return A list of data providers.
    */
-  List<DataProvider<GitHubProject>> providersFor(Feature<?> feature) {
+  List<DataProvider<? extends Subject>> providersFor(Feature<?> feature) {
     return providers.stream()
         .filter(provider -> applicable(provider, feature))
         .collect(Collectors.toList());
