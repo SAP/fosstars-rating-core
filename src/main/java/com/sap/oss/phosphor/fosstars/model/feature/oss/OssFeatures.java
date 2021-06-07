@@ -1,5 +1,6 @@
 package com.sap.oss.phosphor.fosstars.model.feature.oss;
 
+import com.sap.oss.phosphor.fosstars.data.artifact.experimental.VulnerabilitiesInArtifact;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.feature.BooleanFeature;
 import com.sap.oss.phosphor.fosstars.model.feature.DateFeature;
@@ -139,6 +140,12 @@ public class OssFeatures {
    */
   public static final Feature<Vulnerabilities> VULNERABILITIES
       = new VulnerabilitiesInProject("Info about vulnerabilities in open-source project");
+
+  /**
+   * Provides information about vulnerabilities in artifact.
+   */
+  public static final Feature<Vulnerabilities> VULNERABILITIES_IN_ARTIFACT
+      = new VulnerabilitiesInArtifact("Info about vulnerabilities in open-source artifact");
 
   /**
    * Shows if an open-source project scans for known vulnerabilities in its dependencies.

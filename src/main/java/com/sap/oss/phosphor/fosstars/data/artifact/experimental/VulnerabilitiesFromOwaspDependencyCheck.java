@@ -1,21 +1,20 @@
-package com.sap.oss.phosphor.fosstars.data.owasp.experimental;
+package com.sap.oss.phosphor.fosstars.data.artifact.experimental;
 
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES_IN_ARTIFACT;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.data.DataProvider;
 import com.sap.oss.phosphor.fosstars.data.NoValueCache;
 import com.sap.oss.phosphor.fosstars.data.UserCallback;
 import com.sap.oss.phosphor.fosstars.data.ValueCache;
+import com.sap.oss.phosphor.fosstars.data.artifact.experimental.owasp.data.Dependency;
+import com.sap.oss.phosphor.fosstars.data.artifact.experimental.owasp.data.OwaspDependencyCheckEntry;
+import com.sap.oss.phosphor.fosstars.data.artifact.experimental.owasp.data.OwaspDependencyCheckReference;
+import com.sap.oss.phosphor.fosstars.data.artifact.experimental.owasp.data.OwaspDependencyCheckVuln;
+import com.sap.oss.phosphor.fosstars.data.artifact.experimental.owasp.data.Software;
+import com.sap.oss.phosphor.fosstars.data.artifact.experimental.owasp.data.VulnerableSoftware;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
-import com.sap.oss.phosphor.fosstars.model.owasp.experimental.Dependency;
-import com.sap.oss.phosphor.fosstars.model.owasp.experimental.OwaspDependencyCheckEntry;
-import com.sap.oss.phosphor.fosstars.model.owasp.experimental.OwaspDependencyCheckReference;
-import com.sap.oss.phosphor.fosstars.model.owasp.experimental.OwaspDependencyCheckVuln;
-import com.sap.oss.phosphor.fosstars.model.owasp.experimental.Software;
-import com.sap.oss.phosphor.fosstars.model.owasp.experimental.VulnerableSoftware;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.MavenArtifact;
 import com.sap.oss.phosphor.fosstars.model.value.CVSS;
 import com.sap.oss.phosphor.fosstars.model.value.Reference;
@@ -24,6 +23,7 @@ import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerability;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerability.Builder;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerability.Resolution;
+import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -51,8 +51,8 @@ import org.owasp.dependencycheck.utils.Settings;
 
 /**
  * This data provider tries to fill out the
- * {@link com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures#VULNERABILITIES}. It gathers
- * vulnerabilities about {@link MavenArtifact} using OWASP Dependency-Check.
+ * {@link com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures#VULNERABILITIES_IN_ARTIFACT}.
+ * It gathers vulnerabilities in {@link MavenArtifact} using OWASP Dependency-Check.
  * 
  * @see <a href="https://owasp.org/www-project-dependency-check/">OWASP Dependency-Check</a>
  */
@@ -91,11 +91,6 @@ public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider<Mav
   private final Settings settings;
 
   /**
-   * OWASP Dependency-Check engine.
-   */
-  private final Engine engine;
-
-  /**
    * Collection of exceptions.
    */
   private final ExceptionCollection exceptionCollection;
@@ -106,7 +101,6 @@ public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider<Mav
   public VulnerabilitiesFromOwaspDependencyCheck() {
     settings = new Settings();
     settings.setString(Settings.KEYS.DATA_DIRECTORY, DEFAULT_DOWNLOAD_DIRECTORY);
-    engine = new Engine(settings);
     exceptionCollection = new ExceptionCollection();
   }
 
@@ -154,13 +148,15 @@ public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider<Mav
   public DataProvider<MavenArtifact> update(MavenArtifact artifact, ValueSet values)
       throws IOException {
     Objects.requireNonNull(artifact, "On no! The artifact object cannot be null");
+    Objects.requireNonNull(values, "On no! Values cannot be null");
     if (!artifact.version().isPresent()) {
-      throw new IOException("Oh no! the version is not available.");
+      throw new IOException("Oh no! The version is not available.");
     }
 
     Optional<OwaspDependencyCheckEntry> owaspDependencyCheckEntry = scan(artifact);
-    if (!owaspDependencyCheckEntry.isPresent()) {
-      values.update(VULNERABILITIES.unknown());
+    if (!owaspDependencyCheckEntry.isPresent()
+        || owaspDependencyCheckEntry.get().getDependencies() == null) {
+      values.update(VULNERABILITIES_IN_ARTIFACT.unknown());
       return this;
     }
 
@@ -170,12 +166,12 @@ public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider<Mav
         continue;
       }
 
-      for (OwaspDependencyCheckVuln owaspDependencyCheckvuln : dependency.getVulnerabilities()) {
-        vulnerabilities.add(from(owaspDependencyCheckvuln));
+      for (OwaspDependencyCheckVuln owaspDependencyCheckVuln : dependency.getVulnerabilities()) {
+        vulnerabilities.add(from(owaspDependencyCheckVuln));
       }
     }
 
-    values.update(VULNERABILITIES.value(vulnerabilities));
+    values.update(VULNERABILITIES_IN_ARTIFACT.value(vulnerabilities));
     return this;
   }
 
@@ -184,15 +180,17 @@ public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider<Mav
    */
   @Override
   public Set<Feature<?>> supportedFeatures() {
-    return setOf(VULNERABILITIES);
+    return setOf(VULNERABILITIES_IN_ARTIFACT);
   }
 
   /**
    * Scan the input jar file and analyze the extracted {@link Dependency}.
    * 
+   * @param engine OWASP Dependency-Check core {@link Engine}.
    * @param file The jar.
+   * @param Collection of exceptions.
    */
-  private void analyze(File file) {
+  private static void analyze(Engine engine, File file, ExceptionCollection exceptionCollection) {
     try {
       engine.scan(file);
       engine.analyzeDependencies();
@@ -204,11 +202,14 @@ public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider<Mav
   /**
    * Process the report generated from analysis of the jar file.
    * 
+   * @param engine OWASP Dependency-Check core {@link Engine}.
    * @param fileName The name of report.
+   * @param Collection of exceptions.
    * @return An optional of {@link OwaspDependencyCheckEntry}.
    * @throws IOException If something went wrong.
    */
-  private Optional<OwaspDependencyCheckEntry> process(String fileName) throws IOException {
+  private static Optional<OwaspDependencyCheckEntry> process(Engine engine, String fileName,
+      ExceptionCollection exceptionCollection) throws IOException {
     Optional<Path> reportPath = createDirectory(REPORT_DIR);
 
     if (reportPath.isPresent()) {
@@ -216,10 +217,9 @@ public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider<Mav
 
       try {
         engine.writeReports(fileName, file, REPORT_OUTPUT_FORMAT, exceptionCollection);
-        ObjectMapper mapper = new ObjectMapper();
-        return Optional.ofNullable(mapper.readValue(file, OwaspDependencyCheckEntry.class));
+        return Optional.ofNullable(Json.mapper().readValue(file, OwaspDependencyCheckEntry.class));
       } catch (ReportException e) {
-        throw new IOException("Oh no! the report writing failed.", e);
+        throw new IOException("Oh no! The report writing failed.", e);
       }
     }
     return Optional.empty();
@@ -236,9 +236,10 @@ public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider<Mav
     Optional<Path> filePath = fetch(artifact);
 
     if (filePath.isPresent()) {
+      final Engine engine = new Engine(settings);
       try {
-        analyze(filePath.get().toFile());
-        return process(filePath.get().toFile().getName());
+        analyze(engine, filePath.get().toFile(), exceptionCollection);
+        return process(engine, filePath.get().toFile().getName(), exceptionCollection);
       } finally {
         if (engine != null) {
           engine.close();
@@ -258,13 +259,15 @@ public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider<Mav
   private static Vulnerability from(OwaspDependencyCheckVuln owaspDependencyCheckVuln)
       throws IOException {
     Objects.requireNonNull(owaspDependencyCheckVuln,
-        "Oh no! vulnerability from OWASP entry is null");
+        "Oh no! Vulnerability from OWASP Dependency Check entry is null!");
 
     return Builder.newVulnerability(owaspDependencyCheckVuln.getName())
         .description(owaspDependencyCheckVuln.getDescription())
         .set(cvssFrom(owaspDependencyCheckVuln))
         .references(referencesFrom(owaspDependencyCheckVuln))
-        .set(Resolution.PATCHED)
+        // OWASP Dependency Check reports unpatched vulnerabilities for an artifact, so we can just
+        // set resolution to unpatched.
+        .set(Resolution.UNPATCHED)
         .versionRanges(extractVersions(owaspDependencyCheckVuln))
         .make();
   }
@@ -392,7 +395,7 @@ public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider<Mav
   }
 
   /**
-   * Check if the directory exists, otherwise create the path directory.
+   * Creates the path directory and returns the created directory path.
    * 
    * @param directory The directory path.
    * @return Optional path of the directory.
