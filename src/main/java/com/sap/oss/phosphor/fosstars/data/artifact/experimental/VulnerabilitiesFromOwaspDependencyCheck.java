@@ -91,17 +91,11 @@ public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider<Mav
   private final Settings settings;
 
   /**
-   * Collection of exceptions.
-   */
-  private final ExceptionCollection exceptionCollection;
-
-  /**
    * Initializes a data provider.
    */
   public VulnerabilitiesFromOwaspDependencyCheck() {
     settings = new Settings();
     settings.setString(Settings.KEYS.DATA_DIRECTORY, DEFAULT_DOWNLOAD_DIRECTORY);
-    exceptionCollection = new ExceptionCollection();
   }
 
   /**
@@ -237,13 +231,12 @@ public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider<Mav
 
     if (filePath.isPresent()) {
       final Engine engine = new Engine(settings);
+      final ExceptionCollection exceptionCollection = new ExceptionCollection();
       try {
         analyze(engine, filePath.get().toFile(), exceptionCollection);
         return process(engine, filePath.get().toFile().getName(), exceptionCollection);
       } finally {
-        if (engine != null) {
-          engine.close();
-        }
+        engine.close();
       }
     }
     return Optional.empty();
@@ -317,8 +310,7 @@ public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider<Mav
    * @return The list of {@link VersionRange}.
    */
   private static List<VersionRange> extractVersions(OwaspDependencyCheckVuln owaspVulnerability) {
-    if (owaspVulnerability.getVulnerableSoftware() == null
-        || owaspVulnerability.getVulnerableSoftware().isEmpty()) {
+    if (owaspVulnerability.getVulnerableSoftware() == null) {
       return Collections.emptyList();
     }
 
