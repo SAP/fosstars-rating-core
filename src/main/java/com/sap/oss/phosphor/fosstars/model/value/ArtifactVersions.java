@@ -59,7 +59,7 @@ public class ArtifactVersions implements Iterable<ArtifactVersion> {
   @JsonCreator
   public ArtifactVersions(@JsonProperty("elements") Set<ArtifactVersion> versions) {
     Objects.requireNonNull(versions, "versions can't be null!");
-    this.elements = new TreeSet<>(ArtifactVersion.RELEASE_DATE_COMPARISON);
+    this.elements = new TreeSet<>(ArtifactVersion.RELEASE_DATE_VERSION_COMPARISON);
     this.elements.addAll(versions);
   }
 

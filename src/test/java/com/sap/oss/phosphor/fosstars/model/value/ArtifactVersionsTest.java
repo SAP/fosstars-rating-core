@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import org.junit.Test;
 
 public class ArtifactVersionsTest {
@@ -72,5 +71,22 @@ public class ArtifactVersionsTest {
 
     filteredRange = v.filterArtifactsByMajorVersion(SemanticVersion.parse("1.3.0").get());
     assertTrue(Arrays.asList(v1, v2, v3, v7, v8).containsAll(filteredRange.get()));
+  }
+
+  @Test
+  public void testSortingByReleaseDateAndVersion() {
+    ArtifactVersion v100 = new ArtifactVersion("1.0.0", LocalDateTime.now().minusDays(30));
+    ArtifactVersion v110 = new ArtifactVersion("1.1.0", LocalDateTime.now().minusDays(20));
+    ArtifactVersion v120 = new ArtifactVersion("1.2.0", LocalDateTime.now().minusDays(10));
+    ArtifactVersion v130 = new ArtifactVersion("1.3.0", LocalDateTime.now());
+    ArtifactVersion v200 = new ArtifactVersion("2.0.0", LocalDateTime.now().minusDays(10));
+    ArtifactVersion v210 = new ArtifactVersion("2.1.0", LocalDateTime.now());
+    ArtifactVersions v1 = new ArtifactVersions(v100, v110, v120, v130, v200, v210);
+
+    ArtifactVersion[] expectedOrder = {v210, v130, v200, v120, v110, v100};
+    int i = 0;
+    for (ArtifactVersion version : v1) {
+      assertEquals(expectedOrder[i++], version);
+    }
   }
 }
