@@ -35,4 +35,9 @@ public class SecurityReviewsValue extends AbstractKnownValue<SecurityReviews> {
   public SecurityReviews get() {
     return new SecurityReviews(reviews);
   }
+
+  @Override
+  public String toString() {
+    return reviews.toString();
+  }
 }

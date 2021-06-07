@@ -88,7 +88,6 @@ import com.sap.oss.phosphor.fosstars.model.value.OwaspDependencyCheckCvssThresho
 import com.sap.oss.phosphor.fosstars.model.value.OwaspDependencyCheckUsageValue;
 import com.sap.oss.phosphor.fosstars.model.value.PackageManagersValue;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
-import com.sap.oss.phosphor.fosstars.model.value.SecurityReviews;
 import com.sap.oss.phosphor.fosstars.model.value.SecurityReviewsValue;
 import com.sap.oss.phosphor.fosstars.model.value.StringValue;
 import com.sap.oss.phosphor.fosstars.model.value.UnknownValue;
