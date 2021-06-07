@@ -146,4 +146,9 @@ public class SecurityReviews implements Set<SecurityReview> {
   public int hashCode() {
     return Objects.hash(elements);
   }
+
+  @Override
+  public String toString() {
+    return String.format("%d security review%s", size(), size() == 1 ? "" : "s");
+  }
 }
