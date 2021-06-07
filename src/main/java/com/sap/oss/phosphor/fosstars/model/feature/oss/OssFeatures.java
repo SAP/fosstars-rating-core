@@ -141,6 +141,12 @@ public class OssFeatures {
       = new VulnerabilitiesInProject("Info about vulnerabilities in open-source project");
 
   /**
+   * Provides information about vulnerabilities in artifact.
+   */
+  public static final Feature<Vulnerabilities> VULNERABILITIES_IN_ARTIFACT
+      = new VulnerabilitiesInProject("Info about vulnerabilities in open-source artifact");
+
+  /**
    * Shows if an open-source project scans for known vulnerabilities in its dependencies.
    */
   public static final Feature<Boolean> SCANS_FOR_VULNERABLE_DEPENDENCIES
