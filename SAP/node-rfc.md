@@ -8,6 +8,9 @@
 1.  **[rl-assigned_teams-5]** Does teams have enough members on GitHub? **No**
 
 
+## Warnings
+
+1.  **[rl-vulnerability_alerts-2]** Does it have unresolved vulnerability alerts? **Yes**
 
 
 
@@ -30,7 +33,7 @@
 1.  **[rl-reuse_tool-4]** Is it compliant with REUSE rules? **Yes**
 1.  **[rl-security_policy-1]** Does it have a security policy? **Yes**
 1.  **[rl-vulnerability_alerts-1]** Are vulnerability alerts enabled? **Yes**
-1.  **[rl-vulnerability_alerts-2]** Does it have unresolved vulnerability alerts? **No**
+1.  **[rl-vulnerability_alerts-2]** Does it have unresolved vulnerability alerts? **Yes**
 
 
 ## How to fix it
