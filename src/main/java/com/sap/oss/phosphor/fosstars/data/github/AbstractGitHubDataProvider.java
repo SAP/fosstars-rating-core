@@ -8,7 +8,7 @@ import java.util.Objects;
 /**
  * Base class for data providers which get data from GitHub.
  */
-public abstract class AbstractGitHubDataProvider extends AbstractDataProvider<GitHubProject> {
+public abstract class AbstractGitHubDataProvider extends AbstractDataProvider {
 
   /**
    * An interface to GitHub.
@@ -26,8 +26,8 @@ public abstract class AbstractGitHubDataProvider extends AbstractDataProvider<Gi
   }
 
   @Override
-  public boolean supports(Subject type) {
-    return type instanceof GitHubProject;
+  public boolean supports(Subject subject) {
+    return subject instanceof GitHubProject;
   }
 
   /**

@@ -14,7 +14,7 @@ import static org.mockito.Mockito.when;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
-import com.sap.oss.phosphor.fosstars.tool.github.GitHubProjectValueCache;
+import com.sap.oss.phosphor.fosstars.tool.github.SubjectValueCache;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -110,7 +110,7 @@ public class UsesSanitizersTest extends TestGitHubDataFetcherHolder {
 
   private void testProvider(String content, Value... expectedValues) throws IOException {
     UsesSanitizers provider = new UsesSanitizers(fetcher);
-    provider.set(new GitHubProjectValueCache());
+    provider.set(new SubjectValueCache());
 
     final LocalRepository repository = mock(LocalRepository.class);
     when(repository.files(any()))

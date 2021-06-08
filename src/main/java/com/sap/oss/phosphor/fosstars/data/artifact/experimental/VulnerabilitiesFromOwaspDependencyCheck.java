@@ -1,5 +1,6 @@
 package com.sap.oss.phosphor.fosstars.data.artifact.experimental;
 
+import static com.sap.oss.phosphor.fosstars.model.Subject.cast;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES_IN_ARTIFACT;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 
@@ -14,6 +15,7 @@ import com.sap.oss.phosphor.fosstars.data.artifact.experimental.owasp.data.Owasp
 import com.sap.oss.phosphor.fosstars.data.artifact.experimental.owasp.data.Software;
 import com.sap.oss.phosphor.fosstars.data.artifact.experimental.owasp.data.VulnerableSoftware;
 import com.sap.oss.phosphor.fosstars.model.Feature;
+import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.MavenArtifact;
 import com.sap.oss.phosphor.fosstars.model.value.CVSS;
@@ -56,7 +58,7 @@ import org.owasp.dependencycheck.utils.Settings;
  * 
  * @see <a href="https://owasp.org/www-project-dependency-check/">OWASP Dependency-Check</a>
  */
-public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider<MavenArtifact> {
+public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider {
 
   /**
    * The base directory to contain the NVD data source and OWASP Dependency-Check generated DB by
@@ -110,7 +112,7 @@ public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider<Mav
    * This is a dummy cache which stores nothing.
    */
   @Override
-  public ValueCache<MavenArtifact> cache() {
+  public ValueCache<Subject> cache() {
     return NoValueCache.create();
   }
 
@@ -118,7 +120,7 @@ public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider<Mav
    * There is not call back required for this data provider.
    */
   @Override
-  public DataProvider<MavenArtifact> set(UserCallback callback) {
+  public VulnerabilitiesFromOwaspDependencyCheck set(UserCallback callback) {
     return this;
   }
 
@@ -126,7 +128,7 @@ public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider<Mav
    * No cache value is needed that is used by the data provider.
    */
   @Override
-  public DataProvider<MavenArtifact> set(ValueCache<MavenArtifact> cache) {
+  public VulnerabilitiesFromOwaspDependencyCheck set(ValueCache<Subject> cache) {
     return this;
   }
 
@@ -134,15 +136,17 @@ public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider<Mav
    * No configuration is required for this data provider.
    */
   @Override
-  public DataProvider<MavenArtifact> configure(Path config) throws IOException {
+  public VulnerabilitiesFromOwaspDependencyCheck configure(Path config) throws IOException {
     return this;
   }
 
   @Override
-  public DataProvider<MavenArtifact> update(MavenArtifact artifact, ValueSet values)
+  public VulnerabilitiesFromOwaspDependencyCheck update(Subject subject, ValueSet values)
       throws IOException {
-    Objects.requireNonNull(artifact, "On no! The artifact object cannot be null");
+
     Objects.requireNonNull(values, "On no! Values cannot be null");
+    MavenArtifact artifact = cast(subject, MavenArtifact.class);
+
     if (!artifact.version().isPresent()) {
       throw new IOException("Oh no! The version is not available.");
     }
@@ -177,12 +181,17 @@ public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider<Mav
     return setOf(VULNERABILITIES_IN_ARTIFACT);
   }
 
+  @Override
+  public boolean supports(Subject subject) {
+    return subject instanceof MavenArtifact;
+  }
+
   /**
    * Scan the input jar file and analyze the extracted {@link Dependency}.
    * 
    * @param engine OWASP Dependency-Check core {@link Engine}.
    * @param file The jar.
-   * @param Collection of exceptions.
+   * @param exceptionCollection A collection of exceptions that occurred during the analysis.
    */
   private static void analyze(Engine engine, File file, ExceptionCollection exceptionCollection) {
     try {
@@ -198,7 +207,7 @@ public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider<Mav
    * 
    * @param engine OWASP Dependency-Check core {@link Engine}.
    * @param fileName The name of report.
-   * @param Collection of exceptions.
+   * @param exceptionCollection A collection of exceptions that occurred during processing.
    * @return An optional of {@link OwaspDependencyCheckEntry}.
    * @throws IOException If something went wrong.
    */
@@ -230,13 +239,10 @@ public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider<Mav
     Optional<Path> filePath = fetch(artifact);
 
     if (filePath.isPresent()) {
-      final Engine engine = new Engine(settings);
       final ExceptionCollection exceptionCollection = new ExceptionCollection();
-      try {
+      try (Engine engine = new Engine(settings)) {
         analyze(engine, filePath.get().toFile(), exceptionCollection);
         return process(engine, filePath.get().toFile().getName(), exceptionCollection);
-      } finally {
-        engine.close();
       }
     }
     return Optional.empty();

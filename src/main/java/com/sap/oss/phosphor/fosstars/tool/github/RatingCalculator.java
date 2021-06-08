@@ -3,9 +3,6 @@ package com.sap.oss.phosphor.fosstars.tool.github;
 import com.sap.oss.phosphor.fosstars.data.UserCallback;
 import com.sap.oss.phosphor.fosstars.data.ValueCache;
 import com.sap.oss.phosphor.fosstars.model.Subject;
-import com.sap.oss.phosphor.fosstars.model.ValueSet;
-import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
-import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
 import java.io.IOException;
 
 /**
@@ -27,34 +24,14 @@ public interface RatingCalculator {
    * @param cache The cache.
    * @return The same calculator.
    */
-  RatingCalculator set(ValueCache<? extends Subject> cache);
+  RatingCalculator set(ValueCache<Subject> cache);
 
   /**
-   * Calculate a rating and assign it to a project.
+   * Calculate a rating and assign it to a subject.
    *
-   * @param project The project.
+   * @param subject The subject.
    * @return The same calculator.
    * @throws IOException If something went wrong.
    */
-//  RatingCalculator calculateFor(GitHubProject project) throws IOException;
-
-
-  /**
-   * Calculate a rating and assign it to a project.
-   *
-   * @param subjects The project.
-   * @return The same calculator.
-   * @throws IOException If something went wrong.
-   */
-  RatingValue calculateFor(Subject... subjects) throws IOException;
-
-  /**
-   * Calculate a rating and assign it to a project.
-   *
-   * @param project The project.
-   * @param knownValues Already known values.
-   * @return The same calculator.
-   * @throws IOException If something went wrong.
-   */
-//  RatingCalculator calculateFor(GitHubProject project, ValueSet knownValues) throws IOException;
+  RatingCalculator calculateFor(Subject subject) throws IOException;
 }

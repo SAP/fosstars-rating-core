@@ -3,6 +3,7 @@ package com.sap.oss.phosphor.fosstars.data.interactive;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_TEAM;
 
 import com.sap.oss.phosphor.fosstars.model.Feature;
+import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.oss.phosphor.fosstars.tool.YesNoSkipQuestion;
@@ -13,12 +14,12 @@ import java.util.Set;
 /**
  * This data provider asks a user about security teams.
  */
-public class AskAboutSecurityTeam<T> extends AbstractInteractiveDataProvider<T> {
+public class AskAboutSecurityTeam extends AbstractInteractiveDataProvider {
 
   @Override
-  protected AskAboutSecurityTeam<T> ask(T object, ValueSet values) {
+  protected AskAboutSecurityTeam ask(Subject subject, ValueSet values) {
     String question = String.format(
-        "Does project '%s' have a security team? Say yes, no, or skip, please.", object);
+        "Does '%s' have a security team? Say yes, no, or skip, please.", subject.purl());
 
     Answer answer = new YesNoSkipQuestion(callback, question).ask();
     switch (answer) {
@@ -38,6 +39,11 @@ public class AskAboutSecurityTeam<T> extends AbstractInteractiveDataProvider<T> 
     // TODO: store the answer in the SecurityTeamStorage
 
     return this;
+  }
+
+  @Override
+  public boolean supports(Subject subject) {
+    return true;
   }
 
   @Override

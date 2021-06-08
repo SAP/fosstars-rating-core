@@ -21,7 +21,7 @@ import com.sap.oss.phosphor.fosstars.model.value.CVSS;
 import com.sap.oss.phosphor.fosstars.model.value.OwaspDependencyCheckCvssThresholdValue;
 import com.sap.oss.phosphor.fosstars.model.value.OwaspDependencyCheckUsage;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
-import com.sap.oss.phosphor.fosstars.tool.github.GitHubProjectValueCache;
+import com.sap.oss.phosphor.fosstars.tool.github.SubjectValueCache;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Paths;
@@ -233,7 +233,7 @@ public class UsesOwaspDependencyCheckTest extends TestGitHubDataFetcherHolder {
     addForTesting(project, repository);
 
     UsesOwaspDependencyCheck provider = new UsesOwaspDependencyCheck(fetcher);
-    provider.set(new GitHubProjectValueCache());
+    provider.set(new SubjectValueCache());
 
     return provider;
   }

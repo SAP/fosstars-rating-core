@@ -8,6 +8,7 @@ import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
+import javax.annotation.Nullable;
 
 /**
  * A base class for a subject.
@@ -27,13 +28,14 @@ public abstract class AbstractSubject implements Subject {
   /**
    * Initializes a new subject.
    *
-   * @param ratingValue A rating value for the project.
+   * @param ratingValue A rating value for the project. It may be null which means no rating value.
    * @param ratingValueDate When the rating value was calculated.
+   *                        It may be null which means no date is available.
    */
   @JsonCreator
   public AbstractSubject(
-      @JsonProperty("ratingValue") RatingValue ratingValue,
-      @JsonProperty("ratingValueDate") Date ratingValueDate) {
+      @JsonProperty("ratingValue") @Nullable RatingValue ratingValue,
+      @JsonProperty("ratingValueDate") @Nullable Date ratingValueDate) {
 
     this.ratingValue = ratingValue;
     this.ratingValueDate = ratingValueDate;
@@ -58,6 +60,7 @@ public abstract class AbstractSubject implements Subject {
 
   @Override
   public void set(RatingValue value) {
+    Objects.requireNonNull(value, "Oh no! Rating value is null!");
     ratingValue = value;
     ratingValueDate = new Date();
   }
@@ -67,7 +70,7 @@ public abstract class AbstractSubject implements Subject {
     if (this == o) {
       return true;
     }
-    if (o instanceof AbstractSubject == false) {
+    if (o == null || !AbstractSubject.class.isAssignableFrom(o.getClass())) {
       return false;
     }
     AbstractSubject that = (AbstractSubject) o;
@@ -78,6 +81,11 @@ public abstract class AbstractSubject implements Subject {
   @Override
   public int hashCode() {
     return Objects.hash(ratingValue, ratingValueDate);
+  }
+
+  @Override
+  public String toString() {
+    return purl();
   }
 
   /**

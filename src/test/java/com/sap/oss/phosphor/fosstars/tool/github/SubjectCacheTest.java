@@ -17,11 +17,11 @@ import java.nio.file.Path;
 import java.util.Optional;
 import org.junit.Test;
 
-public class GitHubProjectCacheTest {
+public class SubjectCacheTest {
 
   @Test
   public void testStoreAndLoad() throws IOException {
-    GitHubProjectCache cache = GitHubProjectCache.empty();
+    SubjectCache cache = SubjectCache.empty();
 
     GitHubProject project = new GitHubProject(new GitHubOrganization("netty"), "netty");
     RatingValue ratingValue = new RatingValue(
@@ -30,11 +30,11 @@ public class GitHubProjectCacheTest {
     project.set(ratingValue);
 
     cache.add(project);
-    Path filename = Files.createTempFile(GitHubProjectCacheTest.class.getName(), "test");
+    Path filename = Files.createTempFile(SubjectCacheTest.class.getName(), "test");
     try {
       cache.store(filename);
 
-      GitHubProjectCache clone = GitHubProjectCache.load(filename);
+      SubjectCache clone = SubjectCache.load(filename);
       Optional<RatingValue> something = clone.cachedRatingValueFor(project);
       assertTrue(something.isPresent());
       assertEquals(ratingValue, something.get());
@@ -45,7 +45,7 @@ public class GitHubProjectCacheTest {
 
   @Test
   public void add() {
-    GitHubProjectCache cache = GitHubProjectCache.empty();
+    SubjectCache cache = SubjectCache.empty();
     assertNotNull(cache);
     assertEquals(0, cache.size());
 

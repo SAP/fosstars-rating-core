@@ -5,6 +5,7 @@ import static com.sap.oss.phosphor.fosstars.model.value.Vulnerability.Builder.ne
 import static com.sap.oss.phosphor.fosstars.tool.YesNoQuestion.Answer.YES;
 
 import com.sap.oss.phosphor.fosstars.model.Feature;
+import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
@@ -17,14 +18,14 @@ import java.util.Set;
 /**
  * This data provider asks a user about unpatched vulnerabilities.
  */
-public class AskAboutUnpatchedVulnerabilities<T> extends AbstractInteractiveDataProvider<T> {
+public class AskAboutUnpatchedVulnerabilities extends AbstractInteractiveDataProvider {
 
   @Override
-  protected AskAboutUnpatchedVulnerabilities<T> ask(T object, ValueSet values) {
+  protected AskAboutUnpatchedVulnerabilities ask(Subject subject, ValueSet values) {
     Vulnerabilities unpatchedVulnerabilities = new Vulnerabilities();
 
     Answer answer = new YesNoQuestion(
-        callback, "Are you aware about any unpatched vulnerability in the project?").ask();
+        callback, "Are you aware about any unpatched vulnerability?").ask();
 
     if (answer == YES) {
       do {
@@ -43,6 +44,11 @@ public class AskAboutUnpatchedVulnerabilities<T> extends AbstractInteractiveData
     // TODO: store the entered vulnerabilities somewhere
 
     return this;
+  }
+
+  @Override
+  public boolean supports(Subject subject) {
+    return true;
   }
 
   /**

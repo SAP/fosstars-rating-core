@@ -12,7 +12,7 @@ import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
-import com.sap.oss.phosphor.fosstars.tool.github.GitHubProjectValueCache;
+import com.sap.oss.phosphor.fosstars.tool.github.SubjectValueCache;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Set;
@@ -23,7 +23,7 @@ public class AbstractCachingDataProviderTest {
   @Test
   public void testProviderWithSingleFeature() throws IOException {
     CachingDataProviderForSingleFeature provider = new CachingDataProviderForSingleFeature();
-    provider.set(new GitHubProjectValueCache());
+    provider.set(new SubjectValueCache());
 
     assertFalse(provider.interactive());
     assertEquals(1, provider.supportedFeatures().size());
@@ -46,7 +46,7 @@ public class AbstractCachingDataProviderTest {
   @Test
   public void testProviderWithMultipleFeatures() throws IOException {
     CachingDataProviderForMultipleFeatures provider = new CachingDataProviderForMultipleFeatures();
-    provider.set(new GitHubProjectValueCache());
+    provider.set(new SubjectValueCache());
 
     assertFalse(provider.interactive());
     assertEquals(2, provider.supportedFeatures().size());
@@ -89,8 +89,7 @@ public class AbstractCachingDataProviderTest {
     assertEquals(2, provider.counter);
   }
 
-  private static class CachingDataProviderForSingleFeature
-      extends AbstractCachingDataProvider<GitHubProject> {
+  private static class CachingDataProviderForSingleFeature extends AbstractCachingDataProvider {
 
     int counter = 0;
 
@@ -105,19 +104,18 @@ public class AbstractCachingDataProviderTest {
     }
 
     @Override
-    public boolean supports(Subject type) {
-      return type instanceof GitHubProject;
+    public boolean supports(Subject subject) {
+      return subject instanceof GitHubProject;
     }
 
     @Override
-    protected ValueSet fetchValuesFor(GitHubProject object) {
+    protected ValueSet fetchValuesFor(Subject object) {
       counter++;
       return ValueHashSet.from(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE.value(42));
     }
   }
 
-  private static class CachingDataProviderForMultipleFeatures
-      extends AbstractCachingDataProvider<GitHubProject> {
+  private static class CachingDataProviderForMultipleFeatures extends AbstractCachingDataProvider {
 
     int counter = 0;
 
@@ -132,12 +130,12 @@ public class AbstractCachingDataProviderTest {
     }
 
     @Override
-    public boolean supports(Subject type) {
-      return type instanceof GitHubProject;
+    public boolean supports(Subject subject) {
+      return subject instanceof GitHubProject;
     }
 
     @Override
-    protected ValueSet fetchValuesFor(GitHubProject object) {
+    protected ValueSet fetchValuesFor(Subject object) {
       ValueSet values = new ValueHashSet();
       values.update(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE.value(42));
 

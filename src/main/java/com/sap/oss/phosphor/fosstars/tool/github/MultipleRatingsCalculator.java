@@ -1,12 +1,11 @@
 package com.sap.oss.phosphor.fosstars.tool.github;
 
+import static java.util.Arrays.asList;
+
 import com.sap.oss.phosphor.fosstars.data.UserCallback;
 import com.sap.oss.phosphor.fosstars.data.ValueCache;
 import com.sap.oss.phosphor.fosstars.model.Subject;
-import com.sap.oss.phosphor.fosstars.model.ValueSet;
-import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
-import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * The class calculates ratings for multiple open source projects.
+ * The class calculates ratings for multiple subjects.
  */
 class MultipleRatingsCalculator implements RatingCalculator {
 
@@ -26,29 +25,29 @@ class MultipleRatingsCalculator implements RatingCalculator {
   private static final Logger LOGGER = LogManager.getLogger(MultipleRatingsCalculator.class);
 
   /**
-   * A calculator that calculate a rating for a single project.
+   * A calculator that calculates a rating for a single subject.
    */
   private final RatingCalculator calculator;
 
   /**
-   * A cache of processed projects.
+   * A cache of processed subjects.
    */
-  private GitHubProjectCache projectCache = GitHubProjectCache.empty();
+  private SubjectCache subjectCache = SubjectCache.empty();
 
   /**
-   * A filename where the cache of projects should be stored.
+   * A filename where the cache of subjects should be stored.
    */
-  private String projectCacheFile;
+  private String subjectCacheFile;
 
   /**
-   * A list of projects for which a rating couldn't be calculated.
+   * A list of subjects for which a rating couldn't be calculated.
    */
-  private final List<GitHubProject> failedProjects = new ArrayList<>();
+  private final List<Subject> failedSubjects = new ArrayList<>();
 
   /**
-   * Initializes a new calculator that calculates ratings for multiple projects.
+   * Initializes a new calculator that calculates ratings for multiple subjects.
    *
-   * @param calculator A calculator that calculate a rating for a single project.
+   * @param calculator A calculator that calculates a rating for a single subject.
    */
   MultipleRatingsCalculator(RatingCalculator calculator) {
     Objects.requireNonNull(calculator, "Oh no! Calculator is null!");
@@ -63,92 +62,86 @@ class MultipleRatingsCalculator implements RatingCalculator {
   }
 
   @Override
-  public MultipleRatingsCalculator set(ValueCache<? extends Subject> cache) {
+  public MultipleRatingsCalculator set(ValueCache<Subject> cache) {
     Objects.requireNonNull(cache, "Oh no! Cache is null!");
     calculator.set(cache);
     return this;
   }
 
   /**
-   * Set a cache of processed projects.
+   * Set a cache of processed subjects.
    *
-   * @param projectCache The cache.
+   * @param subjectCache The cache.
    * @return The same {@link MultipleRatingsCalculator}.
    */
-  public MultipleRatingsCalculator set(GitHubProjectCache projectCache) {
-    this.projectCache = Objects.requireNonNull(projectCache, "Oh no! Project cache can't be null!");
+  public MultipleRatingsCalculator set(SubjectCache subjectCache) {
+    this.subjectCache = Objects.requireNonNull(subjectCache, "Oh no! Cache can't be null!");
     return this;
   }
 
   /**
-   * Sets a file where the cache of processed projects should be stored.
+   * Sets a file where the cache of processed subjects should be stored.
    *
    * @param filename The file.
    * @return The same {@link MultipleRatingsCalculator}.
    */
-  MultipleRatingsCalculator storeProjectCacheTo(String filename) {
+  MultipleRatingsCalculator storeCacheTo(String filename) {
     Objects.requireNonNull(filename, "Hey! Filename can't be null!");
-    projectCacheFile = filename;
+    subjectCacheFile = filename;
     return this;
-  }
-
-  public MultipleRatingsCalculator calculateFor(GitHubProject project) throws IOException {
-    return calculateFor(project, ValueHashSet.empty());
   }
 
   @Override
-  public RatingValue calculateFor(Subject... subjects) throws IOException {
-    return null;
-  }
-
-  /**
-   * Calculate a rating for a project.
-   * MultipleRatingsCalculator does not support known values but pass values to
-   * underlying rating calculator.
-   *
-   * @param project The project.
-   * @param knownValues Already known values.
-   * @return The same {@link MultipleRatingsCalculator}.
-   * @throws IOException If something went wrong.
-   */
-  public MultipleRatingsCalculator calculateFor(GitHubProject project, ValueSet knownValues)
-      throws IOException {
-
-    Optional<RatingValue> cachedRatingValue = projectCache.cachedRatingValueFor(project);
+  public MultipleRatingsCalculator calculateFor(Subject subject) throws IOException {
+    Optional<RatingValue> cachedRatingValue = subjectCache.cachedRatingValueFor(subject);
     if (cachedRatingValue.isPresent()) {
-      project.set(cachedRatingValue.get());
-      LOGGER.info("Found a cached rating for {}", project);
+      subject.set(cachedRatingValue.get());
+      LOGGER.info("Found a cached rating for {}", subject);
       return this;
     }
 
-    calculator.calculateFor(project);
-    projectCache.add(project);
+    calculator.calculateFor(subject);
+    subjectCache.add(subject);
 
     return this;
   }
 
   /**
-   * Calculates ratings for multiple projects.
-   * First, the method checks if a rating value for a project is already available in cache.
+   * Calculates ratings for multiple subjects.
+   * First, the method checks if a rating value for a subject is already available in cache.
    *
-   * @param projects The projects.
+   * @param subjects The subjects.
    * @return The same calculator.
    */
-  MultipleRatingsCalculator calculateFor(List<GitHubProject> projects) {
-    failedProjects.clear();
+  MultipleRatingsCalculator calculateFor(Subject... subjects) {
+    Objects.requireNonNull(subjects, "Oh no! Subjects is null!");
+    return calculateFor(asList(subjects));
+  }
 
-    for (GitHubProject project : projects) {
+  /**
+   * Calculates ratings for multiple subjects.
+   * First, the method checks if a rating value for a subject is already available in cache.
+   *
+   * @param subjects The subjects.
+   * @return The same calculator.
+   */
+  MultipleRatingsCalculator calculateFor(List<? extends Subject> subjects) {
+    Objects.requireNonNull(subjects, "Oh no! Subjects is null!");
+
+    failedSubjects.clear();
+
+    for (Subject subject : subjects) {
       try {
-        calculateFor(project);
+        calculateFor(subject);
 
-        if (projectCacheFile != null) {
-          LOGGER.info("Storing the project cache to {}", projectCacheFile);
-          projectCache.store(projectCacheFile);
+        if (subjectCacheFile != null) {
+          LOGGER.info("Storing the cache to {}", subjectCacheFile);
+          subjectCache.store(subjectCacheFile);
         }
       } catch (Exception e) {
-        LOGGER.warn("Oh no! Could not calculate a rating for {}", project.scm());
+        LOGGER.warn("Oh no! Could not calculate a rating for {}", subject.purl());
         LOGGER.warn(e);
-        failedProjects.add(project);
+        failedSubjects.add(subject);
       }
     }
 
@@ -156,12 +149,12 @@ class MultipleRatingsCalculator implements RatingCalculator {
   }
 
   /**
-   * Returns a list of projects for which ratings couldn't be calculated.
+   * Returns a list of subjects for which ratings couldn't be calculated.
    *
-   * @return The list of projects.
+   * @return The list of subjects.
    */
-  List<GitHubProject> failedProjects() {
-    return new ArrayList<>(failedProjects);
+  List<Subject> failedSubjects() {
+    return new ArrayList<>(failedSubjects);
   }
 
 }

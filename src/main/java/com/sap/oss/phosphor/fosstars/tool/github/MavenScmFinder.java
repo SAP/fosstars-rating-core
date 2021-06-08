@@ -4,6 +4,7 @@ import static com.sap.oss.phosphor.fosstars.maven.MavenUtils.readModel;
 import static com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject.isOnGitHub;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.sap.oss.phosphor.fosstars.maven.GAV;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
@@ -11,7 +12,6 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
-import java.util.Objects;
 import java.util.Optional;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -50,23 +50,22 @@ public class MavenScmFinder {
   /**
    * Takes GAV coordinates of an artifact and looks for a URL to its SCM.
    *
-   * @param gav The GAV coordinates.
+   * @param coordinates The GAV coordinates.
    * @return A URL to SCM.
    * @throws IOException If something went wrong.
    */
-  public Optional<String> findScmFor(String gav) throws IOException {
-    Objects.requireNonNull(gav, "Oh no! GAV is null");
+  public Optional<String> findScmFor(String coordinates) throws IOException {
+    return findScmFor(GAV.parse(coordinates));
+  }
 
-    String[] parts = gav.trim().split(":");
-    if (parts.length < 2) {
-      throw new IllegalArgumentException("Oh no! The string doesn't look like GAV!");
-    }
-
-    String groupId = parts[0];
-    String artifactId = parts[1];
-    String version = parts.length > 2 ? parts[2] : latestVersionOf(groupId, artifactId);
-
-    Model pom = loadPomFor(groupId, artifactId, version);
+  /**
+   *
+   * @param gav
+   * @return
+   * @throws IOException
+   */
+  public Optional<String> findScmFor(GAV gav) throws IOException {
+    Model pom = loadPomFor(gav);
     Scm scm = pom.getScm();
     if (scm == null) {
       return Optional.empty();
@@ -101,10 +100,14 @@ public class MavenScmFinder {
   /**
    * Takes GAV coordinates and tries to guess a possible GitHub project.
    *
-   * @param gav The GAV coordinates.
+   * @param coordinates The GAV coordinates.
    * @return A project on GitHub if it exists.
    */
-  public Optional<GitHubProject> tryToFindGitHubProjectFor(String gav) {
+  public Optional<GitHubProject> tryToFindGitHubProjectFor(String coordinates) {
+    return tryToFindGitHubProjectFor(GAV.parse(coordinates));
+  }
+
+  public Optional<GitHubProject> tryToFindGitHubProjectFor(GAV gav) {
     Optional<GitHubProject> project = guessGitHubProjectFor(gav);
     if (project.isPresent() && looksLikeValid(project.get())) {
       return project;
@@ -134,65 +137,54 @@ public class MavenScmFinder {
    * @param gav The GAV coordinates.
    * @return A project on GitHub.
    */
-  private static Optional<GitHubProject> guessGitHubProjectFor(String gav) {
-    String[] parts = gav.trim().split(":");
-    if (parts.length < 2) {
-      throw new IllegalArgumentException("Oh no! The string doesn't look like GAV!");
-    }
-
-    String groupId = parts[0];
-    String artifactId = parts[1];
-
-    Optional<GitHubProject> project = guessApacheProjectFor(groupId, artifactId);
+  private static Optional<GitHubProject> guessGitHubProjectFor(GAV gav) {
+    Optional<GitHubProject> project = guessApacheProjectFor(gav);
     if (project.isPresent()) {
       return project;
     }
 
-    return guessEclipseProjectFor(groupId, artifactId);
+    return guessEclipseProjectFor(gav);
   }
 
   /**
    * Guesses a URL to a project under Apache organization on GitHub for specified GAV coordinates.
    *
-   * @param groupId Group ID.
-   * @param artifactId Artifact ID.
+   * @param gav The GAV coordinates.
    * @return A project on GitHub.
    */
-  private static Optional<GitHubProject> guessApacheProjectFor(String groupId, String artifactId) {
-    if (!groupId.startsWith("org.apache")) {
+  private static Optional<GitHubProject> guessApacheProjectFor(GAV gav) {
+    if (!gav.group().startsWith("org.apache")) {
       return Optional.empty();
     }
 
-    return Optional.of(new GitHubProject("apache", artifactId));
+    return Optional.of(new GitHubProject("apache", gav.artifact()));
   }
 
   /**
    * Guesses a URL to a project under Eclipse organization on GitHub for specified GAV coordinates.
    *
-   * @param groupId Group ID.
-   * @param artifactId Artifact ID.
+   * @param gav The GAV coordinates.
    * @return A project on GitHub.
    */
-  private static Optional<GitHubProject> guessEclipseProjectFor(String groupId, String artifactId) {
-    if (!groupId.startsWith("org.eclipse")) {
+  private static Optional<GitHubProject> guessEclipseProjectFor(GAV gav) {
+    if (!gav.group().startsWith("org.eclipse")) {
       return Optional.empty();
     }
 
-    return Optional.of(new GitHubProject("eclipse", artifactId));
+    return Optional.of(new GitHubProject("eclipse", gav.artifact()));
   }
 
   /**
    * Search for the latest version of an artifact in the Maven Central repository.
    *
-   * @param groupId A group ID of the artifact.
-   * @param artifactId An artifact ID of the artifact.
+   * @param gav GAV coordinates of the artifact.
    * @return The latest version of the artifact.
    * @throws IOException If something went wrong.
    */
-  private static String latestVersionOf(String groupId, String artifactId) throws IOException {
+  private static String latestVersionOf(GAV gav) throws IOException {
     String urlString = MAVEN_SEARCH_REQUEST_TEMPLATE
-        .replace("{GROUP_ID}", groupId)
-        .replace("{ARTIFACT_ID}", artifactId);
+        .replace("{GROUP_ID}", gav.group())
+        .replace("{ARTIFACT_ID}", gav.artifact());
     URL url = new URL(urlString);
 
     JsonNode node = Json.mapper().readTree(url);
@@ -227,19 +219,16 @@ public class MavenScmFinder {
   /**
    * Loads a POM file for an artifact.
    *
-   * @param groupId A group ID of the artifact.
-   * @param artifactId An artifact ID of the artifact.
-   * @param version A version of the artifact.
+   * @param gav GAV coordinates of the artifact.
    * @return A Maven model of the POM file.
    * @throws IOException If something wrong.
    */
-  private static Model loadPomFor(String groupId, String artifactId, String version)
-      throws IOException {
+  private static Model loadPomFor(GAV gav) throws IOException {
 
     String path = PATH_TEMPLATE
-        .replace("{GROUP}", groupId.replace(".", "/"))
-        .replace("{ARTIFACT}", artifactId)
-        .replace("{VERSION}", version);
+        .replace("{GROUP}", gav.group().replace(".", "/"))
+        .replace("{ARTIFACT}", gav.artifact())
+        .replace("{VERSION}", gav.version().orElse(latestVersionOf(gav)));
     String urlString = MAVEN_DOWNLOAD_REQUEST_TEMPLATE.replace("{PATH}", path);
     String content = IOUtils.toString(new URL(urlString), CHARSET);
 

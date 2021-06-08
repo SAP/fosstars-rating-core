@@ -49,7 +49,7 @@ public class MultipleRatingsCalculatorTest extends TestGitHubDataFetcherHolder {
     assertTrue(eclipseSteady.ratingValue().isPresent());
     check(eclipseSteady.ratingValue().get());
 
-    assertTrue(multipleRatingsCalculator.failedProjects().isEmpty());
+    assertTrue(multipleRatingsCalculator.failedSubjects().isEmpty());
   }
 
   private static void check(RatingValue ratingValue) {
