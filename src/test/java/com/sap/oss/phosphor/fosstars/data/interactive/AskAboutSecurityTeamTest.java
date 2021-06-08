@@ -8,7 +8,7 @@ import com.sap.oss.phosphor.fosstars.data.UserCallback;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
-import com.sap.oss.phosphor.fosstars.tool.github.GitHubProjectValueCache;
+import com.sap.oss.phosphor.fosstars.tool.github.SubjectValueCache;
 import java.io.IOException;
 import org.junit.Test;
 
@@ -28,7 +28,7 @@ public class AskAboutSecurityTeamTest {
       boolean expected, AskAboutSecurityTeam provider, UserCallback callback) throws IOException {
 
     ValueSet values = new ValueHashSet();
-    provider.set(new GitHubProjectValueCache());
+    provider.set(new SubjectValueCache());
     provider.set(callback);
     GitHubProject project = new GitHubProject("org", "test");
     provider.update(project, values);

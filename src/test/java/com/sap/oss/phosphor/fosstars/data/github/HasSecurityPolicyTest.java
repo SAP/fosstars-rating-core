@@ -14,7 +14,7 @@ import com.sap.oss.phosphor.fosstars.data.NoValueCache;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
-import com.sap.oss.phosphor.fosstars.tool.github.GitHubProjectValueCache;
+import com.sap.oss.phosphor.fosstars.tool.github.SubjectValueCache;
 import java.io.IOException;
 import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
@@ -38,7 +38,7 @@ public class HasSecurityPolicyTest extends TestGitHubDataFetcherHolder {
     addForTesting(project, repository);
 
     HasSecurityPolicy provider = new HasSecurityPolicy(fetcher);
-    provider.set(new GitHubProjectValueCache());
+    provider.set(new SubjectValueCache());
 
     check(provider, true);
   }
@@ -92,7 +92,7 @@ public class HasSecurityPolicyTest extends TestGitHubDataFetcherHolder {
     when(response.getStatusLine()).thenReturn(statusLine);
     when(statusLine.getStatusCode()).thenReturn(HttpStatus.SC_NOT_FOUND);
 
-    provider.set(new GitHubProjectValueCache());
+    provider.set(new SubjectValueCache());
 
     check(provider, false);
   }

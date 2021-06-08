@@ -1,6 +1,7 @@
 package com.sap.oss.phosphor.fosstars.data;
 
 import com.sap.oss.phosphor.fosstars.model.Feature;
+import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.value.UnknownValue;
@@ -13,27 +14,25 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * <p>This is a base class for data providers that would like to check the cache
- * before trying to fetch values for a number of features.</p>
- *
- * @param <T> A type of the objects for which the data provider can fetch data.
+ * This is a base class for data providers that would like to check the cache
+ * before trying to fetch values for a number of features.
  */
-public abstract class AbstractCachingDataProvider<T> extends AbstractDataProvider<T> {
+public abstract class AbstractCachingDataProvider extends AbstractDataProvider {
 
   /**
    * This is a template method that checks for cached values
    * before asking the child classes to fetch the data.
    * If all supported features are already available in the cache, then the method just
    * adds them to the resulting value set and exits. Otherwise, the method calls
-   * the {@link #fetchValuesFor(Object)} method to fetch the data.
+   * the {@link #fetchValuesFor(Subject)} method to fetch the data.
    *
-   * @param object The object for which the values need to be fetched.
+   * @param subject The Subject for which the values need to be fetched.
    * @param values The resulting set of values to be updated.
    * @return The same data provider.
    * @throws IOException If something went wrong.
    */
   @Override
-  public final AbstractCachingDataProvider<T> doUpdate(T object, ValueSet values)
+  public final AbstractCachingDataProvider doUpdate(Subject subject, ValueSet values)
       throws IOException {
 
     // get a list of features which are supported by the data provider
@@ -43,7 +42,7 @@ public abstract class AbstractCachingDataProvider<T> extends AbstractDataProvide
     // unknown values don't count
     Set<Value<?>> cachedValues = new HashSet<>();
     for (Feature feature : features) {
-      Optional<Value<?>> something = cache.get(object, feature);
+      Optional<Value<?>> something = cache.get(subject, feature);
       Value<?> value = something.orElse(UnknownValue.of(feature));
       if (!value.isUnknown()) {
         cachedValues.add(value);
@@ -61,10 +60,10 @@ public abstract class AbstractCachingDataProvider<T> extends AbstractDataProvide
     }
 
     // otherwise, try to find values for all features
-    ValueSet updatedValues = fetchValuesFor(object);
+    ValueSet updatedValues = fetchValuesFor(subject);
 
     // put the fetched values to the cache
-    cache.put(object, updatedValues, expiration());
+    cache.put(subject, updatedValues, expiration());
 
     // and update the resulting set of values
     values.update(updatedValues);
@@ -73,13 +72,13 @@ public abstract class AbstractCachingDataProvider<T> extends AbstractDataProvide
   }
 
   /**
-   * Fetch values for an object.
+   * Fetch values for a subject.
    *
-   * @param object The object
-   * @return A set of values for the object.
+   * @param subject The subject
+   * @return A set of values for the subject.
    * @throws IOException If something went wrong.
    */
-  protected abstract ValueSet fetchValuesFor(T object) throws IOException;
+  protected abstract ValueSet fetchValuesFor(Subject subject) throws IOException;
 
   /**
    * Get an expiration date for cache entries.

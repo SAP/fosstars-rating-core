@@ -23,7 +23,7 @@ import com.sap.oss.phosphor.fosstars.model.value.Languages;
 import com.sap.oss.phosphor.fosstars.model.value.PackageManager;
 import com.sap.oss.phosphor.fosstars.model.value.PackageManagers;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
-import com.sap.oss.phosphor.fosstars.tool.github.GitHubProjectValueCache;
+import com.sap.oss.phosphor.fosstars.tool.github.SubjectValueCache;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -40,7 +40,7 @@ public class PackageManagementTest extends TestGitHubDataFetcherHolder {
 
   @Test
   public void testUpdate() throws IOException {
-    final GitHubProjectValueCache cache = new GitHubProjectValueCache();
+    final SubjectValueCache cache = new SubjectValueCache();
     final GitHubProject project = new GitHubProject("org", "test");
 
     Map<String, Long> languagesMap = new HashMap<>();
@@ -126,7 +126,7 @@ public class PackageManagementTest extends TestGitHubDataFetcherHolder {
 
   @Test
   public void testLanguages() throws IOException {
-    final GitHubProjectValueCache cache = new GitHubProjectValueCache();
+    final SubjectValueCache cache = new SubjectValueCache();
 
     Map<String, Long> languagesMap = new HashMap<>();
     languagesMap.put("Java", 42L);

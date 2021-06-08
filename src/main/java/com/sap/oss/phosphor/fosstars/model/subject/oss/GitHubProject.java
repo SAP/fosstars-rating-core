@@ -1,5 +1,7 @@
 package com.sap.oss.phosphor.fosstars.model.subject.oss;
 
+import static java.lang.String.format;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,6 +12,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
 import java.util.Objects;
+import javax.annotation.Nullable;
 
 /**
  * A project on GitHub.
@@ -57,16 +60,16 @@ public class GitHubProject extends AbstractSubject implements OpenSourceProject 
    * @param organization An organization (or user) that owns the project.
    * @param name Project's name.
    * @param url A URL to the project's SCM.
-   * @param ratingValue A rating value for the project.
-   * @param ratingValueDate When the rating value was calculated.
+   * @param ratingValue A rating value for the project. It may be null.
+   * @param ratingValueDate When the rating value was calculated. It may be null.
    */
   @JsonCreator
   public GitHubProject(
       @JsonProperty("organization") GitHubOrganization organization,
       @JsonProperty("name") String name,
       @JsonProperty("url") URL url,
-      @JsonProperty("ratingValue") RatingValue ratingValue,
-      @JsonProperty("ratingValueDate") Date ratingValueDate) {
+      @JsonProperty("ratingValue") @Nullable RatingValue ratingValue,
+      @JsonProperty("ratingValueDate") @Nullable Date ratingValueDate) {
 
     super(ratingValue, ratingValueDate);
     this.organization = Objects.requireNonNull(organization, "Hey! Organization can't be null!");
@@ -80,13 +83,18 @@ public class GitHubProject extends AbstractSubject implements OpenSourceProject 
     return url;
   }
 
+  @Override
+  public String purl() {
+    return format("pkg:github/%s/%s", organization.name(), name);
+  }
+
   /**
    * Returns project's path.
    *
    * @return Project's path.
    */
   public String path() {
-    return String.format("%s/%s", organization.name(), name);
+    return format("%s/%s", organization.name(), name);
   }
 
   /**
@@ -114,10 +122,7 @@ public class GitHubProject extends AbstractSubject implements OpenSourceProject 
     if (this == o) {
       return true;
     }
-    if (o instanceof GitHubProject == false) {
-      return false;
-    }
-    if (!super.equals(o)) {
+    if (!super.equals(o) || !GitHubProject.class.isAssignableFrom(o.getClass())) {
       return false;
     }
     GitHubProject that = (GitHubProject) o;
@@ -144,9 +149,8 @@ public class GitHubProject extends AbstractSubject implements OpenSourceProject 
    */
   public static GitHubProject parse(String urlString) throws IOException {
     URL url = new URL(urlString);
-    if (!url.getHost().equals("github.com")) {
-      throw new IllegalArgumentException(
-          String.format("The host name is not github.com: %s", urlString));
+    if (!"github.com".equals(url.getHost())) {
+      throw new IllegalArgumentException(format("The host name is not github.com: %s", urlString));
     }
     String[] parts = url.getPath().split("/");
     String name = parts[2];
@@ -176,10 +180,9 @@ public class GitHubProject extends AbstractSubject implements OpenSourceProject 
    */
   private static URL makeUrl(GitHubOrganization organization, String name) {
     try {
-      return new URL(String.format("https://github.com/%s/%s", organization.name(), name));
+      return new URL(format("https://github.com/%s/%s", organization.name(), name));
     } catch (MalformedURLException e) {
       throw new IllegalArgumentException("Could not create a URL!", e);
     }
   }
-
 }

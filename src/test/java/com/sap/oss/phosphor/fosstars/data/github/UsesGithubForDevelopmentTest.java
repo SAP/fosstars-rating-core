@@ -12,7 +12,7 @@ import static org.mockito.Mockito.when;
 
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
-import com.sap.oss.phosphor.fosstars.tool.github.GitHubProjectValueCache;
+import com.sap.oss.phosphor.fosstars.tool.github.SubjectValueCache;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
@@ -119,7 +119,7 @@ public class UsesGithubForDevelopmentTest extends TestGitHubDataFetcherHolder {
   public void testWhenGettingRepositoryFails() throws IOException {
     UsesGithubForDevelopment provider = new UsesGithubForDevelopment(fetcher);
     provider = spy(provider);
-    when(provider.cache()).thenReturn(new GitHubProjectValueCache());
+    when(provider.cache()).thenReturn(new SubjectValueCache());
 
     GitHubProject project = new GitHubProject("org", "test");
     when(fetcher.github().getRepository(any())).thenThrow(new IOException());
@@ -139,7 +139,7 @@ public class UsesGithubForDevelopmentTest extends TestGitHubDataFetcherHolder {
   public void testWithGithubDirectory() throws IOException {
     UsesGithubForDevelopment provider = new UsesGithubForDevelopment(fetcher);
     provider = spy(provider);
-    when(provider.cache()).thenReturn(new GitHubProjectValueCache());
+    when(provider.cache()).thenReturn(new SubjectValueCache());
 
     GHRepository repository = mock(GHRepository.class);
     when(repository.getDirectoryContent(".github"))
@@ -163,7 +163,7 @@ public class UsesGithubForDevelopmentTest extends TestGitHubDataFetcherHolder {
   public void testWithoutGithubDirectory() throws IOException {
     UsesGithubForDevelopment provider = new UsesGithubForDevelopment(fetcher);
     provider = spy(provider);
-    when(provider.cache()).thenReturn(new GitHubProjectValueCache());
+    when(provider.cache()).thenReturn(new SubjectValueCache());
 
     GHRepository repository = mock(GHRepository.class);
     when(repository.getDirectoryContent(".github"))

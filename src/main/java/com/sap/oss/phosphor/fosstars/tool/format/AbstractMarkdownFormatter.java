@@ -68,15 +68,6 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
     return print(subject.ratingValue().get(), markdownAdviceFor(subject));
   }
 
-  @Override
-  public String print(List<Subject> subjects, RatingValue ratingValue) {
-    StringBuilder sb = new StringBuilder("\n");
-    for (Subject subject : subjects) {
-      sb.append(markdownAdviceFor(subject)).append("\n");
-    }
-    return print(ratingValue, sb.toString());
-  }
-
   /**
    * Returns a header for the advice section.
    *
