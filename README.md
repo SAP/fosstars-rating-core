@@ -4,10 +4,10 @@
 
 |                           | # or projects                    | % or projects                      |
 | :------------------------ | -------------------------------: | ---------------------------------: |
-| Total                     |             251 |                               100% |
-| Failed                    |         201 |         80.1% |
-| Passed with&nbsp;warnings |  31 |  12.4% |
-| Passed                    |         19 |         7.6% |
+| Total                     |             252 |                               100% |
+| Failed                    |         201 |         79.8% |
+| Passed with&nbsp;warnings |  32 |  12.7% |
+| Passed                    |         19 |         7.5% |
 | Unclear                   |        0 |        0.0% |
 
 ## Projects
@@ -215,7 +215,6 @@
 | [SAP/sap.github.io](https://github.com/SAP/sap.github.io) | [Failed](SAP/sap.github.io.md) | 11 violated rules |
 | [SAP/cloud-sdk-ios](https://github.com/SAP/cloud-sdk-ios) | [Failed](SAP/cloud-sdk-ios.md) | 7 violated rules |
 | [SAP/.github](https://github.com/SAP/.github) | [Failed](SAP/.github.md) | 10 violated rules |
-| [SAP/openui5](https://github.com/SAP/openui5) | [Passed](SAP/openui5.md) | No violated rules |
 | [SAP/commerce-gradle-plugin](https://github.com/SAP/commerce-gradle-plugin) | [Passed](SAP/commerce-gradle-plugin.md) | No violated rules |
 | [SAP/quality-continuous-traceability-monitor](https://github.com/SAP/quality-continuous-traceability-monitor) | [Passed](SAP/quality-continuous-traceability-monitor.md) | No violated rules |
 | [SAP/generator-easy-ui5](https://github.com/SAP/generator-easy-ui5) | [Passed](SAP/generator-easy-ui5.md) | No violated rules |
@@ -234,6 +233,8 @@
 | [SAP/fosstars-rating-core-action](https://github.com/SAP/fosstars-rating-core-action) | [Passed](SAP/fosstars-rating-core-action.md) | No violated rules |
 | [SAP/abap-file-formats](https://github.com/SAP/abap-file-formats) | [Passed](SAP/abap-file-formats.md) | No violated rules |
 | [SAP/cloud-sdk-ios-cai](https://github.com/SAP/cloud-sdk-ios-cai) | [Passed](SAP/cloud-sdk-ios-cai.md) | No violated rules |
+| [SAP/cloud-sdk-ios-fioriarkit](https://github.com/SAP/cloud-sdk-ios-fioriarkit) | [Passed](SAP/cloud-sdk-ios-fioriarkit.md) | No violated rules |
+| [SAP/openui5](https://github.com/SAP/openui5) | [Passed with warnings](SAP/openui5.md) | No violated rules |
 | [SAP/ui5-inspector](https://github.com/SAP/ui5-inspector) | [Passed with warnings](SAP/ui5-inspector.md) | No violated rules |
 | [SAP/openui5-masterdetail-app](https://github.com/SAP/openui5-masterdetail-app) | [Passed with warnings](SAP/openui5-masterdetail-app.md) | No violated rules |
 | [SAP/openSAP-ui5-course](https://github.com/SAP/openSAP-ui5-course) | [Passed with warnings](SAP/openSAP-ui5-course.md) | No violated rules |
