@@ -108,6 +108,12 @@ public class MavenScmFinder {
     return tryToGuessGitHubProjectFor(GAV.parse(coordinates));
   }
 
+  /**
+   * Takes GAV coordinates and tries to guess a possible GitHub project.
+   *
+   * @param gav The GAV coordinates.
+   * @return A project on GitHub if it exists.
+   */
   public Optional<GitHubProject> tryToGuessGitHubProjectFor(GAV gav) {
     Optional<GitHubProject> project = guessGitHubProjectFor(gav);
     if (project.isPresent() && looksLikeValid(project.get())) {

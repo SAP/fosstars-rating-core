@@ -443,17 +443,6 @@ public class Application {
   }
 
   /**
-   * Calculate a rating for a single project identified by GAV coordinates.
-   *
-   * @param coordinates The GAV coordinates.
-   * @throws IOException If something went wrong.
-   */
-  private void process(GAV coordinates) throws IOException {
-    MavenScmFinder finder = new MavenScmFinder();
-    process(coordinates.toString(), finder::findScmFor, finder::tryToGuessGitHubProjectFor);
-  }
-
-  /**
    * Calculate a rating for a single project identified by NPM name.
    *
    * @param name The NPM name.
@@ -464,21 +453,14 @@ public class Application {
   }
 
   /**
-   * A functional interface of a resolves that resolves an identifier
-   * to something of a specified result type.
+   * Calculate a rating for a single project identified by GAV coordinates.
    *
-   * @param <R> A type of the result.
+   * @param coordinates The GAV coordinates.
+   * @throws IOException If something went wrong.
    */
-  private interface Resolver<R> {
-
-    /**
-     * Run the resolver for an identifier.
-     *
-     * @param identifier The identifier.
-     * @return The result.
-     * @throws IOException If something went wrong.
-     */
-    Optional<R> runFor(String identifier) throws IOException;
+  private void process(GAV coordinates) throws IOException {
+    MavenScmFinder finder = new MavenScmFinder();
+    process(coordinates.toString(), finder::findScmFor, finder::tryToGuessGitHubProjectFor);
   }
 
   /**
@@ -519,6 +501,24 @@ public class Application {
     }
 
     processUrl(url);
+  }
+
+  /**
+   * A functional interface of a resolves that resolves an identifier
+   * to something of a specified result type.
+   *
+   * @param <R> A type of the result.
+   */
+  private interface Resolver<R> {
+
+    /**
+     * Run the resolver for an identifier.
+     *
+     * @param identifier The identifier.
+     * @return The result.
+     * @throws IOException If something went wrong.
+     */
+    Optional<R> runFor(String identifier) throws IOException;
   }
 
   /**

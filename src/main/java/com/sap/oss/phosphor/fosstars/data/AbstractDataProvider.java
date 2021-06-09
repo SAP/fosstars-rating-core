@@ -82,7 +82,8 @@ public abstract class AbstractDataProvider implements DataProvider {
    * @return The same data provider.
    * @throws IOException If something went wrong.
    */
-  protected abstract AbstractDataProvider doUpdate(Subject subject, ValueSet values) throws IOException;
+  protected abstract AbstractDataProvider doUpdate(Subject subject, ValueSet values)
+      throws IOException;
 
   @Override
   public ValueCache<Subject> cache() {
