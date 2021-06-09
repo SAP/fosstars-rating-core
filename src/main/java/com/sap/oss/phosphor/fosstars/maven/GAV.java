@@ -7,30 +7,31 @@ import java.util.Optional;
 import javax.annotation.Nullable;
 
 /**
- *
+ * Maven GAV coordinates.
  */
 public class GAV {
 
   /**
-   *
+   * Group ID.
    */
   private final String group;
 
   /**
-   *
+   * Artifact ID.
    */
   private final String artifact;
 
   /**
-   *
+   * Version.
    */
   private final String version;
 
   /**
+   * Create new GAV coordinates.
    *
-   * @param group
-   * @param artifact
-   * @param version
+   * @param group Group ID.
+   * @param artifact Artifact ID.
+   * @param version Version. May be null.
    */
   public GAV(String group, String artifact, @Nullable String version) {
     Objects.requireNonNull(group, "Oh no! Group can't be null!");
@@ -42,24 +43,27 @@ public class GAV {
   }
 
   /**
+   * Return the group ID.
    *
-   * @return
+   * @return The group ID.
    */
   public String group() {
     return group;
   }
 
   /**
+   * Return the artifact ID.
    *
-   * @return
+   * @return The artifact ID.
    */
   public String artifact() {
     return artifact;
   }
 
   /**
+   * Return the version if available.
    *
-   * @return
+   * @return The version.
    */
   public Optional<String> version() {
     return Optional.ofNullable(version);
@@ -93,9 +97,12 @@ public class GAV {
   }
 
   /**
+   * Parse a string with GAV coordinates. The coordinates have to have group and artifact IDs,
+   * but version is optional.
    *
-   * @param gav
-   * @return
+   * @param gav The string with GAV coordinates.
+   * @return An instance of {@link GAV}.
+   * @throws IllegalArgumentException If the string doesn't have valid GAV coordinates.
    */
   public static GAV parse(String gav) {
     Objects.requireNonNull(gav, "Oh no! GAV is null");
