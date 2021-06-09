@@ -24,8 +24,6 @@ public class SubjectValueCache implements ValueCache<Subject> {
 
   /**
    * Initializes a new cache.
-   *
-   * * @param keyFunction
    */
   public SubjectValueCache() {
     this(new StandardValueCache());

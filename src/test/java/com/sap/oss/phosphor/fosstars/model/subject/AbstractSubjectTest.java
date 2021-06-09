@@ -26,7 +26,7 @@ public class AbstractSubjectTest {
 
     @Override
     public String purl() {
-      return null; // TODO
+      return "scheme:type/namespace/name@version?qualifiers#subpath";
     }
   }
 

@@ -51,6 +51,9 @@
   <suppress checks="AbbreviationAsWordInName"
     files="SecurityReviewsFromOpenSSF.java"
     lines="38"/>
+  <suppress checks="AbbreviationAsWordInName"
+    files="GAV.java"
+    lines="12"/>
   <suppress checks="LineLength"
     files="package-info.java"
     lines="142"/>
