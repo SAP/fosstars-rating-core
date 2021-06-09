@@ -428,7 +428,7 @@ public class Application {
    * @param version The version
    * @throws IOException If something went wrong.
    */
-  private void processMaven(String groupId, String artifactId, String version) throws IOException {
+  private void processGav(String groupId, String artifactId, String version) throws IOException {
     process(new GAV(groupId, artifactId, version));
   }
 
@@ -443,16 +443,59 @@ public class Application {
   }
 
   /**
+   * Calculate a rating for a single project identified by GAV coordinates.
    *
-   * @param gav
-   * @throws IOException
+   * @param coordinates The GAV coordinates.
+   * @throws IOException If something went wrong.
    */
-  private void process(GAV gav) throws IOException {
+  private void process(GAV coordinates) throws IOException {
     MavenScmFinder finder = new MavenScmFinder();
+    process(coordinates.toString(), finder::findScmFor, finder::tryToGuessGitHubProjectFor);
+  }
 
-    LOGGER.info("Start with GAV {}", gav);
+  /**
+   * Calculate a rating for a single project identified by NPM name.
+   *
+   * @param name The NPM name.
+   * @throws IOException If something went wrong.
+   */
+  private void processNpm(String name) throws IOException {
+    process(name, this::npmArtifactReleaseInfo, identifier -> Optional.empty());
+  }
 
-    Optional<String> scm = finder.findScmFor(gav);
+  /**
+   * A functional interface of a resolves that resolves an identifier
+   * to something of a specified result type.
+   *
+   * @param <R> A type of the result.
+   */
+  private interface Resolver<R> {
+
+    /**
+     * Run the resolver for an identifier.
+     *
+     * @param identifier The identifier.
+     * @return The result.
+     * @throws IOException If something went wrong.
+     */
+    Optional<R> runFor(String identifier) throws IOException;
+  }
+
+  /**
+   * Calculate a rating for a single project.
+   *
+   * @param identifier An identifier of the project.
+   * @param scmResolver A resolver that looks for a GitHub repository for the project.
+   * @param githubMirrorGuesser A resolver that looks for a mirror on GitHub for the project.
+   * @throws IOException If something went wrong.
+   */
+  private void process(
+      String identifier, Resolver<String> scmResolver, Resolver<GitHubProject> githubMirrorGuesser)
+      throws IOException {
+
+    LOGGER.info("Start with {}", identifier);
+
+    Optional<String> scm = scmResolver.runFor(identifier);
     if (!scm.isPresent()) {
       throw new IOException("Oh no! Could not find a URL to SCM!");
     }
@@ -464,7 +507,7 @@ public class Application {
       LOGGER.info("But unfortunately I can work only with projects that stay on GitHub ...");
       LOGGER.info("Let me try to find a mirror on GitHub ...");
 
-      Optional<GitHubProject> mirror = finder.tryToFindGitHubProjectFor(gav);
+      Optional<GitHubProject> mirror = githubMirrorGuesser.runFor(identifier);
       if (!mirror.isPresent()) {
         throw new IOException("Oh no! I could not find a mirror on GitHub!");
       }
@@ -546,10 +589,10 @@ public class Application {
           processUrl(url);
           break;
         case MAVEN:
-          processMaven(purl.getNamespace(), purl.getName(), purl.getVersion());
+          processGav(purl.getNamespace(), purl.getName(), purl.getVersion());
           break;
         case NPM:
-          processNpm(purl.getNamespace(), purl.getName(), purl.getVersion());
+          processNpm(purl.getName());
           break;
         default:
           throw new IOException(format(
@@ -562,47 +605,33 @@ public class Application {
   }
 
   /**
+   * Looks for an SCM for an NPM artifact.
    *
-   * @param scope
-   * @param name
-   * @param version
-   * @throws IOException
-   */
-  private void processNpm(String scope, String name, String version) throws IOException {
-    // TODO: find scm, to be implemented
-    Optional<String> scm = npmArtifactReleaseInfo(name);
-
-    if (scm.isPresent()) {
-      processUrl(scm.get());
-    } else {
-      LOGGER.warn("Unable to find GitHub project for {}/{}", scope, name);
-    }
-  }
-
-  /**
-   *
-   * @param identifier
-   * @return
-   * @throws IOException
+   * @param identifier An identifier of the NPM artifact.
+   * @return An SCM for the artifact if found.
+   * @throws IOException If something went wrong.
    */
   private Optional<String> npmArtifactReleaseInfo(String identifier) throws IOException {
-    String requestUrl = format("https://registry.npmjs.org/%s", identifier);
-    JsonNode infos = fetchJsonFrom(requestUrl);
-    // TODO: fix and improve
-    JsonNode repo = infos.get("repository");
-    if (repo != null) {
-      String type = repo.get("type").asText();
-      String url = repo.get("url").asText();
-      if ("git".equalsIgnoreCase(type)) {
-        url = url.toLowerCase(Locale.US);
-        int index = url.indexOf("github.com/");
-        if (index >= 0) {
-          url = "https://" + url.substring(index);
-          System.out.println("URL: " + url);
-          return Optional.of(url);
-        }
-      }
+    String registryUrl = format("https://registry.npmjs.org/%s", identifier);
+    JsonNode json = fetchJsonFrom(registryUrl);
+    JsonNode repo = json.get("repository");
+    if (repo == null) {
+      return Optional.empty();
     }
+
+    if (!repo.has("type") || !"git".equalsIgnoreCase(repo.get("type").asText())) {
+      return Optional.empty();
+    }
+
+    String url = repo.get("url").asText().toLowerCase(Locale.US);
+    if (url.startsWith("github.com/")) {
+      return Optional.of("http://" + url);
+    }
+
+    if (url.startsWith("https://github.com/")) {
+      return Optional.of(url);
+    }
+
     return Optional.empty();
   }
 
@@ -622,7 +651,6 @@ public class Application {
       }
     }
   }
-
 
   /**
    * Stores a rating of a subject if a user asked about it.
