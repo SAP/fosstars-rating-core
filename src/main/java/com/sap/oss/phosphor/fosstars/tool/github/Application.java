@@ -80,8 +80,7 @@ import org.kohsuke.github.HttpConnector;
 import org.kohsuke.github.extras.ImpatientHttpConnector;
 
 /**
- * This is a command line tool for calculating security ratings for one
- * of multiple open-source projects.
+ * This is a command-line tool for calculating ratings.
  */
 public class Application {
 
@@ -423,9 +422,9 @@ public class Application {
   /**
    * Calculate a rating for a single project identified by GAV coordinates.
    *
-   * @param groupId The group id
-   * @param artifactId The artifact id
-   * @param version The version
+   * @param groupId The group identifier.
+   * @param artifactId The artifact identifier.
+   * @param version The version.
    * @throws IOException If something went wrong.
    */
   private void processGav(String groupId, String artifactId, String version) throws IOException {

@@ -16,6 +16,7 @@ import com.sap.oss.phosphor.fosstars.tool.github.SubjectValueCache;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Set;
+import org.junit.AssumptionViolatedException;
 import org.junit.Test;
 
 public class AbstractCachingDataProviderTest {
@@ -23,7 +24,8 @@ public class AbstractCachingDataProviderTest {
   @Test
   public void testProviderWithSingleFeature() throws IOException {
     CachingDataProviderForSingleFeature provider = new CachingDataProviderForSingleFeature();
-    provider.set(new SubjectValueCache());
+    SubjectValueCache cache = new SubjectValueCache();
+    provider.set(cache);
 
     assertFalse(provider.interactive());
     assertEquals(1, provider.supportedFeatures().size());
@@ -40,13 +42,21 @@ public class AbstractCachingDataProviderTest {
 
       // make sure that the cache is used
       assertEquals(1, provider.counter);
+
+      ValueSet cachedValues = cache.get(project)
+          .orElseThrow(() -> new AssumptionViolatedException("No cached value!"));
+      assertEquals(1, cachedValues.size());
+      assertTrue(cachedValues.has(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE));
+      assertTrue(cachedValues.of(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE).isPresent());
+      assertEquals(42, (int) cachedValues.of(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE).get().get());
     }
   }
 
   @Test
   public void testProviderWithMultipleFeatures() throws IOException {
     CachingDataProviderForMultipleFeatures provider = new CachingDataProviderForMultipleFeatures();
-    provider.set(new SubjectValueCache());
+    SubjectValueCache cache = new SubjectValueCache();
+    provider.set(cache);
 
     assertFalse(provider.interactive());
     assertEquals(2, provider.supportedFeatures().size());
@@ -64,6 +74,16 @@ public class AbstractCachingDataProviderTest {
     assertTrue(values.has(SECURITY_REVIEW_DONE_EXAMPLE));
     assertTrue(values.of(SECURITY_REVIEW_DONE_EXAMPLE).isPresent());
     assertTrue(values.of(SECURITY_REVIEW_DONE_EXAMPLE).get().isUnknown());
+
+    ValueSet cachedValues = cache.get(project)
+        .orElseThrow(() -> new AssumptionViolatedException("No cached value!"));
+    assertEquals(2, cachedValues.size());
+    assertTrue(cachedValues.has(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE));
+    assertTrue(cachedValues.of(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE).isPresent());
+    assertEquals(42, (int) cachedValues.of(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE).get().get());
+    assertTrue(cachedValues.has(SECURITY_REVIEW_DONE_EXAMPLE));
+    assertTrue(cachedValues.of(SECURITY_REVIEW_DONE_EXAMPLE).isPresent());
+    assertTrue(cachedValues.of(SECURITY_REVIEW_DONE_EXAMPLE).get().isUnknown());
 
     // since the provider was called for the first time, it should have tried to fetch data
     assertEquals(1, provider.counter);

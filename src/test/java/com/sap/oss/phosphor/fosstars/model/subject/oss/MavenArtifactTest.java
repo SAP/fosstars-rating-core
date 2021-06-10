@@ -5,7 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import com.sap.oss.phosphor.fosstars.TestUtils;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import org.junit.Test;
