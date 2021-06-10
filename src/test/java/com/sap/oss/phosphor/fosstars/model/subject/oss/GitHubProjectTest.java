@@ -1,6 +1,7 @@
 package com.sap.oss.phosphor.fosstars.model.subject.oss;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -60,10 +61,52 @@ public class GitHubProjectTest {
   }
 
   @Test
+  public void testJsonSerializationWithUnknownFields() throws IOException {
+    String content = "{\n"
+        + "  \"type\" : \"GitHubProject\",\n"
+        + "  \"organization\" : {\n"
+        + "    \"type\" : \"GitHubOrganization\",\n"
+        + "    \"name\" : \"apache\",\n"
+        + "    \"ratingValue\" : null,\n"
+        + "    \"ratingValueDate\" : null\n"
+        + "  },\n"
+        + "  \"name\" : \"nifi\","
+        + "  \"ratingValue\" : null,"
+        + "  \"ratingValueDate\" : null,"
+        + "  \"extra\" : \"something\""
+        + "}";
+    GitHubProject project = Json.read(content.getBytes(), GitHubProject.class);
+    assertEquals("apache", project.organization().name());
+    assertEquals("nifi", project.name());
+    assertFalse(project.ratingValue().isPresent());
+    assertFalse(project.ratingValueDate().isPresent());
+  }
+
+  @Test
   public void testYamlSerialization() throws IOException {
     GitHubProject project = new GitHubProject("org", "test");
     GitHubProject clone = Yaml.read(Yaml.toBytes(project), GitHubProject.class);
     assertEquals(project, clone);
+  }
+
+  @Test
+  public void testYamlSerializationWithUnknownFields() throws IOException {
+    String content = "---\n"
+        + "type: \"GitHubProject\"\n"
+        + "organization:\n"
+        + "  type: \"GitHubOrganization\"\n"
+        + "  name: \"org\"\n"
+        + "  ratingValue: null\n"
+        + "  ratingValueDate: null\n"
+        + "name: \"test\"\n"
+        + "ratingValue: null\n"
+        + "ratingValueDate: null\n"
+        + "extra: something\n";
+    GitHubProject project = Yaml.read(content.getBytes(), GitHubProject.class);
+    assertEquals("org", project.organization().name());
+    assertEquals("test", project.name());
+    assertFalse(project.ratingValue().isPresent());
+    assertFalse(project.ratingValueDate().isPresent());
   }
 
   @Test
