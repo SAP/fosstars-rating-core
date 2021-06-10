@@ -16,6 +16,13 @@ import org.junit.Test;
 public class GitHubOrganizationTest {
 
   @Test
+  public void testBasics() {
+    GitHubOrganization org = new GitHubOrganization("name");
+    assertEquals("name", org.name());
+    assertEquals("pkg:github/name", org.purl());
+  }
+
+  @Test
   public void testEqualsAndHashCode() {
     GitHubOrganization firstOrg = new GitHubOrganization("first");
     GitHubOrganization theSameOrg = new GitHubOrganization("first");
