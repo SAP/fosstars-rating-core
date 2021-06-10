@@ -1,6 +1,7 @@
 package com.sap.oss.phosphor.fosstars.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
@@ -85,6 +86,7 @@ public class Yaml extends Deserialization {
    */
   public static ObjectMapper mapper() {
     ObjectMapper mapper = JsonMapper.builder(YAML_FACTORY)
+        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
         .polymorphicTypeValidator(validator()).build();
     mapper.findAndRegisterModules();
     return registerSubTypesIn(mapper);

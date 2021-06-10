@@ -30,11 +30,6 @@ public class GitHubProject extends AbstractSubject implements OpenSourceProject 
   private final String name;
 
   /**
-   * A URL to the project's SCM.
-   */
-  private final URL url;
-
-  /**
    * Initializes a project.
    *
    * @param owner An owner of the project.
@@ -51,7 +46,7 @@ public class GitHubProject extends AbstractSubject implements OpenSourceProject 
    * @param name Project's name.
    */
   public GitHubProject(GitHubOrganization organization, String name) {
-    this(organization, name, makeUrl(organization, name), NO_RATING_VALUE, NO_RATING_DATE);
+    this(organization, name, NO_RATING_VALUE, NO_RATING_DATE);
   }
 
   /**
@@ -59,28 +54,28 @@ public class GitHubProject extends AbstractSubject implements OpenSourceProject 
    *
    * @param organization An organization (or user) that owns the project.
    * @param name Project's name.
-   * @param url A URL to the project's SCM.
-   * @param ratingValue A rating value for the project. It may be null.
-   * @param ratingValueDate When the rating value was calculated. It may be null.
+   * @param ratingValue A rating value for the project.
+   * @param ratingValueDate When the rating value was calculated.
    */
   @JsonCreator
   public GitHubProject(
       @JsonProperty("organization") GitHubOrganization organization,
       @JsonProperty("name") String name,
-      @JsonProperty("url") URL url,
       @JsonProperty("ratingValue") @Nullable RatingValue ratingValue,
       @JsonProperty("ratingValueDate") @Nullable Date ratingValueDate) {
 
     super(ratingValue, ratingValueDate);
     this.organization = Objects.requireNonNull(organization, "Hey! Organization can't be null!");
     this.name = Objects.requireNonNull(name, "Hey! Project's name can't be null!");
-    this.url = Objects.requireNonNull(url, "Hey! URL can't be null!");
   }
 
   @Override
-  @JsonGetter("url")
   public URL scm() {
-    return url;
+    try {
+      return new URL(format("https://github.com/%s/%s", organization.name(), name));
+    } catch (MalformedURLException e) {
+      throw new IllegalArgumentException("Could not create a URL!", e);
+    }
   }
 
   @Override
@@ -126,18 +121,17 @@ public class GitHubProject extends AbstractSubject implements OpenSourceProject 
       return false;
     }
     GitHubProject that = (GitHubProject) o;
-    return Objects.equals(organization, that.organization)
-        && Objects.equals(name, that.name) && Objects.equals(url, that.url);
+    return Objects.equals(organization, that.organization) && Objects.equals(name, that.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), organization, name, url);
+    return Objects.hash(super.hashCode(), organization, name);
   }
 
   @Override
   public String toString() {
-    return url.toString();
+    return scm().toString();
   }
 
   /**
@@ -169,20 +163,5 @@ public class GitHubProject extends AbstractSubject implements OpenSourceProject 
   public static boolean isOnGitHub(String url) {
     return url != null
         && (url.startsWith("https://github.com/") || url.startsWith("http://github.com/"));
-  }
-
-  /**
-   * Constructs a URL of a project.
-   *
-   * @param organization An organization which owns the project.
-   * @param name The project's name.
-   * @return A URL of the project.
-   */
-  private static URL makeUrl(GitHubOrganization organization, String name) {
-    try {
-      return new URL(format("https://github.com/%s/%s", organization.name(), name));
-    } catch (MalformedURLException e) {
-      throw new IllegalArgumentException("Could not create a URL!", e);
-    }
   }
 }
