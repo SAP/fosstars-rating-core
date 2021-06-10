@@ -118,6 +118,6 @@ public class MavenArtifact extends AbstractSubject implements Artifact {
       return format("pkg:maven/%s/%s", group, artifact);
     }
 
-    return format("pkg:maven/%s/%s/%s", group, artifact, version);
+    return format("pkg:maven/%s/%s@%s", group, artifact, version);
   }
 }

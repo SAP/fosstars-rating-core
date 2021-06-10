@@ -21,6 +21,16 @@ import org.junit.Test;
 public class GitHubProjectTest {
 
   @Test
+  public void testBasics() {
+    GitHubProject project = new GitHubProject("org", "test");
+    assertEquals("org", project.organization().name());
+    assertEquals("test", project.name());
+    assertEquals("https://github.com/org/test", project.scm().toString());
+    assertEquals("pkg:github/org/test", project.purl());
+    assertEquals("org/test", project.path());
+  }
+
+  @Test
   public void testJsonSerialization() throws IOException {
     GitHubOrganization apache = new GitHubOrganization("apache");
     GitHubProject project = new GitHubProject(apache, "nifi");
