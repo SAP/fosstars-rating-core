@@ -14,11 +14,11 @@
     "weights" : {
       "values" : {
         "com.sap.oss.phosphor.fosstars.model.score.example.ProjectActivityScoreExample" : {
-          "type" : "MutableWeight",
+          "type" : "ImmutableWeight",
           "value" : 0.23191550842811487
         },
         "com.sap.oss.phosphor.fosstars.model.score.example.SecurityTestingScoreExample" : {
-          "type" : "MutableWeight",
+          "type" : "ImmutableWeight",
           "value" : 0.5411361863322678
         }
       }
