@@ -1,19 +1,19 @@
 {
   "values" : {
     "com.sap.oss.phosphor.fosstars.model.score.oss.ArtifactVersionUpToDateScore" : {
-      "type" : "MutableWeight",
+      "type" : "ImmutableWeight",
       "value" : 0.1
     },
     "com.sap.oss.phosphor.fosstars.model.score.oss.ArtifactLatestReleaseAgeScore" : {
-      "type" : "MutableWeight",
+      "type" : "ImmutableWeight",
       "value" : 0.1
     },
     "com.sap.oss.phosphor.fosstars.model.score.oss.ArtifactReleaseHistoryScore" : {
-      "type" : "MutableWeight",
+      "type" : "ImmutableWeight",
       "value" : 0.5
     },
     "com.sap.oss.phosphor.fosstars.model.score.oss.ArtifactVersionVulnerabilityScore" : {
-      "type" : "MutableWeight",
+      "type" : "ImmutableWeight",
       "value" : 1.0
     }
   }
