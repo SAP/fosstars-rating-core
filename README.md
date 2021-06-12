@@ -5,9 +5,9 @@
 |                           | # or projects                    | % or projects                      |
 | :------------------------ | -------------------------------: | ---------------------------------: |
 | Total                     |             253 |                               100% |
-| Failed                    |         202 |         79.8% |
+| Failed                    |         203 |         80.2% |
 | Passed with&nbsp;warnings |  31 |  12.3% |
-| Passed                    |         20 |         7.9% |
+| Passed                    |         19 |         7.5% |
 | Unclear                   |        0 |        0.0% |
 
 ## Projects
@@ -23,6 +23,7 @@
 | [SAP/cloud-personslist-scenario](https://github.com/SAP/cloud-personslist-scenario) | [Failed](SAP/cloud-personslist-scenario.md) | 4 violated rules |
 | [SAP/node-hdb](https://github.com/SAP/node-hdb) | [Failed](SAP/node-hdb.md) | 5 violated rules |
 | [SAP/cloud-cmis-workbench](https://github.com/SAP/cloud-cmis-workbench) | [Failed](SAP/cloud-cmis-workbench.md) | 4 violated rules |
+| [SAP/openui5](https://github.com/SAP/openui5) | [Failed](SAP/openui5.md) | 1 violated rule |
 | [SAP/PyRFC](https://github.com/SAP/PyRFC) | [Failed](SAP/PyRFC.md) | 2 violated rules |
 | [SAP/cloud-dirigible](https://github.com/SAP/cloud-dirigible) | [Failed](SAP/cloud-dirigible.md) | 5 violated rules |
 | [SAP/mobilesdk-certificateprovider](https://github.com/SAP/mobilesdk-certificateprovider) | [Failed](SAP/mobilesdk-certificateprovider.md) | 4 violated rules |
@@ -113,14 +114,14 @@
 | [SAP/cf-html5-apps-repo-cli-plugin](https://github.com/SAP/cf-html5-apps-repo-cli-plugin) | [Failed](SAP/cf-html5-apps-repo-cli-plugin.md) | 5 violated rules |
 | [SAP/openui5-website](https://github.com/SAP/openui5-website) | [Failed](SAP/openui5-website.md) | 1 violated rule |
 | [SAP/fsm-shell](https://github.com/SAP/fsm-shell) | [Failed](SAP/fsm-shell.md) | 4 violated rules |
-| [SAP/ui5-webcomponents](https://github.com/SAP/ui5-webcomponents) | [Failed](SAP/ui5-webcomponents.md) | 1 violated rule |
+| [SAP/ui5-webcomponents](https://github.com/SAP/ui5-webcomponents) | [Failed](SAP/ui5-webcomponents.md) | 2 violated rules |
 | [SAP/odbc-cpp-wrapper](https://github.com/SAP/odbc-cpp-wrapper) | [Failed](SAP/odbc-cpp-wrapper.md) | 4 violated rules |
 | [SAP/project-kb](https://github.com/SAP/project-kb) | [Failed](SAP/project-kb.md) | 1 violated rule |
 | [SAP/jenkins-library-test](https://github.com/SAP/jenkins-library-test) | [Failed](SAP/jenkins-library-test.md) | 4 violated rules |
 | [SAP/cloud-primetime](https://github.com/SAP/cloud-primetime) | [Failed](SAP/cloud-primetime.md) | 6 violated rules |
-| [SAP/spartacus-core-builds](https://github.com/SAP/spartacus-core-builds) | [Failed](SAP/spartacus-core-builds.md) | 5 violated rules |
-| [SAP/spartacus-styles-builds](https://github.com/SAP/spartacus-styles-builds) | [Failed](SAP/spartacus-styles-builds.md) | 5 violated rules |
-| [SAP/spartacus-storefront-builds](https://github.com/SAP/spartacus-storefront-builds) | [Failed](SAP/spartacus-storefront-builds.md) | 5 violated rules |
+| [SAP/spartacus-core-builds](https://github.com/SAP/spartacus-core-builds) | [Failed](SAP/spartacus-core-builds.md) | 7 violated rules |
+| [SAP/spartacus-styles-builds](https://github.com/SAP/spartacus-styles-builds) | [Failed](SAP/spartacus-styles-builds.md) | 7 violated rules |
+| [SAP/spartacus-storefront-builds](https://github.com/SAP/spartacus-storefront-builds) | [Failed](SAP/spartacus-storefront-builds.md) | 7 violated rules |
 | [SAP/cloud-primetime-appletv](https://github.com/SAP/cloud-primetime-appletv) | [Failed](SAP/cloud-primetime-appletv.md) | 4 violated rules |
 | [SAP/ewm-cloud-robotics-s4](https://github.com/SAP/ewm-cloud-robotics-s4) | [Failed](SAP/ewm-cloud-robotics-s4.md) | 4 violated rules |
 | [SAP/scimono](https://github.com/SAP/scimono) | [Failed](SAP/scimono.md) | 5 violated rules |
@@ -143,7 +144,7 @@
 | [SAP/stewardci-core](https://github.com/SAP/stewardci-core) | [Failed](SAP/stewardci-core.md) | 4 violated rules |
 | [SAP/elasticsearch-logs-plugin](https://github.com/SAP/elasticsearch-logs-plugin) | [Failed](SAP/elasticsearch-logs-plugin.md) | 4 violated rules |
 | [SAP/stewardci-jenkinsfilerunner-image](https://github.com/SAP/stewardci-jenkinsfilerunner-image) | [Failed](SAP/stewardci-jenkinsfilerunner-image.md) | 4 violated rules |
-| [SAP/spartacus-assets-builds](https://github.com/SAP/spartacus-assets-builds) | [Failed](SAP/spartacus-assets-builds.md) | 5 violated rules |
+| [SAP/spartacus-assets-builds](https://github.com/SAP/spartacus-assets-builds) | [Failed](SAP/spartacus-assets-builds.md) | 7 violated rules |
 | [SAP/sap-iot-sdk-nodejs](https://github.com/SAP/sap-iot-sdk-nodejs) | [Failed](SAP/sap-iot-sdk-nodejs.md) | 4 violated rules |
 | [SAP/ui5-showcases](https://github.com/SAP/ui5-showcases) | [Failed](SAP/ui5-showcases.md) | 3 violated rules |
 | [SAP/odfuzz](https://github.com/SAP/odfuzz) | [Failed](SAP/odfuzz.md) | 4 violated rules |
@@ -216,7 +217,6 @@
 | [SAP/cloud-sdk-ios](https://github.com/SAP/cloud-sdk-ios) | [Failed](SAP/cloud-sdk-ios.md) | 7 violated rules |
 | [SAP/cloud-sdk-ios-cai](https://github.com/SAP/cloud-sdk-ios-cai) | [Failed](SAP/cloud-sdk-ios-cai.md) | 1 violated rule |
 | [SAP/.github](https://github.com/SAP/.github) | [Failed](SAP/.github.md) | 10 violated rules |
-| [SAP/openui5](https://github.com/SAP/openui5) | [Passed](SAP/openui5.md) | No violated rules |
 | [SAP/commerce-gradle-plugin](https://github.com/SAP/commerce-gradle-plugin) | [Passed](SAP/commerce-gradle-plugin.md) | No violated rules |
 | [SAP/quality-continuous-traceability-monitor](https://github.com/SAP/quality-continuous-traceability-monitor) | [Passed](SAP/quality-continuous-traceability-monitor.md) | No violated rules |
 | [SAP/generator-easy-ui5](https://github.com/SAP/generator-easy-ui5) | [Passed](SAP/generator-easy-ui5.md) | No violated rules |

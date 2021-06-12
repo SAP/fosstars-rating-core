@@ -5,6 +5,7 @@
 ## Violated rules
 
 1.  **[rl-license_file-2]** Does it use an allowed license? **No**
+1.  **[rl-reuse_tool-4]** Is it compliant with REUSE rules? **No**
 
 
 ## Warnings
@@ -30,7 +31,6 @@
 1.  **[rl-reuse_tool-1]** Does README mention REUSE? **Yes**
 1.  **[rl-reuse_tool-2]** Does it have LICENSES directory with licenses? **Yes**
 1.  **[rl-reuse_tool-3]** Is it registered in REUSE? **Yes**
-1.  **[rl-reuse_tool-4]** Is it compliant with REUSE rules? **Yes**
 1.  **[rl-security_policy-1]** Does it have a security policy? **Yes**
 1.  **[rl-vulnerability_alerts-1]** Are vulnerability alerts enabled? **Yes**
 1.  **[rl-vulnerability_alerts-2]** Does it have unresolved vulnerability alerts? **Yes**
@@ -38,4 +38,4 @@
 
 ## How to fix it
 
-1.  In earlier times, SAP requested projects to add an API usage section to the LICENSE file. As the LICENSE file should only contain the native license text and the API section has moved to the dep5 file of the REUSE project information, we ask all projects to remove the API section from the LICENSE file.2.  A license file was detected, but it doesn't seem to be approved by SAP. Under normal circumstances, we use Apache 2.0 exclusively for our open source projects. Of course, exceptions apply and should be covered by this check.
+1.  In earlier times, SAP requested projects to add an API usage section to the LICENSE file. As the LICENSE file should only contain the native license text and the API section has moved to the dep5 file of the REUSE project information, we ask all projects to remove the API section from the LICENSE file.2.  A license file was detected, but it doesn't seem to be approved by SAP. Under normal circumstances, we use Apache 2.0 exclusively for our open source projects. Of course, exceptions apply and should be covered by this check.3.  The latest REUSE tool compliance check resulted in errors. Please perform the check again on your repository and fix the issues.
