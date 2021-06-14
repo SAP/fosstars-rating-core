@@ -1,4 +1,4 @@
-package com.sap.oss.phosphor.fosstars.tool.github;
+package com.sap.oss.phosphor.fosstars.tool;
 
 import com.sap.oss.phosphor.fosstars.data.DataProvider;
 import com.sap.oss.phosphor.fosstars.data.NoUserCallback;
@@ -51,7 +51,7 @@ public class SingleRatingCalculator implements RatingCalculator {
    * @param rating A rating.
    * @param providers A list of data providers.
    */
-  SingleRatingCalculator(Rating rating, List<DataProvider> providers) {
+  public SingleRatingCalculator(Rating rating, List<DataProvider> providers) {
     Objects.requireNonNull(rating, "Oh no! Rating can't be null!");
     Objects.requireNonNull(providers, "Oh no! A list of data providers can't be null!");
 
