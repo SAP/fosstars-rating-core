@@ -5,9 +5,9 @@
 |                           | # or projects                    | % or projects                      |
 | :------------------------ | -------------------------------: | ---------------------------------: |
 | Total                     |             253 |                               100% |
-| Failed                    |         203 |         80.2% |
+| Failed                    |         202 |         79.8% |
 | Passed with&nbsp;warnings |  31 |  12.3% |
-| Passed                    |         19 |         7.5% |
+| Passed                    |         20 |         7.9% |
 | Unclear                   |        0 |        0.0% |
 
 ## Projects
@@ -167,7 +167,6 @@
 | [SAP/cloud-commerce-spartacus-storefront-docs](https://github.com/SAP/cloud-commerce-spartacus-storefront-docs) | [Failed](SAP/cloud-commerce-spartacus-storefront-docs.md) | 6 violated rules |
 | [SAP/inquirer-gui](https://github.com/SAP/inquirer-gui) | [Failed](SAP/inquirer-gui.md) | 1 violated rule |
 | [SAP/spartacus-docs-v1](https://github.com/SAP/spartacus-docs-v1) | [Failed](SAP/spartacus-docs-v1.md) | 5 violated rules |
-| [SAP/fosstars-rating-core](https://github.com/SAP/fosstars-rating-core) | [Failed](SAP/fosstars-rating-core.md) | 1 violated rule |
 | [SAP/business-document-processing](https://github.com/SAP/business-document-processing) | [Failed](SAP/business-document-processing.md) | 4 violated rules |
 | [SAP/project-piper-action](https://github.com/SAP/project-piper-action) | [Failed](SAP/project-piper-action.md) | 4 violated rules |
 | [SAP/ui5-language-assistant](https://github.com/SAP/ui5-language-assistant) | [Failed](SAP/ui5-language-assistant.md) | 2 violated rules |
@@ -225,6 +224,7 @@
 | [SAP/gigya-android-sdk](https://github.com/SAP/gigya-android-sdk) | [Passed](SAP/gigya-android-sdk.md) | No violated rules |
 | [SAP/gigya-swift-sdk](https://github.com/SAP/gigya-swift-sdk) | [Passed](SAP/gigya-swift-sdk.md) | No violated rules |
 | [SAP/odata-vocabularies](https://github.com/SAP/odata-vocabularies) | [Passed](SAP/odata-vocabularies.md) | No violated rules |
+| [SAP/fosstars-rating-core](https://github.com/SAP/fosstars-rating-core) | [Passed](SAP/fosstars-rating-core.md) | No violated rules |
 | [SAP/cloud-sdk-ios-fiori](https://github.com/SAP/cloud-sdk-ios-fiori) | [Passed](SAP/cloud-sdk-ios-fiori.md) | No violated rules |
 | [SAP/code-pal-for-abap](https://github.com/SAP/code-pal-for-abap) | [Passed](SAP/code-pal-for-abap.md) | No violated rules |
 | [SAP/data-attribute-recommendation-python-sdk](https://github.com/SAP/data-attribute-recommendation-python-sdk) | [Passed](SAP/data-attribute-recommendation-python-sdk.md) | No violated rules |
