@@ -5,8 +5,8 @@ import static com.sap.oss.phosphor.fosstars.data.github.TestGitHubDataFetcherHol
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.FUZZED_IN_OSS_FUZZ;
 import static org.junit.Assert.assertEquals;
 
+import com.sap.oss.phosphor.fosstars.data.SubjectValueCache;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
-import com.sap.oss.phosphor.fosstars.tool.github.SubjectValueCache;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
