@@ -30,6 +30,7 @@ import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.nvd.NVD;
 import com.sap.oss.phosphor.fosstars.tool.InputString;
+import com.sap.oss.phosphor.fosstars.tool.SubjectCache;
 import com.sap.oss.phosphor.fosstars.tool.YesNoQuestion;
 import com.sap.oss.phosphor.fosstars.tool.YesNoQuestion.Answer;
 import com.sap.oss.phosphor.fosstars.tool.format.Formatter;

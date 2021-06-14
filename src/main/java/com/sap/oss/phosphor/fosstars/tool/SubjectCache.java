@@ -1,4 +1,4 @@
-package com.sap.oss.phosphor.fosstars.tool.github;
+package com.sap.oss.phosphor.fosstars.tool;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
@@ -20,7 +20,7 @@ import java.util.Optional;
 /**
  * This is a cache of {@link Subject}s.
  */
-class SubjectCache {
+public class SubjectCache {
 
   /**
    * The default lifetime of a cache entry in days.
@@ -39,8 +39,10 @@ class SubjectCache {
 
   /**
    * Creates an empty cache.
+   *
+   * @return An empty cache.
    */
-  static SubjectCache empty() {
+  public static SubjectCache empty() {
     return new SubjectCache(new HashMap<>());
   }
 
@@ -70,7 +72,7 @@ class SubjectCache {
    * @param days The lifetime in days.
    * @return The same cache.
    */
-  SubjectCache lifetime(long days) {
+  public SubjectCache lifetime(long days) {
     if (days < 1) {
       throw new IllegalArgumentException("Hey! You gave me a wrong life time for cache entries!");
     }
@@ -83,7 +85,7 @@ class SubjectCache {
    *
    * @return A size of the cache.
    */
-  int size() {
+  public int size() {
     return cache.size();
   }
 
@@ -93,7 +95,7 @@ class SubjectCache {
    * @param subject The subject.
    * @return The same cache.
    */
-  SubjectCache add(Subject subject) {
+  public SubjectCache add(Subject subject) {
     cache.put(subject.purl(), subject);
     return this;
   }
@@ -104,7 +106,7 @@ class SubjectCache {
    * @param subject The subject.
    * @return An {@link Optional} with a rating value for the subject.
    */
-  Optional<RatingValue> cachedRatingValueFor(Subject subject) {
+  public Optional<RatingValue> cachedRatingValueFor(Subject subject) {
     Subject cached = cache.get(subject.purl());
     if (cached == null) {
       return Optional.empty();
@@ -127,7 +129,7 @@ class SubjectCache {
    * @return A loaded cache.
    * @throws IOException If something went wrong.
    */
-  static SubjectCache load(String filename) throws IOException {
+  public static SubjectCache load(String filename) throws IOException {
     return load(Paths.get(filename));
   }
 
@@ -138,7 +140,7 @@ class SubjectCache {
    * @return A loaded cache.
    * @throws IOException If something went wrong.
    */
-  static SubjectCache load(Path filename) throws IOException {
+  public static SubjectCache load(Path filename) throws IOException {
     try (InputStream is = Files.newInputStream(filename)) {
       return load(is);
     }
@@ -151,7 +153,7 @@ class SubjectCache {
    * @return A loaded cache.
    * @throws IOException If something went wrong.
    */
-  static SubjectCache load(InputStream is) throws IOException {
+  public static SubjectCache load(InputStream is) throws IOException {
     return Json.read(is, SubjectCache.class);
   }
 
@@ -161,7 +163,7 @@ class SubjectCache {
    * @param filename A path to the file.
    * @throws IOException If something went wrong.
    */
-  void store(String filename) throws IOException {
+  public void store(String filename) throws IOException {
     store(Paths.get(filename));
   }
 
@@ -171,7 +173,7 @@ class SubjectCache {
    * @param filename The file.
    * @throws IOException If something went wrong.
    */
-  void store(Path filename) throws IOException {
+  public void store(Path filename) throws IOException {
     Files.write(filename, Json.toBytes(this));
   }
 }

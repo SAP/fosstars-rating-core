@@ -6,6 +6,7 @@ import com.sap.oss.phosphor.fosstars.data.UserCallback;
 import com.sap.oss.phosphor.fosstars.data.ValueCache;
 import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
+import com.sap.oss.phosphor.fosstars.tool.SubjectCache;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
