@@ -1,4 +1,4 @@
-package com.sap.oss.phosphor.fosstars.tool.github;
+package com.sap.oss.phosphor.fosstars.tool.report;
 
 import static com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScore.findViolatedRulesIn;
 

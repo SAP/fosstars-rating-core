@@ -1,6 +1,6 @@
-package com.sap.oss.phosphor.fosstars.tool.github;
+package com.sap.oss.phosphor.fosstars.tool.report;
 
-import static com.sap.oss.phosphor.fosstars.tool.github.AbstractReporter.LIST_OF_GITHUB_PROJECTS_TYPE;
+import static com.sap.oss.phosphor.fosstars.tool.report.AbstractReporter.LIST_OF_GITHUB_PROJECTS_TYPE;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
