@@ -1,4 +1,4 @@
-package com.sap.oss.phosphor.fosstars.tool.github;
+package com.sap.oss.phosphor.fosstars.tool.report;
 
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.util.Json;
@@ -25,7 +25,7 @@ public class MergedJsonReporter extends AbstractReporter<GitHubProject> {
    *
    * @param filename A path to an output file.
    */
-  MergedJsonReporter(String filename) {
+  public MergedJsonReporter(String filename) {
     Objects.requireNonNull(filename, "Oh no! Output filename is null!");
     if (filename.trim().isEmpty()) {
       throw new IllegalArgumentException("Oh no! Output filename is empty!");

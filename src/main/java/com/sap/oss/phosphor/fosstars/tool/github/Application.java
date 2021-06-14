@@ -29,7 +29,6 @@ import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.nvd.NVD;
 import com.sap.oss.phosphor.fosstars.tool.InputString;
-import com.sap.oss.phosphor.fosstars.tool.Reporter;
 import com.sap.oss.phosphor.fosstars.tool.YesNoQuestion;
 import com.sap.oss.phosphor.fosstars.tool.YesNoQuestion.Answer;
 import com.sap.oss.phosphor.fosstars.tool.format.Formatter;
@@ -38,6 +37,10 @@ import com.sap.oss.phosphor.fosstars.tool.format.OssRulesOfPlayRatingMarkdownFor
 import com.sap.oss.phosphor.fosstars.tool.format.OssSecurityRatingMarkdownFormatter;
 import com.sap.oss.phosphor.fosstars.tool.format.PrettyPrinter;
 import com.sap.oss.phosphor.fosstars.tool.github.Application.ReportConfig.ReportType;
+import com.sap.oss.phosphor.fosstars.tool.report.MergedJsonReporter;
+import com.sap.oss.phosphor.fosstars.tool.report.OssRulesOfPlayMarkdownReporter;
+import com.sap.oss.phosphor.fosstars.tool.report.OssSecurityRatingMarkdownReporter;
+import com.sap.oss.phosphor.fosstars.tool.report.Reporter;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.File;

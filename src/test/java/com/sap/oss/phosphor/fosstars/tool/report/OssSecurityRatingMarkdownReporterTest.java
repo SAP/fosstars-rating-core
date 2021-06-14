@@ -1,4 +1,4 @@
-package com.sap.oss.phosphor.fosstars.tool.github;
+package com.sap.oss.phosphor.fosstars.tool.report;
 
 import static com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel.BAD;
 import static com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel.GOOD;

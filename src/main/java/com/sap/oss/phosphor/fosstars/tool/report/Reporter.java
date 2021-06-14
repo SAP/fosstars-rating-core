@@ -1,4 +1,4 @@
-package com.sap.oss.phosphor.fosstars.tool;
+package com.sap.oss.phosphor.fosstars.tool.report;
 
 import com.sap.oss.phosphor.fosstars.model.subject.oss.OpenSourceProject;
 import java.io.IOException;

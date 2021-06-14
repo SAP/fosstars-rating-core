@@ -1,9 +1,8 @@
-package com.sap.oss.phosphor.fosstars.tool.github;
+package com.sap.oss.phosphor.fosstars.tool.report;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.OpenSourceProject;
-import com.sap.oss.phosphor.fosstars.tool.Reporter;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.io.InputStream;

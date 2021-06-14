@@ -1,4 +1,4 @@
-package com.sap.oss.phosphor.fosstars.tool.github;
+package com.sap.oss.phosphor.fosstars.tool.report;
 
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_GITHUB_STARS;
 
@@ -124,7 +124,7 @@ public class OssSecurityRatingMarkdownReporter extends AbstractReporter<GitHubPr
    *                     (for example, the output directory doesn't exist,
    *                     or the extra projects couldn't be loaded).
    */
-  OssSecurityRatingMarkdownReporter(
+  public OssSecurityRatingMarkdownReporter(
       String outputDirectory, String extraSourceFileName, OssSecurityRating rating, Advisor advisor)
       throws IOException {
 
