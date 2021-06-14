@@ -1,4 +1,4 @@
-package com.sap.oss.phosphor.fosstars.tool.github;
+package com.sap.oss.phosphor.fosstars.tool;
 
 import static java.util.Arrays.asList;
 
@@ -6,7 +6,6 @@ import com.sap.oss.phosphor.fosstars.data.UserCallback;
 import com.sap.oss.phosphor.fosstars.data.ValueCache;
 import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
-import com.sap.oss.phosphor.fosstars.tool.SubjectCache;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,7 @@ import org.apache.logging.log4j.Logger;
 /**
  * The class calculates ratings for multiple subjects.
  */
-class MultipleRatingsCalculator implements RatingCalculator {
+public class MultipleRatingsCalculator implements RatingCalculator {
 
   /**
    * A logger.
@@ -50,7 +49,7 @@ class MultipleRatingsCalculator implements RatingCalculator {
    *
    * @param calculator A calculator that calculates a rating for a single subject.
    */
-  MultipleRatingsCalculator(RatingCalculator calculator) {
+  public MultipleRatingsCalculator(RatingCalculator calculator) {
     Objects.requireNonNull(calculator, "Oh no! Calculator is null!");
     this.calculator = calculator;
   }
@@ -86,7 +85,7 @@ class MultipleRatingsCalculator implements RatingCalculator {
    * @param filename The file.
    * @return The same {@link MultipleRatingsCalculator}.
    */
-  MultipleRatingsCalculator storeCacheTo(String filename) {
+  public MultipleRatingsCalculator storeCacheTo(String filename) {
     Objects.requireNonNull(filename, "Hey! Filename can't be null!");
     subjectCacheFile = filename;
     return this;
@@ -114,7 +113,7 @@ class MultipleRatingsCalculator implements RatingCalculator {
    * @param subjects The subjects.
    * @return The same calculator.
    */
-  MultipleRatingsCalculator calculateFor(Subject... subjects) {
+  public MultipleRatingsCalculator calculateFor(Subject... subjects) {
     Objects.requireNonNull(subjects, "Oh no! Subjects is null!");
     return calculateFor(asList(subjects));
   }
@@ -126,7 +125,7 @@ class MultipleRatingsCalculator implements RatingCalculator {
    * @param subjects The subjects.
    * @return The same calculator.
    */
-  MultipleRatingsCalculator calculateFor(List<? extends Subject> subjects) {
+  public MultipleRatingsCalculator calculateFor(List<? extends Subject> subjects) {
     Objects.requireNonNull(subjects, "Oh no! Subjects is null!");
 
     failedSubjects.clear();
@@ -154,7 +153,7 @@ class MultipleRatingsCalculator implements RatingCalculator {
    *
    * @return The list of subjects.
    */
-  List<Subject> failedSubjects() {
+  public List<Subject> failedSubjects() {
     return new ArrayList<>(failedSubjects);
   }
 
