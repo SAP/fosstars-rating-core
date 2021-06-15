@@ -5,9 +5,9 @@
 |                           | # or projects                    | % or projects                      |
 | :------------------------ | -------------------------------: | ---------------------------------: |
 | Total                     |             253 |                               100% |
-| Failed                    |         202 |         79.8% |
+| Failed                    |         201 |         79.4% |
 | Passed with&nbsp;warnings |  31 |  12.3% |
-| Passed                    |         20 |         7.9% |
+| Passed                    |         21 |         8.3% |
 | Unclear                   |        0 |        0.0% |
 
 ## Projects
@@ -23,7 +23,6 @@
 | [SAP/cloud-personslist-scenario](https://github.com/SAP/cloud-personslist-scenario) | [Failed](SAP/cloud-personslist-scenario.md) | 4 violated rules |
 | [SAP/node-hdb](https://github.com/SAP/node-hdb) | [Failed](SAP/node-hdb.md) | 5 violated rules |
 | [SAP/cloud-cmis-workbench](https://github.com/SAP/cloud-cmis-workbench) | [Failed](SAP/cloud-cmis-workbench.md) | 4 violated rules |
-| [SAP/openui5](https://github.com/SAP/openui5) | [Failed](SAP/openui5.md) | 1 violated rule |
 | [SAP/PyRFC](https://github.com/SAP/PyRFC) | [Failed](SAP/PyRFC.md) | 2 violated rules |
 | [SAP/cloud-dirigible](https://github.com/SAP/cloud-dirigible) | [Failed](SAP/cloud-dirigible.md) | 5 violated rules |
 | [SAP/mobilesdk-certificateprovider](https://github.com/SAP/mobilesdk-certificateprovider) | [Failed](SAP/mobilesdk-certificateprovider.md) | 4 violated rules |
@@ -200,7 +199,7 @@
 | [SAP/project-portal-for-innersource](https://github.com/SAP/project-portal-for-innersource) | [Failed](SAP/project-portal-for-innersource.md) | 2 violated rules |
 | [SAP/ownid-webapp](https://github.com/SAP/ownid-webapp) | [Failed](SAP/ownid-webapp.md) | 1 violated rule |
 | [SAP/ownid-docs](https://github.com/SAP/ownid-docs) | [Failed](SAP/ownid-docs.md) | 2 violated rules |
-| [SAP/ownid-server-sdk-net](https://github.com/SAP/ownid-server-sdk-net) | [Failed](SAP/ownid-server-sdk-net.md) | 1 violated rule |
+| [SAP/ownid-server-sdk-net](https://github.com/SAP/ownid-server-sdk-net) | [Failed](SAP/ownid-server-sdk-net.md) | 2 violated rules |
 | [SAP/ownid-web-ui-sdk](https://github.com/SAP/ownid-web-ui-sdk) | [Failed](SAP/ownid-web-ui-sdk.md) | 1 violated rule |
 | [SAP/ownid-demo](https://github.com/SAP/ownid-demo) | [Failed](SAP/ownid-demo.md) | 1 violated rule |
 | [SAP/ownid-developer-tutorial](https://github.com/SAP/ownid-developer-tutorial) | [Failed](SAP/ownid-developer-tutorial.md) | 1 violated rule |
@@ -216,6 +215,7 @@
 | [SAP/cloud-sdk-ios](https://github.com/SAP/cloud-sdk-ios) | [Failed](SAP/cloud-sdk-ios.md) | 7 violated rules |
 | [SAP/cloud-sdk-ios-cai](https://github.com/SAP/cloud-sdk-ios-cai) | [Failed](SAP/cloud-sdk-ios-cai.md) | 1 violated rule |
 | [SAP/.github](https://github.com/SAP/.github) | [Failed](SAP/.github.md) | 10 violated rules |
+| [SAP/openui5](https://github.com/SAP/openui5) | [Passed](SAP/openui5.md) | No violated rules |
 | [SAP/commerce-gradle-plugin](https://github.com/SAP/commerce-gradle-plugin) | [Passed](SAP/commerce-gradle-plugin.md) | No violated rules |
 | [SAP/quality-continuous-traceability-monitor](https://github.com/SAP/quality-continuous-traceability-monitor) | [Passed](SAP/quality-continuous-traceability-monitor.md) | No violated rules |
 | [SAP/generator-easy-ui5](https://github.com/SAP/generator-easy-ui5) | [Passed](SAP/generator-easy-ui5.md) | No violated rules |

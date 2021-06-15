@@ -13,7 +13,6 @@
 
 1.  **[rl-contributor_file-1]** Does it have a contributing guideline? **No**
 1.  **[rl-contributor_file-2]** Does the contributing guideline have required text? **No**
-1.  **[rl-vulnerability_alerts-2]** Does it have unresolved vulnerability alerts? **Yes**
 
 
 
@@ -35,7 +34,7 @@
 1.  **[rl-reuse_tool-2]** Does it have LICENSES directory with licenses? **Yes**
 1.  **[rl-security_policy-1]** Does it have a security policy? **Yes**
 1.  **[rl-vulnerability_alerts-1]** Are vulnerability alerts enabled? **Yes**
-1.  **[rl-vulnerability_alerts-2]** Does it have unresolved vulnerability alerts? **Yes**
+1.  **[rl-vulnerability_alerts-2]** Does it have unresolved vulnerability alerts? **No**
 
 
 ## How to fix it
