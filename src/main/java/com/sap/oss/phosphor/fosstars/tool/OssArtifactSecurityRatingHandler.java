@@ -1,10 +1,8 @@
 package com.sap.oss.phosphor.fosstars.tool;
 
-import static java.lang.String.format;
+import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 import static java.util.Objects.requireNonNull;
 
-import com.github.packageurl.PackageURL;
-import com.github.packageurl.PackageURL.StandardTypes;
 import com.sap.oss.phosphor.fosstars.maven.GAV;
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurityRating;
@@ -15,16 +13,12 @@ import com.sap.oss.phosphor.fosstars.model.subject.oss.NpmArtifact;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  *
  */
 public class OssArtifactSecurityRatingHandler extends AbstractHandler {
-
-  /**
-   *
-   */
-  private static final String NO_VERSION = null;
 
   /**
    *
@@ -44,43 +38,13 @@ public class OssArtifactSecurityRatingHandler extends AbstractHandler {
   }
 
   @Override
-  public OssArtifactSecurityRatingHandler run() throws Exception {
-    requireOneOfIn(commandLine, "--gav", "--npm", "--purl");
-
-    if (commandLine.hasOption("gav")) {
-      processGav(GAV.parse(commandLine.getOptionValue("gav")));
-    }
-
-    if (commandLine.hasOption("npm")) {
-      processNpm(commandLine.getOptionValue("npm"));
-    }
-
-    if (commandLine.hasOption("purl")) {
-      processPurl(commandLine.getOptionValue("purl"));
-    }
-
-    return this;
+  Set<String> supportedSubjectOptions() {
+    return setOf("--gav", "--npm", "--purl");
   }
 
-  /**
-   * Calculate a rating for an artifact identified by a PURL.
-   *
-   * @param packageUrl The PURL.
-   * @throws IOException If something went wrong.
-   */
-  private void processPurl(String packageUrl) throws Exception {
-    PackageURL purl = new PackageURL(packageUrl);
-
-    switch (purl.getType().toLowerCase()) {
-      case StandardTypes.MAVEN:
-        processGav(new GAV(purl.getNamespace(), purl.getName(), purl.getVersion()));
-        break;
-      case StandardTypes.NPM:
-        processNpm(purl.getName());
-        break;
-      default:
-        throw new IOException(format("Oh no! Unsupported PURL type: '%s'", purl.getType()));
-    }
+  @Override
+  void processMaven(String coordinates) throws IOException {
+    processGav(GAV.parse(coordinates));
   }
 
   /**
@@ -117,11 +81,13 @@ public class OssArtifactSecurityRatingHandler extends AbstractHandler {
    * @param identifier The NPM package.
    * @throws IOException If something went wrong.
    */
-  private void processNpm(String identifier) throws IOException {
+  @Override
+  void processNpm(String identifier) throws IOException {
     requireNonNull(identifier, "Oops! NPM package identifier is null!");
     String[] parts = identifier.split("@");
     if (parts.length != 2) {
-      throw new IllegalArgumentException("Oops! NPM package seems to be wrong!");
+      throw new IllegalArgumentException(
+          "Oops! NPM package seems to be wrong! It has to have a name and a version!");
     }
     String name = parts[0];
     String version = parts[1];
@@ -141,6 +107,16 @@ public class OssArtifactSecurityRatingHandler extends AbstractHandler {
 
     Arrays.stream(createFormatter("text").print(artifact).split("\n")).forEach(logger::info);
     logger.info("");
+  }
+
+  @Override
+  void processUrl(String url) {
+    throw new UnsupportedOperationException("Oops! I don't support URL!");
+  }
+
+  @Override
+  void processConfig(String filename) {
+    throw new UnsupportedOperationException("Oops! I don't support configs!");
   }
 
   @Override
