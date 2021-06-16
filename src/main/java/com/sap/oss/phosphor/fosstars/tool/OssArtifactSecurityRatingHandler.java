@@ -16,17 +16,18 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- *
+ * This handler calculates
+ * {@link com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurityRating}.
  */
 public class OssArtifactSecurityRatingHandler extends AbstractHandler {
 
   /**
-   *
+   * No project on GitHub.
    */
   private static final GitHubProject NO_PROJECT = null;
 
   /**
-   *
+   * Initialize a handler.
    */
   public OssArtifactSecurityRatingHandler() {
     super(RatingRepository.INSTANCE.rating(OssArtifactSecurityRating.class));

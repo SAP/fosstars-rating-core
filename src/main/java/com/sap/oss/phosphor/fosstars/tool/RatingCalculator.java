@@ -29,9 +29,10 @@ public interface RatingCalculator {
   RatingCalculator set(ValueCache<Subject> cache);
 
   /**
+   * Set an adaptor for subjects.
    *
-   * @param adaptor
-   * @return
+   * @param adaptor The adaptor.
+   * @return The same calculator.
    */
   RatingCalculator set(SubjectAdaptor adaptor);
 
@@ -45,15 +46,18 @@ public interface RatingCalculator {
   RatingCalculator calculateFor(Subject subject) throws IOException;
 
   /**
-   *
+   * An adaptor that adapts a subject for a data provider.
+   * For example, if a subject is not supported by a data provider, but the subject
+   * has another subject inside, which is supported by the provider, then the adaptor can return it.
    */
   interface SubjectAdaptor {
 
     /**
+     * Adapt a subject for a data provider.
      *
-     * @param subject
-     * @param provider
-     * @return
+     * @param subject The subject.
+     * @param provider The provider.
+     * @return An adapted subject if available.
      */
     Optional<Subject> adapt(Subject subject, DataProvider provider);
   }

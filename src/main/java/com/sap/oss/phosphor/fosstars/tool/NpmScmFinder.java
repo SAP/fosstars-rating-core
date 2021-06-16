@@ -17,15 +17,16 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 
 /**
- *
+ * The class takes a name of an NPM package and looks for a URL to its SCM.
  */
 public class NpmScmFinder {
 
   /**
+   * Takes a name of an NPM package and looks for its SCM on GitHub.
    *
-   * @param identifier
-   * @return
-   * @throws IOException
+   * @param identifier The name of the package.
+   * @return A project on GitHub if found.
+   * @throws IOException If something went wrong.
    */
   public Optional<GitHubProject> findGithubProjectFor(String identifier) throws IOException {
     Optional<String> scm = scmForNpm(identifier);

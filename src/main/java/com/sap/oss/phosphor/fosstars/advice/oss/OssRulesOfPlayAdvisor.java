@@ -38,8 +38,9 @@ public class OssRulesOfPlayAdvisor extends AbstractOssAdvisor {
       = RatingRepository.INSTANCE.rating(OssRulesOfPlayRating.class);
 
   /**
+   * Create a new advisor.
    *
-   * @throws IOException
+   * @throws IOException If advice could not be loaded.
    */
   public OssRulesOfPlayAdvisor() throws IOException {
     super(storage(), WITH_EMPTY_CONTEXT);

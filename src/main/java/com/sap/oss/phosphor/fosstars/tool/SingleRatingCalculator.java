@@ -48,7 +48,8 @@ public class SingleRatingCalculator implements RatingCalculator {
   UserCallback callback = NoUserCallback.INSTANCE;
 
   /**
-   *
+   * An adaptor for subjects.
+   * The default adaptor returns the same subject if a data provider supports it.
    */
   SubjectAdaptor subjectAdaptor
       = (subject, provider) -> Optional.of(subject).filter(provider::supports);

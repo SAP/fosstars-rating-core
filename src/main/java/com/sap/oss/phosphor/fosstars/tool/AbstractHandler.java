@@ -41,17 +41,17 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- *
+ * A base class for command-line handlers.
  */
 public abstract class AbstractHandler implements Handler {
 
   /**
-   *
+   * A set of command-line options that specify subjects.
    */
   static final Set<String> SUBJECT_OPTIONS = setOf("--url", "--gav", "--npm", "--purl", "--config");
 
   /**
-   *
+   * Maps a command-line option for subjects to a processor.
    */
   final Map<String, Processor> router = new HashMap<>();
 
@@ -61,45 +61,50 @@ public abstract class AbstractHandler implements Handler {
   final Logger logger = LogManager.getLogger(getClass());
 
   /**
-   *
+   * An interface to NVD.
    */
   final NVD nvd = new NVD();
 
   /**
-   *
+   * A rating that the handler calculates.
    */
   final Rating rating;
 
   /**
-   *
+   * Parsed command-line parameters.
    */
   CommandLine commandLine;
 
   /**
-   *
+   * A list of configs for data providers.
    */
   List<String> withDataProviderConfigs = emptyList();
 
   /**
-   *
+   * An interface to GitHub.
    */
   GitHubDataFetcher fetcher;
 
   /**
-   *
+   * A user callback.
    */
   UserCallback callback = NoUserCallback.INSTANCE;
 
   /**
-   *
+   * A cache of values for subjects.
    */
   SubjectValueCache cache = new SubjectValueCache();
 
   /**
-   *
+   * A base directory.
    */
   String baseDirectory = "./";
 
+  /**
+   * Create a handler.
+   *
+   * @param rating A rating that the handler calculates.
+   */
   AbstractHandler(Rating rating) {
     this.rating = requireNonNull(rating, "Oops! Rating is null!");
     this.router.put("--url", this::processUrl);
@@ -110,8 +115,9 @@ public abstract class AbstractHandler implements Handler {
   }
 
   /**
+   * Creates a rating calculator that calculates a rating for a single subject.
    *
-   * @throws IOException
+   * @throws IOException If something went wrong.
    */
   SingleRatingCalculator calculator() throws IOException {
     List<DataProvider> providers = dataProviderSelector().providersFor(rating);
@@ -119,9 +125,10 @@ public abstract class AbstractHandler implements Handler {
   }
 
   /**
+   * Creates a selector for data providers.
    *
-   * @return
-   * @throws IOException
+   * @return A selector for data providers.
+   * @throws IOException If something went wrong.
    */
   DataProviderSelector dataProviderSelector() throws IOException {
     requireNonNull(fetcher, "Oops! Fetcher is not set!");
@@ -217,8 +224,9 @@ public abstract class AbstractHandler implements Handler {
   }
 
   /**
+   * Returns a set of command-line options for specifying subjects.
    *
-   * @return
+   * @return A set of command-line options for specifying subjects.
    */
   abstract Set<String> supportedSubjectOptions();
 
@@ -243,18 +251,20 @@ public abstract class AbstractHandler implements Handler {
   }
 
   /**
+   * Process a Maven artifact.
    *
-   * @param coordinates
-   * @throws Exception
+   * @param coordinates GAV coordinates.
+   * @throws Exception If something went wrong.
    */
   void processMaven(String coordinates) throws Exception {
     throw new UnsupportedOperationException("Oops! I don't support GAV!");
   }
 
   /**
+   * Process an NPM package.
    *
-   * @param identifier
-   * @throws Exception
+   * @param identifier The package's identifier.
+   * @throws Exception If something went wrong.
    */
   void processNpm(String identifier) throws Exception {
     throw new UnsupportedOperationException("Oops! I don't support NPM!");
@@ -447,28 +457,15 @@ public abstract class AbstractHandler implements Handler {
   }
 
   /**
-   *
-   * @param commandLine
-   * @param subjectOptions
-   */
-  static void requireOneOfIn(CommandLine commandLine, String... subjectOptions) {
-    boolean found = Arrays.stream(subjectOptions).anyMatch(commandLine::hasOption);
-    if (!found) {
-      throw new IllegalArgumentException(format(
-          "You have to give me one of the following options: %s",
-          String.join(", ", subjectOptions)));
-    }
-  }
-
-  /**
-   *
+   * A processor that runs rating calculation for a subject identifier by a string.
    */
   private interface Processor {
 
     /**
+     * Run the processor for a subject.
      *
-     * @param string
-     * @throws Exception
+     * @param string The subject's identifier.
+     * @throws Exception If the processor failed.
      */
     void run(String string) throws Exception;
   }
