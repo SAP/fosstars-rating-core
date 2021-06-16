@@ -17,6 +17,7 @@ import com.sap.oss.phosphor.fosstars.data.NoUserCallback;
 import com.sap.oss.phosphor.fosstars.data.Terminal;
 import com.sap.oss.phosphor.fosstars.data.UserCallback;
 import com.sap.oss.phosphor.fosstars.data.github.GitHubDataFetcher;
+import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Rating;
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
 import com.sap.oss.phosphor.fosstars.model.Value;
@@ -24,8 +25,10 @@ import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
+import com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScore;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
+import com.sap.oss.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.oss.phosphor.fosstars.nvd.NVD;
 import com.sap.oss.phosphor.fosstars.tool.InputString;
@@ -57,6 +60,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
@@ -68,6 +73,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
+import org.kohsuke.github.GHIssue;
 import org.kohsuke.github.GitHub;
 import org.kohsuke.github.GitHubBuilder;
 import org.kohsuke.github.HttpConnector;
@@ -239,6 +245,11 @@ public class Application {
             .hasArg()
             .argName("format")
             .desc("Format of the report (text or markdown).")
+            .build());
+    options.addOption(
+        Option.builder()
+            .longOpt("create-issues")
+            .desc("Create GitHub issues for the respective repository in case of findings.")
             .build());
     options.addOption(
         Option.builder()
@@ -424,6 +435,7 @@ public class Application {
     LOGGER.info("");
 
     storeReportIfRequested(project, commandLine);
+    createIssuesIfRequested(project, commandLine);
   }
 
   /**
@@ -585,6 +597,37 @@ public class Application {
       String file = commandLine.getOptionValue("raw-rating-file");
       LOGGER.info("Storing a raw rating to {}", file);
       Files.write(Paths.get(file), Json.toBytes(project.ratingValue().get()));
+    }
+  }
+  
+  /**
+   * Creates issues for findings in the respective repositories if a user asked about it.
+   *
+   * @param project The project.
+   * @param commandLine Command-line options.
+   * @throws IOException If something went wrong.
+   */
+  private void createIssuesIfRequested(GitHubProject project, CommandLine commandLine) 
+      throws IOException {
+
+    if (!project.ratingValue().isPresent()) {
+      throw new IOException("Could not calculate a rating!");
+    }
+
+    if (commandLine.hasOption("create-issues")) {
+      LOGGER.info("Creating issues for findings on {}", project.toString());
+      Formatter formatter = createFormatter("markdown");
+      List<Value<Boolean>> violations = OssRulesOfPlayScore.findViolatedRulesIn(project.ratingValue().get().scoreValue().usedValues());
+      for (Value<Boolean> violation : violations) {
+        String issueHeader = formatter.printTitle(violation);
+        List<GHIssue> existingGitHubIssues = this.fetcher.gitHubIssuesFor(project, issueHeader);
+        if (existingGitHubIssues.isEmpty()) {
+          LOGGER.info("New issue: " + issueHeader);
+          this.fetcher.createGitHubIssue(project, formatter.printTitle(violation), formatter.printBody(violation));
+        } else {
+          LOGGER.info("Issue already existing: " + issueHeader);
+        }
+      }
     }
   }
 

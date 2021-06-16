@@ -322,6 +322,45 @@ public abstract class CommonFormatter implements Formatter {
 
     return value.get().toString();
   }
+  
+  /**
+   * Prints a formatted violated rule.
+   *
+   * @param value The rule.
+   * @return A formatted violated rule.
+   */
+  protected String formatRule(Value<?> value) {
+    String answer = "unknown";
+    if (!value.isUnknown()) {
+      if (!BooleanValue.class.equals(value.getClass())) {
+        throw new IllegalArgumentException("Oh no! Expected a boolean value!");
+      }
+      answer = ((BooleanValue) value).get() ? "Yes" : "No";
+    }
+    return String.format("%s **%s**",
+        nameOf(value.feature()),
+        answer);
+  }
+  
+  /**
+   * Search for ID for a rule.
+   *
+   * @param rule The rule.
+   * @return ID of the rule if available, an empty string otherwise.
+   */
+  protected String identifierOf(Feature<?> rule) {
+    return StringUtils.EMPTY;
+  }
+  
+  @Override
+  public String printTitle(Value<?> value) {
+    return this.formatRule(value);
+  }
+  
+  @Override
+  public String printBody(Value<?> value) {
+    return this.formatRule(value);
+  }
 
   /**
    * Loads a resource.
