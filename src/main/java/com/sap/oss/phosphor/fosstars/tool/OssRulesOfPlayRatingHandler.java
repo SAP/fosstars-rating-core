@@ -19,7 +19,7 @@ import org.apache.commons.cli.CommandLine;
 import org.kohsuke.github.GHIssue;
 
 /**
- *
+ * This handler calculates {@link OssRulesOfPlayRating}.
  */
 public class OssRulesOfPlayRatingHandler extends AbstractHandler {
 
@@ -29,8 +29,9 @@ public class OssRulesOfPlayRatingHandler extends AbstractHandler {
   private final OssRulesOfPlayAdvisor advisor;
 
   /**
+   * Initializes a handler.
    *
-   * @throws IOException
+   * @throws IOException If initialization failed.
    */
   public OssRulesOfPlayRatingHandler() throws IOException {
     super(RatingRepository.INSTANCE.rating(OssRulesOfPlayRating.class));
@@ -44,7 +45,7 @@ public class OssRulesOfPlayRatingHandler extends AbstractHandler {
 
   @Override
   Set<String> supportedSubjectOptions() {
-    return setOf("--url" , "--purl", "--config");
+    return setOf("--url", "--purl", "--config");
   }
 
   @Override

@@ -51,7 +51,7 @@ public class Application {
   private static final String FOSSTARS_DIRECTORY = ".fosstars";
 
   /**
-   *
+   * A path to cache.
    */
   private static final String SUBJECT_VALUE_CACHE_FILE
       = FOSSTARS_DIRECTORY + File.separator + "github_project_value_cache.json";
@@ -63,12 +63,12 @@ public class Application {
       "java -jar fosstars-github-rating-calc.jar [options]";
 
   /**
-   *
+   * A list of handlers for specific ratings.
    */
   private final Handler[] handlers;
 
   /**
-   *
+   * The default handler.
    */
   private final Handler defaultHandler;
 
@@ -88,6 +88,11 @@ public class Application {
     LOGGER.info("Bye!");
   }
 
+  /**
+   * Initialize CLI.
+   *
+   * @throws IOException If something went wrong.
+   */
   public Application() throws IOException {
     handlers = new Handler[] {
         new OssProjectSecurityRatingHandler(),
@@ -98,8 +103,9 @@ public class Application {
   }
 
   /**
+   * Prepare supported command-line options.
    *
-   * @return
+   * @return Command-line options.
    */
   private Options commandLineOptions() {
     Options options = new Options();
@@ -202,9 +208,11 @@ public class Application {
   }
 
   /**
+   * Look for a handler for a rating.
    *
-   * @param rating
-   * @return
+   * @param rating The rating.
+   * @return A handler for the rating.
+   * @throws IllegalArgumentException If no handler found for the rating.
    */
   private Handler handlerFor(String rating) {
     requireNonNull(rating, "Oops! Rating is null!");

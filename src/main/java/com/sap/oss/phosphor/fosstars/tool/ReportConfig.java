@@ -7,6 +7,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class ReportConfig {
 
+  /**
+   * Types of reports.
+   */
   public enum ReportType {
     MARKDOWN, JSON
   }

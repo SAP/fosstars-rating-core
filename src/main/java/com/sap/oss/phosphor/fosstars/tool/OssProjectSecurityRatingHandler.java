@@ -25,7 +25,7 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- *
+ * This handler calculates {@link OssSecurityRating}.
  */
 public class OssProjectSecurityRatingHandler extends AbstractHandler {
 
@@ -35,7 +35,7 @@ public class OssProjectSecurityRatingHandler extends AbstractHandler {
   private static final Advisor OSS_SECURITY_GITHUB_ADVISOR = new OssSecurityGithubAdvisor();
 
   /**
-   *
+   * Initializes a handler.
    */
   public OssProjectSecurityRatingHandler() {
     super(RatingRepository.INSTANCE.rating(OssSecurityRating.class));
@@ -48,7 +48,7 @@ public class OssProjectSecurityRatingHandler extends AbstractHandler {
 
   @Override
   Set<String> supportedSubjectOptions() {
-    return setOf("--url" , "--gav", "--npm", "--purl", "--config");
+    return setOf("--url", "--gav", "--npm", "--purl", "--config");
   }
 
   @Override
@@ -159,7 +159,7 @@ public class OssProjectSecurityRatingHandler extends AbstractHandler {
       case "text":
         return PrettyPrinter.withVerboseOutput(OSS_SECURITY_GITHUB_ADVISOR);
       case "markdown":
-          return new OssSecurityRatingMarkdownFormatter(OSS_SECURITY_GITHUB_ADVISOR);
+        return new OssSecurityRatingMarkdownFormatter(OSS_SECURITY_GITHUB_ADVISOR);
       default:
         throw new IllegalArgumentException(format("Unsupported report type: %s", type));
     }
