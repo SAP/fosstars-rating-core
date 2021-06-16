@@ -83,7 +83,7 @@ public class MavenScmFinder {
    * @return A project on GitHub.
    * @throws IOException If something went wrong.
    */
-  public Optional<GitHubProject> findGithubProjectFor(String gav) throws IOException {
+  public Optional<GitHubProject> findGithubProjectFor(GAV gav) throws IOException {
     Optional<String> scm = findScmFor(gav);
     if (!scm.isPresent()) {
       return Optional.empty();
@@ -249,8 +249,9 @@ public class MavenScmFinder {
    * @throws IOException If something went wrong.
    */
   public static void main(String... args) throws IOException {
-    String gav = args.length > 0 ? args[0] : "org.apache.commons:commons-text";
-    Optional<GitHubProject> project = new MavenScmFinder().findGithubProjectFor(gav);
+    String coordinates = args.length > 0 ? args[0] : "org.apache.commons:commons-text";
+    Optional<GitHubProject> project
+        = new MavenScmFinder().findGithubProjectFor(GAV.parse(coordinates));
     System.out.println(
         project.isPresent() ? String.format("GitHub URL = %s", project.get()) : "No SCM found!");
   }

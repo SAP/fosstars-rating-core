@@ -1,6 +1,7 @@
 package com.sap.oss.phosphor.fosstars.tool;
 
 import static java.util.Arrays.asList;
+import static java.util.Objects.requireNonNull;
 
 import com.sap.oss.phosphor.fosstars.data.UserCallback;
 import com.sap.oss.phosphor.fosstars.data.ValueCache;
@@ -9,7 +10,6 @@ import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -50,21 +50,28 @@ public class MultipleRatingsCalculator implements RatingCalculator {
    * @param calculator A calculator that calculates a rating for a single subject.
    */
   public MultipleRatingsCalculator(RatingCalculator calculator) {
-    Objects.requireNonNull(calculator, "Oh no! Calculator is null!");
+    requireNonNull(calculator, "Oh no! Calculator is null!");
     this.calculator = calculator;
   }
 
   @Override
   public MultipleRatingsCalculator set(UserCallback callback) {
-    Objects.requireNonNull(callback, "Oh no! Callback is null!");
+    requireNonNull(callback, "Oh no! Callback is null!");
     calculator.set(callback);
     return this;
   }
 
   @Override
   public MultipleRatingsCalculator set(ValueCache<Subject> cache) {
-    Objects.requireNonNull(cache, "Oh no! Cache is null!");
+    requireNonNull(cache, "Oh no! Cache is null!");
     calculator.set(cache);
+    return this;
+  }
+
+  @Override
+  public RatingCalculator set(SubjectAdaptor adaptor) {
+    requireNonNull(adaptor, "Oh no! Subject adaptor is null!");
+    calculator.set(adaptor);
     return this;
   }
 
@@ -75,7 +82,7 @@ public class MultipleRatingsCalculator implements RatingCalculator {
    * @return The same {@link MultipleRatingsCalculator}.
    */
   public MultipleRatingsCalculator set(SubjectCache subjectCache) {
-    this.subjectCache = Objects.requireNonNull(subjectCache, "Oh no! Cache can't be null!");
+    this.subjectCache = requireNonNull(subjectCache, "Oh no! Cache can't be null!");
     return this;
   }
 
@@ -86,7 +93,7 @@ public class MultipleRatingsCalculator implements RatingCalculator {
    * @return The same {@link MultipleRatingsCalculator}.
    */
   public MultipleRatingsCalculator storeCacheTo(String filename) {
-    Objects.requireNonNull(filename, "Hey! Filename can't be null!");
+    requireNonNull(filename, "Hey! Filename can't be null!");
     subjectCacheFile = filename;
     return this;
   }
@@ -114,7 +121,7 @@ public class MultipleRatingsCalculator implements RatingCalculator {
    * @return The same calculator.
    */
   public MultipleRatingsCalculator calculateFor(Subject... subjects) {
-    Objects.requireNonNull(subjects, "Oh no! Subjects is null!");
+    requireNonNull(subjects, "Oh no! Subjects is null!");
     return calculateFor(asList(subjects));
   }
 
@@ -126,7 +133,7 @@ public class MultipleRatingsCalculator implements RatingCalculator {
    * @return The same calculator.
    */
   public MultipleRatingsCalculator calculateFor(List<? extends Subject> subjects) {
-    Objects.requireNonNull(subjects, "Oh no! Subjects is null!");
+    requireNonNull(subjects, "Oh no! Subjects is null!");
 
     failedSubjects.clear();
 
