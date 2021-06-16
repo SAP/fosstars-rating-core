@@ -1,14 +1,14 @@
-package com.sap.oss.phosphor.fosstars.tool.github;
+package com.sap.oss.phosphor.fosstars.tool;
 
-import static com.sap.oss.phosphor.fosstars.tool.github.GitHubProjectFinder.EMPTY_EXCLUDE_LIST;
+import static com.sap.oss.phosphor.fosstars.tool.GitHubProjectFinder.EMPTY_EXCLUDE_LIST;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
-import com.sap.oss.phosphor.fosstars.tool.github.GitHubProjectFinder.OrganizationConfig;
-import com.sap.oss.phosphor.fosstars.tool.github.GitHubProjectFinder.ProjectConfig;
+import com.sap.oss.phosphor.fosstars.tool.GitHubProjectFinder.OrganizationConfig;
+import com.sap.oss.phosphor.fosstars.tool.GitHubProjectFinder.ProjectConfig;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;

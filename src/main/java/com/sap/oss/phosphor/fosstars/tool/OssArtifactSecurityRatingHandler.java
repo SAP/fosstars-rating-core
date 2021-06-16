@@ -1,4 +1,4 @@
-package com.sap.oss.phosphor.fosstars.tool.github;
+package com.sap.oss.phosphor.fosstars.tool;
 
 import static java.lang.String.format;
 import static java.util.Objects.requireNonNull;
@@ -12,7 +12,6 @@ import com.sap.oss.phosphor.fosstars.model.subject.oss.Artifact;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.MavenArtifact;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.NpmArtifact;
-import com.sap.oss.phosphor.fosstars.tool.SingleRatingCalculator;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package com.sap.oss.phosphor.fosstars.tool.github;
+package com.sap.oss.phosphor.fosstars.tool;
 
 import static java.lang.String.format;
 import static java.util.Collections.emptyList;
@@ -14,9 +14,6 @@ import com.sap.oss.phosphor.fosstars.model.Rating;
 import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.nvd.NVD;
-import com.sap.oss.phosphor.fosstars.tool.MultipleRatingsCalculator;
-import com.sap.oss.phosphor.fosstars.tool.SingleRatingCalculator;
-import com.sap.oss.phosphor.fosstars.tool.SubjectCache;
 import com.sap.oss.phosphor.fosstars.tool.format.Formatter;
 import com.sap.oss.phosphor.fosstars.tool.format.PrettyPrinter;
 import com.sap.oss.phosphor.fosstars.tool.report.Reporter;

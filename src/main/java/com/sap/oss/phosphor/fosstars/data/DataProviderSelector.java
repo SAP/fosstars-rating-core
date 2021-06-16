@@ -67,7 +67,7 @@ public class DataProviderSelector {
    * @param nvd An interface to NVD.
    * @throws IOException If something went wrong.
    */
-  DataProviderSelector(GitHubDataFetcher fetcher, NVD nvd) throws IOException {
+  public DataProviderSelector(GitHubDataFetcher fetcher, NVD nvd) throws IOException {
     requireNonNull(fetcher, "Oops! Fetcher can't be null!");
     requireNonNull(nvd, "Oops! NVD can't be null!");
 
