@@ -1,11 +1,10 @@
 package com.sap.oss.phosphor.fosstars.tool;
 
+import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 import static com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject.isOnGitHub;
 import static java.lang.String.format;
 import static java.util.Objects.requireNonNull;
 
-import com.github.packageurl.PackageURL;
-import com.github.packageurl.PackageURL.StandardTypes;
 import com.sap.oss.phosphor.fosstars.advice.Advisor;
 import com.sap.oss.phosphor.fosstars.advice.oss.github.OssSecurityGithubAdvisor;
 import com.sap.oss.phosphor.fosstars.maven.GAV;
@@ -20,10 +19,10 @@ import com.sap.oss.phosphor.fosstars.tool.report.OssSecurityRatingMarkdownReport
 import com.sap.oss.phosphor.fosstars.tool.report.Reporter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  *
@@ -48,75 +47,13 @@ public class OssProjectSecurityRatingHandler extends AbstractHandler {
   }
 
   @Override
-  public OssProjectSecurityRatingHandler run() throws Exception {
-    requireOneOfIn(commandLine, "--url" , "--gav", "--npm", "--purl", "--config");
-
-    if (commandLine.hasOption("url")) {
-      processUrl(commandLine.getOptionValue("url"));
-    }
-
-    if (commandLine.hasOption("gav")) {
-      process(GAV.parse(commandLine.getOptionValue("gav")));
-    }
-
-    if (commandLine.hasOption("npm")) {
-      processNpm(commandLine.getOptionValue("npm"));
-    }
-
-    if (commandLine.hasOption("config")) {
-      processConfig(commandLine.getOptionValue("config"));
-    }
-
-    if (commandLine.hasOption("purl")) {
-      processPurl(commandLine.getOptionValue("purl"));
-    }
-
-    return this;
+  Set<String> supportedSubjectOptions() {
+    return setOf("--url" , "--gav", "--npm", "--purl", "--config");
   }
 
-  /**
-   * Calculate a rating for a single project identified by a PURL.
-   *
-   * @param packageUrl The PURL.
-   * @throws IOException If something went wrong.
-   */
-  private void processPurl(String packageUrl) throws Exception {
-    PackageURL purl = new PackageURL(packageUrl);
-
-    switch (purl.getType().toLowerCase()) {
-      case StandardTypes.GITHUB:
-        String url = format("https://github.com/%s/%s", purl.getNamespace(), purl.getName());
-        processUrl(url);
-        break;
-      case StandardTypes.MAVEN:
-        process(new GAV(purl.getNamespace(), purl.getName(), purl.getVersion()));
-        break;
-      case StandardTypes.NPM:
-        processNpm(purl.getName());
-        break;
-      default:
-        throw new IOException(format("Oh no! Unsupported PURL type: '%s'", purl.getType()));
-    }
-  }
-
-  /**
-   * Calculate a rating for a single project identified by a URL to its SCM.
-   *
-   * @param url A URL of the project repository.
-   * @throws IOException If something went wrong.
-   */
-  private void processUrl(String url) throws IOException {
-    GitHubProject project = GitHubProject.parse(url);
-
-    calculator().calculateFor(project);
-
-    if (!project.ratingValue().isPresent()) {
-      throw new IOException("Could not calculate a rating!");
-    }
-
-    Arrays.stream(createFormatter("text").print(project).split("\n")).forEach(logger::info);
-    logger.info("");
-    storeReportIfRequested(project, commandLine);
+  @Override
+  void processMaven(String coordinates) throws IOException {
+    process(GAV.parse(coordinates));
   }
 
   /**
@@ -125,7 +62,8 @@ public class OssProjectSecurityRatingHandler extends AbstractHandler {
    * @param name The NPM name.
    * @throws IOException If something went wrong.
    */
-  private void processNpm(String name) throws IOException {
+  @Override
+  void processNpm(String name) throws IOException {
     process(name, identifier -> {
       Optional<String> scm = new NpmScmFinder().scmForNpm(identifier);
       if (!scm.isPresent()) {
@@ -162,22 +100,23 @@ public class OssProjectSecurityRatingHandler extends AbstractHandler {
       String url = scm.get();
       logger.info("SCM is {}", url);
 
-      if (!isOnGitHub(url)) {
-        logger.info("But unfortunately, I can work only with projects that stay on GitHub ...");
-        logger.info("Let me try to find a mirror on GitHub ...");
-
-        Optional<GitHubProject> mirror = finder.findGithubProjectFor(coordinates);
-        if (!mirror.isPresent()) {
-          throw new IOException("Oh no! I could not find a mirror on GitHub!");
-        }
-
-        logger.info("Yup, that seems to be a corresponding project on GitHub:");
-        logger.info("  {}", mirror.get().scm().toString());
-
-        return mirror;
+      if (isOnGitHub(url)) {
+        return Optional.of(GitHubProject.parse(url));
       }
 
-      return Optional.empty();
+      logger.info("But unfortunately, I can work only with projects that stay on GitHub ...");
+      logger.info("Let me try to find a mirror on GitHub ...");
+
+      Optional<GitHubProject> mirror = finder.findGithubProjectFor(coordinates);
+      if (!mirror.isPresent()) {
+        logger.warn("Oh no! I could not find a mirror on GitHub!");
+        return Optional.empty();
+      }
+
+      logger.info("Yup, that seems to be a corresponding project on GitHub:");
+      logger.info("  {}", mirror.get().scm().toString());
+
+      return mirror;
     });
   }
 

@@ -1,9 +1,12 @@
 package com.sap.oss.phosphor.fosstars.tool;
 
+import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 import static java.lang.String.format;
 import static java.util.Collections.emptyList;
 import static java.util.Objects.requireNonNull;
 
+import com.github.packageurl.PackageURL;
+import com.github.packageurl.PackageURL.StandardTypes;
 import com.sap.oss.phosphor.fosstars.data.DataProvider;
 import com.sap.oss.phosphor.fosstars.data.DataProviderSelector;
 import com.sap.oss.phosphor.fosstars.data.NoUserCallback;
@@ -25,10 +28,15 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionGroup;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -36,6 +44,16 @@ import org.apache.logging.log4j.Logger;
  *
  */
 public abstract class AbstractHandler implements Handler {
+
+  /**
+   *
+   */
+  static final Set<String> SUBJECT_OPTIONS = setOf("--url", "--gav", "--npm", "--purl", "--config");
+
+  /**
+   *
+   */
+  final Map<String, Processor> router = new HashMap<>();
 
   /**
    * A logger.
@@ -84,6 +102,11 @@ public abstract class AbstractHandler implements Handler {
 
   AbstractHandler(Rating rating) {
     this.rating = requireNonNull(rating, "Oops! Rating is null!");
+    this.router.put("--url", this::processUrl);
+    this.router.put("--gav", this::processMaven);
+    this.router.put("--npm", this::processNpm);
+    this.router.put("--purl", this::processPurl);
+    this.router.put("--config", this::processConfig);
   }
 
   /**
@@ -162,6 +185,127 @@ public abstract class AbstractHandler implements Handler {
   @Override
   public void close() {
 
+  }
+
+  @Override
+  public final Handler run() throws Exception {
+    List<String> options = SUBJECT_OPTIONS.stream()
+        .filter(option -> commandLine.hasOption(option))
+        .collect(Collectors.toList());
+
+    if (options.isEmpty()) {
+      throw new IllegalArgumentException(format(
+          "You have to give me one of the following options: %s",
+          String.join(", ", SUBJECT_OPTIONS)));
+    }
+
+    if (options.size() > 1) {
+      throw new IllegalArgumentException(
+          format("Oops! %s cannot be used together!", String.join(", ", options)));
+    }
+
+    String option = options.get(0);
+    Processor processor = router.get(option);
+
+    if (processor == null || !supportedSubjectOptions().contains(option)) {
+      throw new IllegalArgumentException(format("%s is not supported!", option));
+    }
+
+    processor.run(commandLine.getOptionValue(StringUtils.strip(option, "-")));
+
+    return this;
+  }
+
+  /**
+   *
+   * @return
+   */
+  abstract Set<String> supportedSubjectOptions();
+
+  /**
+   * Calculate a rating for a single subject identified by a URL to its SCM.
+   *
+   * @param url A URL of the project repository.
+   * @throws IOException If something went wrong.
+   */
+  void processUrl(String url) throws IOException {
+    GitHubProject project = GitHubProject.parse(url);
+
+    calculator().calculateFor(project);
+
+    if (!project.ratingValue().isPresent()) {
+      throw new IOException("Could not calculate a rating!");
+    }
+
+    Arrays.stream(createFormatter("text").print(project).split("\n")).forEach(logger::info);
+    logger.info("");
+    storeReportIfRequested(project, commandLine);
+  }
+
+  /**
+   *
+   * @param coordinates
+   * @throws Exception
+   */
+  void processMaven(String coordinates) throws Exception {
+    throw new UnsupportedOperationException("Oops! I don't support GAV!");
+  }
+
+  /**
+   *
+   * @param identifier
+   * @throws Exception
+   */
+  void processNpm(String identifier) throws Exception {
+    throw new UnsupportedOperationException("Oops! I don't support NPM!");
+  }
+
+  /**
+   * Calculate a rating for a single project identified by a PURL.
+   *
+   * @param packageUrl The PURL.
+   * @throws IOException If something went wrong.
+   */
+  void processPurl(String packageUrl) throws Exception {
+    PackageURL purl = new PackageURL(packageUrl);
+
+    switch (purl.getType().toLowerCase()) {
+      case StandardTypes.GITHUB:
+        if (purl.getNamespace() == null) {
+          throw new IllegalArgumentException("Oops! No namespace in the PURL!");
+        }
+        if (purl.getName() == null) {
+          throw new IllegalArgumentException("Oops! No name in the PURL!");
+        }
+        String url = format("https://github.com/%s/%s", purl.getNamespace(), purl.getName());
+        processUrl(url);
+        break;
+      case StandardTypes.MAVEN:
+        if (purl.getNamespace() == null) {
+          throw new IllegalArgumentException("Oops! No namespace in the PURL!");
+        }
+        if (purl.getName() == null) {
+          throw new IllegalArgumentException("Oops! No name in the PURL!");
+        }
+        String coordinates = format("%s:%s", purl.getNamespace(), purl.getName());
+        if (purl.getVersion() != null) {
+          coordinates += ":" + purl.getVersion();
+        }
+        processMaven(coordinates);
+        break;
+      case StandardTypes.NPM:
+        if (purl.getName() == null) {
+          throw new IllegalArgumentException("Oops! No name in the PURL!");
+        }
+        String identifier = format("%s", purl.getName());
+        if (purl.getVersion() != null) {
+          identifier += "@" + purl.getVersion();
+        }
+        processNpm(identifier);
+        break;
+      default:
+        throw new IOException(format("Oh no! Unsupported PURL type: '%s'", purl.getType()));
+    }
   }
 
   /**
@@ -314,5 +458,18 @@ public abstract class AbstractHandler implements Handler {
           "You have to give me one of the following options: %s",
           String.join(", ", subjectOptions)));
     }
+  }
+
+  /**
+   *
+   */
+  private interface Processor {
+
+    /**
+     *
+     * @param string
+     * @throws Exception
+     */
+    void run(String string) throws Exception;
   }
 }

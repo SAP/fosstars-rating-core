@@ -1,9 +1,8 @@
 package com.sap.oss.phosphor.fosstars.tool;
 
+import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 import static java.lang.String.format;
 
-import com.github.packageurl.PackageURL;
-import com.github.packageurl.PackageURL.StandardTypes;
 import com.sap.oss.phosphor.fosstars.advice.oss.OssRulesOfPlayAdvisor;
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
 import com.sap.oss.phosphor.fosstars.model.Value;
@@ -14,8 +13,8 @@ import com.sap.oss.phosphor.fosstars.tool.format.Formatter;
 import com.sap.oss.phosphor.fosstars.tool.format.OssRulesOfPlayRatingMarkdownFormatter;
 import com.sap.oss.phosphor.fosstars.tool.format.PrettyPrinter;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import org.apache.commons.cli.CommandLine;
 import org.kohsuke.github.GHIssue;
 
@@ -44,39 +43,13 @@ public class OssRulesOfPlayRatingHandler extends AbstractHandler {
   }
 
   @Override
-  public OssRulesOfPlayRatingHandler run() throws Exception {
-    requireOneOfIn(commandLine, "--url" , "--purl", "--config");
-
-    if (commandLine.hasOption("url")) {
-      processUrl(commandLine.getOptionValue("url"));
-    }
-
-    if (commandLine.hasOption("config")) {
-      processConfig(commandLine.getOptionValue("config"));
-    }
-
-    if (commandLine.hasOption("purl")) {
-      processPurl(commandLine.getOptionValue("purl"));
-    }
-
-    return this;
+  Set<String> supportedSubjectOptions() {
+    return setOf("--url" , "--purl", "--config");
   }
 
-  /**
-   * Calculate a rating for a single project identified by a PURL.
-   *
-   * @param packageUrl The PURL.
-   * @throws IOException If something went wrong.
-   */
-  private void processPurl(String packageUrl) throws Exception {
-    PackageURL purl = new PackageURL(packageUrl);
-
-    if (StandardTypes.GITHUB.equalsIgnoreCase(purl.getType())) {
-      String url = format("https://github.com/%s/%s", purl.getNamespace(), purl.getName());
-      processUrl(url);
-    } else {
-      throw new IOException(format("Oh no! Unsupported PURL type: '%s'", purl.getType()));
-    }
+  @Override
+  void processMaven(String coordinates) {
+    throw new UnsupportedOperationException("Oops! I don't support GAV coordinates!");
   }
 
   /**
@@ -85,19 +58,10 @@ public class OssRulesOfPlayRatingHandler extends AbstractHandler {
    * @param url A URL of the project repository.
    * @throws IOException If something went wrong.
    */
-  private void processUrl(String url) throws IOException {
-    GitHubProject project = GitHubProject.parse(url);
-
-    calculator().calculateFor(project);
-
-    if (!project.ratingValue().isPresent()) {
-      throw new IOException("Could not calculate a rating!");
-    }
-
-    Arrays.stream(createFormatter("text").print(project).split("\n")).forEach(logger::info);
-    logger.info("");
-    storeReportIfRequested(project, commandLine);
-    createIssuesIfRequested(project, commandLine);
+  @Override
+  void processUrl(String url) throws IOException {
+    super.processUrl(url);
+    createIssuesIfRequested(GitHubProject.parse(url), commandLine);
   }
 
   @Override

@@ -18,7 +18,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
@@ -316,14 +315,6 @@ public class Application {
   private static void checkOptionsIn(CommandLine commandLine) {
     if (commandLine.hasOption("h")) {
       return;
-    }
-
-    String[] subjectOptions = { "--url" , "--gav", "-npm", "--purl", "--config" };
-    boolean found = Arrays.stream(subjectOptions).anyMatch(commandLine::hasOption);
-    if (!found) {
-      throw new IllegalArgumentException(format(
-          "You have to give me one of the following options: %s",
-          String.join(", ", subjectOptions)));
     }
 
     if (commandLine.hasOption("report-type") && !commandLine.hasOption("report-file")) {
