@@ -1,17 +1,21 @@
 package com.sap.oss.phosphor.fosstars.model.subject.oss;
 
+import static java.lang.String.format;
+
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sap.oss.phosphor.fosstars.model.subject.AbstractSubject;
 import java.util.Objects;
 import java.util.Optional;
+import javax.annotation.Nullable;
 
 /**
  * NPM package artifact.
  */
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
-public class NpmArtifact implements Artifact {
+public class NpmArtifact extends AbstractSubject implements Artifact {
 
   /**
    * NPM package identifier.
@@ -32,15 +36,18 @@ public class NpmArtifact implements Artifact {
    * Initializes a NPM artifact.
    *
    * @param identifier An NPM package identifier.
-   * @param version The NPM package version.
-   * @param project A {@link GitHubProject}.
+   * @param version The NPM package version. It may be null.
+   * @param project A {@link GitHubProject}. It may be null.
    */
   @JsonCreator
-  public NpmArtifact(@JsonProperty("identifier") String identifier,
-      @JsonProperty("version") String version,
-      @JsonProperty("project") GitHubProject project) {
+  public NpmArtifact(
+      @JsonProperty("identifier") String identifier,
+      @JsonProperty("version") @Nullable String version,
+      @JsonProperty("project") @Nullable GitHubProject project) {
+
     this.identifier = Objects.requireNonNull(identifier,
         "Oh no! You gave me a null instead of an NPM identifier!");
+
     this.version = version;
     this.project = project;
   }
@@ -68,7 +75,7 @@ public class NpmArtifact implements Artifact {
     if (this == o) {
       return true;
     }
-    if (o instanceof NpmArtifact == false) {
+    if (!super.equals(o) || !NpmArtifact.class.isAssignableFrom(o.getClass())) {
       return false;
     }
     NpmArtifact that = (NpmArtifact) o;
@@ -83,12 +90,16 @@ public class NpmArtifact implements Artifact {
   }
 
   @Override
-  public String toString() {
-    return String.format("%s@%s %s", identifier, version, project);
+  public Optional<GitHubProject> project() {
+    return Optional.ofNullable(project);
   }
 
   @Override
-  public Optional<GitHubProject> project() {
-    return Optional.ofNullable(project);
+  public String purl() {
+    if (version == null) {
+      return format("pkg:npm/%s", identifier);
+    }
+
+    return format("pkg:npm/%s@%s", identifier, version);
   }
 }

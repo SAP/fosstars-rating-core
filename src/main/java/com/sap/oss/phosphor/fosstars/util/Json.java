@@ -1,6 +1,7 @@
 package com.sap.oss.phosphor.fosstars.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import java.io.IOException;
@@ -60,6 +61,9 @@ public class Json extends Deserialization {
    * @return A shared {@link ObjectMapper} for JSON.
    */
   public static ObjectMapper mapper() {
-    return registerSubTypesIn(JsonMapper.builder().polymorphicTypeValidator(validator()).build());
+    return registerSubTypesIn(
+        JsonMapper.builder()
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+            .polymorphicTypeValidator(validator()).build());
   }
 }

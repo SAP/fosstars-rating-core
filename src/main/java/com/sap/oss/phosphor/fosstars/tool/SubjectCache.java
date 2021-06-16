@@ -1,9 +1,9 @@
-package com.sap.oss.phosphor.fosstars.tool.github;
+package com.sap.oss.phosphor.fosstars.tool;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
+import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
@@ -18,9 +18,9 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * This is a cache of {@link GitHubProject}s.
+ * This is a cache of {@link Subject}s.
  */
-class GitHubProjectCache {
+public class SubjectCache {
 
   /**
    * The default lifetime of a cache entry in days.
@@ -28,9 +28,9 @@ class GitHubProjectCache {
   private static final int DEFAULT_LIFETIME = 7;
 
   /**
-   * Maps a URL of a project to a {@link GitHubProject}.
+   * Maps a PURL to a {@link Subject}.
    */
-  final Map<String, GitHubProject> cache;
+  final Map<String, Subject> cache;
 
   /**
    * A lifetime of a cache entry in days.
@@ -39,9 +39,11 @@ class GitHubProjectCache {
 
   /**
    * Creates an empty cache.
+   *
+   * @return An empty cache.
    */
-  static GitHubProjectCache empty() {
-    return new GitHubProjectCache(new HashMap<>());
+  public static SubjectCache empty() {
+    return new SubjectCache(new HashMap<>());
   }
 
   /**
@@ -50,7 +52,7 @@ class GitHubProjectCache {
    * @param cache A map with cache entries.
    */
   @JsonCreator
-  private GitHubProjectCache(@JsonProperty("cache") Map<String, GitHubProject> cache) {
+  private SubjectCache(@JsonProperty("cache") Map<String, Subject> cache) {
     this.cache = cache;
   }
 
@@ -60,7 +62,7 @@ class GitHubProjectCache {
    * @return The map.
    */
   @JsonGetter("cache")
-  private Map<String, GitHubProject> cache() {
+  private Map<String, Subject> cache() {
     return cache;
   }
 
@@ -68,9 +70,9 @@ class GitHubProjectCache {
    * Set a lifetime for cache entries.
    *
    * @param days The lifetime in days.
-   * @return The same {@link GitHubProject}.
+   * @return The same cache.
    */
-  GitHubProjectCache lifetime(long days) {
+  public SubjectCache lifetime(long days) {
     if (days < 1) {
       throw new IllegalArgumentException("Hey! You gave me a wrong life time for cache entries!");
     }
@@ -83,29 +85,29 @@ class GitHubProjectCache {
    *
    * @return A size of the cache.
    */
-  int size() {
+  public int size() {
     return cache.size();
   }
 
   /**
-   * Add a new project to the cache.
+   * Add a new subject to the cache.
    *
-   * @param project The project.
-   * @return The same {@link GitHubProject}.
+   * @param subject The subject.
+   * @return The same cache.
    */
-  GitHubProjectCache add(GitHubProject project) {
-    cache.put(project.scm().toString(), project);
+  public SubjectCache add(Subject subject) {
+    cache.put(subject.purl(), subject);
     return this;
   }
 
   /**
-   * Returns a rating value for a project if it's available in the cache.
+   * Returns a rating value for a subject if it's available in the cache.
    *
-   * @param project The project.
-   * @return An {@link Optional} with a rating value for the project.
+   * @param subject The subject.
+   * @return An {@link Optional} with a rating value for the subject.
    */
-  Optional<RatingValue> cachedRatingValueFor(GitHubProject project) {
-    GitHubProject cached = cache.get(project.scm().toString());
+  public Optional<RatingValue> cachedRatingValueFor(Subject subject) {
+    Subject cached = cache.get(subject.purl());
     if (cached == null) {
       return Optional.empty();
     }
@@ -127,7 +129,7 @@ class GitHubProjectCache {
    * @return A loaded cache.
    * @throws IOException If something went wrong.
    */
-  static GitHubProjectCache load(String filename) throws IOException {
+  public static SubjectCache load(String filename) throws IOException {
     return load(Paths.get(filename));
   }
 
@@ -138,7 +140,7 @@ class GitHubProjectCache {
    * @return A loaded cache.
    * @throws IOException If something went wrong.
    */
-  static GitHubProjectCache load(Path filename) throws IOException {
+  public static SubjectCache load(Path filename) throws IOException {
     try (InputStream is = Files.newInputStream(filename)) {
       return load(is);
     }
@@ -151,17 +153,17 @@ class GitHubProjectCache {
    * @return A loaded cache.
    * @throws IOException If something went wrong.
    */
-  static GitHubProjectCache load(InputStream is) throws IOException {
-    return Json.read(is, GitHubProjectCache.class);
+  public static SubjectCache load(InputStream is) throws IOException {
+    return Json.read(is, SubjectCache.class);
   }
 
   /**
-   * Stores a cache of projects to a file.
+   * Stores a cache of subjects to a file.
    *
    * @param filename A path to the file.
    * @throws IOException If something went wrong.
    */
-  void store(String filename) throws IOException {
+  public void store(String filename) throws IOException {
     store(Paths.get(filename));
   }
 
@@ -171,7 +173,7 @@ class GitHubProjectCache {
    * @param filename The file.
    * @throws IOException If something went wrong.
    */
-  void store(Path filename) throws IOException {
+  public void store(Path filename) throws IOException {
     Files.write(filename, Json.toBytes(this));
   }
 }

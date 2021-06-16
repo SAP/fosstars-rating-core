@@ -15,11 +15,17 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
+import org.apache.maven.artifact.versioning.ComparableVersion;
 
 /**
  * A set versions for an artifact.
  */
 public class ArtifactVersions implements Iterable<ArtifactVersion> {
+
+  /**
+   * Major version template.
+   */
+  private static final String MAJOR_VERSION_TEMPLATE = "%s.0.0";
 
   /**
    * A set of versions.
@@ -53,7 +59,7 @@ public class ArtifactVersions implements Iterable<ArtifactVersion> {
   @JsonCreator
   public ArtifactVersions(@JsonProperty("elements") Set<ArtifactVersion> versions) {
     Objects.requireNonNull(versions, "versions can't be null!");
-    this.elements = new TreeSet<>(ArtifactVersion.RELEASE_DATE_COMPARISON);
+    this.elements = new TreeSet<>(ArtifactVersion.RELEASE_DATE_VERSION_COMPARISON);
     this.elements.addAll(versions);
   }
 
@@ -102,6 +108,23 @@ public class ArtifactVersions implements Iterable<ArtifactVersion> {
   }
 
   /**
+   * Checks if the collection contains all the other versions.
+   *
+   * @param versions The other versions.
+   * @return True if all the other versions is present in the collection,
+   *         false otherwise.
+   */
+  public boolean containsAllOf(ArtifactVersions versions) {
+    for (ArtifactVersion version : versions) {
+      if (!this.elements.contains(version)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  /**
    * Get versions sorted by date.
    * First entry is the latest release.
    * Creates a new collection with the sorted versions.
@@ -125,6 +148,30 @@ public class ArtifactVersions implements Iterable<ArtifactVersion> {
       return Collections.emptyList();
     }
     return artifactVersions.get().sortByReleaseDate();
+  }
+
+  /**
+   * Filter {@link ArtifactVersions} by major version.
+   *
+   * @param version The {@link SemanticVersion}.
+   * @return Filtered {@link ArtifactVersions}.
+   */
+  public ArtifactVersions filterArtifactsByMajorVersion(SemanticVersion version) {
+    final int major = version.getMajor();
+    ComparableVersion currentMajorVersion =
+        new ComparableVersion(String.format(MAJOR_VERSION_TEMPLATE, major));
+    ComparableVersion nextMajorVersion =
+        new ComparableVersion(String.format(MAJOR_VERSION_TEMPLATE, major + 1));
+
+    return new ArtifactVersions(
+        elements.stream()
+          .filter(v -> v.hasValidSemanticVersion())
+          .filter(v -> {
+            final ComparableVersion comparableVersion = new ComparableVersion(v.version());
+            return comparableVersion.compareTo(currentMajorVersion) >= 0
+                && comparableVersion.compareTo(nextMajorVersion) < 0;
+          })
+          .collect(Collectors.toSet()));
   }
 
   /**

@@ -6,6 +6,7 @@ import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.sap.oss.phosphor.fosstars.model.Feature;
+import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
@@ -28,14 +29,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * <p>
  * This is a base class for data providers that would like to collect release information from
  * different sources.
- * </p>
- *
- * @param <T> A type of the objects for which the data provider can fetch data.
  */
-public abstract class AbstractReleaseInfoLoader<T> implements DataProvider<T> {
+public abstract class AbstractReleaseInfoLoader implements DataProvider {
 
   /**
    * A logger.
@@ -62,7 +59,7 @@ public abstract class AbstractReleaseInfoLoader<T> implements DataProvider<T> {
    * This is a dummy cache which stores nothing.
    */
   @Override
-  public ValueCache<T> cache() {
+  public ValueCache<Subject> cache() {
     return NoValueCache.create();
   }
 
@@ -70,7 +67,7 @@ public abstract class AbstractReleaseInfoLoader<T> implements DataProvider<T> {
    * There is not call back required for this data provider.
    */
   @Override
-  public DataProvider<T> set(UserCallback callback) {
+  public AbstractReleaseInfoLoader set(UserCallback callback) {
     return this;
   }
 
@@ -78,7 +75,7 @@ public abstract class AbstractReleaseInfoLoader<T> implements DataProvider<T> {
    * No cache value is needed that is used by the data provider.
    */
   @Override
-  public AbstractReleaseInfoLoader<T> set(ValueCache<T> cache) {
+  public AbstractReleaseInfoLoader set(ValueCache<Subject> cache) {
     return this;
   }
 
@@ -86,7 +83,7 @@ public abstract class AbstractReleaseInfoLoader<T> implements DataProvider<T> {
    * No configuration is required for this data provider.
    */
   @Override
-  public AbstractReleaseInfoLoader<T> configure(Path config) throws IOException {
+  public AbstractReleaseInfoLoader configure(Path config) throws IOException {
     return this;
   }
 

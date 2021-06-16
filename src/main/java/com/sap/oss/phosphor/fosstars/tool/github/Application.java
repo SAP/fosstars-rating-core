@@ -1,9 +1,10 @@
 package com.sap.oss.phosphor.fosstars.tool.github;
 
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ARTIFACT_VERSION;
 import static com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject.isOnGitHub;
+import static java.lang.String.format;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.packageurl.MalformedPackageURLException;
@@ -14,25 +15,26 @@ import com.sap.oss.phosphor.fosstars.advice.oss.github.AdviceForGitHubContextFac
 import com.sap.oss.phosphor.fosstars.advice.oss.github.OssSecurityGithubAdvisor;
 import com.sap.oss.phosphor.fosstars.data.DataProvider;
 import com.sap.oss.phosphor.fosstars.data.NoUserCallback;
+import com.sap.oss.phosphor.fosstars.data.StandardValueCache;
+import com.sap.oss.phosphor.fosstars.data.SubjectValueCache;
 import com.sap.oss.phosphor.fosstars.data.Terminal;
 import com.sap.oss.phosphor.fosstars.data.UserCallback;
 import com.sap.oss.phosphor.fosstars.data.github.GitHubDataFetcher;
-import com.sap.oss.phosphor.fosstars.model.Feature;
+import com.sap.oss.phosphor.fosstars.maven.GAV;
 import com.sap.oss.phosphor.fosstars.model.Rating;
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
+import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.Value;
-import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScore;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
-import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
-import com.sap.oss.phosphor.fosstars.model.value.BooleanValue;
-import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.oss.phosphor.fosstars.nvd.NVD;
 import com.sap.oss.phosphor.fosstars.tool.InputString;
-import com.sap.oss.phosphor.fosstars.tool.Reporter;
+import com.sap.oss.phosphor.fosstars.tool.MultipleRatingsCalculator;
+import com.sap.oss.phosphor.fosstars.tool.SingleRatingCalculator;
+import com.sap.oss.phosphor.fosstars.tool.SubjectCache;
 import com.sap.oss.phosphor.fosstars.tool.YesNoQuestion;
 import com.sap.oss.phosphor.fosstars.tool.YesNoQuestion.Answer;
 import com.sap.oss.phosphor.fosstars.tool.format.Formatter;
@@ -41,6 +43,10 @@ import com.sap.oss.phosphor.fosstars.tool.format.OssRulesOfPlayRatingMarkdownFor
 import com.sap.oss.phosphor.fosstars.tool.format.OssSecurityRatingMarkdownFormatter;
 import com.sap.oss.phosphor.fosstars.tool.format.PrettyPrinter;
 import com.sap.oss.phosphor.fosstars.tool.github.Application.ReportConfig.ReportType;
+import com.sap.oss.phosphor.fosstars.tool.report.MergedJsonReporter;
+import com.sap.oss.phosphor.fosstars.tool.report.OssRulesOfPlayMarkdownReporter;
+import com.sap.oss.phosphor.fosstars.tool.report.OssSecurityRatingMarkdownReporter;
+import com.sap.oss.phosphor.fosstars.tool.report.Reporter;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.File;
@@ -51,17 +57,15 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
@@ -69,6 +73,12 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.apache.http.HttpHeaders;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.entity.ContentType;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -80,8 +90,7 @@ import org.kohsuke.github.HttpConnector;
 import org.kohsuke.github.extras.ImpatientHttpConnector;
 
 /**
- * This is a command line tool for calculating security ratings for one
- * of multiple open-source projects.
+ * This is a command-line tool for calculating ratings.
  */
 public class Application {
 
@@ -104,7 +113,7 @@ public class Application {
   /**
    * A shared cache.
    */
-  private static final GitHubProjectValueCache VALUE_CACHE = loadValueCache();
+  private static final SubjectValueCache VALUE_CACHE = loadValueCache();
 
   /**
    * A file name of the default cache of projects.
@@ -153,7 +162,7 @@ public class Application {
    * @see <a href="https://github.com/package-url/purl-spec#known-purl-types">Known PURL types</a>
    */
   private enum SupportedPurlTypes {
-    GITHUB, MAVEN
+    GITHUB, MAVEN, NPM
   }
 
   /**
@@ -306,7 +315,7 @@ public class Application {
     String ratingName = commandLine.getOptionValue("r", "default");
     rating = RATINGS.get(ratingName);
     if (rating == null) {
-      throw new IllegalArgumentException(String.format("Could not find a rating '%s'", ratingName));
+      throw new IllegalArgumentException(format("Could not find a rating '%s'", ratingName));
     }
 
     if (commandLine.hasOption("v")) {
@@ -326,7 +335,7 @@ public class Application {
     fetcher = new GitHubDataFetcher(connectToGithub(githubToken, callback), githubToken);
     DataProviderSelector dataProviderSelector = new DataProviderSelector(fetcher, new NVD());
     dataProviderSelector.configure(withConfigs);
-    List<DataProvider<GitHubProject>> providers = dataProviderSelector.providersFor(rating);
+    List<DataProvider> providers = dataProviderSelector.providersFor(rating);
 
     calculator = new SingleRatingCalculator(rating, providers);
     calculator.set(VALUE_CACHE);
@@ -402,7 +411,7 @@ public class Application {
         && !Arrays.asList("text", "markdown").contains(commandLine.getOptionValue("report-type"))) {
 
       throw new IllegalArgumentException(
-          String.format("Unknown report type: %s", commandLine.getOptionValue("report-type")));
+          format("Unknown report type: %s", commandLine.getOptionValue("report-type")));
     }
   }
 
@@ -413,19 +422,8 @@ public class Application {
    * @throws IOException If something went wrong.
    */
   private void processUrl(String url) throws IOException {
-    processUrl(url, ValueHashSet.empty());
-  }
-
-  /**
-   * Calculate a rating for a single project identified by a URL to its SCM.
-   *
-   * @param url A URL of the project repository.
-   * @param knownValues values which are known and should not be collected by a data provider
-   * @throws IOException If something went wrong.
-   */
-  private void processUrl(String url, ValueSet knownValues) throws IOException {
     GitHubProject project = GitHubProject.parse(url);
-    calculator.calculateFor(project, knownValues);
+    calculator.calculateFor(project);
 
     if (!project.ratingValue().isPresent()) {
       throw new IOException("Could not calculate a rating!");
@@ -433,7 +431,6 @@ public class Application {
 
     Arrays.stream(prettyPrinter.print(project).split("\n")).forEach(LOGGER::info);
     LOGGER.info("");
-
     storeReportIfRequested(project, commandLine);
     createIssuesIfRequested(project, commandLine);
   }
@@ -441,14 +438,61 @@ public class Application {
   /**
    * Calculate a rating for a single project identified by GAV coordinates.
    *
-   * @param gav The GAV coordinates.
+   * @param groupId The group identifier.
+   * @param artifactId The artifact identifier.
+   * @param version The version.
    * @throws IOException If something went wrong.
    */
-  private void processGav(String gav) throws IOException {
-    MavenScmFinder finder = new MavenScmFinder();
-    LOGGER.info("Start with GAV {}", gav);
+  private void processGav(String groupId, String artifactId, String version) throws IOException {
+    process(new GAV(groupId, artifactId, version));
+  }
 
-    Optional<String> scm = finder.findScmFor(gav);
+  /**
+   * Calculate a rating for a single project identified by GAV coordinates.
+   *
+   * @param coordinates The GAV coordinates.
+   * @throws IOException If something went wrong.
+   */
+  private void processGav(String coordinates) throws IOException {
+    process(GAV.parse(coordinates));
+  }
+
+  /**
+   * Calculate a rating for a single project identified by NPM name.
+   *
+   * @param name The NPM name.
+   * @throws IOException If something went wrong.
+   */
+  private void processNpm(String name) throws IOException {
+    process(name, this::npmArtifactReleaseInfo, identifier -> Optional.empty());
+  }
+
+  /**
+   * Calculate a rating for a single project identified by GAV coordinates.
+   *
+   * @param coordinates The GAV coordinates.
+   * @throws IOException If something went wrong.
+   */
+  private void process(GAV coordinates) throws IOException {
+    MavenScmFinder finder = new MavenScmFinder();
+    process(coordinates.toString(), finder::findScmFor, finder::tryToGuessGitHubProjectFor);
+  }
+
+  /**
+   * Calculate a rating for a single project.
+   *
+   * @param identifier An identifier of the project.
+   * @param scmResolver A resolver that looks for a GitHub repository for the project.
+   * @param githubMirrorGuesser A resolver that looks for a mirror on GitHub for the project.
+   * @throws IOException If something went wrong.
+   */
+  private void process(
+      String identifier, Resolver<String> scmResolver, Resolver<GitHubProject> githubMirrorGuesser)
+      throws IOException {
+
+    LOGGER.info("Start with {}", identifier);
+
+    Optional<String> scm = scmResolver.runFor(identifier);
     if (!scm.isPresent()) {
       throw new IOException("Oh no! Could not find a URL to SCM!");
     }
@@ -460,7 +504,7 @@ public class Application {
       LOGGER.info("But unfortunately I can work only with projects that stay on GitHub ...");
       LOGGER.info("Let me try to find a mirror on GitHub ...");
 
-      Optional<GitHubProject> mirror = finder.tryToFindGitHubProjectFor(gav);
+      Optional<GitHubProject> mirror = githubMirrorGuesser.runFor(identifier);
       if (!mirror.isPresent()) {
         throw new IOException("Oh no! I could not find a mirror on GitHub!");
       }
@@ -472,6 +516,24 @@ public class Application {
     }
 
     processUrl(url);
+  }
+
+  /**
+   * A functional interface of a resolves that resolves an identifier
+   * to something of a specified result type.
+   *
+   * @param <R> A type of the result.
+   */
+  private interface Resolver<R> {
+
+    /**
+     * Run the resolver for an identifier.
+     *
+     * @param identifier The identifier.
+     * @return The result.
+     * @throws IOException If something went wrong.
+     */
+    Optional<R> runFor(String identifier) throws IOException;
   }
 
   /**
@@ -502,16 +564,16 @@ public class Application {
     LOGGER.info("Starting calculating ratings ...");
     MultipleRatingsCalculator multipleRatingsCalculator =
         new MultipleRatingsCalculator(calculator)
-            .set(loadProjectCache(projectCacheFile))
-            .storeProjectCacheTo(projectCacheFile)
+            .set(loadSubjectCache(projectCacheFile))
+            .storeCacheTo(projectCacheFile)
             .calculateFor(projects);
 
     LOGGER.info("Okay, we've done calculating the ratings");
 
-    List<GitHubProject> failedProjects = multipleRatingsCalculator.failedProjects();
-    if (!failedProjects.isEmpty()) {
+    List<Subject> failedSubjects = multipleRatingsCalculator.failedSubjects();
+    if (!failedSubjects.isEmpty()) {
       LOGGER.warn("Ratings couldn't be calculated for {} project{}",
-          failedProjects.size(), failedProjects.size() == 1 ? "" : "s");
+          failedSubjects.size(), failedSubjects.size() == 1 ? "" : "s");
       for (GitHubProject project : projects) {
         LOGGER.info("    {}", project.scm());
       }
@@ -528,39 +590,29 @@ public class Application {
   /**
    * Calculate a rating for a single project identified by a PURL (package url).
    *
-   * @param purl The PURL.
+   * @param packageUrl The PURL.
    * @throws IOException If something went wrong.
    */
-  private void processPurl(String purl) throws IOException {
+  private void processPurl(String packageUrl) throws IOException {
     try {
-      LOGGER.info("Start with PURL {}", purl);
-      PackageURL parsedPurl = new PackageURL(purl);
+      LOGGER.info("Start with PURL {}", packageUrl);
+      PackageURL purl = new PackageURL(packageUrl);
 
-      switch (SupportedPurlTypes.valueOf(parsedPurl.getType().toUpperCase())) {
+      switch (SupportedPurlTypes.valueOf(purl.getType().toUpperCase())) {
         case GITHUB:
-          String projectUrl = String.format("https://github.com/%s/%s",
-              parsedPurl.getNamespace(), parsedPurl.getName());
-          LOGGER.info("Found github PURL and start with {}", projectUrl);
-          Value<ArtifactVersion> versionValue;
-          if (parsedPurl.getVersion() == null) {
-            versionValue = ARTIFACT_VERSION.unknown();
-          } else {
-            // use this LocalDateTime.now() as workaround till the MavenArtifact can be provided
-            versionValue = ARTIFACT_VERSION.value(
-                    new ArtifactVersion(parsedPurl.getVersion(), LocalDateTime.now()));
-          }
-          processUrl(projectUrl, new ValueHashSet(versionValue));
+          String url = format("https://github.com/%s/%s", purl.getNamespace(), purl.getName());
+          processUrl(url);
           break;
         case MAVEN:
-          String gav = String.format("%s:%s%s",
-              parsedPurl.getNamespace(), parsedPurl.getName(),
-              parsedPurl.getVersion() == null ? "" : ":" + parsedPurl.getVersion());
-          processGav(gav);
+          processGav(purl.getNamespace(), purl.getName(), purl.getVersion());
+          break;
+        case NPM:
+          processNpm(purl.getName());
           break;
         default:
-          throw new IOException(String.format(
+          throw new IOException(format(
               "Oh no! Unexpected PURL type: '%s' is not supported! Supported types are %s",
-              parsedPurl.getType(), Arrays.toString(SupportedPurlTypes.values())));
+              purl.getType(), Arrays.toString(SupportedPurlTypes.values())));
       }
     } catch (MalformedPackageURLException e) {
       throw new IOException("Oh no! Given PURL could not be parsed!", e);
@@ -568,18 +620,61 @@ public class Application {
   }
 
   /**
-   * Stores a rating of a project if a user asked about it.
+   * Looks for an SCM for an NPM artifact.
    *
-   * @param project The project.
+   * @param identifier An identifier of the NPM artifact.
+   * @return An SCM for the artifact if found.
+   * @throws IOException If something went wrong.
+   */
+  private Optional<String> npmArtifactReleaseInfo(String identifier) throws IOException {
+    String registryUrl = format("https://registry.npmjs.org/%s", identifier);
+    JsonNode json = fetchJsonFrom(registryUrl);
+    JsonNode repo = json.get("repository");
+    if (repo == null) {
+      return Optional.empty();
+    }
+
+    if (!repo.has("type") || !"git".equalsIgnoreCase(repo.get("type").asText())) {
+      return Optional.empty();
+    }
+
+    String url = repo.get("url").asText().toLowerCase(Locale.US);
+    if (url.startsWith("github.com/")) {
+      return Optional.of("http://" + url);
+    }
+
+    if (url.startsWith("https://github.com/")) {
+      return Optional.of(url);
+    }
+
+    return Optional.empty();
+  }
+
+  /**
+   * Fetch JSON from a specified URL.
+   *
+   * @param url The URL.
+   * @return A {@link JsonNode}.
+   * @throws IOException If something went wrong.
+   */
+  private static JsonNode fetchJsonFrom(String url) throws IOException {
+    try (CloseableHttpClient client = HttpClients.createDefault()) {
+      HttpGet httpGetRequest = new HttpGet(url);
+      httpGetRequest.addHeader(HttpHeaders.ACCEPT, ContentType.APPLICATION_JSON.getMimeType());
+      try (CloseableHttpResponse httpResponse = client.execute(httpGetRequest)) {
+        return Json.mapper().readTree(httpResponse.getEntity().getContent());
+      }
+    }
+  }
+
+  /**
+   * Stores a rating of a subject if a user asked about it.
+   *
+   * @param subject The subject.
    * @param commandLine Command-line options.
    * @throws IOException If something went wrong.
    */
-  private void storeReportIfRequested(GitHubProject project, CommandLine commandLine)
-      throws IOException {
-
-    if (!project.ratingValue().isPresent()) {
-      throw new IOException("Could not calculate a rating!");
-    }
+  private void storeReportIfRequested(Subject subject, CommandLine commandLine) throws IOException {
 
     if (commandLine.hasOption("report-file")) {
       String type = commandLine.getOptionValue("report-type", "text");
@@ -590,13 +685,13 @@ public class Application {
 
       Files.write(
           Paths.get(file),
-          formatter.print(project).getBytes(StandardCharsets.UTF_8));
+          formatter.print(subject).getBytes(StandardCharsets.UTF_8));
     }
 
     if (commandLine.hasOption("raw-rating-file")) {
       String file = commandLine.getOptionValue("raw-rating-file");
       LOGGER.info("Storing a raw rating to {}", file);
-      Files.write(Paths.get(file), Json.toBytes(project.ratingValue().get()));
+      Files.write(Paths.get(file), Json.toBytes(subject.ratingValue().get()));
     }
   }
   
@@ -655,7 +750,7 @@ public class Application {
         }
         throw new IllegalArgumentException("No markdown formatter for the rating!");
       default:
-        throw new IllegalArgumentException(String.format("Unknown report type: %s", type));
+        throw new IllegalArgumentException(format("Unknown report type: %s", type));
     }
   }
 
@@ -667,13 +762,13 @@ public class Application {
    * @return A loaded cache of projects.
    * @throws IOException If something went wrong.
    */
-  private static GitHubProjectCache loadProjectCache(String filename) throws IOException {
+  private static SubjectCache loadSubjectCache(String filename) throws IOException {
     if (Files.exists(Paths.get(filename))) {
       LOGGER.info("Loading a project cache from {}", filename);
-      return GitHubProjectCache.load(filename);
+      return SubjectCache.load(filename);
     }
 
-    return GitHubProjectCache.empty();
+    return SubjectCache.empty();
   }
 
   /**
@@ -733,7 +828,7 @@ public class Application {
           reportConfig.where, new OssRulesOfPlayAdvisor(AdviceForGitHubContextFactory.INSTANCE));
     }
 
-    throw new IllegalArgumentException(String.format(
+    throw new IllegalArgumentException(format(
         "Oh no! That's an unknown type of report: %s", reportConfig.type));
   }
 
@@ -889,7 +984,7 @@ public class Application {
           break;
         default:
           throw new IllegalArgumentException(
-              String.format("Not sure what I can do with '%s'", answer));
+              format("Not sure what I can do with '%s'", answer));
       }
     }
 
@@ -944,15 +1039,15 @@ public class Application {
    *
    * @return The value cache.
    */
-  private static GitHubProjectValueCache loadValueCache() {
+  private static SubjectValueCache loadValueCache() {
     try {
-      return GitHubProjectValueCache.load(PATH_TO_VALUE_CACHE);
+      return new SubjectValueCache(StandardValueCache.load(PATH_TO_VALUE_CACHE));
     } catch (FileNotFoundException e) {
       LOGGER.info("The default value cache doesn't exist yet.");
     } catch (IOException e) {
       LOGGER.warn("Could not load the default value cache!", e);
     }
-    return new GitHubProjectValueCache();
+    return new SubjectValueCache();
   }
 
 }

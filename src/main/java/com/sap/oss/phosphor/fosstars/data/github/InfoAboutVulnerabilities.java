@@ -32,7 +32,7 @@ public class InfoAboutVulnerabilities
   /**
    * A list of underlying data providers.
    */
-  private final List<DataProvider<GitHubProject>> providers;
+  private final List<DataProvider> providers;
 
   /**
    * Initializes a data provider.
@@ -59,7 +59,7 @@ public class InfoAboutVulnerabilities
     logger.info("Looking for vulnerabilities in the project ...");
 
     Vulnerabilities allVulnerabilities = new Vulnerabilities();
-    for (DataProvider<GitHubProject> provider : providers) {
+    for (DataProvider provider : providers) {
       ValueSet subset = new ValueHashSet();
       provider.set(callback).set(cache).update(project, subset);
 

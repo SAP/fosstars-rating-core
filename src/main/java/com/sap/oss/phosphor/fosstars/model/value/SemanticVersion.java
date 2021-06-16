@@ -106,7 +106,6 @@ public class SemanticVersion {
    * @return true if in range, otherwise false
    */
   public boolean isInRange(SemanticVersion startVersion, SemanticVersion endVersion) {
-
     return checkStartVersion(startVersion) && checkEndVersion(endVersion);
   }
 
@@ -157,5 +156,10 @@ public class SemanticVersion {
   @Override
   public int hashCode() {
     return Objects.hash(major, minor, micro);
+  }
+
+  @Override
+  public String toString() {
+    return String.format("%s.%s.%s", major, minor, micro);
   }
 }

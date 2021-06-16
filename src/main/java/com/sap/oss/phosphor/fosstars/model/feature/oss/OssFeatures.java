@@ -141,6 +141,12 @@ public class OssFeatures {
       = new VulnerabilitiesInProject("Info about vulnerabilities in open-source project");
 
   /**
+   * Provides information about vulnerabilities in artifact.
+   */
+  public static final Feature<Vulnerabilities> VULNERABILITIES_IN_ARTIFACT
+      = new VulnerabilitiesInProject("Info about vulnerabilities in open-source artifact");
+
+  /**
    * Shows if an open-source project scans for known vulnerabilities in its dependencies.
    */
   public static final Feature<Boolean> SCANS_FOR_VULNERABLE_DEPENDENCIES
@@ -420,4 +426,10 @@ public class OssFeatures {
    */
   public static final BooleanFeature HAS_UNRESOLVED_VULNERABILITY_ALERTS
       = new BooleanFeature("If a project has unresolved vulnerability alerts");
+
+  /**
+   * Contains a set of security reviews that have been done for an open source project.
+   */
+  public static final SecurityReviewsFeature SECURITY_REVIEWS
+      = new SecurityReviewsFeature("Security reviews for a project");
 }

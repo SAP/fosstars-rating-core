@@ -1,0 +1,86 @@
+---
+defaults: []
+elements:
+  - type: "StandardTestVector"
+    values:
+      - type: "UnknownValue"
+        feature:
+          type: "SecurityReviewsFeature"
+          name: "Security reviews for a project"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 0.1
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "unknown_reviews"
+  - type: "StandardTestVector"
+    values:
+      - type: "SecurityReviewsValue"
+        feature:
+          type: "SecurityReviewsFeature"
+          name: "Security reviews for a project"
+        reviews: []
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 1.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "no_reviews"
+  - type: "StandardTestVector"
+    values:
+      - type: "SecurityReviewsValue"
+        feature:
+          type: "SecurityReviewsFeature"
+          name: "Security reviews for a project"
+        reviews:
+          - subject:
+              type: "GitHubProject"
+              name: "test"
+              url: "https://github.com/org/test"
+              organization:
+                type: "GitHubOrganization"
+                name: "org"
+            date: "2021-01-02"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 9.5
+      openLeft: false
+      negativeInfinity: false
+      to: 10.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "fresh_review"
+  - type: "StandardTestVector"
+    values:
+      - type: "SecurityReviewsValue"
+        feature:
+          type: "SecurityReviewsFeature"
+          name: "Security reviews for a project"
+        reviews:
+          - subject:
+              type: "GitHubProject"
+              name: "test"
+              url: "https://github.com/org/test"
+              organization:
+                type: "GitHubOrganization"
+                name: "org"
+            date: "2019-02-03"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 3.0
+      openLeft: false
+      negativeInfinity: false
+      to: 5.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "old_review"

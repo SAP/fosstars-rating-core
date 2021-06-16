@@ -48,6 +48,12 @@
   <suppress checks="AbbreviationAsWordInName"
     files="InputURL.java"
     lines="11"/>
+  <suppress checks="AbbreviationAsWordInName"
+    files="SecurityReviewsFromOpenSSF.java"
+    lines="35"/>
+  <suppress checks="AbbreviationAsWordInName"
+    files="GAV.java"
+    lines="12"/>
   <suppress checks="LineLength"
     files="package-info.java"
     lines="142"/>

@@ -1,11 +1,12 @@
 package com.sap.oss.phosphor.fosstars.data.artifact;
 
+import static com.sap.oss.phosphor.fosstars.model.Subject.cast;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ARTIFACT_VERSION;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RELEASED_ARTIFACT_VERSIONS;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.sap.oss.phosphor.fosstars.data.AbstractReleaseInfoLoader;
-import com.sap.oss.phosphor.fosstars.data.DataProvider;
+import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.MavenArtifact;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -22,7 +24,7 @@ import java.util.Set;
  * and {@link com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures#ARTIFACT_VERSION}
  * features. This data provider gathers release info about {@link MavenArtifact}.
  */
-public class ReleaseInfoFromMaven extends AbstractReleaseInfoLoader<MavenArtifact> {
+public class ReleaseInfoFromMaven extends AbstractReleaseInfoLoader {
 
   /**
    * Standard character type encoding.
@@ -49,10 +51,15 @@ public class ReleaseInfoFromMaven extends AbstractReleaseInfoLoader<MavenArtifac
   }
 
   @Override
-  public DataProvider<MavenArtifact> update(MavenArtifact mavenArtifact, ValueSet values)
-      throws IOException {
+  public ReleaseInfoFromMaven update(Subject subject, ValueSet values) throws IOException {
+    Objects.requireNonNull(values, "Oh no! Values is null!");
+
+    MavenArtifact mavenArtifact = cast(subject, MavenArtifact.class);
     JsonNode json = mavenArtifactReleaseInfo(mavenArtifact);
     JsonNode docs = json.at("/response/docs");
+
+    values.update(RELEASED_ARTIFACT_VERSIONS.unknown());
+    values.update(ARTIFACT_VERSION.unknown());
 
     if (docs.isArray()) {
       Set<ArtifactVersion> artifactVersions = new HashSet<>();
@@ -64,11 +71,13 @@ public class ReleaseInfoFromMaven extends AbstractReleaseInfoLoader<MavenArtifac
       }
       values.update(RELEASED_ARTIFACT_VERSIONS.value(new ArtifactVersions(artifactVersions)));
       updateArtifactVersion(mavenArtifact.version(), artifactVersions, values);
-      return this;
     }
 
-    values.update(RELEASED_ARTIFACT_VERSIONS.unknown());
-    values.update(ARTIFACT_VERSION.unknown());
     return this;
+  }
+
+  @Override
+  public boolean supports(Subject subject) {
+    return subject instanceof MavenArtifact;
   }
 }

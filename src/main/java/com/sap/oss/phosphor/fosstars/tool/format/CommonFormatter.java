@@ -30,6 +30,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.README
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.REGISTERED_IN_REUSE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_CODEQL_SCANS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SECURITY_REVIEWS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SIGNS_ARTIFACTS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_ADDRESS_SANITIZER;
@@ -67,6 +68,7 @@ import com.sap.oss.phosphor.fosstars.model.score.oss.ProjectActivityScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.ProjectPopularityScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.ProjectSecurityAwarenessScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.ProjectSecurityTestingScore;
+import com.sap.oss.phosphor.fosstars.model.score.oss.SecurityReviewScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.StaticAnalysisScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.UnpatchedVulnerabilitiesScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore;
@@ -117,6 +119,7 @@ public abstract class CommonFormatter implements Formatter {
     add(FindSecBugsScore.class, "FindSecBugs score");
     add(VulnerabilityDiscoveryAndSecurityTestingScore.class,
         "Vulnerability discovery and security testing");
+    add(SecurityReviewScore.class, "Security reviews");
   }
 
   /**
@@ -192,6 +195,7 @@ public abstract class CommonFormatter implements Formatter {
         "Does it have a team with push privileges on GitHub?");
     add(HAS_UNRESOLVED_VULNERABILITY_ALERTS, "Does it have unresolved vulnerability alerts?");
     add(ENABLED_VULNERABILITY_ALERTS_ON_GITHUB, "Are vulnerability alerts enabled?");
+    add(SECURITY_REVIEWS, "Info about security reviews");
   }
 
   /**

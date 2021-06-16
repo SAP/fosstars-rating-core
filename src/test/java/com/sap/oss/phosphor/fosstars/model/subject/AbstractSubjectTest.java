@@ -23,6 +23,11 @@ public class AbstractSubjectTest {
     public TestSubject() {
 
     }
+
+    @Override
+    public String purl() {
+      return "scheme:type/namespace/name@version?qualifiers#subpath";
+    }
   }
 
   @Test

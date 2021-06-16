@@ -97,6 +97,11 @@ defaults:
     type: "BooleanFeature"
     name: "If a project runs CodeQL checks for commits"
   flag: false
+- type: "SecurityReviewsValue"
+  feature:
+    type: "SecurityReviewsFeature"
+    name: "Security reviews for a project"
+  reviews: []
 
 # test vectors
 elements:
@@ -551,6 +556,19 @@ elements:
       type: "BooleanFeature"
       name: "If a project runs CodeQL scans"
     flag: true
+  - type: "SecurityReviewsValue"
+    feature:
+      type: "SecurityReviewsFeature"
+      name: "Security reviews for a project"
+    reviews:
+      - subject:
+          type: "GitHubProject"
+          name: "test"
+          url: "https://github.com/org/test"
+          organization:
+            type: "GitHubOrganization"
+            name: "org"
+        date: "2020-01-02"
   expectedScore:
     type: "DoubleInterval"
     from: 3.0

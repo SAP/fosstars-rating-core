@@ -15,13 +15,10 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import org.apache.maven.artifact.versioning.ComparableVersion;
 
 /**
  * This class represents a specific version of an artifact that is produced by an open source
@@ -36,10 +33,18 @@ public class ArtifactVersion {
   public static final ArtifactVersion EMPTY = new ArtifactVersion("", LocalDateTime.MIN);
 
   /**
-   * Comparator for artifact versions release date.
+   * Comparator for artifact versions release date and version.
    */
-  static final Comparator<ArtifactVersion> RELEASE_DATE_COMPARISON =
-      (a, b) -> b.releaseDate().compareTo(a.releaseDate());
+  static final Comparator<ArtifactVersion> RELEASE_DATE_VERSION_COMPARISON = (a, b) -> {
+    final int compareDate = b.releaseDate().compareTo(a.releaseDate());
+    if (compareDate != 0) {
+      return compareDate;
+    }
+
+    final ComparableVersion aVersion = new ComparableVersion(a.version());
+    final ComparableVersion bVersion = new ComparableVersion(b.version());
+    return bVersion.compareTo(aVersion);
+  };
 
   /**
    * A version of the artifact.
@@ -75,18 +80,6 @@ public class ArtifactVersion {
     this.version = version;
     this.releaseDate = releaseDate;
     this.semanticVersion = SemanticVersion.parse(version);
-  }
-
-  /**
-   * Sort artifact versions by release date.
-   *
-   * @param versions The artifact versions.
-   * @return A new sorted collection of artifact versions.
-   */
-  public static Collection<ArtifactVersion> sortByReleaseDate(Set<ArtifactVersion> versions) {
-    SortedSet<ArtifactVersion> sortedArtifacts = new TreeSet<>(RELEASE_DATE_COMPARISON);
-    sortedArtifacts.addAll(versions);
-    return sortedArtifacts;
   }
 
   /**

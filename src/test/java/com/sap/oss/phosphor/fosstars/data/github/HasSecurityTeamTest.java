@@ -6,10 +6,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import com.sap.oss.phosphor.fosstars.data.SubjectValueCache;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
-import com.sap.oss.phosphor.fosstars.tool.github.GitHubProjectValueCache;
 import java.io.IOException;
 import java.util.Optional;
 import org.junit.Test;
@@ -20,7 +20,7 @@ public class HasSecurityTeamTest extends TestGitHubDataFetcherHolder {
   public void testHasTeam() throws IOException {
     GitHubProject project = new GitHubProject("apache", "poi");
     HasSecurityTeam provider = new HasSecurityTeam(fetcher);
-    provider.set(new GitHubProjectValueCache());
+    provider.set(new SubjectValueCache());
     Value<Boolean> value = check(provider, project);
     assertNotNull(value);
     assertTrue(value.get());
@@ -30,7 +30,7 @@ public class HasSecurityTeamTest extends TestGitHubDataFetcherHolder {
   public void testNoTeam() throws IOException {
     GitHubProject project = new GitHubProject("FasterXML", "jackson-databind");
     HasSecurityTeam provider = new HasSecurityTeam(fetcher);
-    provider.set(new GitHubProjectValueCache());
+    provider.set(new SubjectValueCache());
     Value<Boolean> value = check(provider, project);
     assertNotNull(value);
     assertFalse(value.get());

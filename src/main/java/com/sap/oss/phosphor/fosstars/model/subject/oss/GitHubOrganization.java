@@ -1,5 +1,7 @@
 package com.sap.oss.phosphor.fosstars.model.subject.oss;
 
+import static java.lang.String.format;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -26,6 +28,11 @@ public class GitHubOrganization extends AbstractSubject {
     this.name = Objects.requireNonNull(name, "Hey! Organization's name can't be null!");
   }
 
+  @Override
+  public String purl() {
+    return format("pkg:github/%s", name);
+  }
+
   /**
    * Returns organization's name.
    *
@@ -41,10 +48,7 @@ public class GitHubOrganization extends AbstractSubject {
     if (this == o) {
       return true;
     }
-    if (o instanceof GitHubOrganization == false) {
-      return false;
-    }
-    if (!super.equals(o)) {
+    if (!super.equals(o) || !GitHubOrganization.class.isAssignableFrom(o.getClass())) {
       return false;
     }
     GitHubOrganization that = (GitHubOrganization) o;

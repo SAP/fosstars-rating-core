@@ -1,4 +1,4 @@
-package com.sap.oss.phosphor.fosstars.tool.github;
+package com.sap.oss.phosphor.fosstars.tool;
 
 import com.sap.oss.phosphor.fosstars.data.DataProvider;
 import com.sap.oss.phosphor.fosstars.data.NoUserCallback;
@@ -6,8 +6,8 @@ import com.sap.oss.phosphor.fosstars.data.NoValueCache;
 import com.sap.oss.phosphor.fosstars.data.UserCallback;
 import com.sap.oss.phosphor.fosstars.data.ValueCache;
 import com.sap.oss.phosphor.fosstars.model.Rating;
+import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
-import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import java.util.Comparator;
 import java.util.List;
@@ -33,12 +33,12 @@ public class SingleRatingCalculator implements RatingCalculator {
   /**
    * A list of data providers.
    */
-  private final List<DataProvider<GitHubProject>> providers;
+  private final List<DataProvider> providers;
 
   /**
    * A cache of feature values for GitHub projects.
    */
-  ValueCache<GitHubProject> cache = NoValueCache.create();
+  ValueCache<Subject> cache = NoValueCache.create();
 
   /**
    * An interface for interacting with a user.
@@ -51,7 +51,7 @@ public class SingleRatingCalculator implements RatingCalculator {
    * @param rating A rating.
    * @param providers A list of data providers.
    */
-  SingleRatingCalculator(Rating rating, List<DataProvider<GitHubProject>> providers) {
+  public SingleRatingCalculator(Rating rating, List<DataProvider> providers) {
     Objects.requireNonNull(rating, "Oh no! Rating can't be null!");
     Objects.requireNonNull(providers, "Oh no! A list of data providers can't be null!");
 
@@ -67,27 +67,21 @@ public class SingleRatingCalculator implements RatingCalculator {
   }
 
   @Override
-  public SingleRatingCalculator set(ValueCache<GitHubProject> cache) {
+  public SingleRatingCalculator set(ValueCache<Subject> cache) {
     Objects.requireNonNull(cache, "Oh no! Cache can't be null!");
     this.cache = cache;
     return this;
   }
 
   @Override
-  public SingleRatingCalculator calculateFor(GitHubProject project) {
-    return calculateFor(project, ValueHashSet.empty());
-  }
-
-  @Override
-  public SingleRatingCalculator calculateFor(GitHubProject project, ValueSet knownValues) {
-    Objects.requireNonNull(project, "Oh no! Project can't be null!");
+  public SingleRatingCalculator calculateFor(Subject subject) {
+    Objects.requireNonNull(subject, "Oh no! Subjects can't be null!");
 
     LOGGER.info("Let's gather info and calculate a rating for:");
-    LOGGER.info("  {}", project.scm());
+    LOGGER.info("  {}", subject);
 
     ValueSet values = ValueHashSet.unknown(rating.allFeatures());
-    values.update(knownValues);
-    for (DataProvider<GitHubProject> provider : providers) {
+    for (DataProvider provider : providers) {
 
       // skip data providers that talk to users but the callback doesn't allow that
       if (provider.interactive() && !callback.canTalk()) {
@@ -95,7 +89,7 @@ public class SingleRatingCalculator implements RatingCalculator {
       }
 
       try {
-        provider.set(callback).set(cache).update(project, values);
+        provider.set(callback).set(cache).update(subject, values);
       } catch (Exception e) {
         LOGGER.warn("Holy Moly, {} data provider failed!",
             provider.getClass().getSimpleName());
@@ -109,7 +103,7 @@ public class SingleRatingCalculator implements RatingCalculator {
         .sorted(Comparator.comparing(value -> value.feature().name()))
         .forEach(value -> LOGGER.info("   {}: {}", value.feature(), value));
 
-    project.set(rating.calculate(values));
+    subject.set(rating.calculate(values));
 
     return this;
   }
