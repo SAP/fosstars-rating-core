@@ -1,6 +1,7 @@
-package com.sap.oss.phosphor.fosstars.tool.github;
+package com.sap.oss.phosphor.fosstars.data;
 
-import com.sap.oss.phosphor.fosstars.data.DataProvider;
+import static java.util.Objects.requireNonNull;
+
 import com.sap.oss.phosphor.fosstars.data.artifact.ReleaseInfoFromMaven;
 import com.sap.oss.phosphor.fosstars.data.artifact.ReleaseInfoFromNpm;
 import com.sap.oss.phosphor.fosstars.data.github.CodeqlDataProvider;
@@ -47,7 +48,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -68,8 +68,8 @@ public class DataProviderSelector {
    * @throws IOException If something went wrong.
    */
   DataProviderSelector(GitHubDataFetcher fetcher, NVD nvd) throws IOException {
-    Objects.requireNonNull(fetcher, "Oops! Fetcher can't be null!");
-    Objects.requireNonNull(nvd, "Oops! NVD can't be null!");
+    requireNonNull(fetcher, "Oops! Fetcher can't be null!");
+    requireNonNull(nvd, "Oops! NVD can't be null!");
 
     providers = Arrays.asList(
         new NumberOfCommits(fetcher),
@@ -121,7 +121,7 @@ public class DataProviderSelector {
    * @throws IOException If something went wrong.
    */
   public void configure(List<String> configs) throws IOException {
-    Objects.requireNonNull(configs, "Oops! Configs can't be null!");
+    requireNonNull(configs, "Oops! Configs can't be null!");
     for (String config : configs) {
       loadConfigFrom(Paths.get(config));
     }

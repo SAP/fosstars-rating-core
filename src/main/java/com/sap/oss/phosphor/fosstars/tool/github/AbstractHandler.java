@@ -5,6 +5,7 @@ import static java.util.Collections.emptyList;
 import static java.util.Objects.requireNonNull;
 
 import com.sap.oss.phosphor.fosstars.data.DataProvider;
+import com.sap.oss.phosphor.fosstars.data.DataProviderSelector;
 import com.sap.oss.phosphor.fosstars.data.NoUserCallback;
 import com.sap.oss.phosphor.fosstars.data.SubjectValueCache;
 import com.sap.oss.phosphor.fosstars.data.UserCallback;
