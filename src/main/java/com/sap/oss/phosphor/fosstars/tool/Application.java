@@ -1,4 +1,4 @@
-package com.sap.oss.phosphor.fosstars.tool.github;
+package com.sap.oss.phosphor.fosstars.tool;
 
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
@@ -10,8 +10,6 @@ import com.sap.oss.phosphor.fosstars.data.SubjectValueCache;
 import com.sap.oss.phosphor.fosstars.data.Terminal;
 import com.sap.oss.phosphor.fosstars.data.UserCallback;
 import com.sap.oss.phosphor.fosstars.data.github.GitHubDataFetcher;
-import com.sap.oss.phosphor.fosstars.tool.InputString;
-import com.sap.oss.phosphor.fosstars.tool.YesNoQuestion;
 import com.sap.oss.phosphor.fosstars.tool.YesNoQuestion.Answer;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -75,15 +73,6 @@ public class Application {
    */
   private final Handler defaultHandler;
 
-  public Application() throws IOException {
-    handlers = new Handler[] {
-        new OssProjectSecurityRatingHandler(),
-        new OssArtifactSecurityRatingHandler(),
-        new OssRulesOfPlayRatingHandler()
-    };
-    defaultHandler = handlers[0];
-  }
-
   /**
    * Entry point.
    *
@@ -98,6 +87,15 @@ public class Application {
       System.exit(1);
     }
     LOGGER.info("Bye!");
+  }
+
+  public Application() throws IOException {
+    handlers = new Handler[] {
+        new OssProjectSecurityRatingHandler(),
+        new OssArtifactSecurityRatingHandler(),
+        new OssRulesOfPlayRatingHandler()
+    };
+    defaultHandler = handlers[0];
   }
 
   /**
@@ -226,22 +224,6 @@ public class Application {
   }
 
   /**
-   * Initializes a value cache.
-   *
-   * @return The value cache.
-   */
-  private SubjectValueCache loadValueCache() {
-    try {
-      return new SubjectValueCache(StandardValueCache.load(SUBJECT_VALUE_CACHE_FILE));
-    } catch (FileNotFoundException e) {
-      LOGGER.info("The default value cache doesn't exist yet: {}", SUBJECT_VALUE_CACHE_FILE);
-    } catch (IOException e) {
-      LOGGER.warn("Could not load the default value cache!", e);
-    }
-    return new SubjectValueCache();
-  }
-
-  /**
    * Run the tool with a list of command-line parameters.
    *
    * @param args Command-line parameters.
@@ -307,6 +289,22 @@ public class Application {
         cache.store(SUBJECT_VALUE_CACHE_FILE);
       }
     }
+  }
+
+  /**
+   * Initializes a value cache.
+   *
+   * @return The value cache.
+   */
+  private SubjectValueCache loadValueCache() {
+    try {
+      return new SubjectValueCache(StandardValueCache.load(SUBJECT_VALUE_CACHE_FILE));
+    } catch (FileNotFoundException e) {
+      LOGGER.info("The default value cache doesn't exist yet: {}", SUBJECT_VALUE_CACHE_FILE);
+    } catch (IOException e) {
+      LOGGER.warn("Could not load the default value cache!", e);
+    }
+    return new SubjectValueCache();
   }
 
   /**

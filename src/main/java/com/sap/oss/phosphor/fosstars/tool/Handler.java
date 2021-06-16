@@ -1,4 +1,4 @@
-package com.sap.oss.phosphor.fosstars.tool.github;
+package com.sap.oss.phosphor.fosstars.tool;
 
 import com.sap.oss.phosphor.fosstars.data.SubjectValueCache;
 import com.sap.oss.phosphor.fosstars.data.UserCallback;

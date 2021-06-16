@@ -1,4 +1,4 @@
-package com.sap.oss.phosphor.fosstars.tool.github;
+package com.sap.oss.phosphor.fosstars.tool;
 
 import static com.sap.oss.phosphor.fosstars.maven.MavenUtils.readModel;
 import static com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject.isOnGitHub;
@@ -239,7 +239,7 @@ public class MavenScmFinder {
     String urlString = MAVEN_DOWNLOAD_REQUEST_TEMPLATE.replace("{PATH}", path);
     String content = IOUtils.toString(new URL(urlString), CHARSET);
 
-    return readModel(IOUtils.toInputStream(content));
+    return readModel(IOUtils.toInputStream(content, StandardCharsets.UTF_8));
   }
 
   /**

@@ -1,20 +1,20 @@
-package com.sap.oss.phosphor.fosstars.tool.github;
+package com.sap.oss.phosphor.fosstars.tool;
 
-import static com.sap.oss.phosphor.fosstars.tool.github.GitHubProjectFinder.EMPTY_EXCLUDE_LIST;
+import static com.sap.oss.phosphor.fosstars.tool.GitHubProjectFinder.EMPTY_EXCLUDE_LIST;
 import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubOrganization;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
-import com.sap.oss.phosphor.fosstars.tool.github.GitHubProjectFinder.Config;
-import com.sap.oss.phosphor.fosstars.tool.github.GitHubProjectFinder.ConfigParser;
-import com.sap.oss.phosphor.fosstars.tool.github.GitHubProjectFinder.OrganizationConfig;
-import com.sap.oss.phosphor.fosstars.tool.github.GitHubProjectFinder.ProjectConfig;
+import com.sap.oss.phosphor.fosstars.tool.GitHubProjectFinder.Config;
+import com.sap.oss.phosphor.fosstars.tool.GitHubProjectFinder.ConfigParser;
+import com.sap.oss.phosphor.fosstars.tool.GitHubProjectFinder.OrganizationConfig;
+import com.sap.oss.phosphor.fosstars.tool.GitHubProjectFinder.ProjectConfig;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;

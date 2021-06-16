@@ -161,7 +161,7 @@
           <finalName>fosstars-github-rating</finalName>
           <archive>
             <manifest>
-              <mainClass>com.sap.oss.phosphor.fosstars.tool.github.Application</mainClass>
+              <mainClass>com.sap.oss.phosphor.fosstars.tool.Application</mainClass>
             </manifest>
           </archive>
           <descriptor>assembly.xml</descriptor>
