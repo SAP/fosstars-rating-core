@@ -3,11 +3,15 @@ package com.sap.oss.phosphor.fosstars.advice.oss.github;
 import com.sap.oss.phosphor.fosstars.advice.CompositeAdvisor;
 import com.sap.oss.phosphor.fosstars.advice.oss.ArtifactVersionAdvisor;
 import com.sap.oss.phosphor.fosstars.advice.oss.CodeqlAdvisor;
+import com.sap.oss.phosphor.fosstars.advice.oss.DependabotAdvisor;
 import com.sap.oss.phosphor.fosstars.advice.oss.FindSecBugsAdvisor;
 import com.sap.oss.phosphor.fosstars.advice.oss.FuzzingAdvisor;
 import com.sap.oss.phosphor.fosstars.advice.oss.LgtmAdvisor;
 import com.sap.oss.phosphor.fosstars.advice.oss.MemorySafetyAdvisor;
+import com.sap.oss.phosphor.fosstars.advice.oss.NoHttpAdvisor;
+import com.sap.oss.phosphor.fosstars.advice.oss.OwaspDependencyCheckAdvisor;
 import com.sap.oss.phosphor.fosstars.advice.oss.SecurityPolicyAdvisor;
+import com.sap.oss.phosphor.fosstars.advice.oss.SigningAdvisor;
 
 /**
  * This is an advisor for open-source projects hosted on GitHub.
@@ -26,6 +30,10 @@ public class OssSecurityGithubAdvisor extends CompositeAdvisor {
         new FindSecBugsAdvisor(AdviceForGitHubContextFactory.INSTANCE),
         new MemorySafetyAdvisor(AdviceForGitHubContextFactory.INSTANCE),
         new ArtifactVersionAdvisor(AdviceForGitHubContextFactory.INSTANCE),
-        new FuzzingAdvisor(AdviceForGitHubContextFactory.INSTANCE));
+        new FuzzingAdvisor(AdviceForGitHubContextFactory.INSTANCE),
+        new DependabotAdvisor(AdviceForGitHubContextFactory.INSTANCE),
+        new OwaspDependencyCheckAdvisor(AdviceForGitHubContextFactory.INSTANCE),
+        new SigningAdvisor(AdviceForGitHubContextFactory.INSTANCE),
+        new NoHttpAdvisor(AdviceForGitHubContextFactory.INSTANCE));
   }
 }
