@@ -14,6 +14,8 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
@@ -34,11 +36,17 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.junit.Test;
+import org.kohsuke.github.GHIssue;
+import org.kohsuke.github.GHIssueBuilder;
+import org.kohsuke.github.GHIssueSearchBuilder;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
+import org.kohsuke.github.PagedIterator;
+import org.kohsuke.github.PagedSearchIterable;
 
 public class GitHubDataFetcherTest extends TestGitHubDataFetcherHolder  {
 
@@ -282,6 +290,128 @@ public class GitHubDataFetcherTest extends TestGitHubDataFetcherHolder  {
     projects.forEach(project -> addForTesting(project, mock(LocalRepository.class)));
     assertEquals(LOCAL_REPOSITORIES_CACHE_CAPACITY, LOCAL_REPOSITORIES.size());
     assertTrue(checkLocalRepositories(projects, LOCAL_REPOSITORIES));
+  }
+  
+  @Test
+  public void testCreateGitHubIssueExpectProject() throws IOException {
+    try {
+      fetcher.createGitHubIssue(null, "gugl", "hupf");
+    } catch (NullPointerException npe) {
+      assertEquals("Oh no! The project is null!", npe.getMessage());
+    }    
+  }
+  
+  @Test
+  public void testCreateGitHubIssueExpectTitle() throws IOException {
+    GitHubProject myProject = new GitHubProject("gugl", "hupf");
+    try {
+      fetcher.createGitHubIssue(myProject, null, "hupf");
+    } catch (IllegalArgumentException iae) {
+      assertEquals("Oh no! The issue title is invalid!", iae.getMessage());
+    }
+    try {
+      fetcher.createGitHubIssue(myProject, StringUtils.EMPTY, "hupf");
+    } catch (IllegalArgumentException iae) {
+      assertEquals("Oh no! The issue title is invalid!", iae.getMessage());
+    }
+  }
+  
+  @Test
+  public void testCreateGitHubIssueExpectBody() throws IOException {
+    GitHubProject myProject = new GitHubProject("gugl", "hupf");
+    try {
+      fetcher.createGitHubIssue(myProject, "gugl", null);
+    } catch (IllegalArgumentException iae) {
+      assertEquals("Oh no! The issue body is invalid!", iae.getMessage());
+    }
+    try {
+      fetcher.createGitHubIssue(myProject, "gugl", StringUtils.EMPTY);
+    } catch (IllegalArgumentException iae) {
+      assertEquals("Oh no! The issue body is invalid!", iae.getMessage());
+    }
+  }
+  
+  @Test
+  public void testCreateGitHubIssue() throws IOException {
+    GHRepository repository = mock(GHRepository.class);
+    GHIssueBuilder issueBuilder = mock(GHIssueBuilder.class);
+    GHIssue issue = mock(GHIssue.class);
+    
+    GitHubProject myProject = new GitHubProject("gugl", "hupf");
+    when(fetcher.github().getRepository(any())).thenReturn(repository);
+    when(repository.createIssue("apfel")).thenReturn(issueBuilder);
+    when(issueBuilder.create()).thenReturn(issue);
+    
+    GHIssue createdIssue = fetcher.createGitHubIssue(myProject, "apfel", "kuchen");
+    assertEquals(issue, createdIssue);
+    verify(issueBuilder, times(1)).body("kuchen");    
+  }
+  
+  @Test
+  public void testGitHubIssuesForExpectProject() throws IOException {
+    try {
+      fetcher.gitHubIssuesFor(null, "gugl");
+    } catch (NullPointerException npe) {
+      assertEquals("Oh no! The project is null!", npe.getMessage());
+    }    
+  }
+  
+  @Test
+  public void testGitHubIssuesForExpectQuery() throws IOException {
+    GitHubProject myProject = new GitHubProject("gugl", "hupf");
+    try {
+      fetcher.gitHubIssuesFor(myProject, null);
+    } catch (IllegalArgumentException iae) {
+      assertEquals("Oh no! The search query is invalid!", iae.getMessage());
+    }
+    try {
+      fetcher.gitHubIssuesFor(myProject, StringUtils.EMPTY);
+    } catch (IllegalArgumentException iae) {
+      assertEquals("Oh no! The search query is invalid!", iae.getMessage());
+    }
+  }
+  
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testGitHubIssuesForFound() throws IOException {
+    GHIssueSearchBuilder issueSearchBuilder = mock(GHIssueSearchBuilder.class);
+    GHIssue issue = mock(GHIssue.class);
+    PagedSearchIterable<GHIssue> searchIterable = mock(PagedSearchIterable.class);
+    PagedIterator<GHIssue> searchIterator = mock(PagedIterator.class);
+    when(searchIterator.hasNext()).thenReturn(true, false);
+    when(searchIterator.next()).thenReturn(issue);
+    when(searchIterable.iterator()).thenReturn(searchIterator);
+    when(issueSearchBuilder.list()).thenReturn(searchIterable);
+    
+    GitHubProject myProject = new GitHubProject("gugl", "hupf");
+    when(issueSearchBuilder.isOpen()).thenReturn(issueSearchBuilder);
+    when(issueSearchBuilder.q("apfel")).thenReturn(issueSearchBuilder);
+    when(fetcher.github().searchIssues()).thenReturn(issueSearchBuilder);
+    
+    List<GHIssue> foundIssues = fetcher.gitHubIssuesFor(myProject, "apfel");
+    assertNotNull(foundIssues);
+    assertEquals(1, foundIssues.size());
+    assertEquals(issue, foundIssues.get(0));    
+  }
+  
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testGitHubIssuesForNotFound() throws IOException {
+    GHIssueSearchBuilder issueSearchBuilder = mock(GHIssueSearchBuilder.class);
+    PagedSearchIterable<GHIssue> searchIterable = mock(PagedSearchIterable.class);
+    PagedIterator<GHIssue> searchIterator = mock(PagedIterator.class);
+    when(searchIterator.hasNext()).thenReturn(false);
+    when(searchIterable.iterator()).thenReturn(searchIterator);
+    when(issueSearchBuilder.list()).thenReturn(searchIterable);
+    
+    GitHubProject myProject = new GitHubProject("gugl", "hupf");
+    when(issueSearchBuilder.isOpen()).thenReturn(issueSearchBuilder);
+    when(issueSearchBuilder.q("apfel")).thenReturn(issueSearchBuilder);
+    when(fetcher.github().searchIssues()).thenReturn(issueSearchBuilder);
+    
+    List<GHIssue> foundIssues = fetcher.gitHubIssuesFor(myProject, "apfel");
+    assertNotNull(foundIssues);
+    assertEquals(0, foundIssues.size());   
   }
 
   private static List<GitHubProject> generateProjectsForSize(int n) {

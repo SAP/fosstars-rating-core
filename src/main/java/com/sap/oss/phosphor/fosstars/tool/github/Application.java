@@ -709,7 +709,7 @@ public class Application {
       throw new IOException("Could not calculate a rating!");
     }
 
-    if (commandLine.hasOption("create-issues")) {
+    if (commandLine.hasOption("create-issues") && rating instanceof OssRulesOfPlayRating) {
       LOGGER.info("Creating issues for findings on {}", project.toString());
       Formatter formatter = createFormatter("markdown");
       List<Value<Boolean>> violations = 
