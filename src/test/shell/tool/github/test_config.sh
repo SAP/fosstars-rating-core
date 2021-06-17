@@ -20,12 +20,12 @@ $JAVA -jar $JAR \
   --config test_config.yml \
   $TOKEN_OPTION 2>&1 | tee tmp.log
 
-grep "Found 3 projects" tmp.log || exit 1
+grep "Found 2 projects" tmp.log || exit 1
 grep "https://github.com/netty/netty" tmp.log || exit 1
-grep "https://github.com/netty/netty-tcnative" tmp.log || exit 1
 grep "https://github.com/FasterXML/jackson-databind" tmp.log || exit 1
 grep "Starting calculating ratings" tmp.log || exit 1
 grep "Okay, we've done calculating the ratings" tmp.log || exit 1
 grep "Storing info about projects to" tmp.log || exit 1
+grep Exception tmp.log && exit 1
 
 rm tmp.log

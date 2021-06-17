@@ -13,7 +13,7 @@ fi
 JAR=${JAR:-"target/fosstars-github-rating-calc.jar"}
 
 $JAVA -jar $JAR \
-  --url https://github.com/apache/poi \
+  --url https://github.com/apache/poi --verbose \
   $TOKEN_OPTION 2>&1 | tee tmp.log
 
 grep "Rating" tmp.log || exit 1
@@ -22,5 +22,6 @@ grep "Sub-score" tmp.log || exit 1
 grep "Value" tmp.log || exit 1
 grep "Importance" tmp.log || exit 1
 grep "https://github.com/apache/poi" tmp.log || exit 1
+grep Exception tmp.log && exit 1
 
 rm tmp.log
