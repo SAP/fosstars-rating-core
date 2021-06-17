@@ -87,7 +87,8 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownForma
    * @throws IOException If something went wrong.
    */
   public OssRulesOfPlayRatingMarkdownFormatter(Path path, Advisor advisor) throws IOException {
-    this(advisor, loadRuleIdsFrom(path), loadRuleDocumentationUrlFrom(path), DEFAULT_RATING_VALUE_TEMPLATE);
+    this(advisor, loadRuleIdsFrom(path), loadRuleDocumentationUrlFrom(path), 
+        DEFAULT_RATING_VALUE_TEMPLATE);
   }
 
   /**
@@ -100,7 +101,8 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownForma
    * @param template A Markdown template for reports.
    */
   public OssRulesOfPlayRatingMarkdownFormatter(
-      Advisor advisor, Map<Feature<Boolean>, String> featureToRuleId, String ruleDocumentationUrl, String template) {
+      Advisor advisor, Map<Feature<Boolean>, String> featureToRuleId, 
+      String ruleDocumentationUrl, String template) {
 
     super(advisor);
 

@@ -712,13 +712,16 @@ public class Application {
     if (commandLine.hasOption("create-issues")) {
       LOGGER.info("Creating issues for findings on {}", project.toString());
       Formatter formatter = createFormatter("markdown");
-      List<Value<Boolean>> violations = OssRulesOfPlayScore.findViolatedRulesIn(project.ratingValue().get().scoreValue().usedValues());
+      List<Value<Boolean>> violations = 
+          OssRulesOfPlayScore.findViolatedRulesIn(
+              project.ratingValue().get().scoreValue().usedValues());
       for (Value<Boolean> violation : violations) {
         String issueHeader = formatter.printTitle(violation);
         List<GHIssue> existingGitHubIssues = this.fetcher.gitHubIssuesFor(project, issueHeader);
         if (existingGitHubIssues.isEmpty()) {
           LOGGER.info("New issue: " + issueHeader);
-          this.fetcher.createGitHubIssue(project, formatter.printTitle(violation), formatter.printBody(violation));
+          this.fetcher.createGitHubIssue(
+              project, formatter.printTitle(violation), formatter.printBody(violation));
         } else {
           LOGGER.info("Issue already existing: " + issueHeader);
         }

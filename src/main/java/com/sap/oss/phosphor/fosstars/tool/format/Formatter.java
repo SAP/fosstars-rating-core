@@ -26,7 +26,7 @@ public interface Formatter {
   String print(Subject subject);
   
   /**
-   * Print out the title of a single value
+   * Print out the title of a single value.
    *
    * @param value The value.
    * @return A formatted title for the value.
@@ -34,7 +34,7 @@ public interface Formatter {
   String printTitle(Value<?> value);
   
   /**
-   * Print out the body of a single value
+   * Print out the body of a single value.
    *
    * @param value The value.
    * @return A formatted body for the value.
