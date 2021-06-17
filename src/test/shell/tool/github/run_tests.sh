@@ -21,7 +21,7 @@ echo "Found $n tests"
 for test in test_*.sh; do
   log="${test}.log"
   printf "Running $test ... "
-  bash $test > $log 2>&1
+  bash $test 2>&1 | tee $log
   code=$?
   if [ $code -eq 0 ]; then
     status="passed"
