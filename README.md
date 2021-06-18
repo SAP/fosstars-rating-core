@@ -5,8 +5,8 @@
 |                           | # or projects                    | % or projects                      |
 | :------------------------ | -------------------------------: | ---------------------------------: |
 | Total                     |             253 |                               100% |
-| Failed                    |         201 |         79.4% |
-| Passed with&nbsp;warnings |  31 |  12.3% |
+| Failed                    |         199 |         78.7% |
+| Passed with&nbsp;warnings |  33 |  13.0% |
 | Passed                    |         21 |         8.3% |
 | Unclear                   |        0 |        0.0% |
 
@@ -43,14 +43,12 @@
 | [SAP/docker-rabbitmq](https://github.com/SAP/docker-rabbitmq) | [Failed](SAP/docker-rabbitmq.md) | 9 violated rules |
 | [SAP/docker-redis](https://github.com/SAP/docker-redis) | [Failed](SAP/docker-redis.md) | 9 violated rules |
 | [SAP/openui5-worklist-app](https://github.com/SAP/openui5-worklist-app) | [Failed](SAP/openui5-worklist-app.md) | 1 violated rule |
-| [SAP/cf-java-logging-support](https://github.com/SAP/cf-java-logging-support) | [Failed](SAP/cf-java-logging-support.md) | 1 violated rule |
 | [SAP/jcomigrationhelperplugin](https://github.com/SAP/jcomigrationhelperplugin) | [Failed](SAP/jcomigrationhelperplugin.md) | 1 violated rule |
 | [SAP/cloud-metricswatcher](https://github.com/SAP/cloud-metricswatcher) | [Failed](SAP/cloud-metricswatcher.md) | 6 violated rules |
 | [SAP/hana-client-chef-cookbook](https://github.com/SAP/hana-client-chef-cookbook) | [Failed](SAP/hana-client-chef-cookbook.md) | 4 violated rules |
 | [SAP/hana-studio-chef-cookbook](https://github.com/SAP/hana-studio-chef-cookbook) | [Failed](SAP/hana-studio-chef-cookbook.md) | 4 violated rules |
 | [SAP/hcp-cloud-foundry-tutorials](https://github.com/SAP/hcp-cloud-foundry-tutorials) | [Failed](SAP/hcp-cloud-foundry-tutorials.md) | 6 violated rules |
 | [SAP/cloud-metrics-dashboard](https://github.com/SAP/cloud-metrics-dashboard) | [Failed](SAP/cloud-metrics-dashboard.md) | 6 violated rules |
-| [SAP/cf-nodejs-logging-support](https://github.com/SAP/cf-nodejs-logging-support) | [Failed](SAP/cf-nodejs-logging-support.md) | 1 violated rule |
 | [SAP/cloud-s4ext](https://github.com/SAP/cloud-s4ext) | [Failed](SAP/cloud-s4ext.md) | 7 violated rules |
 | [SAP/hcp-portal-service-for-pcm](https://github.com/SAP/hcp-portal-service-for-pcm) | [Failed](SAP/hcp-portal-service-for-pcm.md) | 7 violated rules |
 | [SAP/hcp-portal-service-for-support-site](https://github.com/SAP/hcp-portal-service-for-support-site) | [Failed](SAP/hcp-portal-service-for-support-site.md) | 7 violated rules |
@@ -238,7 +236,9 @@
 | [SAP/gigya-react-native-plugin-for-sap-customer-data-cloud](https://github.com/SAP/gigya-react-native-plugin-for-sap-customer-data-cloud) | [Passed](SAP/gigya-react-native-plugin-for-sap-customer-data-cloud.md) | No violated rules |
 | [SAP/ui5-inspector](https://github.com/SAP/ui5-inspector) | [Passed with warnings](SAP/ui5-inspector.md) | No violated rules |
 | [SAP/openui5-masterdetail-app](https://github.com/SAP/openui5-masterdetail-app) | [Passed with warnings](SAP/openui5-masterdetail-app.md) | No violated rules |
+| [SAP/cf-java-logging-support](https://github.com/SAP/cf-java-logging-support) | [Passed with warnings](SAP/cf-java-logging-support.md) | No violated rules |
 | [SAP/openSAP-ui5-course](https://github.com/SAP/openSAP-ui5-course) | [Passed with warnings](SAP/openSAP-ui5-course.md) | No violated rules |
+| [SAP/cf-nodejs-logging-support](https://github.com/SAP/cf-nodejs-logging-support) | [Passed with warnings](SAP/cf-nodejs-logging-support.md) | No violated rules |
 | [SAP/openui5-basic-template-app](https://github.com/SAP/openui5-basic-template-app) | [Passed with warnings](SAP/openui5-basic-template-app.md) | No violated rules |
 | [SAP/jenkins-library](https://github.com/SAP/jenkins-library) | [Passed with warnings](SAP/jenkins-library.md) | No violated rules |
 | [SAP/ui5-automation-framework](https://github.com/SAP/ui5-automation-framework) | [Passed with warnings](SAP/ui5-automation-framework.md) | No violated rules |
