@@ -10,6 +10,7 @@ import static junit.framework.TestCase.assertTrue;
 import com.sap.oss.phosphor.fosstars.advice.oss.OssRulesOfPlayAdvisor;
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
+import com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating.OssRulesOfPlayLabel;
 import com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScore;
@@ -36,7 +37,8 @@ public class OssRulesOfPlayRatingMarkdownFormatterTest {
       + "  rl-license_file-1: If a project has a license\n"
       + "  rl-license_file-2: If a project uses an allowed license\n"
       + "  rl-license_file-3: If a license has disallowed text\n"
-      + "  rl-readme_file-1: If a project has a README file";
+      + "  rl-readme_file-1: If a project has a README file\n"
+      + "documentationUrl: https://wiki.local/TestPage";
 
   @Test
   public void testPrintWithCompliantProject() throws IOException {
@@ -134,6 +136,31 @@ public class OssRulesOfPlayRatingMarkdownFormatterTest {
     } finally {
       FileUtils.forceDeleteOnExit(CONFIG_PATH.toFile());
     }
+  }
+  
+  @Test
+  public void testPrintTitleAndBody() throws IOException {
+    
+    Files.write(CONFIG_PATH, RULE_IDS.getBytes());
+    try {
+      OssRulesOfPlayRatingMarkdownFormatter formatter
+          = new OssRulesOfPlayRatingMarkdownFormatter(CONFIG_PATH, new OssRulesOfPlayAdvisor());
+      
+      String printedTitle = formatter.printTitle(OssFeatures.HAS_LICENSE.value(false));
+      assertEquals("[rl-license_file-1] Violation against OSS Rules of Play", printedTitle);
+      
+      StringBuffer stringBuffer = new StringBuffer();
+      stringBuffer.append("A violation against the OSS Rules of Play has been detected.\n\n");
+      stringBuffer.append("Rule ID: rl-license_file-2\n");
+      stringBuffer.append("Explanation: Does it use an allowed license? **No**\n\n");
+      stringBuffer.append("Find more information at: https://wiki.local/TestPage");
+      assertEquals(stringBuffer.toString(), 
+          formatter.printBody(OssFeatures.ALLOWED_LICENSE.value(false)));
+      
+    } finally {
+      FileUtils.forceDeleteOnExit(CONFIG_PATH.toFile());
+    }
+    
   }
 
   private static void checkRuleIds(String text) {

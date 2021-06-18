@@ -33,6 +33,8 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHFileNotFoundException;
+import org.kohsuke.github.GHIssue;
+import org.kohsuke.github.GHIssueBuilder;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
 import org.kohsuke.github.HttpException;
@@ -198,6 +200,54 @@ public class GitHubDataFetcher {
       LOGGER.error(String.format("Could not fetch commits from %s", project.scm()), e);
       return Collections.emptyList();
     }
+  }
+
+  /**
+   * Creates a new GitHub issue in the given project with the provided title and body.
+   * 
+   * @param project The project that shall receive the new issue.
+   * @param title The title of the new issue.
+   * @param body The body of the new issue.
+   * @return The newly created issue.
+   * @throws IOException If something went wrong.
+   */
+  public GHIssue createGitHubIssue(GitHubProject project, String title, String body)
+      throws IOException {
+    Objects.requireNonNull(project, "Oh no! The project is null!");
+    if (title == null || title.isEmpty()) {
+      throw new IllegalArgumentException("Oh no! The issue title is invalid!");
+    }
+    if (body == null || body.isEmpty()) {
+      throw new IllegalArgumentException("Oh no! The issue body is invalid!");
+    }
+    
+    GHRepository gitHubRepository = repositoryFor(project);
+    GHIssueBuilder issueBuilder = gitHubRepository.createIssue(title);
+    issueBuilder.body(body);
+    return issueBuilder.create();
+    
+  }
+
+  /**
+   * Search existing GitHub issues in the given project using a query.
+   * 
+   * @param project The project that shall be searched for issues.
+   * @param searchQuery The query that shall be used for the search.
+   * @return A list of found issues. Empty if search was unsuccessful.
+   * @throws IOException If something went wrong.
+   */
+  public List<GHIssue> gitHubIssuesFor(GitHubProject project, String searchQuery)
+      throws IOException {
+    Objects.requireNonNull(project, "Oh no! The project is null!");
+    if (searchQuery == null || searchQuery.isEmpty()) {
+      throw new IllegalArgumentException("Oh no! The search query is invalid!");
+    }
+
+    List<GHIssue> issues = new ArrayList<>();
+    for (GHIssue issue : github().searchIssues().isOpen().q(searchQuery).list()) {
+      issues.add(issue);
+    }
+    return issues;
   }
 
   /**

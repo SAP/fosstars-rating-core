@@ -57,6 +57,11 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownForma
    * Maps a rule to its identifier.
    */
   private final Map<Feature<Boolean>, String> featureToRuleId;
+  
+  /**
+   * The rule documentation URL.
+   */
+  private final String ruleDocumentationUrl;
 
   /**
    * A Markdown template for reports.
@@ -71,7 +76,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownForma
    * @throws IOException If something went wrong.
    */
   public OssRulesOfPlayRatingMarkdownFormatter(Advisor advisor) throws IOException {
-    this(advisor, defaultRuleIds(), DEFAULT_RATING_VALUE_TEMPLATE);
+    this(advisor, defaultRuleIds(), defaultRuleDocumentationUrl(), DEFAULT_RATING_VALUE_TEMPLATE);
   }
 
   /**
@@ -82,7 +87,8 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownForma
    * @throws IOException If something went wrong.
    */
   public OssRulesOfPlayRatingMarkdownFormatter(Path path, Advisor advisor) throws IOException {
-    this(advisor, loadRuleIdsFrom(path), DEFAULT_RATING_VALUE_TEMPLATE);
+    this(advisor, loadRuleIdsFrom(path), loadRuleDocumentationUrlFrom(path), 
+        DEFAULT_RATING_VALUE_TEMPLATE);
   }
 
   /**
@@ -91,10 +97,12 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownForma
    *
    * @param advisor An advisor for calculated ratings.
    * @param featureToRuleId Maps a rule to its identifier.
+   * @param ruleDocumentationUrl The rule documentation URL
    * @param template A Markdown template for reports.
    */
   public OssRulesOfPlayRatingMarkdownFormatter(
-      Advisor advisor, Map<Feature<Boolean>, String> featureToRuleId, String template) {
+      Advisor advisor, Map<Feature<Boolean>, String> featureToRuleId, 
+      String ruleDocumentationUrl, String template) {
 
     super(advisor);
 
@@ -102,6 +110,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownForma
     Objects.requireNonNull(template, "Oh no! Template can't be null!");
 
     this.featureToRuleId = unmodifiableMap(featureToRuleId);
+    this.ruleDocumentationUrl = ruleDocumentationUrl;
     this.template = template;
   }
 
@@ -120,6 +129,23 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownForma
         .replace("%UNCLEAR_RULES%", unclearRulesFrom(scoreValue))
         .replace("%EXPLANATION%", valueExplanationsIn(scoreValue))
         .replace("%ADVICE%", advice);
+  }
+  
+  @Override
+  public String printTitle(Value<?> value) {
+    return String.format("%s Violation against OSS Rules of Play", identifierOf(value.feature()));
+  }
+  
+  @Override
+  public String printBody(Value<?> value) {
+    StringBuffer stringBuffer = 
+        new StringBuffer("A violation against the OSS Rules of Play has been detected.\n\n");
+    stringBuffer.append(String.format("Rule ID: %s\nExplanation: %s **%s**\n\n",
+        identifierOf(value.feature()).replaceAll("[\\[\\]]", ""),
+        nameOf(value.feature()),
+        printValueAnswer(value)));
+    stringBuffer.append(String.format("Find more information at: %s", this.ruleDocumentationUrl));
+    return stringBuffer.toString();
   }
 
   @Override
@@ -167,6 +193,25 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownForma
         .collect(Collectors.joining("\n"));
 
     return String.format("## Warnings%n%n%s%n", content);
+  }
+  
+  @Override
+  protected String formatRule(Value<?> value) {
+    return String.format("1.  **%s** %s **%s**",
+        identifierOf(value.feature()),
+        nameOf(value.feature()),
+        printValueAnswer(value));
+  }
+
+  private String printValueAnswer(Value<?> value) {
+    String answer = "unknown";
+    if (!value.isUnknown()) {
+      if (!BooleanValue.class.equals(value.getClass())) {
+        throw new IllegalArgumentException("Oh no! Expected a boolean value!");
+      }
+      answer = ((BooleanValue) value).get() ? "Yes" : "No";
+    }
+    return answer;
   }
 
   /**
@@ -237,34 +282,15 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownForma
   }
 
   /**
-   * Prints a formatted violated rule.
-   *
-   * @param value The rule.
-   * @return A formatted violated rule.
-   */
-  private String formatRule(Value<?> value) {
-    String answer = "unknown";
-    if (!value.isUnknown()) {
-      if (!BooleanValue.class.equals(value.getClass())) {
-        throw new IllegalArgumentException("Oh no! Expected a boolean value!");
-      }
-      answer = ((BooleanValue) value).get() ? "Yes" : "No";
-    }
-    return String.format("1.  %s %s **%s**",
-        identifierOf(value.feature()),
-        nameOf(value.feature()),
-        answer);
-  }
-
-  /**
    * Search for ID for a rule.
    *
    * @param rule The rule.
    * @return ID of the rule if available, an empty string otherwise.
    */
-  private String identifierOf(Feature<?> rule) {
+  @Override
+  protected String identifierOf(Feature<?> rule) {
     return Optional.ofNullable(featureToRuleId.get(rule))
-        .map(id -> String.format("**[%s]**", id))
+        .map(id -> String.format("[%s]", id))
         .orElse(StringUtils.EMPTY);
   }
 
@@ -312,6 +338,26 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownForma
     }
 
     return emptyMap();
+  }
+  
+  /**
+   * Looks for a configuration file and loads the rule documentation URI if found.
+   *
+   * @return A rule documentation URL.
+   * @throws UncheckedIOException If something went wrong.
+   */
+  private static String defaultRuleDocumentationUrl() throws IOException {
+    Class<?> clazz = OssRulesOfPlayRatingMarkdownFormatter.class;
+    for (String name : asList(clazz.getSimpleName(), clazz.getCanonicalName())) {
+      for (String suffix : asList("yml", "yaml")) {
+        Path path = Paths.get(String.format("%s.config.%s", name, suffix));
+        if (Files.isRegularFile(path)) {
+          return loadRuleDocumentationUrlFrom(path);
+        }
+      }
+    }
+
+    return StringUtils.EMPTY;
   }
 
   /**
@@ -376,5 +422,25 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownForma
     }
 
     return map;
+  }
+  
+  /**
+   * Load rule documentation URI from a file.
+   *
+   * @param path A path to the configuration file.
+   * @return The rule documentation URL.
+   * @throws IOException If something went wrong.
+   */
+  private static String loadRuleDocumentationUrlFrom(Path path) throws IOException {
+    JsonNode config = Yaml.mapper().readTree(Files.newBufferedReader(path));
+    if (!config.has("documentationUrl")) {
+      return StringUtils.EMPTY;
+    }
+
+    if (!config.isObject()) {
+      throw new IOException("Oops! Configuration is not an object!");
+    }
+
+    return config.get("documentationUrl").asText();
   }
 }

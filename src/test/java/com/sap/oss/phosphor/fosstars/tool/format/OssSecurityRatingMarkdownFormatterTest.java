@@ -56,6 +56,7 @@ import com.sap.oss.phosphor.fosstars.model.value.SecurityReview;
 import com.sap.oss.phosphor.fosstars.model.value.SecurityReviews;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Set;
 import org.junit.Test;
 
@@ -119,6 +120,10 @@ public class OssSecurityRatingMarkdownFormatterTest {
 
   @Test
   public void testWithCustomTemplate() {
+    
+    // Needed to ensure that decimal points are exactly as expected below...
+    Locale.setDefault(new Locale("en", "US"));
+    
     RatingValue ratingValue = RATING.calculate(TEST_VALUES);
     GitHubProject project = new GitHubProject("org", "test");
     project.set(ratingValue);
@@ -133,5 +138,18 @@ public class OssSecurityRatingMarkdownFormatterTest {
 
     assertNotNull(text);
     assertEquals("BAD|4.44|10.0|Max|10.0|10.0|security score for open-source projects||", text);
+  }
+  
+  @Test
+  public void testPrintTitleAndBody() {
+
+    OssSecurityRatingMarkdownFormatter formatter
+        = new OssSecurityRatingMarkdownFormatter(new OssSecurityGithubAdvisor());
+    
+    String printedTitle = formatter.printTitle(RUNS_CODEQL_SCANS.value(false));
+    assertEquals("Does it run CodeQL scans? **No**", printedTitle);
+    
+    String printedBody = formatter.printBody(USES_LGTM_CHECKS.value(false));
+    assertEquals("Does it use LGTM checks? **No**", printedBody);
   }
 }
