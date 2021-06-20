@@ -4,10 +4,10 @@
 
 |                           | # or projects                    | % or projects                      |
 | :------------------------ | -------------------------------: | ---------------------------------: |
-| Total                     |             253 |                               100% |
-| Failed                    |         199 |         78.7% |
-| Passed with&nbsp;warnings |  33 |  13.0% |
-| Passed                    |         21 |         8.3% |
+| Total                     |             249 |                               100% |
+| Failed                    |         195 |         78.3% |
+| Passed with&nbsp;warnings |  33 |  13.3% |
+| Passed                    |         21 |         8.4% |
 | Unclear                   |        0 |        0.0% |
 
 ## Projects
@@ -38,10 +38,6 @@
 | [SAP/techne](https://github.com/SAP/techne) | [Failed](SAP/techne.md) | 5 violated rules |
 | [SAP/Lapwing](https://github.com/SAP/Lapwing) | [Failed](SAP/Lapwing.md) | 6 violated rules |
 | [SAP/C4CODATAAPIDEVGUIDE](https://github.com/SAP/C4CODATAAPIDEVGUIDE) | [Failed](SAP/C4CODATAAPIDEVGUIDE.md) | 6 violated rules |
-| [SAP/docker-postgresql](https://github.com/SAP/docker-postgresql) | [Failed](SAP/docker-postgresql.md) | 9 violated rules |
-| [SAP/docker-mongodb](https://github.com/SAP/docker-mongodb) | [Failed](SAP/docker-mongodb.md) | 9 violated rules |
-| [SAP/docker-rabbitmq](https://github.com/SAP/docker-rabbitmq) | [Failed](SAP/docker-rabbitmq.md) | 9 violated rules |
-| [SAP/docker-redis](https://github.com/SAP/docker-redis) | [Failed](SAP/docker-redis.md) | 9 violated rules |
 | [SAP/openui5-worklist-app](https://github.com/SAP/openui5-worklist-app) | [Failed](SAP/openui5-worklist-app.md) | 1 violated rule |
 | [SAP/jcomigrationhelperplugin](https://github.com/SAP/jcomigrationhelperplugin) | [Failed](SAP/jcomigrationhelperplugin.md) | 1 violated rule |
 | [SAP/cloud-metricswatcher](https://github.com/SAP/cloud-metricswatcher) | [Failed](SAP/cloud-metricswatcher.md) | 6 violated rules |
