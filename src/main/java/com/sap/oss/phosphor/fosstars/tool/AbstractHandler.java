@@ -190,11 +190,6 @@ public abstract class AbstractHandler implements Handler {
   }
 
   @Override
-  public void close() {
-
-  }
-
-  @Override
   public final Handler run() throws Exception {
     List<String> options = SUBJECT_OPTIONS.stream()
         .filter(option -> commandLine.hasOption(option))
@@ -234,11 +229,20 @@ public abstract class AbstractHandler implements Handler {
    * Calculate a rating for a single subject identified by a URL to its SCM.
    *
    * @param url A URL of the project repository.
+   * @return The processed {@link Subject}.
    * @throws IOException If something went wrong.
    */
   void processUrl(String url) throws IOException {
-    GitHubProject project = GitHubProject.parse(url);
+    process(GitHubProject.parse(url));
+  }
 
+  /**
+   * Process a GitHub project.
+   *
+   * @param project The project.
+   * @throws IOException If something went wrong.
+   */
+  void process(GitHubProject project) throws IOException {
     calculator().calculateFor(project);
 
     if (!project.ratingValue().isPresent()) {

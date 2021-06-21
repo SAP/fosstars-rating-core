@@ -29,13 +29,19 @@ public class OssRulesOfPlayRatingHandler extends AbstractHandler {
   private final OssRulesOfPlayAdvisor advisor;
 
   /**
+   * A markdown formatter.
+   */
+  private final OssRulesOfPlayRatingMarkdownFormatter markdownFormatter;
+
+  /**
    * Initializes a handler.
    *
    * @throws IOException If initialization failed.
    */
   public OssRulesOfPlayRatingHandler() throws IOException {
     super(RatingRepository.INSTANCE.rating(OssRulesOfPlayRating.class));
-    this.advisor = new OssRulesOfPlayAdvisor();
+    advisor = new OssRulesOfPlayAdvisor();
+    markdownFormatter = new OssRulesOfPlayRatingMarkdownFormatter(advisor);
   }
 
   @Override
@@ -61,19 +67,20 @@ public class OssRulesOfPlayRatingHandler extends AbstractHandler {
    */
   @Override
   void processUrl(String url) throws IOException {
-    super.processUrl(url);
-    createIssuesIfRequested(GitHubProject.parse(url), commandLine);
+    GitHubProject project = GitHubProject.parse(url);
+    process(project);
+    createIssuesIfRequested(project, commandLine);
   }
 
   @Override
-  Formatter createFormatter(String type) throws IOException {
+  Formatter createFormatter(String type) {
     switch (type) {
       case "text":
         return commandLine.hasOption("v")
             ? PrettyPrinter.withVerboseOutput(advisor)
             : PrettyPrinter.withoutVerboseOutput();
       case "markdown":
-        return new OssRulesOfPlayRatingMarkdownFormatter(advisor);
+        return markdownFormatter;
       default:
         throw new IllegalArgumentException(format("Unsupported report type: %s", type));
     }
@@ -89,27 +96,61 @@ public class OssRulesOfPlayRatingHandler extends AbstractHandler {
   private void createIssuesIfRequested(GitHubProject project, CommandLine commandLine)
       throws IOException {
 
-    if (!project.ratingValue().isPresent()) {
-      throw new IOException("Could not calculate a rating!");
-    }
+    if (commandLine.hasOption("create-issues")) {
+      if (!project.ratingValue().isPresent()) {
+        throw new IOException("Could not calculate a rating!");
+      }
 
-    if (commandLine.hasOption("create-issues") && rating instanceof OssRulesOfPlayRating) {
       logger.info("Creating issues for findings on {}", project.toString());
-      Formatter formatter = createFormatter("markdown");
-      List<Value<Boolean>> violations =
-          OssRulesOfPlayScore.findViolatedRulesIn(
+
+      List<Value<Boolean>> violations
+          = OssRulesOfPlayScore.findViolatedRulesIn(
               project.ratingValue().get().scoreValue().usedValues());
+
       for (Value<Boolean> violation : violations) {
-        String issueHeader = formatter.printTitle(violation);
+        String issueHeader = printTitle(violation);
         List<GHIssue> existingGitHubIssues = this.fetcher.gitHubIssuesFor(project, issueHeader);
         if (existingGitHubIssues.isEmpty()) {
+          fetcher.createGitHubIssue(project, printTitle(violation), printBody(violation));
           logger.info("New issue: " + issueHeader);
-          this.fetcher.createGitHubIssue(
-              project, formatter.printTitle(violation), formatter.printBody(violation));
         } else {
           logger.info("Issue already existing: " + issueHeader);
         }
       }
     }
+  }
+
+  /**
+   * Print a title for a value.
+   *
+   * @param value The value.
+   * @return The title.
+   */
+  public String printTitle(Value<?> value) {
+    return String.format("%s Violation against OSS Rules of Play",
+        markdownFormatter.identifierOf(value.feature()));
+  }
+
+  /**
+   * Print a body for the value.
+   *
+   * @param value The value.
+   * @return The body.
+   */
+  public String printBody(Value<?> value) {
+    StringBuilder sb = new StringBuilder(
+        "A violation against the OSS Rules of Play has been detected.\n\n");
+
+    sb.append(String.format("Rule ID: %s\nExplanation: %s **%s**\n\n",
+        markdownFormatter.identifierOf(value.feature()).replaceAll("[\\[\\]]", ""),
+        markdownFormatter.nameOf(value.feature()),
+        markdownFormatter.printValueAnswer(value)));
+
+    if (markdownFormatter.ruleDocumentationUrl().isPresent()) {
+      sb.append(String.format("Find more information at: %s",
+          markdownFormatter.ruleDocumentationUrl().get()));
+    }
+
+    return sb.toString();
   }
 }
