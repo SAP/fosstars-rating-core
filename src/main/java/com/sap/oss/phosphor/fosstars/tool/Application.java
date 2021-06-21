@@ -263,38 +263,35 @@ public class Application {
     checkOptionsIn(commandLine);
 
     String rating = commandLine.getOptionValue("r", "default");
-    try (Handler handler = handlerFor(rating)) {
-      UserCallback callback = commandLine.hasOption("interactive")
-          ? new Terminal() : NoUserCallback.INSTANCE;
+    Handler handler = handlerFor(rating);
+    UserCallback callback = commandLine.hasOption("interactive")
+        ? new Terminal() : NoUserCallback.INSTANCE;
 
-      String githubToken = commandLine.getOptionValue("token", "");
+    String githubToken = commandLine.getOptionValue("token", "");
 
-      GitHubDataFetcher fetcher = new GitHubDataFetcher(connectToGithub(githubToken, callback),
-          githubToken);
+    GitHubDataFetcher fetcher
+        = new GitHubDataFetcher(connectToGithub(githubToken, callback), githubToken);
 
-      List<String> withConfigs = asList(
-          commandLine.getOptionValue("data-provider-configs", "")
-              .split("\\s+,\\s+,"));
+    List<String> withConfigs = asList(
+        commandLine.getOptionValue("data-provider-configs", "").split("\\s+,\\s+,"));
 
-      Path path = Paths.get(FOSSTARS_DIRECTORY);
-      if (!Files.exists(path)) {
-        Files.createDirectories(path);
-      }
+    Path path = Paths.get(FOSSTARS_DIRECTORY);
+    if (!Files.exists(path)) {
+      Files.createDirectories(path);
+    }
 
-      SubjectValueCache cache = loadValueCache();
-
-      try {
-        handler.configureDataProviders(withConfigs)
-            .baseDirectory(FOSSTARS_DIRECTORY)
-            .configureDataProviders(withConfigs)
-            .set(cache)
-            .set(commandLine)
-            .set(callback)
-            .set(fetcher)
-            .run();
-      } finally {
-        cache.store(SUBJECT_VALUE_CACHE_FILE);
-      }
+    SubjectValueCache cache = loadValueCache();
+    try {
+      handler.configureDataProviders(withConfigs)
+          .baseDirectory(FOSSTARS_DIRECTORY)
+          .configureDataProviders(withConfigs)
+          .set(cache)
+          .set(commandLine)
+          .set(callback)
+          .set(fetcher)
+          .run();
+    } finally {
+      cache.store(SUBJECT_VALUE_CACHE_FILE);
     }
   }
 

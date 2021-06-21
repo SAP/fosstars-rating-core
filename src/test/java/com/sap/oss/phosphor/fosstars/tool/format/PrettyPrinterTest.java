@@ -125,11 +125,11 @@ public class PrettyPrinterTest {
     assertFalse(text.isEmpty());
     System.out.println(text);
     for (Value<?> value : ratingValue.scoreValue().usedValues()) {
-      assertTrue(text.contains(CommonFormatter.nameOf(value.feature())));
+      assertTrue(text.contains(printer.nameOf(value.feature())));
     }
     for (Feature<?> feature : RATING.allFeatures()) {
       assertTrue(String.format("'%s' feature should be there!", feature.name()),
-          text.contains(CommonFormatter.nameOf(feature)));
+          text.contains(printer.nameOf(feature)));
     }
     assertTrue(text.contains("Value"));
     assertTrue(text.contains("Confidence"));

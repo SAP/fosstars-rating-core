@@ -139,17 +139,4 @@ public class OssSecurityRatingMarkdownFormatterTest {
     assertNotNull(text);
     assertEquals("BAD|4.44|10.0|Max|10.0|10.0|security score for open-source projects||", text);
   }
-  
-  @Test
-  public void testPrintTitleAndBody() {
-
-    OssSecurityRatingMarkdownFormatter formatter
-        = new OssSecurityRatingMarkdownFormatter(new OssSecurityGithubAdvisor());
-    
-    String printedTitle = formatter.printTitle(RUNS_CODEQL_SCANS.value(false));
-    assertEquals("Does it run CodeQL scans? **No**", printedTitle);
-    
-    String printedBody = formatter.printBody(USES_LGTM_CHECKS.value(false));
-    assertEquals("Does it use LGTM checks? **No**", printedBody);
-  }
 }

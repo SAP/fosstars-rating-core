@@ -11,7 +11,7 @@ import org.apache.commons.cli.OptionGroup;
 /**
  * A command-line handler that calculates a specific rating.
  */
-public interface Handler extends AutoCloseable {
+public interface Handler {
 
   /**
    * Returns a supported rating name that the command-line tool is aware of.
