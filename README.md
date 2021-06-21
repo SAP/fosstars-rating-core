@@ -6,8 +6,8 @@
 | :------------------------ | -------------------------------: | ---------------------------------: |
 | Total                     |             249 |                               100% |
 | Failed                    |         195 |         78.3% |
-| Passed with&nbsp;warnings |  33 |  13.3% |
-| Passed                    |         21 |         8.4% |
+| Passed with&nbsp;warnings |  34 |  13.7% |
+| Passed                    |         20 |         8.0% |
 | Unclear                   |        0 |        0.0% |
 
 ## Projects
@@ -225,7 +225,6 @@
 | [SAP/cloud-security-client-go](https://github.com/SAP/cloud-security-client-go) | [Passed](SAP/cloud-security-client-go.md) | No violated rules |
 | [SAP/gigya-flutter-plugin](https://github.com/SAP/gigya-flutter-plugin) | [Passed](SAP/gigya-flutter-plugin.md) | No violated rules |
 | [SAP/node-socketio-stream](https://github.com/SAP/node-socketio-stream) | [Passed](SAP/node-socketio-stream.md) | No violated rules |
-| [SAP/cloud-foundry-tools](https://github.com/SAP/cloud-foundry-tools) | [Passed](SAP/cloud-foundry-tools.md) | No violated rules |
 | [SAP/fosstars-rating-core-action](https://github.com/SAP/fosstars-rating-core-action) | [Passed](SAP/fosstars-rating-core-action.md) | No violated rules |
 | [SAP/abap-file-formats](https://github.com/SAP/abap-file-formats) | [Passed](SAP/abap-file-formats.md) | No violated rules |
 | [SAP/cloud-sdk-ios-fioriarkit](https://github.com/SAP/cloud-sdk-ios-fioriarkit) | [Passed](SAP/cloud-sdk-ios-fioriarkit.md) | No violated rules |
@@ -256,6 +255,7 @@
 | [SAP/gigya-nSS](https://github.com/SAP/gigya-nSS) | [Passed with warnings](SAP/gigya-nSS.md) | No violated rules |
 | [SAP/ui5-manifest](https://github.com/SAP/ui5-manifest) | [Passed with warnings](SAP/ui5-manifest.md) | No violated rules |
 | [SAP/sap-hana-driver-for-sqltools](https://github.com/SAP/sap-hana-driver-for-sqltools) | [Passed with warnings](SAP/sap-hana-driver-for-sqltools.md) | No violated rules |
+| [SAP/cloud-foundry-tools](https://github.com/SAP/cloud-foundry-tools) | [Passed with warnings](SAP/cloud-foundry-tools.md) | No violated rules |
 | [SAP/ui5-task-adaptation](https://github.com/SAP/ui5-task-adaptation) | [Passed with warnings](SAP/ui5-task-adaptation.md) | No violated rules |
 | [SAP/application-support-center](https://github.com/SAP/application-support-center) | [Passed with warnings](SAP/application-support-center.md) | No violated rules |
 | [SAP/sap-btp-service-operator](https://github.com/SAP/sap-btp-service-operator) | [Passed with warnings](SAP/sap-btp-service-operator.md) | No violated rules |
