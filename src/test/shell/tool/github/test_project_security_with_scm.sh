@@ -12,14 +12,16 @@ fi
 
 JAR=${JAR:-"target/fosstars-github-rating-calc.jar"}
 
-# remove cache
-find .fosstars -name "*cache*.json" | xargs rm -rf
+source lib.sh
+
+clean_cache
 
 $JAVA -jar $JAR \
   --url https://github.com/apache/poi --verbose \
   $TOKEN_OPTION > tmp.log 2>&1
 
 if [ $? != 0 ]; then
+  cat tmp.log
   echo "Unexpected exit code"
   exit 1
 fi
@@ -80,7 +82,6 @@ declare -a expected_strings=(
   'Sub-score:....Security reviews'
 )
 
-source lib.sh
 check_expected_output "${expected_strings[@]}" | tee | grep Failed
 if [ $? == 0 ]; then
   echo "check_expected_output() failed"

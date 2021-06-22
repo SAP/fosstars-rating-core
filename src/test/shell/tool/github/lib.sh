@@ -11,3 +11,9 @@ check_expected_output() {
     fi
   done
 }
+
+clean_cache() {
+  if [ -d .fosstars ]; then
+    find .fosstars -name "*cache*.json" | xargs rm -rf
+  fi
+}

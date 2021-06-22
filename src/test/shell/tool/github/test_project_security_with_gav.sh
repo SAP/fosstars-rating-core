@@ -16,12 +16,8 @@ source lib.sh
 
 clean_cache
 
-rm -rf .fosstars/report > /dev/null 2>&1
-mkdir -p .fosstars/report
-
 $JAVA -jar $JAR \
-  --rating security \
-  --config test_config.yml \
+  --gav org.apache.poi:poi --verbose \
   $TOKEN_OPTION > tmp.log 2>&1
 
 if [ $? != 0 ]; then
@@ -61,16 +57,32 @@ declare -a expected_strings=(
   'Looking for package managers'
   'Looking for programming languages that are used in the project'
   'Figuring out if the project is supported by a company'
-  'Found 2 projects'
-  'https://github.com/netty/netty'
-  'https://github.com/FasterXML/jackson-databind'
-  'Starting calculating ratings'
-  'Storing info about projects to'
-  'Storing a report to'
-  'Storing the cache to'
+  'https://github.com/apache/poi'
+  'Here is how the rating was calculated'
+  'Rating'
+  'Confidence'
+  'Sub-score:....Security testing'
+  'Sub-score:....Static analysis'
+  'Sub-score:....LGTM score'
+  'Sub-score:....How a project uses CodeQL'
+  'Sub-score:....FindSecBugs score'
+  'Sub-score:....Dependency testing'
+  'Sub-score:....Dependabot score'
+  'Sub-score:....OWASP Dependency Check score'
+  'Sub-score:....Fuzzing'
+  'Sub-score:....Memory-safety testing'
+  'Sub-score:....nohttp tool'
+  'Sub-score:....Security awareness'
+  'Sub-score:....Unpatched vulnerabilities'
+  'Sub-score:....Vulnerability discovery and security testing'
+  'Sub-score:....Security testing'
+  'Sub-score:....Community commitment'
+  'Sub-score:....Project activity'
+  'Sub-score:....Project popularity'
+  'Sub-score:....Security reviews'
 )
 
-check_expected_output "${expected_strings[@]}" | grep Failed
+check_expected_output "${expected_strings[@]}" | tee | grep Failed
 if [ $? == 0 ]; then
   echo "check_expected_output() failed"
   exit 1
@@ -80,8 +92,3 @@ if [ grep Exception tmp.log > /dev/null 2>&1 ]; then
   echo "Exceptions found"
   exit 1
 fi
-
-ls .fosstars/report/github_projects.json > /dev/null 2>&1 || exit 1
-ls .fosstars/report/netty/netty.md > /dev/null 2>&1 || exit 1
-ls .fosstars/report/FasterXML/jackson-databind.md > /dev/null 2>&1 || exit 1
-ls .fosstars/report/README.md > /dev/null 2>&1 || exit 1
