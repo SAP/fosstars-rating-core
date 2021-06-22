@@ -3,7 +3,6 @@
 # debug output
 #set -x
 
-
 ME=$(basename "$0")
 TEST_DIRECTORY=$(dirname $0)
 echo "Test directory: $TEST_DIRECTORY"
