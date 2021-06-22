@@ -24,7 +24,7 @@ $JAVA -jar $JAR \
   --config test_security_config.yml \
   $TOKEN_OPTION > tmp.log 2>&1
 
-if [ $? != 0 ]; then
+if [ $? -ne 0 ]; then
   cat tmp.log
   echo "Unexpected exit code"
   exit 1
@@ -71,7 +71,7 @@ declare -a expected_strings=(
 )
 
 check_expected_output "${expected_strings[@]}" | grep Failed
-if [ $? == 0 ]; then
+if [ $? -eq 0 ]; then
   echo "check_expected_output() failed"
   exit 1
 fi

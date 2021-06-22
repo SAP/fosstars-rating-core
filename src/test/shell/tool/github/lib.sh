@@ -6,7 +6,7 @@ check_expected_output() {
   do
     echo "Check: $expected_string"
     grep "$expected_string" tmp.log > /dev/null 2>&1
-    if [ $? != 0 ]; then
+    if [ $? -ne 0 ]; then
       echo "Failed: could not find in the output: $expected_string"
     fi
   done

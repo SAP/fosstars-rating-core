@@ -21,7 +21,7 @@ $JAVA -jar $JAR \
   --url https://github.com/SAP/fosstars-rating-core --verbose \
   $TOKEN_OPTION > tmp.log 2>&1
 
-if [ $? != 0 ]; then
+if [ $? -ne 0 ]; then
   cat tmp.log
   echo "Unexpected exit code"
   exit 1
@@ -30,7 +30,7 @@ fi
 cat tmp.log
 
 check_expected_output "${oss_rop_default_expected_strings[@]}" | tee | grep Failed
-if [ $? == 0 ]; then
+if [ $? -eq 0 ]; then
   echo "check_expected_output() failed"
   exit 1
 fi
@@ -40,7 +40,7 @@ declare -a expected_strings=(
 )
 
 check_expected_output "${expected_strings[@]}" | tee | grep Failed
-if [ $? == 0 ]; then
+if [ $? -eq 0 ]; then
   echo "check_expected_output() failed"
   exit 1
 fi
