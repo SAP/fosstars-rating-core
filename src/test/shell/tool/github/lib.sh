@@ -70,3 +70,19 @@ declare -a project_security_default_expected_strings=(
   'Sub-score:....Project popularity'
   'Sub-score:....Security reviews'
 )
+
+declare -a artifact_security_default_expected_strings=(
+  'Artifact version'
+  'Released artifact versions'
+  'Score:........Security score for an artifact of an open-source project'
+  'Sub-score:....Security score for an artifact version of an open-source project'
+  'Sub-score:....Known vulnerabilities for an artifact of an open-source project'
+  'Sub-score:....How frequent an open source project releases new versions'
+  'Sub-score:....How old the latest released artifact is'
+  'Sub-score:....How up-to-date the given version is'
+)
+
+for expected_string in "${project_security_default_expected_strings[@]}"
+do
+  artifact_security_default_expected_strings+=("$expected_string")
+done
