@@ -45,7 +45,8 @@ if [ $? -eq 0 ]; then
   exit 1
 fi
 
-if grep Exception tmp.log > /dev/null 2>&1 ; then
+cat tmp.log | grep -v list-repository-teams | grep -v "Caused by" | grep -v getChainedException | grep Exception
+if [ $? -eq 0 ]; then
   echo "Exceptions found"
   exit 1
 fi
