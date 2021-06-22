@@ -138,5 +138,5 @@ declare -a oss_rop_default_expected_strings=(
   'Is it compliant with REUSE rules?'
   'Is it registered in REUSE?'
   'Rating'
-  'Confidence''
+  'Confidence'
 )
