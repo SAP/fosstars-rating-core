@@ -143,5 +143,4 @@ public class OssArtifactSecurityRatingHandler extends AbstractHandler {
       return Optional.empty();
     });
   }
-
 }

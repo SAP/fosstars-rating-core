@@ -49,7 +49,7 @@ public abstract class AbstractDataProvider implements DataProvider {
     Class<?> clazz = getClass();
     Optional<Path> path = loadDefaultYamlConfigIfAvailable(clazz);
     if (path.isPresent()) {
-      logger.info("Found config for {} data provider: {}", clazz.getSimpleName(), path);
+      logger.info("Found config for {} data provider: {}", clazz.getSimpleName(), path.get());
       configure(path.get());
     }
   }
