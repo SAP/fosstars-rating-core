@@ -1,0 +1,10 @@
+cache: .fosstars/project_rating_cache.json
+reports:
+  - type: markdown
+    where: .fosstars/report/
+finder:
+  repositories:
+    - organization: SAP
+      name: fosstars-rating-core
+    - organization: SAP
+      name: openui5

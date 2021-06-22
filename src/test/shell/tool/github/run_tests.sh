@@ -28,7 +28,7 @@ for test in test_*.sh; do
     continue
   fi
   log="${test}.log"
-  printf "Running $test ... "
+  echo "Running $test ... "
   bash $test > $log 2>&1
   code=$?
   cat $log

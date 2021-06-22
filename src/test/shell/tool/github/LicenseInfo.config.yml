@@ -1,0 +1,3 @@
+---
+allowedLicensePatterns: "Apache(\\s+)License(\\s+)Version(\\s+)2\\.0"
+disallowedLicensePatterns: "This(\\s+)project(\\s+)may(\\s+)include(\\s+)APIs(\\s+)to(\\s+)SAP"

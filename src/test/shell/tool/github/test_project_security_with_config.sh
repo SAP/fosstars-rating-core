@@ -21,7 +21,7 @@ mkdir -p .fosstars/report
 
 $JAVA -jar $JAR \
   --rating security \
-  --config test_config.yml \
+  --config test_security_config.yml \
   $TOKEN_OPTION > tmp.log 2>&1
 
 if [ $? != 0 ]; then
