@@ -2,6 +2,7 @@ package com.sap.oss.phosphor.fosstars.tool;
 
 import static com.sap.oss.phosphor.fosstars.maven.MavenUtils.readModel;
 import static com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject.isOnGitHub;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.sap.oss.phosphor.fosstars.maven.GAV;
@@ -9,8 +10,6 @@ import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.Optional;
 import org.apache.commons.io.IOUtils;
@@ -43,22 +42,6 @@ public class MavenScmFinder {
       = "{GROUP}/{ARTIFACT}/{VERSION}/{ARTIFACT}-{VERSION}.pom";
 
   /**
-   * The default charset.
-   */
-  private static final Charset CHARSET = StandardCharsets.UTF_8;
-
-  /**
-   * Takes GAV coordinates of an artifact and looks for a URL to its SCM.
-   *
-   * @param coordinates The GAV coordinates.
-   * @return A URL to SCM.
-   * @throws IOException If something went wrong.
-   */
-  public Optional<String> findScmFor(String coordinates) throws IOException {
-    return findScmFor(GAV.parse(coordinates));
-  }
-
-  /**
    * Takes GAV coordinates of an artifact and looks for a URL to its SCM.
    *
    * @param gav The GAV coordinates.
@@ -85,27 +68,14 @@ public class MavenScmFinder {
    */
   public Optional<GitHubProject> findGithubProjectFor(GAV gav) throws IOException {
     Optional<String> scm = findScmFor(gav);
-    if (!scm.isPresent()) {
-      return Optional.empty();
-    }
-
-    String url = scm.get();
-
-    if (isOnGitHub(url)) {
-      return Optional.of(GitHubProject.parse(url));
+    if (scm.isPresent()) {
+      String url = scm.get();
+      if (isOnGitHub(url)) {
+        return Optional.of(GitHubProject.parse(url));
+      }
     }
 
     return tryToGuessGitHubProjectFor(gav);
-  }
-
-  /**
-   * Takes GAV coordinates and tries to guess a possible GitHub project.
-   *
-   * @param coordinates The GAV coordinates.
-   * @return A project on GitHub if it exists.
-   */
-  public Optional<GitHubProject> tryToGuessGitHubProjectFor(String coordinates) {
-    return tryToGuessGitHubProjectFor(GAV.parse(coordinates));
   }
 
   /**
@@ -131,7 +101,7 @@ public class MavenScmFinder {
    */
   private static boolean looksLikeValid(GitHubProject project) {
     try {
-      String content = IOUtils.toString(project.scm(), CHARSET);
+      String content = IOUtils.toString(project.scm(), UTF_8);
       return StringUtils.isNotEmpty(content);
     } catch (IOException e) {
       return false;
@@ -237,9 +207,9 @@ public class MavenScmFinder {
         .replace("{ARTIFACT}", gav.artifact())
         .replace("{VERSION}", gav.version().orElse(latestVersionOf(gav)));
     String urlString = MAVEN_DOWNLOAD_REQUEST_TEMPLATE.replace("{PATH}", path);
-    String content = IOUtils.toString(new URL(urlString), CHARSET);
+    String content = IOUtils.toString(new URL(urlString), UTF_8);
 
-    return readModel(IOUtils.toInputStream(content, StandardCharsets.UTF_8));
+    return readModel(IOUtils.toInputStream(content, UTF_8));
   }
 
   /**

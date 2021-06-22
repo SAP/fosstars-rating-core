@@ -87,33 +87,14 @@ public class OssProjectSecurityRatingHandler extends AbstractHandler {
    */
   private void process(GAV coordinates) throws IOException {
     process(coordinates.toString(), gav -> {
-      MavenScmFinder finder = new MavenScmFinder();
-
-      Optional<String> scm = finder.findScmFor(gav);
-      if (!scm.isPresent()) {
-        throw new IOException("Oh no! Could not find a URL to SCM!");
+      Optional<GitHubProject> project = new MavenScmFinder().findGithubProjectFor(coordinates);
+      if (!project.isPresent()) {
+        throw new IOException("Oh no! Could not find SCM on GitHub for the artifact!");
       }
 
-      String url = scm.get();
-      logger.info("SCM is {}", url);
+      logger.info("SCM is {}", project.get().scm());
 
-      if (isOnGitHub(url)) {
-        return Optional.of(GitHubProject.parse(url));
-      }
-
-      logger.info("But unfortunately, I can work only with projects that stay on GitHub ...");
-      logger.info("Let me try to find a mirror on GitHub ...");
-
-      Optional<GitHubProject> mirror = finder.findGithubProjectFor(coordinates);
-      if (!mirror.isPresent()) {
-        logger.warn("Oh no! I could not find a mirror on GitHub!");
-        return Optional.empty();
-      }
-
-      logger.info("Yup, that seems to be a corresponding project on GitHub:");
-      logger.info("  {}", mirror.get().scm().toString());
-
-      return mirror;
+      return project;
     });
   }
 
