@@ -29,6 +29,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import javax.annotation.Nullable;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -128,7 +129,7 @@ public class LicenseInfo extends GitHubCachingDataProvider {
   /**
    * Set a list of repositories that are known to be compliant.
    *
-   * @param repositoryExceptions The repository URLs
+   * @param repositoryExceptions The repository URLs.
    * @return This data provider.
    */
   public LicenseInfo repositoryExceptions(String... repositoryExceptions) {
@@ -138,7 +139,7 @@ public class LicenseInfo extends GitHubCachingDataProvider {
   /**
    * Set a list of repositories. that are known to be compliant.
    *
-   * @param repositoryExceptions The repository URLs
+   * @param repositoryExceptions The repository URLs.
    * @return This data provider.
    */
   public LicenseInfo repositoryExceptions(List<String> repositoryExceptions) {
@@ -190,8 +191,8 @@ public class LicenseInfo extends GitHubCachingDataProvider {
   protected ValueSet fetchValuesFor(GitHubProject project) throws IOException {
     logger.info("Gathering info about project's license ...");
 
-    // Some repositories use normally disallowed licenses, but are well-known exceptions
-    // Those ones will reported as OK by this data provider
+    // Some repositories use normally disallowed licenses, but are well-known exceptions.
+    // Those ones will reported as OK by this data provider.
     if (this.repositoryExceptionUrls.contains(project.toString())) {
       return ValueHashSet.from(
           HAS_LICENSE.value(true),
@@ -222,11 +223,17 @@ public class LicenseInfo extends GitHubCachingDataProvider {
    * Retrieves the license in a project.
    *
    * @param project The project.
+   * @param path A path to the license.
    * @return Content of the license if found.
    * @throws IOException If something went wrong.
    */
-  private Optional<String> retrieveLicenseIn(GitHubProject project, String path)
+  private Optional<String> retrieveLicenseIn(GitHubProject project, @Nullable String path)
       throws IOException {
+
+    if (path == null) {
+      logger.warn("Oops! License path is null!");
+      return Optional.empty();
+    }
 
     return GitHubDataFetcher.localRepositoryFor(project).readTextFrom(path);
   }
@@ -259,7 +266,7 @@ public class LicenseInfo extends GitHubCachingDataProvider {
   /**
    * Retrieves metadata of the license that is used in a project on GitHub.
    *
-   * @param project The project
+   * @param project The project.
    * @return Metadata of the license.
    */
   Map<String, String> licenseMetadata(GitHubProject project) {
