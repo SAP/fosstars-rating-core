@@ -4,10 +4,10 @@
 
 |                           | # or projects                    | % or projects                      |
 | :------------------------ | -------------------------------: | ---------------------------------: |
-| Total                     |             249 |                               100% |
-| Failed                    |         195 |         78.3% |
-| Passed with&nbsp;warnings |  34 |  13.7% |
-| Passed                    |         20 |         8.0% |
+| Total                     |             244 |                               100% |
+| Failed                    |         190 |         77.9% |
+| Passed with&nbsp;warnings |  34 |  13.9% |
+| Passed                    |         20 |         8.2% |
 | Unclear                   |        0 |        0.0% |
 
 ## Projects
@@ -191,12 +191,7 @@
 | [SAP/stewardci-log-forwarding](https://github.com/SAP/stewardci-log-forwarding) | [Failed](SAP/stewardci-log-forwarding.md) | 3 violated rules |
 | [SAP/alert-notification-node-client](https://github.com/SAP/alert-notification-node-client) | [Failed](SAP/alert-notification-node-client.md) | 3 violated rules |
 | [SAP/project-portal-for-innersource](https://github.com/SAP/project-portal-for-innersource) | [Failed](SAP/project-portal-for-innersource.md) | 2 violated rules |
-| [SAP/ownid-webapp](https://github.com/SAP/ownid-webapp) | [Failed](SAP/ownid-webapp.md) | 1 violated rule |
 | [SAP/ownid-docs](https://github.com/SAP/ownid-docs) | [Failed](SAP/ownid-docs.md) | 2 violated rules |
-| [SAP/ownid-server-sdk-net](https://github.com/SAP/ownid-server-sdk-net) | [Failed](SAP/ownid-server-sdk-net.md) | 2 violated rules |
-| [SAP/ownid-web-ui-sdk](https://github.com/SAP/ownid-web-ui-sdk) | [Failed](SAP/ownid-web-ui-sdk.md) | 1 violated rule |
-| [SAP/ownid-demo](https://github.com/SAP/ownid-demo) | [Failed](SAP/ownid-demo.md) | 1 violated rule |
-| [SAP/ownid-developer-tutorial](https://github.com/SAP/ownid-developer-tutorial) | [Failed](SAP/ownid-developer-tutorial.md) | 1 violated rule |
 | [SAP/kubernetes-deployment-orchestrator](https://github.com/SAP/kubernetes-deployment-orchestrator) | [Failed](SAP/kubernetes-deployment-orchestrator.md) | 4 violated rules |
 | [SAP/pipeline-dsl](https://github.com/SAP/pipeline-dsl) | [Failed](SAP/pipeline-dsl.md) | 4 violated rules |
 | [SAP/project-piper-action-utils](https://github.com/SAP/project-piper-action-utils) | [Failed](SAP/project-piper-action-utils.md) | 3 violated rules |
