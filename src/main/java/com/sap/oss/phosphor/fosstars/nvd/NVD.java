@@ -13,11 +13,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.apache.logging.log4j.LogManager;
@@ -61,9 +59,14 @@ public class NVD {
   private final String downloadDirectory;
 
   /**
-   * Maps a CVE identifier to its entry in NVD.
+   * A list of JSON files downloaded from the NVD.
    */
-  private final Map<String, NvdEntry> nvdEntries = new HashMap<>();
+  private final List<String> jsonFiles = new ArrayList<>();
+
+  /**
+   * A list of pre-loaded NVD entries.
+   */
+  private final List<NvdEntry> nvdEntries = new ArrayList<>();
 
   /**
    * The default constructor.
@@ -87,6 +90,8 @@ public class NVD {
    */
   public void download() {
     new NistDataMirror(downloadDirectory).mirror(NVD_FEED_VERSION);
+    updateTimestamp();
+    jsonFiles.clear();
   }
 
   /**
@@ -134,27 +139,10 @@ public class NVD {
   /**
    * Download and parses NVD if necessary.
    */
-  private void updateIfNecessary() throws IOException {
+  private void updateIfNecessary() {
     if (shouldDownload()) {
       download();
-      updateTimestamp();
     }
-    if (nvdEntries.isEmpty()) {
-      LOGGER.info("Parse NVD data ...");
-      parse();
-    }
-    LOGGER.info("Loaded {} CVE entries from NVD", nvdEntries.size());
-  }
-
-  /**
-   * Returns NVD entries. If necessary, the method downloads and parse data from NVD.
-   *
-   * @return NVD entries.
-   * @throws IOException If something went wrong when downloading and parsing NVD.
-   */
-  private Map<String, NvdEntry> nvdEntries() throws IOException {
-    updateIfNecessary();
-    return nvdEntries;
   }
 
   /**
@@ -177,15 +165,30 @@ public class NVD {
    * @throws IOException If something went wrong.
    */
   public List<String> jsonFiles() throws IOException {
-    String prefix = String.format("nvdcve-%s-", NVD_FEED_VERSION);
-    try (Stream<Path> walk = Files.walk(Paths.get(downloadDirectory), 1)) {
-      return walk
-          .filter(Files::isRegularFile)
-          .filter(path -> path.getFileName().toString().startsWith(prefix))
-          .filter(path -> path.getFileName().toString().endsWith(".json"))
-          .map(Path::toString)
-          .collect(Collectors.toList());
+    if (jsonFiles.isEmpty()) {
+      String prefix = String.format("nvdcve-%s-", NVD_FEED_VERSION);
+      try (Stream<Path> walk = Files.walk(Paths.get(downloadDirectory), 1)) {
+        jsonFiles.addAll(
+            walk.filter(Files::isRegularFile)
+                .filter(path -> path.getFileName().toString().startsWith(prefix))
+                .filter(path -> path.getFileName().toString().endsWith(".json"))
+                .map(Path::toString)
+                .collect(Collectors.toList()));
+      }
     }
+
+    return new ArrayList<>(jsonFiles);
+  }
+
+  /**
+   * Pre-load data from NVD.
+   *
+   * @throws IOException If data could not be loaded or parsed.
+   */
+  public void preload() throws IOException {
+    LOGGER.info("Load data from NVD ...");
+    parse(nvdEntries::add);
+    LOGGER.info("Loaded {} CVE entries from NVD", nvdEntries.size());
   }
 
   /**
@@ -196,28 +199,24 @@ public class NVD {
    * @throws IOException If something went wrong.
    */
   public List<NvdEntry> search(Matcher... matchers) throws IOException {
-    List<NvdEntry> result = new ArrayList<>();
+    updateIfNecessary();
 
-    for (NvdEntry entry : nvdEntries().values()) {
+    List<NvdEntry> result = new ArrayList<>();
+    Consumer<NvdEntry> collector = nvdEntry -> {
       for (Matcher matcher : matchers) {
-        if (matcher.match(entry)) {
-          result.add(entry);
+        if (matcher.match(nvdEntry)) {
+          result.add(nvdEntry);
         }
       }
+    };
+
+    if (!nvdEntries.isEmpty()) {
+      nvdEntries.forEach(collector);
+    } else {
+      parse(collector);
     }
 
     return result;
-  }
-
-  /**
-   * Find a vulnerability by CVE ID.
-   *
-   * @param cve The CVE ID.
-   * @return The vulnerability.
-   * @throws IOException If something went wrong.
-   */
-  public Optional<NvdEntry> get(String cve) throws IOException {
-    return Optional.ofNullable(nvdEntries().get(cve));
   }
 
   /**
@@ -232,11 +231,14 @@ public class NVD {
   }
 
   /**
-   * Parses the downloaded data from NVD.
+   * Parses the downloaded data from NVD and feed entries to a consumer.
    *
+   * @param consumer The consumer.
    * @throws IOException If something went wrong.
    */
-  public void parse() throws IOException {
+  private void parse(Consumer<NvdEntry> consumer) throws IOException {
+    updateIfNecessary();
+
     for (String file : jsonFiles()) {
       try (JsonParser parser = Json.mapper().getFactory().createParser(open(file))) {
         while (!parser.isClosed()) {
@@ -277,9 +279,10 @@ public class NVD {
             continue;
           }
 
-          nvdEntries.put(id, entry);
+          consumer.accept(entry);
         }
       }
     }
   }
+
 }

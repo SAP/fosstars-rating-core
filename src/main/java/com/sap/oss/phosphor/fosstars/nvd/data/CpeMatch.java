@@ -15,7 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 @JsonPropertyOrder({
     "cpe22Uri",
     "cpe23Uri",
-    "versionEndExcluding",
+    "versionStartIncluding",
     "versionEndIncluding"
 })
 // the properties below are ignored because they are not used
@@ -25,7 +25,7 @@ import org.apache.commons.lang3.StringUtils;
     "vulnerable",
     "cpe_name",
     "versionStartExcluding",
-    "versionStartIncluding"
+    "versionEndExcluding"
 })
 public class CpeMatch {
 
