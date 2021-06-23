@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.Optional;
+import javax.annotation.Nullable;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -14,8 +15,6 @@ import org.apache.commons.lang3.StringUtils;
 @JsonPropertyOrder({
     "cpe22Uri",
     "cpe23Uri",
-    "versionStartExcluding",
-    "versionStartIncluding",
     "versionEndExcluding",
     "versionEndIncluding"
 })
@@ -24,40 +23,35 @@ import org.apache.commons.lang3.StringUtils;
 // when they become necessary, then can be enabled
 @JsonIgnoreProperties({
     "vulnerable",
-    "cpe_name"
+    "cpe_name",
+    "versionStartExcluding",
+    "versionStartIncluding"
 })
 public class CpeMatch {
 
-  @JsonProperty("cpe22Uri")
-  private String cpe22Uri;
+  private final Cpe22Uri cpe22Uri;
+  private final Cpe23Uri cpe23Uri;
 
-  @JsonProperty("cpe23Uri")
-  private String cpe23Uri;
+  private final String versionStartIncluding;
+  private final String versionEndIncluding;
 
-  @JsonProperty("versionStartExcluding")
-  private String versionStartExcluding;
+  private CpeMatch(
+      @JsonProperty("cpe22Uri") @Nullable String cpe22Uri,
+      @JsonProperty("cpe23Uri") @Nullable String cpe23Uri,
+      @JsonProperty("versionStartIncluding") @Nullable String versionStartIncluding,
+      @JsonProperty("versionEndIncluding") @Nullable String versionEndIncluding) {
 
-  @JsonProperty("versionStartIncluding")
-  private String versionStartIncluding;
-
-  @JsonProperty("versionEndExcluding")
-  private String versionEndExcluding;
-
-  @JsonProperty("versionEndIncluding")
-  private String versionEndIncluding;
-
-  @JsonProperty("versionEndExcluding")
-  public String getVersionEndExcluding() {
-    return versionEndExcluding;
+    this.cpe22Uri = StringUtils.isEmpty(cpe22Uri) ? null : new Cpe22Uri(cpe22Uri);
+    this.cpe23Uri = StringUtils.isEmpty(cpe23Uri) ? null : new Cpe23Uri(cpe23Uri);
+    this.versionStartIncluding = versionStartIncluding;
+    this.versionEndIncluding = versionEndIncluding;
   }
 
-  @JsonProperty("versionEndIncluding")
-  public String getVersionEndIncluding() {
+  public String versionEndIncluding() {
     return versionEndIncluding;
   }
 
-  @JsonProperty("versionStartIncluding")
-  public String getVersionStartIncluding() {
+  public String versionStartIncluding() {
     return versionStartIncluding;
   }
 
@@ -68,14 +62,6 @@ public class CpeMatch {
    * @return A {@link CpeUri} if available.
    */
   public Optional<CpeUri> getCpeUri() {
-    if (!StringUtils.isEmpty(cpe23Uri)) {
-      return Optional.of(new Cpe23Uri(cpe23Uri));
-    }
-
-    if (!StringUtils.isEmpty(cpe22Uri)) {
-      return Optional.of(new Cpe22Uri(cpe22Uri));
-    }
-
-    return Optional.empty();
+    return cpe23Uri != null ? Optional.of(cpe23Uri) : Optional.ofNullable(cpe22Uri);
   }
 }
