@@ -1,10 +1,9 @@
 package com.sap.oss.phosphor.fosstars.nvd.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 
@@ -13,19 +12,21 @@ import org.apache.commons.lang3.StringUtils;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "vulnerable",
     "cpe22Uri",
     "cpe23Uri",
     "versionStartExcluding",
     "versionStartIncluding",
     "versionEndExcluding",
-    "versionEndIncluding",
+    "versionEndIncluding"
+})
+// the properties below are ignored because they are not used
+// that saves a bit of memory
+// when they become necessary, then can be enabled
+@JsonIgnoreProperties({
+    "vulnerable",
     "cpe_name"
 })
 public class CpeMatch {
-
-  @JsonProperty("vulnerable")
-  private Boolean vulnerable;
 
   @JsonProperty("cpe22Uri")
   private String cpe22Uri;
@@ -45,14 +46,6 @@ public class CpeMatch {
   @JsonProperty("versionEndIncluding")
   private String versionEndIncluding;
 
-  @JsonProperty("cpe_name")
-  private List<CpeName> cpeName = new ArrayList<>();
-
-  @JsonProperty("vulnerable")
-  public Boolean getVulnerable() {
-    return vulnerable;
-  }
-
   @JsonProperty("versionEndExcluding")
   public String getVersionEndExcluding() {
     return versionEndExcluding;
@@ -66,16 +59,6 @@ public class CpeMatch {
   @JsonProperty("versionStartIncluding")
   public String getVersionStartIncluding() {
     return versionStartIncluding;
-  }
-
-  @JsonProperty("cpe22Uri")
-  public String getCpe22Uri() {
-    return cpe22Uri;
-  }
-
-  @JsonProperty("cpe23Uri")
-  public String getCpe23Uri() {
-    return cpe23Uri;
   }
 
   /**

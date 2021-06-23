@@ -45,7 +45,7 @@ public class InfoAboutVulnerabilities
     super(fetcher);
     Objects.requireNonNull(nvd, "NVD can't be null!");
     providers = Arrays.asList(
-        new UnpatchedVulnerabilities(fetcher, nvd),
+        new UnpatchedVulnerabilities(fetcher),
         new VulnerabilitiesFromNvd(fetcher, nvd));
   }
 
