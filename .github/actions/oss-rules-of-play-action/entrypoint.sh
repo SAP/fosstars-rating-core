@@ -62,9 +62,11 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# Cleanup
+rm -rf fosstars-rating-core > /dev/null 2>&1
+rm -rf .fosstars > /dev/null 2>&1
+
 # Commit the report
-echo fosstars-rating-core >> .gitignore
-echo .fosstars >> .gitignore
 git add --all
 git config --global user.name "Fosstars"
 git config --global user.email "fosstars@users.noreply.github.com"
