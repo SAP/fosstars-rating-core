@@ -5,9 +5,9 @@
 |                           | # or projects                    | % or projects                      |
 | :------------------------ | -------------------------------: | ---------------------------------: |
 | Total                     |             244 |                               100% |
-| Failed                    |         190 |         77.9% |
+| Failed                    |         189 |         77.5% |
 | Passed with&nbsp;warnings |  34 |  13.9% |
-| Passed                    |         20 |         8.2% |
+| Passed                    |         21 |         8.6% |
 | Unclear                   |        0 |        0.0% |
 
 ## Projects
@@ -64,7 +64,7 @@
 | [SAP/cloud-xsa-hybrid-deployment-tutorial](https://github.com/SAP/cloud-xsa-hybrid-deployment-tutorial) | [Failed](SAP/cloud-xsa-hybrid-deployment-tutorial.md) | 6 violated rules |
 | [SAP/ase-nodejs-async-odbc-interface](https://github.com/SAP/ase-nodejs-async-odbc-interface) | [Failed](SAP/ase-nodejs-async-odbc-interface.md) | 7 violated rules |
 | [SAP/cf-language-server-buildpack](https://github.com/SAP/cf-language-server-buildpack) | [Failed](SAP/cf-language-server-buildpack.md) | 2 violated rules |
-| [SAP/cloud-language-servers-container](https://github.com/SAP/cloud-language-servers-container) | [Failed](SAP/cloud-language-servers-container.md) | 4 violated rules |
+| [SAP/cloud-language-servers-container](https://github.com/SAP/cloud-language-servers-container) | [Failed](SAP/cloud-language-servers-container.md) | 2 violated rules |
 | [SAP/cloud-s4-sdk-pipeline](https://github.com/SAP/cloud-s4-sdk-pipeline) | [Failed](SAP/cloud-s4-sdk-pipeline.md) | 4 violated rules |
 | [SAP/cloud-s4-sdk-pipeline-lib](https://github.com/SAP/cloud-s4-sdk-pipeline-lib) | [Failed](SAP/cloud-s4-sdk-pipeline-lib.md) | 4 violated rules |
 | [SAP/cloud-s4-sdk-examples](https://github.com/SAP/cloud-s4-sdk-examples) | [Failed](SAP/cloud-s4-sdk-examples.md) | 4 violated rules |
@@ -202,7 +202,6 @@
 | [SAP/project-sailor](https://github.com/SAP/project-sailor) | [Failed](SAP/project-sailor.md) | 2 violated rules |
 | [SAP/sap.github.io](https://github.com/SAP/sap.github.io) | [Failed](SAP/sap.github.io.md) | 11 violated rules |
 | [SAP/cloud-sdk-ios](https://github.com/SAP/cloud-sdk-ios) | [Failed](SAP/cloud-sdk-ios.md) | 7 violated rules |
-| [SAP/cloud-sdk-ios-cai](https://github.com/SAP/cloud-sdk-ios-cai) | [Failed](SAP/cloud-sdk-ios-cai.md) | 1 violated rule |
 | [SAP/.github](https://github.com/SAP/.github) | [Failed](SAP/.github.md) | 10 violated rules |
 | [SAP/openui5](https://github.com/SAP/openui5) | [Passed](SAP/openui5.md) | No violated rules |
 | [SAP/commerce-gradle-plugin](https://github.com/SAP/commerce-gradle-plugin) | [Passed](SAP/commerce-gradle-plugin.md) | No violated rules |
@@ -222,6 +221,7 @@
 | [SAP/node-socketio-stream](https://github.com/SAP/node-socketio-stream) | [Passed](SAP/node-socketio-stream.md) | No violated rules |
 | [SAP/fosstars-rating-core-action](https://github.com/SAP/fosstars-rating-core-action) | [Passed](SAP/fosstars-rating-core-action.md) | No violated rules |
 | [SAP/abap-file-formats](https://github.com/SAP/abap-file-formats) | [Passed](SAP/abap-file-formats.md) | No violated rules |
+| [SAP/cloud-sdk-ios-cai](https://github.com/SAP/cloud-sdk-ios-cai) | [Passed](SAP/cloud-sdk-ios-cai.md) | No violated rules |
 | [SAP/cloud-sdk-ios-fioriarkit](https://github.com/SAP/cloud-sdk-ios-fioriarkit) | [Passed](SAP/cloud-sdk-ios-fioriarkit.md) | No violated rules |
 | [SAP/gigya-react-native-plugin-for-sap-customer-data-cloud](https://github.com/SAP/gigya-react-native-plugin-for-sap-customer-data-cloud) | [Passed](SAP/gigya-react-native-plugin-for-sap-customer-data-cloud.md) | No violated rules |
 | [SAP/ui5-inspector](https://github.com/SAP/ui5-inspector) | [Passed with warnings](SAP/ui5-inspector.md) | No violated rules |
