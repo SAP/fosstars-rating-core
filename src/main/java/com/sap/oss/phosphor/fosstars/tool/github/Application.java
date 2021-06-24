@@ -330,7 +330,7 @@ public class Application {
     String githubToken = commandLine.getOptionValue("token", "");
     List<String> withConfigs = Arrays.asList(
         commandLine.getOptionValue("data-provider-configs", "")
-            .split("\\s+,\\s+,"));
+            .split(","));
 
     fetcher = new GitHubDataFetcher(connectToGithub(githubToken, callback), githubToken);
     DataProviderSelector dataProviderSelector = new DataProviderSelector(fetcher, new NVD());
