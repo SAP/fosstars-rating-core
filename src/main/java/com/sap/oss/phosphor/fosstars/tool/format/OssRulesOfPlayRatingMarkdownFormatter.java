@@ -246,9 +246,11 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownForma
    */
   private String passedRulesFrom(ScoreValue scoreValue) {
     List<Value<Boolean>> violatedRules = findViolatedRulesIn(scoreValue.usedValues());
+    List<Value<Boolean>> warnings = findWarningsIn(scoreValue.usedValues());
 
     String content = scoreValue.usedValues().stream()
         .filter(rule -> !violatedRules.contains(rule))
+        .filter(rule -> !warnings.contains(rule))
         .filter(rule -> !rule.isUnknown())
         .map(BooleanValue.class::cast)
         .map(this::formatRuleForList)
