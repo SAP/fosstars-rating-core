@@ -1,15 +1,14 @@
-package com.sap.oss.phosphor.fosstars.tool.github;
+package com.sap.oss.phosphor.fosstars.tool;
 
-import static com.sap.oss.phosphor.fosstars.tool.github.GitHubProjectFinder.EMPTY_EXCLUDE_LIST;
+import static com.sap.oss.phosphor.fosstars.tool.GitHubProjectFinder.EMPTY_EXCLUDE_LIST;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
-import com.sap.oss.phosphor.fosstars.tool.github.Application.ReportConfig;
-import com.sap.oss.phosphor.fosstars.tool.github.GitHubProjectFinder.OrganizationConfig;
-import com.sap.oss.phosphor.fosstars.tool.github.GitHubProjectFinder.ProjectConfig;
+import com.sap.oss.phosphor.fosstars.tool.GitHubProjectFinder.OrganizationConfig;
+import com.sap.oss.phosphor.fosstars.tool.GitHubProjectFinder.ProjectConfig;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
@@ -19,21 +18,21 @@ import org.junit.Test;
 public class ApplicationTest {
 
   @Test(expected = IllegalArgumentException.class)
-  public void testNoParameters() throws IOException {
+  public void testNoParameters() throws Exception {
     new Application().run();
   }
 
   @Test
-  public void testHelp() throws IOException {
-    new Application("-help").run();
-    new Application("-h").run();
+  public void testHelp() throws Exception {
+    new Application().run("-help");
+    new Application().run("-h");
   }
 
   @Test
   public void testLoadConfig() throws IOException {
     final String filename = "ValidSecurityRatingCalculatorConfig.yml";
     try (InputStream is = getClass().getResourceAsStream(filename)) {
-      Application.Config mainConfig = Application.config(is);
+      Config mainConfig = Config.from(is);
 
       assertEquals(".fosstars/project_rating_cache.json", mainConfig.cacheFilename);
 

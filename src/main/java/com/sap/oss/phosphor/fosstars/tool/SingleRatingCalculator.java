@@ -1,5 +1,7 @@
 package com.sap.oss.phosphor.fosstars.tool;
 
+import static java.util.Objects.requireNonNull;
+
 import com.sap.oss.phosphor.fosstars.data.DataProvider;
 import com.sap.oss.phosphor.fosstars.data.NoUserCallback;
 import com.sap.oss.phosphor.fosstars.data.NoValueCache;
@@ -11,7 +13,7 @@ import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -46,14 +48,21 @@ public class SingleRatingCalculator implements RatingCalculator {
   UserCallback callback = NoUserCallback.INSTANCE;
 
   /**
+   * An adaptor for subjects.
+   * The default adaptor returns the same subject if a data provider supports it.
+   */
+  SubjectAdaptor subjectAdaptor
+      = (subject, provider) -> Optional.of(subject).filter(provider::supports);
+
+  /**
    * Initializes a new calculator.
    *
    * @param rating A rating.
    * @param providers A list of data providers.
    */
   public SingleRatingCalculator(Rating rating, List<DataProvider> providers) {
-    Objects.requireNonNull(rating, "Oh no! Rating can't be null!");
-    Objects.requireNonNull(providers, "Oh no! A list of data providers can't be null!");
+    requireNonNull(rating, "Oh no! Rating can't be null!");
+    requireNonNull(providers, "Oh no! A list of data providers can't be null!");
 
     this.rating = rating;
     this.providers = providers;
@@ -61,21 +70,28 @@ public class SingleRatingCalculator implements RatingCalculator {
 
   @Override
   public SingleRatingCalculator set(UserCallback callback) {
-    Objects.requireNonNull(callback, "Oh no! Callback can't be null!");
+    requireNonNull(callback, "Oh no! Callback can't be null!");
     this.callback = callback;
     return this;
   }
 
   @Override
   public SingleRatingCalculator set(ValueCache<Subject> cache) {
-    Objects.requireNonNull(cache, "Oh no! Cache can't be null!");
+    requireNonNull(cache, "Oh no! Cache can't be null!");
     this.cache = cache;
     return this;
   }
 
   @Override
+  public SingleRatingCalculator set(SubjectAdaptor adaptor) {
+    requireNonNull(adaptor, "Oh no! Subject adaptor is null!");
+    this.subjectAdaptor = adaptor;
+    return this;
+  }
+
+  @Override
   public SingleRatingCalculator calculateFor(Subject subject) {
-    Objects.requireNonNull(subject, "Oh no! Subjects can't be null!");
+    requireNonNull(subject, "Oh no! Subjects can't be null!");
 
     LOGGER.info("Let's gather info and calculate a rating for:");
     LOGGER.info("  {}", subject);
@@ -88,8 +104,13 @@ public class SingleRatingCalculator implements RatingCalculator {
         continue;
       }
 
+      Optional<Subject> adaptedSubject = subjectAdaptor.adapt(subject, provider);
+      if (!adaptedSubject.isPresent()) {
+        continue;
+      }
+
       try {
-        provider.set(callback).set(cache).update(subject, values);
+        provider.set(callback).set(cache).update(adaptedSubject.get(), values);
       } catch (Exception e) {
         LOGGER.warn("Holy Moly, {} data provider failed!",
             provider.getClass().getSimpleName());

@@ -37,6 +37,11 @@ public class OssRulesOfPlayAdvisor extends AbstractOssAdvisor {
   private static final OssRulesOfPlayRating RATING
       = RatingRepository.INSTANCE.rating(OssRulesOfPlayRating.class);
 
+  /**
+   * Create a new advisor.
+   *
+   * @throws IOException If advice could not be loaded.
+   */
   public OssRulesOfPlayAdvisor() throws IOException {
     super(storage(), WITH_EMPTY_CONTEXT);
   }
@@ -71,7 +76,7 @@ public class OssRulesOfPlayAdvisor extends AbstractOssAdvisor {
 
     List<Advice> advice = new ArrayList<>();
     for (Feature<?> feature : RATING.allFeatures()) {
-      if (feature instanceof BooleanFeature == false) {
+      if (!BooleanFeature.class.isAssignableFrom(feature.getClass())) {
         throw new IllegalStateException(
             String.format("Oops! Not a boolean feature: %s", feature.name()));
       }

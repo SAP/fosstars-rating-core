@@ -1,4 +1,4 @@
-package com.sap.oss.phosphor.fosstars.tool.github;
+package com.sap.oss.phosphor.fosstars.tool;
 
 import static com.sap.oss.phosphor.fosstars.maven.MavenUtils.readModel;
 import static com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject.isOnGitHub;
@@ -83,7 +83,7 @@ public class MavenScmFinder {
    * @return A project on GitHub.
    * @throws IOException If something went wrong.
    */
-  public Optional<GitHubProject> findGithubProjectFor(String gav) throws IOException {
+  public Optional<GitHubProject> findGithubProjectFor(GAV gav) throws IOException {
     Optional<String> scm = findScmFor(gav);
     if (!scm.isPresent()) {
       return Optional.empty();
@@ -239,7 +239,7 @@ public class MavenScmFinder {
     String urlString = MAVEN_DOWNLOAD_REQUEST_TEMPLATE.replace("{PATH}", path);
     String content = IOUtils.toString(new URL(urlString), CHARSET);
 
-    return readModel(IOUtils.toInputStream(content));
+    return readModel(IOUtils.toInputStream(content, StandardCharsets.UTF_8));
   }
 
   /**
@@ -249,8 +249,9 @@ public class MavenScmFinder {
    * @throws IOException If something went wrong.
    */
   public static void main(String... args) throws IOException {
-    String gav = args.length > 0 ? args[0] : "org.apache.commons:commons-text";
-    Optional<GitHubProject> project = new MavenScmFinder().findGithubProjectFor(gav);
+    String coordinates = args.length > 0 ? args[0] : "org.apache.commons:commons-text";
+    Optional<GitHubProject> project
+        = new MavenScmFinder().findGithubProjectFor(GAV.parse(coordinates));
     System.out.println(
         project.isPresent() ? String.format("GitHub URL = %s", project.get()) : "No SCM found!");
   }

@@ -238,7 +238,7 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
    * @param scoreValue The score value.
    * @return A formatted text.
    */
-  static String highLevelDescriptionOf(ScoreValue scoreValue) {
+  String highLevelDescriptionOf(ScoreValue scoreValue) {
     return highLevelDescriptionOf(scoreValue, StringUtils.EMPTY);
   }
 
@@ -249,7 +249,7 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
    * @param indent An indent for the list.
    * @return A formatted list.
    */
-  private static String highLevelDescriptionOf(ScoreValue scoreValue, String indent) {
+  private String highLevelDescriptionOf(ScoreValue scoreValue, String indent) {
     StringBuilder sb = new StringBuilder();
 
     usedSubScoreValuesIn(scoreValue).forEach(subScoreValue -> {
@@ -266,7 +266,7 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
    * @param scoreValue The score value.
    * @return A formatted text.
    */
-  private static String shortDescriptionOf(ScoreValue scoreValue) {
+  private String shortDescriptionOf(ScoreValue scoreValue) {
     return String.format("**%s**: **%s** (weight is %s)",
         anchorFor(nameOf(scoreValue.score())),
         actualValueOf(scoreValue),

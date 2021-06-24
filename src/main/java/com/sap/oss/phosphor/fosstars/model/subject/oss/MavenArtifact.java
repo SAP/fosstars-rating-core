@@ -46,7 +46,8 @@ public class MavenArtifact extends AbstractSubject implements Artifact {
    * @param project A {@link GitHubProject}. It may be null.
    */
   @JsonCreator
-  public MavenArtifact(@JsonProperty("group") String group,
+  public MavenArtifact(
+      @JsonProperty("group") String group,
       @JsonProperty("artifact") String artifact,
       @JsonProperty("version") @Nullable String version,
       @JsonProperty("project") @Nullable GitHubProject project) {

@@ -303,4 +303,25 @@ public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
       FileUtils.forceDeleteOnExit(config.toFile());
     }
   }
+
+  @Test
+  public void testProjectWithNullsInMetadata() throws IOException {
+    GitHubProject project = new GitHubProject("test", "project");
+    LocalRepository localRepository = mock(LocalRepository.class);
+    when(localRepository.readTextFrom(null)).thenThrow(new NullPointerException("Test failed!"));
+    TestGitHubDataFetcher.addForTesting(project, localRepository);
+
+    LicenseInfoMock provider = new LicenseInfoMock(fetcher);
+    provider.setLicensePath(null);
+    provider.setSpdxId(null);
+
+    ValueSet values = provider.fetchValuesFor(project);
+    checkValue(values, HAS_LICENSE, false);
+    Optional<Value<Boolean>> something = values.of(ALLOWED_LICENSE);
+    assertTrue(something.isPresent());
+    assertTrue(something.get().isUnknown());
+    something = values.of(LICENSE_HAS_DISALLOWED_CONTENT);
+    assertTrue(something.isPresent());
+    assertTrue(something.get().isUnknown());
+  }
 }

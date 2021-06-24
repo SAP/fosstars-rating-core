@@ -15,6 +15,13 @@ if [ "$FOSSTARS_VERSION" = "" ]; then
     exit 1
 fi
 
+if [ "$TOKEN" = "" ]; then
+    echo "Achtung! No token provided or it is empty!"
+    TOKEN_OPTION=""
+else
+    TOKEN_OPTION="--token $TOKEN"
+fi
+
 if [ "$REPORT_FILE" = "" ]; then
     REPORT_FILE="README.md"
 fi
@@ -46,7 +53,7 @@ cd ..
 
 # Generate a report
 java -jar fosstars-rating-core/target/fosstars-github-rating-calc.jar \
-          --token $TOKEN \
+          $TOKEN_OPTION \
           --verbose \
           --config config.yml \
           --rating oss-rules-of-play
@@ -55,9 +62,11 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# Cleanup
+rm -rf fosstars-rating-core > /dev/null 2>&1
+rm -rf .fosstars > /dev/null 2>&1
+
 # Commit the report
-echo fosstars-rating-core >> .gitignore
-echo .fosstars >> .gitignore
 git add --all
 git config --global user.name "Fosstars"
 git config --global user.email "fosstars@users.noreply.github.com"
