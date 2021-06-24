@@ -385,7 +385,7 @@ public class GitHubDataFetcherTest extends TestGitHubDataFetcherHolder  {
     
     GitHubProject myProject = new GitHubProject("gugl", "hupf");
     when(issueSearchBuilder.isOpen()).thenReturn(issueSearchBuilder);
-    when(issueSearchBuilder.q("apfel")).thenReturn(issueSearchBuilder);
+    when(issueSearchBuilder.q(any())).thenReturn(issueSearchBuilder);
     when(fetcher.github().searchIssues()).thenReturn(issueSearchBuilder);
     
     List<GHIssue> foundIssues = fetcher.gitHubIssuesFor(myProject, "apfel");
@@ -406,7 +406,7 @@ public class GitHubDataFetcherTest extends TestGitHubDataFetcherHolder  {
     
     GitHubProject myProject = new GitHubProject("gugl", "hupf");
     when(issueSearchBuilder.isOpen()).thenReturn(issueSearchBuilder);
-    when(issueSearchBuilder.q("apfel")).thenReturn(issueSearchBuilder);
+    when(issueSearchBuilder.q(any())).thenReturn(issueSearchBuilder);
     when(fetcher.github().searchIssues()).thenReturn(issueSearchBuilder);
     
     List<GHIssue> foundIssues = fetcher.gitHubIssuesFor(myProject, "apfel");
