@@ -31,6 +31,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.apache.commons.cli.CommandLine;
@@ -44,6 +45,11 @@ import org.apache.logging.log4j.Logger;
  * A base class for command-line handlers.
  */
 public abstract class AbstractHandler implements Handler {
+
+  /**
+   * No configuration file.
+   */
+  static final Config NO_CONFIG = null;
 
   /**
    * A set of command-line options that specify subjects.
@@ -413,8 +419,27 @@ public abstract class AbstractHandler implements Handler {
    * @throws IllegalArgumentException If the type is unknown.
    */
   List<Reporter<GitHubProject>> makeReporters(Config config) throws IOException {
-    return emptyList();
+    if (config == NO_CONFIG || config.reportConfigs == null) {
+      return emptyList();
+    }
+
+    List<Reporter<GitHubProject>> reporters = new ArrayList<>();
+    for (ReportConfig reportConfig : config.reportConfigs) {
+      reporterFrom(reportConfig).ifPresent(reporters::add);
+    }
+
+    return reporters;
   }
+
+  /**
+   * Create a reporter from a specified report config.
+   *
+   * @param reportConfig The config.
+   * @return A reporter.
+   * @throws IOException If something went wrong.
+   */
+  abstract Optional<Reporter<GitHubProject>> reporterFrom(ReportConfig reportConfig)
+      throws IOException;
 
   /**
    * Stores a rating of a subject if a user asked about it.

@@ -10,6 +10,7 @@ import com.sap.oss.phosphor.fosstars.model.subject.oss.Artifact;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.MavenArtifact;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.NpmArtifact;
+import com.sap.oss.phosphor.fosstars.tool.report.Reporter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Optional;
@@ -118,6 +119,11 @@ public class OssArtifactSecurityRatingHandler extends AbstractHandler {
   @Override
   void processConfig(String filename) {
     throw new UnsupportedOperationException("Oops! I don't support configs!");
+  }
+
+  @Override
+  Optional<Reporter<GitHubProject>> reporterFrom(ReportConfig reportConfig) {
+    return Optional.empty();
   }
 
   @Override

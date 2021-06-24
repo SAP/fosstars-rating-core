@@ -2,6 +2,7 @@ package com.sap.oss.phosphor.fosstars.tool;
 
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 import static java.lang.String.format;
+import static java.util.Objects.requireNonNull;
 
 import com.sap.oss.phosphor.fosstars.advice.oss.OssRulesOfPlayAdvisor;
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
@@ -11,10 +12,9 @@ import com.sap.oss.phosphor.fosstars.tool.format.Formatter;
 import com.sap.oss.phosphor.fosstars.tool.format.OssRulesOfPlayRatingMarkdownFormatter;
 import com.sap.oss.phosphor.fosstars.tool.format.PrettyPrinter;
 import com.sap.oss.phosphor.fosstars.tool.report.OssRulesOfPlayGitHubIssuesReporter;
+import com.sap.oss.phosphor.fosstars.tool.report.OssRulesOfPlayMarkdownReporter;
 import com.sap.oss.phosphor.fosstars.tool.report.Reporter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -69,9 +69,8 @@ public class OssRulesOfPlayRatingHandler extends AbstractHandler {
   void processUrl(String url) throws IOException {
     GitHubProject project = GitHubProject.parse(url);
     process(project);
-    Optional<OssRulesOfPlayGitHubIssuesReporter> reporter = issuesReporter();
-    if (reporter.isPresent()) {
-      reporter.get().createIssuesFor(project);
+    if (!commandLine.hasOption("create-issues")) {
+      new OssRulesOfPlayGitHubIssuesReporter(fetcher, markdownFormatter).createIssuesFor(project);
     }
   }
 
@@ -90,22 +89,16 @@ public class OssRulesOfPlayRatingHandler extends AbstractHandler {
   }
 
   @Override
-  List<Reporter<GitHubProject>> makeReporters(Config config) throws IOException {
-    List<Reporter<GitHubProject>> reporters = new ArrayList<>(super.makeReporters(config));
-    issuesReporter().ifPresent(reporters::add);
-    return reporters;
-  }
-
-  /**
-   * Creates a {@link OssRulesOfPlayGitHubIssuesReporter} if possible.
-   *
-   * @return A new {@link OssRulesOfPlayGitHubIssuesReporter} if available.
-   */
-  private Optional<OssRulesOfPlayGitHubIssuesReporter> issuesReporter() {
-    if (!commandLine.hasOption("create-issues") || fetcher == null) {
-      return Optional.empty();
+  Optional<Reporter<GitHubProject>> reporterFrom(ReportConfig reportConfig) throws IOException {
+    requireNonNull(reportConfig.type, "Hey! Reporter type can't be null!");
+    switch (reportConfig.type) {
+      case ISSUES:
+        return Optional.of(new OssRulesOfPlayGitHubIssuesReporter(fetcher, markdownFormatter));
+      case MARKDOWN:
+        return Optional.of(new OssRulesOfPlayMarkdownReporter(reportConfig.where, advisor));
+      default:
+        logger.warn("Oops! That's an unknown type of report: {}", reportConfig.type);
+        return Optional.empty();
     }
-
-    return Optional.of(new OssRulesOfPlayGitHubIssuesReporter(fetcher, markdownFormatter));
   }
 }

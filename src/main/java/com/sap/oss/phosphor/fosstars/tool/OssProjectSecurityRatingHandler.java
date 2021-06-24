@@ -18,9 +18,6 @@ import com.sap.oss.phosphor.fosstars.tool.report.MergedJsonReporter;
 import com.sap.oss.phosphor.fosstars.tool.report.OssSecurityRatingMarkdownReporter;
 import com.sap.oss.phosphor.fosstars.tool.report.Reporter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -139,21 +136,6 @@ public class OssProjectSecurityRatingHandler extends AbstractHandler {
   }
 
   @Override
-  List<Reporter<GitHubProject>> makeReporters(Config config) throws IOException {
-    requireNonNull(config, "Oh no! Config is null!");
-    if (config.reportConfigs == null) {
-      return Collections.singletonList(Reporter.dummy());
-    }
-
-    List<Reporter<GitHubProject>> reporters = new ArrayList<>();
-    for (ReportConfig reportConfig : config.reportConfigs) {
-      reporters.add(reporterFrom(reportConfig));
-    }
-
-    return reporters;
-  }
-
-  @Override
   Formatter createFormatter(String type) {
     switch (type) {
       case "text":
@@ -165,24 +147,19 @@ public class OssProjectSecurityRatingHandler extends AbstractHandler {
     }
   }
 
-  /**
-   * Create a reporter from a specified report config.
-   *
-   * @param reportConfig The config.
-   * @return A reporter.
-   * @throws IOException If something went wrong.
-   */
-  private Reporter<GitHubProject> reporterFrom(ReportConfig reportConfig) throws IOException {
+  @Override
+  Optional<Reporter<GitHubProject>> reporterFrom(ReportConfig reportConfig) throws IOException {
     requireNonNull(reportConfig.type, "Hey! Reporter type can't be null!");
     switch (reportConfig.type) {
       case JSON:
-        return new MergedJsonReporter(reportConfig.where);
+        return Optional.of(new MergedJsonReporter(reportConfig.where));
       case MARKDOWN:
-        return new OssSecurityRatingMarkdownReporter(reportConfig.where, reportConfig.source,
-            (OssSecurityRating) rating, OSS_SECURITY_GITHUB_ADVISOR);
+        return Optional.of(
+            new OssSecurityRatingMarkdownReporter(reportConfig.where, reportConfig.source,
+                (OssSecurityRating) rating, OSS_SECURITY_GITHUB_ADVISOR));
       default:
-        throw new IllegalArgumentException(format(
-            "Oh no! That's an unknown type of report: %s", reportConfig.type));
+        logger.warn("Oops! That's an unknown type of report: {}", reportConfig.type);
+        return Optional.empty();
     }
   }
 
