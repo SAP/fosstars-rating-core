@@ -454,7 +454,7 @@ public abstract class AbstractHandler implements Handler {
    * @return A formatter.
    * @throws IllegalArgumentException If the type is unknown.
    */
-  Formatter createFormatter(String type) throws IOException {
+  Formatter createFormatter(String type) {
     if ("text".equals(type)) {
       return PrettyPrinter.withoutVerboseOutput();
     }
