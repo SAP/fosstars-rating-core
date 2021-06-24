@@ -5,6 +5,7 @@ import static java.lang.String.format;
 import static java.util.Objects.requireNonNull;
 
 import com.sap.oss.phosphor.fosstars.advice.oss.OssRulesOfPlayAdvisor;
+import com.sap.oss.phosphor.fosstars.advice.oss.github.AdviceForGitHubContextFactory;
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
@@ -40,7 +41,7 @@ public class OssRulesOfPlayRatingHandler extends AbstractHandler {
    */
   public OssRulesOfPlayRatingHandler() throws IOException {
     super(RatingRepository.INSTANCE.rating(OssRulesOfPlayRating.class));
-    advisor = new OssRulesOfPlayAdvisor();
+    advisor = new OssRulesOfPlayAdvisor(AdviceForGitHubContextFactory.INSTANCE);
     markdownFormatter = new OssRulesOfPlayRatingMarkdownFormatter(advisor);
   }
 
