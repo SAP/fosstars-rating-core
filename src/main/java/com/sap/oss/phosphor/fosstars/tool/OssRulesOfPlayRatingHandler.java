@@ -70,7 +70,7 @@ public class OssRulesOfPlayRatingHandler extends AbstractHandler {
   void processUrl(String url) throws IOException {
     GitHubProject project = GitHubProject.parse(url);
     process(project);
-    if (!commandLine.hasOption("create-issues")) {
+    if (commandLine.hasOption("create-issues")) {
       new OssRulesOfPlayGitHubIssuesReporter(fetcher, markdownFormatter).createIssuesFor(project);
     }
   }

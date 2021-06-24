@@ -1,5 +1,7 @@
 package com.sap.oss.phosphor.fosstars.data.github;
 
+import static java.lang.String.format;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.util.Json;
@@ -25,6 +27,7 @@ import java.util.Optional;
 import java.util.Set;
 import org.apache.commons.collections4.map.LRUMap;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.jgit.api.Git;
@@ -146,7 +149,7 @@ public class GitHubDataFetcher {
     }
 
     if (!Files.isDirectory(REPOSITORIES_BASE_PATH)) {
-      throw new IOException(String.format("Hey! %s is not a directory!", REPOSITORIES_BASE_PATH));
+      throw new IOException(format("Hey! %s is not a directory!", REPOSITORIES_BASE_PATH));
     }
 
     this.github = github;
@@ -197,7 +200,7 @@ public class GitHubDataFetcher {
 
       return commits;
     } catch (HttpException e) {
-      LOGGER.error(String.format("Could not fetch commits from %s", project.scm()), e);
+      LOGGER.error(format("Could not fetch commits from %s", project.scm()), e);
       return Collections.emptyList();
     }
   }
@@ -229,24 +232,26 @@ public class GitHubDataFetcher {
   }
 
   /**
-   * Search existing GitHub issues in the given project using a query.
+   * Search existing GitHub issues in the given project.
    * 
    * @param project The project that shall be searched for issues.
-   * @param searchQuery The query that shall be used for the search.
+   * @param text The text that shall be used for the search.
    * @return A list of found issues. Empty if search was unsuccessful.
    * @throws IOException If something went wrong.
    */
-  public List<GHIssue> gitHubIssuesFor(GitHubProject project, String searchQuery)
-      throws IOException {
+  public List<GHIssue> gitHubIssuesFor(GitHubProject project, String text) throws IOException {
     Objects.requireNonNull(project, "Oh no! The project is null!");
-    if (searchQuery == null || searchQuery.isEmpty()) {
+    if (StringUtils.isEmpty(text)) {
       throw new IllegalArgumentException("Oh no! The search query is invalid!");
     }
 
+    String searchQuery = format("%s repo:%s/%s",
+        text, project.organization().name(), project.name());
     List<GHIssue> issues = new ArrayList<>();
     for (GHIssue issue : github().searchIssues().isOpen().q(searchQuery).list()) {
       issues.add(issue);
     }
+
     return issues;
   }
 
@@ -266,13 +271,13 @@ public class GitHubDataFetcher {
 
     GHRepository repository = github().getRepository(project.path());
     if (repository == null) {
-      throw new IOException(String.format("Could not fetch repository %s (null)", project.scm()));
+      throw new IOException(format("Could not fetch repository %s (null)", project.scm()));
     }
 
     try {
       repository.getDirectoryContent("/");
     } catch (GHFileNotFoundException e) {
-      throw new IOException(String.format("Could not fetch content of / in %s", project.scm()));
+      throw new IOException(format("Could not fetch content of / in %s", project.scm()));
     }
 
     repositoryCache.put(project, repository, expiration());
@@ -424,7 +429,7 @@ public class GitHubDataFetcher {
               .setMustExist(true)
               .build());
     } catch (IOException e) {
-      LOGGER.error(() -> String.format("Could not open a repository at %s", path), e);
+      LOGGER.error(() -> format("Could not open a repository at %s", path), e);
       return Optional.empty();
     }
   }
@@ -460,7 +465,7 @@ public class GitHubDataFetcher {
 
       if (!Files.isRegularFile(LOCAL_REPOSITORIES_INFO_FILE)) {
         throw new IOException(
-            String.format("Hey! %s is not a file!", LOCAL_REPOSITORIES_INFO_FILE));
+            format("Hey! %s is not a file!", LOCAL_REPOSITORIES_INFO_FILE));
       }
 
       try (InputStream is = Files.newInputStream(LOCAL_REPOSITORIES_INFO_FILE)) {
@@ -515,7 +520,7 @@ public class GitHubDataFetcher {
             FileUtils.deleteDirectory(info.path().toFile());
           } catch (IOException e) {
             LOGGER.error(
-                () -> String.format("Could not delete a local repository: %s", info.path()), e);
+                () -> format("Could not delete a local repository: %s", info.path()), e);
           }
           toBeRemoved.add(url);
         }
