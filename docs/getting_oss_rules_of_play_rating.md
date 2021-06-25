@@ -1,32 +1,45 @@
 # Getting the OSS rules of play ratings
 
-The page describes how a rules of play rating may be calculated for an open source project.
+The page describes how a Rules of Play (RoP) rating may be calculated for an open source project.
 
 ## Configuration
 
-Several of the rules need to configured as the detailed guidelines differ from project to project, for example which licenses may be allowed in your organization or which sections you want to enforce in the README file. Thus, in order to get proper OSS rules of play ratings, you need to provide some details. These details are usually passed to Fosstars via YAML configuration files for the respective data providers. Below you find the configurable data providers, information how to name the configuration files and the possible options in the respective configuration file. The section about the command-line tool further below explains how to pass these configuration files to Fosstars. The configuration that SAP uses for their OSS rules of play check run can be accessed in the [fosstars-oss-rules-of-play-sap-report](https://github.com/SAP/fosstars-rating-core/tree/fosstars-oss-rules-of-play-sap-report) branch.
+Several of the rules need to be configured as the detailed guidelines differ from project to project,
+for example, which licenses may be allowed in your organization, or which sections you want to enforce in the README file.
+Thus, in order to get proper OSS rules of play ratings, you need to provide some details.
+These details are usually passed to Fosstars via YAML configuration files for the respective data providers. 
+Below you find the configurable data providers, information how to name the configuration files and the possible options in the respective configuration file.
+The section about the command-line tool further below explains how to pass these configuration files to Fosstars.
+The configuration that SAP uses for their OSS rules of play check run can be found in the [fosstars-oss-rules-of-play-sap-report](https://github.com/SAP/fosstars-rating-core/tree/fosstars-oss-rules-of-play-sap-report) branch.
 
 ### Contributing Guidelines
-This data provider `ContributingGuidelineInfo` allows you to specify 2 types of regular expression patterns 
-- The content that you expect to be part of the contributing guidelines
-- The content that you expect must not be part of the contributing guidelines
-The option is called `requiredContentPatterns` and expects a list of one or multiple entries. If you enter multiple entries, the contribution guidelines must comply with all the patterns for the rule to pass.
+The data provider `ContributingGuidelineInfo` allows you to specify 2 types of regular expression patterns 
+- The content that you expect to be part of the contributing guidelines.
+- The content that you expect must not be part of the contributing guidelines.
+The option is called `requiredContentPatterns` and expects a list of one or multiple Regex. If you enter multiple entries, the contribution guidelines must comply with all the patterns for the rule to pass.
 
 ### Licensing
-This data provider with the ID `LicenseInfo` allows you to specify which license(s) should be allowed in the analyzed project. This option is called `allowedLicenses` and expects a list of one or more SPDX license IDs. In addition you can check for terms that must not in the license (e.g. to avoid modifications) using regular expression patterns. The corresponding option is called `disallowedLicensePatterns`, accepts a list of patterns, but can also be left empty. Finally, you are also able to specify exceptions, i.e. which repositories shall not be checked with this data provider, for example because certain repositories are known to use other licenses, but have gone through an exception process. The option is called `repositoryExceptions` and can accept a list of full repository URLs, e.g. `https://github.com/SAP/fosstars-rating-core`, but can also be left empty if there are no exceptions.
+The data provider `LicenseInfo` allows you to specify which license(s) should be allowed in the analyzed project.
+This option is called `allowedLicenses` and expects a list of one or more SPDX license IDs.
+In addition you can check for terms that must not in the license (e.g. to avoid modifications) using regular expression patterns.
+The corresponding option is called `disallowedLicensePatterns`, and it accepts a list of patterns, but can also be left empty.
+Finally, you are also able to specify exceptions, i.e. which repositories shall not be checked with this data provider, for example, because certain repositories are known to use other licenses, but have gone through an exception process.
+The option is called `repositoryExceptions` and can accept a list of full repository URLs, e.g. `https://github.com/SAP/fosstars-rating-core`, but can also be left empty if there are no exceptions.
 
 ### Readme
-This data provider with the ID `ReadmeInfo` allows you to specify which terms or patterns you expect to see in a README file. The corresponding option `requiredContentPatterns` expects a list of one or more regular expression patterns. If you enter multiple entries, the README file content must match all patterns for the rule to pass.
+The data provider `ReadmeInfo` allows you to specify which terms or patterns you expect to see in a README file.
+The corresponding option `requiredContentPatterns` expects a list of one or more regular expression patterns.
+If you enter multiple entries, the README file content must match all patterns for the rule to pass.
 
 ## Rule IDs and Documentation URL
 
-In order to be able to identify a certain rule better in the final result report, e.g. for follow-up actions, Fosstars expects that all rules are configured with a customized rule ID. That configuration needs to be in a file called `OssRulesOfPlayRatingMarkdownFormatter.config.yaml` and should be placed in the current working directory. The relevant option is called `ruleIds` and expects a list of key/value pairs where the key is the customized rule ID and the value the descriptive name of the rule that is maintained in the [OssFeatures class]((https://github.com/SAP/fosstars-rating-core/blob/master/src/main/java/com/sap/oss/phosphor/fosstars/model/feature/oss/OssFeatures.java)). 
+In order to be able to identify a certain rule better in the final result report, e.g. for follow-up actions, Fosstars expects that all rules are configured with a customized rule ID. That configuration needs to be in a file called `OssRulesOfPlayRatingMarkdownFormatter.config.yaml` and should be placed in the current working directory. The relevant option is called `ruleIds` and expects a list of key/value pairs where the key is the customized rule ID and the value the descriptive name of the rule that is maintained in the [OssFeatures class](../src/main/java/com/sap/oss/phosphor/fosstars/model/feature/oss/OssFeatures.java). 
 Moreover, you should provide a documentation URL that explains your OSS rules of play configuration and the expected content of the checked repositories. The corresponding option is called `documentationUrl` and expects a single string pointing to the documentation web page.
 The configuration that SAP uses for their OSS rules of play check run can be accessed in the [fosstars-oss-rules-of-play-sap-report](https://github.com/SAP/fosstars-rating-core/blob/fosstars-oss-rules-of-play-sap-report/OssRulesOfPlayRatingMarkdownFormatter.config.yml) branch.
 
 ## Command-line tool for calculating OSS rules of play ratings
 
-The command-line tool to calculate OSS rules of play ratings is the same as the one that is [used to get security ratings](getting_oss_security_rating.md).
+The command-line tool can be used to calculate OSS Rules of Play ratings.
 
 The following commands download the source code and build the command-line tool with Maven:
 
@@ -122,17 +135,13 @@ If everything is correctly set up, the output is going to look like the followin
 [+] Bye!
 ```
 
-The tool prints out the gathered data, the structure of the overall security score, used sub-scores,
-their weights and so on. This info may be useful if one would like to understand how the tool
-calculated the rating. In the end, the tool print a list of possible improvements in the project
-that would positively impact the rating.
+The tool prints out the gathered data and a status for the project.
 
-If `--interactive` option is specified, the tool becomes a bit interactive,
-and may ask the user a couple of questions about the project.
 
 ### Creating GitHub issues for failed rules
 
-Exclusively for the OSS rules of play rating, Fosstars can create GitHub issues for failed rules directly in the affected repositories so the issues can be followed up by the repository owners. If you want to do that, add the command-line option `--create-issues`. Fosstars will inform you on the command-line about the issue creation process as well:
+Exclusively for the OSS rules of play rating, Fosstars can create GitHub issues for failed rules directly in the affected repositories so the issues can be followed up by the repository owners. If you want to do that, add the command-line option `--create-issues` or enable `ISSUES` reporter in a config file passes through `--config` options.
+Fosstars will inform you on the command-line about the issue creation process as well:
 
 ```
 [+] Creating issues for findings on https://github.com/<organization>/<repository>
@@ -145,6 +154,17 @@ Exclusively for the OSS rules of play rating, Fosstars can create GitHub issues 
 [+] New issue: [rop-reuse_tool-3] Violation against OSS Rules of Play
 [+] New issue: [rop-reuse_tool-4] Violation against OSS Rules of Play
 ```
+
+Here is an example of a configuration file the scans projects in an organization on GitHub, creates a Markdown report and opens issues for violated rules:
+
+cache: .fosstars/project_rating_cache.json
+reports:
+  - type: markdown # create a Markdown report in the current directory
+    where: ./
+  - type: ISSUES # open issues for violated rules
+finder:
+  organizations: # scan project in the SAP organization
+    - name: SAP
 
 Of course, it won't create duplicates of already existing GitHub issues. Fosstars uses the previously defined rule IDs to check if the repository already contains an issue with the same ID that is not closed yet. In such cases, the command-line output will also report that accordingly:
 
@@ -166,7 +186,7 @@ Other command-line options are as well available for use with the OSS rules of p
 
 ## Fosstars OSS Rules of Play GitHub action
 
-SAP already uses the OSS Rules of Play rating in a [GitHub action](https://github.com/SAP/fosstars-rating-core/blob/master/.github/workflows/fosstars-rules-of-play.yml) and posts the results in a dedicated branch on [fosstars-rating-core](https://github.com/SAP/fosstars-rating-core/tree/fosstars-oss-rules-of-play-sap-report).
+SAP already uses the OSS Rules of Play rating in a [GitHub action](https://github.com/SAP/fosstars-rating-core/blob/master/.github/workflows/fosstars-rules-of-play.yml) and posts the results to the branch [fosstars-oss-rules-of-play-sap-report](https://github.com/SAP/fosstars-rating-core/tree/fosstars-oss-rules-of-play-sap-report).
 
 ---
 

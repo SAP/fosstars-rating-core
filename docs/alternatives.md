@@ -114,4 +114,4 @@ Here are some of them:
 
 ---
 
-Next: [Rules of play rating for open source projects](oss_rules_of_play_rating.md)
+Next: [Notes](notes.md)
