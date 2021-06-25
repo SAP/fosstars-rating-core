@@ -1,6 +1,6 @@
 # Rules of play ratings for open source projects
 
-This section describes a rules of play rating for open source projects.
+This section describes a rules of play rating for OSS projects.
 The rating is implemented in the [OssRulesOfPlayRating](https://github.com/SAP/fosstars-rating-core/blob/master/src/main/java/com/sap/oss/phosphor/fosstars/model/rating/oss/OssRulesOfPlayRating.java) class.
 
 The rating assesses how well projects care about open source best practices and community health aspects. 
@@ -10,8 +10,8 @@ The rating may be used to estimate how well-administered an open source project 
 Here is a list of labels:
 
 1.  `PASSED`: the project implements good measures and in general cares about open source rules of play.
-1.  `PASSED_WITH_WARNING`: the compliance to open source rules of play in the project fulfills the minimum expectations, but shows some issues that should be resolved.
-1.  `FAILED`: looks like the project doesn't care well about open source rules of play.
+1.  `PASSED_WITH_WARNING`: the project fulfills the minimum expectations of the rules of play compliance, but shows some issues that should be resolved.
+1.  `FAILED`: the project doesn't fulfill the minimum expectation of the rules of play compliance.
 1.  `UNCLEAR`: there is no enough data to reliably calculate a score and a label for the project.
 
 The [rating procedure](https://github.com/SAP/fosstars-rating-core/blob/master/src/main/java/com/sap/oss/phosphor/fosstars/model/rating/oss/OssRulesOfPlayRating.java#L31) checks if any rules that are expected to be [true](https://github.com/SAP/fosstars-rating-core/blob/master/src/main/java/com/sap/oss/phosphor/fosstars/model/score/oss/OssRulesOfPlayScore.java#L51) or [false](https://github.com/SAP/fosstars-rating-core/blob/master/src/main/java/com/sap/oss/phosphor/fosstars/model/score/oss/OssRulesOfPlayScore.java#L71) match the expectations. If one of the expectations are not met, the project gets the `FAILED` label. 
