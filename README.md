@@ -4,8 +4,8 @@
 
 |                           | # or projects                    | % or projects                      |
 | :------------------------ | -------------------------------: | ---------------------------------: |
-| Total                     |             244 |                               100% |
-| Failed                    |         189 |         77.5% |
+| Total                     |             245 |                               100% |
+| Failed                    |         190 |         77.6% |
 | Passed with&nbsp;warnings |  34 |  13.9% |
 | Passed                    |         21 |         8.6% |
 | Unclear                   |        0 |        0.0% |
@@ -203,6 +203,7 @@
 | [SAP/sap.github.io](https://github.com/SAP/sap.github.io) | [Failed](SAP/sap.github.io.md) | 11 violated rules |
 | [SAP/cloud-sdk-ios](https://github.com/SAP/cloud-sdk-ios) | [Failed](SAP/cloud-sdk-ios.md) | 7 violated rules |
 | [SAP/.github](https://github.com/SAP/.github) | [Failed](SAP/.github.md) | 10 violated rules |
+| [SAP/gigya-cdp-js-sdk](https://github.com/SAP/gigya-cdp-js-sdk) | [Failed](SAP/gigya-cdp-js-sdk.md) | 4 violated rules |
 | [SAP/openui5](https://github.com/SAP/openui5) | [Passed](SAP/openui5.md) | No violated rules |
 | [SAP/commerce-gradle-plugin](https://github.com/SAP/commerce-gradle-plugin) | [Passed](SAP/commerce-gradle-plugin.md) | No violated rules |
 | [SAP/quality-continuous-traceability-monitor](https://github.com/SAP/quality-continuous-traceability-monitor) | [Passed](SAP/quality-continuous-traceability-monitor.md) | No violated rules |
