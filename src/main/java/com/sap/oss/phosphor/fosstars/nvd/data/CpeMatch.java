@@ -1,11 +1,11 @@
 package com.sap.oss.phosphor.fosstars.nvd.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
+import javax.annotation.Nullable;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -13,69 +13,46 @@ import org.apache.commons.lang3.StringUtils;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "vulnerable",
     "cpe22Uri",
     "cpe23Uri",
-    "versionStartExcluding",
     "versionStartIncluding",
-    "versionEndExcluding",
-    "versionEndIncluding",
-    "cpe_name"
+    "versionEndIncluding"
+})
+// the properties below are ignored because they are not used
+// that saves a bit of memory
+// when they become necessary, then can be enabled
+@JsonIgnoreProperties({
+    "vulnerable",
+    "cpe_name",
+    "versionStartExcluding",
+    "versionEndExcluding"
 })
 public class CpeMatch {
 
-  @JsonProperty("vulnerable")
-  private Boolean vulnerable;
+  private final Cpe22Uri cpe22Uri;
+  private final Cpe23Uri cpe23Uri;
 
-  @JsonProperty("cpe22Uri")
-  private String cpe22Uri;
+  private final String versionStartIncluding;
+  private final String versionEndIncluding;
 
-  @JsonProperty("cpe23Uri")
-  private String cpe23Uri;
+  private CpeMatch(
+      @JsonProperty("cpe22Uri") @Nullable String cpe22Uri,
+      @JsonProperty("cpe23Uri") @Nullable String cpe23Uri,
+      @JsonProperty("versionStartIncluding") @Nullable String versionStartIncluding,
+      @JsonProperty("versionEndIncluding") @Nullable String versionEndIncluding) {
 
-  @JsonProperty("versionStartExcluding")
-  private String versionStartExcluding;
-
-  @JsonProperty("versionStartIncluding")
-  private String versionStartIncluding;
-
-  @JsonProperty("versionEndExcluding")
-  private String versionEndExcluding;
-
-  @JsonProperty("versionEndIncluding")
-  private String versionEndIncluding;
-
-  @JsonProperty("cpe_name")
-  private List<CpeName> cpeName = new ArrayList<>();
-
-  @JsonProperty("vulnerable")
-  public Boolean getVulnerable() {
-    return vulnerable;
+    this.cpe22Uri = StringUtils.isEmpty(cpe22Uri) ? null : new Cpe22Uri(cpe22Uri);
+    this.cpe23Uri = StringUtils.isEmpty(cpe23Uri) ? null : new Cpe23Uri(cpe23Uri);
+    this.versionStartIncluding = versionStartIncluding;
+    this.versionEndIncluding = versionEndIncluding;
   }
 
-  @JsonProperty("versionEndExcluding")
-  public String getVersionEndExcluding() {
-    return versionEndExcluding;
-  }
-
-  @JsonProperty("versionEndIncluding")
-  public String getVersionEndIncluding() {
+  public String versionEndIncluding() {
     return versionEndIncluding;
   }
 
-  @JsonProperty("versionStartIncluding")
-  public String getVersionStartIncluding() {
+  public String versionStartIncluding() {
     return versionStartIncluding;
-  }
-
-  @JsonProperty("cpe22Uri")
-  public String getCpe22Uri() {
-    return cpe22Uri;
-  }
-
-  @JsonProperty("cpe23Uri")
-  public String getCpe23Uri() {
-    return cpe23Uri;
   }
 
   /**
@@ -85,14 +62,6 @@ public class CpeMatch {
    * @return A {@link CpeUri} if available.
    */
   public Optional<CpeUri> getCpeUri() {
-    if (!StringUtils.isEmpty(cpe23Uri)) {
-      return Optional.of(new Cpe23Uri(cpe23Uri));
-    }
-
-    if (!StringUtils.isEmpty(cpe22Uri)) {
-      return Optional.of(new Cpe22Uri(cpe22Uri));
-    }
-
-    return Optional.empty();
+    return cpe23Uri != null ? Optional.of(cpe23Uri) : Optional.ofNullable(cpe22Uri);
   }
 }
