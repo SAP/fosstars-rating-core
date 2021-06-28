@@ -6,8 +6,6 @@
 
 1.  **[rl-license_file-1]** Does it have a license file? **No**
 1.  **[rl-reuse_tool-1]** Does README mention REUSE? **No**
-1.  **[rl-reuse_tool-3]** Is it registered in REUSE? **No**
-1.  **[rl-reuse_tool-4]** Is it compliant with REUSE rules? **No**
 
 
 ## Warnings
@@ -34,6 +32,8 @@
 1.  **[rl-readme_file-1]** Does it have a README file? **Yes**
 1.  **[rl-readme_file-2]** If a project's README doesn't contain required info **No**
 1.  **[rl-reuse_tool-2]** Does it have LICENSES directory with licenses? **Yes**
+1.  **[rl-reuse_tool-3]** Is it registered in REUSE? **Yes**
+1.  **[rl-reuse_tool-4]** Is it compliant with REUSE rules? **Yes**
 1.  **[rl-security_policy-1]** Does it have a security policy? **Yes**
 1.  **[rl-vulnerability_alerts-1]** Are vulnerability alerts enabled? **Yes**
 1.  **[rl-vulnerability_alerts-2]** Does it have unresolved vulnerability alerts? **No**
@@ -47,7 +47,4 @@
 3.  No contributing guideline file could be found in your repository. Though it's only a recommendation, we'd like to encourage you to add some information that can be detected by GitHub.
     More info:
     1.  [Setting guidelines for repository contributors](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/setting-guidelines-for-repository-contributors#adding-a-contributing-file)
-4.  The README of your projects needs to include a link to the results of the REUSE tool scan as well as a licensing section.5.  A registration for the repository could not be found. Please verify that the repository is registered properly.
-    More info:
-    1.  [Register a project in REUSE](https://api.reuse.software/register)
-6.  The latest REUSE tool compliance check resulted in errors. Please perform the check again on your repository and fix the issues.
+4.  The README of your projects needs to include a link to the results of the REUSE tool scan as well as a licensing section.
