@@ -273,7 +273,7 @@ public class Application {
         = new GitHubDataFetcher(connectToGithub(githubToken, callback), githubToken);
 
     List<String> withConfigs = asList(
-        commandLine.getOptionValue("data-provider-configs", "").split("\\s+,\\s+,"));
+        commandLine.getOptionValue("data-provider-configs", "").split(","));
 
     Path path = Paths.get(FOSSTARS_DIRECTORY);
     if (!Files.exists(path)) {
