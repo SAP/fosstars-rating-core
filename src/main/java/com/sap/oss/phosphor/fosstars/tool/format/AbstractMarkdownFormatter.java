@@ -99,9 +99,9 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
     sb.append(markdownAdviceHeader()).append("\n\n");
     int i = 1;
     for (Advice advice : adviceList) {
-      sb.append(String.format("%d.  %s", i++, advice.content().text()));
+      sb.append(String.format("%d.  %s%n", i++, advice.content().text()));
       if (!advice.content().links().isEmpty()) {
-        sb.append("\n    More info:").append("\n");
+        sb.append("    More info:").append("\n");
         int j = 1;
         for (Link link : advice.content().links()) {
           sb.append(String.format("    %d.  [%s](%s)%n", j++, link.name, link.url));

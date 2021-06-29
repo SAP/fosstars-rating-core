@@ -18,6 +18,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SE
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_TEAM;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_TEAM_WITH_PUSH_PRIVILEGES_ON_GITHUB;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_UNRESOLVED_VULNERABILITY_ALERTS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.INCOMPLETE_README;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.IS_APACHE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.IS_ECLIPSE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.IS_REUSE_COMPLIANT;
@@ -184,6 +185,7 @@ public abstract class CommonFormatter implements Formatter {
     add(ALLOWED_LICENSE, "Does it use an allowed license?");
     add(LICENSE_HAS_DISALLOWED_CONTENT, "Does the license have disallowed content?");
     add(HAS_README, "Does it have a README file?");
+    add(INCOMPLETE_README, "Is README incomplete?");
     add(HAS_CONTRIBUTING_GUIDELINE, "Does it have a contributing guideline?");
     add(HAS_REQUIRED_TEXT_IN_CONTRIBUTING_GUIDELINE,
         "Does the contributing guideline have required text?");
