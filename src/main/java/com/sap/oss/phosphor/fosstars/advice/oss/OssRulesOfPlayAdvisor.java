@@ -12,6 +12,7 @@ import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.feature.BooleanFeature;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating;
+import com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScore;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
@@ -74,14 +75,18 @@ public class OssRulesOfPlayAdvisor extends AbstractOssAdvisor {
       Subject subject, List<Value<?>> usedValues, OssAdviceContext context)
       throws MalformedURLException {
 
+    List<Value<Boolean>> toBeAdvised = new ArrayList<>();
+    toBeAdvised.addAll(OssRulesOfPlayScore.findViolatedRulesIn(usedValues));
+    toBeAdvised.addAll(OssRulesOfPlayScore.findWarningsIn(usedValues));
+
     List<Advice> advice = new ArrayList<>();
     for (Feature<?> feature : RATING.allFeatures()) {
       if (!BooleanFeature.class.isAssignableFrom(feature.getClass())) {
         throw new IllegalStateException(
             String.format("Oops! Not a boolean feature: %s", feature.name()));
       }
-      advice.addAll(
-          adviceForBooleanFeature(usedValues, (BooleanFeature) feature, subject, context));
+
+      advice.addAll(adviceForFeature(usedValues, feature, subject, context, toBeAdvised::contains));
     }
 
     return advice;
