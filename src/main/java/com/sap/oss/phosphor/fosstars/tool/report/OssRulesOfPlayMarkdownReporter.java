@@ -201,7 +201,7 @@ public class OssRulesOfPlayMarkdownReporter extends AbstractReporter<GitHubProje
     return String.format("[%s](%s/%s.md)",
         project.ratingValue()
             .map(RatingValue::label)
-            .map(OssRulesOfPlayRatingMarkdownFormatter::format)
+            .map(OssRulesOfPlayRatingMarkdownFormatter::formatted)
             .orElse("UNKNOWN"),
         project.organization().name(),
         project.name());

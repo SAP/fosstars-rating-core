@@ -2,6 +2,7 @@ package com.sap.oss.phosphor.fosstars.tool.report;
 
 import static java.lang.String.format;
 import static java.util.Objects.requireNonNull;
+import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 import com.sap.oss.phosphor.fosstars.data.github.GitHubDataFetcher;
 import com.sap.oss.phosphor.fosstars.model.Value;
@@ -100,8 +101,9 @@ public class OssRulesOfPlayGitHubIssuesReporter implements Reporter<GitHubProjec
    * @return The title.
    */
   public String printTitle(Value<?> value) {
-    return format(
-        "%s Violation against OSS Rules of Play", formatter.identifierOf(value.feature()));
+    String title = "Violation against OSS Rules of Play";
+    return formatter.identifierOf(value.feature())
+        .map(id -> format("%s %s", id, title)).orElse(title);
   }
 
   /**
@@ -115,7 +117,7 @@ public class OssRulesOfPlayGitHubIssuesReporter implements Reporter<GitHubProjec
         "A violation against the OSS Rules of Play has been detected.\n\n");
 
     sb.append(format("Rule ID: %s\nExplanation: %s **%s**\n\n",
-        formatter.identifierOf(value.feature()).replaceAll("[\\[\\]]", ""),
+        formatter.identifierOf(value.feature()).orElse(EMPTY).replaceAll("[\\[\\]]", EMPTY),
         formatter.nameOf(value.feature()),
         formatter.printValueAnswer(value)));
 

@@ -1,5 +1,7 @@
 package com.sap.oss.phosphor.fosstars.tool.format;
 
+import static java.lang.String.format;
+
 import com.sap.oss.phosphor.fosstars.advice.Advice;
 import com.sap.oss.phosphor.fosstars.advice.Advisor;
 import com.sap.oss.phosphor.fosstars.advice.Link;
@@ -45,7 +47,6 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
     super(advisor);
   }
 
-  @Override
   public String print(RatingValue ratingValue) {
     return print(ratingValue, NO_ADVICE);
   }
@@ -99,7 +100,7 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
     sb.append(markdownAdviceHeader()).append("\n\n");
     int i = 1;
     for (Advice advice : adviceList) {
-      sb.append(String.format("%d.  %s%n", i++, advice.content().text()));
+      sb.append(format("%d.  %s%n", i++, advice.content().text()));
       if (!advice.content().links().isEmpty()) {
         sb.append("    More info:").append("\n");
         int j = 1;
@@ -138,7 +139,7 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
       if (vulnerabilities.isEmpty()) {
         return "Not found";
       } else {
-        return String.format("%s, [details below](#known-vulnerabilities)", vulnerabilities);
+        return format("%s, [details below](#known-vulnerabilities)", vulnerabilities);
       }
     }
 
@@ -184,10 +185,9 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
     StringBuilder info = new StringBuilder();
     for (Vulnerability vulnerability : uniqueVulnerabilities) {
       if (vulnerability.description().isPresent()) {
-        info.append(String.format("1.  %s: %s%n",
-            linkFor(vulnerability), vulnerability.description()));
+        info.append(format("1.  %s: %s%n", linkFor(vulnerability), vulnerability.description()));
       } else {
-        info.append(String.format("1.  %s%n", linkFor(vulnerability)));
+        info.append(format("1.  %s%n", linkFor(vulnerability)));
       }
     }
     return info.toString();
@@ -201,7 +201,7 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
    */
   private static String linkFor(Vulnerability vulnerability) {
     if (vulnerability.id().startsWith("CVE-")) {
-      return String.format("[%s](https://nvd.nist.gov/vuln/detail/%s)",
+      return format("[%s](https://nvd.nist.gov/vuln/detail/%s)",
           vulnerability.id(), vulnerability.id());
     }
 
@@ -253,7 +253,7 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
     StringBuilder sb = new StringBuilder();
 
     usedSubScoreValuesIn(scoreValue).forEach(subScoreValue -> {
-      sb.append(String.format("%s1.  %s%n", indent, shortDescriptionOf(subScoreValue)));
+      sb.append(format("%s1.  %s%n", indent, shortDescriptionOf(subScoreValue)));
       sb.append(highLevelDescriptionOf(subScoreValue, indent + LIST_INDENT_STEP));
     });
 
@@ -267,7 +267,7 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
    * @return A formatted text.
    */
   private String shortDescriptionOf(ScoreValue scoreValue) {
-    return String.format("**%s**: **%s** (weight is %s)",
+    return format("**%s**: **%s** (weight is %s)",
         anchorFor(nameOf(scoreValue.score())),
         actualValueOf(scoreValue),
         formatted(scoreValue.weight())
@@ -281,7 +281,7 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
    * @return The anchor.
    */
   private static String anchorFor(String section) {
-    return String.format("[%s](#%s)", section, section.toLowerCase().replaceAll("\\s+", "-"));
+    return format("[%s](#%s)", section, section.toLowerCase().replaceAll("\\s+", "-"));
   }
 
   /**
@@ -322,9 +322,9 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
   String detailsOf(ScoreValue scoreValue) {
     StringBuilder sb = new StringBuilder();
 
-    sb.append(String.format("### %s%n%n", nameOf(scoreValue.score())));
+    sb.append(format("### %s%n%n", nameOf(scoreValue.score())));
 
-    sb.append(String.format("Score: **%s**, confidence is %s (%s), weight is %s (%s)%n%n",
+    sb.append(format("Score: **%s**, confidence is %s (%s), weight is %s (%s)%n%n",
         actualValueOf(scoreValue),
         formatted(scoreValue.confidence()),
         confidenceLabelFor(scoreValue.confidence()).toLowerCase(),
@@ -350,14 +350,14 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
     if (!subScoreValues.isEmpty()) {
       subScoreValues.sort(Collections.reverseOrder(Comparator.comparingDouble(ScoreValue::weight)));
 
-      sb.append(String.format("This sub-score is based on the following sub-score%s:%n%n",
+      sb.append(format("This sub-score is based on the following sub-score%s:%n%n",
           subScoreValues.size() == 1 ? StringUtils.EMPTY : "s"));
       sb.append(highLevelDescriptionOf(scoreValue));
       sb.append("\n");
     }
 
     if (!featureValues.isEmpty()) {
-      sb.append(String.format("This sub-score is based on %d feature%s:%n%n",
+      sb.append(format("This sub-score is based on %d feature%s:%n%n",
           featureValues.size(), featureValues.size() == 1 ? StringUtils.EMPTY : "s"));
 
       Map<String, String> nameToValue = new TreeMap<>(String::compareTo);
@@ -372,7 +372,7 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
       }
 
       for (Map.Entry<String, String> entry : nameToValue.entrySet()) {
-        sb.append(String.format("1.  %s **%s**%n", entry.getKey(), entry.getValue()));
+        sb.append(format("1.  %s **%s**%n", entry.getKey(), entry.getValue()));
       }
     }
 
