@@ -205,6 +205,12 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
         .replace("%ADVICE%", makeAdviceFrom(violations, warnings, passedRules, unclearRules));
   }
 
+  /**
+   * Looks for advice for a subject.
+   *
+   * @param subject The subject.
+   * @return A list of advice.
+   */
   private List<Advice> adviceFor(Subject subject) {
     try {
       return advisor.adviceFor(subject);
@@ -682,7 +688,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     @Override
     public String make() {
       String headerString = header.make();
-      return empty(headerString) ? EMPTY : format("%s%n%n%s%n", headerString, text.make());
+      return empty(headerString) ? EMPTY : format("%s\n\n%s\n", headerString, text.make());
     }
   }
 
@@ -792,15 +798,15 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
           if (!iterator.hasNext()) {
             continue;
           }
-          content.append(format("%s%s%n", prefix, iterator.next().make()));
+          content.append(format("%s%s\n", prefix, iterator.next().make()));
           while (iterator.hasNext()) {
             String indentedContent = Arrays.stream(iterator.next().make().split(NEW_LINE))
                 .map(line -> format("%s%s", indent, line))
                 .collect(joining(NEW_LINE));
-            content.append(format("%s%n", indentedContent));
+            content.append(format("%s\n", indentedContent));
           }
         } else {
-          content.append(format("%s%s%n", prefix, element.make()));
+          content.append(format("%s%s\n", prefix, element.make()));
         }
       }
 
