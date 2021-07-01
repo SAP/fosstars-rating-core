@@ -13,7 +13,6 @@ import static java.util.stream.Collectors.toList;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static org.apache.commons.lang3.StringUtils.repeat;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -39,6 +38,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -242,30 +242,33 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     }
 
     List<MarkdownElement> elements = rules.stream().map(rule -> rule.listText).collect(toList());
-    MarkdownList list = Markdown.list().of(elements);
+    MarkdownList list = Markdown.orderedListOf(elements);
     MarkdownHeader header = Markdown.header().level(2).withCaption(title);
     return Markdown.join(header, list).delimitedBy(NEW_LINE).make();
   }
 
-  private Optional<String> adviceTextFor(Value<Boolean> rule, List<Advice> adviceList) {
-    String prefix = rule.explanation().size() + adviceList.size() > 1 ? "* " : EMPTY;
-
-    StringBuilder content = new StringBuilder();
+  private String adviceTextFor(Value<Boolean> rule, List<Advice> adviceList) {
+    List<MarkdownElement> elements = new ArrayList<>();
 
     for (String note : rule.explanation()) {
-      content.append(format("%s%s%n", prefix, note));
+      elements.add(Markdown.string(note));
     }
 
     for (Advice advice : adviceList) {
-      content.append(format("%s %s%n", prefix, advice.content().text()));
-      for (Link link : advice.content().links()) {
-        content.append(format("  * %s%n", formatted(link)));
-      }
+      MarkdownString text = Markdown.string(advice.content().text());
+      UnorderedMarkdownList links = Markdown.unorderedListOf(linksIn(advice));
+      MarkdownElement adviceContent = Markdown.group(text, links);
+      elements.add(adviceContent);
     }
 
-    String result = content.toString();
+    return Markdown.join(elements).delimitedBy(NEW_LINE).make();
+  }
 
-    return isNotBlank(result) ? Optional.of(result) : Optional.empty();
+  private List<MarkdownElement> linksIn(Advice advice) {
+    return advice.content().links().stream()
+        .map(this::formatted)
+        .map(Markdown::string)
+        .collect(toList());
   }
 
   private static List<Value<Boolean>> violationsIn(RatingValue ratingValue) {
@@ -324,7 +327,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
   }
 
   private FormattedRule formatted(Value<Boolean> rule, List<Advice> adviceList) {
-    String advice = adviceTextFor(rule, selectAdviceFor(rule, adviceList)).orElse(EMPTY);
+    String advice = adviceTextFor(rule, selectAdviceFor(rule, adviceList));
     BooleanSupplier weHaveAdvice = () -> !empty(advice);
 
     MarkdownString id = Markdown.string(featureToRuleId.get(rule.feature()));
@@ -336,7 +339,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     MarkdownChoice identifier
         = Markdown.choose(identifierWithReference).when(weHaveAdvice).otherwise(ruleId);
     MarkdownString formattedRule = Markdown.string(formatted(rule));
-    JoinedMarkdown listText = Markdown.join(identifier, formattedRule).delimitedBy(SPACE);
+    JoinedMarkdownElements listText = Markdown.join(identifier, formattedRule).delimitedBy(SPACE);
 
     return new FormattedRule(listText, adviceSection);
   }
@@ -526,12 +529,12 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
 
   }
 
-  private interface MarkdownElement {
+  interface MarkdownElement {
 
     String make();
   }
 
-  private static class MarkdownString implements MarkdownElement {
+  static class MarkdownString implements MarkdownElement {
 
     static final MarkdownString EMPTY = new MarkdownString(StringUtils.EMPTY);
 
@@ -547,7 +550,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     }
   }
 
-  private static class MarkdownRuleIdentifier implements MarkdownElement {
+  static class MarkdownRuleIdentifier implements MarkdownElement {
 
     private final MarkdownElement identifier;
 
@@ -562,7 +565,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     }
   }
 
-  private static class MarkdownHeader implements MarkdownElement {
+  static class MarkdownHeader implements MarkdownElement {
 
     private final MarkdownElement caption;
     private final int level;
@@ -579,7 +582,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     }
   }
 
-  private static class MarkdownSection implements MarkdownElement {
+  static class MarkdownSection implements MarkdownElement {
 
     private final MarkdownHeader header;
     private final MarkdownElement text;
@@ -596,7 +599,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     }
   }
 
-  private static class MarkdownHeaderReference implements MarkdownElement {
+  static class MarkdownHeaderReference implements MarkdownElement {
 
     private final MarkdownElement caption;
     private final MarkdownSection section;
@@ -623,7 +626,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     }
   }
 
-  private static class MarkdownChoice implements MarkdownElement {
+  static class MarkdownChoice implements MarkdownElement {
 
     private final BooleanSupplier condition;
     private final MarkdownElement firstOption;
@@ -643,14 +646,26 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     }
   }
 
-  private static class JoinedMarkdown implements MarkdownElement {
+  static class JoinedMarkdownElements implements MarkdownElement {
 
     private final String delimiter;
     private final List<MarkdownElement> elements;
 
-    JoinedMarkdown(String delimiter, List<MarkdownElement> elements) {
+    JoinedMarkdownElements(MarkdownElement... elements) {
+      this(asList(elements));
+    }
+
+    JoinedMarkdownElements(List<MarkdownElement> elements) {
+      this(NEW_LINE, elements);
+    }
+
+    JoinedMarkdownElements(String delimiter, List<MarkdownElement> elements) {
       this.delimiter = delimiter;
       this.elements = new ArrayList<>(elements);
+    }
+
+    List<MarkdownElement> get() {
+      return new ArrayList<>(elements);
     }
 
     @Override
@@ -659,27 +674,80 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     }
   }
 
-  private static class MarkdownList implements MarkdownElement {
+  static class GroupedMarkdownElements implements MarkdownElement {
 
     private final List<MarkdownElement> elements;
 
-    MarkdownList(List<MarkdownElement> elements) {
+    GroupedMarkdownElements(MarkdownElement... elements) {
+      this(asList(elements));
+    }
+
+    GroupedMarkdownElements(List<MarkdownElement> elements) {
       this.elements = new ArrayList<>(elements);
+    }
+
+    List<MarkdownElement> get() {
+      return new ArrayList<>(elements);
     }
 
     @Override
     public String make() {
-      if (elements.isEmpty()) {
-        return EMPTY;
-      }
-
-      return elements.stream()
-          .map(element -> format("1.  %s%n", element.make()))
-          .collect(joining(NEW_LINE));
+      return elements.stream().map(MarkdownElement::make).collect(joining(NEW_LINE));
     }
   }
 
-  private static class Markdown {
+  abstract static class MarkdownList implements MarkdownElement {
+
+    private final List<MarkdownElement> elements;
+    private final String prefix;
+
+    MarkdownList(List<MarkdownElement> elements, String prefix) {
+      this.elements = new ArrayList<>(elements);
+      this.prefix = prefix;
+    }
+
+    @Override
+    public String make() {
+      StringBuilder content = new StringBuilder();
+      String indent = repeat(" ", prefix.length());
+      for (MarkdownElement element : elements) {
+        if (element instanceof GroupedMarkdownElements) {
+          GroupedMarkdownElements nestedElements = (GroupedMarkdownElements) element;
+          Iterator<MarkdownElement> iterator = nestedElements.get().iterator();
+          if (!iterator.hasNext()) {
+            continue;
+          }
+          content.append(format("%s%s%n", prefix, iterator.next().make()));
+          while (iterator.hasNext()) {
+            String indentedContent = Arrays.stream(iterator.next().make().split(NEW_LINE))
+                .map(line -> format("%s%s", indent, line))
+                .collect(joining(NEW_LINE));
+            content.append(format("%s%n", indentedContent));
+          }
+        } else {
+          content.append(format("%s%s%n", prefix, element.make()));
+        }
+      }
+
+      return content.toString();
+    }
+  }
+
+  static class OrderedMarkdownList extends MarkdownList {
+
+    OrderedMarkdownList(List<MarkdownElement> elements) {
+      super(elements, "1.  ");
+    }
+  }
+
+  static class UnorderedMarkdownList extends MarkdownList {
+
+    UnorderedMarkdownList(List<MarkdownElement> elements) {
+      super(elements, "*  ");
+    }
+  }
+
+  static class Markdown {
 
     static MarkdownString string(String value) {
       return new MarkdownString(value);
@@ -687,6 +755,14 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
 
     static JoinedMarkdownBuilder join(MarkdownElement... elements) {
       return new JoinedMarkdownBuilder(elements);
+    }
+
+    static JoinedMarkdownBuilder join(List<MarkdownElement> elements) {
+      return new JoinedMarkdownBuilder(elements);
+    }
+
+    static GroupedMarkdownElements group(MarkdownElement... elements) {
+      return new GroupedMarkdownElements(elements);
     }
 
     static MarkdownRuleIdentifier rule(MarkdownString id) {
@@ -709,8 +785,12 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
       return new MarkdownHeaderReferenceBuilder();
     }
 
-    static MarkdownListBuilder list() {
-      return new MarkdownListBuilder();
+    static OrderedMarkdownList orderedListOf(List<MarkdownElement> elements) {
+      return new OrderedMarkdownList(elements);
+    }
+
+    static UnorderedMarkdownList unorderedListOf(List<MarkdownElement> elements) {
+      return new UnorderedMarkdownList(elements);
     }
   }
 
@@ -719,7 +799,11 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     private final List<MarkdownElement> elements = new ArrayList<>();
 
     JoinedMarkdownBuilder(MarkdownElement... elements) {
-      this.elements.addAll(asList(elements));
+      this(asList(elements));
+    }
+
+    JoinedMarkdownBuilder(List<MarkdownElement> elements) {
+      this.elements.addAll(elements);
     }
 
     JoinedMarkdownBuilder of(List<MarkdownElement> elements) {
@@ -727,8 +811,8 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
       return this;
     }
 
-    JoinedMarkdown delimitedBy(String delimiter) {
-      return new JoinedMarkdown(delimiter, elements);
+    JoinedMarkdownElements delimitedBy(String delimiter) {
+      return new JoinedMarkdownElements(delimiter, elements);
     }
   }
 
@@ -804,10 +888,13 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
 
   private static class MarkdownListBuilder {
 
-    MarkdownList of(List<MarkdownElement> elements) {
-      return new MarkdownList(elements);
+    OrderedMarkdownList orderedListOf(List<MarkdownElement> elements) {
+      return new OrderedMarkdownList(elements);
     }
 
+    UnorderedMarkdownList unorderedListOf(List<MarkdownElement> elements) {
+      return new UnorderedMarkdownList(elements);
+    }
   }
 
 }
