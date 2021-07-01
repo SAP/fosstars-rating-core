@@ -180,6 +180,13 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     return print(subject.ratingValue().get(), adviceFor(subject));
   }
 
+  /**
+   * Print a rating value with a list of advice.
+   *
+   * @param ratingValue The rating value.
+   * @param advice The advice.
+   * @return A formatted rating value with advice.
+   */
   String print(RatingValue ratingValue, List<Advice> advice) {
     List<FormattedRule> violations = formatted(violationsIn(ratingValue), advice);
     List<FormattedRule> warnings = formatted(warningsIn(ratingValue), advice);
@@ -207,6 +214,12 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     }
   }
 
+  /**
+   * Convert a list of formatted rules to Markdown-formatted advice.
+   *
+   * @param rules The rules.
+   * @return A list of Markdown-formatted advice.
+   */
   private List<MarkdownElement> adviceFor(List<FormattedRule> rules) {
     return rules.stream()
         .filter(FormattedRule::hasAdvice)
@@ -214,10 +227,26 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
         .collect(toList());
   }
 
+  /**
+   * Looks for advice for a specified rule.
+   *
+   * @param rule The rule.
+   * @param adviceList A list of advice.
+   * @return A sub-list of advice that apply to the rule.
+   */
   private static List<Advice> selectAdviceFor(Value<Boolean> rule, List<Advice> adviceList) {
     return adviceList.stream().filter(advice -> advice.value().equals(rule)).collect(toList());
   }
 
+  /**
+   * Make a Markdown-formatted document that contains advice for specified rules.
+   *
+   * @param violations A list of violated rules.
+   * @param warnings A list of warnings.
+   * @param passedRules A list of passed rules.
+   * @param unclearRules A list of unclear rules.
+   * @return A Markdown-formatted document with advice.
+   */
   private String makeAdviceFrom(List<FormattedRule> violations, List<FormattedRule> warnings,
       List<FormattedRule> passedRules, List<FormattedRule> unclearRules) {
 
@@ -236,6 +265,13 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     return Markdown.choose(section).when(sectionIsNotEmpty).otherwise(MarkdownString.EMPTY).make();
   }
 
+  /**
+   * Make a Markdown document that contains a header and a list of rules.
+   *
+   * @param rules The rules.
+   * @param title The header.
+   * @return A Markdown document.
+   */
   private String makeListFrom(List<FormattedRule> rules, String title) {
     if (rules.isEmpty()) {
       return EMPTY;
@@ -247,6 +283,13 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     return Markdown.join(header, list).delimitedBy(NEW_LINE).make();
   }
 
+  /**
+   * Create a Markdown-formatted advice for a rule.
+   *
+   * @param rule The rule.
+   * @param adviceList A list of advice.
+   * @return A Markdown-formatted advice.
+   */
   private String adviceTextFor(Value<Boolean> rule, List<Advice> adviceList) {
     List<MarkdownElement> elements = new ArrayList<>();
 
@@ -264,6 +307,12 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     return Markdown.join(elements).delimitedBy(NEW_LINE).make();
   }
 
+  /**
+   * Convert links from advice to Markdown elements.
+   *
+   * @param advice The advice.
+   * @return A list of Markdown elements with links from the advice.
+   */
   private List<MarkdownElement> linksIn(Advice advice) {
     return advice.content().links().stream()
         .map(this::formatted)
@@ -271,14 +320,32 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
         .collect(toList());
   }
 
+  /**
+   * Looks for violations in a rating value.
+   *
+   * @param ratingValue The rating value.
+   * @return A list of violations.
+   */
   private static List<Value<Boolean>> violationsIn(RatingValue ratingValue) {
     return findViolatedRulesIn(ratingValue.scoreValue().usedValues());
   }
 
+  /**
+   * Looks for warnings in a rating value.
+   *
+   * @param ratingValue The rating value.
+   * @return A list of warnings.
+   */
   private static List<Value<Boolean>> warningsIn(RatingValue ratingValue) {
     return findWarningsIn(ratingValue.scoreValue().usedValues());
   }
 
+  /**
+   * Looks for passed rules in a rating value.
+   *
+   * @param ratingValue The raging value.
+   * @return A list of passed rules.
+   */
   private static List<Value<Boolean>> passedRulesIn(RatingValue ratingValue) {
     List<Value<Boolean>> violatedRules = violationsIn(ratingValue);
     List<Value<Boolean>> warnings = warningsIn(ratingValue);
@@ -291,6 +358,12 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
         .collect(toList());
   }
 
+  /**
+   * Looks for unclear rules in a rating value.
+   *
+   * @param ratingValue The rating value.
+   * @return A list of unclear rules.
+   */
   private static List<Value<Boolean>> unclearRulesIn(RatingValue ratingValue) {
     return ratingValue.scoreValue().usedValues().stream()
         .filter(Value::isUnknown)
@@ -326,6 +399,13 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     return Optional.ofNullable(featureToRuleId.get(rule)).map(id -> format("[%s]", id));
   }
 
+  /**
+   * Format a rule with advice.
+   *
+   * @param rule The rule.
+   * @param adviceList The advice.
+   * @return A Markdown-formatted rule.
+   */
   private FormattedRule formatted(Value<Boolean> rule, List<Advice> adviceList) {
     String advice = adviceTextFor(rule, selectAdviceFor(rule, adviceList));
     BooleanSupplier weHaveAdvice = () -> !empty(advice);
@@ -344,6 +424,13 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     return new FormattedRule(listText, adviceSection);
   }
 
+  /**
+   * Format a list of rules with advice.
+   *
+   * @param rules The rules.
+   * @param advice The advice.
+   * @return A list of formatted rules.
+   */
   private List<FormattedRule> formatted(List<Value<Boolean>> rules, List<Advice> advice) {
     return rules.stream().map(rule -> formatted(rule, advice)).collect(toList());
   }
