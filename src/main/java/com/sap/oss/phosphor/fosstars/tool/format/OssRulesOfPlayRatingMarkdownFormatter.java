@@ -738,21 +738,9 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     private final String delimiter;
     private final List<MarkdownElement> elements;
 
-    JoinedMarkdownElements(MarkdownElement... elements) {
-      this(asList(elements));
-    }
-
-    JoinedMarkdownElements(List<MarkdownElement> elements) {
-      this(NEW_LINE, elements);
-    }
-
     JoinedMarkdownElements(String delimiter, List<MarkdownElement> elements) {
       this.delimiter = delimiter;
       this.elements = new ArrayList<>(elements);
-    }
-
-    List<MarkdownElement> get() {
-      return new ArrayList<>(elements);
     }
 
     @Override
@@ -881,7 +869,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     }
   }
 
-  private static class JoinedMarkdownBuilder {
+  static class JoinedMarkdownBuilder {
 
     private final List<MarkdownElement> elements = new ArrayList<>();
 
@@ -903,7 +891,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     }
   }
 
-  private static class MarkdownHeaderReferenceBuilder {
+  static class MarkdownHeaderReferenceBuilder {
 
     private MarkdownSection section;
 
@@ -917,7 +905,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     }
   }
 
-  private static class MarkdownSectionBuilder {
+  static class MarkdownSectionBuilder {
 
     private MarkdownHeader header;
 
@@ -935,7 +923,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     }
   }
 
-  private static class MarkdownHeaderBuilder {
+  static class MarkdownHeaderBuilder {
 
     private int level;
 
@@ -953,7 +941,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     }
   }
 
-  private static class MarkdownChoiceBuilder {
+  static class MarkdownChoiceBuilder {
 
     private MarkdownElement firstOption;
     private BooleanSupplier condition;
@@ -970,17 +958,6 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
 
     MarkdownChoice otherwise(MarkdownElement element) {
       return new MarkdownChoice(condition, firstOption, element);
-    }
-  }
-
-  private static class MarkdownListBuilder {
-
-    OrderedMarkdownList orderedListOf(List<MarkdownElement> elements) {
-      return new OrderedMarkdownList(elements);
-    }
-
-    UnorderedMarkdownList unorderedListOf(List<MarkdownElement> elements) {
-      return new UnorderedMarkdownList(elements);
     }
   }
 
