@@ -38,7 +38,7 @@ import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -47,8 +47,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.BooleanSupplier;
-import java.util.stream.Stream;
 import javax.annotation.Nullable;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -74,6 +74,11 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
    * A whitespace.
    */
   private static final String SPACE = " ";
+
+  /**
+   * A new line.
+   */
+  private static final String NEW_LINE = "\n";
 
   /**
    * A logger.
@@ -202,36 +207,44 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     }
   }
 
-  private static List<Advice> adviceFor(Value<Boolean> rule, List<Advice> adviceList) {
+  private List<MarkdownElement> adviceFor(List<FormattedRule> rules) {
+    return rules.stream()
+        .filter(FormattedRule::hasAdvice)
+        .map(rule -> rule.adviceSection)
+        .collect(toList());
+  }
+
+  private static List<Advice> selectAdviceFor(Value<Boolean> rule, List<Advice> adviceList) {
     return adviceList.stream().filter(advice -> advice.value().equals(rule)).collect(toList());
   }
 
   private String makeAdviceFrom(List<FormattedRule> violations, List<FormattedRule> warnings,
       List<FormattedRule> passedRules, List<FormattedRule> unclearRules) {
 
-    String content = Stream.of(violations, warnings, passedRules, unclearRules)
-        .flatMap(Collection::stream)
-        .collect(toList())
-        .stream()
-        .filter(FormattedRule::hasAdvice)
-        .map(rule -> rule.adviceSection.make())
-        .collect(joining("\n"));
+    MarkdownElement advice = Markdown.join()
+        .of(adviceFor(violations))
+        .of(adviceFor(warnings))
+        .of(adviceFor(passedRules))
+        .of(adviceFor(unclearRules))
+        .delimitedBy(NEW_LINE);
 
-    if (isBlank(content)) {
-      return EMPTY;
-    }
+    MarkdownHeader header = Markdown.header().level(2)
+        .withCaption("What is wrong, and how to fix it");
+    MarkdownSection section = Markdown.section().with(header).thatContains(advice);
+    BooleanSupplier sectionIsNotEmpty = () -> !empty(section.text.make());
 
-    return format("%s%n%n%s", "## What is wrong, and how to fix it", content);
+    return Markdown.choose(section).when(sectionIsNotEmpty).otherwise(MarkdownString.EMPTY).make();
   }
 
-  private String makeListFrom(List<FormattedRule> rules, String header) {
+  private String makeListFrom(List<FormattedRule> rules, String title) {
     if (rules.isEmpty()) {
       return EMPTY;
     }
 
-    return format("## %s%n%s",
-        header,
-        rules.stream().map(rule -> format("1.  %s", rule.listText.make())).collect(joining("\n")));
+    List<MarkdownElement> elements = rules.stream().map(rule -> rule.listText).collect(toList());
+    MarkdownList list = Markdown.list().of(elements);
+    MarkdownHeader header = Markdown.header().level(2).withCaption(title);
+    return Markdown.join(header, list).delimitedBy(NEW_LINE).make();
   }
 
   private Optional<String> adviceTextFor(Value<Boolean> rule, List<Advice> adviceList) {
@@ -311,7 +324,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
   }
 
   private FormattedRule formatted(Value<Boolean> rule, List<Advice> adviceList) {
-    String advice = adviceTextFor(rule, adviceFor(rule, adviceList)).orElse(EMPTY);
+    String advice = adviceTextFor(rule, selectAdviceFor(rule, adviceList)).orElse(EMPTY);
     BooleanSupplier weHaveAdvice = () -> !empty(advice);
 
     MarkdownString id = Markdown.string(featureToRuleId.get(rule.feature()));
@@ -323,7 +336,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     MarkdownChoice identifier
         = Markdown.choose(identifierWithReference).when(weHaveAdvice).otherwise(ruleId);
     MarkdownString formattedRule = Markdown.string(formatted(rule));
-    JoinedMarkdown listText = Markdown.join(identifier, formattedRule).with(SPACE);
+    JoinedMarkdown listText = Markdown.join(identifier, formattedRule).delimitedBy(SPACE);
 
     return new FormattedRule(listText, adviceSection);
   }
@@ -520,6 +533,8 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
 
   private static class MarkdownString implements MarkdownElement {
 
+    static final MarkdownString EMPTY = new MarkdownString(StringUtils.EMPTY);
+
     private final String string;
 
     MarkdownString(String identifier) {
@@ -633,14 +648,34 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     private final String delimiter;
     private final List<MarkdownElement> elements;
 
-    public JoinedMarkdown(String delimiter, MarkdownElement... elements) {
+    JoinedMarkdown(String delimiter, List<MarkdownElement> elements) {
       this.delimiter = delimiter;
-      this.elements = asList(elements);
+      this.elements = new ArrayList<>(elements);
     }
 
     @Override
     public String make() {
       return elements.stream().map(MarkdownElement::make).collect(joining(delimiter));
+    }
+  }
+
+  private static class MarkdownList implements MarkdownElement {
+
+    private final List<MarkdownElement> elements;
+
+    MarkdownList(List<MarkdownElement> elements) {
+      this.elements = new ArrayList<>(elements);
+    }
+
+    @Override
+    public String make() {
+      if (elements.isEmpty()) {
+        return EMPTY;
+      }
+
+      return elements.stream()
+          .map(element -> format("1.  %s%n", element.make()))
+          .collect(joining(NEW_LINE));
     }
   }
 
@@ -673,17 +708,26 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     static MarkdownHeaderReferenceBuilder reference() {
       return new MarkdownHeaderReferenceBuilder();
     }
+
+    static MarkdownListBuilder list() {
+      return new MarkdownListBuilder();
+    }
   }
 
   private static class JoinedMarkdownBuilder {
 
-    private final MarkdownElement[] elements;
+    private final List<MarkdownElement> elements = new ArrayList<>();
 
     JoinedMarkdownBuilder(MarkdownElement... elements) {
-      this.elements = elements;
+      this.elements.addAll(asList(elements));
     }
 
-    JoinedMarkdown with(String delimiter) {
+    JoinedMarkdownBuilder of(List<MarkdownElement> elements) {
+      this.elements.addAll(elements);
+      return this;
+    }
+
+    JoinedMarkdown delimitedBy(String delimiter) {
       return new JoinedMarkdown(delimiter, elements);
     }
   }
@@ -714,11 +758,19 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     MarkdownSection thatContains(String text) {
       return new MarkdownSection(header, new MarkdownString(text));
     }
+
+    MarkdownSection thatContains(MarkdownElement text) {
+      return new MarkdownSection(header, text);
+    }
   }
 
   private static class MarkdownHeaderBuilder {
 
     private int level;
+
+    MarkdownHeader withCaption(String caption) {
+      return new MarkdownHeader(new MarkdownString(caption), level);
+    }
 
     MarkdownHeader withCaption(MarkdownElement caption) {
       return new MarkdownHeader(caption, level);
@@ -748,6 +800,14 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     MarkdownChoice otherwise(MarkdownElement element) {
       return new MarkdownChoice(condition, firstOption, element);
     }
+  }
+
+  private static class MarkdownListBuilder {
+
+    MarkdownList of(List<MarkdownElement> elements) {
+      return new MarkdownList(elements);
+    }
+
   }
 
 }
