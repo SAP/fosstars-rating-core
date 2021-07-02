@@ -67,8 +67,12 @@ public class TeamsInfo extends GitHubCachingDataProvider {
    *
    * @param n The number.
    * @return This data provider.
+   * @throws IllegalArgumentException If the number of teams is wrong.
    */
   public TeamsInfo minTeams(int n) {
+    if (n < 0) {
+      throw new IllegalArgumentException("Oops! The number of teams can't be negative!");
+    }
     this.minTeams = n;
     return this;
   }
@@ -78,8 +82,12 @@ public class TeamsInfo extends GitHubCachingDataProvider {
    *
    * @param n The number.
    * @return This data provider.
+   * @throws IllegalArgumentException If the number of admins is wrong.
    */
   public TeamsInfo minAdmins(int n) {
+    if (n < 0) {
+      throw new IllegalArgumentException("Oops! The number of admins can't be negative!");
+    }
     this.minAdmins = n;
     return this;
   }
@@ -90,8 +98,12 @@ public class TeamsInfo extends GitHubCachingDataProvider {
    *
    * @param n The number.
    * @return This data provider.
+   * @throws IllegalArgumentException If the number of members is wrong.
    */
   public TeamsInfo minMembers(int n) {
+    if (n < 0) {
+      throw new IllegalArgumentException("Oops! The number of members can't be negative!");
+    }
     this.minMembers = n;
     return this;
   }
@@ -113,11 +125,16 @@ public class TeamsInfo extends GitHubCachingDataProvider {
     GHRepository repository = fetcher.repositoryFor(project);
     ValueSet values = new ValueHashSet();
 
-    values.update(HAS_ENOUGH_TEAMS_ON_GITHUB.value(repository.getTeams().size() >= minTeams));
-    values.update(HAS_ADMIN_TEAM_ON_GITHUB.value(false));
-    values.update(HAS_ENOUGH_ADMINS_ON_GITHUB.value(false));
-    values.update(HAS_TEAM_WITH_PUSH_PRIVILEGES_ON_GITHUB.value(false));
-    values.update(HAS_ENOUGH_TEAM_MEMBERS_ON_GITHUB.value(false));
+    values.update(HAS_ENOUGH_TEAMS_ON_GITHUB.value(repository.getTeams().size() >= minTeams)
+        .explainIf(false, "The project should have at least %d teams", minTeams));
+    values.update(HAS_ADMIN_TEAM_ON_GITHUB.value(false)
+        .explain("The project does not have an admin team"));
+    values.update(HAS_ENOUGH_ADMINS_ON_GITHUB.value(false)
+        .explain("The project should have at least %n admins", minAdmins));
+    values.update(HAS_TEAM_WITH_PUSH_PRIVILEGES_ON_GITHUB.value(false)
+        .explain("The project does not have a team with push privileges"));
+    values.update(HAS_ENOUGH_TEAM_MEMBERS_ON_GITHUB.value(false)
+        .explain("The project should have at least %d team members", minMembers));
 
     for (GHTeam team : repository.getTeams()) {
       if ("admin".equals(team.getPermission())) {

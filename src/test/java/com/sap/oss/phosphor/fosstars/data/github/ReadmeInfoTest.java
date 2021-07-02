@@ -48,7 +48,11 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
             "",
             "Don't trouble trouble till trouble troubles you."
         )));
-    checkValues(provider.fetchValuesFor(project), true, false);
+    ValueSet values = provider.fetchValuesFor(project);
+    Value<Boolean> value = checkValue(values, HAS_README, true);
+    assertTrue(value.explanation().isEmpty());
+    value = checkValue(values, INCOMPLETE_README, false);
+    assertTrue(value.explanation().isEmpty());
 
     when(localRepository.readTextFrom("README"))
         .thenReturn(Optional.of(String.join("\n",
@@ -56,7 +60,12 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
             "",
             "# Another header"
         )));
-    checkValues(provider.fetchValuesFor(project), true, true);
+    values = provider.fetchValuesFor(project);
+    value = checkValue(values, HAS_README, true);
+    assertTrue(value.explanation().isEmpty());
+    value = checkValue(values, INCOMPLETE_README, true);
+    assertFalse(value.explanation().isEmpty());
+    assertTrue(value.explanation().get(0).contains("Mandatory header"));
 
     when(localRepository.readTextFrom("README"))
         .thenReturn(Optional.of(String.join("\n",
@@ -67,7 +76,12 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
             "Prohibited phrase",
             ""
         )));
-    checkValues(provider.fetchValuesFor(project), true, true);
+    values = provider.fetchValuesFor(project);
+    value = checkValue(values, HAS_README, true);
+    assertTrue(value.explanation().isEmpty());
+    value = checkValue(values, INCOMPLETE_README, true);
+    assertFalse(value.explanation().isEmpty());
+    assertTrue(value.explanation().get(0).contains("Prohibited phrase"));
   }
 
   @Test
@@ -78,22 +92,20 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
     TestGitHubDataFetcher.addForTesting(project, localRepository);
 
     ReadmeInfo provider = new ReadmeInfo(fetcher);
-    checkValues(provider.fetchValuesFor(project), false, false);
+    ValueSet values = provider.fetchValuesFor(project);
+    Value<Boolean> value = checkValue(values, HAS_README, false);
+    assertFalse(value.explanation().isEmpty());
+    value = checkValue(values, INCOMPLETE_README, true);
+    assertFalse(value.explanation().isEmpty());
   }
 
-  private static void checkValues(
-      ValueSet values, boolean expectedHasReadme, boolean expectedIncompleteReadme) {
+  private static Value<Boolean> checkValue(
+      ValueSet values, Feature<Boolean> feature, boolean expected) {
 
-    Optional<Value<Boolean>> something = values.of(HAS_README);
+    Optional<Value<Boolean>> something = values.of(feature);
     assertTrue(something.isPresent());
     Value<Boolean> value = something.get();
-    assertFalse(value.isUnknown());
-    assertEquals(expectedHasReadme, value.get());
-
-    something = values.of(INCOMPLETE_README);
-    assertTrue(something.isPresent());
-    value = something.get();
-    assertFalse(value.isUnknown());
-    assertEquals(expectedIncompleteReadme, value.get());
+    assertEquals(expected, value.get());
+    return value;
   }
 }

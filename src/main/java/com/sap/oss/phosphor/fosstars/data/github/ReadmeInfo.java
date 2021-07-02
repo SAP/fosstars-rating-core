@@ -4,10 +4,14 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_RE
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.INCOMPLETE_README;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 import static com.sap.oss.phosphor.fosstars.util.Deserialization.readListFrom;
+import static java.lang.String.format;
 import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.sap.oss.phosphor.fosstars.model.Feature;
+import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
@@ -23,7 +27,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 /**
  * This data provider gathers info about project's README file.
@@ -52,15 +55,6 @@ public class ReadmeInfo extends GitHubCachingDataProvider {
   }
 
   /**
-   * Get a list of patterns that describe required content in README.
-   *
-   * @return A list of patterns that describe required content in README
-   */
-  List<Pattern> requiredContentPatterns() {
-    return new ArrayList<>(requiredContentPatterns);
-  }
-
-  /**
    * Set a list of patterns that describe required content in README.
    *
    * @param patterns The patterns.
@@ -81,7 +75,7 @@ public class ReadmeInfo extends GitHubCachingDataProvider {
     requiredContentPatterns.clear();
     requiredContentPatterns.addAll(
         patterns.stream()
-            .map(pattern -> Pattern.compile(pattern, Pattern.DOTALL)).collect(Collectors.toList()));
+            .map(pattern -> Pattern.compile(pattern, Pattern.DOTALL)).collect(toList()));
     return this;
   }
 
@@ -95,9 +89,25 @@ public class ReadmeInfo extends GitHubCachingDataProvider {
     logger.info("Gathering info about project's README file ...");
     LocalRepository repository = GitHubDataFetcher.localRepositoryFor(project);
     Optional<String> readme = readReadmeIn(repository);
-    return ValueHashSet.from(
-        HAS_README.value(readme.isPresent()),
-        INCOMPLETE_README.value(readme.map(this::isIncomplete).orElse(false)));
+
+    if (!readme.isPresent()) {
+      return ValueHashSet.from(
+          HAS_README.value(false).explain("No README file found"),
+          INCOMPLETE_README.value(true).explain("The project should have a README file"));
+    }
+
+    Value<Boolean> hasReadme = HAS_README.value(true);
+
+    List<Pattern> missedPatterns = requiredContentPatterns.stream()
+        .filter(pattern -> !pattern.matcher(readme.get()).find())
+        .collect(toList());
+    Value<Boolean> incompleteReadme = INCOMPLETE_README.value(!missedPatterns.isEmpty())
+        .explainIf(true, "The README does not contain required text that should match %s",
+            missedPatterns.stream()
+                .map(pattern -> format("'%s'", pattern))
+                .collect(joining(", ")));
+
+    return ValueHashSet.from(hasReadme, incompleteReadme);
   }
 
   /**
@@ -130,16 +140,6 @@ public class ReadmeInfo extends GitHubCachingDataProvider {
     }
 
     return repository.readTextFrom(readme.get());
-  }
-
-  /**
-   * Checks whether README is complete or not.
-   *
-   * @param readme Content of the README.
-   * @return True if the README is incomplete, false otherwise.
-   */
-  private boolean isIncomplete(String readme) {
-    return !requiredContentPatterns.stream().allMatch(pattern -> pattern.matcher(readme).find());
   }
 
   /**

@@ -1,5 +1,7 @@
 package com.sap.oss.phosphor.fosstars.data.github;
 
+import static com.sap.oss.phosphor.fosstars.TestUtils.HAS_EXPLANATION;
+import static com.sap.oss.phosphor.fosstars.TestUtils.NO_EXPLANATION;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_ADMIN_TEAM_ON_GITHUB;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_ENOUGH_ADMINS_ON_GITHUB;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_ENOUGH_TEAMS_ON_GITHUB;
@@ -20,12 +22,16 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Consumer;
 import org.junit.Test;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GHTeam;
 import org.kohsuke.github.GHUser;
 
 public class TeamsInfoTest extends TestGitHubDataFetcherHolder {
+
+  private static final boolean EXPECT_TRUE = true;
+  private static final boolean EXPECT_FALSE = false;
 
   @Test
   public void testSupportedFeatures() {
@@ -66,11 +72,11 @@ public class TeamsInfoTest extends TestGitHubDataFetcherHolder {
 
     TeamsInfo provider = new TeamsInfo(fetcher);
     ValueSet values = provider.fetchValuesFor(project);
-    checkValue(values, HAS_ENOUGH_TEAMS_ON_GITHUB, true);
-    checkValue(values, HAS_ADMIN_TEAM_ON_GITHUB, true);
-    checkValue(values, HAS_ENOUGH_ADMINS_ON_GITHUB, true);
-    checkValue(values, HAS_TEAM_WITH_PUSH_PRIVILEGES_ON_GITHUB, true);
-    checkValue(values, HAS_ENOUGH_TEAM_MEMBERS_ON_GITHUB, true);
+    checkValue(values, HAS_ENOUGH_TEAMS_ON_GITHUB, EXPECT_TRUE, NO_EXPLANATION);
+    checkValue(values, HAS_ADMIN_TEAM_ON_GITHUB, EXPECT_TRUE, NO_EXPLANATION);
+    checkValue(values, HAS_ENOUGH_ADMINS_ON_GITHUB, EXPECT_TRUE, NO_EXPLANATION);
+    checkValue(values, HAS_TEAM_WITH_PUSH_PRIVILEGES_ON_GITHUB, EXPECT_TRUE, NO_EXPLANATION);
+    checkValue(values, HAS_ENOUGH_TEAM_MEMBERS_ON_GITHUB, EXPECT_TRUE, NO_EXPLANATION);
   }
 
   @Test
@@ -106,11 +112,11 @@ public class TeamsInfoTest extends TestGitHubDataFetcherHolder {
     provider.minMembers(3);
 
     ValueSet values = provider.fetchValuesFor(project);
-    checkValue(values, HAS_ENOUGH_TEAMS_ON_GITHUB, false);
-    checkValue(values, HAS_ADMIN_TEAM_ON_GITHUB, true);
-    checkValue(values, HAS_ENOUGH_ADMINS_ON_GITHUB, false);
-    checkValue(values, HAS_TEAM_WITH_PUSH_PRIVILEGES_ON_GITHUB, true);
-    checkValue(values, HAS_ENOUGH_TEAM_MEMBERS_ON_GITHUB, false);
+    checkValue(values, HAS_ENOUGH_TEAMS_ON_GITHUB, EXPECT_FALSE, HAS_EXPLANATION);
+    checkValue(values, HAS_ADMIN_TEAM_ON_GITHUB, EXPECT_TRUE, NO_EXPLANATION);
+    checkValue(values, HAS_ENOUGH_ADMINS_ON_GITHUB, EXPECT_FALSE, HAS_EXPLANATION);
+    checkValue(values, HAS_TEAM_WITH_PUSH_PRIVILEGES_ON_GITHUB, EXPECT_TRUE, NO_EXPLANATION);
+    checkValue(values, HAS_ENOUGH_TEAM_MEMBERS_ON_GITHUB, EXPECT_FALSE, HAS_EXPLANATION);
   }
 
   @Test
@@ -133,19 +139,22 @@ public class TeamsInfoTest extends TestGitHubDataFetcherHolder {
 
     when(otherTeam.getPermission()).thenReturn("read");
     ValueSet values = provider.fetchValuesFor(project);
-    checkValue(values, HAS_ENOUGH_TEAMS_ON_GITHUB, false);
-    checkValue(values, HAS_ADMIN_TEAM_ON_GITHUB, false);
-    checkValue(values, HAS_ENOUGH_ADMINS_ON_GITHUB, false);
-    checkValue(values, HAS_TEAM_WITH_PUSH_PRIVILEGES_ON_GITHUB, false);
-    checkValue(values, HAS_ENOUGH_TEAM_MEMBERS_ON_GITHUB, false);
+    checkValue(values, HAS_ENOUGH_TEAMS_ON_GITHUB, EXPECT_FALSE, HAS_EXPLANATION);
+    checkValue(values, HAS_ADMIN_TEAM_ON_GITHUB, EXPECT_FALSE, HAS_EXPLANATION);
+    checkValue(values, HAS_ENOUGH_ADMINS_ON_GITHUB, EXPECT_FALSE, HAS_EXPLANATION);
+    checkValue(values, HAS_TEAM_WITH_PUSH_PRIVILEGES_ON_GITHUB, EXPECT_FALSE, HAS_EXPLANATION);
+    checkValue(values, HAS_ENOUGH_TEAM_MEMBERS_ON_GITHUB, EXPECT_FALSE, HAS_EXPLANATION);
   }
 
-  private static void checkValue(ValueSet values, Feature<Boolean> feature, boolean expected) {
+  private static void checkValue(ValueSet values, Feature<Boolean> feature, boolean expected,
+      Consumer<Value<Boolean>> additionalCheck) {
+
     Optional<Value<Boolean>> something = values.of(feature);
     assertTrue(something.isPresent());
     Value<Boolean> value = something.get();
     assertFalse(value.isUnknown());
     assertFalse(value.isNotApplicable());
     assertEquals(expected, value.get());
+    additionalCheck.accept(value);
   }
 }

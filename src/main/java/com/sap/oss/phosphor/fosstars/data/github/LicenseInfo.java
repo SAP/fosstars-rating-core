@@ -5,6 +5,9 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_LI
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.LICENSE_HAS_DISALLOWED_CONTENT;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 import static com.sap.oss.phosphor.fosstars.util.Deserialization.readListFrom;
+import static java.lang.String.format;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.sap.oss.phosphor.fosstars.model.Feature;
@@ -28,7 +31,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpHeaders;
@@ -178,7 +180,7 @@ public class LicenseInfo extends GitHubCachingDataProvider {
     Objects.requireNonNull(patterns, "Oops! Patterns can't be null!");
     disallowedLicensePatterns.clear();
     disallowedLicensePatterns.addAll(patterns.stream()
-        .map(pattern -> Pattern.compile(pattern, Pattern.DOTALL)).collect(Collectors.toList()));
+        .map(pattern -> Pattern.compile(pattern, Pattern.DOTALL)).collect(toList()));
     return this;
   }
 
@@ -246,12 +248,19 @@ public class LicenseInfo extends GitHubCachingDataProvider {
    * @return A set of values.
    */
   ValueSet analyzeLicense(String content, String spdxId) {
-    return ValueHashSet.from(
-        ALLOWED_LICENSE.value(allowedLicenses.contains(spdxId))
-            .explainIf(false, "%s is not allowed", spdxId),
-        LICENSE_HAS_DISALLOWED_CONTENT.value(
-            disallowedLicensePatterns.stream().anyMatch(pattern -> pattern.matcher(content).find()))
-            .explainIf(true, "The license contains disallowed text"));
+    Value<Boolean> allowedLicense = ALLOWED_LICENSE.value(allowedLicenses.contains(spdxId))
+        .explainIf(false, "%s is not allowed", spdxId);
+
+    List<Pattern> violated = disallowedLicensePatterns.stream()
+        .filter(pattern -> pattern.matcher(content).find())
+        .collect(toList());
+    Value<Boolean> hasDisallowedText = LICENSE_HAS_DISALLOWED_CONTENT.value(!violated.isEmpty())
+        .explainIf(true, "The license contains disallowed text that match %s",
+            violated.stream()
+                .map(pattern -> format("'%s'", pattern))
+                .collect(joining(", ")));
+
+    return ValueHashSet.from(allowedLicense, hasDisallowedText);
   }
 
   /**
@@ -273,7 +282,7 @@ public class LicenseInfo extends GitHubCachingDataProvider {
     HashMap<String, String> licenseMetadata = new HashMap<>();
 
     try (CloseableHttpClient client = httpClient()) {
-      String url = String.format("https://api.github.com/repos/%s/%s/license",
+      String url = format("https://api.github.com/repos/%s/%s/license",
           project.organization().name(), project.name());
       HttpGet request = new HttpGet(url);
       request.addHeader(HttpHeaders.ACCEPT, "application/vnd.github.v3+json");
