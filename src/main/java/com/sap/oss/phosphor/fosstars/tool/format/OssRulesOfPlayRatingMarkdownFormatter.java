@@ -81,6 +81,11 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
   private static final String NEW_LINE = "\n";
 
   /**
+   * A double new line.
+   */
+  private static final String DOUBLE_NEW_LINE = NEW_LINE + NEW_LINE;
+
+  /**
    * A logger.
    */
   private static final Logger LOGGER
@@ -310,7 +315,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
       elements.add(adviceContent);
     }
 
-    return Markdown.join(elements).delimitedBy(NEW_LINE).make();
+    return Markdown.join(elements).delimitedBy(DOUBLE_NEW_LINE).make();
   }
 
   /**
