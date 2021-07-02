@@ -55,7 +55,8 @@ public class HasSecurityPolicy extends CachedSingleFeatureGitHubDataProvider<Boo
   protected Value<Boolean> fetchValueFor(GitHubProject project) throws IOException {
     logger.info("Figuring out if the project has a security policy ...");
     return HAS_SECURITY_POLICY.value(
-        hasSecurityPolicy(project) || hasSecurityPolicy(project.organization()));
+        hasSecurityPolicy(project) || hasSecurityPolicy(project.organization()))
+        .explainIf(false, "Neither the project nor organization has a security policy");
   }
 
   /**

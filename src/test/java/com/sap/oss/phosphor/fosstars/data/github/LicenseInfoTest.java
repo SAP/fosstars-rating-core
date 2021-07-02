@@ -20,6 +20,7 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
@@ -53,7 +54,8 @@ public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
   @Test
   public void testLicenseContent() throws IOException {
     LicenseInfoMock provider = new LicenseInfoMock(fetcher);
-    provider.disallowedLicensePatterns("Don't trouble trouble till trouble troubles you");
+    String disallowedPattern = "Don't trouble trouble till trouble troubles you";
+    provider.disallowedLicensePatterns(disallowedPattern);
 
     provider.setLicensePath("LICENSE");
     provider.setSpdxId("Apache-2.0");
@@ -61,18 +63,21 @@ public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
     ValueSet values = provider.analyzeLicense(
         String.join("\n", "", "Apache License", "", "Here should be the text.", ""),
         "Apache-2.0");
-    checkValue(values, LICENSE_HAS_DISALLOWED_CONTENT, false);
+    Value<Boolean> value = checkValue(values, LICENSE_HAS_DISALLOWED_CONTENT, false);
+    assertTrue(value.explanation().isEmpty());
 
     values = provider.analyzeLicense(
         String.join("\n", "MIT License", "", "Here should be the text.", ""),
         "Apache-2.0");
-    checkValue(values, LICENSE_HAS_DISALLOWED_CONTENT, false);
+    value = checkValue(values, LICENSE_HAS_DISALLOWED_CONTENT, false);
+    assertTrue(value.explanation().isEmpty());
 
     values = provider.analyzeLicense(String.join("\n", "MIT License", "",
         "Here should be the text.", "Don't trouble trouble till trouble troubles you", ""),
         "Apache-2.0");
-    Value<Boolean> value = checkValue(values, LICENSE_HAS_DISALLOWED_CONTENT, true);
+    value = checkValue(values, LICENSE_HAS_DISALLOWED_CONTENT, true);
     assertFalse(value.explanation().isEmpty());
+    assertTrue(value.explanation().get(0).contains(disallowedPattern));
   }
 
   private static Value<Boolean> checkValue(
@@ -111,9 +116,11 @@ public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
     provider.setSpdxId("Apache-2.0");
 
     ValueSet values = provider.fetchValuesFor(project);
-    checkValue(values, HAS_LICENSE, true);
-    checkValue(values, ALLOWED_LICENSE, true);
-    checkValue(values, LICENSE_HAS_DISALLOWED_CONTENT, false);
+    Stream.of(
+            checkValue(values, HAS_LICENSE, true),
+            checkValue(values, ALLOWED_LICENSE, true),
+            checkValue(values, LICENSE_HAS_DISALLOWED_CONTENT, false))
+        .forEach(value -> assertTrue(value.explanation().isEmpty()));
 
     provider.setSpdxId("GPL-3.0-only");
     provider.disallowedLicensePatterns("Extra text");
