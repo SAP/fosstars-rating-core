@@ -15,14 +15,20 @@ import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Pattern;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
 public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
 
   @Test
-  public void testSupportedFeatures() {
+  public void testSupportedFeatures() throws IOException {
     Set<Feature<?>> features =  new ReadmeInfo(fetcher).supportedFeatures();
     assertEquals(2, features.size());
     assertTrue(features.contains(HAS_README));
@@ -97,6 +103,26 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
     assertFalse(value.explanation().isEmpty());
     value = checkValue(values, INCOMPLETE_README, true);
     assertFalse(value.explanation().isEmpty());
+  }
+
+  @Test
+  public void testLoadingDefaultConfig() throws IOException {
+    Path config = Paths.get(String.format("%s.config.yml", ReadmeInfo.class.getSimpleName()));
+    String content = "---\n"
+        + "requiredContentPatterns:\n"
+        + "  - \"one two\"\n"
+        + "  - \"three\"\n"
+        + "  - \"[Tt]est\"\n";
+    Files.write(config, content.getBytes());
+    try {
+      ReadmeInfo provider = new ReadmeInfo(fetcher);
+      assertEquals(3, provider.requiredContentPatterns().size());
+      assertEquals("one two", provider.requiredContentPatterns().get(0).pattern());
+      assertEquals("three", provider.requiredContentPatterns().get(1).pattern());
+      assertEquals("[Tt]est", provider.requiredContentPatterns().get(2).pattern());
+    } finally {
+      FileUtils.forceDeleteOnExit(config.toFile());
+    }
   }
 
   private static Value<Boolean> checkValue(

@@ -49,9 +49,20 @@ public class ReadmeInfo extends GitHubCachingDataProvider {
    * Initializes a data provider.
    *
    * @param fetcher An interface to GitHub.
+   * @throws IOException If the provider could not load a default config.
    */
-  public ReadmeInfo(GitHubDataFetcher fetcher) {
+  public ReadmeInfo(GitHubDataFetcher fetcher) throws IOException {
     super(fetcher);
+    loadDefaultConfigIfAvailable();
+  }
+
+  /**
+   * Return a list of patterns that describe required content in README.
+   *
+   * @return A list of patterns.
+   */
+  List<Pattern> requiredContentPatterns() {
+    return new ArrayList<>(requiredContentPatterns);
   }
 
   /**
