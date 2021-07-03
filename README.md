@@ -6,8 +6,8 @@
 | :------------------------ | -------------------------------: | ---------------------------------: |
 | Total                     |             240 |                               100% |
 | Failed                    |         156 |         65.0% |
-| Passed with&nbsp;warnings |  54 |  22.5% |
-| Passed                    |         30 |         12.5% |
+| Passed with&nbsp;warnings |  53 |  22.1% |
+| Passed                    |         31 |         12.9% |
 | Unclear                   |        0 |        0.0% |
 
 ## Projects
@@ -171,6 +171,7 @@
 | [SAP/.github](https://github.com/SAP/.github) | [Failed](SAP/.github.md) | 10 violated rules |
 | [SAP/gigya-cdp-js-sdk](https://github.com/SAP/gigya-cdp-js-sdk) | [Failed](SAP/gigya-cdp-js-sdk.md) | 2 violated rules |
 | [SAP/openui5](https://github.com/SAP/openui5) | [Passed](SAP/openui5.md) | No violated rules |
+| [SAP/cf-java-logging-support](https://github.com/SAP/cf-java-logging-support) | [Passed](SAP/cf-java-logging-support.md) | No violated rules |
 | [SAP/jcomigrationhelperplugin](https://github.com/SAP/jcomigrationhelperplugin) | [Passed](SAP/jcomigrationhelperplugin.md) | No violated rules |
 | [SAP/java-memory-assistant](https://github.com/SAP/java-memory-assistant) | [Passed](SAP/java-memory-assistant.md) | No violated rules |
 | [SAP/ui5-tooling](https://github.com/SAP/ui5-tooling) | [Passed](SAP/ui5-tooling.md) | No violated rules |
@@ -208,7 +209,6 @@
 | [SAP/openui5-sample-app](https://github.com/SAP/openui5-sample-app) | [Passed with warnings](SAP/openui5-sample-app.md) | No violated rules |
 | [SAP/ui5-inspector](https://github.com/SAP/ui5-inspector) | [Passed with warnings](SAP/ui5-inspector.md) | No violated rules |
 | [SAP/openui5-masterdetail-app](https://github.com/SAP/openui5-masterdetail-app) | [Passed with warnings](SAP/openui5-masterdetail-app.md) | No violated rules |
-| [SAP/cf-java-logging-support](https://github.com/SAP/cf-java-logging-support) | [Passed with warnings](SAP/cf-java-logging-support.md) | No violated rules |
 | [SAP/openSAP-ui5-course](https://github.com/SAP/openSAP-ui5-course) | [Passed with warnings](SAP/openSAP-ui5-course.md) | No violated rules |
 | [SAP/cf-nodejs-logging-support](https://github.com/SAP/cf-nodejs-logging-support) | [Passed with warnings](SAP/cf-nodejs-logging-support.md) | No violated rules |
 | [SAP/openui5-basic-template-app](https://github.com/SAP/openui5-basic-template-app) | [Passed with warnings](SAP/openui5-basic-template-app.md) | No violated rules |
