@@ -10,5 +10,3 @@ src/test/shell/tool/github/*.log
 .project
 .settings
 .checkstyle
-*.yml
-*.yaml
