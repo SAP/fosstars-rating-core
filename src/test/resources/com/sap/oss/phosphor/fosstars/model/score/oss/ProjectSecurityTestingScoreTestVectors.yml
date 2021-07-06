@@ -22,8 +22,8 @@ elements:
   - type: "ScoreTestVector"
     values:
       com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore: 8.0
-      com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore: 9.0
-      com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore: 3.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore: 10.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore: 5.0
       com.sap.oss.phosphor.fosstars.model.score.oss.StaticAnalysisScore: 7.0
       com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore: 5.0
     expectedScore:
@@ -283,7 +283,7 @@ elements:
         score:
           type: "NoHttpToolScore"
           name: "If a project uses nohttp tool"
-        value: 9.0
+        value: 10.0
         weight: 1.0
         confidence: 10.0
         usedValues: []
@@ -318,10 +318,10 @@ elements:
         isNotApplicable: true
     expectedScore:
       type: "DoubleInterval"
-      from: 6.0
+      from: 5.5
       openLeft: false
       negativeInfinity: false
-      to: 7.0
+      to: 6.5
       openRight: false
       positiveInfinity: false
     expectedLabel: null

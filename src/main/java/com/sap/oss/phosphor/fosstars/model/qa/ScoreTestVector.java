@@ -75,7 +75,7 @@ public class ScoreTestVector extends AbstractTestVector {
       String targetScoreClassName = entry.getKey().getCanonicalName();
       Score subScore = subScoreIn(score, targetScoreClassName)
           .orElseThrow(() -> new IllegalArgumentException(
-              format("Could not fine sub-score %s!", targetScoreClassName)));
+              format("Could not find sub-score %s!", targetScoreClassName)));
       Value<?> value = subScore.value(entry.getValue());
       result.add(value);
     }

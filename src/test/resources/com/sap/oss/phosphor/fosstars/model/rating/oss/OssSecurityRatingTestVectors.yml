@@ -538,7 +538,7 @@ elements:
     feature:
       type: "BooleanFeature"
       name: "If a project uses nohttp tool"
-    flag: false
+    flag: true
   - type: "PackageManagersValue"
     feature:
       type: "PackageManagersFeature"
@@ -571,10 +571,10 @@ elements:
         date: "2020-01-02"
   expectedScore:
     type: "DoubleInterval"
-    from: 3.0
+    from: 3.5
     openLeft: false
     negativeInfinity: false
-    to: 5.0
+    to: 5.5
     openRight: false
     positiveInfinity: false
   expectedLabel:

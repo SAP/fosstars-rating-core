@@ -94,7 +94,7 @@ elements:
       com.sap.oss.phosphor.fosstars.model.score.oss.ProjectPopularityScore: 5.0
       com.sap.oss.phosphor.fosstars.model.score.oss.ProjectSecurityAwarenessScore: 0.0
       com.sap.oss.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore: 2.0
-      com.sap.oss.phosphor.fosstars.model.score.oss.SecurityReviewScore: 0.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.SecurityReviewScore: 5.0
     expectedScore:
       type: "DoubleInterval"
       from: 3.0
