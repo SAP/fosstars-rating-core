@@ -12,6 +12,7 @@ import com.sap.oss.phosphor.fosstars.model.score.oss.OssSecurityScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.ProjectSecurityTestingScore;
 import com.sap.oss.phosphor.fosstars.model.weight.ScoreWeights;
 import com.sap.oss.phosphor.fosstars.util.Json;
+import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -91,7 +92,7 @@ public class RatingRepository {
     OssSecurityScore ossSecurityScore = new OssSecurityScore();
     ossSecurityScore.weights().update(
         loadScoreWeights("com/sap/oss/phosphor/fosstars/model/score/oss/"
-            + "OssSecurityScoreWeights.json"));
+            + "OssSecurityScoreWeights.yml"));
 
     Optional<ProjectSecurityTestingScore> projectSecurityTestingScore =
         ossSecurityScore.subScore(ProjectSecurityTestingScore.class);
@@ -102,7 +103,7 @@ public class RatingRepository {
 
     projectSecurityTestingScore.get().weights().update(
         loadScoreWeights("com/sap/oss/phosphor/fosstars/model/score/oss/"
-            + "ProjectSecurityTestingScoreWeights.json"));
+            + "ProjectSecurityTestingScoreWeights.yml"));
 
     Thresholds thresholds = load(
         "com/sap/oss/phosphor/fosstars/model/rating/oss/OssSecurityRatingThresholds.json",
@@ -251,13 +252,13 @@ public class RatingRepository {
 
     File file = Paths.get(path.replace('/', File.separatorChar)).toFile();
     if (file.exists()) {
-      return Json.mapper().readValue(file, clazz);
+      return Yaml.mapper().readValue(file, clazz);
     }
 
     InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
     if (is != null) {
       try {
-        return Json.mapper().readValue(is, clazz);
+        return Yaml.mapper().readValue(is, clazz);
       } finally {
         is.close();
       }

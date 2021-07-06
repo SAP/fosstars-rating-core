@@ -18,7 +18,7 @@ public class OssSecurityScoreTuningWithCMAES extends TuningWithCMAES {
    */
   private static final String PATH =
       "src/main/resources/com/sap/oss/phosphor/fosstars/model/score/oss/"
-          + "OssSecurityScoreWeights.json";
+          + "OssSecurityScoreWeights.yml";
 
   /**
    * Initializes a {@link OssSecurityScoreTuningWithCMAES}.
