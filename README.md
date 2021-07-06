@@ -4,10 +4,10 @@
 
 |                           | # or projects                    | % or projects                      |
 | :------------------------ | -------------------------------: | ---------------------------------: |
-| Total                     |             240 |                               100% |
-| Failed                    |         156 |         65.0% |
-| Passed with&nbsp;warnings |  53 |  22.1% |
-| Passed                    |         31 |         12.9% |
+| Total                     |             238 |                               100% |
+| Failed                    |         155 |         65.1% |
+| Passed with&nbsp;warnings |  52 |  21.8% |
+| Passed                    |         31 |         13.0% |
 | Unclear                   |        0 |        0.0% |
 
 ## Projects
@@ -75,9 +75,9 @@
 | [SAP/InfraBox-cli](https://github.com/SAP/InfraBox-cli) | [Failed](SAP/InfraBox-cli.md) | 3 violated rules |
 | [SAP/cloud-s4-sdk-book](https://github.com/SAP/cloud-s4-sdk-book) | [Failed](SAP/cloud-s4-sdk-book.md) | 4 violated rules |
 | [SAP/angular-metaui](https://github.com/SAP/angular-metaui) | [Failed](SAP/angular-metaui.md) | 8 violated rules |
-| [SAP/fiori-for-ios-workshop](https://github.com/SAP/fiori-for-ios-workshop) | [Failed](SAP/fiori-for-ios-workshop.md) | 8 violated rules |
 | [SAP/macOS-enterprise-privileges](https://github.com/SAP/macOS-enterprise-privileges) | [Failed](SAP/macOS-enterprise-privileges.md) | 6 violated rules |
 | [SAP/cloud-mta-build-tool](https://github.com/SAP/cloud-mta-build-tool) | [Failed](SAP/cloud-mta-build-tool.md) | 1 violated rule |
+| [SAP/cloud-security-xsuaa-integration](https://github.com/SAP/cloud-security-xsuaa-integration) | [Failed](SAP/cloud-security-xsuaa-integration.md) | 1 violated rule |
 | [SAP/webide-extension-command-example](https://github.com/SAP/webide-extension-command-example) | [Failed](SAP/webide-extension-command-example.md) | 5 violated rules |
 | [SAP/spartacus](https://github.com/SAP/spartacus) | [Failed](SAP/spartacus.md) | 4 violated rules |
 | [SAP/reason-markdown](https://github.com/SAP/reason-markdown) | [Failed](SAP/reason-markdown.md) | 7 violated rules |
@@ -103,7 +103,6 @@
 | [SAP/cloud-rest-api-client](https://github.com/SAP/cloud-rest-api-client) | [Failed](SAP/cloud-rest-api-client.md) | 7 violated rules |
 | [SAP/spartacus-docs](https://github.com/SAP/spartacus-docs) | [Failed](SAP/spartacus-docs.md) | 4 violated rules |
 | [SAP/devops-docker-cx-server](https://github.com/SAP/devops-docker-cx-server) | [Failed](SAP/devops-docker-cx-server.md) | 4 violated rules |
-| [SAP/devops-docker-mta-archive-builder](https://github.com/SAP/devops-docker-mta-archive-builder) | [Failed](SAP/devops-docker-mta-archive-builder.md) | 4 violated rules |
 | [SAP/devops-docker-neo-cli](https://github.com/SAP/devops-docker-neo-cli) | [Failed](SAP/devops-docker-neo-cli.md) | 4 violated rules |
 | [SAP/devops-docker-cf-cli](https://github.com/SAP/devops-docker-cf-cli) | [Failed](SAP/devops-docker-cf-cli.md) | 4 violated rules |
 | [SAP/devops-docker-node-browsers](https://github.com/SAP/devops-docker-node-browsers) | [Failed](SAP/devops-docker-node-browsers.md) | 4 violated rules |
@@ -224,7 +223,6 @@
 | [SAP/fundamental-ngx](https://github.com/SAP/fundamental-ngx) | [Passed with warnings](SAP/fundamental-ngx.md) | No violated rules |
 | [SAP/luigi](https://github.com/SAP/luigi) | [Passed with warnings](SAP/luigi.md) | No violated rules |
 | [SAP/pair-distribution-app](https://github.com/SAP/pair-distribution-app) | [Passed with warnings](SAP/pair-distribution-app.md) | No violated rules |
-| [SAP/cloud-security-xsuaa-integration](https://github.com/SAP/cloud-security-xsuaa-integration) | [Passed with warnings](SAP/cloud-security-xsuaa-integration.md) | No violated rules |
 | [SAP/fundamental-react](https://github.com/SAP/fundamental-react) | [Passed with warnings](SAP/fundamental-react.md) | No violated rules |
 | [SAP/ui5-uiveri5](https://github.com/SAP/ui5-uiveri5) | [Passed with warnings](SAP/ui5-uiveri5.md) | No violated rules |
 | [SAP/fundamental-vue](https://github.com/SAP/fundamental-vue) | [Passed with warnings](SAP/fundamental-vue.md) | No violated rules |
