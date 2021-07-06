@@ -11,7 +11,7 @@ values:
     value: 1.0
   com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore:
     type: ImmutableWeight
-    value: 0.5
+    value: 0.2 # NoHTTP looks for all http:// links, that may result to a lot of false-positives
   com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore:
     type: ImmutableWeight
     value: 1.0
