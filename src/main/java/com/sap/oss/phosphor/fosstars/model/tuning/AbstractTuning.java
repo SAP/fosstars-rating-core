@@ -1,7 +1,6 @@
 package com.sap.oss.phosphor.fosstars.model.tuning;
 
 import com.sap.oss.phosphor.fosstars.model.Tunable;
-import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.qa.TestVectorResult;
 import com.sap.oss.phosphor.fosstars.model.qa.VerificationFailedException;
 import com.sap.oss.phosphor.fosstars.model.qa.Verifier;
@@ -63,11 +62,6 @@ public abstract class AbstractTuning {
         logger.info("    expected score: {}", result.vector.expectedScore());
         logger.info("    expected label: {}", result.vector.expectedLabel());
         logger.info("    features:");
-
-        for (Value<?> value : result.vector.values()) {
-          logger.info("      {}: {}",
-              value.feature().name(), value.isUnknown() ? "unknown" : value.get());
-        }
       }
     }
 

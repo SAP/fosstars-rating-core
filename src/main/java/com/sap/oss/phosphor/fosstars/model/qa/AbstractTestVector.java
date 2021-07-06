@@ -3,7 +3,9 @@ package com.sap.oss.phosphor.fosstars.model.qa;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.sap.oss.phosphor.fosstars.model.Interval;
 import com.sap.oss.phosphor.fosstars.model.Label;
+import com.sap.oss.phosphor.fosstars.model.Score;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * A base class for test vectors.
@@ -119,5 +121,32 @@ public abstract class AbstractTestVector implements TestVector {
   public int hashCode() {
     return Objects.hash(
         expectedScore, expectedUnknownScore, expectedNotApplicableScore, expectedLabel, alias);
+  }
+
+  /**
+   * Looks for a sub-score in a score.
+   *
+   * @param score The score.
+   * @param scoreClassName A class name of the sub-score.
+   * @return The sub-score if it's found.
+   * @throws IllegalArgumentException If no sub-score found.
+   */
+  static Optional<Score> subScoreIn(Score score, String scoreClassName) {
+    Class<? extends Score> scoreClass = score.getClass();
+    if (scoreClassName.equals(scoreClass.getName())
+        || scoreClassName.equals(scoreClass.getSimpleName())
+        || scoreClassName.equals(scoreClass.getCanonicalName())) {
+
+      return Optional.of(score);
+    }
+
+    for (Score subScore : score.subScores()) {
+      Optional<Score> result = subScoreIn(subScore, scoreClassName);
+      if (result.isPresent()) {
+        return result;
+      }
+    }
+
+    return Optional.empty();
   }
 }

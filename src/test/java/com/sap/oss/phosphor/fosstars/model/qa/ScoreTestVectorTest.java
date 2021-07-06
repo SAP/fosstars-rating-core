@@ -20,19 +20,6 @@ import org.junit.Test;
 
 public class ScoreTestVectorTest {
 
-  @Test(expected = UnsupportedOperationException.class)
-  public void testValues() {
-    Map<Class<? extends Score>, Double> values = new HashMap<>();
-    values.put(ExampleScores.PROJECT_ACTIVITY_SCORE_EXAMPLE.getClass(), 5.3);
-    values.put(ExampleScores.SECURITY_TESTING_SCORE_EXAMPLE.getClass(), 4.0);
-
-    Interval expectedScore = DoubleInterval.init().from(4.0).to(6.4).closed().make();
-    ScoreTestVector vector = new ScoreTestVector(
-        values, expectedScore, null, "test", false, false);
-
-    vector.values();
-  }
-
   @Test
   public void testValuesFor() {
     Map<Class<? extends Score>, Double> values = new HashMap<>();

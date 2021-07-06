@@ -40,7 +40,7 @@ public class RatingVerifier extends AbstractVerifier {
 
     int index = 0;
     for (TestVector vector : vectors) {
-      RatingValue ratingValue = rating.calculate(vector.values());
+      RatingValue ratingValue = rating.calculate(vector.valuesFor(rating));
       results.add(testResultFor(vector, ratingValue, index++));
     }
 

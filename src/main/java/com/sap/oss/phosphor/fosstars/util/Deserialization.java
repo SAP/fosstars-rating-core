@@ -33,6 +33,7 @@ import com.sap.oss.phosphor.fosstars.model.feature.oss.VulnerabilitiesInProject;
 import com.sap.oss.phosphor.fosstars.model.math.DoubleInterval;
 import com.sap.oss.phosphor.fosstars.model.qa.ScoreTestVector;
 import com.sap.oss.phosphor.fosstars.model.qa.StandardTestVector;
+import com.sap.oss.phosphor.fosstars.model.qa.TestScoreValue;
 import com.sap.oss.phosphor.fosstars.model.rating.NotApplicableLabel;
 import com.sap.oss.phosphor.fosstars.model.rating.example.SecurityRatingExample;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurityRating.ArtifactSecurityLabel;
@@ -236,7 +237,8 @@ public abstract class Deserialization {
         ArtifactVersionsValue.class,
         OwaspDependencyCheckUsageValue.class,
         OwaspDependencyCheckCvssThresholdValue.class,
-        SecurityReviewsValue.class
+        SecurityReviewsValue.class,
+        TestScoreValue.class
     );
 
     // labels
