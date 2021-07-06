@@ -1,10 +1,13 @@
 package com.sap.oss.phosphor.fosstars.model.qa;
 
+import static java.lang.String.format;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.oss.phosphor.fosstars.model.Interval;
 import com.sap.oss.phosphor.fosstars.model.Label;
+import com.sap.oss.phosphor.fosstars.model.Rating;
 import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import java.util.HashSet;
@@ -59,8 +62,8 @@ public class ScoreTestVector extends AbstractTestVector {
   }
 
   @Override
-  public Set<Value<?>> values() {
-    throw new UnsupportedOperationException("I need a score to create values!");
+  public Set<Value<?>> valuesFor(Rating rating) {
+    return valuesFor(rating.score());
   }
 
   @Override
@@ -69,7 +72,10 @@ public class ScoreTestVector extends AbstractTestVector {
 
     Set<Value<?>> result = new HashSet<>();
     for (Map.Entry<Class<? extends Score>, Double> entry : values.entrySet()) {
-      Score subScore = subScore(score, entry.getKey());
+      String targetScoreClassName = entry.getKey().getCanonicalName();
+      Score subScore = subScoreIn(score, targetScoreClassName)
+          .orElseThrow(() -> new IllegalArgumentException(
+              format("Could not fine sub-score %s!", targetScoreClassName)));
       Value<?> value = subScore.value(entry.getValue());
       result.add(value);
     }
@@ -83,24 +89,5 @@ public class ScoreTestVector extends AbstractTestVector {
   @JsonGetter("values")
   private Map<Class<? extends Score>, Double> rawValues() {
     return values;
-  }
-
-  /**
-   * Looks for a sub-score in a score.
-   *
-   * @param score The score.
-   * @param scoreClass A class of the sub-score.
-   * @return The sub-score if it's found.
-   * @throws IllegalArgumentException If no sub-score found.
-   */
-  private static Score subScore(Score score, Class<? extends Score> scoreClass) {
-    for (Score subScore : score.subScores()) {
-      if (scoreClass.equals(subScore.getClass())) {
-        return subScore;
-      }
-    }
-
-    throw new IllegalArgumentException(
-        String.format("Could not fine sub-score %s!", scoreClass.getCanonicalName()));
   }
 }

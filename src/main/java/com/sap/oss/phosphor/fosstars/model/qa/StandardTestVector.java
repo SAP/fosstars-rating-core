@@ -1,13 +1,17 @@
 package com.sap.oss.phosphor.fosstars.model.qa;
 
+import static java.lang.String.format;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.oss.phosphor.fosstars.model.Interval;
 import com.sap.oss.phosphor.fosstars.model.Label;
+import com.sap.oss.phosphor.fosstars.model.Rating;
 import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.Value;
-import java.util.Collections;
+import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -68,18 +72,51 @@ public class StandardTestVector extends AbstractTestVector {
       throw new IllegalArgumentException("Hey! Values can't be empty");
     }
 
-    this.values = values;
+    this.values = new HashSet<>(values);
+  }
+
+  @JsonGetter("values")
+  final Set<Value<?>> values() {
+    return new HashSet<>(values);
   }
 
   @Override
-  @JsonGetter("values")
-  public final Set<Value<?>> values() {
-    return Collections.unmodifiableSet(values);
+  public Set<Value<?>> valuesFor(Rating rating) {
+    return valuesFor(rating.score());
   }
 
   @Override
   public Set<Value<?>> valuesFor(Score score) {
-    return values();
+    Set<Value<?>> convertedValues = new HashSet<>();
+    for (Value<?> value : this.values) {
+      convertedValues.add(prepare(value, score));
+    }
+    return convertedValues;
+  }
+
+  /**
+   * Prepare a value for a score if necessary.
+   *
+   * @param value The value.
+   * @param score The score.
+   * @return A prepared or the same value.
+   */
+  private Value<?> prepare(Value<?> value, Score score) {
+    if (value instanceof TestScoreValue) {
+      TestScoreValue testScoreValue = (TestScoreValue) value;
+      Score targetScore = subScoreIn(score, testScoreValue.scoreClassName())
+          .orElseThrow(() -> new IllegalStateException(
+              format("No target score found for %s", testScoreValue.scoreClassName())));
+      if (testScoreValue.isUnknown()) {
+        return new ScoreValue(targetScore).makeUnknown();
+      }
+      if (testScoreValue.isNotApplicable()) {
+        return new ScoreValue(targetScore).makeNotApplicable();
+      }
+      return new ScoreValue(targetScore).set(testScoreValue.get());
+    }
+
+    return value;
   }
 
   @Override
@@ -87,7 +124,7 @@ public class StandardTestVector extends AbstractTestVector {
     if (this == o) {
       return true;
     }
-    if (o instanceof StandardTestVector == false) {
+    if (!StandardTestVector.class.isAssignableFrom(o.getClass())) {
       return false;
     }
     if (!super.equals(o)) {

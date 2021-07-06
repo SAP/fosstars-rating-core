@@ -3,6 +3,7 @@ package com.sap.oss.phosphor.fosstars.model.qa;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.sap.oss.phosphor.fosstars.model.Interval;
 import com.sap.oss.phosphor.fosstars.model.Label;
+import com.sap.oss.phosphor.fosstars.model.Rating;
 import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import java.util.Set;
@@ -21,11 +22,12 @@ public interface TestVector {
   Label NO_LABEL = null;
 
   /**
-   * Get a set of feature values.
+   * Returns the values resolved for a specified rating.
    *
+   * @param rating The rating.
    * @return The values.
    */
-  Set<Value<?>> values();
+  Set<Value<?>> valuesFor(Rating rating);
 
   /**
    * Returns the values resolved for a specified score.
@@ -38,7 +40,7 @@ public interface TestVector {
   /**
    * Returns an expected interval for a score value.
    *
-   * @return An exptected interval for score value.
+   * @return An expected interval for score value.
    */
   Interval expectedScore();
 
@@ -50,7 +52,7 @@ public interface TestVector {
   boolean hasLabel();
 
   /**
-   * Get an exptected label.
+   * Get an expected label.
    *
    * @return An expected label.
    */
@@ -76,5 +78,4 @@ public interface TestVector {
    * @return True if a not-applicable score value is expected, false otherwise.
    */
   boolean expectsUnknownScore();
-
 }

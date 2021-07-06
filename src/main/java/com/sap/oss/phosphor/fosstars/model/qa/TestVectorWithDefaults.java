@@ -2,6 +2,7 @@ package com.sap.oss.phosphor.fosstars.model.qa;
 
 import com.sap.oss.phosphor.fosstars.model.Interval;
 import com.sap.oss.phosphor.fosstars.model.Label;
+import com.sap.oss.phosphor.fosstars.model.Rating;
 import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
@@ -47,9 +48,8 @@ public class TestVectorWithDefaults implements TestVector {
   }
 
   @Override
-  public Set<Value<?>> values() {
-    ValueHashSet values = new ValueHashSet(vector.values());
-    return extendedWithDefaults(values);
+  public Set<Value<?>> valuesFor(Rating rating) {
+    return valuesFor(rating.score());
   }
 
   @Override
