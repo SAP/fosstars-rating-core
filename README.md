@@ -4,10 +4,10 @@
 
 |                           | # or projects                    | % or projects                      |
 | :------------------------ | -------------------------------: | ---------------------------------: |
-| Total                     |             238 |                               100% |
-| Failed                    |         154 |         64.7% |
-| Passed with&nbsp;warnings |  52 |  21.8% |
-| Passed                    |         32 |         13.4% |
+| Total                     |             239 |                               100% |
+| Failed                    |         154 |         64.4% |
+| Passed with&nbsp;warnings |  54 |  22.6% |
+| Passed                    |         31 |         13.0% |
 | Unclear                   |        0 |        0.0% |
 
 ## Projects
@@ -76,7 +76,6 @@
 | [SAP/cloud-s4-sdk-book](https://github.com/SAP/cloud-s4-sdk-book) | [Failed](SAP/cloud-s4-sdk-book.md) | 4 violated rules |
 | [SAP/angular-metaui](https://github.com/SAP/angular-metaui) | [Failed](SAP/angular-metaui.md) | 8 violated rules |
 | [SAP/macOS-enterprise-privileges](https://github.com/SAP/macOS-enterprise-privileges) | [Failed](SAP/macOS-enterprise-privileges.md) | 6 violated rules |
-| [SAP/cloud-mta-build-tool](https://github.com/SAP/cloud-mta-build-tool) | [Failed](SAP/cloud-mta-build-tool.md) | 1 violated rule |
 | [SAP/webide-extension-command-example](https://github.com/SAP/webide-extension-command-example) | [Failed](SAP/webide-extension-command-example.md) | 5 violated rules |
 | [SAP/spartacus](https://github.com/SAP/spartacus) | [Failed](SAP/spartacus.md) | 4 violated rules |
 | [SAP/reason-markdown](https://github.com/SAP/reason-markdown) | [Failed](SAP/reason-markdown.md) | 7 violated rules |
@@ -167,6 +166,7 @@
 | [SAP/sap.github.io](https://github.com/SAP/sap.github.io) | [Failed](SAP/sap.github.io.md) | 11 violated rules |
 | [SAP/cloud-sdk-ios](https://github.com/SAP/cloud-sdk-ios) | [Failed](SAP/cloud-sdk-ios.md) | 7 violated rules |
 | [SAP/.github](https://github.com/SAP/.github) | [Failed](SAP/.github.md) | 10 violated rules |
+| [SAP/business-partner-sample-app-s4hana-cloud](https://github.com/SAP/business-partner-sample-app-s4hana-cloud) | [Failed](SAP/business-partner-sample-app-s4hana-cloud.md) | 3 violated rules |
 | [SAP/gigya-cdp-js-sdk](https://github.com/SAP/gigya-cdp-js-sdk) | [Failed](SAP/gigya-cdp-js-sdk.md) | 2 violated rules |
 | [SAP/openui5](https://github.com/SAP/openui5) | [Passed](SAP/openui5.md) | No violated rules |
 | [SAP/cf-java-logging-support](https://github.com/SAP/cf-java-logging-support) | [Passed](SAP/cf-java-logging-support.md) | No violated rules |
@@ -199,7 +199,6 @@
 | [SAP/abap-file-formats](https://github.com/SAP/abap-file-formats) | [Passed](SAP/abap-file-formats.md) | No violated rules |
 | [SAP/cloud-sdk-ios-cai](https://github.com/SAP/cloud-sdk-ios-cai) | [Passed](SAP/cloud-sdk-ios-cai.md) | No violated rules |
 | [SAP/cloud-sdk-ios-fioriarkit](https://github.com/SAP/cloud-sdk-ios-fioriarkit) | [Passed](SAP/cloud-sdk-ios-fioriarkit.md) | No violated rules |
-| [SAP/gigya-react-native-plugin-for-sap-customer-data-cloud](https://github.com/SAP/gigya-react-native-plugin-for-sap-customer-data-cloud) | [Passed](SAP/gigya-react-native-plugin-for-sap-customer-data-cloud.md) | No violated rules |
 | [SAP/grunt-openui5](https://github.com/SAP/grunt-openui5) | [Passed with warnings](SAP/grunt-openui5.md) | No violated rules |
 | [SAP/less-openui5](https://github.com/SAP/less-openui5) | [Passed with warnings](SAP/less-openui5.md) | No violated rules |
 | [SAP/connect-openui5](https://github.com/SAP/connect-openui5) | [Passed with warnings](SAP/connect-openui5.md) | No violated rules |
@@ -222,6 +221,7 @@
 | [SAP/ui5-fs](https://github.com/SAP/ui5-fs) | [Passed with warnings](SAP/ui5-fs.md) | No violated rules |
 | [SAP/fundamental-ngx](https://github.com/SAP/fundamental-ngx) | [Passed with warnings](SAP/fundamental-ngx.md) | No violated rules |
 | [SAP/luigi](https://github.com/SAP/luigi) | [Passed with warnings](SAP/luigi.md) | No violated rules |
+| [SAP/cloud-mta-build-tool](https://github.com/SAP/cloud-mta-build-tool) | [Passed with warnings](SAP/cloud-mta-build-tool.md) | No violated rules |
 | [SAP/pair-distribution-app](https://github.com/SAP/pair-distribution-app) | [Passed with warnings](SAP/pair-distribution-app.md) | No violated rules |
 | [SAP/fundamental-react](https://github.com/SAP/fundamental-react) | [Passed with warnings](SAP/fundamental-react.md) | No violated rules |
 | [SAP/ui5-uiveri5](https://github.com/SAP/ui5-uiveri5) | [Passed with warnings](SAP/ui5-uiveri5.md) | No violated rules |
@@ -252,3 +252,4 @@
 | [SAP/vscode-test-cli](https://github.com/SAP/vscode-test-cli) | [Passed with warnings](SAP/vscode-test-cli.md) | No violated rules |
 | [SAP/credential-digger-tests](https://github.com/SAP/credential-digger-tests) | [Passed with warnings](SAP/credential-digger-tests.md) | No violated rules |
 | [SAP/crash-similarity-inspector](https://github.com/SAP/crash-similarity-inspector) | [Passed with warnings](SAP/crash-similarity-inspector.md) | No violated rules |
+| [SAP/gigya-react-native-plugin-for-sap-customer-data-cloud](https://github.com/SAP/gigya-react-native-plugin-for-sap-customer-data-cloud) | [Passed with warnings](SAP/gigya-react-native-plugin-for-sap-customer-data-cloud.md) | No violated rules |
