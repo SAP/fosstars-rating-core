@@ -4,9 +4,9 @@
 
 |                           | # or projects                    | % or projects                      |
 | :------------------------ | -------------------------------: | ---------------------------------: |
-| Total                     |             239 |                               100% |
-| Failed                    |         154 |         64.4% |
-| Passed with&nbsp;warnings |  54 |  22.6% |
+| Total                     |             238 |                               100% |
+| Failed                    |         153 |         64.3% |
+| Passed with&nbsp;warnings |  54 |  22.7% |
 | Passed                    |         31 |         13.0% |
 | Unclear                   |        0 |        0.0% |
 
@@ -24,7 +24,6 @@
 | [SAP/node-hdb](https://github.com/SAP/node-hdb) | [Failed](SAP/node-hdb.md) | 5 violated rules |
 | [SAP/cloud-cmis-workbench](https://github.com/SAP/cloud-cmis-workbench) | [Failed](SAP/cloud-cmis-workbench.md) | 4 violated rules |
 | [SAP/PyRFC](https://github.com/SAP/PyRFC) | [Failed](SAP/PyRFC.md) | 2 violated rules |
-| [SAP/cloud-dirigible](https://github.com/SAP/cloud-dirigible) | [Failed](SAP/cloud-dirigible.md) | 5 violated rules |
 | [SAP/mobilesdk-certificateprovider](https://github.com/SAP/mobilesdk-certificateprovider) | [Failed](SAP/mobilesdk-certificateprovider.md) | 4 violated rules |
 | [SAP/go-hdb](https://github.com/SAP/go-hdb) | [Failed](SAP/go-hdb.md) | 5 violated rules |
 | [SAP/node-rfc](https://github.com/SAP/node-rfc) | [Failed](SAP/node-rfc.md) | 2 violated rules |
