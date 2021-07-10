@@ -4,9 +4,9 @@
 
 |                           | # or projects                    | % or projects                      |
 | :------------------------ | -------------------------------: | ---------------------------------: |
-| Total                     |             238 |                               100% |
-| Failed                    |         153 |         64.3% |
-| Passed with&nbsp;warnings |  54 |  22.7% |
+| Total                     |             239 |                               100% |
+| Failed                    |         154 |         64.4% |
+| Passed with&nbsp;warnings |  54 |  22.6% |
 | Passed                    |         31 |         13.0% |
 | Unclear                   |        0 |        0.0% |
 
@@ -166,6 +166,7 @@
 | [SAP/cloud-sdk-ios](https://github.com/SAP/cloud-sdk-ios) | [Failed](SAP/cloud-sdk-ios.md) | 7 violated rules |
 | [SAP/.github](https://github.com/SAP/.github) | [Failed](SAP/.github.md) | 10 violated rules |
 | [SAP/business-partner-sample-app-s4hana-cloud](https://github.com/SAP/business-partner-sample-app-s4hana-cloud) | [Failed](SAP/business-partner-sample-app-s4hana-cloud.md) | 3 violated rules |
+| [SAP/business-entity-recognition-client-library](https://github.com/SAP/business-entity-recognition-client-library) | [Failed](SAP/business-entity-recognition-client-library.md) | 3 violated rules |
 | [SAP/gigya-cdp-js-sdk](https://github.com/SAP/gigya-cdp-js-sdk) | [Failed](SAP/gigya-cdp-js-sdk.md) | 2 violated rules |
 | [SAP/openui5](https://github.com/SAP/openui5) | [Passed](SAP/openui5.md) | No violated rules |
 | [SAP/cf-java-logging-support](https://github.com/SAP/cf-java-logging-support) | [Passed](SAP/cf-java-logging-support.md) | No violated rules |
