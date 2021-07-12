@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * A base class for Markdown lists.
  */
-public abstract class MarkdownList implements MarkdownElement {
+public abstract class MarkdownList extends AbstractMarkdownElement {
 
   /**
    * Elements in the list.

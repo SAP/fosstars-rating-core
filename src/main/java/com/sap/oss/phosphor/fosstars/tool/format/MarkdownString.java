@@ -5,7 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * A simple Markdown string. The class just wraps a usual string.
  */
-public class MarkdownString implements MarkdownElement {
+public class MarkdownString extends AbstractMarkdownElement {
 
   /**
    * An empty string.

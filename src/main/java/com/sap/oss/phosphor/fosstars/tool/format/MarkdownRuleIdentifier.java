@@ -3,10 +3,21 @@ package com.sap.oss.phosphor.fosstars.tool.format;
 import static java.lang.String.format;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
-public class MarkdownRuleIdentifier implements MarkdownElement {
+/**
+ * A formatted identifier of a rule of play from the OSS RoP rating.
+ */
+public class MarkdownRuleIdentifier extends AbstractMarkdownElement {
 
+  /**
+   * A raw identifier.
+   */
   private final MarkdownElement identifier;
 
+  /**
+   * Create an identifier for a rule.
+   *
+   * @param identifier A rule's raw identifier.
+   */
   MarkdownRuleIdentifier(MarkdownElement identifier) {
     this.identifier = identifier;
   }

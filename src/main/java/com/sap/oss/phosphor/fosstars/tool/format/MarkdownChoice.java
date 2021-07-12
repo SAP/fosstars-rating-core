@@ -5,7 +5,7 @@ import java.util.function.BooleanSupplier;
 /**
  * A conditional Markdown element that selects between to options.
  */
-public class MarkdownChoice implements MarkdownElement {
+public class MarkdownChoice extends AbstractMarkdownElement {
 
   /**
    * The condition.
