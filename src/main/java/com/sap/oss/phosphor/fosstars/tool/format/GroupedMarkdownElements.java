@@ -17,7 +17,7 @@ import java.util.List;
  *   2.  Another element of the list.
  * </pre>
  */
-public class GroupedMarkdownElements implements MarkdownElement {
+public class GroupedMarkdownElements extends AbstractMarkdownElement {
 
   /**
    * Elements of the group.

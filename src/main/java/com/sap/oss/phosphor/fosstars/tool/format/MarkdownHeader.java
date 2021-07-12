@@ -4,9 +4,19 @@ import static java.lang.String.format;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.commons.lang3.StringUtils.repeat;
 
-public class MarkdownHeader implements MarkdownElement {
+/**
+ * A Markdown header.
+ */
+public class MarkdownHeader extends AbstractMarkdownElement {
 
+  /**
+   * A caption of the header.
+   */
   private final MarkdownElement caption;
+
+  /**
+   * A level of the reader.
+   */
   private final int level;
 
   MarkdownHeader(MarkdownElement caption, int level) {
@@ -14,6 +24,11 @@ public class MarkdownHeader implements MarkdownElement {
     this.level = level;
   }
 
+  /**
+   * Get the header's caption.
+   *
+   * @return The header's caption.
+   */
   MarkdownElement caption() {
     return caption;
   }
