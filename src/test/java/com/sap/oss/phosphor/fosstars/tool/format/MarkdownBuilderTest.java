@@ -3,14 +3,6 @@ package com.sap.oss.phosphor.fosstars.tool.format;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 
-import com.sap.oss.phosphor.fosstars.tool.format.OssRulesOfPlayRatingMarkdownFormatter.GroupedMarkdownElements;
-import com.sap.oss.phosphor.fosstars.tool.format.OssRulesOfPlayRatingMarkdownFormatter.Markdown;
-import com.sap.oss.phosphor.fosstars.tool.format.OssRulesOfPlayRatingMarkdownFormatter.MarkdownElement;
-import com.sap.oss.phosphor.fosstars.tool.format.OssRulesOfPlayRatingMarkdownFormatter.MarkdownHeader;
-import com.sap.oss.phosphor.fosstars.tool.format.OssRulesOfPlayRatingMarkdownFormatter.MarkdownHeaderReference;
-import com.sap.oss.phosphor.fosstars.tool.format.OssRulesOfPlayRatingMarkdownFormatter.MarkdownList;
-import com.sap.oss.phosphor.fosstars.tool.format.OssRulesOfPlayRatingMarkdownFormatter.MarkdownSection;
-import com.sap.oss.phosphor.fosstars.tool.format.OssRulesOfPlayRatingMarkdownFormatter.MarkdownString;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;

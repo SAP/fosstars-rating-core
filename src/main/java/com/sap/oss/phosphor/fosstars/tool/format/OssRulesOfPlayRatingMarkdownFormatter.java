@@ -2,18 +2,17 @@ package com.sap.oss.phosphor.fosstars.tool.format;
 
 import static com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScore.findViolatedRulesIn;
 import static com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScore.findWarningsIn;
+import static com.sap.oss.phosphor.fosstars.tool.format.Markdown.DOUBLE_NEW_LINE;
+import static com.sap.oss.phosphor.fosstars.tool.format.Markdown.NEW_LINE;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.unmodifiableMap;
 import static java.util.Objects.requireNonNull;
-import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
-import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
-import static org.apache.commons.lang3.StringUtils.repeat;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
@@ -38,7 +37,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -48,7 +46,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.BooleanSupplier;
 import javax.annotation.Nullable;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -74,16 +71,6 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
    * A whitespace.
    */
   private static final String SPACE = " ";
-
-  /**
-   * A new line.
-   */
-  private static final String NEW_LINE = "\n";
-
-  /**
-   * A double new line.
-   */
-  private static final String DOUBLE_NEW_LINE = NEW_LINE + NEW_LINE;
 
   /**
    * A logger.
@@ -271,7 +258,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     MarkdownHeader header = Markdown.header().level(2)
         .withCaption("What is wrong, and how to fix it");
     MarkdownSection section = Markdown.section().with(header).thatContains(advice);
-    BooleanSupplier sectionIsNotEmpty = () -> !empty(section.text.make());
+    BooleanSupplier sectionIsNotEmpty = () -> !Markdown.empty(section.text().make());
 
     return Markdown.choose(section).when(sectionIsNotEmpty).otherwise(MarkdownString.EMPTY).make();
   }
@@ -419,7 +406,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
    */
   private FormattedRule formatted(Value<Boolean> rule, List<Advice> adviceList) {
     String advice = adviceTextFor(rule, selectAdviceFor(rule, adviceList));
-    BooleanSupplier weHaveAdvice = () -> !empty(advice);
+    BooleanSupplier weHaveAdvice = () -> !Markdown.empty(advice);
 
     MarkdownString id = Markdown.string(featureToRuleId.get(rule.feature()));
     MarkdownHeader header = Markdown.header().level(3).withCaption(id);
@@ -607,10 +594,6 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     return config.get("documentationUrl").asText();
   }
 
-  private static boolean empty(String string) {
-    return isEmpty(string) || isBlank(string.trim());
-  }
-
   private static class FormattedRule {
 
     final MarkdownElement listText;
@@ -622,354 +605,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     }
 
     boolean hasAdvice() {
-      return !empty(adviceSection.text.make());
-    }
-
-  }
-
-  interface MarkdownElement {
-
-    String make();
-  }
-
-  static class MarkdownString implements MarkdownElement {
-
-    static final MarkdownString EMPTY = new MarkdownString(StringUtils.EMPTY);
-
-    private final String string;
-
-    MarkdownString(String identifier) {
-      this.string = identifier;
-    }
-
-    @Override
-    public String make() {
-      return string;
+      return !Markdown.empty(adviceSection.text().make());
     }
   }
-
-  static class MarkdownRuleIdentifier implements MarkdownElement {
-
-    private final MarkdownElement identifier;
-
-    MarkdownRuleIdentifier(MarkdownElement identifier) {
-      this.identifier = identifier;
-    }
-
-    @Override
-    public String make() {
-      String string = identifier.make();
-      return empty(string) ? EMPTY : format("**[%s]**", string);
-    }
-  }
-
-  static class MarkdownHeader implements MarkdownElement {
-
-    private final MarkdownElement caption;
-    private final int level;
-
-    private MarkdownHeader(MarkdownElement caption, int level) {
-      this.caption = caption;
-      this.level = level;
-    }
-
-    @Override
-    public String make() {
-      String captionString = caption.make();
-      return empty(captionString) ? EMPTY : format("%s %s", repeat("#", level), captionString);
-    }
-  }
-
-  static class MarkdownSection implements MarkdownElement {
-
-    private final MarkdownHeader header;
-    private final MarkdownElement text;
-
-    private MarkdownSection(MarkdownHeader header, MarkdownElement text) {
-      this.header = header;
-      this.text = text;
-    }
-
-    @Override
-    public String make() {
-      String headerString = header.make();
-      return empty(headerString) ? EMPTY : format("%s\n\n%s\n", headerString, text.make());
-    }
-  }
-
-  static class MarkdownHeaderReference implements MarkdownElement {
-
-    private final MarkdownElement caption;
-    private final MarkdownSection section;
-
-    MarkdownHeaderReference(MarkdownElement caption, MarkdownSection section) {
-      this.caption = caption;
-      this.section = section;
-    }
-
-    @Override
-    public String make() {
-      String captionString = caption.make();
-      if (empty(captionString)) {
-        return EMPTY;
-      }
-
-      String headerString = section.header.caption.make();
-      if (empty(headerString)) {
-        return EMPTY;
-      }
-
-      String anchor = headerString.toLowerCase().replaceAll(" ", "-");
-      return format("[%s](#%s)", captionString, anchor);
-    }
-  }
-
-  static class MarkdownChoice implements MarkdownElement {
-
-    private final BooleanSupplier condition;
-    private final MarkdownElement firstOption;
-    private final MarkdownElement secondOption;
-
-    public MarkdownChoice(
-        BooleanSupplier condition, MarkdownElement firstOption, MarkdownElement secondOption) {
-
-      this.condition = condition;
-      this.firstOption = firstOption;
-      this.secondOption = secondOption;
-    }
-
-    @Override
-    public String make() {
-      return condition.getAsBoolean() ? firstOption.make() : secondOption.make();
-    }
-  }
-
-  static class JoinedMarkdownElements implements MarkdownElement {
-
-    private final String delimiter;
-    private final List<MarkdownElement> elements;
-
-    JoinedMarkdownElements(String delimiter, List<MarkdownElement> elements) {
-      this.delimiter = delimiter;
-      this.elements = new ArrayList<>(elements);
-    }
-
-    @Override
-    public String make() {
-      return elements.stream().map(MarkdownElement::make).collect(joining(delimiter));
-    }
-  }
-
-  static class GroupedMarkdownElements implements MarkdownElement {
-
-    private final List<MarkdownElement> elements;
-
-    GroupedMarkdownElements(MarkdownElement... elements) {
-      this(asList(elements));
-    }
-
-    GroupedMarkdownElements(List<MarkdownElement> elements) {
-      this.elements = new ArrayList<>(elements);
-    }
-
-    List<MarkdownElement> get() {
-      return new ArrayList<>(elements);
-    }
-
-    @Override
-    public String make() {
-      return elements.stream().map(MarkdownElement::make).collect(joining(NEW_LINE));
-    }
-  }
-
-  abstract static class MarkdownList implements MarkdownElement {
-
-    private final List<MarkdownElement> elements;
-    private final String prefix;
-
-    MarkdownList(List<MarkdownElement> elements, String prefix) {
-      this.elements = new ArrayList<>(elements);
-      this.prefix = prefix;
-    }
-
-    @Override
-    public String make() {
-      StringBuilder content = new StringBuilder();
-      String indent = repeat(" ", prefix.length());
-      for (MarkdownElement element : elements) {
-        if (element instanceof GroupedMarkdownElements) {
-          GroupedMarkdownElements nestedElements = (GroupedMarkdownElements) element;
-          Iterator<MarkdownElement> iterator = nestedElements.get().iterator();
-          if (!iterator.hasNext()) {
-            continue;
-          }
-          content.append(format("%s%s\n", prefix, iterator.next().make()));
-          while (iterator.hasNext()) {
-            String indentedContent = Arrays.stream(iterator.next().make().split(NEW_LINE))
-                .map(line -> format("%s%s", indent, line))
-                .collect(joining(NEW_LINE));
-            content.append(format("%s\n", indentedContent));
-          }
-        } else {
-          content.append(format("%s%s\n", prefix, element.make()));
-        }
-      }
-
-      return content.toString();
-    }
-  }
-
-  static class OrderedMarkdownList extends MarkdownList {
-
-    OrderedMarkdownList(List<MarkdownElement> elements) {
-      super(elements, "1.  ");
-    }
-  }
-
-  static class UnorderedMarkdownList extends MarkdownList {
-
-    UnorderedMarkdownList(List<MarkdownElement> elements) {
-      super(elements, "*  ");
-    }
-  }
-
-  static class Markdown {
-
-    static MarkdownString string(String value) {
-      return new MarkdownString(value);
-    }
-
-    static JoinedMarkdownBuilder join(MarkdownElement... elements) {
-      return new JoinedMarkdownBuilder(elements);
-    }
-
-    static JoinedMarkdownBuilder join(List<MarkdownElement> elements) {
-      return new JoinedMarkdownBuilder(elements);
-    }
-
-    static GroupedMarkdownElements group(MarkdownElement... elements) {
-      return new GroupedMarkdownElements(elements);
-    }
-
-    static MarkdownRuleIdentifier rule(MarkdownString id) {
-      return new MarkdownRuleIdentifier(id);
-    }
-
-    static MarkdownChoiceBuilder choose(MarkdownElement element) {
-      return new MarkdownChoiceBuilder().firstOption(element);
-    }
-
-    static MarkdownHeaderBuilder header() {
-      return new MarkdownHeaderBuilder();
-    }
-
-    static MarkdownSectionBuilder section() {
-      return new MarkdownSectionBuilder();
-    }
-
-    static MarkdownHeaderReferenceBuilder reference() {
-      return new MarkdownHeaderReferenceBuilder();
-    }
-
-    static OrderedMarkdownList orderedListOf(List<MarkdownElement> elements) {
-      return new OrderedMarkdownList(elements);
-    }
-
-    static UnorderedMarkdownList unorderedListOf(List<MarkdownElement> elements) {
-      return new UnorderedMarkdownList(elements);
-    }
-  }
-
-  static class JoinedMarkdownBuilder {
-
-    private final List<MarkdownElement> elements = new ArrayList<>();
-
-    JoinedMarkdownBuilder(MarkdownElement... elements) {
-      this(asList(elements));
-    }
-
-    JoinedMarkdownBuilder(List<MarkdownElement> elements) {
-      this.elements.addAll(elements);
-    }
-
-    JoinedMarkdownBuilder of(List<MarkdownElement> elements) {
-      this.elements.addAll(elements);
-      return this;
-    }
-
-    JoinedMarkdownElements delimitedBy(String delimiter) {
-      return new JoinedMarkdownElements(delimiter, elements);
-    }
-  }
-
-  static class MarkdownHeaderReferenceBuilder {
-
-    private MarkdownSection section;
-
-    MarkdownHeaderReferenceBuilder to(MarkdownSection section) {
-      this.section = section;
-      return this;
-    }
-
-    MarkdownHeaderReference withCaption(MarkdownElement caption) {
-      return new MarkdownHeaderReference(caption, section);
-    }
-  }
-
-  static class MarkdownSectionBuilder {
-
-    private MarkdownHeader header;
-
-    MarkdownSectionBuilder with(MarkdownHeader header) {
-      this.header = header;
-      return this;
-    }
-
-    MarkdownSection thatContains(String text) {
-      return new MarkdownSection(header, new MarkdownString(text));
-    }
-
-    MarkdownSection thatContains(MarkdownElement text) {
-      return new MarkdownSection(header, text);
-    }
-  }
-
-  static class MarkdownHeaderBuilder {
-
-    private int level;
-
-    MarkdownHeader withCaption(String caption) {
-      return new MarkdownHeader(new MarkdownString(caption), level);
-    }
-
-    MarkdownHeader withCaption(MarkdownElement caption) {
-      return new MarkdownHeader(caption, level);
-    }
-
-    MarkdownHeaderBuilder level(int n) {
-      this.level = n;
-      return this;
-    }
-  }
-
-  static class MarkdownChoiceBuilder {
-
-    private MarkdownElement firstOption;
-    private BooleanSupplier condition;
-
-    MarkdownChoiceBuilder firstOption(MarkdownElement firstOption) {
-      this.firstOption = firstOption;
-      return this;
-    }
-
-    MarkdownChoiceBuilder when(BooleanSupplier condition) {
-      this.condition = condition;
-      return this;
-    }
-
-    MarkdownChoice otherwise(MarkdownElement element) {
-      return new MarkdownChoice(condition, firstOption, element);
-    }
-  }
-
 }
