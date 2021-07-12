@@ -24,7 +24,7 @@ public class MarkdownSection implements MarkdownElement {
   @Override
   public String make() {
     String headerString = header.make();
-    return Markdown.empty(headerString) ? EMPTY
+    return Markdown.isEmpty(headerString) ? EMPTY
         : format("%s\n\n%s\n", headerString, text.make());
   }
 }

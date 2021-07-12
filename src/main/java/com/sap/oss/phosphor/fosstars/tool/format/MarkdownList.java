@@ -9,11 +9,29 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * A base class for Markdown lists.
+ */
 public abstract class MarkdownList implements MarkdownElement {
 
+  /**
+   * Elements in the list.
+   */
   private final List<MarkdownElement> elements;
+
+  /**
+   * A prefix for elements in the list. The prefix determines a type of the list.
+   * For example, the prefix "1.  " means an ordered list,
+   * and "*  " means an unordered list with bullets.
+   */
   private final String prefix;
 
+  /**
+   * Create a Markdown list.
+   *
+   * @param elements Elements in the list.
+   * @param prefix A prefix for the elements.
+   */
   MarkdownList(List<MarkdownElement> elements, String prefix) {
     this.elements = new ArrayList<>(elements);
     this.prefix = prefix;

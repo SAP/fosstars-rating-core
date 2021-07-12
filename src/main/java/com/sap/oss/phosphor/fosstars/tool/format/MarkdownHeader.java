@@ -21,7 +21,7 @@ public class MarkdownHeader implements MarkdownElement {
   @Override
   public String make() {
     String captionString = caption.make();
-    return Markdown.empty(captionString)
+    return Markdown.isEmpty(captionString)
         ? EMPTY
         : format("%s %s", repeat("#", level), captionString);
   }
