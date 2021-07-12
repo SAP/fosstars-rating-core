@@ -1,11 +1,14 @@
 package com.sap.oss.phosphor.fosstars.data.github;
 
+import static com.sap.oss.phosphor.fosstars.TestUtils.PROJECT;
 import static com.sap.oss.phosphor.fosstars.data.github.UseReuseDataProvider.REUSE_CONFIG;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_REUSE_LICENSES;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.IS_REUSE_COMPLIANT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.README_HAS_REUSE_INFO;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.REGISTERED_IN_REUSE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_REUSE;
+import static java.lang.String.format;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -17,7 +20,6 @@ import static org.mockito.Mockito.when;
 
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
-import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -33,8 +35,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.junit.Test;
 
 public class UseReuseDataProviderTest extends TestGitHubDataFetcherHolder {
-
-  private static final GitHubProject PROJECT = new GitHubProject("org", "test");
 
   @Test
   public void testSupportedFeature() {
@@ -55,12 +55,14 @@ public class UseReuseDataProviderTest extends TestGitHubDataFetcherHolder {
     Value<Boolean> value = UseReuseDataProvider.useReuse(PROJECT);
     assertFalse(value.isUnknown());
     assertFalse(value.get());
+    assertFalse(value.explanation().isEmpty());
 
     when(localRepository.hasFile(REUSE_CONFIG)).thenReturn(true);
     value = UseReuseDataProvider.useReuse(PROJECT);
     assertEquals(USES_REUSE, value.feature());
     assertFalse(value.isUnknown());
     assertTrue(value.get());
+    assertTrue(value.explanation().isEmpty());
   }
 
   @Test
@@ -73,6 +75,7 @@ public class UseReuseDataProviderTest extends TestGitHubDataFetcherHolder {
     assertEquals(README_HAS_REUSE_INFO, value.feature());
     assertFalse(value.isUnknown());
     assertFalse(value.get());
+    assertFalse(value.explanation().isEmpty());
 
     when(localRepository.hasFile("README.md")).thenReturn(true);
     when(localRepository.file("README.md")).thenReturn(Optional.of("This is README."));
@@ -80,16 +83,18 @@ public class UseReuseDataProviderTest extends TestGitHubDataFetcherHolder {
     assertEquals(README_HAS_REUSE_INFO, value.feature());
     assertFalse(value.isUnknown());
     assertFalse(value.get());
+    assertFalse(value.explanation().isEmpty());
 
     when(localRepository.hasFile("README.md")).thenReturn(true);
     when(localRepository.file("README.md"))
-        .thenReturn(Optional.of(String.format(
+        .thenReturn(Optional.of(format(
             "Yes, README has a link to REUSE: https://api.reuse.software/info/github.com/%s/%s",
             PROJECT.organization().name(), PROJECT.name())));
     value = UseReuseDataProvider.readmeHasReuseInfo(PROJECT);
     assertEquals(README_HAS_REUSE_INFO, value.feature());
     assertFalse(value.isUnknown());
     assertTrue(value.get());
+    assertTrue(value.explanation().isEmpty());
   }
 
   @Test
@@ -104,6 +109,7 @@ public class UseReuseDataProviderTest extends TestGitHubDataFetcherHolder {
     assertEquals(HAS_REUSE_LICENSES, value.feature());
     assertFalse(value.isUnknown());
     assertFalse(value.get());
+    assertFalse(value.explanation().isEmpty());
 
     when(localRepository.hasDirectory(licensesDirectory)).thenReturn(true);
     when(localRepository.files(any(), any())).thenReturn(Collections.emptyList());
@@ -111,6 +117,7 @@ public class UseReuseDataProviderTest extends TestGitHubDataFetcherHolder {
     assertEquals(HAS_REUSE_LICENSES, value.feature());
     assertFalse(value.isUnknown());
     assertFalse(value.get());
+    assertFalse(value.explanation().isEmpty());
 
     when(localRepository.hasDirectory(licensesDirectory)).thenReturn(true);
     when(localRepository.files(any(), any()))
@@ -119,6 +126,7 @@ public class UseReuseDataProviderTest extends TestGitHubDataFetcherHolder {
     assertEquals(HAS_REUSE_LICENSES, value.feature());
     assertFalse(value.isUnknown());
     assertTrue(value.get());
+    assertTrue(value.explanation().isEmpty());
   }
 
   @Test
@@ -161,7 +169,7 @@ public class UseReuseDataProviderTest extends TestGitHubDataFetcherHolder {
 
     HttpEntity entity = mock(HttpEntity.class);
     when(entity.getContent())
-        .thenReturn(IOUtils.toInputStream(String.format("{ \"status\" : \"%s\"}", status)));
+        .thenReturn(IOUtils.toInputStream(format("{ \"status\" : \"%s\"}", status), UTF_8));
 
     statusLine = mock(StatusLine.class);
     when(statusLine.getStatusCode()).thenReturn(200);
@@ -178,7 +186,15 @@ public class UseReuseDataProviderTest extends TestGitHubDataFetcherHolder {
     when(provider.httpClient()).thenReturn(client);
 
     ValueSet values = provider.fetchValuesFor(PROJECT);
-    values.toSet().containsAll(expectedValues.toSet());
+    for (Value<?> expectedValue : expectedValues) {
+      Value<?> value = values.of(expectedValue.feature())
+          .orElseThrow(() -> new Error(
+              format("Could not find an expected feature: %s", expectedValue.feature().name())));
+      value.processIfKnown(v -> assertEquals(expectedValue.get(), value.get()));
+      if (value.isUnknown() || value.get().equals(Boolean.FALSE)) {
+        assertFalse(value.explanation().isEmpty());
+      }
+    }
   }
 
 }

@@ -95,7 +95,12 @@ public class PrettyPrinter extends CommonFormatter {
     return String.format("%s%n%s", print(subject.ratingValue().get()), printAdviceFor(subject));
   }
 
-  @Override
+  /**
+   * Format a rating value.
+   *
+   * @param ratingValue THe rating value.
+   * @return A formatted rating value.
+   */
   public String print(RatingValue ratingValue) {
     StringBuilder sb = new StringBuilder();
     sb.append(String.format("Here is how the rating was calculated:%n"));

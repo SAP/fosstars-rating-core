@@ -15,14 +15,20 @@ import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Pattern;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
 public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
 
   @Test
-  public void testSupportedFeatures() {
+  public void testSupportedFeatures() throws IOException {
     Set<Feature<?>> features =  new ReadmeInfo(fetcher).supportedFeatures();
     assertEquals(2, features.size());
     assertTrue(features.contains(HAS_README));
@@ -48,7 +54,11 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
             "",
             "Don't trouble trouble till trouble troubles you."
         )));
-    checkValues(provider.fetchValuesFor(project), true, false);
+    ValueSet values = provider.fetchValuesFor(project);
+    Value<Boolean> value = checkValue(values, HAS_README, true);
+    assertTrue(value.explanation().isEmpty());
+    value = checkValue(values, INCOMPLETE_README, false);
+    assertTrue(value.explanation().isEmpty());
 
     when(localRepository.readTextFrom("README"))
         .thenReturn(Optional.of(String.join("\n",
@@ -56,7 +66,12 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
             "",
             "# Another header"
         )));
-    checkValues(provider.fetchValuesFor(project), true, true);
+    values = provider.fetchValuesFor(project);
+    value = checkValue(values, HAS_README, true);
+    assertTrue(value.explanation().isEmpty());
+    value = checkValue(values, INCOMPLETE_README, true);
+    assertFalse(value.explanation().isEmpty());
+    assertTrue(value.explanation().get(0).contains("Mandatory header"));
 
     when(localRepository.readTextFrom("README"))
         .thenReturn(Optional.of(String.join("\n",
@@ -67,7 +82,12 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
             "Prohibited phrase",
             ""
         )));
-    checkValues(provider.fetchValuesFor(project), true, true);
+    values = provider.fetchValuesFor(project);
+    value = checkValue(values, HAS_README, true);
+    assertTrue(value.explanation().isEmpty());
+    value = checkValue(values, INCOMPLETE_README, true);
+    assertFalse(value.explanation().isEmpty());
+    assertTrue(value.explanation().get(0).contains("Prohibited phrase"));
   }
 
   @Test
@@ -78,22 +98,40 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
     TestGitHubDataFetcher.addForTesting(project, localRepository);
 
     ReadmeInfo provider = new ReadmeInfo(fetcher);
-    checkValues(provider.fetchValuesFor(project), false, false);
+    ValueSet values = provider.fetchValuesFor(project);
+    Value<Boolean> value = checkValue(values, HAS_README, false);
+    assertFalse(value.explanation().isEmpty());
+    value = checkValue(values, INCOMPLETE_README, true);
+    assertFalse(value.explanation().isEmpty());
   }
 
-  private static void checkValues(
-      ValueSet values, boolean expectedHasReadme, boolean expectedIncompleteReadme) {
+  @Test
+  public void testLoadingDefaultConfig() throws IOException {
+    Path config = Paths.get(String.format("%s.config.yml", ReadmeInfo.class.getSimpleName()));
+    String content = "---\n"
+        + "requiredContentPatterns:\n"
+        + "  - \"one two\"\n"
+        + "  - \"three\"\n"
+        + "  - \"[Tt]est\"\n";
+    Files.write(config, content.getBytes());
+    try {
+      ReadmeInfo provider = new ReadmeInfo(fetcher);
+      assertEquals(3, provider.requiredContentPatterns().size());
+      assertEquals("one two", provider.requiredContentPatterns().get(0).pattern());
+      assertEquals("three", provider.requiredContentPatterns().get(1).pattern());
+      assertEquals("[Tt]est", provider.requiredContentPatterns().get(2).pattern());
+    } finally {
+      FileUtils.forceDeleteOnExit(config.toFile());
+    }
+  }
 
-    Optional<Value<Boolean>> something = values.of(HAS_README);
+  private static Value<Boolean> checkValue(
+      ValueSet values, Feature<Boolean> feature, boolean expected) {
+
+    Optional<Value<Boolean>> something = values.of(feature);
     assertTrue(something.isPresent());
     Value<Boolean> value = something.get();
-    assertFalse(value.isUnknown());
-    assertEquals(expectedHasReadme, value.get());
-
-    something = values.of(INCOMPLETE_README);
-    assertTrue(something.isPresent());
-    value = something.get();
-    assertFalse(value.isUnknown());
-    assertEquals(expectedIncompleteReadme, value.get());
+    assertEquals(expected, value.get());
+    return value;
   }
 }

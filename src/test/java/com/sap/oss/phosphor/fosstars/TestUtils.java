@@ -42,6 +42,7 @@ import static com.sap.oss.phosphor.fosstars.model.value.OwaspDependencyCheckUsag
 import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.MAVEN;
 import static com.sap.oss.phosphor.fosstars.model.value.SecurityReviews.noReviews;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.Confidence;
@@ -74,6 +75,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class TestUtils {
@@ -81,6 +83,12 @@ public class TestUtils {
   private static final double DELTA = 0.01;
 
   public static final GitHubProject PROJECT = new GitHubProject("org", "test");
+
+  public static final Consumer<Value<Boolean>> NO_EXPLANATION
+      = value -> assertTrue(value.explanation().isEmpty());
+
+  public static final Consumer<Value<Boolean>> HAS_EXPLANATION
+      = value -> assertFalse(value.explanation().isEmpty());
 
   /**
    * The method checks if a score calculates an expected score value for a specified set of values.

@@ -6,6 +6,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.README
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.REGISTERED_IN_REUSE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_REUSE;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
+import static java.lang.String.format;
 import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -63,7 +64,11 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
 
   @Override
   public Set<Feature<?>> supportedFeatures() {
-    return setOf(USES_REUSE, README_HAS_REUSE_INFO, HAS_REUSE_LICENSES, REGISTERED_IN_REUSE,
+    return setOf(
+        USES_REUSE,
+        README_HAS_REUSE_INFO,
+        HAS_REUSE_LICENSES,
+        REGISTERED_IN_REUSE,
         IS_REUSE_COMPLIANT);
   }
 
@@ -86,7 +91,8 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
    * @throws IOException If something went wrong.
    */
   static Value<Boolean> useReuse(GitHubProject project) throws IOException {
-    return USES_REUSE.value(GitHubDataFetcher.localRepositoryFor(project).hasFile(REUSE_CONFIG));
+    return USES_REUSE.value(GitHubDataFetcher.localRepositoryFor(project).hasFile(REUSE_CONFIG))
+        .explainIf(false, "The project does not have a config for REUSE (%s)", REUSE_CONFIG);
   }
 
   /**
@@ -101,17 +107,18 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
 
     Optional<String> filename = ReadmeInfo.readmeIn(repository);
     if (!filename.isPresent()) {
-      return README_HAS_REUSE_INFO.value(false);
+      return README_HAS_REUSE_INFO.value(false).explain("The project does not have a README");
     }
 
     Optional<String> content = repository.file(filename.get());
     if (!content.isPresent()) {
-      return README_HAS_REUSE_INFO.value(false);
+      return README_HAS_REUSE_INFO.value(false).explain("Could not read the README");
     }
 
-    String reuseUrl = String.format("https://api.reuse.software/info/github.com/%s/%s",
+    String reuseUrl = format("https://api.reuse.software/info/github.com/%s/%s",
         project.organization().name(), project.name());
-    return README_HAS_REUSE_INFO.value(content.get().contains(reuseUrl));
+    return README_HAS_REUSE_INFO.value(content.get().contains(reuseUrl)).explainIf(false,
+        "The README does not seem to have a badge that points to REUSE status (%s)", reuseUrl);
   }
 
   /**
@@ -125,11 +132,13 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
     LocalRepository repository = GitHubDataFetcher.localRepositoryFor(project);
     Path licenseDirectory = Paths.get(REUSE_LICENCES_DIRECTORY);
     if (!repository.hasDirectory(licenseDirectory)) {
-      return HAS_REUSE_LICENSES.value(false);
+      return HAS_REUSE_LICENSES.value(false)
+          .explain("The project does not have %s directory", REUSE_LICENCES_DIRECTORY);
     }
 
-    return HAS_REUSE_LICENSES.value(
-        !repository.files(licenseDirectory, UseReuseDataProvider::isFile).isEmpty());
+    return HAS_REUSE_LICENSES
+        .value(!repository.files(licenseDirectory, UseReuseDataProvider::isFile).isEmpty())
+        .explainIf(false, "The project doesn't have licenses in %s directory", licenseDirectory);
   }
 
   /**
@@ -141,7 +150,7 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
    */
   ValueSet reuseInfo(GitHubProject project) {
     try (CloseableHttpClient client = httpClient()) {
-      String url = String.format("https://api.reuse.software/status/github.com/%s/%s",
+      String url = format("https://api.reuse.software/status/github.com/%s/%s",
           project.organization().name(), project.name());
       HttpGet request = new HttpGet(url);
       try (CloseableHttpResponse response = client.execute(request)) {
@@ -154,28 +163,42 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
         JsonNode root = Json.mapper().readTree(response.getEntity().getContent());
         if (!root.has("status")) {
           logger.warn("Oops! Could not get REUSE status!");
-          return ValueHashSet.from(REGISTERED_IN_REUSE.unknown(), IS_REUSE_COMPLIANT.unknown());
+          String note = "Could not retrieve the project's REUSE status";
+          return ValueHashSet.from(
+              REGISTERED_IN_REUSE.unknown().explain(note),
+              IS_REUSE_COMPLIANT.unknown().explain(note));
         }
 
+        String note;
         String status = root.get("status").asText();
         switch (status) {
           case "unregistered":
+            note = "The project is not registered in REUSE";
             return ValueHashSet.from(
-                REGISTERED_IN_REUSE.value(false), IS_REUSE_COMPLIANT.value(false));
+                REGISTERED_IN_REUSE.value(false).explain(note),
+                IS_REUSE_COMPLIANT.value(false).explain(note));
           case "compliant":
             return ValueHashSet.from(
                 REGISTERED_IN_REUSE.value(true), IS_REUSE_COMPLIANT.value(true));
           case "non-compliant":
             return ValueHashSet.from(
-                REGISTERED_IN_REUSE.value(true), IS_REUSE_COMPLIANT.value(false));
+                REGISTERED_IN_REUSE.value(true),
+                IS_REUSE_COMPLIANT.value(false).explain("The project violates REUSE rules"));
           default:
             logger.warn("Oops! Unknown REUSE status ({})", status);
-            return ValueHashSet.from(REGISTERED_IN_REUSE.unknown(), IS_REUSE_COMPLIANT.unknown());
+            note = format("Received unknown an project's REUSE status (%s). "
+                    + "You may want to open an issue for that.", status);
+            return ValueHashSet.from(
+                REGISTERED_IN_REUSE.unknown().explain(note),
+                IS_REUSE_COMPLIANT.unknown().explain(note));
         }
       }
     } catch (IOException e) {
-      logger.warn("Oops! Could not check whether vulnerability alerts are enabled or not", e);
-      return ValueHashSet.from(REGISTERED_IN_REUSE.unknown(), IS_REUSE_COMPLIANT.unknown());
+      logger.warn("Oops! Could not retrieve REUSE status!", e);
+      String note = "Could not retrieve the project's REUSE status";
+      return ValueHashSet.from(
+          REGISTERED_IN_REUSE.unknown().explain(note),
+          IS_REUSE_COMPLIANT.unknown().explain(note));
     }
   }
 
@@ -226,7 +249,6 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
    * @param feature The feature.
    */
   private static void print(ValueSet values, Feature<Boolean> feature) {
-    String string;
     Optional<Value<Boolean>> something = values.of(feature);
     System.out.printf("%s: %s%n",
         feature.name(), something.map(Value::toString).orElse("not found"));

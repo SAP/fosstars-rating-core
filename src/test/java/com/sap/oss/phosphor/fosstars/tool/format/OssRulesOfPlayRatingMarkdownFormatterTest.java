@@ -2,6 +2,7 @@ package com.sap.oss.phosphor.fosstars.tool.format;
 
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.allUnknown;
 import static com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScoreTest.allRulesPassed;
+import static java.util.Collections.emptyList;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertNotNull;
@@ -47,7 +48,7 @@ public class OssRulesOfPlayRatingMarkdownFormatterTest {
       assertEquals(OssRulesOfPlayLabel.PASSED, ratingValue.label());
       OssRulesOfPlayRatingMarkdownFormatter formatter
           = new OssRulesOfPlayRatingMarkdownFormatter(CONFIG_PATH, new OssRulesOfPlayAdvisor());
-      String text = formatter.print(ratingValue);
+      String text = formatter.print(ratingValue, emptyList());
       assertNotNull(text);
       assertFalse(text.isEmpty());
       String lowerCaseText = text.toLowerCase();
@@ -73,7 +74,7 @@ public class OssRulesOfPlayRatingMarkdownFormatterTest {
       assertEquals(OssRulesOfPlayLabel.PASSED_WITH_WARNING, ratingValue.label());
       OssRulesOfPlayRatingMarkdownFormatter formatter
           = new OssRulesOfPlayRatingMarkdownFormatter(CONFIG_PATH, new OssRulesOfPlayAdvisor());
-      String text = formatter.print(ratingValue);
+      String text = formatter.print(ratingValue, emptyList());
       assertNotNull(text);
       assertFalse(text.isEmpty());
       String lowerCaseText = text.toLowerCase();
@@ -99,7 +100,7 @@ public class OssRulesOfPlayRatingMarkdownFormatterTest {
       assertEquals(OssRulesOfPlayLabel.FAILED, ratingValue.label());
       OssRulesOfPlayRatingMarkdownFormatter formatter
           = new OssRulesOfPlayRatingMarkdownFormatter(CONFIG_PATH, new OssRulesOfPlayAdvisor());
-      String text = formatter.print(ratingValue);
+      String text = formatter.print(ratingValue, emptyList());
       assertNotNull(text);
       assertFalse(text.isEmpty());
       String lowerCaseText = text.toLowerCase();
@@ -123,7 +124,7 @@ public class OssRulesOfPlayRatingMarkdownFormatterTest {
       assertEquals(OssRulesOfPlayLabel.UNCLEAR, ratingValue.label());
       OssRulesOfPlayRatingMarkdownFormatter formatter
           = new OssRulesOfPlayRatingMarkdownFormatter(CONFIG_PATH, new OssRulesOfPlayAdvisor());
-      String text = formatter.print(ratingValue);
+      String text = formatter.print(ratingValue, emptyList());
       assertNotNull(text);
       assertFalse(text.isEmpty());
       String lowerCaseText = text.toLowerCase();

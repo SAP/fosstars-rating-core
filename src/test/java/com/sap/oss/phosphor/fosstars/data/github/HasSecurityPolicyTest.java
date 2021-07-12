@@ -3,6 +3,7 @@ package com.sap.oss.phosphor.fosstars.data.github;
 import static com.sap.oss.phosphor.fosstars.data.github.TestGitHubDataFetcherHolder.TestGitHubDataFetcher.addForTesting;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -110,5 +111,8 @@ public class HasSecurityPolicyTest extends TestGitHubDataFetcherHolder {
     Value<Boolean> value = something.get();
     assertNotNull(value);
     assertEquals(expectedValue, value.get());
+    if (!expectedValue) {
+      assertFalse(value.explanation().isEmpty());
+    }
   }
 }
