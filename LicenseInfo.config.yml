@@ -8,3 +8,5 @@ disallowedLicensePatterns: "API"
 repositoryExceptions:
   - https://github.com/SAP/SapMachine
   - https://github.com/SAP/styleguides
+  - https://github.com/SAP/abnf-test-tool
+  - https://github.com/SAP/software-documentation-data-set-for-machine-translation
