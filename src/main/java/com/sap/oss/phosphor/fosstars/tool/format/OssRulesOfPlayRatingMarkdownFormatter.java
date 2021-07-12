@@ -258,7 +258,7 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     MarkdownHeader header = Markdown.header().level(2)
         .withCaption("What is wrong, and how to fix it");
     MarkdownSection section = Markdown.section().with(header).thatContains(advice);
-    BooleanSupplier sectionIsNotEmpty = () -> !Markdown.empty(section.text().make());
+    BooleanSupplier sectionIsNotEmpty = () -> !Markdown.isEmpty(section.text().make());
 
     return Markdown.choose(section).when(sectionIsNotEmpty).otherwise(MarkdownString.EMPTY).make();
   }
@@ -406,13 +406,13 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
    */
   private FormattedRule formatted(Value<Boolean> rule, List<Advice> adviceList) {
     String advice = adviceTextFor(rule, selectAdviceFor(rule, adviceList));
-    BooleanSupplier weHaveAdvice = () -> !Markdown.empty(advice);
+    BooleanSupplier weHaveAdvice = () -> !Markdown.isEmpty(advice);
 
     MarkdownString id = Markdown.string(featureToRuleId.get(rule.feature()));
     MarkdownHeader header = Markdown.header().level(3).withCaption(id);
     MarkdownSection adviceSection = Markdown.section().with(header).thatContains(advice);
     MarkdownRuleIdentifier ruleId = Markdown.rule(id);
-    MarkdownHeaderReference identifierWithReference
+    MarkdownSectionReference identifierWithReference
         = Markdown.reference().to(adviceSection).withCaption(ruleId);
     MarkdownChoice identifier
         = Markdown.choose(identifierWithReference).when(weHaveAdvice).otherwise(ruleId);
@@ -594,18 +594,40 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     return config.get("documentationUrl").asText();
   }
 
+  /**
+   * This class holds Markdown elements for one rule.
+   * The elements may be rendered in different parts of the report.
+   */
   private static class FormattedRule {
 
+    /**
+     * A text for the rule in the list of passed, failed, unclear rules or warnings.
+     */
     final MarkdownElement listText;
+
+    /**
+     * A Markdown section with advice for the rule.
+     */
     final MarkdownSection adviceSection;
 
+    /**
+     * Create a formatted rule.
+     *
+     * @param listText A text for the rule in the list of rules.
+     * @param adviceSection A Markdown section with advice for the rule.
+     */
     private FormattedRule(MarkdownElement listText, MarkdownSection adviceSection) {
       this.listText = listText;
       this.adviceSection = adviceSection;
     }
 
+    /**
+     * Checks whether or not the rule has advice.
+     *
+     * @return True if th rule has advice, false otherwise.
+     */
     boolean hasAdvice() {
-      return !Markdown.empty(adviceSection.text().make());
+      return !Markdown.isEmpty(adviceSection.text().make());
     }
   }
 }

@@ -5,11 +5,27 @@ import static java.util.stream.Collectors.joining;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A collection of Markdown elements that should be joined using a specified delimiter.
+ */
 public class JoinedMarkdownElements implements MarkdownElement {
 
+  /**
+   * A delimiter for the elements.
+   */
   private final String delimiter;
+
+  /**
+   * A list of elements.
+   */
   private final List<MarkdownElement> elements;
 
+  /**
+   * Create a collection of joined elements.
+   *
+   * @param delimiter A delimiter.
+   * @param elements A list of elements.
+   */
   JoinedMarkdownElements(String delimiter, List<MarkdownElement> elements) {
     this.delimiter = delimiter;
     this.elements = new ArrayList<>(elements);

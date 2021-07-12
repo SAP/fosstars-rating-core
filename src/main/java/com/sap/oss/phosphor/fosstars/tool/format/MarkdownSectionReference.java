@@ -3,12 +3,12 @@ package com.sap.oss.phosphor.fosstars.tool.format;
 import static java.lang.String.format;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
-public class MarkdownHeaderReference implements MarkdownElement {
+public class MarkdownSectionReference implements MarkdownElement {
 
   private final MarkdownElement caption;
   private final MarkdownSection section;
 
-  MarkdownHeaderReference(MarkdownElement caption, MarkdownSection section) {
+  MarkdownSectionReference(MarkdownElement caption, MarkdownSection section) {
     this.caption = caption;
     this.section = section;
   }
@@ -16,12 +16,12 @@ public class MarkdownHeaderReference implements MarkdownElement {
   @Override
   public String make() {
     String captionString = caption.make();
-    if (Markdown.empty(captionString)) {
+    if (Markdown.isEmpty(captionString)) {
       return EMPTY;
     }
 
     String headerString = section.header().caption().make();
-    if (Markdown.empty(headerString)) {
+    if (Markdown.isEmpty(headerString)) {
       return EMPTY;
     }
 

@@ -14,6 +14,6 @@ public class MarkdownRuleIdentifier implements MarkdownElement {
   @Override
   public String make() {
     String string = identifier.make();
-    return Markdown.empty(string) ? EMPTY : format("**[%s]**", string);
+    return Markdown.isEmpty(string) ? EMPTY : format("**[%s]**", string);
   }
 }

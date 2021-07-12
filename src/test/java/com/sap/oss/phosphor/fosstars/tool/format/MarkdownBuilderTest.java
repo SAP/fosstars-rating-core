@@ -97,7 +97,7 @@ public class MarkdownBuilderTest {
   public void testHeaderReference() {
     MarkdownHeader header = Markdown.header().level(1).withCaption("This is a header");
     MarkdownSection section = Markdown.section().with(header).thatContains("Text");
-    MarkdownHeaderReference reference = Markdown.reference()
+    MarkdownSectionReference reference = Markdown.reference()
         .to(section)
         .withCaption(Markdown.string("Test"));
     assertEquals("[Test](#this-is-a-header)", reference.make());

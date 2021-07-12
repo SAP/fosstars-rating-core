@@ -47,10 +47,6 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
     super(advisor);
   }
 
-  public String print(RatingValue ratingValue) {
-    return print(ratingValue, NO_ADVICE);
-  }
-
   /**
    * Print out a rating value with advice.
    *
