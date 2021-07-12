@@ -1,0 +1,19 @@
+package com.sap.oss.phosphor.fosstars.tool.format;
+
+import static java.lang.String.format;
+import static org.apache.commons.lang3.StringUtils.EMPTY;
+
+public class MarkdownRuleIdentifier implements MarkdownElement {
+
+  private final MarkdownElement identifier;
+
+  MarkdownRuleIdentifier(MarkdownElement identifier) {
+    this.identifier = identifier;
+  }
+
+  @Override
+  public String make() {
+    String string = identifier.make();
+    return Markdown.empty(string) ? EMPTY : format("**[%s]**", string);
+  }
+}
