@@ -4,6 +4,7 @@ import static com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScore.
 import static com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScore.findWarningsIn;
 import static com.sap.oss.phosphor.fosstars.tool.format.Markdown.DOUBLE_NEW_LINE;
 import static com.sap.oss.phosphor.fosstars.tool.format.Markdown.NEW_LINE;
+import static com.sap.oss.phosphor.fosstars.tool.format.Markdown.SPACE;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
@@ -18,7 +19,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
 import com.sap.oss.phosphor.fosstars.advice.Advice;
 import com.sap.oss.phosphor.fosstars.advice.Advisor;
-import com.sap.oss.phosphor.fosstars.advice.Link;
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Label;
@@ -53,7 +53,7 @@ import org.apache.logging.log4j.Logger;
  * The class prints a rating value
  * for {@link com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating} in Markdown.
  */
-public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
+public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownFormatter {
 
   /**
    * A resource with a default Markdown template.
@@ -66,11 +66,6 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
    */
   private static final String DEFAULT_RATING_VALUE_TEMPLATE
       = loadFrom(RATING_VALUE_TEMPLATE_RESOURCE, OssRulesOfPlayRatingMarkdownFormatter.class);
-
-  /**
-   * A whitespace.
-   */
-  private static final String SPACE = " ";
 
   /**
    * A logger.
@@ -306,19 +301,6 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
   }
 
   /**
-   * Convert links from advice to Markdown elements.
-   *
-   * @param advice The advice.
-   * @return A list of Markdown elements with links from the advice.
-   */
-  private List<MarkdownElement> linksIn(Advice advice) {
-    return advice.content().links().stream()
-        .map(this::formatted)
-        .map(Markdown::string)
-        .collect(toList());
-  }
-
-  /**
    * Looks for violations in a rating value.
    *
    * @param ratingValue The rating value.
@@ -408,11 +390,16 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
     String advice = adviceTextFor(rule, selectAdviceFor(rule, adviceList));
     BooleanSupplier weHaveAdvice = () -> !Markdown.isEmpty(advice);
 
-    MarkdownString id = Markdown.string(featureToRuleId.get(rule.feature()));
+    String rawId = featureToRuleId.get(rule.feature());
+    BooleanSupplier weHaveId = () -> rawId != null;
+
+    MarkdownElement id = Markdown.choose(Markdown.template(rawId))
+        .when(weHaveId)
+        .otherwise(Markdown.string(rule.feature().name()));
     MarkdownHeader header = Markdown.header().level(3).withCaption(id);
     MarkdownSection adviceSection = Markdown.section().with(header).thatContains(advice);
     MarkdownRuleIdentifier ruleId = Markdown.rule(id);
-    MarkdownSectionReference identifierWithReference
+    MarkdownHeaderReference identifierWithReference
         = Markdown.reference().to(adviceSection).withCaption(ruleId);
     MarkdownChoice identifier
         = Markdown.choose(identifierWithReference).when(weHaveAdvice).otherwise(ruleId);
@@ -431,16 +418,6 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends CommonFormatter {
    */
   private List<FormattedRule> formatted(List<Value<Boolean>> rules, List<Advice> advice) {
     return rules.stream().map(rule -> formatted(rule, advice)).collect(toList());
-  }
-
-  /**
-   * Format a link.
-   *
-   * @param link The link.
-   * @return A formatted link.
-   */
-  String formatted(Link link) {
-    return format("[%s](%s)", link.name, link.url);
   }
 
   /**
