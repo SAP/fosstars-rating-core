@@ -1,6 +1,7 @@
 package com.sap.oss.phosphor.fosstars.tool.format;
 
 import static java.lang.String.format;
+import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.joining;
 import static org.apache.commons.lang3.StringUtils.repeat;
 
@@ -33,6 +34,9 @@ public abstract class MarkdownList extends AbstractMarkdownElement {
    * @param prefix A prefix for the elements.
    */
   MarkdownList(List<MarkdownElement> elements, String prefix) {
+    requireNonNull(elements, "Oops! Elements is null!");
+    requireNonNull(prefix, "Oops! Prefix is null!");
+
     this.elements = new ArrayList<>(elements);
     this.prefix = prefix;
   }

@@ -1,6 +1,7 @@
 package com.sap.oss.phosphor.fosstars.tool.format;
 
 import static java.lang.String.format;
+import static java.util.Objects.requireNonNull;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 /**
@@ -19,7 +20,7 @@ public class MarkdownRuleIdentifier extends AbstractMarkdownElement {
    * @param identifier A rule's raw identifier.
    */
   MarkdownRuleIdentifier(MarkdownElement identifier) {
-    this.identifier = identifier;
+    this.identifier = requireNonNull(identifier, "Oops! Identifier is null!");
   }
 
   @Override

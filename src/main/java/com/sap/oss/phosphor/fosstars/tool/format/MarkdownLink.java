@@ -1,6 +1,7 @@
 package com.sap.oss.phosphor.fosstars.tool.format;
 
 import static java.lang.String.format;
+import static java.util.Objects.requireNonNull;
 
 /**
  * A Markdown link.
@@ -24,8 +25,8 @@ public class MarkdownLink extends AbstractMarkdownElement {
    * @param target A link's target.
    */
   public MarkdownLink(MarkdownElement caption, String target) {
-    this.caption = caption;
-    this.target = target;
+    this.caption = requireNonNull(caption, "Oops! Caption is null!");
+    this.target = requireNonNull(target, "Oops! Target is null!");
   }
 
   @Override

@@ -1,5 +1,7 @@
 package com.sap.oss.phosphor.fosstars.tool.format;
 
+import static java.util.Objects.requireNonNull;
+
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -23,7 +25,7 @@ public class MarkdownString extends AbstractMarkdownElement {
    * @param string The actual string.
    */
   MarkdownString(String string) {
-    this.string = string;
+    this.string = requireNonNull(string, "Oops! String is null!");
   }
 
   @Override

@@ -1,6 +1,7 @@
 package com.sap.oss.phosphor.fosstars.tool.format;
 
 import static java.lang.String.format;
+import static java.util.Objects.requireNonNull;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 /**
@@ -25,8 +26,8 @@ public class MarkdownHeaderReference extends AbstractMarkdownElement {
    * @param header The target header.
    */
   MarkdownHeaderReference(MarkdownElement caption, MarkdownHeader header) {
-    this.caption = caption;
-    this.header = header;
+    this.caption = requireNonNull(caption, "Oops! Caption is null!");
+    this.header = requireNonNull(header, "Oops! Header is null!");
   }
 
   @Override

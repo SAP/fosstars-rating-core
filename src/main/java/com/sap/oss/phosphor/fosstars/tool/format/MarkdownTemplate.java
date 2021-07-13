@@ -1,6 +1,8 @@
 package com.sap.oss.phosphor.fosstars.tool.format;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
+import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 
@@ -29,8 +31,8 @@ public class MarkdownTemplate extends AbstractMarkdownElement {
    * @param parameters Parameters.
    */
   public MarkdownTemplate(String template, MarkdownElement... parameters) {
-    this.template = template;
-    this.parameters = asList(parameters);
+    this.template = requireNonNull(template, "Oops! Template is null!");
+    this.parameters = parameters != null ? asList(parameters) : emptyList();
   }
 
   @Override
