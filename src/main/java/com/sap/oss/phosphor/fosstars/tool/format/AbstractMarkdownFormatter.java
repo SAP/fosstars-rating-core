@@ -181,11 +181,10 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
     List<MarkdownElement> elements = new ArrayList<>();
     for (Vulnerability vulnerability : uniqueVulnerabilities) {
       if (vulnerability.description().isPresent()) {
-        elements.add(
-            Markdown.join(
-                    linkFor(vulnerability),
-                    Markdown.string(vulnerability.description().get()))
-                .delimitedBy(": "));
+        MarkdownElement description = Markdown.template("%s: %s",
+            linkFor(vulnerability),
+            Markdown.string(vulnerability.description().get()));
+        elements.add(description);
       } else {
         elements.add(linkFor(vulnerability));
       }
