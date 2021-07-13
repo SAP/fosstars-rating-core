@@ -5,8 +5,8 @@
 |                           | # or projects                    | % or projects                      |
 | :------------------------ | -------------------------------: | ---------------------------------: |
 | Total                     |             239 |                               100% |
-| Failed                    |         153 |         64.0% |
-| Passed with&nbsp;warnings |  76 |  31.8% |
+| Failed                    |         152 |         63.6% |
+| Passed with&nbsp;warnings |  77 |  32.2% |
 | Passed                    |         10 |         4.2% |
 | Unclear                   |        0 |        0.0% |
 
@@ -18,7 +18,7 @@
 | [SAP/cloud-maven-plugin](https://github.com/SAP/cloud-maven-plugin) | [Failed](SAP/cloud-maven-plugin.md) | 4 violated rules |
 | [SAP/cloud-roo-gwaddon](https://github.com/SAP/cloud-roo-gwaddon) | [Failed](SAP/cloud-roo-gwaddon.md) | 4 violated rules |
 | [SAP/cloud-odata-java](https://github.com/SAP/cloud-odata-java) | [Failed](SAP/cloud-odata-java.md) | 3 violated rules |
-| [SAP/abnf-test-tool](https://github.com/SAP/abnf-test-tool) | [Failed](SAP/abnf-test-tool.md) | 7 violated rules |
+| [SAP/abnf-test-tool](https://github.com/SAP/abnf-test-tool) | [Failed](SAP/abnf-test-tool.md) | 6 violated rules |
 | [SAP/cloud-connectivityproxy](https://github.com/SAP/cloud-connectivityproxy) | [Failed](SAP/cloud-connectivityproxy.md) | 4 violated rules |
 | [SAP/cloud-personslist-scenario](https://github.com/SAP/cloud-personslist-scenario) | [Failed](SAP/cloud-personslist-scenario.md) | 4 violated rules |
 | [SAP/node-hdb](https://github.com/SAP/node-hdb) | [Failed](SAP/node-hdb.md) | 5 violated rules |
@@ -83,7 +83,6 @@
 | [SAP/python-pyodata](https://github.com/SAP/python-pyodata) | [Failed](SAP/python-pyodata.md) | 4 violated rules |
 | [SAP/cloud-mta](https://github.com/SAP/cloud-mta) | [Failed](SAP/cloud-mta.md) | 1 violated rule |
 | [SAP/cf-html5-apps-repo-cli-plugin](https://github.com/SAP/cf-html5-apps-repo-cli-plugin) | [Failed](SAP/cf-html5-apps-repo-cli-plugin.md) | 5 violated rules |
-| [SAP/openui5-website](https://github.com/SAP/openui5-website) | [Failed](SAP/openui5-website.md) | 1 violated rule |
 | [SAP/fsm-shell](https://github.com/SAP/fsm-shell) | [Failed](SAP/fsm-shell.md) | 4 violated rules |
 | [SAP/ui5-webcomponents](https://github.com/SAP/ui5-webcomponents) | [Failed](SAP/ui5-webcomponents.md) | 1 violated rule |
 | [SAP/odbc-cpp-wrapper](https://github.com/SAP/odbc-cpp-wrapper) | [Failed](SAP/odbc-cpp-wrapper.md) | 4 violated rules |
@@ -135,7 +134,7 @@
 | [SAP/async-profiler](https://github.com/SAP/async-profiler) | [Failed](SAP/async-profiler.md) | 4 violated rules |
 | [SAP/ytt-lint](https://github.com/SAP/ytt-lint) | [Failed](SAP/ytt-lint.md) | 7 violated rules |
 | [SAP/contextual-ai](https://github.com/SAP/contextual-ai) | [Failed](SAP/contextual-ai.md) | 4 violated rules |
-| [SAP/software-documentation-data-set-for-machine-translation](https://github.com/SAP/software-documentation-data-set-for-machine-translation) | [Failed](SAP/software-documentation-data-set-for-machine-translation.md) | 5 violated rules |
+| [SAP/software-documentation-data-set-for-machine-translation](https://github.com/SAP/software-documentation-data-set-for-machine-translation) | [Failed](SAP/software-documentation-data-set-for-machine-translation.md) | 4 violated rules |
 | [SAP/spartacus-tua](https://github.com/SAP/spartacus-tua) | [Failed](SAP/spartacus-tua.md) | 3 violated rules |
 | [SAP/bayesian-network-builder](https://github.com/SAP/bayesian-network-builder) | [Failed](SAP/bayesian-network-builder.md) | 5 violated rules |
 | [SAP/cloud-sdk-ios-fiori-snapshot-references](https://github.com/SAP/cloud-sdk-ios-fiori-snapshot-references) | [Failed](SAP/cloud-sdk-ios-fiori-snapshot-references.md) | 3 violated rules |
@@ -212,6 +211,7 @@
 | [SAP/ui5-uiveri5](https://github.com/SAP/ui5-uiveri5) | [Passed with warnings](SAP/ui5-uiveri5.md) | No violated rules |
 | [SAP/fundamental-vue](https://github.com/SAP/fundamental-vue) | [Passed with warnings](SAP/fundamental-vue.md) | No violated rules |
 | [SAP/generator-easy-ui5](https://github.com/SAP/generator-easy-ui5) | [Passed with warnings](SAP/generator-easy-ui5.md) | No violated rules |
+| [SAP/openui5-website](https://github.com/SAP/openui5-website) | [Passed with warnings](SAP/openui5-website.md) | No violated rules |
 | [SAP/ui5-flush-game](https://github.com/SAP/ui5-flush-game) | [Passed with warnings](SAP/ui5-flush-game.md) | No violated rules |
 | [SAP/ewm-cloud-robotics](https://github.com/SAP/ewm-cloud-robotics) | [Passed with warnings](SAP/ewm-cloud-robotics.md) | No violated rules |
 | [SAP/openui5-fhir](https://github.com/SAP/openui5-fhir) | [Passed with warnings](SAP/openui5-fhir.md) | No violated rules |

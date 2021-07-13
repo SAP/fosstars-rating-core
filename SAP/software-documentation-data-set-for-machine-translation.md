@@ -4,7 +4,6 @@
 
 ## Violated rules
 1.  [**[rl-reuse_tool-2]**](#rl-reuse_tool-2) Does it have LICENSES directory with licenses? **No**
-1.  [**[rl-license_file-2]**](#rl-license_file-2) Does it use an allowed license? **No**
 1.  [**[rl-reuse_tool-1]**](#rl-reuse_tool-1) Does README mention REUSE? **No**
 1.  [**[rl-reuse_tool-3]**](#rl-reuse_tool-3) Is it registered in REUSE? **No**
 1.  [**[rl-reuse_tool-4]**](#rl-reuse_tool-4) Is it compliant with REUSE rules? **No**
@@ -30,6 +29,7 @@
 1.  **[rl-assigned_teams-1]** Does it have enough teams on GitHub? **Yes**
 1.  **[rl-license_file-3]** Does the license have disallowed content? **No**
 1.  **[rl-vulnerability_alerts-2]** Does it have unresolved vulnerability alerts? **No**
+1.  **[rl-license_file-2]** Does it use an allowed license? **Yes**
 
 
 ## What is wrong, and how to fix it
@@ -39,13 +39,6 @@
 The project does not have LICENSES directory
 
 REUSE tool compliance requires that all used licenses are provided in a LICENSES folder on root level.
-
-
-### rl-license_file-2
-
-NOASSERTION is not allowed
-
-A license file was detected, but it doesn't seem to be approved by SAP. Under normal circumstances, we use Apache 2.0 exclusively for our open source projects. Of course, exceptions apply and should be covered by this check.
 
 
 ### rl-reuse_tool-1

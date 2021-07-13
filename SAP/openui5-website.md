@@ -1,9 +1,7 @@
-**Status**: **Failed**
+**Status**: **Passed with warnings**
 
 **Confidence**: Max (10.0, max confidence value is 10.0)
 
-## Violated rules
-1.  [**[rl-license_file-2]**](#rl-license_file-2) Does it use an allowed license? **No**
 
 
 ## Warnings
@@ -27,19 +25,13 @@
 1.  **[rl-assigned_teams-1]** Does it have enough teams on GitHub? **Yes**
 1.  **[rl-contributor_file-1]** Does it have a contributing guideline? **Yes**
 1.  **[rl-license_file-3]** Does the license have disallowed content? **No**
+1.  **[rl-license_file-2]** Does it use an allowed license? **Yes**
 1.  **[rl-reuse_tool-1]** Does README mention REUSE? **Yes**
 1.  **[rl-reuse_tool-3]** Is it registered in REUSE? **Yes**
 1.  **[rl-reuse_tool-4]** Is it compliant with REUSE rules? **Yes**
 
 
 ## What is wrong, and how to fix it
-
-### rl-license_file-2
-
-NOASSERTION is not allowed
-
-A license file was detected, but it doesn't seem to be approved by SAP. Under normal circumstances, we use Apache 2.0 exclusively for our open source projects. Of course, exceptions apply and should be covered by this check.
-
 
 ### rl-readme_file-2
 
