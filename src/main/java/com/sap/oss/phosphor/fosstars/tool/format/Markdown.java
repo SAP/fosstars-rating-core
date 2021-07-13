@@ -1,8 +1,11 @@
 package com.sap.oss.phosphor.fosstars.tool.format;
 
+import static java.lang.String.format;
 import static java.util.Arrays.asList;
+import static java.util.Objects.requireNonNull;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BooleanSupplier;
@@ -12,6 +15,11 @@ import org.apache.commons.lang3.StringUtils;
  * A helper class for creating Markdown.
  */
 public class Markdown {
+
+  /**
+   * A whitespace.
+   */
+  static final String SPACE = " ";
 
   /**
    * A new line.
@@ -34,13 +42,47 @@ public class Markdown {
   }
 
   /**
-   * Create a Markdown string from a usual string.
+   * Create a Markdown string from a template string with parameters.
    *
-   * @param string The string.
+   * @param template The string.
+   * @param elements The parameters.
    * @return A Markdown string.
+   * @see String#format(String, Object...)
    */
-  static MarkdownString string(String string) {
-    return new MarkdownString(string);
+  static MarkdownString string(String template, Object... elements) {
+    requireNonNull(template, "Oops! String is null!");
+    return new MarkdownString(elements != null ? format(template, elements) : template);
+  }
+
+  /**
+   * Make a text.
+   *
+   * @param text The text.
+   * @return A bold text.
+   */
+  static BoldMarkdownString bold(String text) {
+    return bold(string(text));
+  }
+
+  /**
+   * Make a bold Markdown element.
+   *
+   * @param element The element.
+   * @return A bold Markdown element.
+   */
+  static BoldMarkdownString bold(MarkdownElement element) {
+    return new BoldMarkdownString(element);
+  }
+
+  /**
+   * Create a Markdown template that is going to be filled out with elements while rendering.
+   *
+   * @param template The template.
+   * @param elements The elements.
+   * @return A Markdown template.
+   */
+  static MarkdownTemplate template(String template, MarkdownElement... elements) {
+    return new MarkdownTemplate(template, elements);
   }
 
   /**
@@ -59,7 +101,7 @@ public class Markdown {
    * @param id The rule's identifier.
    * @return A new Markdown identifier.
    */
-  static MarkdownRuleIdentifier rule(MarkdownString id) {
+  static MarkdownRuleIdentifier rule(MarkdownElement id) {
     return new MarkdownRuleIdentifier(id);
   }
 
@@ -132,12 +174,21 @@ public class Markdown {
   }
 
   /**
-   * Create a builder for a reference to a Markdown section.
+   * Create a builder for a reference to a Markdown header.
    *
    * @return A new builder.
    */
-  static MarkdownSectionReferenceBuilder reference() {
-    return new MarkdownSectionReferenceBuilder();
+  static MarkdownHeaderReferenceBuilder reference() {
+    return new MarkdownHeaderReferenceBuilder();
+  }
+
+  /**
+   * Create a builder for a link.
+   *
+   * @return A new builder.
+   */
+  static MarkdownLinkBuilder link() {
+    return new MarkdownLinkBuilder();
   }
 
   /**
@@ -191,14 +242,14 @@ public class Markdown {
   }
 
   /**
-   * A builder for a reference to a Markdown section.
+   * A builder for a reference to a Markdown header.
    */
-  public static class MarkdownSectionReferenceBuilder {
+  public static class MarkdownHeaderReferenceBuilder {
 
     /**
-     * A section.
+     * A header.
      */
-    private MarkdownSection section;
+    private MarkdownHeader header;
 
     /**
      * Set a section for the reference.
@@ -206,8 +257,18 @@ public class Markdown {
      * @param section The section.
      * @return The same builder.
      */
-    MarkdownSectionReferenceBuilder to(MarkdownSection section) {
-      this.section = section;
+    MarkdownHeaderReferenceBuilder to(MarkdownSection section) {
+      return to(section.header());
+    }
+
+    /**
+     * Set a header for the reference.
+     *
+     * @param header The header.
+     * @return The same builder.
+     */
+    MarkdownHeaderReferenceBuilder to(MarkdownHeader header) {
+      this.header = header;
       return this;
     }
 
@@ -217,8 +278,27 @@ public class Markdown {
      * @param caption The caption.
      * @return A Markdown reference.
      */
-    MarkdownSectionReference withCaption(MarkdownElement caption) {
-      return new MarkdownSectionReference(caption, section);
+    MarkdownHeaderReference withCaption(MarkdownElement caption) {
+      return new MarkdownHeaderReference(caption, header);
+    }
+
+    /**
+     * Create a reference with a caption.
+     *
+     * @param caption The caption.
+     * @return A Markdown reference.
+     */
+    MarkdownHeaderReference withCaption(String caption) {
+      return new MarkdownHeaderReference(string(caption), header);
+    }
+
+    /**
+     * Create a reference with the header's name as a caption.
+     *
+     * @return A Markdown reference.
+     */
+    MarkdownHeaderReference withHeaderName() {
+      return new MarkdownHeaderReference(header.caption(), header);
     }
   }
 
@@ -272,7 +352,7 @@ public class Markdown {
     /**
      * A header's level.
      */
-    private int level;
+    private int level = 1;
 
     /**
      * Create a Markdown header with a specified caption.
@@ -351,6 +431,59 @@ public class Markdown {
      */
     MarkdownChoice otherwise(MarkdownElement element) {
       return new MarkdownChoice(condition, firstOption, element);
+    }
+  }
+
+  /**
+   * A builder for a Markdown link.
+   */
+  static class MarkdownLinkBuilder {
+
+    /**
+     * A link's target.
+     */
+    private String target;
+
+    /**
+     * Set a target of the link.
+     *
+     * @param target A target of the link.
+     * @return The same builder.
+     */
+    public MarkdownLinkBuilder to(String target) {
+      this.target = target;
+      return this;
+    }
+
+    /**
+     * Set a target of the link.
+     *
+     * @param target A target of the link.
+     * @return The same builder.
+     */
+    public MarkdownLinkBuilder to(URL target) {
+      this.target = target.toString();
+      return this;
+    }
+
+    /**
+     * Create a Markdown link with a specified caption.
+     *
+     * @param caption The caption.
+     * @return A new Markdown link.
+     */
+    public MarkdownLink withCaption(MarkdownElement caption) {
+      return new MarkdownLink(caption, target);
+    }
+
+    /**
+     * Create a Markdown link with a specified caption.
+     *
+     * @param caption The caption.
+     * @return A new Markdown link.
+     */
+    public MarkdownLink withCaption(String caption) {
+      return new MarkdownLink(new MarkdownString(caption), target);
     }
   }
 }

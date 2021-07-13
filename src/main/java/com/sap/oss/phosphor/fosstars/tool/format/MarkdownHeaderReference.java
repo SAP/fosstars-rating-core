@@ -4,9 +4,9 @@ import static java.lang.String.format;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 /**
- * A reference (link) to a Markdown section.
+ * A reference (link) to a Markdown header.
  */
-public class MarkdownSectionReference extends AbstractMarkdownElement {
+public class MarkdownHeaderReference extends AbstractMarkdownElement {
 
   /**
    * A caption of the reference.
@@ -14,19 +14,19 @@ public class MarkdownSectionReference extends AbstractMarkdownElement {
   private final MarkdownElement caption;
 
   /**
-   * A target section.
+   * A target header.
    */
-  private final MarkdownSection section;
+  private final MarkdownHeader header;
 
   /**
-   * Create a new reference to a section.
+   * Create a new reference to a header.
    *
    * @param caption A caption of the reference.
-   * @param section The target section.
+   * @param header The target header.
    */
-  MarkdownSectionReference(MarkdownElement caption, MarkdownSection section) {
+  MarkdownHeaderReference(MarkdownElement caption, MarkdownHeader header) {
     this.caption = caption;
-    this.section = section;
+    this.header = header;
   }
 
   @Override
@@ -36,7 +36,7 @@ public class MarkdownSectionReference extends AbstractMarkdownElement {
       return EMPTY;
     }
 
-    String headerString = section.header().caption().make();
+    String headerString = header.caption().make();
     if (Markdown.isEmpty(headerString)) {
       return EMPTY;
     }
