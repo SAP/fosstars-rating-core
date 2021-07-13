@@ -1,5 +1,6 @@
 package com.sap.oss.phosphor.fosstars.tool.format;
 
+import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.joining;
 
 import java.util.ArrayList;
@@ -27,6 +28,9 @@ public class JoinedMarkdownElements extends AbstractMarkdownElement {
    * @param elements A list of elements.
    */
   JoinedMarkdownElements(String delimiter, List<MarkdownElement> elements) {
+    requireNonNull(delimiter, "Oops! Delimiter is null!");
+    requireNonNull(elements, "Oops! Elements is null!");
+
     this.delimiter = delimiter;
     this.elements = new ArrayList<>(elements);
   }

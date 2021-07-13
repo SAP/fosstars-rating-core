@@ -1,6 +1,7 @@
 package com.sap.oss.phosphor.fosstars.tool.format;
 
 import static java.lang.String.format;
+import static java.util.Objects.requireNonNull;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 /**
@@ -25,8 +26,8 @@ public class MarkdownSection extends AbstractMarkdownElement {
    * @param text A text in the section.
    */
   MarkdownSection(MarkdownHeader header, MarkdownElement text) {
-    this.header = header;
-    this.text = text;
+    this.header = requireNonNull(header, "Oops! Header is null!");
+    this.text = requireNonNull(text, "Oops! Text is null!");
   }
 
   /**

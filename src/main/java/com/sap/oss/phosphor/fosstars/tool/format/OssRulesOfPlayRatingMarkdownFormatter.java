@@ -390,10 +390,10 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownForma
     String advice = adviceTextFor(rule, selectAdviceFor(rule, adviceList));
     BooleanSupplier weHaveAdvice = () -> !Markdown.isEmpty(advice);
 
-    String rawId = featureToRuleId.get(rule.feature());
-    BooleanSupplier weHaveId = () -> rawId != null;
+    String rawId = featureToRuleId.getOrDefault(rule.feature(), EMPTY);
+    BooleanSupplier weHaveId = () -> !Markdown.isEmpty(rawId);
 
-    MarkdownElement id = Markdown.choose(Markdown.template(rawId))
+    MarkdownElement id = Markdown.choose(Markdown.string(rawId))
         .when(weHaveId)
         .otherwise(Markdown.string(rule.feature().name()));
     MarkdownHeader header = Markdown.header().level(3).withCaption(id);

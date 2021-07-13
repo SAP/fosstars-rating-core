@@ -1,6 +1,8 @@
 package com.sap.oss.phosphor.fosstars.tool.format;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
+import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.joining;
 
 import java.util.ArrayList;
@@ -30,7 +32,7 @@ public class GroupedMarkdownElements extends AbstractMarkdownElement {
    * @param elements The elements.
    */
   GroupedMarkdownElements(MarkdownElement... elements) {
-    this(asList(elements));
+    this(elements != null ? asList(elements) : emptyList());
   }
 
   /**
@@ -39,6 +41,7 @@ public class GroupedMarkdownElements extends AbstractMarkdownElement {
    * @param elements A list of elements.
    */
   GroupedMarkdownElements(List<MarkdownElement> elements) {
+    requireNonNull(elements, "Oops! Elements is null!");
     this.elements = new ArrayList<>(elements);
   }
 

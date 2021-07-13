@@ -1,5 +1,7 @@
 package com.sap.oss.phosphor.fosstars.tool.format;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.function.BooleanSupplier;
 
 /**
@@ -32,9 +34,9 @@ public class MarkdownChoice extends AbstractMarkdownElement {
   public MarkdownChoice(
       BooleanSupplier condition, MarkdownElement firstOption, MarkdownElement secondOption) {
 
-    this.condition = condition;
-    this.firstOption = firstOption;
-    this.secondOption = secondOption;
+    this.condition = requireNonNull(condition, "Oops! Condition is null!");
+    this.firstOption = requireNonNull(firstOption, "Oops! First option is null!");
+    this.secondOption = requireNonNull(secondOption, "Oops! Second option is null!");
   }
 
   @Override
