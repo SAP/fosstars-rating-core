@@ -19,3 +19,4 @@ ruleIds:
   rl-reuse_tool-3: If a project is registered in REUSE
   rl-reuse_tool-4: If a project is compliant with REUSE rules
   rl-security_policy-1: If an open-source project has a security policy
+documentationUrl: https://sap.github.io/fosstars-rating-core/oss_rules_of_play_rating.html
