@@ -2,11 +2,11 @@
 
 https://github.com/google/leveldb
 
-Last updated on May 19, 2021
+Last updated on Jul 14, 2021
 
 **Rating**: **MODERATE**
 
-**Score**: **5.27**, max score value is 10.0
+**Score**: **4.84**, max score value is 10.0
 
 **Confidence**: Max (10.0, max confidence value is 10.0)
 
@@ -20,7 +20,7 @@ The rating is based on **security score for open-source projects**.
 
 It used the following sub-scores:
 
-1.  **[Security testing](#security-testing)**: **4.14** (weight is 1.0)
+1.  **[Security testing](#security-testing)**: **4.53** (weight is 1.0)
     1.  **[Dependency testing](#dependency-testing)**: **N/A** (weight is 1.0)
         1.  **[Dependabot score](#dependabot-score)**: **N/A** (weight is 1.0)
         1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
@@ -30,11 +30,10 @@ It used the following sub-scores:
         1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
     1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
     1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
-    1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.5)
+    1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
 1.  **[Security awareness](#security-awareness)**: **3.0** (weight is 0.9)
-1.  **[Unpatched vulnerabilities](#unpatched-vulnerabilities)**: **10.0** (weight is 0.8)
 1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: **2.0** (weight is 0.6)
-    1.  **[Security testing](#security-testing)**: **4.14** (weight is 1.0)
+    1.  **[Security testing](#security-testing)**: **4.53** (weight is 1.0)
         1.  **[Dependency testing](#dependency-testing)**: **N/A** (weight is 1.0)
             1.  **[Dependabot score](#dependabot-score)**: **N/A** (weight is 1.0)
             1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
@@ -44,10 +43,12 @@ It used the following sub-scores:
             1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
         1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
         1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
-        1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.5)
+        1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
+1.  **[Unpatched vulnerabilities](#unpatched-vulnerabilities)**: **10.0** (weight is 0.5)
 1.  **[Community commitment](#community-commitment)**: **8.0** (weight is 0.5)
-1.  **[Project activity](#project-activity)**: **0.51** (weight is 0.5)
+1.  **[Project activity](#project-activity)**: **0.65** (weight is 0.5)
 1.  **[Project popularity](#project-popularity)**: **10.0** (weight is 0.5)
+1.  **[Security reviews](#security-reviews)**: **0.0** (weight is 0.2)
 
 
 ## How to improve the rating
@@ -76,6 +77,12 @@ It used the following sub-scores:
 8.  You can open a pull request to enable UndefinedBehaviorSanitizer for the project.
     More info:
     1.  [About UndefinedBehaviorSanitizer](https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html)
+9.  You can enable artifact signing in the project's build pipeline.
+    More info:
+    1.  [Apache Maven Jarsigner Plugin](https://maven.apache.org/plugins/maven-jarsigner-plugin/)
+10.  You can enable NoHttp tool in the project's build pipeline.
+    More info:
+    1.  [NoHttp tool home page](https://github.com/spring-io/nohttp)
 
 
 ## Sub-scores
@@ -84,7 +91,7 @@ Below are the details about all the used sub-scores.
 
 ### Security testing
 
-Score: **4.14**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **4.53**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -101,7 +108,7 @@ This sub-score is based on the following sub-scores:
     1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
 1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
 1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
-1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.5)
+1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
 
 
 ### Security awareness
@@ -132,18 +139,6 @@ This sub-score is based on 17 features:
 1.  How is OWASP Dependency Check used? **Not used**
 1.  Is it included to OSS-Fuzz? **Yes**
 
-### Unpatched vulnerabilities
-
-Score: **10.0**, confidence is 10.0 (max), weight is 0.8 (high)
-
-
-
-No unpatched vulnerabilities found which is good
-
-This sub-score is based on 1 feature:
-
-1.  Info about vulnerabilities: **Not found**
-
 ### Vulnerability discovery and security testing
 
 Score: **2.0**, confidence is 10.0 (max), weight is 0.6 (medium)
@@ -154,7 +149,7 @@ The scores checks how security testing is done and how many vulnerabilities were
 
 This sub-score is based on the following sub-score:
 
-1.  **[Security testing](#security-testing)**: **4.14** (weight is 1.0)
+1.  **[Security testing](#security-testing)**: **4.53** (weight is 1.0)
     1.  **[Dependency testing](#dependency-testing)**: **N/A** (weight is 1.0)
         1.  **[Dependabot score](#dependabot-score)**: **N/A** (weight is 1.0)
         1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
@@ -164,7 +159,19 @@ This sub-score is based on the following sub-score:
         1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
     1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
     1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
-    1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.5)
+    1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
+
+This sub-score is based on 1 feature:
+
+1.  Info about vulnerabilities: **Not found**
+
+### Unpatched vulnerabilities
+
+Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
+
+
+
+No unpatched vulnerabilities found which is good
 
 This sub-score is based on 1 feature:
 
@@ -186,17 +193,17 @@ This sub-score is based on 3 features:
 
 ### Project activity
 
-Score: **0.51**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **0.65**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-3 commits in the last 3 months results to 0.46 points
-3 contributors increase the score value from 0.46 to 0.51
+4 commits in the last 3 months results to 0.62 points
+2 contributors increase the score value from 0.62 to 0.65
 
 This sub-score is based on 2 features:
 
-1.  Number of commits in the last three months: **3**
-1.  Number of contributors in the last three months: **3**
+1.  Number of commits in the last three months: **4**
+1.  Number of contributors in the last three months: **2**
 
 ### Project popularity
 
@@ -212,8 +219,20 @@ Here is how a number of watchers contributes to the score:
 
 This sub-score is based on 2 features:
 
-1.  Number of stars for a GitHub repository: **25034**
-1.  Number of watchers for a GitHub repository: **1326**
+1.  Number of stars for a GitHub repository: **25791**
+1.  Number of watchers for a GitHub repository: **1334**
+
+### Security reviews
+
+Score: **0.0**, confidence is 10.0 (max), weight is 0.2 (low)
+
+
+
+No security reviews have been done
+
+This sub-score is based on 1 feature:
+
+1.  Info about security reviews: **0 security reviews**
 
 ### Dependency testing
 
@@ -274,7 +293,7 @@ This sub-score is based on 4 features:
 
 ### nohttp tool
 
-Score: **0.0**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **0.0**, confidence is 10.0 (max), weight is 0.2 (low)
 
 
 

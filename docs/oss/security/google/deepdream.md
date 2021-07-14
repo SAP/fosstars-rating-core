@@ -2,13 +2,13 @@
 
 https://github.com/google/deepdream
 
-Last updated on May 19, 2021
+Last updated on Jul 14, 2021
 
 **Rating**: **BAD**
 
-**Score**: **4.17**, max score value is 10.0
+**Score**: **3.62**, max score value is 10.0
 
-**Confidence**: High (9.88, max confidence value is 10.0)
+**Confidence**: High (9.87, max confidence value is 10.0)
 
 ## Details
 
@@ -30,9 +30,8 @@ It used the following sub-scores:
         1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
     1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
     1.  **[Memory-safety testing](#memory-safety-testing)**: **N/A** (weight is 1.0)
-    1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.5)
+    1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
 1.  **[Security awareness](#security-awareness)**: **2.0** (weight is 0.9)
-1.  **[Unpatched vulnerabilities](#unpatched-vulnerabilities)**: **10.0** (weight is 0.8)
 1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: **2.0** (weight is 0.6)
     1.  **[Security testing](#security-testing)**: **0.0** (weight is 1.0)
         1.  **[Dependency testing](#dependency-testing)**: **N/A** (weight is 1.0)
@@ -44,10 +43,12 @@ It used the following sub-scores:
             1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
         1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
         1.  **[Memory-safety testing](#memory-safety-testing)**: **N/A** (weight is 1.0)
-        1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.5)
+        1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
+1.  **[Unpatched vulnerabilities](#unpatched-vulnerabilities)**: **10.0** (weight is 0.5)
 1.  **[Community commitment](#community-commitment)**: **8.0** (weight is 0.5)
 1.  **[Project activity](#project-activity)**: **0.0** (weight is 0.5)
 1.  **[Project popularity](#project-popularity)**: **10.0** (weight is 0.5)
+1.  **[Security reviews](#security-reviews)**: **0.0** (weight is 0.2)
 
 
 ## How to improve the rating
@@ -64,6 +65,12 @@ It used the following sub-scores:
 4.  You can open a pull request to enable FindSecBugs for the project.
     More info:
     1.  [FindSecBugs home page](https://find-sec-bugs.github.io/)
+5.  You can enable artifact signing in the project's build pipeline.
+    More info:
+    1.  [Apache Maven Jarsigner Plugin](https://maven.apache.org/plugins/maven-jarsigner-plugin/)
+6.  You can enable NoHttp tool in the project's build pipeline.
+    More info:
+    1.  [NoHttp tool home page](https://github.com/spring-io/nohttp)
 
 
 ## Sub-scores
@@ -72,7 +79,7 @@ Below are the details about all the used sub-scores.
 
 ### Security testing
 
-Score: **0.0**, confidence is 9.56 (high), weight is 1.0 (high)
+Score: **0.0**, confidence is 9.52 (high), weight is 1.0 (high)
 
 
 
@@ -89,7 +96,7 @@ This sub-score is based on the following sub-scores:
     1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
 1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
 1.  **[Memory-safety testing](#memory-safety-testing)**: **N/A** (weight is 1.0)
-1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.5)
+1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
 
 
 ### Security awareness
@@ -120,21 +127,9 @@ This sub-score is based on 17 features:
 1.  How is OWASP Dependency Check used? **Not used**
 1.  Is it included to OSS-Fuzz? **No**
 
-### Unpatched vulnerabilities
-
-Score: **10.0**, confidence is 10.0 (max), weight is 0.8 (high)
-
-
-
-No unpatched vulnerabilities found which is good
-
-This sub-score is based on 1 feature:
-
-1.  Info about vulnerabilities: **Not found**
-
 ### Vulnerability discovery and security testing
 
-Score: **2.0**, confidence is 9.78 (high), weight is 0.6 (medium)
+Score: **2.0**, confidence is 9.76 (high), weight is 0.6 (medium)
 
 The scores checks how security testing is done and how many vulnerabilities were recently discovered. If testing is good, and there are no recent vulnerabilities, then the score value is max. If there are vulnerabilities, then the score value is high. If testing is bad, and there are no recent vulnerabilities, then the score value is low. If there are vulnerabilities, then the score is min.
 
@@ -152,7 +147,19 @@ This sub-score is based on the following sub-score:
         1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
     1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
     1.  **[Memory-safety testing](#memory-safety-testing)**: **N/A** (weight is 1.0)
-    1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.5)
+    1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
+
+This sub-score is based on 1 feature:
+
+1.  Info about vulnerabilities: **Not found**
+
+### Unpatched vulnerabilities
+
+Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
+
+
+
+No unpatched vulnerabilities found which is good
 
 This sub-score is based on 1 feature:
 
@@ -199,8 +206,20 @@ Here is how a number of watchers contributes to the score:
 
 This sub-score is based on 2 features:
 
-1.  Number of stars for a GitHub repository: **12799**
-1.  Number of watchers for a GitHub repository: **941**
+1.  Number of stars for a GitHub repository: **12827**
+1.  Number of watchers for a GitHub repository: **932**
+
+### Security reviews
+
+Score: **0.0**, confidence is 10.0 (max), weight is 0.2 (low)
+
+
+
+No security reviews have been done
+
+This sub-score is based on 1 feature:
+
+1.  Info about security reviews: **0 security reviews**
 
 ### Dependency testing
 
@@ -261,7 +280,7 @@ This sub-score is based on 4 features:
 
 ### nohttp tool
 
-Score: **0.0**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **0.0**, confidence is 10.0 (max), weight is 0.2 (low)
 
 
 
