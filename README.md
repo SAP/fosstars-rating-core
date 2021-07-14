@@ -5,8 +5,8 @@
 |                           | # or projects                    | % or projects                      |
 | :------------------------ | -------------------------------: | ---------------------------------: |
 | Total                     |             239 |                               100% |
-| Failed                    |         152 |         63.6% |
-| Passed with&nbsp;warnings |  77 |  32.2% |
+| Failed                    |         151 |         63.2% |
+| Passed with&nbsp;warnings |  78 |  32.6% |
 | Passed                    |         10 |         4.2% |
 | Unclear                   |        0 |        0.0% |
 
@@ -24,7 +24,6 @@
 | [SAP/node-hdb](https://github.com/SAP/node-hdb) | [Failed](SAP/node-hdb.md) | 5 violated rules |
 | [SAP/cloud-cmis-workbench](https://github.com/SAP/cloud-cmis-workbench) | [Failed](SAP/cloud-cmis-workbench.md) | 4 violated rules |
 | [SAP/PyRFC](https://github.com/SAP/PyRFC) | [Failed](SAP/PyRFC.md) | 2 violated rules |
-| [SAP/mobilesdk-certificateprovider](https://github.com/SAP/mobilesdk-certificateprovider) | [Failed](SAP/mobilesdk-certificateprovider.md) | 4 violated rules |
 | [SAP/go-hdb](https://github.com/SAP/go-hdb) | [Failed](SAP/go-hdb.md) | 5 violated rules |
 | [SAP/node-rfc](https://github.com/SAP/node-rfc) | [Failed](SAP/node-rfc.md) | 2 violated rules |
 | [SAP/sqlalchemy-hana](https://github.com/SAP/sqlalchemy-hana) | [Failed](SAP/sqlalchemy-hana.md) | 5 violated rules |
@@ -177,6 +176,7 @@
 | [SAP/gigya-flutter-plugin](https://github.com/SAP/gigya-flutter-plugin) | [Passed](SAP/gigya-flutter-plugin.md) | No violated rules |
 | [SAP/guided-development](https://github.com/SAP/guided-development) | [Passed](SAP/guided-development.md) | No violated rules |
 | [SAP/openui5](https://github.com/SAP/openui5) | [Passed with warnings](SAP/openui5.md) | No violated rules |
+| [SAP/mobilesdk-certificateprovider](https://github.com/SAP/mobilesdk-certificateprovider) | [Passed with warnings](SAP/mobilesdk-certificateprovider.md) | No violated rules |
 | [SAP/grunt-openui5](https://github.com/SAP/grunt-openui5) | [Passed with warnings](SAP/grunt-openui5.md) | No violated rules |
 | [SAP/less-openui5](https://github.com/SAP/less-openui5) | [Passed with warnings](SAP/less-openui5.md) | No violated rules |
 | [SAP/connect-openui5](https://github.com/SAP/connect-openui5) | [Passed with warnings](SAP/connect-openui5.md) | No violated rules |
