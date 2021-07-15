@@ -1,11 +1,9 @@
-**Status**: **Passed with warnings**
+**Status**: **Passed**
 
 **Confidence**: Max (10.0, max confidence value is 10.0)
 
 
 
-## Warnings
-1.  [**[rl-readme_file-2]**](#rl-readme_file-2) Is README incomplete? **Yes**
 
 
 
@@ -16,6 +14,7 @@
 1.  **[rl-assigned_teams-5]** Does teams have enough members on GitHub? **Yes**
 1.  **[rl-vulnerability_alerts-1]** Are vulnerability alerts enabled? **Yes**
 1.  **[rl-contributor_file-2]** Does the contributing guideline have required text? **Yes**
+1.  **[rl-readme_file-2]** Is README incomplete? **No**
 1.  **[rl-license_file-1]** Does it have a license file? **Yes**
 1.  **[rl-reuse_tool-2]** Does it have LICENSES directory with licenses? **Yes**
 1.  **[rl-assigned_teams-2]** Does it have an admin team on GitHub? **Yes**
@@ -30,11 +29,5 @@
 1.  **[rl-reuse_tool-3]** Is it registered in REUSE? **Yes**
 1.  **[rl-reuse_tool-4]** Is it compliant with REUSE rules? **Yes**
 
-
-## What is wrong, and how to fix it
-
-### rl-readme_file-2
-
-The README does not contain required text that should match '# Download and [Ii]nstallation', '# How to obtain support'
 
 
