@@ -2,7 +2,7 @@
 
 https://github.com/aws/aws-sam-cli
 
-Last updated on Jul 14, 2021
+Last updated on Jul 15, 2021
 
 **Rating**: **GOOD**
 

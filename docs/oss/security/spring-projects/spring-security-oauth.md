@@ -2,7 +2,7 @@
 
 https://github.com/spring-projects/spring-security-oauth
 
-Last updated on Jul 14, 2021
+Last updated on Jul 15, 2021
 
 **Rating**: **BAD**
 
