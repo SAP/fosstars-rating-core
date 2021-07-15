@@ -95,6 +95,17 @@ public class UseReuseDataProviderTest extends TestGitHubDataFetcherHolder {
     assertFalse(value.isUnknown());
     assertTrue(value.get());
     assertTrue(value.explanation().isEmpty());
+    
+    when(localRepository.hasFile("README.md")).thenReturn(true);
+    when(localRepository.file("README.md"))
+        .thenReturn(Optional.of(format(
+            "Yes, README has a link to REUSE: https://api.reuse.software/info/github.com/%s/%s",
+            PROJECT.organization().name().toUpperCase(), PROJECT.name().toUpperCase())));
+    value = UseReuseDataProvider.readmeHasReuseInfo(PROJECT);
+    assertEquals(README_HAS_REUSE_INFO, value.feature());
+    assertFalse(value.isUnknown());
+    assertTrue(value.get());
+    assertTrue(value.explanation().isEmpty());
   }
 
   @Test

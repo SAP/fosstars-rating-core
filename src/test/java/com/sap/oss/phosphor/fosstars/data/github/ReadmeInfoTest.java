@@ -20,9 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.Set;
-import java.util.regex.Pattern;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
 public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
@@ -103,6 +101,24 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
     assertFalse(value.explanation().isEmpty());
     value = checkValue(values, INCOMPLETE_README, true);
     assertFalse(value.explanation().isEmpty());
+  }
+  
+  @Test
+  public void testWithRstReadme() throws IOException {
+    GitHubProject project = new GitHubProject("test", "project");
+    LocalRepository localRepository = mock(LocalRepository.class);
+    when(localRepository.hasFile("README.rst")).thenReturn(true);
+    TestGitHubDataFetcher.addForTesting(project, localRepository);
+    
+    ReadmeInfo provider = new ReadmeInfo(fetcher);
+    provider.set(NoValueCache.create());
+
+    when(localRepository.readTextFrom("README.rst"))
+        .thenReturn(Optional.of(String.join("\n",
+            "This is README.rst"
+        )));
+    ValueSet values = provider.fetchValuesFor(project);
+    assertTrue(checkValue(values, HAS_README, true).get());
   }
 
   @Test
