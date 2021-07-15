@@ -23,6 +23,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.Set;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -117,7 +118,8 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
 
     String reuseUrl = format("https://api.reuse.software/info/github.com/%s/%s",
         project.organization().name(), project.name());
-    return README_HAS_REUSE_INFO.value(content.get().contains(reuseUrl)).explainIf(false,
+    return README_HAS_REUSE_INFO.value(
+        StringUtils.containsIgnoreCase(content.get(), reuseUrl)).explainIf(false,
         "The README does not seem to have a badge that points to REUSE status (%s)", reuseUrl);
   }
 
