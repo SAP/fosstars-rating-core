@@ -1,6 +1,9 @@
 package com.sap.oss.phosphor.fosstars.tool.format;
 
+import static com.sap.oss.phosphor.fosstars.tool.format.Markdown.DOUBLE_NEW_LINE;
+import static com.sap.oss.phosphor.fosstars.tool.format.Markdown.NEW_LINE;
 import static java.lang.String.format;
+import static java.util.stream.Collectors.toList;
 
 import com.sap.oss.phosphor.fosstars.advice.Advice;
 import com.sap.oss.phosphor.fosstars.advice.Advisor;
@@ -8,7 +11,6 @@ import com.sap.oss.phosphor.fosstars.advice.Link;
 import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.Value;
-import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerability;
@@ -34,11 +36,6 @@ import org.apache.commons.lang3.StringUtils;
 public abstract class AbstractMarkdownFormatter extends CommonFormatter {
 
   /**
-   * An indent for building nested lists.
-   */
-  private static final String LIST_INDENT_STEP = "    ";
-
-  /**
    * Create a new formatter.
    *
    * @param advisor An advisor for calculated ratings.
@@ -47,35 +44,13 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
     super(advisor);
   }
 
-  public String print(RatingValue ratingValue) {
-    return print(ratingValue, NO_ADVICE);
-  }
-
-  /**
-   * Print out a rating value with advice.
-   *
-   * @param ratingValue The rating value.
-   * @param advice The advice.
-   * @return Formatted rating value with advice.
-   */
-  protected abstract String print(RatingValue ratingValue, String advice);
-
-  @Override
-  public String print(Subject subject) {
-    if (!subject.ratingValue().isPresent()) {
-      return StringUtils.EMPTY;
-    }
-
-    return print(subject.ratingValue().get(), markdownAdviceFor(subject));
-  }
-
   /**
    * Returns a header for the advice section.
    *
    * @return A header for the advice section.
    */
-  protected String markdownAdviceHeader() {
-    return "## How to improve the rating";
+  protected MarkdownHeader markdownAdviceHeader() {
+    return Markdown.header().withCaption("## How to improve the rating");
   }
 
   /**
@@ -84,7 +59,7 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
    * @param subject The subject.
    * @return Advice to be displayed.
    */
-  protected String markdownAdviceFor(Subject subject) {
+  protected MarkdownElement markdownAdviceFor(Subject subject) {
     List<Advice> adviceList;
     try {
       adviceList = advisor.adviceFor(subject);
@@ -93,24 +68,41 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
     }
 
     if (adviceList.isEmpty()) {
-      return StringUtils.EMPTY;
+      return MarkdownString.EMPTY;
     }
 
-    StringBuilder sb = new StringBuilder();
-    sb.append(markdownAdviceHeader()).append("\n\n");
-    int i = 1;
+    List<MarkdownElement> elements = new ArrayList<>();
     for (Advice advice : adviceList) {
-      sb.append(format("%d.  %s%n", i++, advice.content().text()));
-      if (!advice.content().links().isEmpty()) {
-        sb.append("    More info:").append("\n");
-        int j = 1;
-        for (Link link : advice.content().links()) {
-          sb.append(String.format("    %d.  [%s](%s)%n", j++, link.name, link.url));
-        }
-      }
+      MarkdownString text = Markdown.string(advice.content().text());
+      OrderedMarkdownList links = Markdown.orderedListOf(linksIn(advice));
+      MarkdownString moreInfo = Markdown.string("More info:");
+      MarkdownElement adviceContent = Markdown.group(text, moreInfo, links);
+      elements.add(adviceContent);
     }
 
-    return sb.toString();
+    JoinedMarkdownElements advice = Markdown.join(elements).delimitedBy(DOUBLE_NEW_LINE);
+
+    return Markdown.section().with(markdownAdviceHeader()).thatContains(advice);
+  }
+
+  /**
+   * Convert links from advice to Markdown elements.
+   *
+   * @param advice The advice.
+   * @return A list of Markdown elements with links from the advice.
+   */
+  List<MarkdownElement> linksIn(Advice advice) {
+    return advice.content().links().stream().map(this::formatted).collect(toList());
+  }
+
+  /**
+   * Format a link.
+   *
+   * @param link The link.
+   * @return A formatted link.
+   */
+  MarkdownLink formatted(Link link) {
+    return Markdown.link().to(link.url).withCaption(link.name);
   }
 
   /**
@@ -120,16 +112,16 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
    * @param scoreValue The score value.
    * @return A string that represents the score value.
    */
-  public static String actualValueOf(ScoreValue scoreValue) {
+  public static MarkdownString actualValueOf(ScoreValue scoreValue) {
     if (scoreValue.isNotApplicable()) {
-      return "N/A";
+      return Markdown.string("N/A");
     }
 
     if (scoreValue.isUnknown()) {
-      return "unknown";
+      return Markdown.string("unknown");
     }
 
-    return formatted(scoreValue.get());
+    return Markdown.string(formatted(scoreValue.get()));
   }
 
   @Override
@@ -138,9 +130,13 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
       Vulnerabilities vulnerabilities = (Vulnerabilities) value.get();
       if (vulnerabilities.isEmpty()) {
         return "Not found";
-      } else {
-        return format("%s, [details below](#known-vulnerabilities)", vulnerabilities);
       }
+
+      MarkdownHeader knownVulnerabilities = Markdown.header().withCaption("Known vulnerabilities");
+      MarkdownHeaderReference reference
+          = Markdown.reference().to(knownVulnerabilities).withCaption("details below");
+      MarkdownString infoAboutVulnerabilities = Markdown.string(vulnerabilities.toString());
+      return Markdown.join(infoAboutVulnerabilities, reference).delimitedBy(", ").make();
     }
 
     return super.actualValueOf(value);
@@ -152,7 +148,7 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
    * @param scoreValue The score value.
    * @return Formatted info about vulnerabilities.
    */
-  String infoAboutVulnerabilitiesIn(ScoreValue scoreValue) {
+  MarkdownElement infoAboutVulnerabilitiesIn(ScoreValue scoreValue) {
     Set<Vulnerability> uniqueVulnerabilities = new TreeSet<>((first, second) -> {
       if (first.id().equals(second.id())) {
         return 0;
@@ -179,18 +175,22 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
     }
 
     if (uniqueVulnerabilities.isEmpty()) {
-      return "No vulnerabilities found";
+      return Markdown.string("No vulnerabilities found");
     }
 
-    StringBuilder info = new StringBuilder();
+    List<MarkdownElement> elements = new ArrayList<>();
     for (Vulnerability vulnerability : uniqueVulnerabilities) {
       if (vulnerability.description().isPresent()) {
-        info.append(format("1.  %s: %s%n", linkFor(vulnerability), vulnerability.description()));
+        MarkdownElement description = Markdown.template("%s: %s",
+            linkFor(vulnerability),
+            Markdown.string(vulnerability.description().get()));
+        elements.add(description);
       } else {
-        info.append(format("1.  %s%n", linkFor(vulnerability)));
+        elements.add(linkFor(vulnerability));
       }
     }
-    return info.toString();
+
+    return Markdown.orderedListOf(elements);
   }
 
   /**
@@ -199,13 +199,13 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
    * @param vulnerability The vulnerability.
    * @return A link for the vulnerability if available, or its identifier otherwise.
    */
-  private static String linkFor(Vulnerability vulnerability) {
+  private static MarkdownElement linkFor(Vulnerability vulnerability) {
     if (vulnerability.id().startsWith("CVE-")) {
-      return format("[%s](https://nvd.nist.gov/vuln/detail/%s)",
-          vulnerability.id(), vulnerability.id());
+      String url = format("https://nvd.nist.gov/vuln/detail/%s", vulnerability.id());
+      return Markdown.link().to(url).withCaption(vulnerability.id());
     }
 
-    return vulnerability.id();
+    return Markdown.string(vulnerability.id());
   }
 
   /**
@@ -214,8 +214,10 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
    * @param scoreValue The score value.
    * @return A formatted string.
    */
-  static String explanationOf(ScoreValue scoreValue) {
-    return String.join("\n", scoreValue.explanation());
+  static MarkdownElement explanationOf(ScoreValue scoreValue) {
+    List<MarkdownElement> explanations
+        = scoreValue.explanation().stream().map(Markdown::string).collect(toList());
+    return Markdown.join(explanations).delimitedBy(NEW_LINE);
   }
 
   /**
@@ -238,26 +240,16 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
    * @param scoreValue The score value.
    * @return A formatted text.
    */
-  String highLevelDescriptionOf(ScoreValue scoreValue) {
-    return highLevelDescriptionOf(scoreValue, StringUtils.EMPTY);
-  }
-
-  /**
-   * Builds a list of short descriptions of sub-score values for a specified score value.
-   *
-   * @param scoreValue The score value.
-   * @param indent An indent for the list.
-   * @return A formatted list.
-   */
-  private String highLevelDescriptionOf(ScoreValue scoreValue, String indent) {
-    StringBuilder sb = new StringBuilder();
-
+  MarkdownElement highLevelDescriptionOf(ScoreValue scoreValue) {
+    List<MarkdownElement> elements = new ArrayList<>();
     usedSubScoreValuesIn(scoreValue).forEach(subScoreValue -> {
-      sb.append(format("%s1.  %s%n", indent, shortDescriptionOf(subScoreValue)));
-      sb.append(highLevelDescriptionOf(subScoreValue, indent + LIST_INDENT_STEP));
+      elements.add(Markdown.group(
+          shortDescriptionOf(subScoreValue),
+          highLevelDescriptionOf(subScoreValue)
+      ));
     });
 
-    return sb.toString();
+    return Markdown.orderedListOf(elements);
   }
 
   /**
@@ -266,22 +258,14 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
    * @param scoreValue The score value.
    * @return A formatted text.
    */
-  private String shortDescriptionOf(ScoreValue scoreValue) {
-    return format("**%s**: **%s** (weight is %s)",
-        anchorFor(nameOf(scoreValue.score())),
-        actualValueOf(scoreValue),
-        formatted(scoreValue.weight())
+  private MarkdownElement shortDescriptionOf(ScoreValue scoreValue) {
+    MarkdownHeader header = Markdown.header().withCaption(nameOf(scoreValue.score()));
+    MarkdownHeaderReference reference = Markdown.reference().to(header).withHeaderName();
+    return Markdown.template("%s: %s (weight is %s)",
+        Markdown.bold(reference),
+        Markdown.bold(actualValueOf(scoreValue)),
+        Markdown.string(formatted(scoreValue.weight()))
     );
-  }
-
-  /**
-   * Builds a Markdown anchor for a section.
-   *
-   * @param section The section's name.
-   * @return The anchor.
-   */
-  private static String anchorFor(String section) {
-    return format("[%s](#%s)", section, section.toLowerCase().replaceAll("\\s+", "-"));
   }
 
   /**
@@ -292,8 +276,8 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
    * @param scoreValue The score value to be printed out.
    * @return A formatted text.
    */
-  String descriptionOfSubScoresIn(ScoreValue scoreValue) {
-    StringBuilder sb = new StringBuilder();
+  MarkdownElement descriptionOfSubScoresIn(ScoreValue scoreValue) {
+    List<MarkdownElement> elements = new ArrayList<>();
 
     Set<Score> processedScores = new HashSet<>();
     Queue<ScoreValue> queue = new LinkedList<>(usedSubScoreValuesIn(scoreValue));
@@ -306,10 +290,10 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
 
       queue.addAll(usedSubScoreValuesIn(subScoreValue));
 
-      sb.append(detailsOf(subScoreValue));
+      elements.add(detailsOf(subScoreValue));
     }
 
-    return sb.toString();
+    return Markdown.join(elements).delimitedBy(DOUBLE_NEW_LINE);
   }
 
   /**
@@ -319,23 +303,21 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
    * @param scoreValue The score value to be printed.
    * @return A formatted score value.
    */
-  String detailsOf(ScoreValue scoreValue) {
-    StringBuilder sb = new StringBuilder();
+  MarkdownElement detailsOf(ScoreValue scoreValue) {
+    List<MarkdownElement> elements = new ArrayList<>();
 
-    sb.append(format("### %s%n%n", nameOf(scoreValue.score())));
+    elements.add(Markdown.header().level(3).withCaption(nameOf(scoreValue.score())));
 
-    sb.append(format("Score: **%s**, confidence is %s (%s), weight is %s (%s)%n%n",
-        actualValueOf(scoreValue),
-        formatted(scoreValue.confidence()),
-        confidenceLabelFor(scoreValue.confidence()).toLowerCase(),
-        formatted(scoreValue.weight()),
-        weightLabel(scoreValue.weight()).toLowerCase()));
+    elements.add(Markdown.template("Score: %s, confidence is %s (%s), weight is %s (%s)",
+        Markdown.bold(actualValueOf(scoreValue)),
+        Markdown.string(formatted(scoreValue.confidence())),
+        Markdown.string(confidenceLabelFor(scoreValue.confidence()).toLowerCase()),
+        Markdown.string(formatted(scoreValue.weight())),
+        Markdown.string(weightLabel(scoreValue.weight()).toLowerCase())));
 
-    sb.append(scoreValue.score().description());
-    sb.append("\n\n");
+    elements.add(Markdown.string(scoreValue.score().description()));
 
-    sb.append(explanationOf(scoreValue));
-    sb.append("\n\n");
+    elements.add(explanationOf(scoreValue));
 
     List<ScoreValue> subScoreValues = new ArrayList<>();
     List<Value<?>> featureValues = new ArrayList<>();
@@ -350,14 +332,15 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
     if (!subScoreValues.isEmpty()) {
       subScoreValues.sort(Collections.reverseOrder(Comparator.comparingDouble(ScoreValue::weight)));
 
-      sb.append(format("This sub-score is based on the following sub-score%s:%n%n",
+      elements.add(Markdown.string(
+          "This sub-score is based on the following sub-score%s:%n%n",
           subScoreValues.size() == 1 ? StringUtils.EMPTY : "s"));
-      sb.append(highLevelDescriptionOf(scoreValue));
-      sb.append("\n");
+
+      elements.add(highLevelDescriptionOf(scoreValue));
     }
 
     if (!featureValues.isEmpty()) {
-      sb.append(format("This sub-score is based on %d feature%s:%n%n",
+      elements.add(Markdown.string("This sub-score is based on %d feature%s:%n%n",
           featureValues.size(), featureValues.size() == 1 ? StringUtils.EMPTY : "s"));
 
       Map<String, String> nameToValue = new TreeMap<>(String::compareTo);
@@ -371,14 +354,14 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
         nameToValue.put(name, actualValueOf(usedValue));
       }
 
+      List<MarkdownElement> items = new ArrayList<>();
       for (Map.Entry<String, String> entry : nameToValue.entrySet()) {
-        sb.append(format("1.  %s **%s**%n", entry.getKey(), entry.getValue()));
+        items.add(Markdown.template("%s %s",
+            Markdown.bold(entry.getKey()), Markdown.string(entry.getValue())));
       }
+      elements.add(Markdown.orderedListOf(items));
     }
 
-    sb.append("\n");
-
-    return sb.toString();
+    return Markdown.join(elements).delimitedBy(DOUBLE_NEW_LINE);
   }
-
 }
