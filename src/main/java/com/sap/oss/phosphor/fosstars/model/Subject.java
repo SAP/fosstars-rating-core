@@ -75,8 +75,8 @@ public interface Subject {
   }
 
   /**
-   * Casts a subject to a specified type that implements {@link Subject}. To avoid JSON mapping
-   * infinite recursion loop the subject cloned to a different entity.
+   * Clones a subject to avoid JSON mapping infinite recursion loop.
+   * The subject is cloned to a different entity.
    *
    * @param subject The subject.
    * @param clazz The class.
@@ -84,7 +84,7 @@ public interface Subject {
    * @return The subject.
    * @throws IOException If subject is not cloneable.
    */
-  static <T extends Subject> T castAndCopy(Subject subject, Class<T> clazz) throws IOException {
-    return Json.read(Json.toBytes(cast(subject, clazz)), clazz);
+  static <T extends Subject> T copy(Subject subject, Class<T> clazz) throws IOException {
+    return Json.read(Json.toBytes(subject), clazz);
   }
 }

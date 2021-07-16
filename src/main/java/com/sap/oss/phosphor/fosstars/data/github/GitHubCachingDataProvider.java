@@ -1,6 +1,6 @@
 package com.sap.oss.phosphor.fosstars.data.github;
 
-import static com.sap.oss.phosphor.fosstars.model.Subject.castAndCopy;
+import static com.sap.oss.phosphor.fosstars.model.Subject.cast;
 
 import com.sap.oss.phosphor.fosstars.data.AbstractCachingDataProvider;
 import com.sap.oss.phosphor.fosstars.model.Subject;
@@ -42,7 +42,7 @@ public abstract class GitHubCachingDataProvider extends AbstractCachingDataProvi
 
   @Override
   protected final ValueSet fetchValuesFor(Subject subject) throws IOException {
-    return fetchValuesFor(castAndCopy(subject, GitHubProject.class));
+    return fetchValuesFor(cast(subject, GitHubProject.class));
   }
 
   /**
