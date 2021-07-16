@@ -1,9 +1,13 @@
 package com.sap.oss.phosphor.fosstars.data.github;
 
+import static com.sap.oss.phosphor.fosstars.TestUtils.DELTA;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 
+import com.sap.oss.phosphor.fosstars.TestUtils;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -11,8 +15,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.api.CommitCommand;
 import org.eclipse.jgit.api.Git;
@@ -104,7 +110,7 @@ public class LocalRepositoryTest {
           new LocalRepositoryInfo(directory, new Date(), new URL("https://scm/org/test")),
           repository);
 
-      List<Commit> commits = localRepository.commits();
+      List<GitCommit> commits = localRepository.commits();
       assertNotNull(commits);
       assertEquals(2, commits.size());
       assertEquals("Mr. Black", commits.get(0).authorName());
@@ -118,6 +124,69 @@ public class LocalRepositoryTest {
       assertTrue(firstCommit.isPresent());
       assertEquals("Mr. White", firstCommit.get().authorName());
       assertEquals("Mr. White", firstCommit.get().committerName());
+    } finally {
+      FileUtils.forceDeleteOnExit(directory.toFile());
+    }
+  }
+
+  @Test
+  public void testChanges() throws IOException, GitAPIException {
+    Path directory = Files.createTempDirectory(getClass().getName());
+    try (Repository repository = FileRepositoryBuilder.create(directory.resolve(".git").toFile());
+        Git git = new Git(repository)) {
+
+      repository.create();
+
+      TestUtils.commit(
+          new HashMap<String, String>() {
+            {
+              put("App.java", "public class App {}");
+              put("One.java", "public class One {}");
+              put("Two.java", "public class Two {}");
+              put("Three.java", "public class Three {}");
+            }
+            }, "First commit: init", git);
+
+      TestUtils.commit(
+          new HashMap<String, String>() {
+            {
+              put("App.java", "public class App { /* something new */ }");
+            }
+            }, "Second commit: updated App", git);
+
+      TestUtils.commit(
+          new HashMap<String, String>() {
+            {
+              put("Other.java", "public class Other {}");
+            }
+            }, "Third commit: added Other", git);
+
+      LocalRepository localRepository = new LocalRepository(
+          new LocalRepositoryInfo(directory, new Date(), new URL("https://scm/org/test")),
+          repository);
+
+      List<GitCommit> commits = localRepository.commits();
+      assertNotNull(commits);
+      assertEquals(3, commits.size());
+      assertEquals("Third commit: added Other", commits.get(0).message().get(0));
+      assertEquals("Second commit: updated App", commits.get(1).message().get(0));
+      assertEquals("First commit: init", commits.get(2).message().get(0));
+
+      localRepository = spy(localRepository);
+      Date reviewDate = new Date();
+      Predicate<Path> forAllFiles = p -> Files.isRegularFile(p) && !p.toString().contains("/.git");
+
+      when(localRepository.firstCommitAfter(reviewDate)).thenReturn(Optional.of(commits.get(0)));
+      Double changes = localRepository.changedSince(reviewDate, forAllFiles);
+      assertEquals(0.0, changes, DELTA);
+
+      when(localRepository.firstCommitAfter(reviewDate)).thenReturn(Optional.of(commits.get(1)));
+      changes = localRepository.changedSince(reviewDate, forAllFiles);
+      assertEquals(0.2, changes, DELTA);
+
+      when(localRepository.firstCommitAfter(reviewDate)).thenReturn(Optional.of(commits.get(2)));
+      changes = localRepository.changedSince(reviewDate, forAllFiles);
+      assertEquals(0.4, changes, DELTA);
     } finally {
       FileUtils.forceDeleteOnExit(directory.toFile());
     }

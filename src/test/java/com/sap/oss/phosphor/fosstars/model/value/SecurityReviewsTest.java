@@ -13,8 +13,8 @@ public class SecurityReviewsTest {
 
   @Test
   public void testClone() {
-    SecurityReview firstReview = new SecurityReview(new Date(1));
-    SecurityReview secondReview = new SecurityReview(new Date(2));
+    SecurityReview firstReview = new SecurityReview(new Date(1), 0.0);
+    SecurityReview secondReview = new SecurityReview(new Date(2), 1.0);
     SecurityReviews securityReviews = new SecurityReviews(firstReview, secondReview);
     assertEquals(2, securityReviews.size());
     assertTrue(securityReviews.contains(firstReview));
@@ -28,8 +28,8 @@ public class SecurityReviewsTest {
 
   @Test
   public void testJsonSerialization() throws IOException {
-    SecurityReview firstReview = new SecurityReview(new Date(1));
-    SecurityReview secondReview = new SecurityReview(new Date(2));
+    SecurityReview firstReview = new SecurityReview(new Date(1), 0.0);
+    SecurityReview secondReview = new SecurityReview(new Date(2), 1.0);
     SecurityReviews securityReviews = new SecurityReviews(firstReview, secondReview);
 
     SecurityReviews clone = Json.read(Json.toBytes(securityReviews), SecurityReviews.class);

@@ -64,6 +64,9 @@ import com.sap.oss.phosphor.fosstars.model.value.VersionRange;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerability;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerability.Resolution;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -77,11 +80,21 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+import org.eclipse.jgit.api.CommitCommand;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
 public class TestUtils {
 
-  private static final double DELTA = 0.01;
+  /**
+   * The precision when comparing numbers.
+   */
+  public static final double DELTA = 0.01;
 
+  /**
+   * A test GitHub project.
+   */
   public static final GitHubProject PROJECT = new GitHubProject("org", "test");
 
   public static final Consumer<Value<Boolean>> NO_EXPLANATION
@@ -249,7 +262,7 @@ public class TestUtils {
         OWASP_DEPENDENCY_CHECK_USAGE.value(MANDATORY),
         OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.value(4.0),
         PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)),
-        SECURITY_REVIEWS.value(new SecurityReviews(new SecurityReview(new Date()))));
+        SECURITY_REVIEWS.value(new SecurityReviews(new SecurityReview(new Date(), 0.0))));
   }
 
   /**
@@ -289,5 +302,37 @@ public class TestUtils {
     } catch (ParseException e) {
       throw new RuntimeException(e);
     }
+  }
+
+  /**
+   * Commits a set of files to a Git repository.
+   *
+   * @param content The stuff to be committed. It is a map from file name to its content.
+   * @param message A commit message.
+   * @param git An interface to the Git repository.
+   * @throws IOException If something went wrong.
+   * @throws GitAPIException If git failed.
+   */
+  public static void commit(Map<String, String> content, String message, Git git)
+      throws IOException, GitAPIException {
+
+    for (Map.Entry<String, String> entry : content.entrySet()) {
+      String filename = entry.getKey();
+      String text = entry.getValue();
+
+      Files.write(
+          Paths.get(git.getRepository().getDirectory().getParent()).resolve(filename),
+          text.getBytes());
+
+      git.add().addFilepattern(filename).call();
+    }
+
+    CommitCommand commit = git.commit();
+    commit.setCredentialsProvider(
+        new UsernamePasswordCredentialsProvider("mr.pink", "don't tell anyone"));
+    commit.setMessage(message)
+        .setSign(false)
+        .setAuthor("Mr. Pink", "mr.pink@test.com")
+        .call();
   }
 }
