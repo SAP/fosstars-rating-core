@@ -81,4 +81,13 @@ public class GitCommit implements Commit {
     return Arrays.stream(revCommit.getFullMessage().split("\\r?\\n"))
         .map(String::trim).filter(s -> !s.isEmpty()).collect(Collectors.toList());
   }
+
+  /**
+   * Get an underlying {@link RevCommit}.
+   *
+   * @return An underlying {@link RevCommit}.
+   */
+  RevCommit raw() {
+    return revCommit;
+  }
 }

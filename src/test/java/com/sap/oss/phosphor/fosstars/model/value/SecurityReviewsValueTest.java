@@ -13,8 +13,8 @@ public class SecurityReviewsValueTest {
 
   @Test
   public void testJsonSerialization() throws IOException {
-    SecurityReview firstReview = new SecurityReview(new Date(1));
-    SecurityReview secondReview = new SecurityReview(new Date(2));
+    SecurityReview firstReview = new SecurityReview(new Date(1), 0.0);
+    SecurityReview secondReview = new SecurityReview(new Date(2), 1.0);
     SecurityReviews reviews = new SecurityReviews(firstReview, secondReview);
     SecurityReviewsFeature feature = new SecurityReviewsFeature("feature");
     SecurityReviewsValue value = new SecurityReviewsValue(feature, reviews);
