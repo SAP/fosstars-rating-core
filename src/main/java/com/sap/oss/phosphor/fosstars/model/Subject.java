@@ -4,6 +4,8 @@ import static java.lang.String.format;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
+import com.sap.oss.phosphor.fosstars.util.Json;
+import java.io.IOException;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
@@ -70,5 +72,19 @@ public interface Subject {
     }
 
     return clazz.cast(subject);
+  }
+
+  /**
+   * Casts a subject to a specified type that implements {@link Subject}. To avoid JSON mapping
+   * infinite recursion loop the subject cloned to a different entity.
+   *
+   * @param subject The subject.
+   * @param clazz The class.
+   * @param <T> The type.
+   * @return The subject.
+   * @throws IOException If subject is not cloneable.
+   */
+  static <T extends Subject> T castAndCopy(Subject subject, Class<T> clazz) throws IOException {
+    return Json.read(Json.toBytes(cast(subject, clazz)), clazz);
   }
 }
