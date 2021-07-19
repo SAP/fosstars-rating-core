@@ -1,6 +1,5 @@
 package com.sap.oss.phosphor.fosstars.data.github;
 
-import static com.sap.oss.phosphor.fosstars.model.Subject.copy;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SECURITY_REVIEWS;
 import static java.lang.String.format;
 
@@ -84,7 +83,7 @@ public class SecurityReviewsFromOpenSSF
         if (!reviewDate.isPresent()) {
           continue;
         }
-        reviews.add(new SecurityReview(copy(project, GitHubProject.class), reviewDate.get()));
+        reviews.add(new SecurityReview(reviewDate.get()));
       }
     }
 

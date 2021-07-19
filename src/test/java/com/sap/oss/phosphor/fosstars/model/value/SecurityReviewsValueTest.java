@@ -1,6 +1,5 @@
 package com.sap.oss.phosphor.fosstars.model.value;
 
-import static com.sap.oss.phosphor.fosstars.model.Subject.copy;
 import static com.sap.oss.phosphor.fosstars.model.score.example.ExampleScores.PROJECT_ACTIVITY_SCORE_EXAMPLE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -18,9 +17,8 @@ public class SecurityReviewsValueTest {
 
   @Test
   public void testJsonSerialization() throws IOException {
-    GitHubProject project = new GitHubProject("org", "test");
-    SecurityReview firstReview = new SecurityReview(copyProject(project), new Date(1));
-    SecurityReview secondReview = new SecurityReview(copyProject(project), new Date(2));
+    SecurityReview firstReview = new SecurityReview(new Date(1));
+    SecurityReview secondReview = new SecurityReview(new Date(2));
     SecurityReviews reviews = new SecurityReviews(firstReview, secondReview);
     SecurityReviewsFeature feature = new SecurityReviewsFeature("feature");
     SecurityReviewsValue value = new SecurityReviewsValue(feature, reviews);
@@ -39,7 +37,7 @@ public class SecurityReviewsValueTest {
     RatingValue ratingValue = new RatingValue(scoreValue, SecurityLabelExample.OKAY);
     project.set(ratingValue);
 
-    SecurityReview firstReview = new SecurityReview(copyProject(project), new Date(1));
+    SecurityReview firstReview = new SecurityReview(new Date(1));
     SecurityReviews reviews = new SecurityReviews(firstReview);
     SecurityReviewsFeature feature = new SecurityReviewsFeature("feature");
     SecurityReviewsValue value = new SecurityReviewsValue(feature, reviews);
@@ -48,9 +46,5 @@ public class SecurityReviewsValueTest {
     SecurityReviewsValue clone = Json.read(Json.toBytes(value), SecurityReviewsValue.class);
     assertTrue(value.equals(clone) && clone.equals(value));
     assertEquals(value.hashCode(), clone.hashCode());
-  }
-
-  private static GitHubProject copyProject(GitHubProject project) throws IOException {
-    return copy(project, GitHubProject.class);
   }
 }

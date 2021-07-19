@@ -249,7 +249,7 @@ public class TestUtils {
         OWASP_DEPENDENCY_CHECK_USAGE.value(MANDATORY),
         OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.value(4.0),
         PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)),
-        SECURITY_REVIEWS.value(new SecurityReviews(new SecurityReview(PROJECT, new Date()))));
+        SECURITY_REVIEWS.value(new SecurityReviews(new SecurityReview(new Date()))));
   }
 
   /**

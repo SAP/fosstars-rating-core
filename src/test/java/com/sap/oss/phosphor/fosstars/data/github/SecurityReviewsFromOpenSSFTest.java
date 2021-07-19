@@ -197,7 +197,6 @@ public class SecurityReviewsFromOpenSSFTest extends TestGitHubDataFetcherHolder 
       assertEquals(1, reviews.size());
       SecurityReview review = reviews.iterator().next();
       assertEquals("2020-12-25", DATE_FORMAT.format(review.date()));
-      assertEquals(project, review.subject());
 
       when(repository.files(any(), any())).thenReturn(Collections.emptyList());
       value = provider.fetchValueFor(project);
