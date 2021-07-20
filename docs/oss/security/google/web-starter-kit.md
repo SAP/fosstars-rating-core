@@ -2,7 +2,7 @@
 
 https://github.com/google/web-starter-kit
 
-Last updated on Jul 15, 2021
+Last updated on Jul 18, 2021
 
 **Rating**: **MODERATE**
 
@@ -209,7 +209,7 @@ Here is how a number of watchers contributes to the score:
 
 This sub-score is based on 2 features:
 
-1.  Number of stars for a GitHub repository: **18509**
+1.  Number of stars for a GitHub repository: **18510**
 1.  Number of watchers for a GitHub repository: **979**
 
 ### Security reviews

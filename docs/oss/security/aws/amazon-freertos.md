@@ -2,7 +2,7 @@
 
 https://github.com/aws/amazon-freertos
 
-Last updated on Jul 15, 2021
+Last updated on Jul 18, 2021
 
 **Rating**: **MODERATE**
 
@@ -47,7 +47,7 @@ It used the following sub-scores:
 1.  **[Unpatched vulnerabilities](#unpatched-vulnerabilities)**: **10.0** (weight is 0.5)
 1.  **[Community commitment](#community-commitment)**: **8.0** (weight is 0.5)
 1.  **[Project activity](#project-activity)**: **10.0** (weight is 0.5)
-1.  **[Project popularity](#project-popularity)**: **3.07** (weight is 0.5)
+1.  **[Project popularity](#project-popularity)**: **3.08** (weight is 0.5)
 1.  **[Security reviews](#security-reviews)**: **0.0** (weight is 0.2)
 
 
@@ -200,17 +200,17 @@ Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-162 commits in the last 3 months results to 10.00 points
+159 commits in the last 3 months results to 10.00 points
 14 contributors increase the score value from 10.00 to 12.00
 
 This sub-score is based on 2 features:
 
-1.  Number of commits in the last three months: **162**
+1.  Number of commits in the last three months: **159**
 1.  Number of contributors in the last three months: **14**
 
 ### Project popularity
 
-Score: **3.07**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **3.08**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score is based on number of stars and watchers.
 Here is how a number of stars contributes to the score:
@@ -222,7 +222,7 @@ Here is how a number of watchers contributes to the score:
 
 This sub-score is based on 2 features:
 
-1.  Number of stars for a GitHub repository: **2316**
+1.  Number of stars for a GitHub repository: **2319**
 1.  Number of watchers for a GitHub repository: **227**
 
 ### Security reviews

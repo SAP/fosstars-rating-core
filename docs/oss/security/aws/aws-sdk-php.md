@@ -2,7 +2,7 @@
 
 https://github.com/aws/aws-sdk-php
 
-Last updated on Jul 15, 2021
+Last updated on Jul 18, 2021
 
 **Rating**: **MODERATE**
 
@@ -188,12 +188,12 @@ Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-121 commits in the last 3 months results to 10.00 points
+129 commits in the last 3 months results to 10.00 points
 2 contributors increase the score value from 10.00 to 10.50
 
 This sub-score is based on 2 features:
 
-1.  Number of commits in the last three months: **121**
+1.  Number of commits in the last three months: **129**
 1.  Number of contributors in the last three months: **2**
 
 ### Project popularity
@@ -210,7 +210,7 @@ Here is how a number of watchers contributes to the score:
 
 This sub-score is based on 2 features:
 
-1.  Number of stars for a GitHub repository: **5250**
+1.  Number of stars for a GitHub repository: **5256**
 1.  Number of watchers for a GitHub repository: **239**
 
 ### Security reviews

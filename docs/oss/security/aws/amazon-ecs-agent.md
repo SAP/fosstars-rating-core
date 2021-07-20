@@ -2,7 +2,7 @@
 
 https://github.com/aws/amazon-ecs-agent
 
-Last updated on Jul 15, 2021
+Last updated on Jul 18, 2021
 
 **Rating**: **MODERATE**
 

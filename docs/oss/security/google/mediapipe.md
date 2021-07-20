@@ -2,7 +2,7 @@
 
 https://github.com/google/mediapipe
 
-Last updated on Jul 15, 2021
+Last updated on Jul 18, 2021
 
 **Rating**: **BAD**
 
@@ -222,8 +222,8 @@ Here is how a number of watchers contributes to the score:
 
 This sub-score is based on 2 features:
 
-1.  Number of stars for a GitHub repository: **12998**
-1.  Number of watchers for a GitHub repository: **443**
+1.  Number of stars for a GitHub repository: **13044**
+1.  Number of watchers for a GitHub repository: **440**
 
 ### Security reviews
 

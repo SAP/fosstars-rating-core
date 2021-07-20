@@ -2,9 +2,9 @@
 
 https://github.com/spring-projects/spring-mvc-showcase
 
-Last updated on Jul 15, 2021
+Last updated on Jul 18, 2021
 
-**Rating**: **BAD**
+**Rating**: **MODERATE**
 
 **Score**: **4.5**, max score value is 10.0
 

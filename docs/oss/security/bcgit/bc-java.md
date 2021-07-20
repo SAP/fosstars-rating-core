@@ -2,7 +2,7 @@
 
 https://github.com/bcgit/bc-java
 
-Last updated on Jul 15, 2021
+Last updated on Jul 18, 2021
 
 **Rating**: **BAD**
 
@@ -194,12 +194,12 @@ Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-420 commits in the last 3 months results to 10.00 points
+414 commits in the last 3 months results to 10.00 points
 9 contributors increase the score value from 10.00 to 12.00
 
 This sub-score is based on 2 features:
 
-1.  Number of commits in the last three months: **420**
+1.  Number of commits in the last three months: **414**
 1.  Number of contributors in the last three months: **9**
 
 ### Project popularity

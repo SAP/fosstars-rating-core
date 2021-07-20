@@ -2,9 +2,9 @@
 
 https://github.com/aws/serverless-application-model
 
-Last updated on Jul 15, 2021
+Last updated on Jul 18, 2021
 
-**Rating**: **BAD**
+**Rating**: **MODERATE**
 
 **Score**: **4.45**, max score value is 10.0
 
@@ -209,7 +209,7 @@ Here is how a number of watchers contributes to the score:
 
 This sub-score is based on 2 features:
 
-1.  Number of stars for a GitHub repository: **8025**
+1.  Number of stars for a GitHub repository: **8027**
 1.  Number of watchers for a GitHub repository: **324**
 
 ### Security reviews

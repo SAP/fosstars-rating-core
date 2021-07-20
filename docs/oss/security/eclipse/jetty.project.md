@@ -2,9 +2,9 @@
 
 https://github.com/eclipse/jetty.project
 
-Last updated on Jul 15, 2021
+Last updated on Jul 18, 2021
 
-**Rating**: **MODERATE**
+**Rating**: **GOOD**
 
 **Score**: **5.59**, max score value is 10.0
 
@@ -194,13 +194,13 @@ Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-167 commits in the last 3 months results to 10.00 points
-9 contributors increase the score value from 10.00 to 12.00
+161 commits in the last 3 months results to 10.00 points
+8 contributors increase the score value from 10.00 to 12.00
 
 This sub-score is based on 2 features:
 
-1.  Number of commits in the last three months: **167**
-1.  Number of contributors in the last three months: **9**
+1.  Number of commits in the last three months: **161**
+1.  Number of contributors in the last three months: **8**
 
 ### Project popularity
 
@@ -216,7 +216,7 @@ Here is how a number of watchers contributes to the score:
 
 This sub-score is based on 2 features:
 
-1.  Number of stars for a GitHub repository: **3158**
+1.  Number of stars for a GitHub repository: **3159**
 1.  Number of watchers for a GitHub repository: **274**
 
 ### Security reviews

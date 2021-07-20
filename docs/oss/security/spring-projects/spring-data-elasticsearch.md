@@ -2,11 +2,11 @@
 
 https://github.com/spring-projects/spring-data-elasticsearch
 
-Last updated on Jul 15, 2021
+Last updated on Jul 18, 2021
 
 **Rating**: **MODERATE**
 
-**Score**: **5.21**, max score value is 10.0
+**Score**: **5.14**, max score value is 10.0
 
 **Confidence**: Max (10.0, max confidence value is 10.0)
 
@@ -46,8 +46,8 @@ It used the following sub-scores:
         1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
 1.  **[Unpatched vulnerabilities](#unpatched-vulnerabilities)**: **10.0** (weight is 0.5)
 1.  **[Community commitment](#community-commitment)**: **8.0** (weight is 0.5)
-1.  **[Project activity](#project-activity)**: **6.6** (weight is 0.5)
-1.  **[Project popularity](#project-popularity)**: **3.38** (weight is 0.5)
+1.  **[Project activity](#project-activity)**: **5.92** (weight is 0.5)
+1.  **[Project popularity](#project-popularity)**: **3.39** (weight is 0.5)
 1.  **[Security reviews](#security-reviews)**: **0.0** (weight is 0.2)
 
 
@@ -196,21 +196,21 @@ This sub-score is based on 3 features:
 
 ### Project activity
 
-Score: **6.6**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **5.92**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-39 commits in the last 3 months results to 6.00 points
-4 contributors increase the score value from 6.00 to 6.60
+35 commits in the last 3 months results to 5.38 points
+4 contributors increase the score value from 5.38 to 5.92
 
 This sub-score is based on 2 features:
 
-1.  Number of commits in the last three months: **39**
+1.  Number of commits in the last three months: **35**
 1.  Number of contributors in the last three months: **4**
 
 ### Project popularity
 
-Score: **3.38**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **3.39**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score is based on number of stars and watchers.
 Here is how a number of stars contributes to the score:
@@ -222,8 +222,8 @@ Here is how a number of watchers contributes to the score:
 
 This sub-score is based on 2 features:
 
-1.  Number of stars for a GitHub repository: **2481**
-1.  Number of watchers for a GitHub repository: **270**
+1.  Number of stars for a GitHub repository: **2484**
+1.  Number of watchers for a GitHub repository: **272**
 
 ### Security reviews
 

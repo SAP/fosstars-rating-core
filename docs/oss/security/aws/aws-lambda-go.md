@@ -2,7 +2,7 @@
 
 https://github.com/aws/aws-lambda-go
 
-Last updated on Jul 15, 2021
+Last updated on Jul 18, 2021
 
 **Rating**: **BAD**
 
@@ -207,7 +207,7 @@ Here is how a number of watchers contributes to the score:
 
 This sub-score is based on 2 features:
 
-1.  Number of stars for a GitHub repository: **2661**
+1.  Number of stars for a GitHub repository: **2663**
 1.  Number of watchers for a GitHub repository: **63**
 
 ### Security reviews

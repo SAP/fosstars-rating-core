@@ -2,11 +2,11 @@
 
 https://github.com/FasterXML/jackson
 
-Last updated on Jul 15, 2021
+Last updated on Jul 18, 2021
 
 **Rating**: **BAD**
 
-**Score**: **2.41**, max score value is 10.0
+**Score**: **2.42**, max score value is 10.0
 
 **Confidence**: High (9.87, max confidence value is 10.0)
 
@@ -47,7 +47,7 @@ It used the following sub-scores:
 1.  **[Unpatched vulnerabilities](#unpatched-vulnerabilities)**: **10.0** (weight is 0.5)
 1.  **[Community commitment](#community-commitment)**: **0.0** (weight is 0.5)
 1.  **[Project activity](#project-activity)**: **0.62** (weight is 0.5)
-1.  **[Project popularity](#project-popularity)**: **7.88** (weight is 0.5)
+1.  **[Project popularity](#project-popularity)**: **7.89** (weight is 0.5)
 1.  **[Security reviews](#security-reviews)**: **0.0** (weight is 0.2)
 
 
@@ -199,7 +199,7 @@ This sub-score is based on 2 features:
 
 ### Project popularity
 
-Score: **7.88**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **7.89**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score is based on number of stars and watchers.
 Here is how a number of stars contributes to the score:
@@ -211,7 +211,7 @@ Here is how a number of watchers contributes to the score:
 
 This sub-score is based on 2 features:
 
-1.  Number of stars for a GitHub repository: **6711**
+1.  Number of stars for a GitHub repository: **6724**
 1.  Number of watchers for a GitHub repository: **350**
 
 ### Security reviews

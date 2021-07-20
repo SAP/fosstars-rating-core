@@ -2,7 +2,7 @@
 
 https://github.com/spring-projects/spring-session
 
-Last updated on Jul 15, 2021
+Last updated on Jul 18, 2021
 
 **Rating**: **BAD**
 
@@ -219,7 +219,7 @@ Here is how a number of watchers contributes to the score:
 
 This sub-score is based on 2 features:
 
-1.  Number of stars for a GitHub repository: **1613**
+1.  Number of stars for a GitHub repository: **1614**
 1.  Number of watchers for a GitHub repository: **158**
 
 ### Security reviews

@@ -2,7 +2,7 @@
 
 https://github.com/google/ExoPlayer
 
-Last updated on Jul 15, 2021
+Last updated on Jul 18, 2021
 
 **Rating**: **MODERATE**
 
@@ -203,12 +203,12 @@ Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-184 commits in the last 3 months results to 10.00 points
+177 commits in the last 3 months results to 10.00 points
 5 contributors increase the score value from 10.00 to 12.00
 
 This sub-score is based on 2 features:
 
-1.  Number of commits in the last three months: **184**
+1.  Number of commits in the last three months: **177**
 1.  Number of contributors in the last three months: **5**
 
 ### Project popularity
@@ -225,8 +225,8 @@ Here is how a number of watchers contributes to the score:
 
 This sub-score is based on 2 features:
 
-1.  Number of stars for a GitHub repository: **17976**
-1.  Number of watchers for a GitHub repository: **868**
+1.  Number of stars for a GitHub repository: **17994**
+1.  Number of watchers for a GitHub repository: **867**
 
 ### Security reviews
 

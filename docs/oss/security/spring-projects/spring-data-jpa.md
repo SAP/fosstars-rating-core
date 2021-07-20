@@ -2,11 +2,11 @@
 
 https://github.com/spring-projects/spring-data-jpa
 
-Last updated on Jul 15, 2021
+Last updated on Jul 18, 2021
 
 **Rating**: **MODERATE**
 
-**Score**: **4.91**, max score value is 10.0
+**Score**: **5.01**, max score value is 10.0
 
 **Confidence**: Max (10.0, max confidence value is 10.0)
 
@@ -46,7 +46,7 @@ It used the following sub-scores:
         1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
 1.  **[Unpatched vulnerabilities](#unpatched-vulnerabilities)**: **10.0** (weight is 0.5)
 1.  **[Community commitment](#community-commitment)**: **8.0** (weight is 0.5)
-1.  **[Project activity](#project-activity)**: **5.91** (weight is 0.5)
+1.  **[Project activity](#project-activity)**: **6.83** (weight is 0.5)
 1.  **[Project popularity](#project-popularity)**: **2.82** (weight is 0.5)
 1.  **[Security reviews](#security-reviews)**: **0.0** (weight is 0.2)
 
@@ -196,16 +196,16 @@ This sub-score is based on 3 features:
 
 ### Project activity
 
-Score: **5.91**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **6.83**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-32 commits in the last 3 months results to 4.92 points
-5 contributors increase the score value from 4.92 to 5.91
+37 commits in the last 3 months results to 5.69 points
+5 contributors increase the score value from 5.69 to 6.83
 
 This sub-score is based on 2 features:
 
-1.  Number of commits in the last three months: **32**
+1.  Number of commits in the last three months: **37**
 1.  Number of contributors in the last three months: **5**
 
 ### Project popularity
@@ -222,8 +222,8 @@ Here is how a number of watchers contributes to the score:
 
 This sub-score is based on 2 features:
 
-1.  Number of stars for a GitHub repository: **2117**
-1.  Number of watchers for a GitHub repository: **210**
+1.  Number of stars for a GitHub repository: **2120**
+1.  Number of watchers for a GitHub repository: **209**
 
 ### Security reviews
 

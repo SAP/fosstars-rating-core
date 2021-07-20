@@ -2,7 +2,7 @@
 
 https://github.com/google/dagger
 
-Last updated on Jul 15, 2021
+Last updated on Jul 18, 2021
 
 **Rating**: **MODERATE**
 
@@ -197,11 +197,11 @@ Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-98 commits in the last 3 months results to 10.00 points
+96 commits in the last 3 months results to 10.00 points
 
 This sub-score is based on 2 features:
 
-1.  Number of commits in the last three months: **98**
+1.  Number of commits in the last three months: **96**
 1.  Number of contributors in the last three months: **1**
 
 ### Project popularity
@@ -218,7 +218,7 @@ Here is how a number of watchers contributes to the score:
 
 This sub-score is based on 2 features:
 
-1.  Number of stars for a GitHub repository: **16131**
+1.  Number of stars for a GitHub repository: **16138**
 1.  Number of watchers for a GitHub repository: **571**
 
 ### Security reviews

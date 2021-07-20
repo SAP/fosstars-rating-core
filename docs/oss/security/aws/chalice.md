@@ -2,11 +2,11 @@
 
 https://github.com/aws/chalice
 
-Last updated on Jul 15, 2021
+Last updated on Jul 18, 2021
 
 **Rating**: **GOOD**
 
-**Score**: **5.98**, max score value is 10.0
+**Score**: **5.96**, max score value is 10.0
 
 **Confidence**: Max (10.0, max confidence value is 10.0)
 
@@ -46,8 +46,8 @@ It used the following sub-scores:
         1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
 1.  **[Unpatched vulnerabilities](#unpatched-vulnerabilities)**: **10.0** (weight is 0.5)
 1.  **[Community commitment](#community-commitment)**: **8.0** (weight is 0.5)
-1.  **[Project activity](#project-activity)**: **8.31** (weight is 0.5)
-1.  **[Project popularity](#project-popularity)**: **8.93** (weight is 0.5)
+1.  **[Project activity](#project-activity)**: **8.12** (weight is 0.5)
+1.  **[Project popularity](#project-popularity)**: **8.94** (weight is 0.5)
 1.  **[Security reviews](#security-reviews)**: **0.0** (weight is 0.2)
 
 
@@ -184,21 +184,21 @@ This sub-score is based on 3 features:
 
 ### Project activity
 
-Score: **8.31**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **8.12**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-45 commits in the last 3 months results to 6.92 points
-7 contributors increase the score value from 6.92 to 8.31
+44 commits in the last 3 months results to 6.77 points
+7 contributors increase the score value from 6.77 to 8.12
 
 This sub-score is based on 2 features:
 
-1.  Number of commits in the last three months: **45**
+1.  Number of commits in the last three months: **44**
 1.  Number of contributors in the last three months: **7**
 
 ### Project popularity
 
-Score: **8.93**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **8.94**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score is based on number of stars and watchers.
 Here is how a number of stars contributes to the score:
@@ -210,7 +210,7 @@ Here is how a number of watchers contributes to the score:
 
 This sub-score is based on 2 features:
 
-1.  Number of stars for a GitHub repository: **8091**
+1.  Number of stars for a GitHub repository: **8100**
 1.  Number of watchers for a GitHub repository: **251**
 
 ### Security reviews

@@ -2,7 +2,7 @@
 
 https://github.com/google/flexbox-layout
 
-Last updated on Jul 15, 2021
+Last updated on Jul 18, 2021
 
 **Rating**: **BAD**
 
@@ -218,8 +218,8 @@ Here is how a number of watchers contributes to the score:
 
 This sub-score is based on 2 features:
 
-1.  Number of stars for a GitHub repository: **16855**
-1.  Number of watchers for a GitHub repository: **456**
+1.  Number of stars for a GitHub repository: **16861**
+1.  Number of watchers for a GitHub repository: **455**
 
 ### Security reviews
 
