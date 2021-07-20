@@ -83,7 +83,7 @@ public class SecurityReviewsFromOpenSSF
         if (!reviewDate.isPresent()) {
           continue;
         }
-        reviews.add(new SecurityReview(project, reviewDate.get()));
+        reviews.add(new SecurityReview(reviewDate.get()));
       }
     }
 

@@ -7,7 +7,6 @@ import static java.time.temporal.ChronoUnit.DAYS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.oss.phosphor.fosstars.model.value.SecurityReview;
 import com.sap.oss.phosphor.fosstars.model.value.SecurityReviews;
@@ -21,36 +20,34 @@ public class SecurityReviewScoreTest {
 
   @Test
   public void testPointsFor() {
-    GitHubProject project = new GitHubProject("org", "test");
-
     Instant now = Instant.now();
     assertEquals(
         MAX,
-        SecurityReviewScore.pointsFor(new SecurityReview(project, Date.from(now)), now),
+        SecurityReviewScore.pointsFor(new SecurityReview(Date.from(now)), now),
         DELTA);
 
     Instant lessThanYearAgo = now.minus(180, DAYS);
     assertEquals(
         MAX,
-        SecurityReviewScore.pointsFor(new SecurityReview(project, Date.from(lessThanYearAgo)), now),
+        SecurityReviewScore.pointsFor(new SecurityReview(Date.from(lessThanYearAgo)), now),
         DELTA);
 
     Instant lastYear = now.minus(400, DAYS);
     assertEquals(
         5.0,
-        SecurityReviewScore.pointsFor(new SecurityReview(project, Date.from(lastYear)), now),
+        SecurityReviewScore.pointsFor(new SecurityReview(Date.from(lastYear)), now),
         DELTA);
 
     Instant twoYearsAgo = now.minus(365 * 2 + 50, DAYS);
     assertEquals(
         3.33,
-        SecurityReviewScore.pointsFor(new SecurityReview(project, Date.from(twoYearsAgo)), now),
+        SecurityReviewScore.pointsFor(new SecurityReview(Date.from(twoYearsAgo)), now),
         DELTA);
 
     Instant threeYearsAgo = now.minus(365 * 3 + 50, DAYS);
     assertEquals(
         2.5,
-        SecurityReviewScore.pointsFor(new SecurityReview(project, Date.from(threeYearsAgo)), now),
+        SecurityReviewScore.pointsFor(new SecurityReview(Date.from(threeYearsAgo)), now),
         DELTA);
   }
 
@@ -61,13 +58,11 @@ public class SecurityReviewScoreTest {
     Instant lastYear = now.minus(400, DAYS);
     Instant threeYearsAgo = now.minus(365 * 3 + 50, DAYS);
 
-    GitHubProject project = new GitHubProject("org", "test");
-
     ScoreValue scoreValue = score.calculate(
         SECURITY_REVIEWS.value(
             new SecurityReviews(
-                new SecurityReview(project, Date.from(lastYear)),
-                new SecurityReview(project, Date.from(threeYearsAgo)))));
+                new SecurityReview(Date.from(lastYear)),
+                new SecurityReview(Date.from(threeYearsAgo)))));
 
     assertFalse(scoreValue.isUnknown());
     assertFalse(scoreValue.isNotApplicable());

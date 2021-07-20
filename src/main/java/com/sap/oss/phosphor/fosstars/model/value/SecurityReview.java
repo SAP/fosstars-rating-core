@@ -12,11 +12,6 @@ import java.util.Objects;
 public class SecurityReview {
 
   /**
-   * What was reviewed.
-   */
-  private final Subject subject;
-
-  /**
    * When the review was done.
    */
   private final Date date;
@@ -24,25 +19,10 @@ public class SecurityReview {
   /**
    * Create a new review.
    *
-   * @param subject What was reviewed.
    * @param date When the review was done.
    */
-  public SecurityReview(
-      @JsonProperty("subject") Subject subject,
-      @JsonProperty("date") Date date) {
-
-    this.subject = Objects.requireNonNull(subject, "Subject can't be null!");
+  public SecurityReview(@JsonProperty("date") Date date) {
     this.date = Objects.requireNonNull(date, "Date can't be null!");
-  }
-
-  /**
-   * Returns what was reviewed.
-   *
-   * @return What was reviewed.
-   */
-  @JsonGetter("subject")
-  public Subject subject() {
-    return subject;
   }
 
   /**
@@ -64,11 +44,11 @@ public class SecurityReview {
       return false;
     }
     SecurityReview that = (SecurityReview) o;
-    return Objects.equals(subject, that.subject) && Objects.equals(date, that.date);
+    return Objects.equals(date, that.date);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(subject, date);
+    return Objects.hash(date);
   }
 }
