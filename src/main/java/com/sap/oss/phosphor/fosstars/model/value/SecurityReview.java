@@ -19,6 +19,11 @@ import javax.annotation.Nullable;
 public class SecurityReview {
 
   /**
+   * No info about changes since a review.
+   */
+  public static final Double NO_INFO_ABOUT_CHANGES = null;
+
+  /**
    * A valid interval for amount of changes returned by {@link #changes()}.
    */
   private static final Interval CHANGES_INTERVAL = DoubleInterval.closed(0.0, 1.0);
