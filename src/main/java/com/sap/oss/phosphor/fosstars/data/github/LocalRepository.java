@@ -38,6 +38,11 @@ import org.eclipse.jgit.revwalk.RevCommit;
 public class LocalRepository implements AutoCloseable {
 
   /**
+   * No changes in the repository.
+   */
+  private static final double NO_CHANGES = 0.0;
+
+  /**
    * Info about the repository.
    */
   private final LocalRepositoryInfo info;
@@ -342,8 +347,8 @@ public class LocalRepository implements AutoCloseable {
   }
 
   /**
-   * Estimate how much the project has changed since a specified data.
-   * The method inspects the commit history after the specified data,
+   * Estimate how much the project has changed since a specified date.
+   * The method inspects the commit history after the specified date,
    * and looks for updated files.
    * The method doesn't take into account what was exactly updated in the files.
    *
@@ -355,11 +360,15 @@ public class LocalRepository implements AutoCloseable {
   public Double changedSince(Date date, Predicate<Path> toConsider) throws IOException {
     loadCommitsIfNecessary();
 
+    if (commits.isEmpty()) {
+      return NO_CHANGES;
+    }
+
     GitCommit head = commits.get(0);
     Optional<GitCommit> target = firstCommitAfter(date);
 
     if (!target.isPresent() || target.get().equals(head)) {
-      return 0.0;
+      return NO_CHANGES;
     }
 
     Map<Path, Boolean> fileMap = new HashMap<>();

@@ -50,7 +50,7 @@
     lines="11"/>
   <suppress checks="AbbreviationAsWordInName"
     files="SecurityReviewsFromOpenSSF.java"
-    lines="40"/>
+    lines="41"/>
   <suppress checks="AbbreviationAsWordInName"
     files="GAV.java"
     lines="12"/>

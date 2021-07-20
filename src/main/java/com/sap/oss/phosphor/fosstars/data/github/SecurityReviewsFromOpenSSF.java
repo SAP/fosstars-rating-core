@@ -15,6 +15,7 @@ import com.sap.oss.phosphor.fosstars.model.value.SecurityReviews;
 import com.sap.oss.phosphor.fosstars.model.value.SecurityReviewsValue;
 import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -58,7 +59,7 @@ public class SecurityReviewsFromOpenSSF
       Files.isRegularFile(path)
           && Stream.of(".md", ".txt", ".html", ".rst")
                   .noneMatch(ext -> path.getFileName().endsWith(ext))
-          && Stream.of("/.git", "docs", "test", "demo", "sample", "example")
+          && Stream.of(File.separator + ".git", "docs", "test", "demo", "sample", "example")
                   .noneMatch(string -> path.toString().contains(string));
 
   /**
