@@ -167,7 +167,7 @@ public class SecurityReviewsFromOpenSSFTest extends TestGitHubDataFetcherHolder 
         = Files.createTempDirectory(SecurityReviewsFromOpenSSFTest.class.getName());
     Path directory = Files.createTempDirectory(getClass().getName());
     try (Repository repository = FileRepositoryBuilder.create(directory.resolve(".git").toFile());
-        Git git = new Git(repository)) {
+         Git git = new Git(repository)) {
 
       repository.create();
 
