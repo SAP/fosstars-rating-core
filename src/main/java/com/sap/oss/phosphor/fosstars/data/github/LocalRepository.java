@@ -1,6 +1,9 @@
 package com.sap.oss.phosphor.fosstars.data.github;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -11,7 +14,10 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -21,13 +27,14 @@ import org.apache.commons.io.IOUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.ResetCommand.ResetType;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.diff.DiffEntry;
+import org.eclipse.jgit.diff.DiffFormatter;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 
 /**
  * The class holds information about repository that was cloned with JGit.
  */
-// TODO: make sure that all methods accept and expect relative paths from the repository root
 public class LocalRepository implements AutoCloseable {
 
   /**
@@ -38,7 +45,7 @@ public class LocalRepository implements AutoCloseable {
   /**
    * A list of commits in the repository.
    */
-  private final List<Commit> commits = new ArrayList<>();
+  private final List<GitCommit> commits = new ArrayList<>();
 
   /**
    * An instance of {@link Repository} from JGit.
@@ -81,7 +88,7 @@ public class LocalRepository implements AutoCloseable {
    * @throws IOException If something went wrong.
    */
   @JsonIgnore
-  public List<Commit> commits() throws IOException {
+  public List<GitCommit> commits() throws IOException {
     loadCommitsIfNecessary();
     return new ArrayList<>(commits);
   }
@@ -196,7 +203,7 @@ public class LocalRepository implements AutoCloseable {
     }
 
     try (InputStream is = Files.newInputStream(path)) {
-      return Optional.of(IOUtils.toString(is));
+      return Optional.of(IOUtils.toString(is, UTF_8));
     }
   }
 
@@ -260,7 +267,7 @@ public class LocalRepository implements AutoCloseable {
     Optional<InputStream> content = read(file);
     if (content.isPresent()) {
       try (InputStream is = content.get()) {
-        return Optional.of(IOUtils.toString(is));
+        return Optional.of(IOUtils.toString(is, UTF_8));
       }
     }
 
@@ -293,7 +300,7 @@ public class LocalRepository implements AutoCloseable {
     }
 
     try (InputStream is = Files.newInputStream(path)) {
-      return Optional.of(IOUtils.readLines(is));
+      return Optional.of(IOUtils.readLines(is, UTF_8));
     }
   }
 
@@ -332,6 +339,79 @@ public class LocalRepository implements AutoCloseable {
   @Override
   public void close() {
     repository.close();
+  }
+
+  /**
+   * Estimate how much the project has changed since a specified data.
+   * The method inspects the commit history after the specified data,
+   * and looks for updated files.
+   * The method doesn't take into account what was exactly updated in the files.
+   *
+   * @param date The date.
+   * @param toConsider Defines which files should be considered.
+   * @return An estimated amount of changes in the project.
+   * @throws IOException If something went wrong.
+   */
+  public Double changedSince(Date date, Predicate<Path> toConsider) throws IOException {
+    loadCommitsIfNecessary();
+
+    GitCommit head = commits.get(0);
+    Optional<GitCommit> target = firstCommitAfter(date);
+
+    if (!target.isPresent() || target.get().equals(head)) {
+      return 0.0;
+    }
+
+    Map<Path, Boolean> fileMap = new HashMap<>();
+    files(toConsider).forEach(path -> fileMap.put(path, false));
+
+    try (ByteArrayOutputStream out = new ByteArrayOutputStream();
+         DiffFormatter diffFormatter = new DiffFormatter(out)) {
+
+      diffFormatter.setRepository(repository);
+      for (DiffEntry entry : diffFormatter.scan(target.get().raw(), head.raw())) {
+        validEntryPath(entry.getNewPath(), toConsider).ifPresent(path -> fileMap.put(path, true));
+        validEntryPath(entry.getOldPath(), toConsider).ifPresent(path -> fileMap.put(path, true));
+      }
+    }
+
+    long updates = fileMap.entrySet().stream().filter(Entry::getValue).count();
+    return (double) updates / (double) fileMap.size();
+  }
+
+  /**
+   * Looks for the first commit after a specified date.
+   *
+   * @param date The date.
+   * @return The first commit after the specified date if found.
+   */
+  Optional<GitCommit> firstCommitAfter(Date date) {
+    int i = 0;
+    GitCommit target = null;
+    while (i < commits.size()) {
+      if (commits.get(i).date().before(date)) {
+        break;
+      }
+      target = commits.get(i++);
+    }
+    return Optional.ofNullable(target);
+  }
+
+  /**
+   * Resolve a path from a diff entry against the repository's root
+   * if the path satisfies a specified criteria.
+   *
+   * @param entryPath The path.
+   * @param criteria The criteria.
+   * @return A resolved path if all the conditions are met.
+   */
+  private Optional<Path> validEntryPath(String entryPath, Predicate<Path> criteria) {
+    if (entryPath == null || entryPath.equals(DiffEntry.DEV_NULL)) {
+      return Optional.empty();
+    }
+
+    Path path = info.path().resolve(Paths.get(entryPath));
+    return criteria.test(path) ? Optional.of(path) : Optional.empty();
   }
 
   /**

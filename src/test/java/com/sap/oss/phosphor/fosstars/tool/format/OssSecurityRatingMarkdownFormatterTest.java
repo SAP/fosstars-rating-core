@@ -102,7 +102,7 @@ public class OssSecurityRatingMarkdownFormatterTest {
       OWASP_DEPENDENCY_CHECK_USAGE.value(NOT_USED),
       OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.notSpecifiedValue(),
       PACKAGE_MANAGERS.value(new PackageManagers(MAVEN)),
-      SECURITY_REVIEWS.value(new SecurityReviews(new SecurityReview(new Date())))
+      SECURITY_REVIEWS.value(new SecurityReviews(new SecurityReview(new Date(), 0.0)))
   );
 
   @Test

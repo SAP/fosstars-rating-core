@@ -39,7 +39,7 @@ public class SecurityReviewScore extends FeatureBasedScore {
       return score.explain("No security reviews have been done");
     }
 
-    double value = 0.0;
+    double value = MIN;
     Instant now = Instant.now();
     for (SecurityReview review : reviews.get()) {
       value += pointsFor(review, now);
@@ -56,6 +56,9 @@ public class SecurityReviewScore extends FeatureBasedScore {
    * @return Points for the security review.
    */
   static double pointsFor(SecurityReview review, Instant now) {
+    if (review.projectChanged().isPresent()) {
+      return MAX * (1.0 - review.projectChanged().get());
+    }
     long years = (Duration.between(review.date().toInstant(), now).toDays() / 365) + 1;
     return MAX / years;
   }
