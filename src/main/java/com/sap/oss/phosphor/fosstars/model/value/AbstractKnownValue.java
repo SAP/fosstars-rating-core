@@ -36,14 +36,14 @@ public abstract class AbstractKnownValue<T> extends AbstractValue<T, AbstractKno
   }
 
   @Override
-  public Value<T> processIfKnown(Processor<T> processor) {
+  public final Value<T> processIfKnown(Processor<T> processor) {
     Objects.requireNonNull(processor, "Processor can't be null!");
     processor.process(get());
     return this;
   }
 
   @Override
-  public Value<T> processIfUnknown(Runnable processor) {
+  public final Value<T> processIfUnknown(Runnable processor) {
     return this;
   }
 
@@ -61,5 +61,10 @@ public abstract class AbstractKnownValue<T> extends AbstractValue<T, AbstractKno
       return false;
     }
     return super.equals(o);
+  }
+
+  @Override
+  public int hashCode() {
+    return 17 * super.hashCode();
   }
 }

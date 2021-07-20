@@ -55,12 +55,12 @@ public final class UnknownValue<T> extends AbstractValue<T, UnknownValue<T>> {
   }
 
   @Override
-  public Value<T> processIfKnown(Processor<T> processor) {
+  public final Value<T> processIfKnown(Processor<T> processor) {
     return this;
   }
 
   @Override
-  public Value<T> processIfUnknown(Runnable processor) {
+  public final Value<T> processIfUnknown(Runnable processor) {
     Objects.requireNonNull(processor, "Processor can't be null!");
     processor.run();
     return this;
@@ -75,6 +75,11 @@ public final class UnknownValue<T> extends AbstractValue<T, UnknownValue<T>> {
       return false;
     }
     return super.equals(o);
+  }
+
+  @Override
+  public int hashCode() {
+    return 17 * super.hashCode();
   }
 
   @Override
