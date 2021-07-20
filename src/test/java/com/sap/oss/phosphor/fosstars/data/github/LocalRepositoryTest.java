@@ -174,7 +174,8 @@ public class LocalRepositoryTest {
 
       localRepository = spy(localRepository);
       Date reviewDate = new Date();
-      Predicate<Path> forAllFiles = p -> Files.isRegularFile(p) && !p.toString().contains("/.git");
+      Predicate<Path> forAllFiles = p -> Files.isRegularFile(p)
+          && !p.toString().contains(File.separator + ".git");
 
       when(localRepository.firstCommitAfter(reviewDate)).thenReturn(Optional.of(commits.get(0)));
       Double changes = localRepository.changedSince(reviewDate, forAllFiles);
