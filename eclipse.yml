@@ -1,0 +1,28 @@
+# this is a configuration for generating a report for Eclipse projects
+cache: .fosstars/project_rating_cache.json
+reports:
+  - type: markdown
+    where: .
+    source: github_projects.json
+  - type: json
+    where: github_projects.json
+finder:
+  organizations:
+    - name: eclipse
+      stars: 1000
+      exclude:
+        - incubator
+        - website
+        - docs
+        - site
+        - example
+        - test
+        - vscode
+        - staging
+        - tutorial
+        - integration
+        - wiki
+        - Test
+        - org.eclipse
+        - demo
+        - sample
