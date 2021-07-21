@@ -378,8 +378,8 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2017-8046](https://nvd.nist.gov/vuln/detail/CVE-2017-8046): Optional[Malicious PATCH requests submitted to servers using Spring Data REST versions prior to 2.6.9 (Ingalls SR9), versions prior to 3.0.1 (Kay SR1) and Spring Boot versions prior to 1.5.9, 2.0 M6 can use specially crafted JSON data to run arbitrary Java code.]
-1.  [CVE-2018-1196](https://nvd.nist.gov/vuln/detail/CVE-2018-1196): Optional[Spring Boot supports an embedded launch script that can be used to easily run the application as a systemd or init.d linux service. The script included with Spring Boot 1.5.9 and earlier and 2.0.0.M1 through 2.0.0.M7 is susceptible to a symlink attack which allows the "run_user" to overwrite and take ownership of any file on the same system. In order to instigate the attack, the application must be installed as a service and the "run_user" requires shell access to the server. Spring Boot application that are not installed as a service, or are not using the embedded launch script are not susceptible.]
-1.  [CVE-2021-26987](https://nvd.nist.gov/vuln/detail/CVE-2021-26987): Optional[Element Plug-in for vCenter Server incorporates SpringBoot Framework. SpringBoot Framework versions prior to 1.3.2 are susceptible to a vulnerability which when successfully exploited could lead to Remote Code Execution. All versions of Element Plug-in for vCenter Server, Management Services versions prior to 2.17.56 and Management Node versions through 12.2 contain vulnerable versions of SpringBoot Framework.]
+1.  [CVE-2017-8046](https://nvd.nist.gov/vuln/detail/CVE-2017-8046)
+1.  [CVE-2018-1196](https://nvd.nist.gov/vuln/detail/CVE-2018-1196)
+1.  [CVE-2021-26987](https://nvd.nist.gov/vuln/detail/CVE-2021-26987)
 
 

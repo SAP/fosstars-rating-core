@@ -2,10 +2,10 @@
 
 |                  |                                                         | # or projects             |  % or projects              |
 | :--------------- | :------------------------------------------------------ | ------------------------: | --------------------------: |
-| Total            |                                                         | 43      |                        100% |
-| BAD ratings      | score below 4.43                        | 16      |      37.2% |
-| MODERATE ratings | score between 4.43 and 5.54 | 21 | 48.8% |
-| GOOD ratings     | score above 5.54                            | 6     |     14.0% |
+| Total            |                                                         | 44      |                        100% |
+| BAD ratings      | score below 4.43                        | 17      |      38.6% |
+| MODERATE ratings | score between 4.43 and 5.54 | 21 | 47.7% |
+| GOOD ratings     | score above 5.54                            | 6     |     13.6% |
 | UNCLEAR ratings  | confidence below 8.00                    | 0  |  0.0% |
 | UNKNOWN ratings  |                                                         | 0  |  0.0% |
 
@@ -44,6 +44,7 @@
 | [spring-projects/spring-session](spring-projects/spring-session.md) | [1614](https://github.com/spring-projects/spring-session) | 3.88 | [BAD](spring-projects/spring-session.md) | 10.00 | Jul 21, 2021 |
 | [eclipse/paho.mqtt.java](eclipse/paho.mqtt.java.md) | [1528](https://github.com/eclipse/paho.mqtt.java) | 4.07 | [BAD](eclipse/paho.mqtt.java.md) | 10.00 | Jul 21, 2021 |
 | [spring-projects/spring-retry](spring-projects/spring-retry.md) | [1523](https://github.com/spring-projects/spring-retry) | 4.90 | [MODERATE](spring-projects/spring-retry.md) | 10.00 | Jul 21, 2021 |
+| [bcgit/bc-java](bcgit/bc-java.md) | [1472](https://github.com/bcgit/bc-java) | 3.62 | [BAD](bcgit/bc-java.md) | 10.00 | Jul 21, 2021 |
 | [eclipse/paho.mqtt.python](eclipse/paho.mqtt.python.md) | [1387](https://github.com/eclipse/paho.mqtt.python) | 3.98 | [BAD](eclipse/paho.mqtt.python.md) | 10.00 | Jul 21, 2021 |
 | [spring-projects/spring-kafka](spring-projects/spring-kafka.md) | [1372](https://github.com/spring-projects/spring-kafka) | 5.32 | [MODERATE](spring-projects/spring-kafka.md) | 10.00 | Jul 21, 2021 |
 | [spring-projects/spring-data-redis](spring-projects/spring-data-redis.md) | [1329](https://github.com/spring-projects/spring-data-redis) | 5.32 | [MODERATE](spring-projects/spring-data-redis.md) | 10.00 | Jul 21, 2021 |

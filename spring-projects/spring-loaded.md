@@ -377,6 +377,6 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2020-16165](https://nvd.nist.gov/vuln/detail/CVE-2020-16165): Optional[The DAO/DTO implementation in SpringBlade through 2.7.1 allows SQL Injection in an ORDER BY clause. This is related to the /api/blade-log/api/list ascs and desc parameters.]
+1.  [CVE-2020-16165](https://nvd.nist.gov/vuln/detail/CVE-2020-16165)
 
 
