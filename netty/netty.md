@@ -197,12 +197,12 @@ Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-191 commits in the last 3 months results to 10.00 points
+192 commits in the last 3 months results to 10.00 points
 4 contributors increase the score value from 10.00 to 11.00
 
 This sub-score is based on 2 features:
 
-1.  Number of commits in the last three months: **191**
+1.  Number of commits in the last three months: **192**
 1.  Number of contributors in the last three months: **4**
 
 ### Project popularity
@@ -219,7 +219,7 @@ Here is how a number of watchers contributes to the score:
 
 This sub-score is based on 2 features:
 
-1.  Number of stars for a GitHub repository: **27173**
+1.  Number of stars for a GitHub repository: **27174**
 1.  Number of watchers for a GitHub repository: **1815**
 
 ### Security reviews
@@ -378,16 +378,16 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2014-0193](https://nvd.nist.gov/vuln/detail/CVE-2014-0193)
-1.  [CVE-2014-3488](https://nvd.nist.gov/vuln/detail/CVE-2014-3488)
-1.  [CVE-2016-4970](https://nvd.nist.gov/vuln/detail/CVE-2016-4970)
-1.  [CVE-2015-2156](https://nvd.nist.gov/vuln/detail/CVE-2015-2156)
-1.  [CVE-2019-16869](https://nvd.nist.gov/vuln/detail/CVE-2019-16869)
-1.  [CVE-2020-7238](https://nvd.nist.gov/vuln/detail/CVE-2020-7238)
-1.  [CVE-2019-20445](https://nvd.nist.gov/vuln/detail/CVE-2019-20445)
-1.  [CVE-2020-11612](https://nvd.nist.gov/vuln/detail/CVE-2020-11612)
-1.  [CVE-2021-21290](https://nvd.nist.gov/vuln/detail/CVE-2021-21290)
-1.  [CVE-2021-21295](https://nvd.nist.gov/vuln/detail/CVE-2021-21295)
-1.  [CVE-2021-21409](https://nvd.nist.gov/vuln/detail/CVE-2021-21409)
+1.  [CVE-2014-0193](https://nvd.nist.gov/vuln/detail/CVE-2014-0193): Optional[WebSocket08FrameDecoder in Netty 3.6.x before 3.6.9, 3.7.x before 3.7.1, 3.8.x before 3.8.2, 3.9.x before 3.9.1, and 4.0.x before 4.0.19 allows remote attackers to cause a denial of service (memory consumption) via a TextWebSocketFrame followed by a long stream of ContinuationWebSocketFrames.]
+1.  [CVE-2014-3488](https://nvd.nist.gov/vuln/detail/CVE-2014-3488): Optional[The SslHandler in Netty before 3.9.2 allows remote attackers to cause a denial of service (infinite loop and CPU consumption) via a crafted SSLv2Hello message.]
+1.  [CVE-2016-4970](https://nvd.nist.gov/vuln/detail/CVE-2016-4970): Optional[handler/ssl/OpenSslEngine.java in Netty 4.0.x before 4.0.37.Final and 4.1.x before 4.1.1.Final allows remote attackers to cause a denial of service (infinite loop).]
+1.  [CVE-2015-2156](https://nvd.nist.gov/vuln/detail/CVE-2015-2156): Optional[Netty before 3.9.8.Final, 3.10.x before 3.10.3.Final, 4.0.x before 4.0.28.Final, and 4.1.x before 4.1.0.Beta5 and Play Framework 2.x before 2.3.9 might allow remote attackers to bypass the httpOnly flag on cookies and obtain sensitive information by leveraging improper validation of cookie name and value characters.]
+1.  [CVE-2019-16869](https://nvd.nist.gov/vuln/detail/CVE-2019-16869): Optional[Netty before 4.1.42.Final mishandles whitespace before the colon in HTTP headers (such as a "Transfer-Encoding : chunked" line), which leads to HTTP request smuggling.]
+1.  [CVE-2020-7238](https://nvd.nist.gov/vuln/detail/CVE-2020-7238): Optional[Netty 4.1.43.Final allows HTTP Request Smuggling because it mishandles Transfer-Encoding whitespace (such as a [space]Transfer-Encoding:chunked line) and a later Content-Length header. This issue exists because of an incomplete fix for CVE-2019-16869.]
+1.  [CVE-2019-20445](https://nvd.nist.gov/vuln/detail/CVE-2019-20445): Optional[HttpObjectDecoder.java in Netty before 4.1.44 allows a Content-Length header to be accompanied by a second Content-Length header, or by a Transfer-Encoding header.]
+1.  [CVE-2020-11612](https://nvd.nist.gov/vuln/detail/CVE-2020-11612): Optional[The ZlibDecoders in Netty 4.1.x before 4.1.46 allow for unbounded memory allocation while decoding a ZlibEncoded byte stream. An attacker could send a large ZlibEncoded byte stream to the Netty server, forcing the server to allocate all of its free memory to a single decoder.]
+1.  [CVE-2021-21290](https://nvd.nist.gov/vuln/detail/CVE-2021-21290): Optional[Netty is an open-source, asynchronous event-driven network application framework for rapid development of maintainable high performance protocol servers & clients. In Netty before version 4.1.59.Final there is a vulnerability on Unix-like systems involving an insecure temp file. When netty's multipart decoders are used local information disclosure can occur via the local system temporary directory if temporary storing uploads on the disk is enabled. On unix-like systems, the temporary directory is shared between all user. As such, writing to this directory using APIs that do not explicitly set the file/directory permissions can lead to information disclosure. Of note, this does not impact modern MacOS Operating Systems. The method "File.createTempFile" on unix-like systems creates a random file, but, by default will create this file with the permissions "-rw-r--r--". Thus, if sensitive information is written to this file, other local users can read this information. This is the case in netty's "AbstractDiskHttpData" is vulnerable. This has been fixed in version 4.1.59.Final. As a workaround, one may specify your own "java.io.tmpdir" when you start the JVM or use "DefaultHttpDataFactory.setBaseDir(...)" to set the directory to something that is only readable by the current user.]
+1.  [CVE-2021-21295](https://nvd.nist.gov/vuln/detail/CVE-2021-21295): Optional[Netty is an open-source, asynchronous event-driven network application framework for rapid development of maintainable high performance protocol servers & clients. In Netty (io.netty:netty-codec-http2) before version 4.1.60.Final there is a vulnerability that enables request smuggling. If a Content-Length header is present in the original HTTP/2 request, the field is not validated by `Http2MultiplexHandler` as it is propagated up. This is fine as long as the request is not proxied through as HTTP/1.1. If the request comes in as an HTTP/2 stream, gets converted into the HTTP/1.1 domain objects (`HttpRequest`, `HttpContent`, etc.) via `Http2StreamFrameToHttpObjectCodec `and then sent up to the child channel's pipeline and proxied through a remote peer as HTTP/1.1 this may result in request smuggling. In a proxy case, users may assume the content-length is validated somehow, which is not the case. If the request is forwarded to a backend channel that is a HTTP/1.1 connection, the Content-Length now has meaning and needs to be checked. An attacker can smuggle requests inside the body as it gets downgraded from HTTP/2 to HTTP/1.1. For an example attack refer to the linked GitHub Advisory. Users are only affected if all of this is true: `HTTP2MultiplexCodec` or `Http2FrameCodec` is used, `Http2StreamFrameToHttpObjectCodec` is used to convert to HTTP/1.1 objects, and these HTTP/1.1 objects are forwarded to another remote peer. This has been patched in 4.1.60.Final As a workaround, the user can do the validation by themselves by implementing a custom `ChannelInboundHandler` that is put in the `ChannelPipeline` behind `Http2StreamFrameToHttpObjectCodec`.]
+1.  [CVE-2021-21409](https://nvd.nist.gov/vuln/detail/CVE-2021-21409): Optional[Netty is an open-source, asynchronous event-driven network application framework for rapid development of maintainable high performance protocol servers & clients. In Netty (io.netty:netty-codec-http2) before version 4.1.61.Final there is a vulnerability that enables request smuggling. The content-length header is not correctly validated if the request only uses a single Http2HeaderFrame with the endStream set to to true. This could lead to request smuggling if the request is proxied to a remote peer and translated to HTTP/1.1. This is a followup of GHSA-wm47-8v5p-wjpj/CVE-2021-21295 which did miss to fix this one case. This was fixed as part of 4.1.61.Final.]
 
 
