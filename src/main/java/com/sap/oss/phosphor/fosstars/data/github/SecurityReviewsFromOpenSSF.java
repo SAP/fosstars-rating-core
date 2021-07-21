@@ -8,12 +8,14 @@ import com.github.packageurl.MalformedPackageURLException;
 import com.github.packageurl.PackageURL;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Value;
+import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.SecurityReview;
 import com.sap.oss.phosphor.fosstars.model.value.SecurityReviews;
 import com.sap.oss.phosphor.fosstars.model.value.SecurityReviewsValue;
 import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -25,7 +27,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
+import org.kohsuke.github.GitHub;
+import org.kohsuke.github.GitHubBuilder;
 
 /**
  * This data provider gather information about security reviews collected by OpenSSF.
@@ -45,6 +51,16 @@ public class SecurityReviewsFromOpenSSF
    * A parser for dates.
    */
   static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+
+  /**
+   * Defines a set of files that should be in scope of security review.
+   */
+  private static final Predicate<Path> INTERESTING_FOR_REVIEW = path ->
+      Files.isRegularFile(path)
+          && Stream.of(".md", ".txt", ".html", ".rst")
+                  .noneMatch(ext -> path.getFileName().endsWith(ext))
+          && Stream.of(File.separator + ".git", "docs", "test", "demo", "sample", "example")
+                  .noneMatch(string -> path.toString().contains(string));
 
   /**
    * Initializes a data provider.
@@ -83,7 +99,11 @@ public class SecurityReviewsFromOpenSSF
         if (!reviewDate.isPresent()) {
           continue;
         }
-        reviews.add(new SecurityReview(reviewDate.get()));
+
+        Double changed = GitHubDataFetcher.localRepositoryFor(project)
+            .changedSince(reviewDate.get(), INTERESTING_FOR_REVIEW);
+        SecurityReview review = new SecurityReview(reviewDate.get(), changed);
+        reviews.add(review);
       }
     }
 
@@ -195,6 +215,31 @@ public class SecurityReviewsFromOpenSSF
    */
   private static boolean isReview(Path path) {
     return Files.isRegularFile(path) && path.getFileName().toString().endsWith(".md");
+  }
+
+  /**
+   * This is for testing and demo purposes.
+   *
+   * @param args Command-line options (option 1: API token, option 2: project URL).
+   * @throws Exception If something went wrong.
+   */
+  public static void main(String... args) throws Exception {
+    String token = args.length > 0 ? args[0] : "";
+    String url = args.length > 1 ? args[1] : "https://github.com/madler/zlib";
+    GitHubProject project = GitHubProject.parse(url);
+    GitHub github = new GitHubBuilder().withOAuthToken(token).build();
+    SecurityReviewsFromOpenSSF provider
+        = new SecurityReviewsFromOpenSSF(new GitHubDataFetcher(github, token));
+
+    ValueSet values = provider.fetchValuesFor(project);
+    Optional<Value<SecurityReviews>> securityReviews = values.of(SECURITY_REVIEWS);
+    if (!securityReviews.isPresent()) {
+      throw new RuntimeException("Could not find security reviews!");
+    }
+
+    for (SecurityReview review : securityReviews.get().get()) {
+      System.out.println(review);
+    }
   }
 }
 
