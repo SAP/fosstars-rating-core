@@ -382,6 +382,6 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2018-8088](https://nvd.nist.gov/vuln/detail/CVE-2018-8088): Optional[org.slf4j.ext.EventData in the slf4j-ext module in QOS.CH SLF4J before 1.8.0-beta2 allows remote attackers to bypass intended access restrictions via crafted data.]
+1.  [CVE-2018-8088](https://nvd.nist.gov/vuln/detail/CVE-2018-8088)
 
 
