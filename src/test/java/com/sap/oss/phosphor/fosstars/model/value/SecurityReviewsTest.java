@@ -4,7 +4,6 @@ import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.util.Date;
@@ -14,9 +13,8 @@ public class SecurityReviewsTest {
 
   @Test
   public void testClone() {
-    GitHubProject project = new GitHubProject("org", "test");
-    SecurityReview firstReview = new SecurityReview(project, new Date(1));
-    SecurityReview secondReview = new SecurityReview(project, new Date(2));
+    SecurityReview firstReview = new SecurityReview(new Date(1));
+    SecurityReview secondReview = new SecurityReview(new Date(2));
     SecurityReviews securityReviews = new SecurityReviews(firstReview, secondReview);
     assertEquals(2, securityReviews.size());
     assertTrue(securityReviews.contains(firstReview));
@@ -30,9 +28,8 @@ public class SecurityReviewsTest {
 
   @Test
   public void testJsonSerialization() throws IOException {
-    GitHubProject project = new GitHubProject("org", "test");
-    SecurityReview firstReview = new SecurityReview(project, new Date(1));
-    SecurityReview secondReview = new SecurityReview(project, new Date(2));
+    SecurityReview firstReview = new SecurityReview(new Date(1));
+    SecurityReview secondReview = new SecurityReview(new Date(2));
     SecurityReviews securityReviews = new SecurityReviews(firstReview, secondReview);
 
     SecurityReviews clone = Json.read(Json.toBytes(securityReviews), SecurityReviews.class);

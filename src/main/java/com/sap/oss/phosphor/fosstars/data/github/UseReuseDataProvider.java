@@ -7,7 +7,6 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.REGIST
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_REUSE;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 import static java.lang.String.format;
-import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.sap.oss.phosphor.fosstars.model.Feature;
@@ -220,7 +219,7 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
    * @return True if the path is a regular file, false otherwise.
    */
   private static boolean isFile(Path path) {
-    return Files.isRegularFile(path, NOFOLLOW_LINKS) && !Files.isSymbolicLink(path);
+    return Files.isRegularFile(path);
   }
 
   /**
