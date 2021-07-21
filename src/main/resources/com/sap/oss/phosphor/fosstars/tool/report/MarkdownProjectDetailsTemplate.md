@@ -1,7 +1,0 @@
-# %PROJECT_NAME%
-
-%PROJECT_URL%
-
-Last updated on %UPDATED_DATE%
-
-%DETAILS%

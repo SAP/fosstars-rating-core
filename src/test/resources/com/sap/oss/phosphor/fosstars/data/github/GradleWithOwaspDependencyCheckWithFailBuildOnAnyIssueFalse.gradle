@@ -1,5 +1,0 @@
-apply plugin: 'org.owasp.dependencycheck'
-
-dependencyCheck {
-    failBuildOnAnyVulnerability = false
-}
