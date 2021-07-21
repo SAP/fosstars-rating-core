@@ -226,11 +226,6 @@ public abstract class CommonFormatter implements Formatter {
   }
 
   /**
-   * Print out an empty string if no advice is available for a rating.
-   */
-  static final String NO_ADVICE = StringUtils.EMPTY;
-
-  /**
    * An advisor for calculated ratings.
    */
   protected final Advisor advisor;
