@@ -1,0 +1,30 @@
+name: "Calculate Fosstars security ratings for open source projects"
+description: "The action calculates security ratings for a number of open source projects."
+inputs:
+  config-file:
+    description: "A path to a config file"
+    required: true
+  report-branch:
+    description: "A branch where the report is stored"
+    required: true
+    default: fosstars-project-security-report
+  fosstars-version:
+    description: "A version of Fosstars"
+    required: true
+    default: master
+  token:
+    description: "A GitHub token for accessing the repository"
+    required: true
+  cleanup:
+    description: "Tells the action to remove the old report and data"
+    required: false
+    default: No
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - ${{ inputs.config-file }}
+    - ${{ inputs.report-branch }}
+    - ${{ inputs.fosstars-version }}
+    - ${{ inputs.token }}
+    - ${{ inputs.cleanup }}
