@@ -1,5 +1,7 @@
 package com.sap.oss.phosphor.fosstars.data.github;
 
+import static com.sap.oss.phosphor.fosstars.TestUtils.DELTA;
+import static com.sap.oss.phosphor.fosstars.TestUtils.PROJECT;
 import static com.sap.oss.phosphor.fosstars.data.github.SecurityReviewsFromOpenSSF.DATE_FORMAT;
 import static com.sap.oss.phosphor.fosstars.data.github.SecurityReviewsFromOpenSSF.SECURITY_REVIEWS_PROJECT;
 import static org.junit.Assert.assertEquals;
@@ -7,10 +9,12 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.sap.oss.phosphor.fosstars.TestUtils;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.SecurityReview;
@@ -21,10 +25,17 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.ParseException;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 import org.apache.commons.io.FileUtils;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.junit.Test;
 
 public class SecurityReviewsFromOpenSSFTest extends TestGitHubDataFetcherHolder {
@@ -151,17 +162,53 @@ public class SecurityReviewsFromOpenSSFTest extends TestGitHubDataFetcherHolder 
   }
 
   @Test
-  public void testFetchValueFor() throws IOException {
-    Path repositoryDirectory
+  public void testFetchValueFor() throws IOException, GitAPIException, ParseException {
+    Path securityReviewDirectory
         = Files.createTempDirectory(SecurityReviewsFromOpenSSFTest.class.getName());
-    try {
-      LocalRepository repository = mock(LocalRepository.class);
-      TestGitHubDataFetcher.addForTesting(SECURITY_REVIEWS_PROJECT, repository);
+    Path directory = Files.createTempDirectory(getClass().getName());
+    try (Repository repository = FileRepositoryBuilder.create(directory.resolve(".git").toFile());
+         Git git = new Git(repository)) {
 
-      Path reviewFile = repositoryDirectory.resolve("reviews").resolve("github").resolve("test.md");
+      repository.create();
+
+      TestUtils.commit(
+          new HashMap<String, String>() {
+            {
+              put("App.java", "public class App {}");
+              put("One.java", "public class One {}");
+              put("Two.java", "public class Two {}");
+            }
+            }, "First commit: init", git);
+
+      TestUtils.commit(
+          new HashMap<String, String>() {
+            {
+              put("App.java", "public class App { /* something new */ }");
+            }
+            }, "Second commit: updated App", git);
+
+      TestUtils.commit(
+          new HashMap<String, String>() {
+            {
+              put("Other.java", "public class Other {}");
+              put("One.java", "public class One { /* something new */ }");
+            }
+            }, "Third commit: added Other, updated One", git);
+
+      LocalRepository localRepository = new LocalRepository(
+          new LocalRepositoryInfo(directory, new Date(), PROJECT.scm()),
+          repository);
+      localRepository = spy(localRepository);
+      TestGitHubDataFetcher.addForTesting(PROJECT, localRepository);
+
+      LocalRepository securityReviewLocalRepository = mock(LocalRepository.class);
+      TestGitHubDataFetcher.addForTesting(SECURITY_REVIEWS_PROJECT, securityReviewLocalRepository);
+
+      Path reviewFile
+          = securityReviewDirectory.resolve("reviews").resolve("github").resolve("test.md");
       Files.createDirectories(reviewFile.getParent());
 
-      SecurityReviewsFromOpenSSF provider = new SecurityReviewsFromOpenSSF(fetcher);
+      final SecurityReviewsFromOpenSSF provider = new SecurityReviewsFromOpenSSF(fetcher);
 
       String content = "---\n"
           + "Publication-State: Active\n"
@@ -186,25 +233,34 @@ public class SecurityReviewsFromOpenSSFTest extends TestGitHubDataFetcherHolder 
           + "\n"
           + "Some text here.\n";
       Files.write(reviewFile, content.getBytes());
-      when(repository.files(any(), any())).thenReturn(Collections.singletonList(reviewFile));
+      when(securityReviewLocalRepository.files(any(), any()))
+          .thenReturn(Collections.singletonList(reviewFile));
 
-      GitHubProject project = new GitHubProject("org", "test");
+      Date reviewDate = DATE_FORMAT.parse("2020-12-25");
+      List<GitCommit> commits = localRepository.commits();
 
-      Value<SecurityReviews> value = provider.fetchValueFor(project);
+      when(localRepository.firstCommitAfter(reviewDate))
+          .thenReturn(Optional.of(commits.get(1)));
+      Value<SecurityReviews> value = provider.fetchValueFor(PROJECT);
       assertFalse(value.isUnknown());
       assertFalse(value.isNotApplicable());
       SecurityReviews reviews = value.get();
       assertEquals(1, reviews.size());
       SecurityReview review = reviews.iterator().next();
       assertEquals("2020-12-25", DATE_FORMAT.format(review.date()));
+      assertEquals(0.5,
+          review.projectChanged()
+              .orElseThrow(() -> new Error("Could not figure out how much of code has changes!")),
+          DELTA);
 
-      when(repository.files(any(), any())).thenReturn(Collections.emptyList());
-      value = provider.fetchValueFor(project);
+      when(securityReviewLocalRepository.files(any(), any())).thenReturn(Collections.emptyList());
+      value = provider.fetchValueFor(PROJECT);
       assertFalse(value.isUnknown());
       assertFalse(value.isNotApplicable());
       assertTrue(value.get().isEmpty());
     } finally {
-      FileUtils.forceDeleteOnExit(repositoryDirectory.toFile());
+      FileUtils.forceDeleteOnExit(securityReviewDirectory.toFile());
+      FileUtils.forceDeleteOnExit(directory.toFile());
     }
   }
 }
