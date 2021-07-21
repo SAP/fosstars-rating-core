@@ -384,6 +384,6 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2020-35864](https://nvd.nist.gov/vuln/detail/CVE-2020-35864): Optional[An issue was discovered in the flatbuffers crate through 2020-04-11 for Rust. read_scalar (and read_scalar_at) can transmute values without unsafe blocks.]
+1.  [CVE-2020-35864](https://nvd.nist.gov/vuln/detail/CVE-2020-35864)
 
 

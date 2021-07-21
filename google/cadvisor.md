@@ -369,6 +369,6 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2017-5682](https://nvd.nist.gov/vuln/detail/CVE-2017-5682): Optional[Intel PSET Application Install wrapper of Intel Parallel Studio XE, Intel System Studio, Intel VTune Amplifier, Intel Inspector, Intel Advisor, Intel MPI Library, Intel Trace Analyzer and Collector, Intel Integrated Performance Primitives, Cryptography for Intel Integrated Performance Primitives, Intel Math Kernel Library, Intel Data Analytics Acceleration Library, and Intel Threading Building Blocks before 2017 Update 2 allows an attacker to launch a process with escalated privileges.]
+1.  [CVE-2017-5682](https://nvd.nist.gov/vuln/detail/CVE-2017-5682)
 
 

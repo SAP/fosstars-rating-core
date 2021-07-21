@@ -375,38 +375,38 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2017-17485](https://nvd.nist.gov/vuln/detail/CVE-2017-17485)
-1.  [CVE-2018-5968](https://nvd.nist.gov/vuln/detail/CVE-2018-5968)
-1.  [CVE-2017-15095](https://nvd.nist.gov/vuln/detail/CVE-2017-15095)
-1.  [CVE-2018-7489](https://nvd.nist.gov/vuln/detail/CVE-2018-7489)
-1.  [CVE-2018-14720](https://nvd.nist.gov/vuln/detail/CVE-2018-14720)
-1.  [CVE-2018-12022](https://nvd.nist.gov/vuln/detail/CVE-2018-12022)
-1.  [CVE-2019-12086](https://nvd.nist.gov/vuln/detail/CVE-2019-12086)
-1.  [CVE-2019-12814](https://nvd.nist.gov/vuln/detail/CVE-2019-12814)
-1.  [CVE-2019-12384](https://nvd.nist.gov/vuln/detail/CVE-2019-12384)
-1.  [CVE-2018-11307](https://nvd.nist.gov/vuln/detail/CVE-2018-11307)
-1.  [CVE-2019-14379](https://nvd.nist.gov/vuln/detail/CVE-2019-14379)
-1.  [CVE-2019-14439](https://nvd.nist.gov/vuln/detail/CVE-2019-14439)
-1.  [CVE-2019-14540](https://nvd.nist.gov/vuln/detail/CVE-2019-14540)
-1.  [CVE-2019-16942](https://nvd.nist.gov/vuln/detail/CVE-2019-16942)
-1.  [CVE-2019-17267](https://nvd.nist.gov/vuln/detail/CVE-2019-17267)
-1.  [CVE-2019-17531](https://nvd.nist.gov/vuln/detail/CVE-2019-17531)
-1.  [CVE-2019-20330](https://nvd.nist.gov/vuln/detail/CVE-2019-20330)
-1.  [CVE-2020-8840](https://nvd.nist.gov/vuln/detail/CVE-2020-8840)
-1.  [CVE-2019-14893](https://nvd.nist.gov/vuln/detail/CVE-2019-14893)
-1.  [CVE-2020-10672](https://nvd.nist.gov/vuln/detail/CVE-2020-10672)
-1.  [CVE-2020-10968](https://nvd.nist.gov/vuln/detail/CVE-2020-10968)
-1.  [CVE-2020-11111](https://nvd.nist.gov/vuln/detail/CVE-2020-11111)
-1.  [CVE-2020-11619](https://nvd.nist.gov/vuln/detail/CVE-2020-11619)
-1.  [CVE-2020-14060](https://nvd.nist.gov/vuln/detail/CVE-2020-14060)
-1.  [CVE-2020-14195](https://nvd.nist.gov/vuln/detail/CVE-2020-14195)
-1.  [CVE-2020-24616](https://nvd.nist.gov/vuln/detail/CVE-2020-24616)
-1.  [CVE-2020-24750](https://nvd.nist.gov/vuln/detail/CVE-2020-24750)
-1.  [CVE-2020-25649](https://nvd.nist.gov/vuln/detail/CVE-2020-25649)
-1.  [CVE-2020-35490](https://nvd.nist.gov/vuln/detail/CVE-2020-35490)
-1.  [CVE-2020-35728](https://nvd.nist.gov/vuln/detail/CVE-2020-35728)
-1.  [CVE-2020-36189](https://nvd.nist.gov/vuln/detail/CVE-2020-36189)
-1.  [CVE-2020-36180](https://nvd.nist.gov/vuln/detail/CVE-2020-36180)
-1.  [CVE-2021-20190](https://nvd.nist.gov/vuln/detail/CVE-2021-20190)
+1.  [CVE-2017-17485](https://nvd.nist.gov/vuln/detail/CVE-2017-17485): Optional[FasterXML jackson-databind through 2.8.10 and 2.9.x through 2.9.3 allows unauthenticated remote code execution because of an incomplete fix for the CVE-2017-7525 deserialization flaw. This is exploitable by sending maliciously crafted JSON input to the readValue method of the ObjectMapper, bypassing a blacklist that is ineffective if the Spring libraries are available in the classpath.]
+1.  [CVE-2018-5968](https://nvd.nist.gov/vuln/detail/CVE-2018-5968): Optional[FasterXML jackson-databind through 2.8.11 and 2.9.x through 2.9.3 allows unauthenticated remote code execution because of an incomplete fix for the CVE-2017-7525 and CVE-2017-17485 deserialization flaws. This is exploitable via two different gadgets that bypass a blacklist.]
+1.  [CVE-2017-15095](https://nvd.nist.gov/vuln/detail/CVE-2017-15095): Optional[A deserialization flaw was discovered in the jackson-databind in versions before 2.8.10 and 2.9.1, which could allow an unauthenticated user to perform code execution by sending the maliciously crafted input to the readValue method of the ObjectMapper. This issue extends the previous flaw CVE-2017-7525 by blacklisting more classes that could be used maliciously.]
+1.  [CVE-2018-7489](https://nvd.nist.gov/vuln/detail/CVE-2018-7489): Optional[FasterXML jackson-databind before 2.7.9.3, 2.8.x before 2.8.11.1 and 2.9.x before 2.9.5 allows unauthenticated remote code execution because of an incomplete fix for the CVE-2017-7525 deserialization flaw. This is exploitable by sending maliciously crafted JSON input to the readValue method of the ObjectMapper, bypassing a blacklist that is ineffective if the c3p0 libraries are available in the classpath.]
+1.  [CVE-2018-14720](https://nvd.nist.gov/vuln/detail/CVE-2018-14720): Optional[FasterXML jackson-databind 2.x before 2.9.7 might allow attackers to conduct external XML entity (XXE) attacks by leveraging failure to block unspecified JDK classes from polymorphic deserialization.]
+1.  [CVE-2018-12022](https://nvd.nist.gov/vuln/detail/CVE-2018-12022): Optional[An issue was discovered in FasterXML jackson-databind prior to 2.7.9.4, 2.8.11.2, and 2.9.6. When Default Typing is enabled (either globally or for a specific property), the service has the Jodd-db jar (for database access for the Jodd framework) in the classpath, and an attacker can provide an LDAP service to access, it is possible to make the service execute a malicious payload.]
+1.  [CVE-2019-12086](https://nvd.nist.gov/vuln/detail/CVE-2019-12086): Optional[A Polymorphic Typing issue was discovered in FasterXML jackson-databind 2.x before 2.9.9. When Default Typing is enabled (either globally or for a specific property) for an externally exposed JSON endpoint, the service has the mysql-connector-java jar (8.0.14 or earlier) in the classpath, and an attacker can host a crafted MySQL server reachable by the victim, an attacker can send a crafted JSON message that allows them to read arbitrary local files on the server. This occurs because of missing com.mysql.cj.jdbc.admin.MiniAdmin validation.]
+1.  [CVE-2019-12814](https://nvd.nist.gov/vuln/detail/CVE-2019-12814): Optional[A Polymorphic Typing issue was discovered in FasterXML jackson-databind 2.x through 2.9.9. When Default Typing is enabled (either globally or for a specific property) for an externally exposed JSON endpoint and the service has JDOM 1.x or 2.x jar in the classpath, an attacker can send a specifically crafted JSON message that allows them to read arbitrary local files on the server.]
+1.  [CVE-2019-12384](https://nvd.nist.gov/vuln/detail/CVE-2019-12384): Optional[FasterXML jackson-databind 2.x before 2.9.9.1 might allow attackers to have a variety of impacts by leveraging failure to block the logback-core class from polymorphic deserialization. Depending on the classpath content, remote code execution may be possible.]
+1.  [CVE-2018-11307](https://nvd.nist.gov/vuln/detail/CVE-2018-11307): Optional[An issue was discovered in FasterXML jackson-databind 2.0.0 through 2.9.5. Use of Jackson default typing along with a gadget class from iBatis allows exfiltration of content. Fixed in 2.7.9.4, 2.8.11.2, and 2.9.6.]
+1.  [CVE-2019-14379](https://nvd.nist.gov/vuln/detail/CVE-2019-14379): Optional[SubTypeValidator.java in FasterXML jackson-databind before 2.9.9.2 mishandles default typing when ehcache is used (because of net.sf.ehcache.transaction.manager.DefaultTransactionManagerLookup), leading to remote code execution.]
+1.  [CVE-2019-14439](https://nvd.nist.gov/vuln/detail/CVE-2019-14439): Optional[A Polymorphic Typing issue was discovered in FasterXML jackson-databind 2.x before 2.9.9.2. This occurs when Default Typing is enabled (either globally or for a specific property) for an externally exposed JSON endpoint and the service has the logback jar in the classpath.]
+1.  [CVE-2019-14540](https://nvd.nist.gov/vuln/detail/CVE-2019-14540): Optional[A Polymorphic Typing issue was discovered in FasterXML jackson-databind before 2.9.10. It is related to com.zaxxer.hikari.HikariConfig.]
+1.  [CVE-2019-16942](https://nvd.nist.gov/vuln/detail/CVE-2019-16942): Optional[A Polymorphic Typing issue was discovered in FasterXML jackson-databind 2.0.0 through 2.9.10. When Default Typing is enabled (either globally or for a specific property) for an externally exposed JSON endpoint and the service has the commons-dbcp (1.4) jar in the classpath, and an attacker can find an RMI service endpoint to access, it is possible to make the service execute a malicious payload. This issue exists because of org.apache.commons.dbcp.datasources.SharedPoolDataSource and org.apache.commons.dbcp.datasources.PerUserPoolDataSource mishandling.]
+1.  [CVE-2019-17267](https://nvd.nist.gov/vuln/detail/CVE-2019-17267): Optional[A Polymorphic Typing issue was discovered in FasterXML jackson-databind before 2.9.10. It is related to net.sf.ehcache.hibernate.EhcacheJtaTransactionManagerLookup.]
+1.  [CVE-2019-17531](https://nvd.nist.gov/vuln/detail/CVE-2019-17531): Optional[A Polymorphic Typing issue was discovered in FasterXML jackson-databind 2.0.0 through 2.9.10. When Default Typing is enabled (either globally or for a specific property) for an externally exposed JSON endpoint and the service has the apache-log4j-extra (version 1.2.x) jar in the classpath, and an attacker can provide a JNDI service to access, it is possible to make the service execute a malicious payload.]
+1.  [CVE-2019-20330](https://nvd.nist.gov/vuln/detail/CVE-2019-20330): Optional[FasterXML jackson-databind 2.x before 2.9.10.2 lacks certain net.sf.ehcache blocking.]
+1.  [CVE-2020-8840](https://nvd.nist.gov/vuln/detail/CVE-2020-8840): Optional[FasterXML jackson-databind 2.0.0 through 2.9.10.2 lacks certain xbean-reflect/JNDI blocking, as demonstrated by org.apache.xbean.propertyeditor.JndiConverter.]
+1.  [CVE-2019-14893](https://nvd.nist.gov/vuln/detail/CVE-2019-14893): Optional[A flaw was discovered in FasterXML jackson-databind in all versions before 2.9.10 and 2.10.0, where it would permit polymorphic deserialization of malicious objects using the xalan JNDI gadget when used in conjunction with polymorphic type handling methods such as `enableDefaultTyping()` or when @JsonTypeInfo is using `Id.CLASS` or `Id.MINIMAL_CLASS` or in any other way which ObjectMapper.readValue might instantiate objects from unsafe sources. An attacker could use this flaw to execute arbitrary code.]
+1.  [CVE-2020-10672](https://nvd.nist.gov/vuln/detail/CVE-2020-10672): Optional[FasterXML jackson-databind 2.x before 2.9.10.4 mishandles the interaction between serialization gadgets and typing, related to org.apache.aries.transaction.jms.internal.XaPooledConnectionFactory (aka aries.transaction.jms).]
+1.  [CVE-2020-10968](https://nvd.nist.gov/vuln/detail/CVE-2020-10968): Optional[FasterXML jackson-databind 2.x before 2.9.10.4 mishandles the interaction between serialization gadgets and typing, related to org.aoju.bus.proxy.provider.remoting.RmiProvider (aka bus-proxy).]
+1.  [CVE-2020-11111](https://nvd.nist.gov/vuln/detail/CVE-2020-11111): Optional[FasterXML jackson-databind 2.x before 2.9.10.4 mishandles the interaction between serialization gadgets and typing, related to org.apache.activemq.* (aka activemq-jms, activemq-core, activemq-pool, and activemq-pool-jms).]
+1.  [CVE-2020-11619](https://nvd.nist.gov/vuln/detail/CVE-2020-11619): Optional[FasterXML jackson-databind 2.x before 2.9.10.4 mishandles the interaction between serialization gadgets and typing, related to org.springframework.aop.config.MethodLocatingFactoryBean (aka spring-aop).]
+1.  [CVE-2020-14060](https://nvd.nist.gov/vuln/detail/CVE-2020-14060): Optional[FasterXML jackson-databind 2.x before 2.9.10.5 mishandles the interaction between serialization gadgets and typing, related to oadd.org.apache.xalan.lib.sql.JNDIConnectionPool (aka apache/drill).]
+1.  [CVE-2020-14195](https://nvd.nist.gov/vuln/detail/CVE-2020-14195): Optional[FasterXML jackson-databind 2.x before 2.9.10.5 mishandles the interaction between serialization gadgets and typing, related to org.jsecurity.realm.jndi.JndiRealmFactory (aka org.jsecurity).]
+1.  [CVE-2020-24616](https://nvd.nist.gov/vuln/detail/CVE-2020-24616): Optional[FasterXML jackson-databind 2.x before 2.9.10.6 mishandles the interaction between serialization gadgets and typing, related to br.com.anteros.dbcp.AnterosDBCPDataSource (aka Anteros-DBCP).]
+1.  [CVE-2020-24750](https://nvd.nist.gov/vuln/detail/CVE-2020-24750): Optional[FasterXML jackson-databind 2.x before 2.9.10.6 mishandles the interaction between serialization gadgets and typing, related to com.pastdev.httpcomponents.configuration.JndiConfiguration.]
+1.  [CVE-2020-25649](https://nvd.nist.gov/vuln/detail/CVE-2020-25649): Optional[A flaw was found in FasterXML Jackson Databind, where it did not have entity expansion secured properly. This flaw allows vulnerability to XML external entity (XXE) attacks. The highest threat from this vulnerability is data integrity.]
+1.  [CVE-2020-35490](https://nvd.nist.gov/vuln/detail/CVE-2020-35490): Optional[FasterXML jackson-databind 2.x before 2.9.10.8 mishandles the interaction between serialization gadgets and typing, related to org.apache.commons.dbcp2.datasources.PerUserPoolDataSource.]
+1.  [CVE-2020-35728](https://nvd.nist.gov/vuln/detail/CVE-2020-35728): Optional[FasterXML jackson-databind 2.x before 2.9.10.8 mishandles the interaction between serialization gadgets and typing, related to com.oracle.wls.shaded.org.apache.xalan.lib.sql.JNDIConnectionPool (aka embedded Xalan in org.glassfish.web/javax.servlet.jsp.jstl).]
+1.  [CVE-2020-36189](https://nvd.nist.gov/vuln/detail/CVE-2020-36189): Optional[FasterXML jackson-databind 2.x before 2.9.10.8 mishandles the interaction between serialization gadgets and typing, related to com.newrelic.agent.deps.ch.qos.logback.core.db.DriverManagerConnectionSource.]
+1.  [CVE-2020-36180](https://nvd.nist.gov/vuln/detail/CVE-2020-36180): Optional[FasterXML jackson-databind 2.x before 2.9.10.8 mishandles the interaction between serialization gadgets and typing, related to org.apache.commons.dbcp2.cpdsadapter.DriverAdapterCPDS.]
+1.  [CVE-2021-20190](https://nvd.nist.gov/vuln/detail/CVE-2021-20190): Optional[A flaw was found in jackson-databind before 2.9.10.7. FasterXML mishandles the interaction between serialization gadgets and typing. The highest threat from this vulnerability is to data confidentiality and integrity as well as system availability.]
 
 

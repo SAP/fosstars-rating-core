@@ -384,11 +384,11 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-1999-1092](https://nvd.nist.gov/vuln/detail/CVE-1999-1092): Optional[tin 1.40 creates the .tin directory with insecure permissions, which allows local users to read passwords from the .inputhistory file.]
-1.  [CVE-1999-1091](https://nvd.nist.gov/vuln/detail/CVE-1999-1091): Optional[UNIX news readers tin and rtin create the /tmp/.tin_log file with insecure permissions and follow symlinks, which allows attackers to modify the permissions of files writable by the user via a symlink attack.]
-1.  [CVE-2006-0804](https://nvd.nist.gov/vuln/detail/CVE-2006-0804): Optional[Off-by-one error in TIN 1.8.0 and earlier might allow attackers to execute arbitrary code via unknown vectors that trigger a buffer overflow.]
-1.  [CVE-2006-6122](https://nvd.nist.gov/vuln/detail/CVE-2006-6122): Optional[Multiple buffer overflows in TIN before 1.8.2 have unspecified impact and attack vectors, a different vulnerability than CVE-2006-0804.]
-1.  [CVE-2017-17520](https://nvd.nist.gov/vuln/detail/CVE-2017-17520): Optional[** DISPUTED ** tools/url_handler.pl in TIN 2.4.1 does not validate strings before launching the program specified by the BROWSER environment variable, which might allow remote attackers to conduct argument-injection attacks via a crafted URL. NOTE: a third party has reported that this is intentional behavior, because the documentation states "url_handler.pl was designed to work together with tin which only issues shell escaped absolute URLs."]
-1.  [CVE-2020-8929](https://nvd.nist.gov/vuln/detail/CVE-2020-8929): Optional[A mis-handling of invalid unicode characters in the Java implementation of Tink versions prior to 1.5 allows an attacker to change the ID part of a ciphertext, which result in the creation of a second ciphertext that can decrypt to the same plaintext. This can be a problem with encrypting deterministic AEAD with a single key, and rely on a unique ciphertext-per-plaintext.]
+1.  [CVE-1999-1092](https://nvd.nist.gov/vuln/detail/CVE-1999-1092)
+1.  [CVE-1999-1091](https://nvd.nist.gov/vuln/detail/CVE-1999-1091)
+1.  [CVE-2006-0804](https://nvd.nist.gov/vuln/detail/CVE-2006-0804)
+1.  [CVE-2006-6122](https://nvd.nist.gov/vuln/detail/CVE-2006-6122)
+1.  [CVE-2017-17520](https://nvd.nist.gov/vuln/detail/CVE-2017-17520)
+1.  [CVE-2020-8929](https://nvd.nist.gov/vuln/detail/CVE-2020-8929)
 
 
