@@ -12,11 +12,17 @@ finder:
       name: netty
     - organization: netty
       name: netty-tcnative
-    - organization: openssl
-      name: openssl
     - organization: curl
       name: curl
     - organization: qos-ch
       name: slf4j
     - organization: GoogleChrome
       name: lighthouse
+    - organization: coredns
+      name: coredns
+    - organization: envoyproxy
+      name: envoy
+    - organization: madler
+      name: zlib
+    - organization: openssl
+      name: openssl

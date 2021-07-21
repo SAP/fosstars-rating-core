@@ -2,11 +2,11 @@
 
 https://github.com/apache/echarts
 
-Last updated on May 19, 2021
+Last updated on Jul 18, 2021
 
 **Rating**: **GOOD**
 
-**Score**: **6.58**, max score value is 10.0
+**Score**: **6.16**, max score value is 10.0
 
 **Confidence**: Max (10.0, max confidence value is 10.0)
 
@@ -20,34 +20,35 @@ The rating is based on **security score for open-source projects**.
 
 It used the following sub-scores:
 
-1.  **[Security testing](#security-testing)**: **4.4** (weight is 1.0)
+1.  **[Security testing](#security-testing)**: **4.77** (weight is 1.0)
     1.  **[Dependency testing](#dependency-testing)**: **6.0** (weight is 1.0)
         1.  **[Dependabot score](#dependabot-score)**: **6.0** (weight is 1.0)
         1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
-    1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
-    1.  **[Memory-safety testing](#memory-safety-testing)**: **N/A** (weight is 1.0)
-    1.  **[Static analysis](#static-analysis)**: **5.0** (weight is 1.0)
-        1.  **[LGTM score](#lgtm-score)**: **10.0** (weight is 1.0)
+    1.  **[Static analysis](#static-analysis)**: **4.5** (weight is 1.0)
+        1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
         1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
         1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
-    1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.5)
+    1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
+    1.  **[Memory-safety testing](#memory-safety-testing)**: **N/A** (weight is 1.0)
+    1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
 1.  **[Security awareness](#security-awareness)**: **5.0** (weight is 0.9)
-1.  **[Unpatched vulnerabilities](#unpatched-vulnerabilities)**: **10.0** (weight is 0.8)
 1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: **2.0** (weight is 0.6)
-    1.  **[Security testing](#security-testing)**: **4.4** (weight is 1.0)
+    1.  **[Security testing](#security-testing)**: **4.77** (weight is 1.0)
         1.  **[Dependency testing](#dependency-testing)**: **6.0** (weight is 1.0)
             1.  **[Dependabot score](#dependabot-score)**: **6.0** (weight is 1.0)
             1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
-        1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
-        1.  **[Memory-safety testing](#memory-safety-testing)**: **N/A** (weight is 1.0)
-        1.  **[Static analysis](#static-analysis)**: **5.0** (weight is 1.0)
-            1.  **[LGTM score](#lgtm-score)**: **10.0** (weight is 1.0)
+        1.  **[Static analysis](#static-analysis)**: **4.5** (weight is 1.0)
+            1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
             1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
             1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
-        1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.5)
+        1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
+        1.  **[Memory-safety testing](#memory-safety-testing)**: **N/A** (weight is 1.0)
+        1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
+1.  **[Unpatched vulnerabilities](#unpatched-vulnerabilities)**: **10.0** (weight is 0.5)
 1.  **[Community commitment](#community-commitment)**: **7.0** (weight is 0.5)
 1.  **[Project activity](#project-activity)**: **10.0** (weight is 0.5)
 1.  **[Project popularity](#project-popularity)**: **10.0** (weight is 0.5)
+1.  **[Security reviews](#security-reviews)**: **0.0** (weight is 0.2)
 
 
 ## How to improve the rating
@@ -61,9 +62,21 @@ It used the following sub-scores:
 3.  You can open a pull request to enable CodeQL scans in the project.
     More info:
     1.  [How to enable CodeQL checks](https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#enabling-code-scanning-using-actions)
-4.  You can open a pull request to enable FindSecBugs for the project.
+4.  You can fix the issues reported by LGTM for the project.
+    More info:
+    1.  [List of issues on LGTM](https://lgtm.com/projects/g/apache/echarts)
+5.  You can open a pull request to enable FindSecBugs for the project.
     More info:
     1.  [FindSecBugs home page](https://find-sec-bugs.github.io/)
+6.  You can configure Dependabot by creating a configuration file.
+    More info:
+    1.  [Configuration options for dependency updates](https://docs.github.com/en/github/administering-a-repository/configuration-options-for-dependency-updates)
+7.  You can enable artifact signing in the project's build pipeline.
+    More info:
+    1.  [Apache Maven Jarsigner Plugin](https://maven.apache.org/plugins/maven-jarsigner-plugin/)
+8.  You can enable NoHttp tool in the project's build pipeline.
+    More info:
+    1.  [NoHttp tool home page](https://github.com/spring-io/nohttp)
 
 
 ## Sub-scores
@@ -72,7 +85,7 @@ Below are the details about all the used sub-scores.
 
 ### Security testing
 
-Score: **4.4**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **4.77**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -83,13 +96,13 @@ This sub-score is based on the following sub-scores:
 1.  **[Dependency testing](#dependency-testing)**: **6.0** (weight is 1.0)
     1.  **[Dependabot score](#dependabot-score)**: **6.0** (weight is 1.0)
     1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
-1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
-1.  **[Memory-safety testing](#memory-safety-testing)**: **N/A** (weight is 1.0)
-1.  **[Static analysis](#static-analysis)**: **5.0** (weight is 1.0)
-    1.  **[LGTM score](#lgtm-score)**: **10.0** (weight is 1.0)
+1.  **[Static analysis](#static-analysis)**: **4.5** (weight is 1.0)
+    1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
     1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
     1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
-1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.5)
+1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
+1.  **[Memory-safety testing](#memory-safety-testing)**: **N/A** (weight is 1.0)
+1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
 
 
 ### Security awareness
@@ -120,18 +133,6 @@ This sub-score is based on 17 features:
 1.  How is OWASP Dependency Check used? **Not used**
 1.  Is it included to OSS-Fuzz? **No**
 
-### Unpatched vulnerabilities
-
-Score: **10.0**, confidence is 10.0 (max), weight is 0.8 (high)
-
-
-
-No unpatched vulnerabilities found which is good
-
-This sub-score is based on 1 feature:
-
-1.  Info about vulnerabilities: **1 vulnerability, [details below](#known-vulnerabilities)**
-
 ### Vulnerability discovery and security testing
 
 Score: **2.0**, confidence is 10.0 (max), weight is 0.6 (medium)
@@ -142,17 +143,29 @@ The scores checks how security testing is done and how many vulnerabilities were
 
 This sub-score is based on the following sub-score:
 
-1.  **[Security testing](#security-testing)**: **4.4** (weight is 1.0)
+1.  **[Security testing](#security-testing)**: **4.77** (weight is 1.0)
     1.  **[Dependency testing](#dependency-testing)**: **6.0** (weight is 1.0)
         1.  **[Dependabot score](#dependabot-score)**: **6.0** (weight is 1.0)
         1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
-    1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
-    1.  **[Memory-safety testing](#memory-safety-testing)**: **N/A** (weight is 1.0)
-    1.  **[Static analysis](#static-analysis)**: **5.0** (weight is 1.0)
-        1.  **[LGTM score](#lgtm-score)**: **10.0** (weight is 1.0)
+    1.  **[Static analysis](#static-analysis)**: **4.5** (weight is 1.0)
+        1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
         1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
         1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
-    1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.5)
+    1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
+    1.  **[Memory-safety testing](#memory-safety-testing)**: **N/A** (weight is 1.0)
+    1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
+
+This sub-score is based on 1 feature:
+
+1.  Info about vulnerabilities: **1 vulnerability, [details below](#known-vulnerabilities)**
+
+### Unpatched vulnerabilities
+
+Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
+
+
+
+No unpatched vulnerabilities found which is good
 
 This sub-score is based on 1 feature:
 
@@ -200,8 +213,20 @@ Here is how a number of watchers contributes to the score:
 
 This sub-score is based on 2 features:
 
-1.  Number of stars for a GitHub repository: **46449**
-1.  Number of watchers for a GitHub repository: **2038**
+1.  Number of stars for a GitHub repository: **47144**
+1.  Number of watchers for a GitHub repository: **2037**
+
+### Security reviews
+
+Score: **0.0**, confidence is 10.0 (max), weight is 0.2 (low)
+
+
+
+No security reviews have been done
+
+This sub-score is based on 1 feature:
+
+1.  Info about security reviews: **0 security reviews**
 
 ### Dependency testing
 
@@ -215,6 +240,21 @@ This sub-score is based on the following sub-scores:
 
 1.  **[Dependabot score](#dependabot-score)**: **6.0** (weight is 1.0)
 1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
+
+
+### Static analysis
+
+Score: **4.5**, confidence is 10.0 (max), weight is 1.0 (high)
+
+
+
+
+
+This sub-score is based on the following sub-scores:
+
+1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
+1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
+1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
 
 
 ### Fuzzing
@@ -245,24 +285,9 @@ This sub-score is based on 4 features:
 1.  Does it use UndefinedBehaviorSanitizer? **No**
 1.  Programming languages: **JAVASCRIPT, TYPESCRIPT, OTHER**
 
-### Static analysis
-
-Score: **5.0**, confidence is 10.0 (max), weight is 1.0 (high)
-
-
-
-
-
-This sub-score is based on the following sub-scores:
-
-1.  **[LGTM score](#lgtm-score)**: **10.0** (weight is 1.0)
-1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
-1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
-
-
 ### nohttp tool
 
-Score: **0.0**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **0.0**, confidence is 10.0 (max), weight is 0.2 (low)
 
 
 
@@ -304,7 +329,7 @@ This sub-score is based on 3 features:
 
 ### LGTM score
 
-Score: **10.0**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **9.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -313,7 +338,7 @@ Score: **10.0**, confidence is 10.0 (max), weight is 1.0 (high)
 This sub-score is based on 2 features:
 
 1.  Programming languages: **JAVASCRIPT, TYPESCRIPT, OTHER**
-1.  The worst LGTM grade of the project: **A+**
+1.  The worst LGTM grade of the project: **A**
 
 ### How a project uses CodeQL
 
