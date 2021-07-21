@@ -13,10 +13,10 @@
 
 | Project | Stars | Score<br>from&nbsp;0&nbsp;to&nbsp;10 | Rating | Confidence | Last<br>updated |
 | ------- | ----: | -----------------------------------: | :----- | :--------- | --------------- |
-| [netty/netty](netty/netty.md) | [27172](https://github.com/netty/netty) | 5.82 | [GOOD](netty/netty.md) | 10.00 | Jul 21, 2021 |
+| [netty/netty](netty/netty.md) | [27173](https://github.com/netty/netty) | 5.82 | [GOOD](netty/netty.md) | 10.00 | Jul 21, 2021 |
 | [GoogleChrome/lighthouse](GoogleChrome/lighthouse.md) | [23113](https://github.com/GoogleChrome/lighthouse) | 5.22 | [MODERATE](GoogleChrome/lighthouse.md) | 10.00 | Jul 21, 2021 |
-| [curl/curl](curl/curl.md) | [21312](https://github.com/curl/curl) | 5.50 | [MODERATE](curl/curl.md) | 10.00 | Jul 21, 2021 |
-| [envoyproxy/envoy](envoyproxy/envoy.md) | [17391](https://github.com/envoyproxy/envoy) | 5.40 | [MODERATE](envoyproxy/envoy.md) | 10.00 | Jul 21, 2021 |
+| [curl/curl](curl/curl.md) | [21313](https://github.com/curl/curl) | 5.50 | [MODERATE](curl/curl.md) | 10.00 | Jul 21, 2021 |
+| [envoyproxy/envoy](envoyproxy/envoy.md) | [17407](https://github.com/envoyproxy/envoy) | 5.40 | [MODERATE](envoyproxy/envoy.md) | 10.00 | Jul 21, 2021 |
 | [openssl/openssl](openssl/openssl.md) | [16112](https://github.com/openssl/openssl) | 5.19 | [MODERATE](openssl/openssl.md) | 10.00 | Jul 21, 2021 |
 | [coredns/coredns](coredns/coredns.md) | [7892](https://github.com/coredns/coredns) | 5.63 | [GOOD](coredns/coredns.md) | 9.87 | Jul 21, 2021 |
 | [madler/zlib](madler/zlib.md) | [2993](https://github.com/madler/zlib) | 2.94 | [BAD](madler/zlib.md) | 10.00 | Jul 21, 2021 |
