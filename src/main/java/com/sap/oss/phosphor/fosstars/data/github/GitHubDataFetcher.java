@@ -516,12 +516,18 @@ public class GitHubDataFetcher {
         LocalRepositoryInfo info = entry.getValue();
 
         if (strategy.shouldBeDeleted(url, info, total)) {
+          LocalRepository repository = LOCAL_REPOSITORIES.get(url);
+          if (repository != null) {
+            repository.close();
+          }
+
           try {
             FileUtils.deleteDirectory(info.path().toFile());
           } catch (IOException e) {
             LOGGER.error(
                 () -> format("Could not delete a local repository: %s", info.path()), e);
           }
+
           toBeRemoved.add(url);
         }
       }
