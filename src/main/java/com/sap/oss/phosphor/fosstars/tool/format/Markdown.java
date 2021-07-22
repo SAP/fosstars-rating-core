@@ -51,7 +51,8 @@ public class Markdown {
    */
   static MarkdownString string(String template, Object... elements) {
     requireNonNull(template, "Oops! String is null!");
-    return new MarkdownString(elements != null ? format(template, elements) : template);
+    return new MarkdownString(
+        elements != null && elements.length != 0 ? format(template, elements) : template);
   }
 
   /**
