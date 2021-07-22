@@ -2,10 +2,10 @@
 
 |                  |                                                         | # or projects             |  % or projects              |
 | :--------------- | :------------------------------------------------------ | ------------------------: | --------------------------: |
-| Total            |                                                         | 28      |                        100% |
-| BAD ratings      | score below 4.43                        | 8      |      28.6% |
-| MODERATE ratings | score between 4.43 and 5.54 | 17 | 60.7% |
-| GOOD ratings     | score above 5.54                            | 3     |     10.7% |
+| Total            |                                                         | 29      |                        100% |
+| BAD ratings      | score below 4.43                        | 9      |      31.0% |
+| MODERATE ratings | score between 4.43 and 5.54 | 17 | 58.6% |
+| GOOD ratings     | score above 5.54                            | 3     |     10.3% |
 | UNCLEAR ratings  | confidence below 8.00                    | 0  |  0.0% |
 | UNKNOWN ratings  |                                                         | 0  |  0.0% |
 
@@ -33,6 +33,7 @@
 | [qos-ch/slf4j](qos-ch/slf4j.md) | [1687](https://github.com/qos-ch/slf4j) | 3.29 | [BAD](qos-ch/slf4j.md) | 10.00 | Jul 21, 2021 |
 | [spring-projects/spring-session](spring-projects/spring-session.md) | [1615](https://github.com/spring-projects/spring-session) | 3.88 | [BAD](spring-projects/spring-session.md) | 10.00 | Jul 22, 2021 |
 | [spring-projects/spring-retry](spring-projects/spring-retry.md) | [1523](https://github.com/spring-projects/spring-retry) | 4.88 | [MODERATE](spring-projects/spring-retry.md) | 10.00 | Jul 22, 2021 |
+| [bcgit/bc-java](bcgit/bc-java.md) | [1472](https://github.com/bcgit/bc-java) | 3.62 | [BAD](bcgit/bc-java.md) | 10.00 | Jul 22, 2021 |
 | [spring-projects/spring-kafka](spring-projects/spring-kafka.md) | [1374](https://github.com/spring-projects/spring-kafka) | 5.32 | [MODERATE](spring-projects/spring-kafka.md) | 10.00 | Jul 22, 2021 |
 | [spring-projects/spring-data-redis](spring-projects/spring-data-redis.md) | [1329](https://github.com/spring-projects/spring-data-redis) | 5.32 | [MODERATE](spring-projects/spring-data-redis.md) | 10.00 | Jul 22, 2021 |
 | [spring-projects/greenhouse](spring-projects/greenhouse.md) | [1323](https://github.com/spring-projects/greenhouse) | 3.88 | [BAD](spring-projects/greenhouse.md) | 9.87 | Jul 22, 2021 |

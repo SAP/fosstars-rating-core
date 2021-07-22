@@ -489,7 +489,7 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2019-3774](https://nvd.nist.gov/vuln/detail/CVE-2019-3774): Spring Batch versions 3.0.9, 4.0.1, 4.1.0, and older unsupported versions, were susceptible to XML External Entity Injection (XXE) when receiving XML data from untrusted sources.
-1.  [CVE-2020-5411](https://nvd.nist.gov/vuln/detail/CVE-2020-5411): When configured to enable default typing, Jackson contained a deserialization vulnerability that could lead to arbitrary code execution. Jackson fixed this vulnerability by blacklisting known "deserialization gadgets". Spring Batch configures Jackson with global default typing enabled which means that through the previous exploit, arbitrary code could be executed if all of the following is true: * Spring Batch's Jackson support is being leveraged to serialize a job's ExecutionContext. * A malicious user gains write access to the data store used by the JobRepository (where the data to be deserialized is stored). In order to protect against this type of attack, Jackson prevents a set of untrusted gadget classes from being deserialized. Spring Batch should be proactive against blocking unknown "deserialization gadgets" when enabling default typing.
+1.  [CVE-2019-3774](https://nvd.nist.gov/vuln/detail/CVE-2019-3774)
+1.  [CVE-2020-5411](https://nvd.nist.gov/vuln/detail/CVE-2020-5411)
 
 
