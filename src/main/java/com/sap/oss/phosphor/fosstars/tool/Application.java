@@ -164,6 +164,11 @@ public class Application {
             .desc("A list of YAML config files for data providers, format: ProviderClassName.yaml")
             .valueSeparator(',')
             .build());
+    options.addOption(
+        Option.builder("cl")
+            .longOpt("cleanup")
+            .desc("Clean up locally stored data while rating calculation.")
+            .build());
 
     OptionGroup group = new OptionGroup();
     group.addOption(

@@ -128,20 +128,24 @@ public abstract class AbstractHandler implements Handler {
    */
   SingleRatingCalculator calculator() throws IOException {
     List<DataProvider> providers = dataProviderSelector().providersFor(rating);
-    return new SingleRatingCalculator(rating, providers)
-        .set(cache)
-        .set(callback)
-        .doAfter(subject -> {
-          if (subject instanceof GitHubProject) {
-            GitHubProject project = (GitHubProject) subject;
-            CleanupStrategy processedRepository = (url, info, total) -> project.scm().equals(url);
-            try {
-              fetcher.cleanup(processedRepository);
-            } catch (IOException e) {
-              logger.warn("Oops! Could not clean up!", e);
-            }
+    SingleRatingCalculator calculator
+        = new SingleRatingCalculator(rating, providers).set(cache).set(callback);
+
+    if (commandLine.hasOption("cleanup")) {
+      calculator.doAfter(subject -> {
+        if (subject instanceof GitHubProject) {
+          GitHubProject project = (GitHubProject) subject;
+          CleanupStrategy processedRepository = (url, info, total) -> project.scm().equals(url);
+          try {
+            fetcher.cleanup(processedRepository);
+          } catch (IOException e) {
+            logger.warn("Oops! Could not clean up!", e);
           }
-        });
+        }
+      });
+    }
+
+    return calculator;
   }
 
   /**
