@@ -3,6 +3,8 @@
 This section describes a rules of play rating for OSS projects. The rating assesses how well projects care about open source best practices and community health aspects. 
 The rating may be used to estimate how well-administered an open source project is and how it adheres to recommendations how an open source project should be set up.
 
+The rules follow the guidelines that the Open Source Program Office (OSPO) at SAP is applying to the company's own open source projects. Those rules and guidelines are mainly based on well established best practices in the open source community to [setup projects for healthy contributions](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions) and to ensure their maintainability in the long run. As there are usually many similarities between open source projects in one organizations, e.g. with respect to the security policy or the code of conduct, many of those community health files [can be stored centrally](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/creating-a-default-community-health-file) so they apply automatically to all projects if they are not overridden by the respective project maintainers. The OSS rules of play ratings take all these aspects into account and are of course also open to changes and extensions by external contributors.
+
 The rating is implemented in the [OssRulesOfPlayRating](https://github.com/SAP/fosstars-rating-core/blob/master/src/main/java/com/sap/oss/phosphor/fosstars/model/rating/oss/OssRulesOfPlayRating.java) class.
 
 [By definition](ratings.md), the rules of play rating produces a score, a label and a confidence score - the same way as the security score.
