@@ -1,12 +1,12 @@
-# eclipse/paho.mqtt.java
+# spring-projects/spring-mvc-showcase
 
-https://github.com/eclipse/paho.mqtt.java
+https://github.com/spring-projects/spring-mvc-showcase
 
 Last updated on Jul 23, 2021
 
-**Rating**: **BAD**
+**Rating**: **MODERATE**
 
-**Score**: **4.07**, max score value is 10.0
+**Score**: **4.5**, max score value is 10.0
 
 **Confidence**: Max (10.0, max confidence value is 10.0)
 
@@ -39,7 +39,7 @@ It used the following sub-scores:
             
     1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
         
-1.  **[Security awareness](#security-awareness)**: **6.0** (weight is 0.9)
+1.  **[Security awareness](#security-awareness)**: **5.0** (weight is 0.9)
     
 1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: **2.0** (weight is 0.6)
     1.  **[Security testing](#security-testing)**: **3.09** (weight is 1.0)
@@ -63,11 +63,11 @@ It used the following sub-scores:
             
 1.  **[Unpatched vulnerabilities](#unpatched-vulnerabilities)**: **10.0** (weight is 0.5)
     
-1.  **[Community commitment](#community-commitment)**: **7.0** (weight is 0.5)
+1.  **[Community commitment](#community-commitment)**: **8.0** (weight is 0.5)
     
 1.  **[Project activity](#project-activity)**: **0.0** (weight is 0.5)
     
-1.  **[Project popularity](#project-popularity)**: **1.9** (weight is 0.5)
+1.  **[Project popularity](#project-popularity)**: **6.74** (weight is 0.5)
     
 1.  **[Security reviews](#security-reviews)**: **0.0** (weight is 0.2)
     
@@ -92,7 +92,7 @@ More info:
 
 You can fix the issues reported by LGTM for the project.
 More info:
-1.  [List of issues on LGTM](https://lgtm.com/projects/g/eclipse/paho.mqtt.java)
+1.  [List of issues on LGTM](https://lgtm.com/projects/g/spring-projects/spring-mvc-showcase)
 
 
 You can open a pull request to enable FindSecBugs for the project.
@@ -116,6 +116,11 @@ You can set a CVSS threshold for vulnerabilities reported by OWASP Dependency Ch
 More info:
 1.  [OWASP Dependnecy Check](https://jeremylong.github.io/DependencyCheck/)
 1.  [Configuring OWASP Dependency Check](https://jeremylong.github.io/DependencyCheck/dependency-check-maven/configuration.html)
+
+
+You can enable artifact signing in the project's build pipeline.
+More info:
+1.  [Apache Maven Jarsigner Plugin](https://maven.apache.org/plugins/maven-jarsigner-plugin/)
 
 
 You can enable NoHttp tool in the project's build pipeline.
@@ -162,7 +167,7 @@ This sub-score is based on the following sub-scores:
 
 ### Security awareness
 
-Score: **6.0**, confidence is 10.0 (max), weight is 0.9 (high)
+Score: **5.0**, confidence is 10.0 (max), weight is 0.9 (high)
 
 The score shows how a project is aware of security. If the project has a security policy, then the score adds 2.00. If the project has a security team, then the score adds 3.00. If the project uses verified signed commits, then the score adds 0.50. If the project has a bug bounty program, then the score adds 4.00. If the project signs its artifacts, then the score adds 0.50. If the project uses a security tool or library, then the score adds 1.00.
 
@@ -175,7 +180,7 @@ This sub-score is based on 17 features:
 1.  **Does it have a bug bounty program?** No
 1.  **Does it have a security policy?** Yes
 1.  **Does it have a security team?** Yes
-1.  **Does it sign artifacts?** Yes
+1.  **Does it sign artifacts?** No
 1.  **Does it use AddressSanitizer?** No
 1.  **Does it use Dependabot?** No
 1.  **Does it use FindSecBugs?** No
@@ -186,7 +191,7 @@ This sub-score is based on 17 features:
 1.  **Does it use OWASP Java HTML Sanitizer?** No
 1.  **Does it use UndefinedBehaviorSanitizer?** No
 1.  **Does it use nohttp?** No
-1.  **Does it use verified signed commits?** Yes
+1.  **Does it use verified signed commits?** No
 1.  **How is OWASP Dependency Check used?** Not used
 1.  **Is it included to OSS-Fuzz?** No
 
@@ -248,7 +253,7 @@ This sub-score is based on 1 feature:
 
 ### Community commitment
 
-Score: **7.0**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **8.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 
 
@@ -259,8 +264,8 @@ This sub-score is based on 3 features:
 
 
 1.  **Does it belong to Apache?** No
-1.  **Does it belong to Eclipse?** Yes
-1.  **Is it supported by a company?** No
+1.  **Does it belong to Eclipse?** No
+1.  **Is it supported by a company?** Yes
 
 
 ### Project activity
@@ -281,7 +286,7 @@ This sub-score is based on 2 features:
 
 ### Project popularity
 
-Score: **1.9**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **6.74**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score is based on number of stars and watchers.
 Here is how a number of stars contributes to the score:
@@ -295,8 +300,8 @@ This sub-score is based on 2 features:
 
 
 
-1.  **Number of stars for a GitHub repository:** 1530
-1.  **Number of watchers for a GitHub repository:** 111
+1.  **Number of stars for a GitHub repository:** 4925
+1.  **Number of watchers for a GitHub repository:** 544
 
 
 ### Security reviews
@@ -345,7 +350,7 @@ This sub-score is based on 2 features:
 
 
 1.  **Is it included to OSS-Fuzz?** No
-1.  **Programming languages:** JAVA, OTHER
+1.  **Programming languages:** JAVA, JAVASCRIPT, OTHER
 
 
 ### Memory-safety testing
@@ -363,7 +368,7 @@ This sub-score is based on 4 features:
 1.  **Does it use AddressSanitizer?** No
 1.  **Does it use MemorySanitizer?** No
 1.  **Does it use UndefinedBehaviorSanitizer?** No
-1.  **Programming languages:** JAVA, OTHER
+1.  **Programming languages:** JAVA, JAVASCRIPT, OTHER
 
 
 ### Static analysis
@@ -417,7 +422,7 @@ This sub-score is based on 4 features:
 1.  **Does it use Dependabot?** No
 1.  **Does it use GitHub as the main development platform?** Yes
 1.  **Package managers:** MAVEN
-1.  **Programming languages:** JAVA, OTHER
+1.  **Programming languages:** JAVA, JAVASCRIPT, OTHER
 
 
 ### OWASP Dependency Check score
@@ -449,7 +454,7 @@ This sub-score is based on 2 features:
 
 
 
-1.  **Programming languages:** JAVA, OTHER
+1.  **Programming languages:** JAVA, JAVASCRIPT, OTHER
 1.  **The worst LGTM grade of the project:** D
 
 
@@ -468,7 +473,7 @@ This sub-score is based on 4 features:
 1.  **Does it run CodeQL scans?** No
 1.  **Does it use CodeQL checks for pull requests?** No
 1.  **Does it use LGTM checks?** No
-1.  **Programming languages:** JAVA, OTHER
+1.  **Programming languages:** JAVA, JAVASCRIPT, OTHER
 
 
 ### FindSecBugs score
@@ -484,7 +489,7 @@ This sub-score is based on 2 features:
 
 
 1.  **Does it use FindSecBugs?** No
-1.  **Programming languages:** JAVA, OTHER
+1.  **Programming languages:** JAVA, JAVASCRIPT, OTHER
 
 
 ## Known vulnerabilities

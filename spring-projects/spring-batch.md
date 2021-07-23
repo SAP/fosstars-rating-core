@@ -1,12 +1,12 @@
-# eclipse/che
+# spring-projects/spring-batch
 
-https://github.com/eclipse/che
+https://github.com/spring-projects/spring-batch
 
 Last updated on Jul 23, 2021
 
-**Rating**: **GOOD**
+**Rating**: **MODERATE**
 
-**Score**: **6.27**, max score value is 10.0
+**Score**: **4.73**, max score value is 10.0
 
 **Confidence**: Max (10.0, max confidence value is 10.0)
 
@@ -20,54 +20,54 @@ The rating is based on **security score for open-source projects**.
 
 It used the following sub-scores:
 
-1.  **[Security testing](#security-testing)**: **6.82** (weight is 1.0)
-    1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
-        1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
+1.  **[Security testing](#security-testing)**: **3.64** (weight is 1.0)
+    1.  **[Dependency testing](#dependency-testing)**: **6.0** (weight is 1.0)
+        1.  **[Dependabot score](#dependabot-score)**: **6.0** (weight is 1.0)
             
-        1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
+        1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
             
     1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
         
     1.  **[Memory-safety testing](#memory-safety-testing)**: **N/A** (weight is 1.0)
         
-    1.  **[Static analysis](#static-analysis)**: **5.0** (weight is 1.0)
-        1.  **[LGTM score](#lgtm-score)**: **10.0** (weight is 1.0)
+    1.  **[Static analysis](#static-analysis)**: **2.0** (weight is 1.0)
+        1.  **[LGTM score](#lgtm-score)**: **5.0** (weight is 1.0)
             
         1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
             
-        1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
+        1.  **[FindSecBugs score](#findsecbugs-score)**: **0.0** (weight is 0.5)
             
     1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
         
 1.  **[Security awareness](#security-awareness)**: **6.0** (weight is 0.9)
     
-1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: **0.0** (weight is 0.6)
-    1.  **[Security testing](#security-testing)**: **6.82** (weight is 1.0)
-        1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
-            1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
+1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: **2.0** (weight is 0.6)
+    1.  **[Security testing](#security-testing)**: **3.64** (weight is 1.0)
+        1.  **[Dependency testing](#dependency-testing)**: **6.0** (weight is 1.0)
+            1.  **[Dependabot score](#dependabot-score)**: **6.0** (weight is 1.0)
                 
-            1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
+            1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
                 
         1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
             
         1.  **[Memory-safety testing](#memory-safety-testing)**: **N/A** (weight is 1.0)
             
-        1.  **[Static analysis](#static-analysis)**: **5.0** (weight is 1.0)
-            1.  **[LGTM score](#lgtm-score)**: **10.0** (weight is 1.0)
+        1.  **[Static analysis](#static-analysis)**: **2.0** (weight is 1.0)
+            1.  **[LGTM score](#lgtm-score)**: **5.0** (weight is 1.0)
                 
             1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
                 
-            1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
+            1.  **[FindSecBugs score](#findsecbugs-score)**: **0.0** (weight is 0.5)
                 
         1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
             
 1.  **[Unpatched vulnerabilities](#unpatched-vulnerabilities)**: **10.0** (weight is 0.5)
     
-1.  **[Community commitment](#community-commitment)**: **7.0** (weight is 0.5)
+1.  **[Community commitment](#community-commitment)**: **8.0** (weight is 0.5)
     
-1.  **[Project activity](#project-activity)**: **10.0** (weight is 0.5)
+1.  **[Project activity](#project-activity)**: **3.23** (weight is 0.5)
     
-1.  **[Project popularity](#project-popularity)**: **7.51** (weight is 0.5)
+1.  **[Project popularity](#project-popularity)**: **2.72** (weight is 0.5)
     
 1.  **[Security reviews](#security-reviews)**: **0.0** (weight is 0.2)
     
@@ -90,14 +90,32 @@ More info:
 1.  [How to enable CodeQL checks](https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#enabling-code-scanning-using-actions)
 
 
+You can fix the issues reported by LGTM for the project.
+More info:
+1.  [List of issues on LGTM](https://lgtm.com/projects/g/spring-projects/spring-batch)
+
+
 You can open a pull request to enable FindSecBugs for the project.
 More info:
 1.  [FindSecBugs home page](https://find-sec-bugs.github.io/)
 
 
-You can enable artifact signing in the project's build pipeline.
+You can configure Dependabot by creating a configuration file.
 More info:
-1.  [Apache Maven Jarsigner Plugin](https://maven.apache.org/plugins/maven-jarsigner-plugin/)
+1.  [Configuration options for dependency updates](https://docs.github.com/en/github/administering-a-repository/configuration-options-for-dependency-updates)
+
+
+You can add OWASP Dependency Check to the project's build pipeline.
+More info:
+1.  [OWASP Dependnecy Check](https://jeremylong.github.io/DependencyCheck/)
+1.  [How to use OWASP Dependency Check with Maven](https://jeremylong.github.io/DependencyCheck/dependency-check-maven)
+1.  [How to use OWASP Dependnecy Check with Gradle](https://github.com/dependency-check/dependency-check-gradle)
+
+
+You can set a CVSS threshold for vulnerabilities reported by OWASP Dependency Check.
+More info:
+1.  [OWASP Dependnecy Check](https://jeremylong.github.io/DependencyCheck/)
+1.  [Configuring OWASP Dependency Check](https://jeremylong.github.io/DependencyCheck/dependency-check-maven/configuration.html)
 
 
 You can enable NoHttp tool in the project's build pipeline.
@@ -112,7 +130,7 @@ Below are the details about all the used sub-scores.
 
 ### Security testing
 
-Score: **6.82**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **3.64**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -122,21 +140,21 @@ This sub-score is based on the following sub-scores:
 
 
 
-1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
-    1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
+1.  **[Dependency testing](#dependency-testing)**: **6.0** (weight is 1.0)
+    1.  **[Dependabot score](#dependabot-score)**: **6.0** (weight is 1.0)
         
-    1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
+    1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
         
 1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
     
 1.  **[Memory-safety testing](#memory-safety-testing)**: **N/A** (weight is 1.0)
     
-1.  **[Static analysis](#static-analysis)**: **5.0** (weight is 1.0)
-    1.  **[LGTM score](#lgtm-score)**: **10.0** (weight is 1.0)
+1.  **[Static analysis](#static-analysis)**: **2.0** (weight is 1.0)
+    1.  **[LGTM score](#lgtm-score)**: **5.0** (weight is 1.0)
         
     1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
         
-    1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
+    1.  **[FindSecBugs score](#findsecbugs-score)**: **0.0** (weight is 0.5)
         
 1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
     
@@ -157,9 +175,9 @@ This sub-score is based on 17 features:
 1.  **Does it have a bug bounty program?** No
 1.  **Does it have a security policy?** Yes
 1.  **Does it have a security team?** Yes
-1.  **Does it sign artifacts?** No
+1.  **Does it sign artifacts?** Yes
 1.  **Does it use AddressSanitizer?** No
-1.  **Does it use Dependabot?** Yes
+1.  **Does it use Dependabot?** No
 1.  **Does it use FindSecBugs?** No
 1.  **Does it use LGTM checks?** No
 1.  **Does it use MemorySanitizer?** No
@@ -168,14 +186,14 @@ This sub-score is based on 17 features:
 1.  **Does it use OWASP Java HTML Sanitizer?** No
 1.  **Does it use UndefinedBehaviorSanitizer?** No
 1.  **Does it use nohttp?** No
-1.  **Does it use verified signed commits?** No
+1.  **Does it use verified signed commits?** Yes
 1.  **How is OWASP Dependency Check used?** Not used
 1.  **Is it included to OSS-Fuzz?** No
 
 
 ### Vulnerability discovery and security testing
 
-Score: **0.0**, confidence is 10.0 (max), weight is 0.6 (medium)
+Score: **2.0**, confidence is 10.0 (max), weight is 0.6 (medium)
 
 The scores checks how security testing is done and how many vulnerabilities were recently discovered. If testing is good, and there are no recent vulnerabilities, then the score value is max. If there are vulnerabilities, then the score value is high. If testing is bad, and there are no recent vulnerabilities, then the score value is low. If there are vulnerabilities, then the score is min.
 
@@ -185,22 +203,22 @@ This sub-score is based on the following sub-score:
 
 
 
-1.  **[Security testing](#security-testing)**: **6.82** (weight is 1.0)
-    1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
-        1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
+1.  **[Security testing](#security-testing)**: **3.64** (weight is 1.0)
+    1.  **[Dependency testing](#dependency-testing)**: **6.0** (weight is 1.0)
+        1.  **[Dependabot score](#dependabot-score)**: **6.0** (weight is 1.0)
             
-        1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
+        1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
             
     1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
         
     1.  **[Memory-safety testing](#memory-safety-testing)**: **N/A** (weight is 1.0)
         
-    1.  **[Static analysis](#static-analysis)**: **5.0** (weight is 1.0)
-        1.  **[LGTM score](#lgtm-score)**: **10.0** (weight is 1.0)
+    1.  **[Static analysis](#static-analysis)**: **2.0** (weight is 1.0)
+        1.  **[LGTM score](#lgtm-score)**: **5.0** (weight is 1.0)
             
         1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
             
-        1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
+        1.  **[FindSecBugs score](#findsecbugs-score)**: **0.0** (weight is 0.5)
             
     1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
         
@@ -210,7 +228,7 @@ This sub-score is based on 1 feature:
 
 
 
-1.  **Info about vulnerabilities:** 3 vulnerabilities, [details below](#known-vulnerabilities)
+1.  **Info about vulnerabilities:** 2 vulnerabilities, [details below](#known-vulnerabilities)
 
 
 ### Unpatched vulnerabilities
@@ -225,12 +243,12 @@ This sub-score is based on 1 feature:
 
 
 
-1.  **Info about vulnerabilities:** 3 vulnerabilities, [details below](#known-vulnerabilities)
+1.  **Info about vulnerabilities:** 2 vulnerabilities, [details below](#known-vulnerabilities)
 
 
 ### Community commitment
 
-Score: **7.0**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **8.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 
 
@@ -241,30 +259,29 @@ This sub-score is based on 3 features:
 
 
 1.  **Does it belong to Apache?** No
-1.  **Does it belong to Eclipse?** Yes
-1.  **Is it supported by a company?** No
+1.  **Does it belong to Eclipse?** No
+1.  **Is it supported by a company?** Yes
 
 
 ### Project activity
 
-Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **3.23**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-68 commits in the last 3 months results to 10.00 points
-6 contributors increase the score value from 10.00 to 12.00
+21 commits in the last 3 months results to 3.23 points
 
 This sub-score is based on 2 features:
 
 
 
-1.  **Number of commits in the last three months:** 68
-1.  **Number of contributors in the last three months:** 6
+1.  **Number of commits in the last three months:** 21
+1.  **Number of contributors in the last three months:** 1
 
 
 ### Project popularity
 
-Score: **7.51**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **2.72**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score is based on number of stars and watchers.
 Here is how a number of stars contributes to the score:
@@ -278,8 +295,8 @@ This sub-score is based on 2 features:
 
 
 
-1.  **Number of stars for a GitHub repository:** 6484
-1.  **Number of watchers for a GitHub repository:** 307
+1.  **Number of stars for a GitHub repository:** 1881
+1.  **Number of watchers for a GitHub repository:** 252
 
 
 ### Security reviews
@@ -299,7 +316,7 @@ This sub-score is based on 1 feature:
 
 ### Dependency testing
 
-Score: **10.0**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **6.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -309,9 +326,9 @@ This sub-score is based on the following sub-scores:
 
 
 
-1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
+1.  **[Dependabot score](#dependabot-score)**: **6.0** (weight is 1.0)
     
-1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
+1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
     
 
 
@@ -328,7 +345,7 @@ This sub-score is based on 2 features:
 
 
 1.  **Is it included to OSS-Fuzz?** No
-1.  **Programming languages:** TYPESCRIPT, OTHER
+1.  **Programming languages:** JAVA, JAVASCRIPT, OTHER
 
 
 ### Memory-safety testing
@@ -346,12 +363,12 @@ This sub-score is based on 4 features:
 1.  **Does it use AddressSanitizer?** No
 1.  **Does it use MemorySanitizer?** No
 1.  **Does it use UndefinedBehaviorSanitizer?** No
-1.  **Programming languages:** TYPESCRIPT, OTHER
+1.  **Programming languages:** JAVA, JAVASCRIPT, OTHER
 
 
 ### Static analysis
 
-Score: **5.0**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **2.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -361,11 +378,11 @@ This sub-score is based on the following sub-scores:
 
 
 
-1.  **[LGTM score](#lgtm-score)**: **10.0** (weight is 1.0)
+1.  **[LGTM score](#lgtm-score)**: **5.0** (weight is 1.0)
     
 1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
     
-1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
+1.  **[FindSecBugs score](#findsecbugs-score)**: **0.0** (weight is 0.5)
     
 
 
@@ -382,12 +399,12 @@ This sub-score is based on 2 features:
 
 
 1.  **Does it use nohttp?** No
-1.  **Package managers:** None
+1.  **Package managers:** MAVEN
 
 
 ### Dependabot score
 
-Score: **10.0**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **6.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -397,15 +414,15 @@ This sub-score is based on 4 features:
 
 
 
-1.  **Does it use Dependabot?** Yes
+1.  **Does it use Dependabot?** No
 1.  **Does it use GitHub as the main development platform?** Yes
-1.  **Package managers:** None
-1.  **Programming languages:** TYPESCRIPT, OTHER
+1.  **Package managers:** MAVEN
+1.  **Programming languages:** JAVA, JAVASCRIPT, OTHER
 
 
 ### OWASP Dependency Check score
 
-Score: **N/A**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **0.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -416,13 +433,13 @@ This sub-score is based on 3 features:
 
 
 1.  **How is OWASP Dependency Check used?** Not used
-1.  **Package managers:** None
+1.  **Package managers:** MAVEN
 1.  **What is the threshold for OWASP Dependency Check?** Not specified
 
 
 ### LGTM score
 
-Score: **10.0**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **5.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -432,8 +449,8 @@ This sub-score is based on 2 features:
 
 
 
-1.  **Programming languages:** TYPESCRIPT, OTHER
-1.  **The worst LGTM grade of the project:** A+
+1.  **Programming languages:** JAVA, JAVASCRIPT, OTHER
+1.  **The worst LGTM grade of the project:** C
 
 
 ### How a project uses CodeQL
@@ -451,12 +468,12 @@ This sub-score is based on 4 features:
 1.  **Does it run CodeQL scans?** No
 1.  **Does it use CodeQL checks for pull requests?** No
 1.  **Does it use LGTM checks?** No
-1.  **Programming languages:** TYPESCRIPT, OTHER
+1.  **Programming languages:** JAVA, JAVASCRIPT, OTHER
 
 
 ### FindSecBugs score
 
-Score: **N/A**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **0.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 
 
@@ -467,13 +484,12 @@ This sub-score is based on 2 features:
 
 
 1.  **Does it use FindSecBugs?** No
-1.  **Programming languages:** TYPESCRIPT, OTHER
+1.  **Programming languages:** JAVA, JAVASCRIPT, OTHER
 
 
 ## Known vulnerabilities
 
-1.  [CVE-2019-17633](https://nvd.nist.gov/vuln/detail/CVE-2019-17633): For Eclipse Che versions 6.16 to 7.3.0, with both authentication and TLS disabled, visiting a malicious web site could trigger the start of an arbitrary Che workspace. Che with no authentication and no TLS is not usually deployed on a public network but is often used for local installations (e.g. on personal laptops). In that case, even if the Che API is not exposed externally, some javascript running in the local browser is able to send requests to it.
-1.  [CVE-2020-10689](https://nvd.nist.gov/vuln/detail/CVE-2020-10689): A flaw was found in the Eclipse Che up to version 7.8.x, where it did not properly restrict access to workspace pods. An authenticated user can exploit this flaw to bypass JWT proxy and gain access to the workspace pods of another user. Successful exploitation requires knowledge of the service name and namespace of the target pod.
-1.  [CVE-2020-14368](https://nvd.nist.gov/vuln/detail/CVE-2020-14368): A flaw was found in Eclipse Che in versions prior to 7.14.0 that impacts CodeReady Workspaces. When configured with cookies authentication, Theia IDE doesn't properly set the SameSite value, allowing a Cross-Site Request Forgery (CSRF) and consequently allowing a cross-site WebSocket hijack on Theia IDE. This flaw allows an attacker to gain full access to the victim's workspace through the /services endpoint. To perform a successful attack, the attacker conducts a Man-in-the-middle attack (MITM) and tricks the victim into executing a request via an untrusted link, which performs the CSRF and the Socket hijack. The highest threat from this vulnerability is to confidentiality, integrity, as well as system availability.
+1.  [CVE-2019-3774](https://nvd.nist.gov/vuln/detail/CVE-2019-3774): Spring Batch versions 3.0.9, 4.0.1, 4.1.0, and older unsupported versions, were susceptible to XML External Entity Injection (XXE) when receiving XML data from untrusted sources.
+1.  [CVE-2020-5411](https://nvd.nist.gov/vuln/detail/CVE-2020-5411): When configured to enable default typing, Jackson contained a deserialization vulnerability that could lead to arbitrary code execution. Jackson fixed this vulnerability by blacklisting known "deserialization gadgets". Spring Batch configures Jackson with global default typing enabled which means that through the previous exploit, arbitrary code could be executed if all of the following is true: * Spring Batch's Jackson support is being leveraged to serialize a job's ExecutionContext. * A malicious user gains write access to the data store used by the JobRepository (where the data to be deserialized is stored). In order to protect against this type of attack, Jackson prevents a set of untrusted gadget classes from being deserialized. Spring Batch should be proactive against blocking unknown "deserialization gadgets" when enabling default typing.
 
 

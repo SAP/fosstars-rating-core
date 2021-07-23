@@ -2,10 +2,10 @@
 
 |                  |                                                         | # or projects             |  % or projects              |
 | :--------------- | :------------------------------------------------------ | ------------------------: | --------------------------: |
-| Total            |                                                         | 12      |                        100% |
-| BAD ratings      | score below 4.43                        | 6      |      50.0% |
-| MODERATE ratings | score between 4.43 and 5.54 | 3 | 25.0% |
-| GOOD ratings     | score above 5.54                            | 3     |     25.0% |
+| Total            |                                                         | 19      |                        100% |
+| BAD ratings      | score below 4.43                        | 5      |      26.3% |
+| MODERATE ratings | score between 4.43 and 5.54 | 13 | 68.4% |
+| GOOD ratings     | score above 5.54                            | 1     |     5.3% |
 | UNCLEAR ratings  | confidence below 8.00                    | 0  |  0.0% |
 | UNKNOWN ratings  |                                                         | 0  |  0.0% |
 
@@ -13,16 +13,23 @@
 
 | Project | Stars | Score<br>from&nbsp;0&nbsp;to&nbsp;10 | Rating | Confidence | Last<br>updated |
 | ------- | ----: | -----------------------------------: | :----- | :--------- | --------------- |
-| [eclipse/deeplearning4j](eclipse/deeplearning4j.md) | [12122](https://github.com/eclipse/deeplearning4j) | 5.98 | [GOOD](eclipse/deeplearning4j.md) | 10.00 | Jul 23, 2021 |
-| [eclipse/che](eclipse/che.md) | [6484](https://github.com/eclipse/che) | 6.27 | [GOOD](eclipse/che.md) | 10.00 | Jul 23, 2021 |
-| [eclipse/mosquitto](eclipse/mosquitto.md) | [4927](https://github.com/eclipse/mosquitto) | 4.65 | [MODERATE](eclipse/mosquitto.md) | 10.00 | Jul 23, 2021 |
-| [eclipse/jetty.project](eclipse/jetty.project.md) | [3159](https://github.com/eclipse/jetty.project) | 5.60 | [GOOD](eclipse/jetty.project.md) | 10.00 | Jul 23, 2021 |
-| [eclipse/paho.mqtt.android](eclipse/paho.mqtt.android.md) | [2240](https://github.com/eclipse/paho.mqtt.android) | 4.17 | [BAD](eclipse/paho.mqtt.android.md) | 10.00 | Jul 23, 2021 |
-| [eclipse/eclipse-collections](eclipse/eclipse-collections.md) | [1720](https://github.com/eclipse/eclipse-collections) | 5.41 | [MODERATE](eclipse/eclipse-collections.md) | 10.00 | Jul 23, 2021 |
-| [eclipse/paho.mqtt.golang](eclipse/paho.mqtt.golang.md) | [1673](https://github.com/eclipse/paho.mqtt.golang) | 3.58 | [BAD](eclipse/paho.mqtt.golang.md) | 9.87 | Jul 23, 2021 |
-| [eclipse/paho.mqtt.java](eclipse/paho.mqtt.java.md) | [1530](https://github.com/eclipse/paho.mqtt.java) | 4.07 | [BAD](eclipse/paho.mqtt.java.md) | 10.00 | Jul 23, 2021 |
-| [eclipse/paho.mqtt.python](eclipse/paho.mqtt.python.md) | [1389](https://github.com/eclipse/paho.mqtt.python) | 3.82 | [BAD](eclipse/paho.mqtt.python.md) | 10.00 | Jul 23, 2021 |
-| [eclipse/mraa](eclipse/mraa.md) | [1225](https://github.com/eclipse/mraa) | 3.67 | [BAD](eclipse/mraa.md) | 10.00 | Jul 23, 2021 |
-| [eclipse/paho.mqtt.c](eclipse/paho.mqtt.c.md) | [1152](https://github.com/eclipse/paho.mqtt.c) | 3.82 | [BAD](eclipse/paho.mqtt.c.md) | 10.00 | Jul 23, 2021 |
-| [eclipse/sumo](eclipse/sumo.md) | [1137](https://github.com/eclipse/sumo) | 4.97 | [MODERATE](eclipse/sumo.md) | 10.00 | Jul 23, 2021 |
+| [spring-projects/spring-boot](spring-projects/spring-boot.md) | [56383](https://github.com/spring-projects/spring-boot) | 6.16 | [GOOD](spring-projects/spring-boot.md) | 10.00 | Jul 23, 2021 |
+| [spring-projects/spring-framework](spring-projects/spring-framework.md) | [43657](https://github.com/spring-projects/spring-framework) | 5.27 | [MODERATE](spring-projects/spring-framework.md) | 10.00 | Jul 23, 2021 |
+| [spring-projects/spring-security](spring-projects/spring-security.md) | [6086](https://github.com/spring-projects/spring-security) | 5.01 | [MODERATE](spring-projects/spring-security.md) | 10.00 | Jul 23, 2021 |
+| [spring-projects/spring-petclinic](spring-projects/spring-petclinic.md) | [4974](https://github.com/spring-projects/spring-petclinic) | 5.29 | [MODERATE](spring-projects/spring-petclinic.md) | 10.00 | Jul 23, 2021 |
+| [spring-projects/spring-mvc-showcase](spring-projects/spring-mvc-showcase.md) | [4925](https://github.com/spring-projects/spring-mvc-showcase) | 4.50 | [MODERATE](spring-projects/spring-mvc-showcase.md) | 10.00 | Jul 23, 2021 |
+| [spring-projects/spring-security-oauth](spring-projects/spring-security-oauth.md) | [4423](https://github.com/spring-projects/spring-security-oauth) | 4.93 | [MODERATE](spring-projects/spring-security-oauth.md) | 10.00 | Jul 23, 2021 |
+| [spring-projects/spring-loaded](spring-projects/spring-loaded.md) | [2576](https://github.com/spring-projects/spring-loaded) | 3.30 | [BAD](spring-projects/spring-loaded.md) | 10.00 | Jul 23, 2021 |
+| [spring-projects/spring-data-elasticsearch](spring-projects/spring-data-elasticsearch.md) | [2489](https://github.com/spring-projects/spring-data-elasticsearch) | 5.43 | [MODERATE](spring-projects/spring-data-elasticsearch.md) | 10.00 | Jul 23, 2021 |
+| [spring-projects/spring-data-jpa](spring-projects/spring-data-jpa.md) | [2122](https://github.com/spring-projects/spring-data-jpa) | 4.95 | [MODERATE](spring-projects/spring-data-jpa.md) | 10.00 | Jul 23, 2021 |
+| [spring-projects/spring-batch](spring-projects/spring-batch.md) | [1881](https://github.com/spring-projects/spring-batch) | 4.73 | [MODERATE](spring-projects/spring-batch.md) | 10.00 | Jul 23, 2021 |
+| [spring-projects/spring-session](spring-projects/spring-session.md) | [1615](https://github.com/spring-projects/spring-session) | 3.88 | [BAD](spring-projects/spring-session.md) | 10.00 | Jul 23, 2021 |
+| [spring-projects/spring-retry](spring-projects/spring-retry.md) | [1523](https://github.com/spring-projects/spring-retry) | 4.88 | [MODERATE](spring-projects/spring-retry.md) | 10.00 | Jul 23, 2021 |
+| [spring-projects/spring-kafka](spring-projects/spring-kafka.md) | [1377](https://github.com/spring-projects/spring-kafka) | 5.32 | [MODERATE](spring-projects/spring-kafka.md) | 10.00 | Jul 23, 2021 |
+| [spring-projects/spring-data-redis](spring-projects/spring-data-redis.md) | [1330](https://github.com/spring-projects/spring-data-redis) | 5.32 | [MODERATE](spring-projects/spring-data-redis.md) | 10.00 | Jul 23, 2021 |
+| [spring-projects/greenhouse](spring-projects/greenhouse.md) | [1323](https://github.com/spring-projects/greenhouse) | 3.88 | [BAD](spring-projects/greenhouse.md) | 9.87 | Jul 23, 2021 |
+| [spring-projects/spring-data-mongodb](spring-projects/spring-data-mongodb.md) | [1306](https://github.com/spring-projects/spring-data-mongodb) | 5.32 | [MODERATE](spring-projects/spring-data-mongodb.md) | 10.00 | Jul 23, 2021 |
+| [spring-projects/spring-data-book](spring-projects/spring-data-book.md) | [1210](https://github.com/spring-projects/spring-data-book) | 4.30 | [BAD](spring-projects/spring-data-book.md) | 10.00 | Jul 23, 2021 |
+| [spring-projects/spring-integration](spring-projects/spring-integration.md) | [1186](https://github.com/spring-projects/spring-integration) | 4.45 | [MODERATE](spring-projects/spring-integration.md) | 10.00 | Jul 23, 2021 |
+| [spring-projects/spring-statemachine](spring-projects/spring-statemachine.md) | [1145](https://github.com/spring-projects/spring-statemachine) | 4.40 | [BAD](spring-projects/spring-statemachine.md) | 10.00 | Jul 23, 2021 |
 
