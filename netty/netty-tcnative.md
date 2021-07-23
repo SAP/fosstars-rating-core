@@ -2,11 +2,11 @@
 
 https://github.com/netty/netty-tcnative
 
-Last updated on Jul 21, 2021
+Last updated on Jul 23, 2021
 
 **Rating**: **BAD**
 
-**Score**: **3.38**, max score value is 10.0
+**Score**: **3.36**, max score value is 10.0
 
 **Confidence**: High (9.87, max confidence value is 10.0)
 
@@ -65,7 +65,7 @@ It used the following sub-scores:
     
 1.  **[Community commitment](#community-commitment)**: **8.0** (weight is 0.5)
     
-1.  **[Project activity](#project-activity)**: **2.54** (weight is 0.5)
+1.  **[Project activity](#project-activity)**: **2.37** (weight is 0.5)
     
 1.  **[Project popularity](#project-popularity)**: **0.34** (weight is 0.5)
     
@@ -277,18 +277,18 @@ This sub-score is based on 3 features:
 
 ### Project activity
 
-Score: **2.54**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **2.37**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-15 commits in the last 3 months results to 2.31 points
-3 contributors increase the score value from 2.31 to 2.54
+14 commits in the last 3 months results to 2.15 points
+3 contributors increase the score value from 2.15 to 2.37
 
 This sub-score is based on 2 features:
 
 
 
-1.  **Number of commits in the last three months:** 15
+1.  **Number of commits in the last three months:** 14
 1.  **Number of contributors in the last three months:** 3
 
 
