@@ -19,6 +19,7 @@ import com.sap.oss.phosphor.fosstars.data.github.LgtmDataProvider;
 import com.sap.oss.phosphor.fosstars.data.github.LicenseInfo;
 import com.sap.oss.phosphor.fosstars.data.github.NumberOfCommits;
 import com.sap.oss.phosphor.fosstars.data.github.NumberOfContributors;
+import com.sap.oss.phosphor.fosstars.data.github.NumberOfDependentProjectOnGitHub;
 import com.sap.oss.phosphor.fosstars.data.github.NumberOfStars;
 import com.sap.oss.phosphor.fosstars.data.github.NumberOfWatchers;
 import com.sap.oss.phosphor.fosstars.data.github.OwaspSecurityLibraries;
@@ -107,6 +108,7 @@ public class DataProviderSelector {
         new ContributingGuidelineInfo(fetcher),
         new VulnerabilityAlertsInfo(fetcher),
         new SecurityReviewsFromOpenSSF(fetcher),
+        new NumberOfDependentProjectOnGitHub(fetcher),
 
         // currently interactive data provider have to be added to the end, see issue #133
         new AskAboutSecurityTeam(),

@@ -432,4 +432,10 @@ public class OssFeatures {
    */
   public static final SecurityReviewsFeature SECURITY_REVIEWS
       = new SecurityReviewsFeature("Security reviews for a project");
+
+  /**
+   * Shows how many projects use a project on GitHub.
+   */
+  public static final PositiveIntegerFeature NUMBER_OF_DEPENDENT_PROJECTS_ON_GITHUB
+      = new PositiveIntegerFeature("Number of projects on GitHub that use an open source project");
 }
