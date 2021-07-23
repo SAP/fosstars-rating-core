@@ -1,12 +1,12 @@
-# aws/containers-roadmap
+# google/deepdream
 
-https://github.com/aws/containers-roadmap
+https://github.com/google/deepdream
 
 Last updated on Jul 23, 2021
 
 **Rating**: **BAD**
 
-**Score**: **3.27**, max score value is 10.0
+**Score**: **3.62**, max score value is 10.0
 
 **Confidence**: High (9.87, max confidence value is 10.0)
 
@@ -65,9 +65,9 @@ It used the following sub-scores:
     
 1.  **[Community commitment](#community-commitment)**: **8.0** (weight is 0.5)
     
-1.  **[Project activity](#project-activity)**: **0.62** (weight is 0.5)
+1.  **[Project activity](#project-activity)**: **0.0** (weight is 0.5)
     
-1.  **[Project popularity](#project-popularity)**: **6.17** (weight is 0.5)
+1.  **[Project popularity](#project-popularity)**: **10.0** (weight is 0.5)
     
 1.  **[Security reviews](#security-reviews)**: **0.0** (weight is 0.2)
     
@@ -247,23 +247,23 @@ This sub-score is based on 3 features:
 
 ### Project activity
 
-Score: **0.62**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **0.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-4 commits in the last 3 months results to 0.62 points
+0 commits in the last 3 months results to 0.00 points
 
 This sub-score is based on 2 features:
 
 
 
-1.  **Number of commits in the last three months:** 4
-1.  **Number of contributors in the last three months:** 1
+1.  **Number of commits in the last three months:** 0
+1.  **Number of contributors in the last three months:** 0
 
 
 ### Project popularity
 
-Score: **6.17**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score is based on number of stars and watchers.
 Here is how a number of stars contributes to the score:
@@ -277,8 +277,8 @@ This sub-score is based on 2 features:
 
 
 
-1.  **Number of stars for a GitHub repository:** 3812
-1.  **Number of watchers for a GitHub repository:** 706
+1.  **Number of stars for a GitHub repository:** 12836
+1.  **Number of watchers for a GitHub repository:** 931
 
 
 ### Security reviews
@@ -327,7 +327,7 @@ This sub-score is based on 2 features:
 
 
 1.  **Is it included to OSS-Fuzz?** No
-1.  **Programming languages:** OTHER
+1.  **Programming languages:** None
 
 
 ### Memory-safety testing
@@ -345,7 +345,7 @@ This sub-score is based on 4 features:
 1.  **Does it use AddressSanitizer?** No
 1.  **Does it use MemorySanitizer?** No
 1.  **Does it use UndefinedBehaviorSanitizer?** No
-1.  **Programming languages:** OTHER
+1.  **Programming languages:** None
 
 
 ### Static analysis
@@ -399,7 +399,7 @@ This sub-score is based on 4 features:
 1.  **Does it use Dependabot?** No
 1.  **Does it use GitHub as the main development platform?** Yes
 1.  **Package managers:** None
-1.  **Programming languages:** OTHER
+1.  **Programming languages:** None
 
 
 ### OWASP Dependency Check score
@@ -431,7 +431,7 @@ This sub-score is based on 2 features:
 
 
 
-1.  **Programming languages:** OTHER
+1.  **Programming languages:** None
 1.  **The worst LGTM grade of the project:** unknown
 
 
@@ -450,7 +450,7 @@ This sub-score is based on 4 features:
 1.  **Does it run CodeQL scans?** No
 1.  **Does it use CodeQL checks for pull requests?** No
 1.  **Does it use LGTM checks?** No
-1.  **Programming languages:** OTHER
+1.  **Programming languages:** None
 
 
 ### FindSecBugs score
@@ -466,7 +466,7 @@ This sub-score is based on 2 features:
 
 
 1.  **Does it use FindSecBugs?** No
-1.  **Programming languages:** OTHER
+1.  **Programming languages:** None
 
 
 ## Known vulnerabilities

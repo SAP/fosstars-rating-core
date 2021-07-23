@@ -2,10 +2,10 @@
 
 |                  |                                                         | # or projects             |  % or projects              |
 | :--------------- | :------------------------------------------------------ | ------------------------: | --------------------------: |
-| Total            |                                                         | 29      |                        100% |
-| BAD ratings      | score below 4.43                        | 9      |      31.0% |
-| MODERATE ratings | score between 4.43 and 5.54 | 16 | 55.2% |
-| GOOD ratings     | score above 5.54                            | 4     |     13.8% |
+| Total            |                                                         | 24      |                        100% |
+| BAD ratings      | score below 4.43                        | 4      |      16.7% |
+| MODERATE ratings | score between 4.43 and 5.54 | 16 | 66.7% |
+| GOOD ratings     | score above 5.54                            | 4     |     16.7% |
 | UNCLEAR ratings  | confidence below 8.00                    | 0  |  0.0% |
 | UNKNOWN ratings  |                                                         | 0  |  0.0% |
 
@@ -13,33 +13,28 @@
 
 | Project | Stars | Score<br>from&nbsp;0&nbsp;to&nbsp;10 | Rating | Confidence | Last<br>updated |
 | ------- | ----: | -----------------------------------: | :----- | :--------- | --------------- |
-| [aws/aws-cli](aws/aws-cli.md) | [11249](https://github.com/aws/aws-cli) | 6.27 | [GOOD](aws/aws-cli.md) | 10.00 | Jul 23, 2021 |
-| [aws/chalice](aws/chalice.md) | [8116](https://github.com/aws/chalice) | 5.98 | [GOOD](aws/chalice.md) | 10.00 | Jul 23, 2021 |
-| [aws/serverless-application-model](aws/serverless-application-model.md) | [8039](https://github.com/aws/serverless-application-model) | 4.47 | [MODERATE](aws/serverless-application-model.md) | 10.00 | Jul 23, 2021 |
-| [aws/aws-cdk](aws/aws-cdk.md) | [7035](https://github.com/aws/aws-cdk) | 5.77 | [GOOD](aws/aws-cdk.md) | 10.00 | Jul 23, 2021 |
-| [aws/aws-sdk-go](aws/aws-sdk-go.md) | [7023](https://github.com/aws/aws-sdk-go) | 5.00 | [MODERATE](aws/aws-sdk-go.md) | 10.00 | Jul 23, 2021 |
-| [aws/aws-sdk-js](aws/aws-sdk-js.md) | [6677](https://github.com/aws/aws-sdk-js) | 5.43 | [MODERATE](aws/aws-sdk-js.md) | 10.00 | Jul 23, 2021 |
-| [aws/aws-sam-cli](aws/aws-sam-cli.md) | [5617](https://github.com/aws/aws-sam-cli) | 5.84 | [GOOD](aws/aws-sam-cli.md) | 10.00 | Jul 23, 2021 |
-| [aws/aws-sdk-php](aws/aws-sdk-php.md) | [5269](https://github.com/aws/aws-sdk-php) | 5.33 | [MODERATE](aws/aws-sdk-php.md) | 10.00 | Jul 23, 2021 |
-| [aws/s2n-tls](aws/s2n-tls.md) | [3973](https://github.com/aws/s2n-tls) | 4.39 | [BAD](aws/s2n-tls.md) | 10.00 | Jul 23, 2021 |
-| [aws/containers-roadmap](aws/containers-roadmap.md) | [3812](https://github.com/aws/containers-roadmap) | 3.27 | [BAD](aws/containers-roadmap.md) | 9.87 | Jul 23, 2021 |
-| [aws/aws-sdk-java](aws/aws-sdk-java.md) | [3575](https://github.com/aws/aws-sdk-java) | 5.13 | [MODERATE](aws/aws-sdk-java.md) | 10.00 | Jul 23, 2021 |
-| [aws/aws-sdk-ruby](aws/aws-sdk-ruby.md) | [3283](https://github.com/aws/aws-sdk-ruby) | 5.08 | [MODERATE](aws/aws-sdk-ruby.md) | 10.00 | Jul 23, 2021 |
-| [aws/aws-lambda-go](aws/aws-lambda-go.md) | [2673](https://github.com/aws/aws-lambda-go) | 3.02 | [BAD](aws/aws-lambda-go.md) | 9.87 | Jul 23, 2021 |
-| [aws/amazon-freertos](aws/amazon-freertos.md) | [2325](https://github.com/aws/amazon-freertos) | 4.69 | [MODERATE](aws/amazon-freertos.md) | 10.00 | Jul 23, 2021 |
-| [aws/amazon-ecs-agent](aws/amazon-ecs-agent.md) | [1825](https://github.com/aws/amazon-ecs-agent) | 4.57 | [MODERATE](aws/amazon-ecs-agent.md) | 9.87 | Jul 23, 2021 |
-| [aws/aws-sdk-net](aws/aws-sdk-net.md) | [1658](https://github.com/aws/aws-sdk-net) | 4.65 | [MODERATE](aws/aws-sdk-net.md) | 10.00 | Jul 23, 2021 |
-| [aws/lumberyard](aws/lumberyard.md) | [1637](https://github.com/aws/lumberyard) | 3.21 | [BAD](aws/lumberyard.md) | 10.00 | Jul 23, 2021 |
-| [aws/copilot-cli](aws/copilot-cli.md) | [1604](https://github.com/aws/copilot-cli) | 5.30 | [MODERATE](aws/copilot-cli.md) | 10.00 | Jul 23, 2021 |
-| [aws/amazon-ecs-cli](aws/amazon-ecs-cli.md) | [1572](https://github.com/aws/amazon-ecs-cli) | 4.40 | [BAD](aws/amazon-ecs-cli.md) | 10.00 | Jul 23, 2021 |
-| [aws/amazon-vpc-cni-k8s](aws/amazon-vpc-cni-k8s.md) | [1558](https://github.com/aws/amazon-vpc-cni-k8s) | 4.59 | [MODERATE](aws/amazon-vpc-cni-k8s.md) | 9.87 | Jul 23, 2021 |
-| [aws/sagemaker-python-sdk](aws/sagemaker-python-sdk.md) | [1431](https://github.com/aws/sagemaker-python-sdk) | 4.52 | [MODERATE](aws/sagemaker-python-sdk.md) | 10.00 | Jul 23, 2021 |
-| [aws/aws-sdk-php-laravel](aws/aws-sdk-php-laravel.md) | [1417](https://github.com/aws/aws-sdk-php-laravel) | 3.80 | [BAD](aws/aws-sdk-php-laravel.md) | 9.87 | Jul 23, 2021 |
-| [aws/jsii](aws/jsii.md) | [1278](https://github.com/aws/jsii) | 5.37 | [MODERATE](aws/jsii.md) | 10.00 | Jul 23, 2021 |
-| [aws/aws-sdk-cpp](aws/aws-sdk-cpp.md) | [1269](https://github.com/aws/aws-sdk-cpp) | 4.50 | [MODERATE](aws/aws-sdk-cpp.md) | 10.00 | Jul 23, 2021 |
-| [aws/aws-sdk-java-v2](aws/aws-sdk-java-v2.md) | [1185](https://github.com/aws/aws-sdk-java-v2) | 5.03 | [MODERATE](aws/aws-sdk-java-v2.md) | 10.00 | Jul 23, 2021 |
-| [aws/aws-fpga](aws/aws-fpga.md) | [1130](https://github.com/aws/aws-fpga) | 3.20 | [BAD](aws/aws-fpga.md) | 10.00 | Jul 23, 2021 |
-| [aws/opsworks-cookbooks](aws/opsworks-cookbooks.md) | [1058](https://github.com/aws/opsworks-cookbooks) | 3.33 | [BAD](aws/opsworks-cookbooks.md) | 10.00 | Jul 23, 2021 |
-| [aws/aws-sdk-js-v3](aws/aws-sdk-js-v3.md) | [1011](https://github.com/aws/aws-sdk-js-v3) | 4.99 | [MODERATE](aws/aws-sdk-js-v3.md) | 9.87 | Jul 23, 2021 |
-| [aws/aws-sdk-go-v2](aws/aws-sdk-go-v2.md) | [1002](https://github.com/aws/aws-sdk-go-v2) | 3.74 | [BAD](aws/aws-sdk-go-v2.md) | 9.87 | Jul 23, 2021 |
+| [google/guava](google/guava.md) | [41779](https://github.com/google/guava) | 6.03 | [GOOD](google/guava.md) | 10.00 | Jul 23, 2021 |
+| [google/leveldb](google/leveldb.md) | [25895](https://github.com/google/leveldb) | 4.84 | [MODERATE](google/leveldb.md) | 10.00 | Jul 23, 2021 |
+| [google/iosched](google/iosched.md) | [20633](https://github.com/google/iosched) | 4.68 | [MODERATE](google/iosched.md) | 10.00 | Jul 23, 2021 |
+| [google/python-fire](google/python-fire.md) | [19825](https://github.com/google/python-fire) | 4.43 | [MODERATE](google/python-fire.md) | 10.00 | Jul 23, 2021 |
+| [google/gson](google/gson.md) | [19810](https://github.com/google/gson) | 5.24 | [MODERATE](google/gson.md) | 10.00 | Jul 23, 2021 |
+| [google/web-starter-kit](google/web-starter-kit.md) | [18511](https://github.com/google/web-starter-kit) | 4.68 | [MODERATE](google/web-starter-kit.md) | 10.00 | Jul 23, 2021 |
+| [google/zx](google/zx.md) | [18155](https://github.com/google/zx) | 5.26 | [MODERATE](google/zx.md) | 9.87 | Jul 23, 2021 |
+| [google/ExoPlayer](google/ExoPlayer.md) | [18022](https://github.com/google/ExoPlayer) | 5.58 | [GOOD](google/ExoPlayer.md) | 10.00 | Jul 23, 2021 |
+| [google/flexbox-layout](google/flexbox-layout.md) | [16878](https://github.com/google/flexbox-layout) | 4.11 | [BAD](google/flexbox-layout.md) | 10.00 | Jul 23, 2021 |
+| [google/flatbuffers](google/flatbuffers.md) | [16541](https://github.com/google/flatbuffers) | 6.16 | [GOOD](google/flatbuffers.md) | 10.00 | Jul 23, 2021 |
+| [google/dagger](google/dagger.md) | [16153](https://github.com/google/dagger) | 5.26 | [MODERATE](google/dagger.md) | 9.87 | Jul 23, 2021 |
+| [google/jax](google/jax.md) | [13483](https://github.com/google/jax) | 4.98 | [MODERATE](google/jax.md) | 10.00 | Jul 23, 2021 |
+| [google/mediapipe](google/mediapipe.md) | [13124](https://github.com/google/mediapipe) | 3.81 | [BAD](google/mediapipe.md) | 10.00 | Jul 23, 2021 |
+| [google/deepdream](google/deepdream.md) | [12836](https://github.com/google/deepdream) | 3.62 | [BAD](google/deepdream.md) | 9.87 | Jul 23, 2021 |
+| [google/guetzli](google/guetzli.md) | [12582](https://github.com/google/guetzli) | 4.71 | [MODERATE](google/guetzli.md) | 10.00 | Jul 23, 2021 |
+| [google/cadvisor](google/cadvisor.md) | [12340](https://github.com/google/cadvisor) | 4.54 | [MODERATE](google/cadvisor.md) | 10.00 | Jul 23, 2021 |
+| [google/libphonenumber](google/libphonenumber.md) | [12281](https://github.com/google/libphonenumber) | 5.29 | [MODERATE](google/libphonenumber.md) | 10.00 | Jul 23, 2021 |
+| [google/yapf](google/yapf.md) | [11912](https://github.com/google/yapf) | 4.76 | [MODERATE](google/yapf.md) | 10.00 | Jul 23, 2021 |
+| [google/tink](google/tink.md) | [11471](https://github.com/google/tink) | 5.47 | [MODERATE](google/tink.md) | 10.00 | Jul 23, 2021 |
+| [google/gvisor](google/gvisor.md) | [11470](https://github.com/google/gvisor) | 5.63 | [GOOD](google/gvisor.md) | 10.00 | Jul 23, 2021 |
+| [google/filament](google/filament.md) | [11373](https://github.com/google/filament) | 5.03 | [MODERATE](google/filament.md) | 10.00 | Jul 23, 2021 |
+| [google/grumpy](google/grumpy.md) | [10347](https://github.com/google/grumpy) | 3.79 | [BAD](google/grumpy.md) | 10.00 | Jul 23, 2021 |
+| [google/guice](google/guice.md) | [10292](https://github.com/google/guice) | 4.72 | [MODERATE](google/guice.md) | 10.00 | Jul 23, 2021 |
+| [google/brotli](google/brotli.md) | [10214](https://github.com/google/brotli) | 4.92 | [MODERATE](google/brotli.md) | 10.00 | Jul 23, 2021 |
 
