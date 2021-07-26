@@ -2,10 +2,10 @@
 
 |                  |                                                         | # or projects             |  % or projects              |
 | :--------------- | :------------------------------------------------------ | ------------------------: | --------------------------: |
-| Total            |                                                         | 3      |                        100% |
-| BAD ratings      | score below 4.43                        | 3      |      100.0% |
-| MODERATE ratings | score between 4.43 and 5.54 | 0 | 0.0% |
-| GOOD ratings     | score above 5.54                            | 0     |     0.0% |
+| Total            |                                                         | 9      |                        100% |
+| BAD ratings      | score below 4.43                        | 3      |      33.3% |
+| MODERATE ratings | score between 4.43 and 5.54 | 5 | 55.6% |
+| GOOD ratings     | score above 5.54                            | 1     |     11.1% |
 | UNCLEAR ratings  | confidence below 8.00                    | 0  |  0.0% |
 | UNKNOWN ratings  |                                                         | 0  |  0.0% |
 
@@ -13,7 +13,13 @@
 
 | Project | Stars | Score<br>from&nbsp;0&nbsp;to&nbsp;10 | Rating | Confidence | Last<br>updated |
 | ------- | ----: | -----------------------------------: | :----- | :--------- | --------------- |
-| [FasterXML/jackson](FasterXML/jackson.md) | [6738](https://github.com/FasterXML/jackson) | 2.42 | [BAD](FasterXML/jackson.md) | 9.87 | Jul 23, 2021 |
-| [FasterXML/jackson-databind](FasterXML/jackson-databind.md) | [2862](https://github.com/FasterXML/jackson-databind) | 4.38 | [BAD](FasterXML/jackson-databind.md) | 10.00 | Jul 23, 2021 |
-| [FasterXML/jackson-core](FasterXML/jackson-core.md) | [1962](https://github.com/FasterXML/jackson-core) | 3.50 | [BAD](FasterXML/jackson-core.md) | 10.00 | Jul 23, 2021 |
+| [netty/netty](netty/netty.md) | [27198](https://github.com/netty/netty) | 5.82 | [GOOD](netty/netty.md) | 10.00 | Jul 26, 2021 |
+| [GoogleChrome/lighthouse](GoogleChrome/lighthouse.md) | [23130](https://github.com/GoogleChrome/lighthouse) | 5.22 | [MODERATE](GoogleChrome/lighthouse.md) | 10.00 | Jul 26, 2021 |
+| [curl/curl](curl/curl.md) | [21358](https://github.com/curl/curl) | 5.50 | [MODERATE](curl/curl.md) | 10.00 | Jul 26, 2021 |
+| [envoyproxy/envoy](envoyproxy/envoy.md) | [17524](https://github.com/envoyproxy/envoy) | 5.30 | [MODERATE](envoyproxy/envoy.md) | 10.00 | Jul 26, 2021 |
+| [openssl/openssl](openssl/openssl.md) | [16136](https://github.com/openssl/openssl) | 5.33 | [MODERATE](openssl/openssl.md) | 10.00 | Jul 26, 2021 |
+| [coredns/coredns](coredns/coredns.md) | [7910](https://github.com/coredns/coredns) | 5.54 | [MODERATE](coredns/coredns.md) | 9.87 | Jul 26, 2021 |
+| [madler/zlib](madler/zlib.md) | [2997](https://github.com/madler/zlib) | 3.13 | [BAD](madler/zlib.md) | 10.00 | Jul 26, 2021 |
+| [qos-ch/slf4j](qos-ch/slf4j.md) | [1691](https://github.com/qos-ch/slf4j) | 3.29 | [BAD](qos-ch/slf4j.md) | 10.00 | Jul 26, 2021 |
+| [netty/netty-tcnative](netty/netty-tcnative.md) | [192](https://github.com/netty/netty-tcnative) | 3.29 | [BAD](netty/netty-tcnative.md) | 9.87 | Jul 26, 2021 |
 
