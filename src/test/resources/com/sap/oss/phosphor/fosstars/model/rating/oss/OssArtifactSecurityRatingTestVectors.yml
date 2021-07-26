@@ -196,6 +196,11 @@ defaults:
       type: "SecurityReviewsFeature"
       name: "Security reviews for a project"
     reviews: []
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of projects on GitHub that use an open source project"
+    number: 5
 
 # test vectors
 elements:
@@ -269,6 +274,10 @@ elements:
         feature:
           type: "PositiveIntegerFeature"
           name: "Number of commits in the last three months"
+      - type: "UnknownValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of projects on GitHub that use an open source project"
       - type: "UnknownValue"
         feature:
           type: "BooleanFeature"
