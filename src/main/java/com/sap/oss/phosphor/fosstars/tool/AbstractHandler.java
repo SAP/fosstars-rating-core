@@ -351,8 +351,6 @@ public abstract class AbstractHandler implements Handler {
       logger.info("  {}", project.scm());
     }
 
-    nvd.preload();
-
     String projectCacheFile = projectCacheFile(config);
 
     logger.info("Starting calculating ratings ...");
