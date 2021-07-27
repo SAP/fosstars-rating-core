@@ -141,6 +141,9 @@ public class MarkdownBuilderTest {
     assertEquals(
         "This is a test string.",
         Markdown.string("This is a %s string.", "test").make());
+    assertEquals("", Markdown.string("").make());
+    assertEquals("%s", Markdown.string("%s").make());
+    assertEquals("%\"", Markdown.string("%\"").make());
   }
 
   @Test
