@@ -79,6 +79,12 @@ public class OssProjectSecurityRatingHandler extends AbstractHandler {
     });
   }
 
+  @Override
+  void processConfig(String filename) throws IOException {
+    nvd.preload();
+    super.processConfig(filename);
+  }
+
   /**
    * Calculate a rating for a single project identified by GAV coordinates.
    *
