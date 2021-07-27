@@ -14,6 +14,7 @@ import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -40,19 +41,24 @@ public class SingleRatingCalculator implements RatingCalculator {
   /**
    * A cache of feature values for GitHub projects.
    */
-  ValueCache<Subject> cache = NoValueCache.create();
+  private ValueCache<Subject> cache = NoValueCache.create();
 
   /**
    * An interface for interacting with a user.
    */
-  UserCallback callback = NoUserCallback.INSTANCE;
+  private UserCallback callback = NoUserCallback.INSTANCE;
 
   /**
    * An adaptor for subjects.
    * The default adaptor returns the same subject if a data provider supports it.
    */
-  SubjectAdaptor subjectAdaptor
+  private SubjectAdaptor subjectAdaptor
       = (subject, provider) -> Optional.of(subject).filter(provider::supports);
+
+  /**
+   * An action that should be run after calculating a rating.
+   */
+  private Consumer<Subject> doAfterAction;
 
   /**
    * Initializes a new calculator.
@@ -86,6 +92,18 @@ public class SingleRatingCalculator implements RatingCalculator {
   public SingleRatingCalculator set(SubjectAdaptor adaptor) {
     requireNonNull(adaptor, "Oh no! Subject adaptor is null!");
     this.subjectAdaptor = adaptor;
+    return this;
+  }
+
+  /**
+   * Set an action that should be run after calculating a rating.
+   *
+   * @param doAfterAction The action.
+   * @return The same calculator.
+   */
+  public SingleRatingCalculator doAfter(Consumer<Subject> doAfterAction) {
+    requireNonNull(doAfterAction, "Oh no! Action is null!");
+    this.doAfterAction = doAfterAction;
     return this;
   }
 
@@ -125,6 +143,10 @@ public class SingleRatingCalculator implements RatingCalculator {
         .forEach(value -> LOGGER.info("   {}: {}", value.feature(), value));
 
     subject.set(rating.calculate(values));
+
+    if (doAfterAction != null) {
+      doAfterAction.accept(subject);
+    }
 
     return this;
   }

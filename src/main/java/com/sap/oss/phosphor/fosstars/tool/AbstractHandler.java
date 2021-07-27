@@ -13,6 +13,7 @@ import com.sap.oss.phosphor.fosstars.data.NoUserCallback;
 import com.sap.oss.phosphor.fosstars.data.SubjectValueCache;
 import com.sap.oss.phosphor.fosstars.data.UserCallback;
 import com.sap.oss.phosphor.fosstars.data.github.GitHubDataFetcher;
+import com.sap.oss.phosphor.fosstars.data.github.GitHubDataFetcher.CleanupStrategy;
 import com.sap.oss.phosphor.fosstars.model.Rating;
 import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
@@ -127,7 +128,24 @@ public abstract class AbstractHandler implements Handler {
    */
   SingleRatingCalculator calculator() throws IOException {
     List<DataProvider> providers = dataProviderSelector().providersFor(rating);
-    return new SingleRatingCalculator(rating, providers).set(cache).set(callback);
+    SingleRatingCalculator calculator
+        = new SingleRatingCalculator(rating, providers).set(cache).set(callback);
+
+    if (commandLine.hasOption("cleanup")) {
+      calculator.doAfter(subject -> {
+        if (subject instanceof GitHubProject) {
+          GitHubProject project = (GitHubProject) subject;
+          CleanupStrategy processedRepository = (url, info, total) -> project.scm().equals(url);
+          try {
+            fetcher.cleanup(processedRepository);
+          } catch (IOException e) {
+            logger.warn("Oops! Could not clean up!", e);
+          }
+        }
+      });
+    }
+
+    return calculator;
   }
 
   /**
