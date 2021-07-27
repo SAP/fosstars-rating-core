@@ -48,11 +48,6 @@ public class LocalRepository implements AutoCloseable {
   private final LocalRepositoryInfo info;
 
   /**
-   * A list of commits in the repository.
-   */
-  private final List<GitCommit> commits = new ArrayList<>();
-
-  /**
    * An instance of {@link Repository} from JGit.
    */
   private final Repository repository;
@@ -94,8 +89,18 @@ public class LocalRepository implements AutoCloseable {
    */
   @JsonIgnore
   public List<GitCommit> commits() throws IOException {
-    loadCommitsIfNecessary();
-    return new ArrayList<>(commits);
+    List<GitCommit> commits = new ArrayList<>();
+    try (Git git = new Git(repository)) {
+      for (RevCommit rev : git.log().call()) {
+        commits.add(new GitCommit(rev));
+      }
+    } catch (GitAPIException e) {
+      throw new IOException("Could not list commits!", e);
+    }
+
+    commits.sort(Comparator.comparing(Commit::date).reversed());
+
+    return commits;
   }
 
   /**
@@ -109,10 +114,8 @@ public class LocalRepository implements AutoCloseable {
   public List<Commit> commitsAfter(Date date) throws IOException {
     Objects.requireNonNull(date, "Hey! Date can't be null!");
 
-    loadCommitsIfNecessary();
-
     List<Commit> result = new ArrayList<>();
-    for (Commit commit : commits) {
+    for (Commit commit : commits()) {
       if (commit.date().before(date)) {
         break;
       }
@@ -144,7 +147,7 @@ public class LocalRepository implements AutoCloseable {
    */
   @JsonIgnore
   public Optional<Commit> firstCommit() throws IOException {
-    loadCommitsIfNecessary();
+    List<GitCommit> commits = commits();
 
     if (commits.isEmpty()) {
       return Optional.empty();
@@ -178,7 +181,6 @@ public class LocalRepository implements AutoCloseable {
     } catch (GitAPIException e) {
       throw new IOException("Could not pull to repository!", e);
     }
-    commits.clear();
   }
 
   /**
@@ -358,7 +360,7 @@ public class LocalRepository implements AutoCloseable {
    * @throws IOException If something went wrong.
    */
   public Double changedSince(Date date, Predicate<Path> toConsider) throws IOException {
-    loadCommitsIfNecessary();
+    List<GitCommit> commits = commits();
 
     if (commits.isEmpty()) {
       return NO_CHANGES;
@@ -394,9 +396,10 @@ public class LocalRepository implements AutoCloseable {
    * @param date The date.
    * @return The first commit after the specified date if found.
    */
-  Optional<GitCommit> firstCommitAfter(Date date) {
+  Optional<GitCommit> firstCommitAfter(Date date) throws IOException {
     int i = 0;
     GitCommit target = null;
+    List<GitCommit> commits = commits();
     while (i < commits.size()) {
       if (commits.get(i).date().before(date)) {
         break;
@@ -421,26 +424,5 @@ public class LocalRepository implements AutoCloseable {
 
     Path path = info.path().resolve(Paths.get(entryPath));
     return criteria.test(path) ? Optional.of(path) : Optional.empty();
-  }
-
-  /**
-   * Loads commits in the repository.
-   *
-   * @throws IOException If something went wrong.
-   */
-  private void loadCommitsIfNecessary() throws IOException {
-    if (!commits.isEmpty()) {
-      return;
-    }
-
-    try (Git git = new Git(repository)) {
-      for (RevCommit rev : git.log().call()) {
-        commits.add(new GitCommit(rev));
-      }
-    } catch (GitAPIException e) {
-      throw new IOException("Could not list commits!", e);
-    }
-
-    commits.sort(Comparator.comparing(Commit::date).reversed());
   }
 }
