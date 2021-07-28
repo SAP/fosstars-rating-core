@@ -10,6 +10,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.IS_ECL
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.LANGUAGES;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_COMMITS_LAST_THREE_MONTHS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_DEPENDENT_PROJECTS_ON_GITHUB;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_GITHUB_STARS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_WATCHERS_ON_GITHUB;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD;
@@ -176,6 +177,7 @@ public class TestUtils {
         NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(3),
         NUMBER_OF_GITHUB_STARS.value(10),
         NUMBER_OF_WATCHERS_ON_GITHUB.value(5),
+        NUMBER_OF_DEPENDENT_PROJECTS_ON_GITHUB.value(10),
         HAS_SECURITY_TEAM.value(false),
         HAS_SECURITY_POLICY.value(false),
         HAS_BUG_BOUNTY_PROGRAM.value(false),
@@ -226,6 +228,7 @@ public class TestUtils {
         NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(30),
         NUMBER_OF_GITHUB_STARS.value(100000),
         NUMBER_OF_WATCHERS_ON_GITHUB.value(50),
+        NUMBER_OF_DEPENDENT_PROJECTS_ON_GITHUB.value(50000),
         HAS_SECURITY_TEAM.value(true),
         HAS_SECURITY_POLICY.value(true),
         HAS_BUG_BOUNTY_PROGRAM.value(true),

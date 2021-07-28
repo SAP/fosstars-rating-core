@@ -10,6 +10,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.IS_ECL
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.LANGUAGES;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_COMMITS_LAST_THREE_MONTHS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_DEPENDENT_PROJECTS_ON_GITHUB;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_GITHUB_STARS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_WATCHERS_ON_GITHUB;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD;
@@ -75,6 +76,7 @@ public class PrettyPrinterTest {
       IS_ECLIPSE.value(false),
       NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(50),
       NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(3),
+      NUMBER_OF_DEPENDENT_PROJECTS_ON_GITHUB.value(42),
       NUMBER_OF_GITHUB_STARS.value(10),
       NUMBER_OF_WATCHERS_ON_GITHUB.value(5),
       HAS_SECURITY_TEAM.value(false),

@@ -11,6 +11,10 @@ elements:
     feature:
       type: "PositiveIntegerFeature"
       name: "Number of watchers for a GitHub repository"
+  - type: "UnknownValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of projects on GitHub that use an open source project"
   expectedScore:
     type: "DoubleInterval"
     from: 0.0
@@ -32,6 +36,11 @@ elements:
     feature:
       type: "PositiveIntegerFeature"
       name: "Number of watchers for a GitHub repository"
+    number: 0
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of projects on GitHub that use an open source project"
     number: 0
   expectedScore:
     type: "DoubleInterval"
@@ -55,6 +64,11 @@ elements:
       type: "PositiveIntegerFeature"
       name: "Number of watchers for a GitHub repository"
     number: 0
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of projects on GitHub that use an open source project"
+    number: 100
   expectedScore:
     type: "DoubleInterval"
     from: 0.0
@@ -77,6 +91,11 @@ elements:
       type: "PositiveIntegerFeature"
       name: "Number of watchers for a GitHub repository"
     number: 0
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of projects on GitHub that use an open source project"
+    number: 1000
   expectedScore:
     type: "DoubleInterval"
     from: 0.0
@@ -99,6 +118,11 @@ elements:
       type: "PositiveIntegerFeature"
       name: "Number of watchers for a GitHub repository"
     number: 0
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of projects on GitHub that use an open source project"
+    number: 50
   expectedScore:
     type: "DoubleInterval"
     from: 1.0
@@ -121,6 +145,11 @@ elements:
       type: "PositiveIntegerFeature"
       name: "Number of stars for a GitHub repository"
     number: 10
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of projects on GitHub that use an open source project"
+    number: 15
   expectedScore:
     type: "DoubleInterval"
     from: 0.0
@@ -143,12 +172,17 @@ elements:
       type: "PositiveIntegerFeature"
       name: "Number of watchers for a GitHub repository"
     number: 10
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of projects on GitHub that use an open source project"
+    number: 800
   expectedScore:
     type: "DoubleInterval"
-    from: 0.0
+    from: 0.5
     openLeft: false
     negativeInfinity: false
-    to: 2.0
+    to: 1.5
     openRight: false
     positiveInfinity: false
   expectedLabel: null
@@ -165,12 +199,17 @@ elements:
       type: "PositiveIntegerFeature"
       name: "Number of stars for a GitHub repository"
     number: 1000
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of projects on GitHub that use an open source project"
+    number: 5400
   expectedScore:
     type: "DoubleInterval"
-    from: 1.0
+    from: 4.5
     openLeft: false
     negativeInfinity: false
-    to: 2.0
+    to: 5.0
     openRight: false
     positiveInfinity: false
   expectedLabel: null
@@ -187,9 +226,14 @@ elements:
       type: "PositiveIntegerFeature"
       name: "Number of stars for a GitHub repository"
     number: 5000
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of projects on GitHub that use an open source project"
+    number: 100
   expectedScore:
     type: "DoubleInterval"
-    from: 4.0
+    from: 5.0
     openLeft: false
     negativeInfinity: false
     to: 6.0
@@ -208,13 +252,18 @@ elements:
     feature:
       type: "PositiveIntegerFeature"
       name: "Number of stars for a GitHub repository"
-    number: 10000
+    number: 5000
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of projects on GitHub that use an open source project"
+    number: 4000
   expectedScore:
     type: "DoubleInterval"
     from: 8.0
     openLeft: false
     negativeInfinity: false
-    to: 10.0
+    to: 9.0
     openRight: false
     positiveInfinity: false
   expectedLabel: null
@@ -231,6 +280,11 @@ elements:
       type: "PositiveIntegerFeature"
       name: "Number of stars for a GitHub repository"
     number: 20000
+  - type: "IntegerValue"
+    feature:
+      type: "PositiveIntegerFeature"
+      name: "Number of projects on GitHub that use an open source project"
+    number: 5000
   expectedScore:
     type: "DoubleInterval"
     from: 9.0
