@@ -1,4 +1,4 @@
-package com.sap.oss.phosphor.fosstars.data.artifact.experimental.owasp.data;
+package com.sap.oss.phosphor.fosstars.owasp.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -7,13 +7,13 @@ import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class VulnerableSoftware implements Serializable {
+public class Cvssv3 implements Serializable {
 
-  @JsonProperty("software")
-  private Software software;
+  @JsonProperty("baseScore")
+  private float baseScore;
 
-  @JsonProperty("software")
-  public Software getSoftware() {
-    return software;
+  @JsonProperty("baseScore")
+  public float getBaseScore() {
+    return baseScore;
   }
 }

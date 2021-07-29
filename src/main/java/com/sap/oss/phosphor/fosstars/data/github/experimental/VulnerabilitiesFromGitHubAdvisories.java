@@ -12,7 +12,7 @@ import com.sap.oss.phosphor.fosstars.data.github.experimental.graphql.data.Advis
 import com.sap.oss.phosphor.fosstars.data.github.experimental.graphql.data.Node;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Value;
-import com.sap.oss.phosphor.fosstars.model.feature.oss.VulnerabilitiesInProject;
+import com.sap.oss.phosphor.fosstars.model.feature.oss.VulnerabilitiesFeature;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.PackageManager;
 import com.sap.oss.phosphor.fosstars.model.value.Reference;
@@ -41,7 +41,7 @@ public class VulnerabilitiesFromGitHubAdvisories
    * A feature that holds info about vulnerabilities in the GitHub Advisory Database.
    */
   public static final Feature<Vulnerabilities> VULNERABILITIES_IN_ADVISORIES =
-      new VulnerabilitiesInProject(
+      new VulnerabilitiesFeature(
           "Info about vulnerabilities in an open-source project from GitHub Security Advisories");
 
   /**

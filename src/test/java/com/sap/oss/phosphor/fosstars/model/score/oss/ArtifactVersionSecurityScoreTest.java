@@ -10,7 +10,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.PACKAGE_MANAGERS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RELEASED_ARTIFACT_VERSIONS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES_IN_ARTIFACT;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.MAVEN;
 import static org.junit.Assert.assertEquals;
@@ -68,7 +68,7 @@ public class ArtifactVersionSecurityScoreTest {
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(false)),
         ARTIFACT_VERSION.value(new ArtifactVersion("1.2.0", LocalDateTime.now())),
         SUPPORTED_BY_COMPANY.value(false),
-        VULNERABILITIES.value(new Vulnerabilities()),
+        VULNERABILITIES_IN_ARTIFACT.value(new Vulnerabilities()),
         IS_APACHE.value(true),
         IS_ECLIPSE.value(false),
         PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)));
@@ -89,7 +89,7 @@ public class ArtifactVersionSecurityScoreTest {
         SUPPORTED_BY_COMPANY.value(false),
         IS_APACHE.value(true),
         IS_ECLIPSE.value(false),
-        VULNERABILITIES.value(new Vulnerabilities()),
+        VULNERABILITIES_IN_ARTIFACT.value(new Vulnerabilities()),
         NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(50),
         NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(3),
         NUMBER_OF_GITHUB_STARS.value(10),
@@ -111,7 +111,7 @@ public class ArtifactVersionSecurityScoreTest {
         SUPPORTED_BY_COMPANY.value(false),
         IS_APACHE.value(true),
         IS_ECLIPSE.value(false),
-        VULNERABILITIES.value(new Vulnerabilities()),
+        VULNERABILITIES_IN_ARTIFACT.value(new Vulnerabilities()),
         NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(50),
         NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(3),
         NUMBER_OF_GITHUB_STARS.value(10),
@@ -132,7 +132,7 @@ public class ArtifactVersionSecurityScoreTest {
         SUPPORTED_BY_COMPANY.value(false),
         IS_APACHE.value(true),
         IS_ECLIPSE.value(false),
-        VULNERABILITIES.value(new Vulnerabilities()),
+        VULNERABILITIES_IN_ARTIFACT.value(new Vulnerabilities()),
         NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(50),
         NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(3),
         NUMBER_OF_GITHUB_STARS.value(10),
@@ -154,7 +154,7 @@ public class ArtifactVersionSecurityScoreTest {
         SUPPORTED_BY_COMPANY.value(false),
         IS_APACHE.value(true),
         IS_ECLIPSE.value(false),
-        VULNERABILITIES.value(new Vulnerabilities(vulnerability)),
+        VULNERABILITIES_IN_ARTIFACT.value(new Vulnerabilities(vulnerability)),
         NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(50),
         NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(3),
         NUMBER_OF_GITHUB_STARS.value(10),
@@ -176,7 +176,7 @@ public class ArtifactVersionSecurityScoreTest {
         SUPPORTED_BY_COMPANY.value(false),
         IS_APACHE.value(true),
         IS_ECLIPSE.value(false),
-        VULNERABILITIES.value(new Vulnerabilities(vulnerability)),
+        VULNERABILITIES_IN_ARTIFACT.value(new Vulnerabilities(vulnerability)),
         NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(50),
         NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(3),
         NUMBER_OF_GITHUB_STARS.value(10),
@@ -198,7 +198,7 @@ public class ArtifactVersionSecurityScoreTest {
         SUPPORTED_BY_COMPANY.value(false),
         IS_APACHE.value(true),
         IS_ECLIPSE.value(false),
-        VULNERABILITIES.value(new Vulnerabilities(vulnerability)),
+        VULNERABILITIES_IN_ARTIFACT.value(new Vulnerabilities(vulnerability)),
         NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(50),
         NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(3),
         NUMBER_OF_GITHUB_STARS.value(10),

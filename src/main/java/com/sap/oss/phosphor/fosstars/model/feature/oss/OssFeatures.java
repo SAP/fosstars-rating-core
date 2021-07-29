@@ -135,16 +135,16 @@ public class OssFeatures {
       = new BooleanFeature("If an open-source project is included to OSS-Fuzz project");
 
   /**
-   * Provides information about vulnerabilities.
+   * Provides information about vulnerabilities in project.
    */
-  public static final Feature<Vulnerabilities> VULNERABILITIES
-      = new VulnerabilitiesInProject("Info about vulnerabilities in open-source project");
+  public static final Feature<Vulnerabilities> VULNERABILITIES_IN_PROJECT
+      = new VulnerabilitiesFeature("Info about vulnerabilities in open-source project");
 
   /**
    * Provides information about vulnerabilities in artifact.
    */
   public static final Feature<Vulnerabilities> VULNERABILITIES_IN_ARTIFACT
-      = new VulnerabilitiesInProject("Info about vulnerabilities in open-source artifact");
+      = new VulnerabilitiesFeature("Info about vulnerabilities in open-source artifact");
 
   /**
    * Shows if an open-source project scans for known vulnerabilities in its dependencies.

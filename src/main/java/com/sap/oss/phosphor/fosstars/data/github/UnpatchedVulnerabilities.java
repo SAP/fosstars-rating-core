@@ -3,7 +3,7 @@ package com.sap.oss.phosphor.fosstars.data.github;
 import com.sap.oss.phosphor.fosstars.data.json.UnpatchedVulnerabilitiesStorage;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Value;
-import com.sap.oss.phosphor.fosstars.model.feature.oss.VulnerabilitiesInProject;
+import com.sap.oss.phosphor.fosstars.model.feature.oss.VulnerabilitiesFeature;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
 import java.io.IOException;
@@ -18,7 +18,7 @@ public class UnpatchedVulnerabilities
    * A feature that hold info about unpatched vulnerabilities.
    */
   private static final Feature<Vulnerabilities> UNPATCHED_VULNERABILITIES
-      = new VulnerabilitiesInProject(
+      = new VulnerabilitiesFeature(
           "Info about unpatched vulnerabilities in an open-source project");
 
   /**

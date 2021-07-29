@@ -48,7 +48,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_O
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_REUSE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SIGNED_COMMITS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_UNDEFINED_BEHAVIOR_SANITIZER;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES_IN_PROJECT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 
 import com.sap.oss.phosphor.fosstars.advice.Advisor;
@@ -147,7 +147,7 @@ public abstract class CommonFormatter implements Formatter {
     add(HAS_SECURITY_TEAM, "Does it have a security team?");
     add(HAS_SECURITY_POLICY, "Does it have a security policy?");
     add(USES_SIGNED_COMMITS, "Does it use verified signed commits?");
-    add(VULNERABILITIES, "Info about vulnerabilities");
+    add(VULNERABILITIES_IN_PROJECT, "Info about vulnerabilities");
     add(IS_APACHE, "Does it belong to Apache?");
     add(IS_ECLIPSE, "Does it belong to Eclipse?");
     add(SUPPORTED_BY_COMPANY, "Is it supported by a company?");

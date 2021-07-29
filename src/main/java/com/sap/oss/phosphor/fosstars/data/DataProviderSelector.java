@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import com.sap.oss.phosphor.fosstars.data.artifact.ReleaseInfoFromMaven;
 import com.sap.oss.phosphor.fosstars.data.artifact.ReleaseInfoFromNpm;
+import com.sap.oss.phosphor.fosstars.data.artifact.VulnerabilitiesFromOwaspDependencyCheck;
 import com.sap.oss.phosphor.fosstars.data.github.CodeqlDataProvider;
 import com.sap.oss.phosphor.fosstars.data.github.ContributingGuidelineInfo;
 import com.sap.oss.phosphor.fosstars.data.github.FuzzedInOssFuzz;
@@ -109,6 +110,7 @@ public class DataProviderSelector {
         new VulnerabilityAlertsInfo(fetcher),
         new SecurityReviewsFromOpenSSF(fetcher),
         new NumberOfDependentProjectOnGitHub(fetcher),
+        new VulnerabilitiesFromOwaspDependencyCheck(),
 
         // currently interactive data provider have to be added to the end, see issue #133
         new AskAboutSecurityTeam(),

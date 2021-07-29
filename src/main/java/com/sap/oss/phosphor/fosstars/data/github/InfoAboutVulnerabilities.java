@@ -1,6 +1,6 @@
 package com.sap.oss.phosphor.fosstars.data.github;
 
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES_IN_PROJECT;
 
 import com.sap.oss.phosphor.fosstars.data.DataProvider;
 import com.sap.oss.phosphor.fosstars.model.Feature;
@@ -17,14 +17,15 @@ import java.util.Objects;
 
 /**
  * This data provider tries to fill out the
- * {@link com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures#VULNERABILITIES} feature.
- * It is based on the following data providers:
+ * {@link com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures#VULNERABILITIES_IN_PROJECT}
+ * feature. It is based on the following data providers:
  * <ul>
  *   <li>{@link UnpatchedVulnerabilities}</li>
  *   <li>{@link VulnerabilitiesFromNvd}</li>
  * </ul>
- * The data provider cache a value for
- * the {@link com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures#VULNERABILITIES} feature.
+ * The data provider cache a value for the
+ * {@link com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures#VULNERABILITIES_IN_PROJECT}
+ * feature.
  */
 public class InfoAboutVulnerabilities
     extends CachedSingleFeatureGitHubDataProvider<Vulnerabilities> {
@@ -51,7 +52,7 @@ public class InfoAboutVulnerabilities
 
   @Override
   protected Feature<Vulnerabilities> supportedFeature() {
-    return VULNERABILITIES;
+    return VULNERABILITIES_IN_PROJECT;
   }
 
   @Override
@@ -74,6 +75,6 @@ public class InfoAboutVulnerabilities
       }
     }
 
-    return VULNERABILITIES.value(allVulnerabilities);
+    return VULNERABILITIES_IN_PROJECT.value(allVulnerabilities);
   }
 }

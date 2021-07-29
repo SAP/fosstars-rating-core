@@ -1,4 +1,4 @@
-package com.sap.oss.phosphor.fosstars.data.artifact.experimental.owasp.data;
+package com.sap.oss.phosphor.fosstars.owasp.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -7,13 +7,13 @@ import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Cvssv3 implements Serializable {
+public class Cvssv2 implements Serializable {
 
-  @JsonProperty("baseScore")
-  private float baseScore;
+  @JsonProperty("score")
+  private float score;
 
-  @JsonProperty("baseScore")
-  public float getBaseScore() {
-    return baseScore;
+  @JsonProperty("score")
+  public float getScore() {
+    return score;
   }
 }

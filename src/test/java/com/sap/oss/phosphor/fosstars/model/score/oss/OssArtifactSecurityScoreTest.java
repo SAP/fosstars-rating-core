@@ -3,7 +3,7 @@ package com.sap.oss.phosphor.fosstars.model.score.oss;
 import static com.sap.oss.phosphor.fosstars.TestUtils.getDefaultValues;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ARTIFACT_VERSION;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RELEASED_ARTIFACT_VERSIONS;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES_IN_ARTIFACT;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -112,7 +112,7 @@ public class OssArtifactSecurityScoreTest {
 
     Set<Value<?>> values = getDefaultValues(
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(true)),
-        VULNERABILITIES.value(new Vulnerabilities(vulnerability)),
+        VULNERABILITIES_IN_ARTIFACT.value(new Vulnerabilities(vulnerability)),
         ARTIFACT_VERSION.value(new ArtifactVersion("2.0.0", LocalDateTime.now())));
 
     ScoreValue scoreValue = score.calculate(values);
@@ -128,7 +128,7 @@ public class OssArtifactSecurityScoreTest {
 
     Set<Value<?>> values = getDefaultValues(
         RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(true)),
-        VULNERABILITIES.value(new Vulnerabilities(vulnerability)),
+        VULNERABILITIES_IN_ARTIFACT.value(new Vulnerabilities(vulnerability)),
         ARTIFACT_VERSION.value(new ArtifactVersion("2.0.0", LocalDateTime.now())));
 
     ScoreValue scoreValue = score.calculate(values);

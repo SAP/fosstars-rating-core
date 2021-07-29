@@ -12,7 +12,7 @@ import com.sap.oss.phosphor.fosstars.model.value.VulnerabilitiesValue;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 
-public class VulnerabilitiesInProject extends AbstractFeature<Vulnerabilities> {
+public class VulnerabilitiesFeature extends AbstractFeature<Vulnerabilities> {
 
   /**
    * For deserialization.
@@ -29,13 +29,13 @@ public class VulnerabilitiesInProject extends AbstractFeature<Vulnerabilities> {
    * @param name A name of the feature.
    */
   @JsonCreator
-  public VulnerabilitiesInProject(@JsonProperty("name") String name) {
+  public VulnerabilitiesFeature(@JsonProperty("name") String name) {
     super(name);
   }
 
   @Override
   public Value<Vulnerabilities> value(Vulnerabilities entries) {
-    return new VulnerabilitiesValue(entries);
+    return new VulnerabilitiesValue(this, entries);
   }
 
   /**

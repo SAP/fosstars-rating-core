@@ -201,6 +201,12 @@ defaults:
       type: "PositiveIntegerFeature"
       name: "Number of projects on GitHub that use an open source project"
     number: 5
+  - type: "VulnerabilitiesValue"
+    feature:
+      type: "VulnerabilitiesFeature"
+      name: "Info about vulnerabilities in open-source project"
+    vulnerabilities:
+      entries: []
 
 # test vectors
 elements:
@@ -256,8 +262,12 @@ elements:
           name: "If an open-source project has a security policy"
       - type: "UnknownValue"
         feature:
-          type: "VulnerabilitiesInProject"
+          type: "VulnerabilitiesFeature"
           name: "Info about vulnerabilities in open-source project"
+      - type: "UnknownValue"
+        feature:
+          type: "VulnerabilitiesFeature"
+          name: "Info about vulnerabilities in open-source artifact"
       - type: "UnknownValue"
         feature:
           type: "PositiveIntegerFeature"
@@ -310,6 +320,9 @@ elements:
   - type: "StandardTestVector"
     values:
       - type: "VulnerabilitiesValue"
+        feature:
+          type: "VulnerabilitiesFeature"
+          name: "Info about vulnerabilities in open-source artifact"
         vulnerabilities:
           entries:
             - id: "VULN-123-1"
@@ -354,6 +367,9 @@ elements:
   - type: "StandardTestVector"
     values:
       - type: "VulnerabilitiesValue"
+        feature:
+          type: "VulnerabilitiesFeature"
+          name: "Info about vulnerabilities in open-source artifact"
         vulnerabilities:
           entries:
             - id: "VULN-123-1"
@@ -405,6 +421,9 @@ elements:
           version: ""
           age: "p1d"
       - type: "VulnerabilitiesValue"
+        feature:
+          type: "VulnerabilitiesFeature"
+          name: "Info about vulnerabilities in open-source artifact"
         vulnerabilities:
           entries:
             - id: "VULN-123-1"
@@ -477,6 +496,9 @@ elements:
           name: "The worst LGTM grade of a project"
         value: "C"
       - type: "VulnerabilitiesValue"
+        feature:
+          type: "VulnerabilitiesFeature"
+          name: "Info about vulnerabilities in open-source artifact"
         vulnerabilities:
           entries:
             - id: "VULN-123-1"
@@ -556,6 +578,9 @@ elements:
           name: "If a project uses Dependabot"
         flag: false
       - type: "VulnerabilitiesValue"
+        feature:
+          type: "VulnerabilitiesFeature"
+          name: "Info about vulnerabilities in open-source artifact"
         vulnerabilities:
           entries:
             - id: "VULN-123-1"

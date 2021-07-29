@@ -1,6 +1,6 @@
 package com.sap.oss.phosphor.fosstars.data.interactive;
 
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES_IN_PROJECT;
 import static com.sap.oss.phosphor.fosstars.model.value.Vulnerability.Builder.newVulnerability;
 import static com.sap.oss.phosphor.fosstars.tool.YesNoQuestion.Answer.YES;
 
@@ -53,18 +53,19 @@ public class AskAboutUnpatchedVulnerabilities extends AbstractInteractiveDataPro
 
   /**
    * Searches for
-   * {@link com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures#VULNERABILITIES}
+   * {@link com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures#VULNERABILITIES_IN_PROJECT}
    * feature a set of values.
    *
    * @param values The set of value.
    * @return An existing value for the feature, or an empty value otherwise.
    */
   private static Value<Vulnerabilities> knownVulnerabilities(ValueSet values) {
-    return values.of(VULNERABILITIES).orElseGet(() -> VULNERABILITIES.value(new Vulnerabilities()));
+    return values.of(VULNERABILITIES_IN_PROJECT)
+        .orElseGet(() -> VULNERABILITIES_IN_PROJECT.value(new Vulnerabilities()));
   }
 
   @Override
   public Set<Feature<?>> supportedFeatures() {
-    return Collections.singleton(VULNERABILITIES);
+    return Collections.singleton(VULNERABILITIES_IN_PROJECT);
   }
 }
