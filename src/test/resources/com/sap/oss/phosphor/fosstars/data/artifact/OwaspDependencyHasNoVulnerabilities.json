@@ -1,0 +1,362 @@
+{
+    "reportSchema": "1.1",
+    "scanInfo": {
+        "engineVersion": "6.2.2",
+        "dataSource": [
+            {
+                "name": "NVD CVE Checked",
+                "timestamp": "2021-07-28T15:08:24"
+            },
+            {
+                "name": "NVD CVE Modified",
+                "timestamp": "2021-07-28T14:00:06"
+            },
+            {
+                "name": "VersionCheckOn",
+                "timestamp": "2021-07-13T16:42:04"
+            }
+        ]
+    },
+    "projectInfo": {
+        "name": "jackson-databind-2.9.1.jar",
+        "reportDate": "2021-07-28T13:26:57.202Z",
+        "credits": {
+            "NVD": "This report contains data retrieved from the National Vulnerability Database: http://nvd.nist.gov",
+            "NPM": "This report may contain data retrieved from the NPM Public Advisories: https://www.npmjs.com/advisories",
+            "RETIREJS": "This report may contain data retrieved from the RetireJS community: https://retirejs.github.io/retire.js/",
+            "OSSINDEX": "This report may contain data retrieved from the Sonatype OSS Index: https://ossindex.sonatype.org"
+        }
+    },
+    "dependencies": [
+        {
+            "isVirtual": false,
+            "fileName": "jackson-databind-2.9.1.jar",
+            "filePath": "C:\\Users\\D067452\\eclipseWorkspace\\fosstars\\fosstars-rating-core\\.fosstars\\jars\\jackson-databind-2.9.1.jar",
+            "md5": "88d151266214f04685a7b5630cb3f55a",
+            "sha1": "716da1830a2043f18882fc036ec26eb32cbe5aff",
+            "sha256": "17b28ec21ae487bb9a0570b6c0ec66b2277d47546d4089c3a5a2b3e60054134c",
+            "description": "General data-binding functionality for Jackson: works on core streaming API",
+            "license": "http:\/\/www.apache.org\/licenses\/LICENSE-2.0.txt",
+            "evidenceCollected": {
+                "vendorEvidence": [
+                    {
+                        "type": "vendor",
+                        "confidence": "HIGH",
+                        "source": "file",
+                        "name": "name",
+                        "value": "jackson-databind"
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "HIGHEST",
+                        "source": "jar",
+                        "name": "package name",
+                        "value": "databind"
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "HIGHEST",
+                        "source": "jar",
+                        "name": "package name",
+                        "value": "fasterxml"
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "HIGHEST",
+                        "source": "jar",
+                        "name": "package name",
+                        "value": "jackson"
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "MEDIUM",
+                        "source": "Manifest",
+                        "name": "automatic-module-name",
+                        "value": "com.fasterxml.jackson.databind"
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "LOW",
+                        "source": "Manifest",
+                        "name": "bundle-docurl",
+                        "value": "http:\/\/github.com\/FasterXML\/jackson"
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "MEDIUM",
+                        "source": "Manifest",
+                        "name": "bundle-symbolicname",
+                        "value": "com.fasterxml.jackson.core.jackson-databind"
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "LOW",
+                        "source": "Manifest",
+                        "name": "implementation-build-date",
+                        "value": "2017-09-08 01:09:29+0000"
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "HIGH",
+                        "source": "Manifest",
+                        "name": "Implementation-Vendor",
+                        "value": "FasterXML"
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "MEDIUM",
+                        "source": "Manifest",
+                        "name": "Implementation-Vendor-Id",
+                        "value": "com.fasterxml.jackson.core"
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "LOW",
+                        "source": "Manifest",
+                        "name": "require-capability",
+                        "value": "osgi.ee;filter:=\"(&(osgi.ee=JavaSE)(version=1.7))\""
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "LOW",
+                        "source": "Manifest",
+                        "name": "specification-vendor",
+                        "value": "FasterXML"
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "LOW",
+                        "source": "pom",
+                        "name": "artifactid",
+                        "value": "jackson-databind"
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "HIGHEST",
+                        "source": "pom",
+                        "name": "groupid",
+                        "value": "fasterxml.jackson.core"
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "HIGH",
+                        "source": "pom",
+                        "name": "name",
+                        "value": "jackson-databind"
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "LOW",
+                        "source": "pom",
+                        "name": "parent-artifactid",
+                        "value": "jackson-bom"
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "MEDIUM",
+                        "source": "pom",
+                        "name": "parent-groupid",
+                        "value": "com.fasterxml.jackson"
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "HIGHEST",
+                        "source": "pom",
+                        "name": "url",
+                        "value": "http:\/\/github.com\/FasterXML\/jackson"
+                    }
+                ],
+                "productEvidence": [
+                    {
+                        "type": "product",
+                        "confidence": "HIGH",
+                        "source": "file",
+                        "name": "name",
+                        "value": "jackson-databind"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "HIGHEST",
+                        "source": "hint analyzer",
+                        "name": "product",
+                        "value": "java8"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "HIGHEST",
+                        "source": "hint analyzer",
+                        "name": "product",
+                        "value": "modules"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "HIGHEST",
+                        "source": "jar",
+                        "name": "package name",
+                        "value": "databind"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "HIGHEST",
+                        "source": "jar",
+                        "name": "package name",
+                        "value": "fasterxml"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "HIGHEST",
+                        "source": "jar",
+                        "name": "package name",
+                        "value": "jackson"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "MEDIUM",
+                        "source": "Manifest",
+                        "name": "automatic-module-name",
+                        "value": "com.fasterxml.jackson.databind"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "LOW",
+                        "source": "Manifest",
+                        "name": "bundle-docurl",
+                        "value": "http:\/\/github.com\/FasterXML\/jackson"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "MEDIUM",
+                        "source": "Manifest",
+                        "name": "Bundle-Name",
+                        "value": "jackson-databind"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "MEDIUM",
+                        "source": "Manifest",
+                        "name": "bundle-symbolicname",
+                        "value": "com.fasterxml.jackson.core.jackson-databind"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "LOW",
+                        "source": "Manifest",
+                        "name": "implementation-build-date",
+                        "value": "2017-09-08 01:09:29+0000"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "HIGH",
+                        "source": "Manifest",
+                        "name": "Implementation-Title",
+                        "value": "jackson-databind"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "LOW",
+                        "source": "Manifest",
+                        "name": "require-capability",
+                        "value": "osgi.ee;filter:=\"(&(osgi.ee=JavaSE)(version=1.7))\""
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "MEDIUM",
+                        "source": "Manifest",
+                        "name": "specification-title",
+                        "value": "jackson-databind"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "HIGHEST",
+                        "source": "pom",
+                        "name": "artifactid",
+                        "value": "jackson-databind"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "HIGHEST",
+                        "source": "pom",
+                        "name": "groupid",
+                        "value": "fasterxml.jackson.core"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "HIGH",
+                        "source": "pom",
+                        "name": "name",
+                        "value": "jackson-databind"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "MEDIUM",
+                        "source": "pom",
+                        "name": "parent-artifactid",
+                        "value": "jackson-bom"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "MEDIUM",
+                        "source": "pom",
+                        "name": "parent-groupid",
+                        "value": "com.fasterxml.jackson"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "MEDIUM",
+                        "source": "pom",
+                        "name": "url",
+                        "value": "http:\/\/github.com\/FasterXML\/jackson"
+                    }
+                ],
+                "versionEvidence": [
+                    {
+                        "type": "version",
+                        "confidence": "HIGH",
+                        "source": "file",
+                        "name": "version",
+                        "value": "2.9.1"
+                    },
+                    {
+                        "type": "version",
+                        "confidence": "HIGH",
+                        "source": "Manifest",
+                        "name": "Bundle-Version",
+                        "value": "2.9.1"
+                    },
+                    {
+                        "type": "version",
+                        "confidence": "HIGH",
+                        "source": "Manifest",
+                        "name": "Implementation-Version",
+                        "value": "2.9.1"
+                    },
+                    {
+                        "type": "version",
+                        "confidence": "HIGHEST",
+                        "source": "pom",
+                        "name": "version",
+                        "value": "2.9.1"
+                    }
+                ]
+            },
+            "packages": [
+                {
+                    "id": "pkg:maven\/com.fasterxml.jackson.core\/jackson-databind@2.9.1",
+                    "confidence": "HIGH",
+                    "url": "https:\/\/ossindex.sonatype.org\/component\/pkg:maven\/com.fasterxml.jackson.core\/jackson-databind@2.9.1?utm_source=dependency-check&utm_medium=integration&utm_content=6.2.2"
+                }
+            ],
+            "vulnerabilityIds": [
+                {
+                    "id": "cpe:2.3:a:fasterxml:jackson-databind:2.9.1:*:*:*:*:*:*:*",
+                    "confidence": "HIGHEST",
+                    "url": "https:\/\/nvd.nist.gov\/vuln\/search\/results?form_type=Advanced&results_type=overview&search_type=all&cpe_vendor=cpe%3A%2F%3Afasterxml&cpe_product=cpe%3A%2F%3Afasterxml%3Ajackson-databind&cpe_version=cpe%3A%2F%3Afasterxml%3Ajackson-databind%3A2.9.1"
+                },
+                {
+                    "id": "cpe:2.3:a:fasterxml:jackson-modules-java8:2.9.1:*:*:*:*:*:*:*",
+                    "confidence": "LOW"
+                }
+            ]
+        }
+    ]
+}

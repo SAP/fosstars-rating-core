@@ -235,7 +235,7 @@ public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider {
    * @return An optional of {@link OwaspDependencyCheckEntry}.
    * @throws IOException If something went wrong.
    */
-  private Optional<OwaspDependencyCheckEntry> scan(MavenArtifact artifact) throws IOException {
+  Optional<OwaspDependencyCheckEntry> scan(MavenArtifact artifact) throws IOException {
     Optional<Path> filePath = fetch(artifact);
 
     if (filePath.isPresent()) {

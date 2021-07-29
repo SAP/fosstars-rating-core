@@ -1,0 +1,30 @@
+{
+    "reportSchema": "1.1",
+    "scanInfo": {
+        "engineVersion": "6.2.2",
+        "dataSource": [
+            {
+                "name": "NVD CVE Checked",
+                "timestamp": "2021-07-28T15:08:24"
+            },
+            {
+                "name": "NVD CVE Modified",
+                "timestamp": "2021-07-28T14:00:06"
+            },
+            {
+                "name": "VersionCheckOn",
+                "timestamp": "2021-07-13T16:42:04"
+            }
+        ]
+    },
+    "projectInfo": {
+        "name": "jackson-databind-2.9.1.jar",
+        "reportDate": "2021-07-28T13:26:57.202Z",
+        "credits": {
+            "NVD": "This report contains data retrieved from the National Vulnerability Database: http://nvd.nist.gov",
+            "NPM": "This report may contain data retrieved from the NPM Public Advisories: https://www.npmjs.com/advisories",
+            "RETIREJS": "This report may contain data retrieved from the RetireJS community: https://retirejs.github.io/retire.js/",
+            "OSSINDEX": "This report may contain data retrieved from the Sonatype OSS Index: https://ossindex.sonatype.org"
+        }
+    }
+}
