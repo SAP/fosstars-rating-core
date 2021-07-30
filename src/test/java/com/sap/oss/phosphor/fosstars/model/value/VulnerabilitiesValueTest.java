@@ -1,5 +1,6 @@
 package com.sap.oss.phosphor.fosstars.model.value;
 
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES_IN_PROJECT;
 import static com.sap.oss.phosphor.fosstars.model.value.Vulnerability.Builder.newVulnerability;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -15,6 +16,7 @@ public class VulnerabilitiesValueTest {
   public void testSerialization() throws IOException {
     VulnerabilitiesValue vulnerabilityValue =
         new VulnerabilitiesValue(
+            VULNERABILITIES_IN_PROJECT,
             new Vulnerabilities(
                 newVulnerability("https://bugtracker/1").make(),
                 newVulnerability("https://bugtracker/2").make()));

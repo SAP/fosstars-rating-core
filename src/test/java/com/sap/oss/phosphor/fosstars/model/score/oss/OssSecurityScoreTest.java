@@ -33,7 +33,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_O
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_OWASP_JAVA_HTML_SANITIZER;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SIGNED_COMMITS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_UNDEFINED_BEHAVIOR_SANITIZER;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES_IN_PROJECT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.JAVA;
@@ -99,7 +99,7 @@ public class OssSecurityScoreTest {
         HAS_SECURITY_POLICY.value(false),
         HAS_BUG_BOUNTY_PROGRAM.value(false),
         SIGNS_ARTIFACTS.value(true),
-        VULNERABILITIES.value(new Vulnerabilities()),
+        VULNERABILITIES_IN_PROJECT.value(new Vulnerabilities()),
         PROJECT_START_DATE.value(new Date()),
         USES_SIGNED_COMMITS.value(false),
         RUNS_CODEQL_SCANS.value(false),

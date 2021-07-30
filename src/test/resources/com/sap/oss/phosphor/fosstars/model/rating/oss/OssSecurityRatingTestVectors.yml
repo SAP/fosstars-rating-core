@@ -154,7 +154,7 @@ elements:
       name: "If an open-source project has a security policy"
   - type: "UnknownValue"
     feature:
-      type: "VulnerabilitiesInProject"
+      type: "VulnerabilitiesFeature"
       name: "Info about vulnerabilities in open-source project"
   - type: "UnknownValue"
     feature:
@@ -255,7 +255,7 @@ elements:
         introduced: null
         fixed: null
     feature:
-      type: "VulnerabilitiesInProject"
+      type: "VulnerabilitiesFeature"
       name: "Info about vulnerabilities in open-source project"
   - type: "IntegerValue"
     feature:
@@ -386,7 +386,7 @@ elements:
         introduced: "2017-07-04"
         fixed: "2017-07-08"
     feature:
-      type: "VulnerabilitiesInProject"
+      type: "VulnerabilitiesFeature"
       name: "Info about vulnerabilities in open-source project"
   - type: "BooleanValue"
     feature:
@@ -526,7 +526,7 @@ elements:
         introduced: "2017-07-04"
         fixed: "2017-07-08"
     feature:
-      type: "VulnerabilitiesInProject"
+      type: "VulnerabilitiesFeature"
       name: "Info about vulnerabilities in open-source project"
   - type: "BooleanValue"
     feature:

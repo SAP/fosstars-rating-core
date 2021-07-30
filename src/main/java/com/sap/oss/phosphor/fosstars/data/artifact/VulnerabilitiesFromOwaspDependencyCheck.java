@@ -1,4 +1,4 @@
-package com.sap.oss.phosphor.fosstars.data.artifact.experimental;
+package com.sap.oss.phosphor.fosstars.data.artifact;
 
 import static com.sap.oss.phosphor.fosstars.model.Subject.cast;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES_IN_ARTIFACT;
@@ -8,12 +8,12 @@ import com.sap.oss.phosphor.fosstars.data.DataProvider;
 import com.sap.oss.phosphor.fosstars.data.NoValueCache;
 import com.sap.oss.phosphor.fosstars.data.UserCallback;
 import com.sap.oss.phosphor.fosstars.data.ValueCache;
-import com.sap.oss.phosphor.fosstars.data.artifact.experimental.owasp.data.Dependency;
-import com.sap.oss.phosphor.fosstars.data.artifact.experimental.owasp.data.OwaspDependencyCheckEntry;
-import com.sap.oss.phosphor.fosstars.data.artifact.experimental.owasp.data.OwaspDependencyCheckReference;
-import com.sap.oss.phosphor.fosstars.data.artifact.experimental.owasp.data.OwaspDependencyCheckVuln;
-import com.sap.oss.phosphor.fosstars.data.artifact.experimental.owasp.data.Software;
-import com.sap.oss.phosphor.fosstars.data.artifact.experimental.owasp.data.VulnerableSoftware;
+import com.sap.oss.phosphor.fosstars.data.owasp.model.Dependency;
+import com.sap.oss.phosphor.fosstars.data.owasp.model.OwaspDependencyCheckEntry;
+import com.sap.oss.phosphor.fosstars.data.owasp.model.OwaspDependencyCheckReference;
+import com.sap.oss.phosphor.fosstars.data.owasp.model.OwaspDependencyCheckVuln;
+import com.sap.oss.phosphor.fosstars.data.owasp.model.Software;
+import com.sap.oss.phosphor.fosstars.data.owasp.model.VulnerableSoftware;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
@@ -235,7 +235,7 @@ public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider {
    * @return An optional of {@link OwaspDependencyCheckEntry}.
    * @throws IOException If something went wrong.
    */
-  private Optional<OwaspDependencyCheckEntry> scan(MavenArtifact artifact) throws IOException {
+  Optional<OwaspDependencyCheckEntry> scan(MavenArtifact artifact) throws IOException {
     Optional<Path> filePath = fetch(artifact);
 
     if (filePath.isPresent()) {
