@@ -7,11 +7,11 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 
+import com.sap.oss.phosphor.fosstars.data.owasp.model.OwaspDependencyCheckEntry;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.MavenArtifact;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerability;
-import com.sap.oss.phosphor.fosstars.owasp.data.OwaspDependencyCheckEntry;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.File;
 import java.io.IOException;
@@ -47,11 +47,10 @@ public class VulnerabilitiesFromOwaspDependencyCheckTest {
     assertFalse(values.of(VULNERABILITIES_IN_ARTIFACT).get().isUnknown());
 
     Vulnerabilities vulnerabilities = values.of(VULNERABILITIES_IN_ARTIFACT).get().get();
-    assertFalse(vulnerabilities.isEmpty());
-    assertEquals(63, vulnerabilities.size());
+    assertEquals(3, vulnerabilities.size());
 
     Vulnerability vulnerability = vulnerabilities.entries().iterator().next();
-    assertEquals("CVE-2019-14540", vulnerability.id());
+    assertEquals("CVE-2018-11307", vulnerability.id());
   }
 
   @Test

@@ -1,7 +1,5 @@
 package com.sap.oss.phosphor.fosstars.model.value;
 
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES_IN_PROJECT;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,7 +8,7 @@ import com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures;
 import java.util.Objects;
 
 /**
- * This is a value for one of the features mentioned in the list.
+ * This is a value that contains information about vulnerabilities.
  * <ol>
  *   <li>{@link OssFeatures#VULNERABILITIES_IN_PROJECT} feature.</li>
  *   <li>{@link OssFeatures#VULNERABILITIES_IN_ARTIFACT} feature.</li>
@@ -22,24 +20,6 @@ public class VulnerabilitiesValue extends AbstractKnownValue<Vulnerabilities> {
    * Vulnerabilities.
    */
   private final Vulnerabilities vulnerabilities;
-
-  /**
-   * Creates an empty value.
-   */
-  public VulnerabilitiesValue() {
-    this(new Vulnerabilities());
-  }
-
-  /**
-   * Initializes a new value with a collection of vulnerabilities. By default assign
-   * {@link com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures#VULNERABILITIES_IN_PROJECT}
-   * as the feature.
-   *
-   * @param vulnerabilities The vulnerabilities.
-   */
-  public VulnerabilitiesValue(Vulnerabilities vulnerabilities) {
-    this(VULNERABILITIES_IN_PROJECT, vulnerabilities);
-  }
 
   /**
    * Initializes a new value with a collection of vulnerabilities.

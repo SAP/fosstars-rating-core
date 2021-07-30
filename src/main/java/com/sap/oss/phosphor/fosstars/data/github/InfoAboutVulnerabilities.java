@@ -23,7 +23,7 @@ import java.util.Objects;
  *   <li>{@link UnpatchedVulnerabilities}</li>
  *   <li>{@link VulnerabilitiesFromNvd}</li>
  * </ul>
- * The data provider cache a value for the
+ * The data provider caches a value for the
  * {@link com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures#VULNERABILITIES_IN_PROJECT}
  * feature.
  */

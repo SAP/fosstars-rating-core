@@ -1,4 +1,4 @@
-package com.sap.oss.phosphor.fosstars.owasp.data;
+package com.sap.oss.phosphor.fosstars.data.owasp.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
