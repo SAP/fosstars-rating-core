@@ -9,10 +9,6 @@ import java.util.Objects;
 
 /**
  * This is a value that contains information about vulnerabilities.
- * <ol>
- *   <li>{@link OssFeatures#VULNERABILITIES_IN_PROJECT} feature.</li>
- *   <li>{@link OssFeatures#VULNERABILITIES_IN_ARTIFACT} feature.</li>
- * </ol>
  */
 public class VulnerabilitiesValue extends AbstractKnownValue<Vulnerabilities> {
 
