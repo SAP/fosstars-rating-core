@@ -1,0 +1,167 @@
+{
+  "scoreValue" : {
+    "type" : "ScoreValue",
+    "score" : {
+      "type" : "OssRulesOfPlayScore",
+      "name" : "Open source rules or play score"
+    },
+    "value" : 0.0,
+    "weight" : 1.0,
+    "confidence" : 6.842105263157895,
+    "usedValues" : [ {
+      "type" : "BooleanValue",
+      "feature" : {
+        "type" : "BooleanFeature",
+        "name" : "If a project has a README file"
+      },
+      "flag" : true,
+      "explanation" : [ ]
+    }, {
+      "type" : "UnknownValue",
+      "feature" : {
+        "type" : "BooleanFeature",
+        "name" : "If a project has a team with push privileges"
+      },
+      "explanation" : [ ]
+    }, {
+      "type" : "UnknownValue",
+      "feature" : {
+        "type" : "BooleanFeature",
+        "name" : "If a project has enough team members on GitHub"
+      },
+      "explanation" : [ ]
+    }, {
+      "type" : "BooleanValue",
+      "feature" : {
+        "type" : "BooleanFeature",
+        "name" : "If vulnerability alerts are enabled for a project on GitHub"
+      },
+      "flag" : false,
+      "explanation" : [ "Vulnerability alerts are not enabled in the project" ]
+    }, {
+      "type" : "BooleanValue",
+      "feature" : {
+        "type" : "BooleanFeature",
+        "name" : "If a project's contributing guideline has required text"
+      },
+      "flag" : true,
+      "explanation" : [ ]
+    }, {
+      "type" : "BooleanValue",
+      "feature" : {
+        "type" : "BooleanFeature",
+        "name" : "If a project's README doesn't contain required info"
+      },
+      "flag" : true,
+      "explanation" : [ "The README does not contain required text that should match '# How to obtain support'" ]
+    }, {
+      "type" : "BooleanValue",
+      "feature" : {
+        "type" : "BooleanFeature",
+        "name" : "If a project has a license"
+      },
+      "flag" : true,
+      "explanation" : [ ]
+    }, {
+      "type" : "BooleanValue",
+      "feature" : {
+        "type" : "BooleanFeature",
+        "name" : "If a project has a LICENSES folder with licenses"
+      },
+      "flag" : true,
+      "explanation" : [ ]
+    }, {
+      "type" : "UnknownValue",
+      "feature" : {
+        "type" : "BooleanFeature",
+        "name" : "If a project has an admin team on GitHub"
+      },
+      "explanation" : [ ]
+    }, {
+      "type" : "UnknownValue",
+      "feature" : {
+        "type" : "BooleanFeature",
+        "name" : "If a project has enough admins on GitHub"
+      },
+      "explanation" : [ ]
+    }, {
+      "type" : "BooleanValue",
+      "feature" : {
+        "type" : "BooleanFeature",
+        "name" : "If an open-source project has a security policy"
+      },
+      "flag" : true,
+      "explanation" : [ ]
+    }, {
+      "type" : "UnknownValue",
+      "feature" : {
+        "type" : "BooleanFeature",
+        "name" : "If a project has enough teams on GitHub"
+      },
+      "explanation" : [ ]
+    }, {
+      "type" : "BooleanValue",
+      "feature" : {
+        "type" : "BooleanFeature",
+        "name" : "If a project has a contributing guideline"
+      },
+      "flag" : true,
+      "explanation" : [ ]
+    }, {
+      "type" : "BooleanValue",
+      "feature" : {
+        "type" : "BooleanFeature",
+        "name" : "If a license has disallowed text"
+      },
+      "flag" : false,
+      "explanation" : [ ]
+    }, {
+      "type" : "UnknownValue",
+      "feature" : {
+        "type" : "BooleanFeature",
+        "name" : "If a project has unresolved vulnerability alerts"
+      },
+      "explanation" : [ "Could not retrieve vulnerability alerts" ]
+    }, {
+      "type" : "BooleanValue",
+      "feature" : {
+        "type" : "BooleanFeature",
+        "name" : "If a project uses an allowed license"
+      },
+      "flag" : true,
+      "explanation" : [ ]
+    }, {
+      "type" : "BooleanValue",
+      "feature" : {
+        "type" : "BooleanFeature",
+        "name" : "If project's README has info about REUSE"
+      },
+      "flag" : true,
+      "explanation" : [ ]
+    }, {
+      "type" : "BooleanValue",
+      "feature" : {
+        "type" : "BooleanFeature",
+        "name" : "If a project is registered in REUSE"
+      },
+      "flag" : true,
+      "explanation" : [ ]
+    }, {
+      "type" : "BooleanValue",
+      "feature" : {
+        "type" : "BooleanFeature",
+        "name" : "If a project is compliant with REUSE rules"
+      },
+      "flag" : true,
+      "explanation" : [ ]
+    } ],
+    "explanation" : [ "Found 1 violated rule" ],
+    "isUnknown" : false,
+    "isNotApplicable" : false,
+    "feature" : {
+      "type" : "OssRulesOfPlayScore",
+      "name" : "Open source rules or play score"
+    }
+  },
+  "label" : [ "OssRulesOfPlayRating$OssRulesOfPlayLabel", "FAILED" ]
+}
