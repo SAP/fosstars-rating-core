@@ -12,11 +12,11 @@ import com.sap.oss.phosphor.fosstars.model.value.CVSS;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
 import org.junit.Test;
 
-public class VulnerabilitiesInProjectTest {
+public class VulnerabilitiesFeatureTest {
 
   @Test
   public void value() {
-    VulnerabilitiesInProject feature = new VulnerabilitiesInProject("test");
+    VulnerabilitiesFeature feature = new VulnerabilitiesFeature("test");
     assertNotNull(feature.name());
     Value<Vulnerabilities> value = feature.value(
         new Vulnerabilities(
@@ -41,7 +41,7 @@ public class VulnerabilitiesInProjectTest {
 
   @Test
   public void unknown() {
-    VulnerabilitiesInProject feature = new VulnerabilitiesInProject("test");
+    VulnerabilitiesFeature feature = new VulnerabilitiesFeature("test");
     Value value = feature.unknown();
     assertNotNull(value);
     assertTrue(value.isUnknown());

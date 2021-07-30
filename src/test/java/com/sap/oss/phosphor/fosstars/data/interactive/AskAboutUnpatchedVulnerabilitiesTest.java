@@ -1,6 +1,6 @@
 package com.sap.oss.phosphor.fosstars.data.interactive;
 
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES_IN_PROJECT;
 import static com.sap.oss.phosphor.fosstars.model.value.Vulnerability.Builder.newVulnerability;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -46,9 +46,9 @@ public class AskAboutUnpatchedVulnerabilitiesTest {
     GitHubProject project = new GitHubProject("org", "test");
     provider.ask(project, values);
     assertEquals(1, values.size());
-    assertTrue(values.has(VULNERABILITIES));
-    assertTrue(values.of(VULNERABILITIES).isPresent());
-    Value<Vulnerabilities> value = values.of(VULNERABILITIES).get();
+    assertTrue(values.has(VULNERABILITIES_IN_PROJECT));
+    assertTrue(values.of(VULNERABILITIES_IN_PROJECT).isPresent());
+    Value<Vulnerabilities> value = values.of(VULNERABILITIES_IN_PROJECT).get();
     assertEquals(expectedVulnerabilities, value.get());
   }
 }

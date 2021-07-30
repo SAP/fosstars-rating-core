@@ -1,6 +1,6 @@
 package com.sap.oss.phosphor.fosstars.model.score.oss;
 
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES_IN_PROJECT;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.findValue;
 import static com.sap.oss.phosphor.fosstars.model.value.Vulnerability.Resolution.UNPATCHED;
 
@@ -50,12 +50,12 @@ public class UnpatchedVulnerabilitiesScore extends FeatureBasedScore {
    * Initializes a new score.
    */
   UnpatchedVulnerabilitiesScore() {
-    super("How well vulnerabilities are patched", VULNERABILITIES);
+    super("How well vulnerabilities are patched", VULNERABILITIES_IN_PROJECT);
   }
 
   @Override
   public ScoreValue calculate(Value<?>... values) {
-    Value<Vulnerabilities> vulnerabilities = findValue(values, VULNERABILITIES,
+    Value<Vulnerabilities> vulnerabilities = findValue(values, VULNERABILITIES_IN_PROJECT,
         "Hey! Give me info about vulnerabilities!");
 
     if (vulnerabilities.isUnknown()) {

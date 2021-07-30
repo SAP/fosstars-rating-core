@@ -29,7 +29,7 @@ import com.sap.oss.phosphor.fosstars.model.feature.oss.ArtifactVersionsFeature;
 import com.sap.oss.phosphor.fosstars.model.feature.oss.LanguagesFeature;
 import com.sap.oss.phosphor.fosstars.model.feature.oss.PackageManagersFeature;
 import com.sap.oss.phosphor.fosstars.model.feature.oss.SecurityReviewsFeature;
-import com.sap.oss.phosphor.fosstars.model.feature.oss.VulnerabilitiesInProject;
+import com.sap.oss.phosphor.fosstars.model.feature.oss.VulnerabilitiesFeature;
 import com.sap.oss.phosphor.fosstars.model.math.DoubleInterval;
 import com.sap.oss.phosphor.fosstars.model.qa.ScoreTestVector;
 import com.sap.oss.phosphor.fosstars.model.qa.StandardTestVector;
@@ -201,7 +201,7 @@ public abstract class Deserialization {
         BoundedDoubleFeature.class,
         DateFeature.class,
         EnumFeature.class,
-        VulnerabilitiesInProject.class,
+        VulnerabilitiesFeature.class,
         SecurityReviewDoneExample.class,
         StaticCodeAnalysisDoneExample.class,
         NumberOfCommitsLastMonthExample.class,

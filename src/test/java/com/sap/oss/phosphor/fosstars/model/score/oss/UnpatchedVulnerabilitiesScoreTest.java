@@ -1,7 +1,7 @@
 package com.sap.oss.phosphor.fosstars.model.score.oss;
 
 import static com.sap.oss.phosphor.fosstars.TestUtils.assertScore;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES_IN_PROJECT;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -24,7 +24,8 @@ public class UnpatchedVulnerabilitiesScoreTest {
   @Test
   public void calculate() {
     Score score = new UnpatchedVulnerabilitiesScore();
-    assertScore(Score.INTERVAL, score, setOf(VULNERABILITIES.value(new Vulnerabilities())));
+    assertScore(Score.INTERVAL, score,
+        setOf(VULNERABILITIES_IN_PROJECT.value(new Vulnerabilities())));
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -37,7 +38,7 @@ public class UnpatchedVulnerabilitiesScoreTest {
     Score score = new UnpatchedVulnerabilitiesScore();
     assertNotNull(score.description());
     assertTrue(score.description().isEmpty());
-    ScoreValue value = score.calculate(VULNERABILITIES.value(new Vulnerabilities()));
+    ScoreValue value = score.calculate(VULNERABILITIES_IN_PROJECT.value(new Vulnerabilities()));
     assertNotNull(value);
     assertFalse(value.explanation().isEmpty());
   }

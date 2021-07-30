@@ -1,0 +1,1032 @@
+{
+    "reportSchema": "1.1",
+    "scanInfo": {
+        "engineVersion": "6.2.2",
+        "dataSource": [
+            {
+                "name": "NVD CVE Checked",
+                "timestamp": "2021-07-28T15:08:24"
+            },
+            {
+                "name": "NVD CVE Modified",
+                "timestamp": "2021-07-28T14:00:06"
+            },
+            {
+                "name": "VersionCheckOn",
+                "timestamp": "2021-07-13T16:42:04"
+            }
+        ]
+    },
+    "projectInfo": {
+        "name": "jackson-databind-2.9.1.jar",
+        "reportDate": "2021-07-28T13:26:57.202Z",
+        "credits": {
+            "NVD": "This report contains data retrieved from the National Vulnerability Database: http://nvd.nist.gov",
+            "NPM": "This report may contain data retrieved from the NPM Public Advisories: https://www.npmjs.com/advisories",
+            "RETIREJS": "This report may contain data retrieved from the RetireJS community: https://retirejs.github.io/retire.js/",
+            "OSSINDEX": "This report may contain data retrieved from the Sonatype OSS Index: https://ossindex.sonatype.org"
+        }
+    },
+    "dependencies": [
+        {
+            "isVirtual": false,
+            "fileName": "jackson-databind-2.9.1.jar",
+            "filePath": "C:\\Users\\D067452\\eclipseWorkspace\\fosstars\\fosstars-rating-core\\.fosstars\\jars\\jackson-databind-2.9.1.jar",
+            "md5": "88d151266214f04685a7b5630cb3f55a",
+            "sha1": "716da1830a2043f18882fc036ec26eb32cbe5aff",
+            "sha256": "17b28ec21ae487bb9a0570b6c0ec66b2277d47546d4089c3a5a2b3e60054134c",
+            "description": "General data-binding functionality for Jackson: works on core streaming API",
+            "license": "http:\/\/www.apache.org\/licenses\/LICENSE-2.0.txt",
+            "evidenceCollected": {
+                "vendorEvidence": [
+                    {
+                        "type": "vendor",
+                        "confidence": "HIGH",
+                        "source": "file",
+                        "name": "name",
+                        "value": "jackson-databind"
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "HIGHEST",
+                        "source": "jar",
+                        "name": "package name",
+                        "value": "databind"
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "HIGHEST",
+                        "source": "jar",
+                        "name": "package name",
+                        "value": "fasterxml"
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "HIGHEST",
+                        "source": "jar",
+                        "name": "package name",
+                        "value": "jackson"
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "MEDIUM",
+                        "source": "Manifest",
+                        "name": "automatic-module-name",
+                        "value": "com.fasterxml.jackson.databind"
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "LOW",
+                        "source": "Manifest",
+                        "name": "bundle-docurl",
+                        "value": "http:\/\/github.com\/FasterXML\/jackson"
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "MEDIUM",
+                        "source": "Manifest",
+                        "name": "bundle-symbolicname",
+                        "value": "com.fasterxml.jackson.core.jackson-databind"
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "LOW",
+                        "source": "Manifest",
+                        "name": "implementation-build-date",
+                        "value": "2017-09-08 01:09:29+0000"
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "HIGH",
+                        "source": "Manifest",
+                        "name": "Implementation-Vendor",
+                        "value": "FasterXML"
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "MEDIUM",
+                        "source": "Manifest",
+                        "name": "Implementation-Vendor-Id",
+                        "value": "com.fasterxml.jackson.core"
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "LOW",
+                        "source": "Manifest",
+                        "name": "require-capability",
+                        "value": "osgi.ee;filter:=\"(&(osgi.ee=JavaSE)(version=1.7))\""
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "LOW",
+                        "source": "Manifest",
+                        "name": "specification-vendor",
+                        "value": "FasterXML"
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "LOW",
+                        "source": "pom",
+                        "name": "artifactid",
+                        "value": "jackson-databind"
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "HIGHEST",
+                        "source": "pom",
+                        "name": "groupid",
+                        "value": "fasterxml.jackson.core"
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "HIGH",
+                        "source": "pom",
+                        "name": "name",
+                        "value": "jackson-databind"
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "LOW",
+                        "source": "pom",
+                        "name": "parent-artifactid",
+                        "value": "jackson-bom"
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "MEDIUM",
+                        "source": "pom",
+                        "name": "parent-groupid",
+                        "value": "com.fasterxml.jackson"
+                    },
+                    {
+                        "type": "vendor",
+                        "confidence": "HIGHEST",
+                        "source": "pom",
+                        "name": "url",
+                        "value": "http:\/\/github.com\/FasterXML\/jackson"
+                    }
+                ],
+                "productEvidence": [
+                    {
+                        "type": "product",
+                        "confidence": "HIGH",
+                        "source": "file",
+                        "name": "name",
+                        "value": "jackson-databind"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "HIGHEST",
+                        "source": "hint analyzer",
+                        "name": "product",
+                        "value": "java8"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "HIGHEST",
+                        "source": "hint analyzer",
+                        "name": "product",
+                        "value": "modules"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "HIGHEST",
+                        "source": "jar",
+                        "name": "package name",
+                        "value": "databind"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "HIGHEST",
+                        "source": "jar",
+                        "name": "package name",
+                        "value": "fasterxml"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "HIGHEST",
+                        "source": "jar",
+                        "name": "package name",
+                        "value": "jackson"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "MEDIUM",
+                        "source": "Manifest",
+                        "name": "automatic-module-name",
+                        "value": "com.fasterxml.jackson.databind"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "LOW",
+                        "source": "Manifest",
+                        "name": "bundle-docurl",
+                        "value": "http:\/\/github.com\/FasterXML\/jackson"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "MEDIUM",
+                        "source": "Manifest",
+                        "name": "Bundle-Name",
+                        "value": "jackson-databind"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "MEDIUM",
+                        "source": "Manifest",
+                        "name": "bundle-symbolicname",
+                        "value": "com.fasterxml.jackson.core.jackson-databind"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "LOW",
+                        "source": "Manifest",
+                        "name": "implementation-build-date",
+                        "value": "2017-09-08 01:09:29+0000"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "HIGH",
+                        "source": "Manifest",
+                        "name": "Implementation-Title",
+                        "value": "jackson-databind"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "LOW",
+                        "source": "Manifest",
+                        "name": "require-capability",
+                        "value": "osgi.ee;filter:=\"(&(osgi.ee=JavaSE)(version=1.7))\""
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "MEDIUM",
+                        "source": "Manifest",
+                        "name": "specification-title",
+                        "value": "jackson-databind"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "HIGHEST",
+                        "source": "pom",
+                        "name": "artifactid",
+                        "value": "jackson-databind"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "HIGHEST",
+                        "source": "pom",
+                        "name": "groupid",
+                        "value": "fasterxml.jackson.core"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "HIGH",
+                        "source": "pom",
+                        "name": "name",
+                        "value": "jackson-databind"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "MEDIUM",
+                        "source": "pom",
+                        "name": "parent-artifactid",
+                        "value": "jackson-bom"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "MEDIUM",
+                        "source": "pom",
+                        "name": "parent-groupid",
+                        "value": "com.fasterxml.jackson"
+                    },
+                    {
+                        "type": "product",
+                        "confidence": "MEDIUM",
+                        "source": "pom",
+                        "name": "url",
+                        "value": "http:\/\/github.com\/FasterXML\/jackson"
+                    }
+                ],
+                "versionEvidence": [
+                    {
+                        "type": "version",
+                        "confidence": "HIGH",
+                        "source": "file",
+                        "name": "version",
+                        "value": "2.9.1"
+                    },
+                    {
+                        "type": "version",
+                        "confidence": "HIGH",
+                        "source": "Manifest",
+                        "name": "Bundle-Version",
+                        "value": "2.9.1"
+                    },
+                    {
+                        "type": "version",
+                        "confidence": "HIGH",
+                        "source": "Manifest",
+                        "name": "Implementation-Version",
+                        "value": "2.9.1"
+                    },
+                    {
+                        "type": "version",
+                        "confidence": "HIGHEST",
+                        "source": "pom",
+                        "name": "version",
+                        "value": "2.9.1"
+                    }
+                ]
+            },
+            "packages": [
+                {
+                    "id": "pkg:maven\/com.fasterxml.jackson.core\/jackson-databind@2.9.1",
+                    "confidence": "HIGH",
+                    "url": "https:\/\/ossindex.sonatype.org\/component\/pkg:maven\/com.fasterxml.jackson.core\/jackson-databind@2.9.1?utm_source=dependency-check&utm_medium=integration&utm_content=6.2.2"
+                }
+            ],
+            "vulnerabilityIds": [
+                {
+                    "id": "cpe:2.3:a:fasterxml:jackson-databind:2.9.1:*:*:*:*:*:*:*",
+                    "confidence": "HIGHEST",
+                    "url": "https:\/\/nvd.nist.gov\/vuln\/search\/results?form_type=Advanced&results_type=overview&search_type=all&cpe_vendor=cpe%3A%2F%3Afasterxml&cpe_product=cpe%3A%2F%3Afasterxml%3Ajackson-databind&cpe_version=cpe%3A%2F%3Afasterxml%3Ajackson-databind%3A2.9.1"
+                },
+                {
+                    "id": "cpe:2.3:a:fasterxml:jackson-modules-java8:2.9.1:*:*:*:*:*:*:*",
+                    "confidence": "LOW"
+                }
+            ],
+            "vulnerabilities": [
+                {
+                    "source": "NVD",
+                    "name": "CVE-2017-17485",
+                    "severity": "CRITICAL",
+                    "cvssv2": {
+                        "score": 7.5,
+                        "accessVector": "NETWORK",
+                        "accessComplexity": "LOW",
+                        "authenticationr": "NONE",
+                        "confidentialImpact": "PARTIAL",
+                        "integrityImpact": "PARTIAL",
+                        "availabilityImpact": "PARTIAL",
+                        "severity": "HIGH",
+                        "version": "2.0",
+                        "exploitabilityScore": "10.0",
+                        "impactScore": "6.4"
+                    },
+                    "cvssv3": {
+                        "baseScore": 9.8,
+                        "attackVector": "NETWORK",
+                        "attackComplexity": "LOW",
+                        "privilegesRequired": "NONE",
+                        "userInteraction": "NONE",
+                        "scope": "UNCHANGED",
+                        "confidentialityImpact": "HIGH",
+                        "integrityImpact": "HIGH",
+                        "availabilityImpact": "HIGH",
+                        "baseSeverity": "CRITICAL",
+                        "exploitabilityScore": "3.9",
+                        "impactScore": "5.9",
+                        "version": "3.1"
+                    },
+                    "cwes": [
+                        "CWE-502"
+                    ],
+                    "description": "FasterXML jackson-databind through 2.8.10 and 2.9.x through 2.9.3 allows unauthenticated remote code execution because of an incomplete fix for the CVE-2017-7525 deserialization flaw. This is exploitable by sending maliciously crafted JSON input to the readValue method of the ObjectMapper, bypassing a blacklist that is ineffective if the Spring libraries are available in the classpath.",
+                    "notes": "",
+                    "references": [
+                        {
+                            "source": "REDHAT",
+                            "url": "https:\/\/access.redhat.com\/errata\/RHSA-2019:3149",
+                            "name": "RHSA-2019:3149"
+                        },
+                        {
+                            "source": "MISC",
+                            "url": "https:\/\/www.oracle.com\/security-alerts\/cpuoct2020.html",
+                            "name": "https:\/\/www.oracle.com\/security-alerts\/cpuoct2020.html"
+                        },
+                        {
+                            "source": "MISC",
+                            "url": "https:\/\/github.com\/irsl\/jackson-rce-via-spel\/",
+                            "name": "https:\/\/github.com\/irsl\/jackson-rce-via-spel\/"
+                        },
+                        {
+                            "source": "REDHAT",
+                            "url": "https:\/\/access.redhat.com\/errata\/RHSA-2019:2858",
+                            "name": "RHSA-2019:2858"
+                        },
+                        {
+                            "source": "REDHAT",
+                            "url": "https:\/\/access.redhat.com\/errata\/RHSA-2018:0481",
+                            "name": "RHSA-2018:0481"
+                        },
+                        {
+                            "source": "CONFIRM",
+                            "url": "https:\/\/github.com\/FasterXML\/jackson-databind\/issues\/1855",
+                            "name": "https:\/\/github.com\/FasterXML\/jackson-databind\/issues\/1855"
+                        },
+                        {
+                            "source": "REDHAT",
+                            "url": "https:\/\/access.redhat.com\/errata\/RHSA-2018:0480",
+                            "name": "RHSA-2018:0480"
+                        },
+                        {
+                            "source": "OSSINDEX",
+                            "url": "https:\/\/ossindex.sonatype.org\/vulnerability\/b85a00e3-7d9b-49cf-9b19-b73f8ee60275?component-type=maven&component-name=com.fasterxml.jackson.core.jackson-databind&utm_source=dependency-check&utm_medium=integration&utm_content=6.2.2",
+                            "name": "[CVE-2017-17485]  Improper Control of Generation of Code (\"Code Injection\")"
+                        },
+                        {
+                            "source": "REDHAT",
+                            "url": "https:\/\/access.redhat.com\/errata\/RHSA-2018:1447",
+                            "name": "RHSA-2018:1447"
+                        },
+                        {
+                            "source": "REDHAT",
+                            "url": "https:\/\/access.redhat.com\/errata\/RHSA-2019:1797",
+                            "name": "RHSA-2019:1797"
+                        },
+                        {
+                            "source": "REDHAT",
+                            "url": "https:\/\/access.redhat.com\/errata\/RHSA-2018:1448",
+                            "name": "RHSA-2018:1448"
+                        },
+                        {
+                            "source": "CONFIRM",
+                            "url": "https:\/\/support.hpe.com\/hpsc\/doc\/public\/display?docLocale=en_US&docId=emr_na-hpesbhf03902en_us",
+                            "name": "https:\/\/support.hpe.com\/hpsc\/doc\/public\/display?docLocale=en_US&docId=emr_na-hpesbhf03902en_us"
+                        },
+                        {
+                            "source": "REDHAT",
+                            "url": "https:\/\/access.redhat.com\/errata\/RHSA-2018:1449",
+                            "name": "RHSA-2018:1449"
+                        },
+                        {
+                            "source": "REDHAT",
+                            "url": "https:\/\/access.redhat.com\/errata\/RHSA-2018:0342",
+                            "name": "RHSA-2018:0342"
+                        },
+                        {
+                            "source": "CONFIRM",
+                            "url": "https:\/\/security.netapp.com\/advisory\/ntap-20180201-0003\/",
+                            "name": "https:\/\/security.netapp.com\/advisory\/ntap-20180201-0003\/"
+                        },
+                        {
+                            "source": "REDHAT",
+                            "url": "https:\/\/access.redhat.com\/errata\/RHSA-2019:1782",
+                            "name": "RHSA-2019:1782"
+                        },
+                        {
+                            "source": "REDHAT",
+                            "url": "https:\/\/access.redhat.com\/errata\/RHSA-2018:0478",
+                            "name": "RHSA-2018:0478"
+                        },
+                        {
+                            "source": "BUGTRAQ",
+                            "url": "http:\/\/www.securityfocus.com\/archive\/1\/541652\/100\/0\/threaded",
+                            "name": "20180109 CVE-2017-17485: one more way of rce in jackson-databind when defaultTyping+objects are used"
+                        },
+                        {
+                            "source": "REDHAT",
+                            "url": "https:\/\/access.redhat.com\/errata\/RHSA-2018:2930",
+                            "name": "RHSA-2018:2930"
+                        },
+                        {
+                            "source": "REDHAT",
+                            "url": "https:\/\/access.redhat.com\/errata\/RHSA-2018:0116",
+                            "name": "RHSA-2018:0116"
+                        },
+                        {
+                            "source": "REDHAT",
+                            "url": "https:\/\/access.redhat.com\/errata\/RHSA-2018:1450",
+                            "name": "RHSA-2018:1450"
+                        },
+                        {
+                            "source": "REDHAT",
+                            "url": "https:\/\/access.redhat.com\/errata\/RHSA-2019:3892",
+                            "name": "RHSA-2019:3892"
+                        },
+                        {
+                            "source": "DEBIAN",
+                            "url": "https:\/\/www.debian.org\/security\/2018\/dsa-4114",
+                            "name": "DSA-4114"
+                        },
+                        {
+                            "source": "REDHAT",
+                            "url": "https:\/\/access.redhat.com\/errata\/RHSA-2018:0479",
+                            "name": "RHSA-2018:0479"
+                        },
+                        {
+                            "source": "REDHAT",
+                            "url": "https:\/\/access.redhat.com\/errata\/RHSA-2018:1451",
+                            "name": "RHSA-2018:1451"
+                        }
+                    ],
+                    "vulnerableSoftware": [
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:fasterxml:jackson-databind:*:*:*:*:*:*:*:*",
+                                "versionStartIncluding": "2.6.0",
+                                "versionEndExcluding": "2.6.7.3"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:fasterxml:jackson-databind:*:*:*:*:*:*:*:*",
+                                "versionStartIncluding": "2.7.0",
+                                "versionEndExcluding": "2.7.9.2"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:fasterxml:jackson-databind:*:*:*:*:*:*:*:*",
+                                "versionStartIncluding": "2.8.0",
+                                "versionEndExcluding": "2.8.11"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:fasterxml:jackson-databind:*:*:*:*:*:*:*:*",
+                                "vulnerabilityIdMatched": "true",
+                                "versionStartIncluding": "2.9.0",
+                                "versionEndExcluding": "2.9.4"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:netapp:e-series_santricity_os_controller:*:*:*:*:*:*:*:*",
+                                "versionStartIncluding": "11.0.0",
+                                "versionEndIncluding": "11.60.3"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:netapp:e-series_santricity_web_services_proxy:-:*:*:*:*:*:*:*"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:netapp:oncommand_shift:-:*:*:*:*:*:*:*"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:netapp:snapcenter:-:*:*:*:*:*:*:*"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:redhat:jboss_enterprise_application_platform:6.0.0:*:*:*:*:*:*:*"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:redhat:jboss_enterprise_application_platform:6.4.0:*:*:*:*:*:*:*"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:redhat:jboss_enterprise_application_platform:7.1:*:*:*:*:*:*:*"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:redhat:openshift_container_platform:3.11:*:*:*:*:*:*:*"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:redhat:openshift_container_platform:4.1:*:*:*:*:*:*:*"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "source": "NVD",
+                    "name": "CVE-2018-1000873",
+                    "severity": "MEDIUM",
+                    "cvssv2": {
+                        "score": 4.3,
+                        "accessVector": "NETWORK",
+                        "accessComplexity": "MEDIUM",
+                        "authenticationr": "NONE",
+                        "confidentialImpact": "NONE",
+                        "integrityImpact": "NONE",
+                        "availabilityImpact": "PARTIAL",
+                        "severity": "MEDIUM",
+                        "version": "2.0",
+                        "exploitabilityScore": "8.6",
+                        "impactScore": "2.9",
+                        "userInteractionRequired": "true"
+                    },
+                    "cvssv3": {
+                        "baseScore": 6.5,
+                        "attackVector": "NETWORK",
+                        "attackComplexity": "LOW",
+                        "privilegesRequired": "NONE",
+                        "userInteraction": "REQUIRED",
+                        "scope": "UNCHANGED",
+                        "confidentialityImpact": "NONE",
+                        "integrityImpact": "NONE",
+                        "availabilityImpact": "HIGH",
+                        "baseSeverity": "MEDIUM",
+                        "exploitabilityScore": "2.8",
+                        "impactScore": "3.6",
+                        "version": "3.1"
+                    },
+                    "cwes": [
+                        "CWE-20"
+                    ],
+                    "description": "Fasterxml Jackson version Before 2.9.8 contains a CWE-20: Improper Input Validation vulnerability in Jackson-Modules-Java8 that can result in Causes a denial-of-service (DoS). This attack appear to be exploitable via The victim deserializes malicious input, specifically very large values in the nanoseconds field of a time value. This vulnerability appears to have been fixed in 2.9.8.",
+                    "notes": "",
+                    "references": [
+                        {
+                            "source": "MISC",
+                            "url": "https:\/\/www.oracle.com\/security-alerts\/cpuoct2020.html",
+                            "name": "https:\/\/www.oracle.com\/security-alerts\/cpuoct2020.html"
+                        },
+                        {
+                            "source": "MISC",
+                            "url": "https:\/\/github.com\/FasterXML\/jackson-modules-java8\/issues\/90",
+                            "name": "https:\/\/github.com\/FasterXML\/jackson-modules-java8\/issues\/90"
+                        },
+                        {
+                            "source": "MLIST",
+                            "url": "https:\/\/lists.apache.org\/thread.html\/519eb0fd45642dcecd9ff74cb3e71c20a4753f7d82e2f07864b5108f@%3Cdev.drill.apache.org%3E",
+                            "name": "[drill-dev] 20191021 [jira] [Created] (DRILL-7416) Updates required to dependencies to resolve potential security vulnerabilities"
+                        },
+                        {
+                            "source": "MLIST",
+                            "url": "https:\/\/lists.apache.org\/thread.html\/bcce5a9c532b386c68dab2f6b3ce8b0cc9b950ec551766e76391caa3@%3Ccommits.nifi.apache.org%3E",
+                            "name": "[nifi-commits] 20191113 svn commit: r1869773 - \/nifi\/site\/trunk\/security.html"
+                        },
+                        {
+                            "source": "MLIST",
+                            "url": "https:\/\/lists.apache.org\/thread.html\/ff8dcfe29377088ab655fda9d585dccd5b1f07fabd94ae84fd60a7f8@%3Ccommits.pulsar.apache.org%3E",
+                            "name": "[pulsar-commits] 20190416 [GitHub] [pulsar] one70six opened a new issue #4057: Security Vulnerabilities - Black Duck Scan - Pulsar v.2.3.1"
+                        },
+                        {
+                            "source": "OSSINDEX",
+                            "url": "https:\/\/ossindex.sonatype.org\/vulnerability\/292c11e9-cf66-4d76-aaf7-b63a091f8891?component-type=maven&component-name=com.fasterxml.jackson.core.jackson-databind&utm_source=dependency-check&utm_medium=integration&utm_content=6.2.2",
+                            "name": "[CVE-2018-1000873]  Improper Input Validation"
+                        },
+                        {
+                            "source": "MISC",
+                            "url": "https:\/\/www.oracle.com\/technetwork\/security-advisory\/cpuoct2019-5072832.html",
+                            "name": "https:\/\/www.oracle.com\/technetwork\/security-advisory\/cpuoct2019-5072832.html"
+                        },
+                        {
+                            "source": "MISC",
+                            "url": "https:\/\/github.com\/FasterXML\/jackson-modules-java8\/pull\/87",
+                            "name": "https:\/\/github.com\/FasterXML\/jackson-modules-java8\/pull\/87"
+                        },
+                        {
+                            "source": "MISC",
+                            "url": "https:\/\/www.oracle.com\/technetwork\/security-advisory\/cpujul2019-5072835.html",
+                            "name": "https:\/\/www.oracle.com\/technetwork\/security-advisory\/cpujul2019-5072835.html"
+                        },
+                        {
+                            "source": "MLIST",
+                            "url": "https:\/\/lists.apache.org\/thread.html\/f9bc3e55f4e28d1dcd1a69aae6d53e609a758e34d2869b4d798e13cc@%3Cissues.drill.apache.org%3E",
+                            "name": "[drill-issues] 20191021 [jira] [Created] (DRILL-7416) Updates required to dependencies to resolve potential security vulnerabilities"
+                        },
+                        {
+                            "source": "MLIST",
+                            "url": "https:\/\/lists.apache.org\/thread.html\/b0656d359c7d40ec9f39c8cc61bca66802ef9a2a12ee199f5b0c1442@%3Cdev.drill.apache.org%3E",
+                            "name": "[drill-dev] 20191017 Dependencies used by Drill contain known vulnerabilities"
+                        },
+                        {
+                            "source": "MLIST",
+                            "url": "https:\/\/lists.apache.org\/thread.html\/rca37935d661f4689cb4119f1b3b224413b22be161b678e6e6ce0c69b@%3Ccommits.nifi.apache.org%3E",
+                            "name": "[nifi-commits] 20200123 svn commit: r1873083 - \/nifi\/site\/trunk\/security.html"
+                        },
+                        {
+                            "source": "CONFIRM",
+                            "url": "https:\/\/bugzilla.redhat.com\/show_bug.cgi?id=1665601",
+                            "name": "https:\/\/bugzilla.redhat.com\/show_bug.cgi?id=1665601"
+                        },
+                        {
+                            "source": "N\/A",
+                            "url": "https:\/\/www.oracle.com\/security-alerts\/cpuapr2020.html",
+                            "name": "N\/A"
+                        },
+                        {
+                            "source": "CONFIRM",
+                            "url": "https:\/\/security.netapp.com\/advisory\/ntap-20200904-0004\/",
+                            "name": "https:\/\/security.netapp.com\/advisory\/ntap-20200904-0004\/"
+                        }
+                    ],
+                    "vulnerableSoftware": [
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:fasterxml:jackson-modules-java8:*:*:*:*:*:*:*:*",
+                                "vulnerabilityIdMatched": "true",
+                                "versionEndExcluding": "2.9.8"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:netapp:active_iq_unified_manager:*:*:*:*:*:linux:*:*",
+                                "versionStartIncluding": "7.3"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:netapp:active_iq_unified_manager:*:*:*:*:*:vmware_vsphere:*:*",
+                                "versionStartIncluding": "9.5"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:netapp:active_iq_unified_manager:*:*:*:*:*:windows:*:*",
+                                "versionStartIncluding": "7.3"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:oracle:clusterware:12.1.0.2.0:*:*:*:*:*:*:*"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:oracle:database_server:18c:*:*:*:*:*:*:*"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:oracle:database_server:19c:*:*:*:*:*:*:*"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:oracle:database_server:12.1.0.2:*:*:*:*:*:*:*"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:oracle:database_server:12.2.0.1:*:*:*:*:*:*:*"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:oracle:global_lifecycle_management_opatch:*:*:*:*:*:*:*:*",
+                                "versionEndExcluding": "11.2.0.3.23"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:oracle:global_lifecycle_management_opatch:*:*:*:*:*:*:*:*",
+                                "versionStartIncluding": "12.2.0.1.0",
+                                "versionEndExcluding": "12.2.0.1.19"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:oracle:global_lifecycle_management_opatch:*:*:*:*:*:*:*:*",
+                                "versionStartIncluding": "13.9.4.0.0",
+                                "versionEndExcluding": "13.9.4.2.1"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:oracle:nosql_database:*:*:*:*:*:*:*:*",
+                                "versionEndExcluding": "19.3.12"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "source": "NVD",
+                    "name": "CVE-2018-11307",
+                    "severity": "CRITICAL",
+                    "cvssv2": {
+                        "score": 7.5,
+                        "accessVector": "NETWORK",
+                        "accessComplexity": "LOW",
+                        "authenticationr": "NONE",
+                        "confidentialImpact": "PARTIAL",
+                        "integrityImpact": "PARTIAL",
+                        "availabilityImpact": "PARTIAL",
+                        "severity": "HIGH",
+                        "version": "2.0",
+                        "exploitabilityScore": "10.0",
+                        "impactScore": "6.4"
+                    },
+                    "cvssv3": {
+                        "baseScore": 9.8,
+                        "attackVector": "NETWORK",
+                        "attackComplexity": "LOW",
+                        "privilegesRequired": "NONE",
+                        "userInteraction": "NONE",
+                        "scope": "UNCHANGED",
+                        "confidentialityImpact": "HIGH",
+                        "integrityImpact": "HIGH",
+                        "availabilityImpact": "HIGH",
+                        "baseSeverity": "CRITICAL",
+                        "exploitabilityScore": "3.9",
+                        "impactScore": "5.9",
+                        "version": "3.1"
+                    },
+                    "cwes": [
+                        "CWE-502"
+                    ],
+                    "description": "An issue was discovered in FasterXML jackson-databind 2.0.0 through 2.9.5. Use of Jackson default typing along with a gadget class from iBatis allows exfiltration of content. Fixed in 2.7.9.4, 2.8.11.2, and 2.9.6.",
+                    "notes": "",
+                    "references": [
+                        {
+                            "source": "REDHAT",
+                            "url": "https:\/\/access.redhat.com\/errata\/RHSA-2019:3149",
+                            "name": "RHSA-2019:3149"
+                        },
+                        {
+                            "source": "MISC",
+                            "url": "https:\/\/www.oracle.com\/security-alerts\/cpuoct2020.html",
+                            "name": "https:\/\/www.oracle.com\/security-alerts\/cpuoct2020.html"
+                        },
+                        {
+                            "source": "MISC",
+                            "url": "https:\/\/medium.com\/@cowtowncoder\/on-jackson-cves-dont-panic-here-is-what-you-need-to-know-54cd0d6e8062",
+                            "name": "https:\/\/medium.com\/@cowtowncoder\/on-jackson-cves-dont-panic-here-is-what-you-need-to-know-54cd0d6e8062"
+                        },
+                        {
+                            "source": "MLIST",
+                            "url": "https:\/\/lists.apache.org\/thread.html\/519eb0fd45642dcecd9ff74cb3e71c20a4753f7d82e2f07864b5108f@%3Cdev.drill.apache.org%3E",
+                            "name": "[drill-dev] 20191021 [jira] [Created] (DRILL-7416) Updates required to dependencies to resolve potential security vulnerabilities"
+                        },
+                        {
+                            "source": "REDHAT",
+                            "url": "https:\/\/access.redhat.com\/errata\/RHSA-2019:1822",
+                            "name": "RHSA-2019:1822"
+                        },
+                        {
+                            "source": "MLIST",
+                            "url": "https:\/\/lists.apache.org\/thread.html\/7fcf88aff0d1deaa5c3c7be8d58c05ad7ad5da94b59065d8e7c50c5d@%3Cissues.lucene.apache.org%3E",
+                            "name": "[lucene-issues] 20191004 [GitHub] [lucene-solr] marungo opened a new pull request #925: SOLR-13818: Upgrade jackson to 2.10.0"
+                        },
+                        {
+                            "source": "MISC",
+                            "url": "https:\/\/www.oracle.com\/technetwork\/security-advisory\/cpujul2019-5072835.html",
+                            "name": "https:\/\/www.oracle.com\/technetwork\/security-advisory\/cpujul2019-5072835.html"
+                        },
+                        {
+                            "source": "REDHAT",
+                            "url": "https:\/\/access.redhat.com\/errata\/RHSA-2019:3140",
+                            "name": "RHSA-2019:3140"
+                        },
+                        {
+                            "source": "REDHAT",
+                            "url": "https:\/\/access.redhat.com\/errata\/RHSA-2019:1823",
+                            "name": "RHSA-2019:1823"
+                        },
+                        {
+                            "source": "MISC",
+                            "url": "https:\/\/nvd.nist.gov\/vuln\/detail\/CVE-2017-7525",
+                            "name": "https:\/\/nvd.nist.gov\/vuln\/detail\/CVE-2017-7525"
+                        },
+                        {
+                            "source": "CONFIRM",
+                            "url": "https:\/\/access.redhat.com\/errata\/RHSA-2019:0782",
+                            "name": "https:\/\/access.redhat.com\/errata\/RHSA-2019:0782"
+                        },
+                        {
+                            "source": "MISC",
+                            "url": "https:\/\/github.com\/FasterXML\/jackson-databind\/issues\/2032",
+                            "name": "https:\/\/github.com\/FasterXML\/jackson-databind\/issues\/2032"
+                        },
+                        {
+                            "source": "REDHAT",
+                            "url": "https:\/\/access.redhat.com\/errata\/RHSA-2019:2858",
+                            "name": "RHSA-2019:2858"
+                        },
+                        {
+                            "source": "MLIST",
+                            "url": "https:\/\/lists.apache.org\/thread.html\/f9bc3e55f4e28d1dcd1a69aae6d53e609a758e34d2869b4d798e13cc@%3Cissues.drill.apache.org%3E",
+                            "name": "[drill-issues] 20191021 [jira] [Created] (DRILL-7416) Updates required to dependencies to resolve potential security vulnerabilities"
+                        },
+                        {
+                            "source": "REDHAT",
+                            "url": "https:\/\/access.redhat.com\/errata\/RHSA-2019:2804",
+                            "name": "RHSA-2019:2804"
+                        },
+                        {
+                            "source": "MLIST",
+                            "url": "https:\/\/lists.apache.org\/thread.html\/b0656d359c7d40ec9f39c8cc61bca66802ef9a2a12ee199f5b0c1442@%3Cdev.drill.apache.org%3E",
+                            "name": "[drill-dev] 20191017 Dependencies used by Drill contain known vulnerabilities"
+                        },
+                        {
+                            "source": "REDHAT",
+                            "url": "https:\/\/access.redhat.com\/errata\/RHSA-2019:4037",
+                            "name": "RHSA-2019:4037"
+                        },
+                        {
+                            "source": "REDHAT",
+                            "url": "https:\/\/access.redhat.com\/errata\/RHSA-2019:3892",
+                            "name": "RHSA-2019:3892"
+                        },
+                        {
+                            "source": "REDHAT",
+                            "url": "https:\/\/access.redhat.com\/errata\/RHSA-2019:3002",
+                            "name": "RHSA-2019:3002"
+                        },
+                        {
+                            "source": "MISC",
+                            "url": "https:\/\/www.oracle.com\/security-alerts\/cpujan2020.html",
+                            "name": "https:\/\/www.oracle.com\/security-alerts\/cpujan2020.html"
+                        },
+                        {
+                            "source": "N\/A",
+                            "url": "https:\/\/www.oracle.com\/security-alerts\/cpuapr2020.html",
+                            "name": "N\/A"
+                        },
+                        {
+                            "source": "OSSINDEX",
+                            "url": "https:\/\/ossindex.sonatype.org\/vulnerability\/cc8066c6-7e9c-4f25-b44b-56861eb1673b?component-type=maven&component-name=com.fasterxml.jackson.core.jackson-databind&utm_source=dependency-check&utm_medium=integration&utm_content=6.2.2",
+                            "name": "[CVE-2018-11307] An issue was discovered in FasterXML jackson-databind 2.0.0 through 2.9.5. Use o..."
+                        }
+                    ],
+                    "vulnerableSoftware": [
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:fasterxml:jackson-databind:*:*:*:*:*:*:*:*",
+                                "versionStartIncluding": "2.6.0",
+                                "versionEndExcluding": "2.6.7.3"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:fasterxml:jackson-databind:*:*:*:*:*:*:*:*",
+                                "versionStartIncluding": "2.7.0",
+                                "versionEndExcluding": "2.7.9.4"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:fasterxml:jackson-databind:*:*:*:*:*:*:*:*",
+                                "versionStartIncluding": "2.8.0",
+                                "versionEndExcluding": "2.8.11.2"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:fasterxml:jackson-databind:*:*:*:*:*:*:*:*",
+                                "vulnerabilityIdMatched": "true",
+                                "versionStartIncluding": "2.9.0",
+                                "versionEndExcluding": "2.9.5"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:oracle:clusterware:12.1.0.2.0:*:*:*:*:*:*:*"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:oracle:communications_instant_messaging_server:10.0.1.2.0:*:*:*:*:*:*:*"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:oracle:global_lifecycle_management_opatch:*:*:*:*:*:*:*:*",
+                                "versionEndExcluding": "11.2.0.3.23"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:oracle:global_lifecycle_management_opatch:*:*:*:*:*:*:*:*",
+                                "versionStartIncluding": "12.2.0.1.0",
+                                "versionEndExcluding": "12.2.0.1.19"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:oracle:global_lifecycle_management_opatch:*:*:*:*:*:*:*:*",
+                                "versionStartIncluding": "13.9.4.0.0",
+                                "versionEndExcluding": "13.9.4.2.1"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:oracle:retail_customer_management_and_segmentation_foundation:17.0:*:*:*:*:*:*:*"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:oracle:utilities_advanced_spatial_and_operational_analytics:2.7.0.1:*:*:*:*:*:*:*"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:redhat:openshift_container_platform:3.11:*:*:*:*:*:*:*"
+                            }
+                        },
+                        {
+                            "software": {
+                                "id": "cpe:2.3:a:redhat:openshift_container_platform:4.1:*:*:*:*:*:*:*"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
