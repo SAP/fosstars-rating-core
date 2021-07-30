@@ -1,5 +1,6 @@
 name: "Fosstars RoP report"
 on:
+  workflow_dispatch: ~
   schedule:
     - cron: "1 1 * * *"
 
@@ -15,4 +16,4 @@ jobs:
           report-branch: fosstars-rop-report
           report-file: README.md
           badge-file: fosstars_rop_rating.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.ROP_TOKEN }}
