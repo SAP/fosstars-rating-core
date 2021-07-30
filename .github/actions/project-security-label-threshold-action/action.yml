@@ -1,0 +1,22 @@
+name: "Calculate label thresholds for Fosstars security ratings"
+description: "The action calculates label thresholds for Fosstars project security rating procedure."
+inputs:
+  input-file:
+    description: "A path to an input JSON file"
+    default: "github_projects.json"
+    required: true
+  report-branch:
+    description: "A branch where the output file should be stored"
+    required: true
+    default: oss-security-report
+  fosstars-version:
+    description: "A version of Fosstars"
+    required: true
+    default: master
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - ${{ inputs.input-file }}
+    - ${{ inputs.report-branch }}
+    - ${{ inputs.fosstars-version }}
