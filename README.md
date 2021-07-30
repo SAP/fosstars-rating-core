@@ -2,6 +2,7 @@
 [![Language grade: Java](https://img.shields.io/lgtm/grade/java/g/SAP/fosstars-rating-core.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/SAP/fosstars-rating-core/context:java)
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP/fosstars-rating-core)](https://api.reuse.software/info/github.com/SAP/fosstars-rating-core)
 [![Fosstars security rating](https://raw.githubusercontent.com/SAP/fosstars-rating-core/fosstars-report/fosstars_badge.svg)](https://github.com/SAP/fosstars-rating-core/blob/fosstars-report/fosstars_report.md)
+[![Fosstars RoP status](https://raw.githubusercontent.com/SAP/fosstars-rating-core/fosstars-rop-report/fosstars_rop_rating.svg)](https://github.com/SAP/fosstars-rating-core/blob/fosstars-rop-report/README.md)
 
 # Ratings for open source projects
 
