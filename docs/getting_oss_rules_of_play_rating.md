@@ -60,7 +60,8 @@ For example, here is how an OSS rules of play rating may be calculated for the r
 java -jar target/fosstars-github-rating-calc.jar --url https://github.com/SAP/code-pal-for-abap --token ${TOKEN} --rating oss-rules-of-play --data-provider-configs=./LicenseInfo.yml,./ContributingGuidelineInfo.yml,ReadmeInfo.yml --verbose
 ```
 
-The environment variable `TOKEN` contains a token for accessing the GitHub API. You can create a personal token in the [settings/tokens](https://github.com/settings/tokens) tab in your profile on GitHub.
+The environment variable `TOKEN` contains a token for accessing the GitHub API. You can create a personal token in the [settings/tokens](https://github.com/settings/tokens) tab in your profile on GitHub. **Please note:** In order to work correctly, the token needs to have elevated permissions. To get the status of vulnerability alerts, the user who issued the token [must have admin access to the respective repository](https://docs.github.com/en/rest/reference/repos#check-if-vulnerability-alerts-are-enabled-for-a-repository). To get the correct team assignment status, the token [requires the `read:org` scope](https://docs.github.com/en/rest/reference/teams).
+
 Be sure to use the option `--rating` with the value `oss-rules-of-play` as otherwise you won't get the OSS rules of play rating, but the security rating for the repository. 
 The option `--data-provider-configs` expects a comma-separated list of YAML configuration files for the individual data providers as outlined above. Be sure to name configuration files according to the data provider IDs so that they can be found properly.
 In addition, remember to keep the `OssRulesOfPlayRatingMarkdownFormatter.config.yaml` in the current working directory as explained above.
