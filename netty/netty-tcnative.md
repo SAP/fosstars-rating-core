@@ -2,11 +2,11 @@
 
 https://github.com/netty/netty-tcnative
 
-Last updated on Jul 26, 2021
+Last updated on Aug 3, 2021
 
 **Rating**: **BAD**
 
-**Score**: **3.29**, max score value is 10.0
+**Score**: **3.27**, max score value is 10.0
 
 **Confidence**: High (9.87, max confidence value is 10.0)
 
@@ -65,9 +65,9 @@ It used the following sub-scores:
     
 1.  **[Community commitment](#community-commitment)**: **8.0** (weight is 0.5)
     
-1.  **[Project activity](#project-activity)**: **1.69** (weight is 0.5)
+1.  **[Project activity](#project-activity)**: **1.18** (weight is 0.5)
     
-1.  **[Project popularity](#project-popularity)**: **0.34** (weight is 0.5)
+1.  **[Project popularity](#project-popularity)**: **0.65** (weight is 0.5)
     
 1.  **[Security reviews](#security-reviews)**: **0.0** (weight is 0.2)
     
@@ -240,7 +240,7 @@ This sub-score is based on 1 feature:
 
 
 
-1.  **Info about vulnerabilities:** Not found
+1.  **Info about vulnerabilities in the project:** Not found
 
 
 ### Unpatched vulnerabilities
@@ -255,7 +255,7 @@ This sub-score is based on 1 feature:
 
 
 
-1.  **Info about vulnerabilities:** Not found
+1.  **Info about vulnerabilities in the project:** Not found
 
 
 ### Community commitment
@@ -277,38 +277,35 @@ This sub-score is based on 3 features:
 
 ### Project activity
 
-Score: **1.69**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **1.18**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-10 commits in the last 3 months results to 1.54 points
-3 contributors increase the score value from 1.54 to 1.69
+7 commits in the last 3 months results to 1.08 points
+3 contributors increase the score value from 1.08 to 1.18
 
 This sub-score is based on 2 features:
 
 
 
-1.  **Number of commits in the last three months:** 10
+1.  **Number of commits in the last three months:** 7
 1.  **Number of contributors in the last three months:** 3
 
 
 ### Project popularity
 
-Score: **0.34**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **0.65**, confidence is 10.0 (max), weight is 0.5 (medium)
 
-The score is based on number of stars and watchers.
-Here is how a number of stars contributes to the score:
-0 -> 0.00 (min), 2500 -> 2.50, 5000 -> 5.00, 10000 -> 10.00 (max)
-Here is how a number of watchers contributes to the score:
-0 -> 0.00 (min), 450 -> 1.50, 750 -> 2.50, 3000 -> 10.00 (max)
+This scoring function is based on number of stars, watchers and dependent projects.
 
 
 
-This sub-score is based on 2 features:
+This sub-score is based on 3 features:
 
 
 
-1.  **Number of stars for a GitHub repository:** 192
+1.  **Number of projects on GitHub that use an open source project:** 467
+1.  **Number of stars for a GitHub repository:** 193
 1.  **Number of watchers for a GitHub repository:** 44
 
 

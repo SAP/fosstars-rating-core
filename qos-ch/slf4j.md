@@ -2,11 +2,11 @@
 
 https://github.com/qos-ch/slf4j
 
-Last updated on Jul 26, 2021
+Last updated on Aug 3, 2021
 
 **Rating**: **BAD**
 
-**Score**: **3.29**, max score value is 10.0
+**Score**: **3.36**, max score value is 10.0
 
 **Confidence**: Max (10.0, max confidence value is 10.0)
 
@@ -65,9 +65,9 @@ It used the following sub-scores:
     
 1.  **[Community commitment](#community-commitment)**: **0.0** (weight is 0.5)
     
-1.  **[Project activity](#project-activity)**: **8.31** (weight is 0.5)
+1.  **[Project activity](#project-activity)**: **8.77** (weight is 0.5)
     
-1.  **[Project popularity](#project-popularity)**: **2.06** (weight is 0.5)
+1.  **[Project popularity](#project-popularity)**: **2.28** (weight is 0.5)
     
 1.  **[Security reviews](#security-reviews)**: **0.0** (weight is 0.2)
     
@@ -235,7 +235,7 @@ This sub-score is based on 1 feature:
 
 
 
-1.  **Info about vulnerabilities:** 1 vulnerability, [details below](#known-vulnerabilities)
+1.  **Info about vulnerabilities in the project:** 1 vulnerability, [details below](#known-vulnerabilities)
 
 
 ### Unpatched vulnerabilities
@@ -250,7 +250,7 @@ This sub-score is based on 1 feature:
 
 
 
-1.  **Info about vulnerabilities:** 1 vulnerability, [details below](#known-vulnerabilities)
+1.  **Info about vulnerabilities in the project:** 1 vulnerability, [details below](#known-vulnerabilities)
 
 
 ### Community commitment
@@ -272,38 +272,35 @@ This sub-score is based on 3 features:
 
 ### Project activity
 
-Score: **8.31**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **8.77**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-54 commits in the last 3 months results to 8.31 points
+57 commits in the last 3 months results to 8.77 points
 
 This sub-score is based on 2 features:
 
 
 
-1.  **Number of commits in the last three months:** 54
+1.  **Number of commits in the last three months:** 57
 1.  **Number of contributors in the last three months:** 1
 
 
 ### Project popularity
 
-Score: **2.06**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **2.28**, confidence is 10.0 (max), weight is 0.5 (medium)
 
-The score is based on number of stars and watchers.
-Here is how a number of stars contributes to the score:
-0 -> 0.00 (min), 2500 -> 2.50, 5000 -> 5.00, 10000 -> 10.00 (max)
-Here is how a number of watchers contributes to the score:
-0 -> 0.00 (min), 450 -> 1.50, 750 -> 2.50, 3000 -> 10.00 (max)
+This scoring function is based on number of stars, watchers and dependent projects.
 
 
 
-This sub-score is based on 2 features:
+This sub-score is based on 3 features:
 
 
 
-1.  **Number of stars for a GitHub repository:** 1691
-1.  **Number of watchers for a GitHub repository:** 111
+1.  **Number of projects on GitHub that use an open source project:** 320
+1.  **Number of stars for a GitHub repository:** 1695
+1.  **Number of watchers for a GitHub repository:** 112
 
 
 ### Security reviews

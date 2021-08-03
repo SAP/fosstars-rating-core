@@ -2,13 +2,13 @@
 
 https://github.com/envoyproxy/envoy
 
-Last updated on Jul 26, 2021
+Last updated on Aug 3, 2021
 
 **Rating**: **MODERATE**
 
 **Score**: **5.3**, max score value is 10.0
 
-**Confidence**: Max (10.0, max confidence value is 10.0)
+**Confidence**: High (9.65, max confidence value is 10.0)
 
 ## Details
 
@@ -230,7 +230,7 @@ This sub-score is based on 1 feature:
 
 
 
-1.  **Info about vulnerabilities:** 34 vulnerabilities, [details below](#known-vulnerabilities)
+1.  **Info about vulnerabilities in the project:** 34 vulnerabilities, [details below](#known-vulnerabilities)
 
 
 ### Unpatched vulnerabilities
@@ -245,7 +245,7 @@ This sub-score is based on 1 feature:
 
 
 
-1.  **Info about vulnerabilities:** 34 vulnerabilities, [details below](#known-vulnerabilities)
+1.  **Info about vulnerabilities in the project:** 34 vulnerabilities, [details below](#known-vulnerabilities)
 
 
 ### Community commitment
@@ -271,34 +271,31 @@ Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-620 commits in the last 3 months results to 10.00 points
+599 commits in the last 3 months results to 10.00 points
 2 contributors increase the score value from 10.00 to 10.50
 
 This sub-score is based on 2 features:
 
 
 
-1.  **Number of commits in the last three months:** 620
+1.  **Number of commits in the last three months:** 599
 1.  **Number of contributors in the last three months:** 2
 
 
 ### Project popularity
 
-Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **10.0**, confidence is 6.67 (low), weight is 0.5 (medium)
 
-The score is based on number of stars and watchers.
-Here is how a number of stars contributes to the score:
-0 -> 0.00 (min), 2500 -> 2.50, 5000 -> 5.00, 10000 -> 10.00 (max)
-Here is how a number of watchers contributes to the score:
-0 -> 0.00 (min), 450 -> 1.50, 750 -> 2.50, 3000 -> 10.00 (max)
+This scoring function is based on number of stars, watchers and dependent projects.
 
 
 
-This sub-score is based on 2 features:
+This sub-score is based on 3 features:
 
 
 
-1.  **Number of stars for a GitHub repository:** 17527
+1.  **Number of projects on GitHub that use an open source project:** unknown
+1.  **Number of stars for a GitHub repository:** 17600
 1.  **Number of watchers for a GitHub repository:** 603
 
 
