@@ -28,6 +28,7 @@ import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 import org.kohsuke.github.GHFileNotFoundException;
 import org.kohsuke.github.GHIssue;
+import org.kohsuke.github.GHRepository;
 
 public class OssRulesOfPlayGitHubIssuesReporterTest extends TestGitHubDataFetcherHolder {
 
@@ -75,20 +76,21 @@ public class OssRulesOfPlayGitHubIssuesReporterTest extends TestGitHubDataFetche
 
     GitHubDataFetcher ghDataFetcher = mock(GitHubDataFetcher.class);
 
-    try {
-      OssRulesOfPlayGitHubIssuesReporter reporter = new OssRulesOfPlayGitHubIssuesReporter(
-          ghDataFetcher,
-          new OssRulesOfPlayRatingMarkdownFormatter(new OssRulesOfPlayAdvisor()));
+    when(ghDataFetcher.gitHubIssuesFor(any(), any())).thenReturn(Lists.newArrayList());
+    when(ghDataFetcher.createGitHubIssue(any(), any(), any())).thenThrow(
+        GHFileNotFoundException.class);
 
-      when(ghDataFetcher.gitHubIssuesFor(any(), any())).thenReturn(Lists.newArrayList());
-      when(ghDataFetcher.createGitHubIssue(any(), any(), any())).thenThrow(
-          GHFileNotFoundException.class);
+    GHRepository repository = mock(GHRepository.class);
+    when(repository.hasIssues()).thenReturn(false);
+    when(ghDataFetcher.repositoryFor(any())).thenReturn(repository);
 
-      reporter.createIssuesFor(project);
-      verify(ghDataFetcher, times(1)).createGitHubIssue(any(), any(), any());
-    } finally {
-      FileUtils.forceDeleteOnExit(CONFIG_PATH.toFile());
-    }
+    OssRulesOfPlayGitHubIssuesReporter reporter = new OssRulesOfPlayGitHubIssuesReporter(
+        ghDataFetcher,
+        new OssRulesOfPlayRatingMarkdownFormatter(new OssRulesOfPlayAdvisor()));
+
+    reporter.createIssuesFor(project);
+    verify(repository, times(1)).hasIssues();
+    verify(ghDataFetcher, times(0)).createGitHubIssue(any(), any(), any());
   }
 
   @Test
@@ -104,18 +106,19 @@ public class OssRulesOfPlayGitHubIssuesReporterTest extends TestGitHubDataFetche
 
     GitHubDataFetcher ghDataFetcher = mock(GitHubDataFetcher.class);
 
-    try {
-      OssRulesOfPlayGitHubIssuesReporter reporter = new OssRulesOfPlayGitHubIssuesReporter(
-          ghDataFetcher, new OssRulesOfPlayRatingMarkdownFormatter(new OssRulesOfPlayAdvisor()));
+    when(ghDataFetcher.gitHubIssuesFor(any(), any())).thenReturn(Lists.newArrayList());
+    when(ghDataFetcher.createGitHubIssue(any(), any(), any())).thenReturn(new GHIssue());
 
-      when(ghDataFetcher.gitHubIssuesFor(any(), any())).thenReturn(Lists.newArrayList());
-      when(ghDataFetcher.createGitHubIssue(any(), any(), any())).thenReturn(new GHIssue());
+    GHRepository repository = mock(GHRepository.class);
+    when(repository.hasIssues()).thenReturn(true);
+    when(ghDataFetcher.repositoryFor(any())).thenReturn(repository);
 
-      reporter.createIssuesFor(project);
-      verify(ghDataFetcher, times(2)).createGitHubIssue(any(), any(), any());
-    } finally {
-      FileUtils.forceDeleteOnExit(CONFIG_PATH.toFile());
-    }
+    OssRulesOfPlayGitHubIssuesReporter reporter = new OssRulesOfPlayGitHubIssuesReporter(
+        ghDataFetcher, new OssRulesOfPlayRatingMarkdownFormatter(new OssRulesOfPlayAdvisor()));
+
+    reporter.createIssuesFor(project);
+    verify(repository, times(1)).hasIssues();
+    verify(ghDataFetcher, times(2)).createGitHubIssue(any(), any(), any());
   }
 
 }
