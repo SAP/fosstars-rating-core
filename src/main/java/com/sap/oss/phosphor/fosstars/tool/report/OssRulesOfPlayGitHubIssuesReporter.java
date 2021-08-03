@@ -76,6 +76,11 @@ public class OssRulesOfPlayGitHubIssuesReporter implements Reporter<GitHubProjec
       return;
     }
 
+    if (!fetcher.repositoryFor(project).hasIssues()) {
+      LOGGER.warn("Creating issues is disabled for project {}", project.toString());
+      return;
+    }
+
     LOGGER.info("Creating issues for violations on {}", project.toString());
 
     List<Value<Boolean>> violations
