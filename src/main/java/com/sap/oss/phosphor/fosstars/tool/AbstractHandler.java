@@ -1,6 +1,5 @@
 package com.sap.oss.phosphor.fosstars.tool;
 
-import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 import static java.lang.String.format;
 import static java.util.Collections.emptyList;
 import static java.util.Objects.requireNonNull;
@@ -51,11 +50,6 @@ public abstract class AbstractHandler implements Handler {
    * No configuration file.
    */
   static final Config NO_CONFIG = null;
-
-  /**
-   * A set of command-line options that specify subjects.
-   */
-  static final Set<String> SUBJECT_OPTIONS = setOf("--url", "--gav", "--npm", "--purl", "--config");
 
   /**
    * Maps a command-line option for subjects to a processor.
@@ -119,6 +113,7 @@ public abstract class AbstractHandler implements Handler {
     this.router.put("--npm", this::processNpm);
     this.router.put("--purl", this::processPurl);
     this.router.put("--config", this::processConfig);
+    this.router.put("--pom", this::processPom);
   }
 
   /**
@@ -215,14 +210,14 @@ public abstract class AbstractHandler implements Handler {
 
   @Override
   public final Handler run() throws Exception {
-    List<String> options = SUBJECT_OPTIONS.stream()
+    List<String> options = router.keySet().stream()
         .filter(option -> commandLine.hasOption(option))
         .collect(Collectors.toList());
 
     if (options.isEmpty()) {
       throw new IllegalArgumentException(format(
           "You have to give me one of the following options: %s",
-          String.join(", ", SUBJECT_OPTIONS)));
+          String.join(", ", router.keySet())));
     }
 
     if (options.size() > 1) {
@@ -276,6 +271,43 @@ public abstract class AbstractHandler implements Handler {
     Arrays.stream(createFormatter("text").print(project).split("\n")).forEach(logger::info);
     logger.info("");
     storeReportIfRequested(project, commandLine);
+  }
+
+  /**
+   * Calculate ratings for a number of projects.
+   *
+   * @param projects The projects.
+   * @param reporters A list of reporters to be applied to the calculated ratings.
+   * @param projectCacheFile A path to projects cache.
+   * @throws IOException If something went wrong.
+   */
+  void process(List<GitHubProject> projects, List<Reporter<GitHubProject>> reporters,
+      String projectCacheFile) throws IOException {
+
+    logger.info("Starting calculating ratings ...");
+    MultipleRatingsCalculator multipleRatingsCalculator =
+        new MultipleRatingsCalculator(calculator())
+            .set(loadSubjectCache(projectCacheFile))
+            .storeCacheTo(projectCacheFile)
+            .calculateFor(projects);
+
+    logger.info("Okay, we've done calculating the ratings");
+
+    List<Subject> failedSubjects = multipleRatingsCalculator.failedSubjects();
+    if (!failedSubjects.isEmpty()) {
+      logger.warn("Ratings couldn't be calculated for {} project{}",
+          failedSubjects.size(), failedSubjects.size() == 1 ? "" : "s");
+      for (GitHubProject project : projects) {
+        logger.info("    {}", project.scm());
+      }
+    }
+
+    if (!reporters.isEmpty()) {
+      logger.info("Now let's generate reports");
+      for (Reporter<GitHubProject> reporter : reporters) {
+        reporter.runFor(projects);
+      }
+    }
   }
 
   /**
@@ -370,31 +402,17 @@ public abstract class AbstractHandler implements Handler {
     }
 
     String projectCacheFile = projectCacheFile(config);
+    process(projects, reporters, projectCacheFile);
+  }
 
-    logger.info("Starting calculating ratings ...");
-    MultipleRatingsCalculator multipleRatingsCalculator =
-        new MultipleRatingsCalculator(calculator())
-            .set(loadSubjectCache(projectCacheFile))
-            .storeCacheTo(projectCacheFile)
-            .calculateFor(projects);
-
-    logger.info("Okay, we've done calculating the ratings");
-
-    List<Subject> failedSubjects = multipleRatingsCalculator.failedSubjects();
-    if (!failedSubjects.isEmpty()) {
-      logger.warn("Ratings couldn't be calculated for {} project{}",
-          failedSubjects.size(), failedSubjects.size() == 1 ? "" : "s");
-      for (GitHubProject project : projects) {
-        logger.info("    {}", project.scm());
-      }
-    }
-
-    if (!reporters.isEmpty()) {
-      logger.info("Now let's generate reports");
-      for (Reporter<GitHubProject> reporter : reporters) {
-        reporter.runFor(projects);
-      }
-    }
+  /**
+   * Calculate ratings for dependencies in a POm file.
+   *
+   * @param filename A path to the POM file.
+   * @throws IOException If something went wrong.
+   */
+  void processPom(String filename) throws Exception {
+    throw new UnsupportedOperationException("Oops! I don't support Maven POM!");
   }
 
   /**
