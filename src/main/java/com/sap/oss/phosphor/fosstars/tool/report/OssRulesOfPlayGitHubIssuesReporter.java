@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.kohsuke.github.GHFileNotFoundException;
 import org.kohsuke.github.GHIssue;
 
 /**
@@ -86,8 +87,13 @@ public class OssRulesOfPlayGitHubIssuesReporter implements Reporter<GitHubProjec
       String issueHeader = printTitle(violation);
       List<GHIssue> existingGitHubIssues = fetcher.gitHubIssuesFor(project, issueHeader);
       if (existingGitHubIssues.isEmpty()) {
-        fetcher.createGitHubIssue(project, printTitle(violation), printBody(violation));
-        LOGGER.info("New issue: " + issueHeader);
+        try {
+          fetcher.createGitHubIssue(project, printTitle(violation), printBody(violation));
+          LOGGER.info("New issue: " + issueHeader);
+        } catch (GHFileNotFoundException issuesDisabledException) {
+          LOGGER.warn("Creating issues is disabled for project {}", project.toString());
+          break;
+        }
       } else {
         LOGGER.info("Issue already exists: " + issueHeader);
       }
