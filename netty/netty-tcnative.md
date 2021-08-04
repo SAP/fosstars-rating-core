@@ -2,7 +2,7 @@
 
 https://github.com/netty/netty-tcnative
 
-Last updated on Aug 3, 2021
+Last updated on Aug 4, 2021
 
 **Rating**: **BAD**
 

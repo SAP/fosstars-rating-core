@@ -2,7 +2,7 @@
 
 https://github.com/madler/zlib
 
-Last updated on Aug 3, 2021
+Last updated on Aug 4, 2021
 
 **Rating**: **BAD**
 
@@ -301,7 +301,7 @@ This sub-score is based on 3 features:
 
 
 1.  **Number of projects on GitHub that use an open source project:** unknown
-1.  **Number of stars for a GitHub repository:** 3011
+1.  **Number of stars for a GitHub repository:** 3015
 1.  **Number of watchers for a GitHub repository:** 164
 
 

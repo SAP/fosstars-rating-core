@@ -2,11 +2,11 @@
 
 https://github.com/envoyproxy/envoy
 
-Last updated on Aug 3, 2021
+Last updated on Aug 4, 2021
 
 **Rating**: **MODERATE**
 
-**Score**: **5.3**, max score value is 10.0
+**Score**: **5.24**, max score value is 10.0
 
 **Confidence**: High (9.65, max confidence value is 10.0)
 
@@ -20,7 +20,7 @@ The rating is based on **security score for open-source projects**.
 
 It used the following sub-scores:
 
-1.  **[Security testing](#security-testing)**: **5.83** (weight is 1.0)
+1.  **[Security testing](#security-testing)**: **5.6** (weight is 1.0)
     1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
         1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
             
@@ -30,8 +30,8 @@ It used the following sub-scores:
         
     1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
         
-    1.  **[Static analysis](#static-analysis)**: **4.5** (weight is 1.0)
-        1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
+    1.  **[Static analysis](#static-analysis)**: **3.5** (weight is 1.0)
+        1.  **[LGTM score](#lgtm-score)**: **7.0** (weight is 1.0)
             
         1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
             
@@ -42,7 +42,7 @@ It used the following sub-scores:
 1.  **[Security awareness](#security-awareness)**: **4.5** (weight is 0.9)
     
 1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: **0.0** (weight is 0.6)
-    1.  **[Security testing](#security-testing)**: **5.83** (weight is 1.0)
+    1.  **[Security testing](#security-testing)**: **5.6** (weight is 1.0)
         1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
             1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
                 
@@ -52,8 +52,8 @@ It used the following sub-scores:
             
         1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
             
-        1.  **[Static analysis](#static-analysis)**: **4.5** (weight is 1.0)
-            1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
+        1.  **[Static analysis](#static-analysis)**: **3.5** (weight is 1.0)
+            1.  **[LGTM score](#lgtm-score)**: **7.0** (weight is 1.0)
                 
             1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
                 
@@ -132,7 +132,7 @@ Below are the details about all the used sub-scores.
 
 ### Security testing
 
-Score: **5.83**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **5.6**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -151,8 +151,8 @@ This sub-score is based on the following sub-scores:
     
 1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
     
-1.  **[Static analysis](#static-analysis)**: **4.5** (weight is 1.0)
-    1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
+1.  **[Static analysis](#static-analysis)**: **3.5** (weight is 1.0)
+    1.  **[LGTM score](#lgtm-score)**: **7.0** (weight is 1.0)
         
     1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
         
@@ -205,7 +205,7 @@ This sub-score is based on the following sub-score:
 
 
 
-1.  **[Security testing](#security-testing)**: **5.83** (weight is 1.0)
+1.  **[Security testing](#security-testing)**: **5.6** (weight is 1.0)
     1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
         1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
             
@@ -215,8 +215,8 @@ This sub-score is based on the following sub-score:
         
     1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
         
-    1.  **[Static analysis](#static-analysis)**: **4.5** (weight is 1.0)
-        1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
+    1.  **[Static analysis](#static-analysis)**: **3.5** (weight is 1.0)
+        1.  **[LGTM score](#lgtm-score)**: **7.0** (weight is 1.0)
             
         1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
             
@@ -271,14 +271,14 @@ Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-599 commits in the last 3 months results to 10.00 points
+594 commits in the last 3 months results to 10.00 points
 2 contributors increase the score value from 10.00 to 10.50
 
 This sub-score is based on 2 features:
 
 
 
-1.  **Number of commits in the last three months:** 599
+1.  **Number of commits in the last three months:** 594
 1.  **Number of contributors in the last three months:** 2
 
 
@@ -295,7 +295,7 @@ This sub-score is based on 3 features:
 
 
 1.  **Number of projects on GitHub that use an open source project:** unknown
-1.  **Number of stars for a GitHub repository:** 17600
+1.  **Number of stars for a GitHub repository:** 17602
 1.  **Number of watchers for a GitHub repository:** 603
 
 
@@ -368,7 +368,7 @@ This sub-score is based on 4 features:
 
 ### Static analysis
 
-Score: **4.5**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **3.5**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -378,7 +378,7 @@ This sub-score is based on the following sub-scores:
 
 
 
-1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
+1.  **[LGTM score](#lgtm-score)**: **7.0** (weight is 1.0)
     
 1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
     
@@ -439,7 +439,7 @@ This sub-score is based on 3 features:
 
 ### LGTM score
 
-Score: **9.0**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **7.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -450,7 +450,7 @@ This sub-score is based on 2 features:
 
 
 1.  **Programming languages:** C, CPP, PYTHON, GO, OTHER
-1.  **The worst LGTM grade of the project:** A
+1.  **The worst LGTM grade of the project:** B
 
 
 ### How a project uses CodeQL

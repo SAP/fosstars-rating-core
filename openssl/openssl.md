@@ -2,7 +2,7 @@
 
 https://github.com/openssl/openssl
 
-Last updated on Aug 3, 2021
+Last updated on Aug 4, 2021
 
 **Rating**: **MODERATE**
 
@@ -278,14 +278,14 @@ Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-1040 commits in the last 3 months results to 10.00 points
+1027 commits in the last 3 months results to 10.00 points
 13 contributors increase the score value from 10.00 to 12.00
 
 This sub-score is based on 2 features:
 
 
 
-1.  **Number of commits in the last three months:** 1040
+1.  **Number of commits in the last three months:** 1027
 1.  **Number of contributors in the last three months:** 13
 
 
@@ -302,7 +302,7 @@ This sub-score is based on 3 features:
 
 
 1.  **Number of projects on GitHub that use an open source project:** unknown
-1.  **Number of stars for a GitHub repository:** 16167
+1.  **Number of stars for a GitHub repository:** 16174
 1.  **Number of watchers for a GitHub repository:** 924
 
 
