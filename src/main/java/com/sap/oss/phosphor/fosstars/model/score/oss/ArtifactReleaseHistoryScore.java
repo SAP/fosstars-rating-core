@@ -31,7 +31,7 @@ public class ArtifactReleaseHistoryScore extends FeatureBasedScore {
    * The artifact versions list to be considered as a cluster should have size greater than the
    * threshold.
    */
-  private static final int VERSIONS_CLUSTER_SIZE_THRESHOLD = 2;
+  private static final int VERSIONS_CLUSTER_SIZE_THRESHOLD = 10;
 
   /**
    * Initializes a new score.
