@@ -11,17 +11,17 @@ import com.sap.oss.phosphor.fosstars.model.score.FeatureBasedScore;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 
 /**
- * This scoring function shows how much an open source project is used, for example, in a company.
- * Currently, the function simply translates
- * {@link OssRiskFeatures#HOW_MANY_COMPONENTS_USE_OSS_PROJECT} to a score value.
+ * This scoring function outputs a likelihood factor for security risk of open source project.
+ * The factor is based on how much the project is used, for example, in a company.
  */
-public class OssProjectUsageScore extends FeatureBasedScore {
+public class UsageRiskLikelihoodFactor extends FeatureBasedScore {
 
   /**
    * Create a new scoring function.
    */
-  public OssProjectUsageScore() {
-    super("How much an open source project is used", HOW_MANY_COMPONENTS_USE_OSS_PROJECT);
+  public UsageRiskLikelihoodFactor() {
+    super("Likelihood factor of usage of an open source project",
+        HOW_MANY_COMPONENTS_USE_OSS_PROJECT);
   }
 
   @Override

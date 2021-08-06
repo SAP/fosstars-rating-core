@@ -71,7 +71,7 @@ import com.sap.oss.phosphor.fosstars.model.score.oss.UnpatchedVulnerabilitiesSco
 import com.sap.oss.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.VulnerabilityLifetimeScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.FunctionalityRiskLikelihoodFactor;
-import com.sap.oss.phosphor.fosstars.model.score.oss.risk.OssProjectUsageScore;
+import com.sap.oss.phosphor.fosstars.model.score.oss.risk.UsageRiskLikelihoodFactor;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubOrganization;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.MavenArtifact;
@@ -285,7 +285,7 @@ public abstract class Deserialization {
         ArtifactVersionUpToDateScore.class,
         ArtifactVersionVulnerabilityScore.class,
         ArtifactReleaseHistoryScore.class,
-        OssProjectUsageScore.class,
+        UsageRiskLikelihoodFactor.class,
         FunctionalityRiskLikelihoodFactor.class
     );
 
