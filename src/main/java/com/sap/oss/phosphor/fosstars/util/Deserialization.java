@@ -70,6 +70,7 @@ import com.sap.oss.phosphor.fosstars.model.score.oss.StaticAnalysisScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.UnpatchedVulnerabilitiesScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.VulnerabilityLifetimeScore;
+import com.sap.oss.phosphor.fosstars.model.score.oss.risk.OssProjectUsageScore;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubOrganization;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.MavenArtifact;
@@ -282,7 +283,8 @@ public abstract class Deserialization {
         ArtifactLatestReleaseAgeScore.class,
         ArtifactVersionUpToDateScore.class,
         ArtifactVersionVulnerabilityScore.class,
-        ArtifactReleaseHistoryScore.class
+        ArtifactReleaseHistoryScore.class,
+        OssProjectUsageScore.class
     );
 
     // ratings
