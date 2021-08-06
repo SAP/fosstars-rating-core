@@ -1,6 +1,7 @@
 package com.sap.oss.phosphor.fosstars.model.feature.oss.risk;
 
 import com.sap.oss.phosphor.fosstars.model.feature.EnumFeature;
+import com.sap.oss.phosphor.fosstars.model.feature.Likelihood;
 import com.sap.oss.phosphor.fosstars.model.feature.Quantity;
 import com.sap.oss.phosphor.fosstars.model.feature.oss.Functionality;
 
@@ -22,4 +23,11 @@ public class OssRiskFeatures {
    */
   public static final EnumFeature<Functionality> FUNCTIONALITY
       = new EnumFeature<>(Functionality.class, "What kind of functionality an open project offers");
+
+  /**
+   * Shows how likely an open source project handles untrusted data.
+   */
+  public static final EnumFeature<Likelihood> HANDLING_UNTRUSTED_DATA_LIKELIHOOD
+      = new EnumFeature<>(
+          Likelihood.class, "How likely an open source project handles untrusted data");
 }
