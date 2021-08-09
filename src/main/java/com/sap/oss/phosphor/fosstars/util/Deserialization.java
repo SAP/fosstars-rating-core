@@ -73,6 +73,7 @@ import com.sap.oss.phosphor.fosstars.model.score.oss.VulnerabilityLifetimeScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.AdoptedRiskLikelihoodFactor;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.FunctionalityRiskLikelihoodFactor;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.HandlingUntrustedDataRiskLikelihoodFactor;
+import com.sap.oss.phosphor.fosstars.model.score.oss.risk.RiskLikelihoodCoefficient;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.UsageRiskLikelihoodFactor;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubOrganization;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
@@ -290,7 +291,8 @@ public abstract class Deserialization {
         UsageRiskLikelihoodFactor.class,
         FunctionalityRiskLikelihoodFactor.class,
         HandlingUntrustedDataRiskLikelihoodFactor.class,
-        AdoptedRiskLikelihoodFactor.class
+        AdoptedRiskLikelihoodFactor.class,
+        RiskLikelihoodCoefficient.class
     );
 
     // ratings
