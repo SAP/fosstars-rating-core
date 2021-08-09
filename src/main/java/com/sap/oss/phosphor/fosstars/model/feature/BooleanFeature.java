@@ -22,6 +22,24 @@ public class BooleanFeature extends AbstractFeature<Boolean> {
   }
 
   /**
+   * Creates a true value of the feature.
+   *
+   * @return A true value of the feature.
+   */
+  public BooleanValue yes() {
+    return value(true);
+  }
+
+  /**
+   * Creates a false value of the feature.
+   *
+   * @return A false value of the feature.
+   */
+  public BooleanValue no() {
+    return value(false);
+  }
+
+  /**
    * Creates a value of the features.
    *
    * @param value True or false.
