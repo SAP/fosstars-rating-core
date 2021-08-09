@@ -15,6 +15,7 @@ elements:
       to: 0.1
       openRight: false
       positiveInfinity: false
+    expectedUnknownScore: true
     expectedLabel: null
     alias: "unknown_reviews"
   - type: "StandardTestVector"

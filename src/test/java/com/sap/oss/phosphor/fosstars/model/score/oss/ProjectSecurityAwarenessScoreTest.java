@@ -1,5 +1,6 @@
 package com.sap.oss.phosphor.fosstars.model.score.oss;
 
+import static com.sap.oss.phosphor.fosstars.TestUtils.DELTA;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_TEAM;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -16,33 +17,34 @@ import org.junit.Test;
 
 public class ProjectSecurityAwarenessScoreTest {
 
-  private static final ProjectSecurityAwarenessScore PROJECT_SECURITY_AWARENESS_SCORE
-      = new ProjectSecurityAwarenessScore();
-
-  private static final double ACCURACY = 0.001;
+  private static final ProjectSecurityAwarenessScore SCORE = new ProjectSecurityAwarenessScore();
 
   @Test(expected = IllegalArgumentException.class)
   public void testWithoutEnoughInfo() {
-    Set<Value<?>> values = Utils.allUnknown(PROJECT_SECURITY_AWARENESS_SCORE.allFeatures());
+    Set<Value<?>> values = Utils.allUnknown(SCORE.allFeatures());
     values.remove(HAS_SECURITY_TEAM.unknown());
-    PROJECT_SECURITY_AWARENESS_SCORE.calculate(values);
+    SCORE.calculate(values);
   }
 
   @Test
   public void testDescription() {
-    assertNotNull(PROJECT_SECURITY_AWARENESS_SCORE.description());
-    assertFalse(PROJECT_SECURITY_AWARENESS_SCORE.description().isEmpty());
+    assertNotNull(SCORE.description());
+    assertFalse(SCORE.description().isEmpty());
+  }
+
+  @Test
+  public void testWithAllUnknown() {
+    assertTrue(SCORE.calculate(Utils.allUnknown(SCORE.allFeatures())).isUnknown());
   }
 
   @Test
   public void testCalculate() {
-    Set<Value<?>> values = Utils.allUnknown(PROJECT_SECURITY_AWARENESS_SCORE.allFeatures());
-    ScoreValue scoreValue = PROJECT_SECURITY_AWARENESS_SCORE.calculate(values);
+    Set<Value<?>> values = OssSecurityScoreTest.defaultValues();
+    ScoreValue scoreValue = SCORE.calculate(values);
     assertFalse(scoreValue.isUnknown());
     assertFalse(scoreValue.isNotApplicable());
     assertTrue(Score.INTERVAL.contains(scoreValue.get()));
-    assertEquals(Confidence.MIN, scoreValue.confidence(), ACCURACY);
-    assertEquals(values.size(), scoreValue.usedValues().size());
+    assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     scoreValue.usedValues().forEach(usedValue -> assertTrue(values.contains(usedValue)));
   }
 

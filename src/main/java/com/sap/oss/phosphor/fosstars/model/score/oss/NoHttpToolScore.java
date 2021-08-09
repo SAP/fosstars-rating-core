@@ -41,6 +41,10 @@ public class NoHttpToolScore extends FeatureBasedScore {
 
     ScoreValue scoreValue = scoreValue(MIN, usesNoHttp, packageManagers);
 
+    if (allUnknown(scoreValue.usedValues())) {
+      return scoreValue.makeUnknown();
+    }
+
     // if nohttp is used, then return the max score value, and the min value otherwise
     if (!usesNoHttp.isUnknown()) {
       return usesNoHttp.get() ? scoreValue.set(MAX) : scoreValue;

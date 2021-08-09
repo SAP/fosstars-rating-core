@@ -4,7 +4,6 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.OWASP_
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.OWASP_DEPENDENCY_CHECK_USAGE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.PACKAGE_MANAGERS;
 import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.MAVEN;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -17,8 +16,6 @@ import org.junit.Test;
 
 public class OwaspDependencyScanScoreTest {
 
-  private static final double ACCURACY = 0.01;
-
   private static final OwaspDependencyScanScore SCORE = new OwaspDependencyScanScore();
 
   @Test
@@ -28,8 +25,7 @@ public class OwaspDependencyScanScoreTest {
         OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.unknown(),
         PACKAGE_MANAGERS.unknown());
     assertNotNull(value);
-    assertFalse(value.isUnknown());
-    assertEquals(Score.MIN, value.get(), ACCURACY);
+    assertTrue(value.isUnknown());
   }
 
   @Test

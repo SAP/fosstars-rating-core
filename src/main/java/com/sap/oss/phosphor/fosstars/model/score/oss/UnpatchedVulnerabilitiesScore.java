@@ -59,7 +59,7 @@ public class UnpatchedVulnerabilitiesScore extends FeatureBasedScore {
         "Hey! Give me info about vulnerabilities!");
 
     if (vulnerabilities.isUnknown()) {
-      return scoreValue(Score.MIN, vulnerabilities);
+      return scoreValue(Score.MIN, vulnerabilities).makeUnknown();
     }
 
     int highSeverityIssues = 0;

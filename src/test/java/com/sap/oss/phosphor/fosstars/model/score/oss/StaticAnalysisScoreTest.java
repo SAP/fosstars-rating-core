@@ -1,5 +1,6 @@
 package com.sap.oss.phosphor.fosstars.model.score.oss;
 
+import static com.sap.oss.phosphor.fosstars.TestUtils.DELTA;
 import static com.sap.oss.phosphor.fosstars.model.Score.MIN;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.LANGUAGES;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_CODEQL_SCANS;
@@ -24,8 +25,6 @@ import org.junit.Test;
 
 public class StaticAnalysisScoreTest {
 
-  private static final double DELTA = 0.01;
-  
   @Test
   public void testCalculateWithFeatureValues() {
     StaticAnalysisScore score = new StaticAnalysisScore();

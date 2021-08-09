@@ -23,8 +23,9 @@ elements:
     to: 0.1
     openRight: false
     positiveInfinity: false
+  expectedUnknownScore: true
   expectedLabel: null
-  alias: "test_vector_0"
+  alias: "all_unknown"
 - type: "StandardTestVector"
   values:
   - type: "BooleanValue"

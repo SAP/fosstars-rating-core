@@ -1,5 +1,6 @@
 package com.sap.oss.phosphor.fosstars.model.score.oss;
 
+import static com.sap.oss.phosphor.fosstars.TestUtils.DELTA;
 import static com.sap.oss.phosphor.fosstars.TestUtils.assertScore;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_COMMITS_LAST_THREE_MONTHS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS;
@@ -21,22 +22,20 @@ public class ProjectActivityScoreTest {
 
   private static final ProjectActivityScore PROJECT_ACTIVITY = new ProjectActivityScore();
 
-  private static final double PRECISION = 0.01;
-
   @Test
   public void testCalculate() {
     ScoreValue scoreValue = PROJECT_ACTIVITY.calculate(
         UnknownValue.of(NUMBER_OF_COMMITS_LAST_THREE_MONTHS),
         UnknownValue.of(NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS));
     assertTrue(scoreValue.isUnknown());
-    assertEquals(Confidence.MIN, scoreValue.confidence(), PRECISION);
+    assertEquals(Confidence.MIN, scoreValue.confidence(), DELTA);
     assertFalse(scoreValue.explanation().isEmpty());
 
     scoreValue = PROJECT_ACTIVITY.calculate(
             NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(0),
             UnknownValue.of(NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS));
     assertFalse(scoreValue.isUnknown());
-    assertEquals(Score.MIN, scoreValue.get(), PRECISION);
+    assertEquals(Score.MIN, scoreValue.get(), DELTA);
     assertTrue(scoreValue.confidence() > Confidence.MIN);
     assertTrue(scoreValue.confidence() < Confidence.MAX);
     assertFalse(scoreValue.explanation().isEmpty());
@@ -45,19 +44,19 @@ public class ProjectActivityScoreTest {
             UnknownValue.of(NUMBER_OF_COMMITS_LAST_THREE_MONTHS),
             NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(0));
     assertTrue(scoreValue.isUnknown());
-    assertEquals(Confidence.MIN, scoreValue.confidence(), PRECISION);
+    assertEquals(Confidence.MIN, scoreValue.confidence(), DELTA);
     assertFalse(scoreValue.explanation().isEmpty());
 
     scoreValue = PROJECT_ACTIVITY.calculate(values(0,0));
     assertFalse(scoreValue.isUnknown());
-    assertEquals(Score.MIN, scoreValue.get(), PRECISION);
-    assertEquals(Confidence.MAX, scoreValue.confidence(), PRECISION);
+    assertEquals(Score.MIN, scoreValue.get(), DELTA);
+    assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     assertFalse(scoreValue.explanation().isEmpty());
 
     scoreValue = PROJECT_ACTIVITY.calculate(values(1,1));
     assertFalse(scoreValue.isUnknown());
     assertTrue(Score.INTERVAL.contains(scoreValue.get()));
-    assertEquals(Confidence.MAX, scoreValue.confidence(), PRECISION);
+    assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     assertFalse(scoreValue.explanation().isEmpty());
 
     // I wish all open-source projects were like that
@@ -92,7 +91,7 @@ public class ProjectActivityScoreTest {
     ScoreValue scoreValue = PROJECT_ACTIVITY.calculate(values(1, 2));
     assertFalse(scoreValue.isUnknown());
     assertTrue(Score.INTERVAL.contains(scoreValue.get()));
-    assertEquals(Confidence.MAX, scoreValue.confidence(), PRECISION);
+    assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     assertFalse(scoreValue.explanation().isEmpty());
   }
   
@@ -101,7 +100,7 @@ public class ProjectActivityScoreTest {
     ScoreValue scoreValue = PROJECT_ACTIVITY.calculate(values(2, 1));
     assertFalse(scoreValue.isUnknown());
     assertTrue(Score.INTERVAL.contains(scoreValue.get()));
-    assertEquals(Confidence.MAX, scoreValue.confidence(), PRECISION);
+    assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     assertFalse(scoreValue.explanation().isEmpty());
   }
 

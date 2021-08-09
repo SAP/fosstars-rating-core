@@ -1,5 +1,6 @@
 package com.sap.oss.phosphor.fosstars.model.score.oss;
 
+import static com.sap.oss.phosphor.fosstars.TestUtils.DELTA;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.FUZZED_IN_OSS_FUZZ;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_BUG_BOUNTY_PROGRAM;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
@@ -62,8 +63,6 @@ import org.junit.Test;
 
 public class OssSecurityScoreTest {
 
-  private static final double DELTA = 0.01;
-
   @Test
   public void testSerializeAndDeserialize() throws IOException {
     OssSecurityScore score = new OssSecurityScore();
@@ -78,7 +77,7 @@ public class OssSecurityScoreTest {
   public void testCalculateForAllUnknown() {
     Score score = new OssSecurityScore();
     ScoreValue scoreValue = score.calculate(Utils.allUnknown(score.allFeatures()));
-    assertEquals(Score.MIN, scoreValue.get(), 0.01);
+    assertTrue(scoreValue.isUnknown());
     assertEquals(Confidence.MIN, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }
@@ -86,7 +85,14 @@ public class OssSecurityScoreTest {
   @Test
   public void testCalculate() {
     Score score = new OssSecurityScore();
-    Set<Value<?>> values = setOf(
+    ScoreValue scoreValue = score.calculate(defaultValues());
+    assertTrue(Score.INTERVAL.contains(scoreValue.get()));
+    assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
+    checkUsedValues(scoreValue);
+  }
+
+  public static Set<Value<?>> defaultValues() {
+    return setOf(
         SUPPORTED_BY_COMPANY.value(false),
         IS_APACHE.value(true),
         IS_ECLIPSE.value(false),
@@ -122,10 +128,6 @@ public class OssSecurityScoreTest {
         OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.value(7.0),
         PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)),
         SECURITY_REVIEWS.value(noReviews()));
-    ScoreValue scoreValue = score.calculate(values);
-    assertTrue(Score.INTERVAL.contains(scoreValue.get()));
-    assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
-    checkUsedValues(scoreValue);
   }
 
   private static void checkUsedValues(ScoreValue scoreValue) {

@@ -19,19 +19,21 @@ import org.junit.Test;
 
 public class FindSecBugsScoreTest {
 
+  private static final FindSecBugsScore SCORE = new FindSecBugsScore();
+
   @Test(expected = IllegalArgumentException.class)
   public void testWithoutUsesFindSecBugs() {
-    new FindSecBugsScore().calculate(LANGUAGES.unknown());
+    SCORE.calculate(LANGUAGES.unknown());
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testWithoutLanguagesValue() {
-    new FindSecBugsScore().calculate(USES_FIND_SEC_BUGS.unknown());
+    SCORE.calculate(USES_FIND_SEC_BUGS.unknown());
   }
 
   @Test
   public void testWithAllUnknown() {
-    FindSecBugsScore score = new FindSecBugsScore();
+    FindSecBugsScore score = SCORE;
     ScoreValue scoreValue = score.calculate(USES_FIND_SEC_BUGS.unknown(), LANGUAGES.unknown());
     assertTrue(scoreValue.isUnknown());
   }
@@ -52,7 +54,7 @@ public class FindSecBugsScoreTest {
       vectors.storeToYaml(file);
 
       ScoreVerification verification = new ScoreVerification(
-          new FindSecBugsScore(),
+          SCORE,
           TestVectors.loadFromYaml(file));
 
       verification.run();

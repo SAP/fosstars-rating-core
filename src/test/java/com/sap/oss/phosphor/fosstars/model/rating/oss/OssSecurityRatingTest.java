@@ -6,6 +6,8 @@ import static com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating.S
 import static com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel.UNCLEAR;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
@@ -19,6 +21,7 @@ import com.sap.oss.phosphor.fosstars.model.other.MakeImmutable;
 import com.sap.oss.phosphor.fosstars.model.other.Utils;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating.Thresholds;
 import com.sap.oss.phosphor.fosstars.model.score.oss.OssSecurityScore;
+import com.sap.oss.phosphor.fosstars.model.score.oss.OssSecurityScoreTest;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import java.util.Set;
@@ -29,9 +32,19 @@ public class OssSecurityRatingTest {
   @Test
   public void testCalculate() {
     Rating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
-    Set<Value<?>> values = Utils.allUnknown(rating.allFeatures());
+    Set<Value<?>> values = OssSecurityScoreTest.defaultValues();
     RatingValue ratingValue = rating.calculate(values);
     assertTrue(Score.INTERVAL.contains(ratingValue.score()));
+    assertNotNull(ratingValue.label());
+    assertNotEquals(UNCLEAR, ratingValue.label());
+  }
+
+  @Test
+  public void testCalculateWitAllUnknown() {
+    Rating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
+    Set<Value<?>> values = Utils.allUnknown(rating.allFeatures());
+    RatingValue ratingValue = rating.calculate(values);
+    assertTrue(ratingValue.scoreValue().isUnknown());
     assertEquals(UNCLEAR, ratingValue.label());
   }
 

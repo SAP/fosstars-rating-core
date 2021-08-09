@@ -17,27 +17,25 @@ import org.junit.Test;
 
 public class LgtmScoreTest {
 
-  @Test
-  public void smokeTest() {
-    LgtmScore score = new LgtmScore();
-    assertFalse(score.name().isEmpty());
-    assertEquals(2, score.features().size());
-    assertTrue(score.features().contains(WORST_LGTM_GRADE));
-    assertTrue(score.features().contains(LANGUAGES));
-    assertTrue(score.subScores().isEmpty());
-  }
+  private static final LgtmScore SCORE = new LgtmScore();
 
   @Test
   public void testCalculate() {
-    LgtmScore score = new LgtmScore();
-    ScoreValue scoreValue = score.calculate(WORST_LGTM_GRADE.unknown(), LANGUAGES.unknown());
+    ScoreValue scoreValue = SCORE.calculate(WORST_LGTM_GRADE.unknown(), LANGUAGES.unknown());
     assertTrue(scoreValue.isUnknown());
-    assertScore(Score.INTERVAL, score,
+
+    assertFalse(SCORE.name().isEmpty());
+    assertEquals(2, SCORE.features().size());
+    assertTrue(SCORE.features().contains(WORST_LGTM_GRADE));
+    assertTrue(SCORE.features().contains(LANGUAGES));
+    assertTrue(SCORE.subScores().isEmpty());
+
+    assertScore(Score.INTERVAL, SCORE,
         setOf(WORST_LGTM_GRADE.value(LgtmGrade.A_PLUS), LANGUAGES.value(Languages.of(JAVA))));
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testCalculateWithoutUsesWorseLgtmGradeValue() {
-    new LgtmScore().calculate(LANGUAGES.unknown());
+    SCORE.calculate(LANGUAGES.unknown());
   }
 }

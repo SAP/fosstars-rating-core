@@ -284,9 +284,20 @@ public abstract class AbstractScore implements Score {
    * @throws IllegalArgumentException If values are empty.
    */
   protected static boolean allUnknown(Value<?>... values) {
+    return allUnknown(Arrays.asList(values));
+  }
+
+  /**
+   * Checks if all values are unknown.
+   *
+   * @param values A list of values to be checked.
+   * @return True if all values are unknown, false otherwise.
+   * @throws IllegalArgumentException If values are empty.
+   */
+  protected static boolean allUnknown(List<Value<?>> values) {
     Objects.requireNonNull(values, "Oh no! Values is null!");
 
-    if (values.length == 0) {
+    if (values.size() == 0) {
       throw new IllegalStateException("Oh no! Values is empty!");
     }
 

@@ -75,6 +75,10 @@ public class MemorySafetyTestingScore extends FeatureBasedScore {
     ScoreValue scoreValue = scoreValue(MIN,
         languages, usesAddressSanitizer, usesMemorySanitizer, usesUndefinedBehaviorSanitizer);
 
+    if (allUnknown(scoreValue.usedValues())) {
+      return scoreValue.makeUnknown();
+    }
+
     boolean applicable = languages.isUnknown() || languages.get().containsAnyOf(UNSAFE_LANGUAGES);
     if (!applicable) {
       return scoreValue.makeNotApplicable();

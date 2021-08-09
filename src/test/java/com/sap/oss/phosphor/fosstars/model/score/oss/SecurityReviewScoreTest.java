@@ -8,6 +8,7 @@ import static com.sap.oss.phosphor.fosstars.model.value.SecurityReview.NO_INFO_A
 import static java.time.temporal.ChronoUnit.DAYS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.oss.phosphor.fosstars.model.value.SecurityReview;
@@ -123,9 +124,9 @@ public class SecurityReviewScoreTest {
   public void testCalculateWithUnknownReviews() {
     SecurityReviewScore score = new SecurityReviewScore();
     ScoreValue scoreValue = score.calculate(SECURITY_REVIEWS.unknown());
-    assertFalse(scoreValue.isUnknown());
+    assertTrue(scoreValue.isUnknown());
     assertFalse(scoreValue.isNotApplicable());
-    assertEquals(MIN, scoreValue.get(), DELTA);
+    assertEquals(MIN, scoreValue.confidence(), DELTA);
   }
 
   @Test

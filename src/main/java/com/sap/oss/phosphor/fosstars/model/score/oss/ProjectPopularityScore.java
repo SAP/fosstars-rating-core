@@ -59,6 +59,10 @@ public class ProjectPopularityScore extends FeatureBasedScore {
     Value<Integer> dependents = findValue(values, NUMBER_OF_DEPENDENT_PROJECTS_ON_GITHUB,
         "Hey! You have to give me a number of dependents!");
 
+    if (allUnknown(stars, watchers, dependents)) {
+      return scoreValue(MIN, stars, watchers, dependents).makeUnknown();
+    }
+
     return scoreValue(MIN, stars, watchers, dependents)
         .increase(subScoreFor(stars, BEST_STARS_AMOUNT))
         .increase(subScoreFor(watchers, BEST_WATCHERS_AMOUNT))

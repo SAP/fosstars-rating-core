@@ -55,6 +55,10 @@ public class OwaspDependencyScanScore extends FeatureBasedScore {
 
     ScoreValue scoreValue = scoreValue(MIN, usageValue, thresholdValue, packageManagersValue);
 
+    if (allUnknown(scoreValue.usedValues())) {
+      return scoreValue.makeUnknown();
+    }
+
     if (!packageManagersValue.isUnknown()
         && !SUPPORTED_PACKAGE_MANAGERS.containsAny(packageManagersValue.get())) {
 
