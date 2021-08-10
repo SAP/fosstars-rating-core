@@ -19,7 +19,7 @@ import com.sap.oss.phosphor.fosstars.model.weight.ScoreWeights;
  *   <li>{@link AvailabilityRiskImpactFactor}</li>
  * </ul>
  */
-public class RiskImpactFactors extends WeightedCompositeScore {
+public class RiskImpactScore extends WeightedCompositeScore {
 
   /**
    * This scoring function outputs am impact factor for security risk of open source project.
@@ -82,7 +82,7 @@ public class RiskImpactFactors extends WeightedCompositeScore {
   /**
    * Initializes a new score.
    */
-  public RiskImpactFactors() {
+  public RiskImpactScore() {
     super("Aggregated impact factors for security risk of open source project",
         setOf(
             new DataConfidentialityRiskImpactFactor(),

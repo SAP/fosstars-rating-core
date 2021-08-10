@@ -39,6 +39,7 @@ import com.sap.oss.phosphor.fosstars.model.rating.example.SecurityRatingExample;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurityRating.ArtifactSecurityLabel;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
+import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRiskRating;
 import com.sap.oss.phosphor.fosstars.model.score.AverageCompositeScore;
 import com.sap.oss.phosphor.fosstars.model.score.WeightedCompositeScore;
 import com.sap.oss.phosphor.fosstars.model.score.example.ProjectActivityScoreExample;
@@ -76,7 +77,7 @@ import com.sap.oss.phosphor.fosstars.model.score.oss.risk.FunctionalityRiskLikel
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.HandlingUntrustedDataRiskLikelihoodFactor;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.ImpactScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.OssSecurityRisk;
-import com.sap.oss.phosphor.fosstars.model.score.oss.risk.RiskImpactFactors;
+import com.sap.oss.phosphor.fosstars.model.score.oss.risk.RiskImpactScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.RiskLikelihoodCoefficient;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.RiskLikelihoodFactors;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.RiskLikelihoodScore;
@@ -258,7 +259,8 @@ public abstract class Deserialization {
         OssSecurityRating.SecurityLabel.class,
         SecurityRatingExample.SecurityLabelExample.class,
         OssRulesOfPlayRating.OssRulesOfPlayLabel.class,
-        NotApplicableLabel.class
+        NotApplicableLabel.class,
+        OssSecurityRiskRating.OssSecurityRiskLabel.class
     );
 
     // scores
@@ -303,10 +305,10 @@ public abstract class Deserialization {
         RiskLikelihoodScore.class,
         DataConfidentialityRiskImpactFactor.class,
         ImpactScore.class,
-        RiskImpactFactors.class,
-        RiskImpactFactors.ConfidentialityRiskImpactFactor.class,
-        RiskImpactFactors.IntegrityRiskImpactFactor.class,
-        RiskImpactFactors.AvailabilityRiskImpactFactor.class,
+        RiskImpactScore.class,
+        RiskImpactScore.ConfidentialityRiskImpactFactor.class,
+        RiskImpactScore.IntegrityRiskImpactFactor.class,
+        RiskImpactScore.AvailabilityRiskImpactFactor.class,
         OssSecurityRisk.class
     );
 
@@ -314,7 +316,8 @@ public abstract class Deserialization {
     mapper.registerSubtypes(
         SecurityRatingExample.class,
         OssSecurityRating.class,
-        OssRulesOfPlayScore.class
+        OssRulesOfPlayScore.class,
+        OssSecurityRiskRating.class
     );
 
     // weights
