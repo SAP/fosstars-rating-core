@@ -1,7 +1,6 @@
 package com.sap.oss.phosphor.fosstars.model.score.oss.risk;
 
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.risk.OssRiskFeatures.DATA_CONFIDENTIALITY;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.risk.OssRiskFeatures.FUNCTIONALITY;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.findValue;
 import static java.lang.String.format;
 
@@ -21,7 +20,7 @@ public class DataConfidentialityRiskImpactFactor extends FeatureBasedScore {
    */
   public DataConfidentialityRiskImpactFactor() {
     super("Impact factor of confidentiality of data that an open source project likely processes",
-        FUNCTIONALITY);
+        DATA_CONFIDENTIALITY);
   }
 
   @Override
