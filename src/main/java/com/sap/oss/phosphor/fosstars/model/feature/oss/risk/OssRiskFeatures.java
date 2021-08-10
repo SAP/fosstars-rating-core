@@ -3,6 +3,7 @@ package com.sap.oss.phosphor.fosstars.model.feature.oss.risk;
 import com.sap.oss.phosphor.fosstars.model.feature.BooleanFeature;
 import com.sap.oss.phosphor.fosstars.model.feature.DataConfidentialityType;
 import com.sap.oss.phosphor.fosstars.model.feature.EnumFeature;
+import com.sap.oss.phosphor.fosstars.model.feature.Impact;
 import com.sap.oss.phosphor.fosstars.model.feature.Likelihood;
 import com.sap.oss.phosphor.fosstars.model.feature.Quantity;
 import com.sap.oss.phosphor.fosstars.model.feature.oss.Functionality;
@@ -45,4 +46,28 @@ public class OssRiskFeatures {
   public static final EnumFeature<DataConfidentialityType> DATA_CONFIDENTIALITY
       = new EnumFeature<>(DataConfidentialityType.class,
       "Confidentiality of data that an open source project likely processes");
+
+  /**
+   * Describes potential impact to confidentiality of data in case of a security problem
+   * in an open source project.
+   */
+  public static final EnumFeature<Impact> CONFIDENTIALITY_IMPACT
+      = new EnumFeature<>(Impact.class,
+      "Potential impact to confidentiality in case of a security problem");
+
+  /**
+   * Describes potential impact to integrity of data in case of a security problem
+   * in an open source project.
+   */
+  public static final EnumFeature<Impact> INTEGRITY_IMPACT
+      = new EnumFeature<>(Impact.class,
+      "Potential impact to integrity in case of a security problem");
+
+  /**
+   * Describes potential impact to availability in case of a security problem
+   * in an open source project.
+   */
+  public static final EnumFeature<Impact> AVAILABILITY_IMPACT
+      = new EnumFeature<>(Impact.class,
+      "Potential impact to availability in case of a security problem");
 }

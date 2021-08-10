@@ -74,6 +74,8 @@ import com.sap.oss.phosphor.fosstars.model.score.oss.risk.AdoptedRiskLikelihoodF
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.DataConfidentialityRiskImpactFactor;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.FunctionalityRiskLikelihoodFactor;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.HandlingUntrustedDataRiskLikelihoodFactor;
+import com.sap.oss.phosphor.fosstars.model.score.oss.risk.ImpactScore;
+import com.sap.oss.phosphor.fosstars.model.score.oss.risk.RiskImpactFactors;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.RiskLikelihoodCoefficient;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.RiskLikelihoodFactors;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.RiskLikelihoodScore;
@@ -298,7 +300,12 @@ public abstract class Deserialization {
         RiskLikelihoodCoefficient.class,
         RiskLikelihoodFactors.class,
         RiskLikelihoodScore.class,
-        DataConfidentialityRiskImpactFactor.class
+        DataConfidentialityRiskImpactFactor.class,
+        ImpactScore.class,
+        RiskImpactFactors.class,
+        RiskImpactFactors.ConfidentialityRiskImpactFactor.class,
+        RiskImpactFactors.IntegrityRiskImpactFactor.class,
+        RiskImpactFactors.AvailabilityRiskImpactFactor.class
     );
 
     // ratings
