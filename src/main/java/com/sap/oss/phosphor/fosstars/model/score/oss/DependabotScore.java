@@ -93,6 +93,10 @@ public class DependabotScore extends FeatureBasedScore {
     ScoreValue scoreValue = scoreValue(Score.MIN,
         usesDependabot, usesGithub, packageManagers, languages);
 
+    if (allUnknown(scoreValue.usedValues())) {
+      return scoreValue.makeUnknown();
+    }
+
     // if the project uses Dependabot,
     // then we're happy
     if (usesDependabot.orElse(false)) {
@@ -100,7 +104,7 @@ public class DependabotScore extends FeatureBasedScore {
     }
 
     // if the projects uses GitHub for development,
-    // then there is a chance that it takes advantage of security alerts
+    // then there is a chance that it takes advantage of security alerts,
     // although we can't tell for sure
     if (usesGithub.orElse(false)) {
       boolean dependabotCanBeUsed = packageManagers.orElse(PackageManagers.empty()).list().stream()

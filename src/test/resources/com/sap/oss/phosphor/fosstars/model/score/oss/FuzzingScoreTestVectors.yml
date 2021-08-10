@@ -19,6 +19,7 @@ elements:
     to: 0.1
     openRight: false
     positiveInfinity: false
+  expectedUnknownScore: true
   expectedLabel: null
   alias: "all_unknown"
 

@@ -15,8 +15,9 @@ elements:
     to: 1.0
     openRight: false
     positiveInfinity: false
+  expectedUnknownScore: true
   expectedLabel: null
-  alias: "test_vector_0"
+  alias: "all_unknown"
 - type: "StandardTestVector"
   values:
   - type: "VulnerabilitiesValue"

@@ -41,6 +41,11 @@ public class CommunityCommitmentScore extends FeatureBasedScore {
     Value<Boolean> isEclipseProject = findValue(values, IS_ECLIPSE,
         "Hey! Tell me if the project belongs to the Eclipse Foundation!");
 
+    if (allUnknown(hasResponsibleCompany, isApacheProject, isEclipseProject)) {
+      return scoreValue(
+          MIN, hasResponsibleCompany, isApacheProject, isEclipseProject).makeUnknown();
+    }
+
     boolean belongsToApache = !isApacheProject.isUnknown() && isApacheProject.get();
     boolean belongsToEclipse = !isEclipseProject.isUnknown() && isEclipseProject.get();
 

@@ -42,6 +42,10 @@ public class FuzzingScore extends FeatureBasedScore {
 
     ScoreValue scoreValue = scoreValue(MIN, languages, fuzzedInOssFuzz);
 
+    if (allUnknown(scoreValue.usedValues())) {
+      return scoreValue.makeUnknown();
+    }
+
     boolean applicable = languages.isUnknown() || languages.get().containsAnyOf(UNSAFE_LANGUAGES);
     if (!applicable) {
       return scoreValue.makeNotApplicable();

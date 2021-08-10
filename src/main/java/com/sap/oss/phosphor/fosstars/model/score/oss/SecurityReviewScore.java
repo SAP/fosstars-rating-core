@@ -32,7 +32,7 @@ public class SecurityReviewScore extends FeatureBasedScore {
 
     ScoreValue score = scoreValue(MIN, reviews);
     if (reviews.isUnknown()) {
-      return score.explain("No info about security reviews");
+      return score.makeUnknown().explain("No info about security reviews");
     }
 
     if (reviews.get().isEmpty()) {

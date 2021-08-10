@@ -15,30 +15,31 @@ import org.junit.Test;
 
 public class UnpatchedVulnerabilitiesScoreTest {
 
+  private static final UnpatchedVulnerabilitiesScore SCORE = new UnpatchedVulnerabilitiesScore();
+
   @Test
-  public void calculateForAllUnknown() {
-    Score score = new UnpatchedVulnerabilitiesScore();
-    assertScore(Score.MIN, score, Utils.allUnknown(score.allFeatures()));
+  public void testCalculateForAllUnknown() {
+    assertTrue(SCORE.calculate(Utils.allUnknown(SCORE.allFeatures())).isUnknown());
   }
 
   @Test
-  public void calculate() {
-    Score score = new UnpatchedVulnerabilitiesScore();
-    assertScore(Score.INTERVAL, score,
+  public void testCalculate() {
+    assertScore(
+        Score.INTERVAL,
+        SCORE,
         setOf(VULNERABILITIES_IN_PROJECT.value(new Vulnerabilities())));
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void noInfoAboutVulnerabilities() {
-    assertScore(Score.INTERVAL, new UnpatchedVulnerabilitiesScore(), setOf());
+  public void testWithoutInfoAboutVulnerabilities() {
+    assertScore(Score.INTERVAL, SCORE, setOf());
   }
 
   @Test
-  public void explanation() {
-    Score score = new UnpatchedVulnerabilitiesScore();
-    assertNotNull(score.description());
-    assertTrue(score.description().isEmpty());
-    ScoreValue value = score.calculate(VULNERABILITIES_IN_PROJECT.value(new Vulnerabilities()));
+  public void testExplanation() {
+    assertNotNull(SCORE.description());
+    assertTrue(SCORE.description().isEmpty());
+    ScoreValue value = SCORE.calculate(VULNERABILITIES_IN_PROJECT.value(new Vulnerabilities()));
     assertNotNull(value);
     assertFalse(value.explanation().isEmpty());
   }

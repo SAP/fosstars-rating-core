@@ -12,37 +12,37 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.Score;
+import com.sap.oss.phosphor.fosstars.model.other.Utils;
 import com.sap.oss.phosphor.fosstars.model.value.Languages;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import org.junit.Test;
 
 public class CodeqlScoreTest {
 
+  private static final CodeqlScore SCORE = new CodeqlScore();
+
   @Test
-  public void smokeTest() {
-    CodeqlScore score = new CodeqlScore();
-    assertFalse(score.name().isEmpty());
-    assertEquals(4, score.features().size());
-    assertTrue(score.features().contains(USES_LGTM_CHECKS));
-    assertTrue(score.features().contains(USES_CODEQL_CHECKS));
-    assertTrue(score.features().contains(RUNS_CODEQL_SCANS));
-    assertTrue(score.features().contains(LANGUAGES));
-    assertTrue(score.subScores().isEmpty());
+  public void testBasics() {
+    assertFalse(SCORE.name().isEmpty());
+    assertEquals(4, SCORE.features().size());
+    assertTrue(SCORE.features().contains(USES_LGTM_CHECKS));
+    assertTrue(SCORE.features().contains(USES_CODEQL_CHECKS));
+    assertTrue(SCORE.features().contains(RUNS_CODEQL_SCANS));
+    assertTrue(SCORE.features().contains(LANGUAGES));
+    assertTrue(SCORE.subScores().isEmpty());
+  }
+
+  @Test
+  public void testWithAllUnknown() {
+    ScoreValue scoreValue = SCORE.calculate(Utils.allUnknown(SCORE.allFeatures()));
+    assertTrue(scoreValue.isUnknown());
   }
 
   @Test
   public void testCalculate() {
-    CodeqlScore score = new CodeqlScore();
-    ScoreValue scoreValue = score.calculate(
-        USES_CODEQL_CHECKS.unknown(),
-        USES_LGTM_CHECKS.unknown(),
-        RUNS_CODEQL_SCANS.unknown(),
-        LANGUAGES.unknown());
-    assertTrue(scoreValue.isUnknown());
-
     assertScore(
         Score.INTERVAL,
-        score,
+        SCORE,
         setOf(
             USES_CODEQL_CHECKS.value(true),
             USES_LGTM_CHECKS.value(true),
@@ -52,19 +52,16 @@ public class CodeqlScoreTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testCalculateWithoutUsesLgtmChecksValue() {
-    new CodeqlScore().calculate(
-        USES_CODEQL_CHECKS.unknown(), RUNS_CODEQL_SCANS.unknown(), LANGUAGES.unknown());
+    SCORE.calculate(USES_CODEQL_CHECKS.unknown(), RUNS_CODEQL_SCANS.unknown(), LANGUAGES.unknown());
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testCalculateWithoutUsesCodeqlChecksValue() {
-    new CodeqlScore().calculate(
-        USES_LGTM_CHECKS.unknown(), RUNS_CODEQL_SCANS.unknown(), LANGUAGES.unknown());
+    SCORE.calculate(USES_LGTM_CHECKS.unknown(), RUNS_CODEQL_SCANS.unknown(), LANGUAGES.unknown());
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testCalculateWithoutRunsCodeqlChecksValue() {
-    new CodeqlScore().calculate(
-        USES_CODEQL_CHECKS.unknown(), USES_LGTM_CHECKS.unknown(), LANGUAGES.unknown());
+    SCORE.calculate(USES_CODEQL_CHECKS.unknown(), USES_LGTM_CHECKS.unknown(), LANGUAGES.unknown());
   }
 }

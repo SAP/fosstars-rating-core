@@ -1,15 +1,14 @@
 package com.sap.oss.phosphor.fosstars.model.score.oss;
 
-import static com.sap.oss.phosphor.fosstars.TestUtils.assertScore;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.LANGUAGES;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_ADDRESS_SANITIZER;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_MEMORY_SANITIZER;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_UNDEFINED_BEHAVIOR_SANITIZER;
-import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
+import static com.sap.oss.phosphor.fosstars.model.other.Utils.allUnknown;
 import static com.sap.oss.phosphor.fosstars.model.qa.TestVectorBuilder.newTestVector;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.CPP;
+import static org.junit.Assert.assertTrue;
 
-import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.qa.ScoreVerification;
 import com.sap.oss.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.oss.phosphor.fosstars.model.qa.VerificationFailedException;
@@ -21,29 +20,24 @@ import org.junit.Test;
 
 public class MemorySafetyTestingScoreTest {
 
+  private static final MemorySafetyTestingScore SCORE = new MemorySafetyTestingScore();
+
   @Test(expected = IllegalArgumentException.class)
   public void testWithLackOfValues() {
-    new MemorySafetyTestingScore().calculate(LANGUAGES.value(Languages.of(CPP)));
+    SCORE.calculate(LANGUAGES.value(Languages.of(CPP)));
   }
 
   @Test
   public void testWithoutAllUnknown() {
-    assertScore(
-        Score.INTERVAL,
-        new MemorySafetyTestingScore(),
-        setOf(
-            LANGUAGES.unknown(),
-            USES_ADDRESS_SANITIZER.unknown(),
-            USES_MEMORY_SANITIZER.unknown(),
-            USES_UNDEFINED_BEHAVIOR_SANITIZER.unknown()));
+    assertTrue(SCORE.calculate(allUnknown(SCORE.allFeatures())).isUnknown());
   }
 
   @Test
   public void testVerification() throws VerificationFailedException, IOException {
     TestVectors vectors = new TestVectors(
         newTestVector()
-            .alias("1")
-            .expectedScore(Score.INTERVAL)
+            .alias("test")
+            .expectUnknownScore()
             .set(LANGUAGES.unknown())
             .set(USES_ADDRESS_SANITIZER.unknown())
             .set(USES_MEMORY_SANITIZER.unknown())
@@ -56,7 +50,7 @@ public class MemorySafetyTestingScoreTest {
       vectors.storeToYaml(file);
 
       ScoreVerification verification = new ScoreVerification(
-          new MemorySafetyTestingScore(),
+          SCORE,
           TestVectors.loadFromYaml(file));
 
       verification.run();

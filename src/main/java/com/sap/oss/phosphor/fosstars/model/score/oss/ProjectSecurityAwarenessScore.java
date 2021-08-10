@@ -181,6 +181,10 @@ public class ProjectSecurityAwarenessScore extends FeatureBasedScore {
 
     ScoreValue scoreValue = scoreValue(MIN, usedValues);
 
+    if (allUnknown(scoreValue.usedValues())) {
+      return scoreValue.makeUnknown();
+    }
+
     securityPolicy.processIfKnown(exists -> {
       if (exists) {
         scoreValue.increase(SECURITY_POLICY_POINTS);
