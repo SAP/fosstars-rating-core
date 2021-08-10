@@ -11,7 +11,7 @@ import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import java.util.Set;
 
 /**
- * This scoring function calculates a risk introduced by an open source project.
+ * This scoring function calculates a security risk introduced by an open source project.
  * It is based on the following sub-scores:
  * <ul>
  *   <li>{@link RiskLikelihoodScore}</li>
@@ -19,7 +19,7 @@ import java.util.Set;
  * </ul>
  * <pre>security risk = likelihood * impact</pre>
  */
-public class OssSecurityRisk extends AbstractScore {
+public class SecurityRiskIntroducedByOss extends AbstractScore {
 
   /**
    * Calculates likelihood.
@@ -34,7 +34,7 @@ public class OssSecurityRisk extends AbstractScore {
   /**
    * Creates a new scoring function.
    */
-  public OssSecurityRisk() {
+  public SecurityRiskIntroducedByOss() {
     super("Security risk introduced by an open source project");
   }
 

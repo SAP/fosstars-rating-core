@@ -3,7 +3,7 @@ package com.sap.oss.phosphor.fosstars.model.score.oss.risk;
 import static com.sap.oss.phosphor.fosstars.TestUtils.DELTA;
 import static com.sap.oss.phosphor.fosstars.model.feature.Likelihood.HIGH;
 import static com.sap.oss.phosphor.fosstars.model.feature.Likelihood.LOW;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.risk.OssRiskFeatures.HANDLING_UNTRUSTED_DATA_LIKELIHOOD;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.HANDLING_UNTRUSTED_DATA_LIKELIHOOD;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

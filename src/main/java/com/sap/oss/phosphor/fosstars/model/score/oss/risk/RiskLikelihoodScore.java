@@ -12,8 +12,9 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * <p>This scoring function calculates likelihood score that is used in the security risk
- * for open source project. This is based on the following:</p>
+ * <p>This scoring function calculates likelihood score
+ * that is used in calculating security risk introduced by an open source project.
+ * This is based on the following:</p>
  * <ul>
  *   <li>{@link RiskLikelihoodCoefficient}</li>
  *   <li>{@link RiskLikelihoodFactors}</li>

@@ -7,8 +7,9 @@ import com.sap.oss.phosphor.fosstars.model.weight.ImmutableWeight;
 import com.sap.oss.phosphor.fosstars.model.weight.ScoreWeights;
 
 /**
- * <p>This scoring function aggregates likelihood factors that are used in the security risk
- * for open source project. This is based on the following factors:</p>
+ * <p>This scoring function aggregates likelihood factors
+ * that are used in calculating security risk introduced by an open source project.
+ * This is based on the following factors:</p>
  * <ul>
  *   <li>{@link UsageRiskLikelihoodFactor}</li>
  *   <li>{@link FunctionalityRiskLikelihoodFactor}</li>

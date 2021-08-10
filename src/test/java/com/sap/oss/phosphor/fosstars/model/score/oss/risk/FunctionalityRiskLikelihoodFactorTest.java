@@ -3,7 +3,7 @@ package com.sap.oss.phosphor.fosstars.model.score.oss.risk;
 import static com.sap.oss.phosphor.fosstars.TestUtils.DELTA;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.Functionality.SDK;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.Functionality.SECURITY;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.risk.OssRiskFeatures.FUNCTIONALITY;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.FUNCTIONALITY;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

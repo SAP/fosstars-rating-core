@@ -3,7 +3,7 @@ package com.sap.oss.phosphor.fosstars.model.score.oss.risk;
 import static com.sap.oss.phosphor.fosstars.TestUtils.DELTA;
 import static com.sap.oss.phosphor.fosstars.model.feature.DataConfidentialityType.PERSONAL;
 import static com.sap.oss.phosphor.fosstars.model.feature.DataConfidentialityType.TEST;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.risk.OssRiskFeatures.DATA_CONFIDENTIALITY;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.DATA_CONFIDENTIALITY;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

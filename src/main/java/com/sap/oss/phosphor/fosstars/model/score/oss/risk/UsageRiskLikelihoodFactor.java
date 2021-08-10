@@ -1,17 +1,17 @@
 package com.sap.oss.phosphor.fosstars.model.score.oss.risk;
 
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.risk.OssRiskFeatures.HOW_MANY_COMPONENTS_USE_OSS_PROJECT;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.HOW_MANY_COMPONENTS_USE_OSS_PROJECT;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.findValue;
 import static java.lang.String.format;
 
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.feature.Quantity;
-import com.sap.oss.phosphor.fosstars.model.feature.oss.risk.OssRiskFeatures;
 import com.sap.oss.phosphor.fosstars.model.score.FeatureBasedScore;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 
 /**
- * This scoring function outputs a likelihood factor for security risk of open source project.
+ * This scoring function outputs a likelihood factor
+ * for security risk introduced by an open source project.
  * The factor is based on how much the project is used, for example, in a company.
  */
 public class UsageRiskLikelihoodFactor extends FeatureBasedScore {

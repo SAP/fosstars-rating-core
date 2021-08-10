@@ -7,14 +7,14 @@ import static com.sap.oss.phosphor.fosstars.model.feature.Impact.LOW;
 import static com.sap.oss.phosphor.fosstars.model.feature.Likelihood.MEDIUM;
 import static com.sap.oss.phosphor.fosstars.model.feature.Quantity.QUITE_A_LOT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.Functionality.NETWORKING;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.risk.OssRiskFeatures.AVAILABILITY_IMPACT;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.risk.OssRiskFeatures.CONFIDENTIALITY_IMPACT;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.risk.OssRiskFeatures.DATA_CONFIDENTIALITY;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.risk.OssRiskFeatures.FUNCTIONALITY;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.risk.OssRiskFeatures.HANDLING_UNTRUSTED_DATA_LIKELIHOOD;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.risk.OssRiskFeatures.HOW_MANY_COMPONENTS_USE_OSS_PROJECT;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.risk.OssRiskFeatures.INTEGRITY_IMPACT;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.risk.OssRiskFeatures.IS_ADOPTED;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.AVAILABILITY_IMPACT;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.CONFIDENTIALITY_IMPACT;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.DATA_CONFIDENTIALITY;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.FUNCTIONALITY;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.HANDLING_UNTRUSTED_DATA_LIKELIHOOD;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.HOW_MANY_COMPONENTS_USE_OSS_PROJECT;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.INTEGRITY_IMPACT;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.IS_ADOPTED;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -31,20 +31,22 @@ import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
 import org.junit.Test;
 
-public class OssSecurityRiskTest {
+public class SecurityRiskIntroducedByOssTest {
 
-  private static final OssSecurityRisk SCORE = new OssSecurityRisk();
+  private static final SecurityRiskIntroducedByOss SCORE = new SecurityRiskIntroducedByOss();
 
   @Test
   public void testJsonSerialization() throws IOException {
-    OssSecurityRisk clone = Json.read(Json.toBytes(SCORE), OssSecurityRisk.class);
+    SecurityRiskIntroducedByOss clone
+        = Json.read(Json.toBytes(SCORE), SecurityRiskIntroducedByOss.class);
     assertTrue(SCORE.equals(clone) && clone.equals(SCORE));
     assertEquals(SCORE.hashCode(), clone.hashCode());
   }
 
   @Test
   public void testYamlSerialization() throws IOException {
-    OssSecurityRisk clone = Yaml.read(Yaml.toBytes(SCORE), OssSecurityRisk.class);
+    SecurityRiskIntroducedByOss clone
+        = Yaml.read(Yaml.toBytes(SCORE), SecurityRiskIntroducedByOss.class);
     assertEquals(clone, SCORE);
   }
 
