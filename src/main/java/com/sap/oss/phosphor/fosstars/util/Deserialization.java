@@ -74,6 +74,8 @@ import com.sap.oss.phosphor.fosstars.model.score.oss.risk.AdoptedRiskLikelihoodF
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.FunctionalityRiskLikelihoodFactor;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.HandlingUntrustedDataRiskLikelihoodFactor;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.RiskLikelihoodCoefficient;
+import com.sap.oss.phosphor.fosstars.model.score.oss.risk.RiskLikelihoodFactors;
+import com.sap.oss.phosphor.fosstars.model.score.oss.risk.RiskLikelihoodScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.UsageRiskLikelihoodFactor;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubOrganization;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
@@ -292,7 +294,9 @@ public abstract class Deserialization {
         FunctionalityRiskLikelihoodFactor.class,
         HandlingUntrustedDataRiskLikelihoodFactor.class,
         AdoptedRiskLikelihoodFactor.class,
-        RiskLikelihoodCoefficient.class
+        RiskLikelihoodCoefficient.class,
+        RiskLikelihoodFactors.class,
+        RiskLikelihoodScore.class
     );
 
     // ratings
