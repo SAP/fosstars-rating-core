@@ -13,7 +13,8 @@ import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import java.util.Objects;
 
 /**
- * This scoring function outputs an impact factor for security risk of open source project.
+ * This scoring function outputs an impact factor
+ * for security risk introduced by an open source project.
  * The factor is based on a specified security impact,
  * for example, confidentiality, integrity or availability impact.
  */

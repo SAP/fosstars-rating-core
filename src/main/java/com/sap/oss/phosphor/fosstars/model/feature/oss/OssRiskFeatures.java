@@ -1,4 +1,4 @@
-package com.sap.oss.phosphor.fosstars.model.feature.oss.risk;
+package com.sap.oss.phosphor.fosstars.model.feature.oss;
 
 import com.sap.oss.phosphor.fosstars.model.feature.BooleanFeature;
 import com.sap.oss.phosphor.fosstars.model.feature.DataConfidentialityType;
@@ -6,7 +6,6 @@ import com.sap.oss.phosphor.fosstars.model.feature.EnumFeature;
 import com.sap.oss.phosphor.fosstars.model.feature.Impact;
 import com.sap.oss.phosphor.fosstars.model.feature.Likelihood;
 import com.sap.oss.phosphor.fosstars.model.feature.Quantity;
-import com.sap.oss.phosphor.fosstars.model.feature.oss.Functionality;
 
 /**
  * The class contains features that are used in the security risk calculator

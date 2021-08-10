@@ -5,18 +5,18 @@ import static java.util.Objects.requireNonNull;
 
 import com.sap.oss.phosphor.fosstars.model.Label;
 import com.sap.oss.phosphor.fosstars.model.rating.AbstractRating;
-import com.sap.oss.phosphor.fosstars.model.score.oss.risk.OssSecurityRisk;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.RiskImpactScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.RiskLikelihoodScore;
+import com.sap.oss.phosphor.fosstars.model.score.oss.risk.SecurityRiskIntroducedByOss;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import java.util.Optional;
 
 /**
  * This rating calculates a security risk introduced by an open source project.
- * The rating is based on {@link com.sap.oss.phosphor.fosstars.model.score.oss.risk.OssSecurityRisk}
+ * The rating is based on {@link SecurityRiskIntroducedByOss}
  * score and {@link #RISK_MATRIX};
  */
-public class OssSecurityRiskRating extends AbstractRating  {
+public class SecurityRiskRatingIntroducedByOss extends AbstractRating  {
 
   /**
    * A set of labels for the rating.
@@ -53,8 +53,9 @@ public class OssSecurityRiskRating extends AbstractRating  {
   /**
    * Creates a new rating procedure.
    */
-  public OssSecurityRiskRating() {
-    super("Security risk introduced by an open source project", new OssSecurityRisk());
+  public SecurityRiskRatingIntroducedByOss() {
+    super("Security risk introduced by an open source project",
+        new SecurityRiskIntroducedByOss());
   }
 
   @Override

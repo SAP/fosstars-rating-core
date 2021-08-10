@@ -1,6 +1,6 @@
 package com.sap.oss.phosphor.fosstars.model.score.oss.risk;
 
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.risk.OssRiskFeatures.IS_ADOPTED;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.IS_ADOPTED;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.findValue;
 
 import com.sap.oss.phosphor.fosstars.model.Value;
@@ -8,7 +8,8 @@ import com.sap.oss.phosphor.fosstars.model.score.FeatureBasedScore;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 
 /**
- * This scoring function outputs a likelihood factor for security risk of open source project.
+ * This scoring function outputs a likelihood factor
+ * for security risk introduced by an open source project.
  * The factor is based on whether the project is adopted by a team.
  */
 public class AdoptedRiskLikelihoodFactor extends FeatureBasedScore {

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.oss.phosphor.fosstars.model.Feature;
-import com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures;
 import java.util.Objects;
 
 /**
