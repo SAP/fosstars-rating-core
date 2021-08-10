@@ -26,20 +26,20 @@ import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
 import org.junit.Test;
 
-public class RiskImpactFactorsTest {
+public class RiskImpactScoreTest {
 
-  private static final RiskImpactFactors SCORE = new RiskImpactFactors();
+  private static final RiskImpactScore SCORE = new RiskImpactScore();
 
   @Test
   public void testJsonSerialization() throws IOException {
-    RiskImpactFactors clone = Json.read(Json.toBytes(SCORE), RiskImpactFactors.class);
+    RiskImpactScore clone = Json.read(Json.toBytes(SCORE), RiskImpactScore.class);
     assertTrue(SCORE.equals(clone) && clone.equals(SCORE));
     assertEquals(SCORE.hashCode(), clone.hashCode());
   }
 
   @Test
   public void testYamlSerialization() throws IOException {
-    RiskImpactFactors clone = Yaml.read(Yaml.toBytes(SCORE), RiskImpactFactors.class);
+    RiskImpactScore clone = Yaml.read(Yaml.toBytes(SCORE), RiskImpactScore.class);
     assertEquals(clone, SCORE);
   }
 

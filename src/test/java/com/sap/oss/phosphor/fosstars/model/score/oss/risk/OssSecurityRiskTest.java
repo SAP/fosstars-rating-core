@@ -2,14 +2,10 @@ package com.sap.oss.phosphor.fosstars.model.score.oss.risk;
 
 import static com.sap.oss.phosphor.fosstars.TestUtils.DELTA;
 import static com.sap.oss.phosphor.fosstars.model.feature.DataConfidentialityType.INTERNAL;
-import static com.sap.oss.phosphor.fosstars.model.feature.DataConfidentialityType.PERSONAL;
 import static com.sap.oss.phosphor.fosstars.model.feature.Impact.HIGH;
 import static com.sap.oss.phosphor.fosstars.model.feature.Impact.LOW;
 import static com.sap.oss.phosphor.fosstars.model.feature.Likelihood.MEDIUM;
-import static com.sap.oss.phosphor.fosstars.model.feature.Likelihood.NEGLIGIBLE;
 import static com.sap.oss.phosphor.fosstars.model.feature.Quantity.QUITE_A_LOT;
-import static com.sap.oss.phosphor.fosstars.model.feature.Quantity.SOME;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.Functionality.LOGGER;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.Functionality.NETWORKING;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.risk.OssRiskFeatures.AVAILABILITY_IMPACT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.risk.OssRiskFeatures.CONFIDENTIALITY_IMPACT;
@@ -26,7 +22,6 @@ import static org.junit.Assert.assertTrue;
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
-import com.sap.oss.phosphor.fosstars.model.feature.Impact;
 import com.sap.oss.phosphor.fosstars.model.other.Utils;
 import com.sap.oss.phosphor.fosstars.model.score.oss.OssSecurityScoreTest;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
@@ -55,17 +50,7 @@ public class OssSecurityRiskTest {
 
   @Test
   public void testCalculate() {
-    ValueSet values = new ValueHashSet();
-    values.update(OssSecurityScoreTest.defaultValues());
-    values.update(HOW_MANY_COMPONENTS_USE_OSS_PROJECT.value(SOME));
-    values.update(FUNCTIONALITY.value(LOGGER));
-    values.update(HANDLING_UNTRUSTED_DATA_LIKELIHOOD.value(NEGLIGIBLE));
-    values.update(IS_ADOPTED.yes());
-    values.update(DATA_CONFIDENTIALITY.value(PERSONAL));
-    values.update(CONFIDENTIALITY_IMPACT.value(Impact.NEGLIGIBLE));
-    values.update(INTEGRITY_IMPACT.value(LOW));
-    values.update(AVAILABILITY_IMPACT.value(HIGH));
-    ScoreValue scoreValue = SCORE.calculate(values);
+    ScoreValue scoreValue = SCORE.calculate(defaultValues());
     assertFalse(scoreValue.isUnknown());
     assertFalse(scoreValue.isNotApplicable());
     assertTrue(Score.INTERVAL.contains(scoreValue.get()));
@@ -79,6 +64,13 @@ public class OssSecurityRiskTest {
 
   @Test
   public void testScoreValueSerialization() throws IOException {
+    ScoreValue scoreValue = SCORE.calculate(defaultValues());
+    ScoreValue clone = Json.read(Json.toBytes(scoreValue), ScoreValue.class);
+    assertTrue(scoreValue.equals(clone) && clone.equals(scoreValue));
+    assertEquals(scoreValue.hashCode(), clone.hashCode());
+  }
+
+  public static ValueSet defaultValues() {
     ValueSet values = new ValueHashSet();
     values.update(OssSecurityScoreTest.defaultValues());
     values.update(HOW_MANY_COMPONENTS_USE_OSS_PROJECT.value(QUITE_A_LOT));
@@ -89,9 +81,6 @@ public class OssSecurityRiskTest {
     values.update(CONFIDENTIALITY_IMPACT.value(LOW));
     values.update(INTEGRITY_IMPACT.value(LOW));
     values.update(AVAILABILITY_IMPACT.value(HIGH));
-    ScoreValue scoreValue = SCORE.calculate(values);
-    ScoreValue clone = Json.read(Json.toBytes(scoreValue), ScoreValue.class);
-    assertTrue(scoreValue.equals(clone) && clone.equals(scoreValue));
-    assertEquals(scoreValue.hashCode(), clone.hashCode());
+    return values;
   }
 }

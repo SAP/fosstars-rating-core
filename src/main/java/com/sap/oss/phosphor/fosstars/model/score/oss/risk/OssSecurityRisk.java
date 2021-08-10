@@ -15,21 +15,21 @@ import java.util.Set;
  * It is based on the following sub-scores:
  * <ul>
  *   <li>{@link RiskLikelihoodScore}</li>
- *   <li>{@link RiskImpactFactors}</li>
+ *   <li>{@link RiskImpactScore}</li>
  * </ul>
  * <pre>security risk = likelihood * impact</pre>
  */
 public class OssSecurityRisk extends AbstractScore {
 
   /**
-   * Calculates likelihood factors.
+   * Calculates likelihood.
    */
-  private final RiskLikelihoodFactors likelihoodFactors = new RiskLikelihoodFactors();
+  private final RiskLikelihoodScore likelihoodScore = new RiskLikelihoodScore();
 
   /**
-   * Calculates impact factors.
+   * Calculates impact.
    */
-  private final RiskImpactFactors impactFactors = new RiskImpactFactors();
+  private final RiskImpactScore impactScore = new RiskImpactScore();
 
   /**
    * Creates a new scoring function.
@@ -45,13 +45,13 @@ public class OssSecurityRisk extends AbstractScore {
 
   @Override
   public Set<Score> subScores() {
-    return setOf(likelihoodFactors, impactFactors);
+    return setOf(likelihoodScore, impactScore);
   }
 
   @Override
   public ScoreValue calculate(Value<?>... values) {
-    ScoreValue likelihood = calculateIfNecessary(likelihoodFactors, values);
-    ScoreValue impact = calculateIfNecessary(impactFactors, values);
+    ScoreValue likelihood = calculateIfNecessary(likelihoodScore, values);
+    ScoreValue impact = calculateIfNecessary(impactScore, values);
 
     ScoreValue risk = scoreValue(MIN, likelihood, impact);
 
