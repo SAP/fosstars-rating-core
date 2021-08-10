@@ -1,13 +1,17 @@
 package com.sap.oss.phosphor.fosstars.tool;
 
+import static com.sap.oss.phosphor.fosstars.maven.GAV.NO_VERSION;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 import static com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject.isOnGitHub;
 import static java.lang.String.format;
+import static java.util.Collections.singletonList;
 import static java.util.Objects.requireNonNull;
 
 import com.sap.oss.phosphor.fosstars.advice.Advisor;
 import com.sap.oss.phosphor.fosstars.advice.oss.github.OssSecurityGithubAdvisor;
+import com.sap.oss.phosphor.fosstars.maven.AbstractModelVisitor;
 import com.sap.oss.phosphor.fosstars.maven.GAV;
+import com.sap.oss.phosphor.fosstars.maven.MavenUtils;
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
@@ -17,9 +21,17 @@ import com.sap.oss.phosphor.fosstars.tool.format.PrettyPrinter;
 import com.sap.oss.phosphor.fosstars.tool.report.MergedJsonReporter;
 import com.sap.oss.phosphor.fosstars.tool.report.OssSecurityRatingMarkdownReporter;
 import com.sap.oss.phosphor.fosstars.tool.report.Reporter;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import org.apache.maven.model.Dependency;
+import org.apache.maven.model.Model;
 
 /**
  * This handler calculates {@link OssSecurityRating}.
@@ -45,7 +57,7 @@ public class OssProjectSecurityRatingHandler extends AbstractHandler {
 
   @Override
   Set<String> supportedSubjectOptions() {
-    return setOf("--url", "--gav", "--npm", "--purl", "--config");
+    return setOf("--url", "--gav", "--npm", "--purl", "--config", "--pom");
   }
 
   @Override
@@ -83,6 +95,42 @@ public class OssProjectSecurityRatingHandler extends AbstractHandler {
   void processConfig(String filename) throws IOException {
     nvd.preload();
     super.processConfig(filename);
+  }
+
+  @Override
+  void processPom(String filename) throws IOException {
+    logger.info("Looking for dependencies in {}", filename);
+
+    try (InputStream is = Files.newInputStream(Paths.get(filename))) {
+      Model model = MavenUtils.readModel(is);
+      DependencyVisitor visitor = new DependencyVisitor();
+      MavenUtils.browse(model, visitor);
+      MavenScmFinder finder = new MavenScmFinder();
+      List<GitHubProject> projects = new ArrayList<>();
+      for (GAV dependency : visitor.dependencies()) {
+        Optional<GitHubProject> project = finder.findGithubProjectFor(dependency);
+        if (!project.isPresent()) {
+          logger.warn("Could not find a GitHub project for {}", dependency);
+          continue;
+        }
+
+        logger.info("Found a GitHub project for {}: {}", dependency, project.get());
+        projects.add(project.get());
+      }
+
+      String reportType = commandLine.getOptionValue("report-type", "markdown");
+      String reportFile = commandLine.getOptionValue("report-file", "report");
+      if (!"markdown".equals(reportType)) {
+        throw new IllegalArgumentException("Oops! Only Markdown report is supported!");
+      }
+      Reporter<GitHubProject> reporter = new OssSecurityRatingMarkdownReporter(
+          reportFile, rating(), OSS_SECURITY_GITHUB_ADVISOR);
+
+      String cacheFile = String.join(File.separator,
+          baseDirectory, format("%s_cache.json", rating.getClass().getCanonicalName()));
+
+      process(projects, singletonList(reporter), cacheFile);
+    }
   }
 
   /**
@@ -143,11 +191,20 @@ public class OssProjectSecurityRatingHandler extends AbstractHandler {
       case MARKDOWN:
         return Optional.of(
             new OssSecurityRatingMarkdownReporter(reportConfig.where, reportConfig.source,
-                (OssSecurityRating) rating, OSS_SECURITY_GITHUB_ADVISOR));
+                rating(), OSS_SECURITY_GITHUB_ADVISOR));
       default:
         logger.warn("Oops! That's an unknown type of report: {}", reportConfig.type);
         return Optional.empty();
     }
+  }
+
+  /**
+   * Returns the {@link OssSecurityRating}.
+   *
+   * @return The {@link OssSecurityRating}.
+   */
+  private OssSecurityRating rating() {
+    return (OssSecurityRating) rating;
   }
 
   /**
@@ -166,5 +223,20 @@ public class OssProjectSecurityRatingHandler extends AbstractHandler {
      * @throws IOException If something went wrong.
      */
     Optional<R> runFor(String identifier) throws IOException;
+  }
+
+  private static class DependencyVisitor extends AbstractModelVisitor {
+
+    private final List<GAV> dependencies = new ArrayList<>();
+
+    @Override
+    public void accept(Dependency dependency, Set<Location> locations) {
+      dependencies.add(
+          new GAV(dependency.getGroupId(), dependency.getArtifactId(), NO_VERSION));
+    }
+
+    List<GAV> dependencies() {
+      return dependencies;
+    }
   }
 }

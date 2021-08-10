@@ -12,6 +12,11 @@ import javax.annotation.Nullable;
 public class GAV {
 
   /**
+   * No version.
+   */
+  public static final String NO_VERSION = null;
+
+  /**
    * Group ID.
    */
   private final String group;

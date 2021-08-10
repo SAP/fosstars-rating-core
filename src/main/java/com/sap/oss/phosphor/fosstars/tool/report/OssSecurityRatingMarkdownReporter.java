@@ -35,6 +35,11 @@ import org.apache.commons.io.IOUtils;
 public class OssSecurityRatingMarkdownReporter extends AbstractReporter<GitHubProject> {
 
   /**
+   * No extra projects.
+   */
+  private static final String NO_EXTRA_SOURCE = null;
+
+  /**
    * This value shows that a number of stars is unknown.
    */
   private static final int UNKNOWN_NUMBER_OF_STARS = -1;
@@ -112,6 +117,22 @@ public class OssSecurityRatingMarkdownReporter extends AbstractReporter<GitHubPr
    * A rating used in a report.
    */
   private final OssSecurityRating rating;
+
+  /**
+   * Initializes a new reporter.
+   *
+   * @param outputDirectory An output directory.
+   * @param rating A rating.
+   * @param advisor An advisor for calculated ratings.
+   * @throws IOException If something went wrong
+   *                     (for example, the output directory doesn't exist,
+   *                     or the extra projects couldn't be loaded).
+   */
+  public OssSecurityRatingMarkdownReporter(
+      String outputDirectory, OssSecurityRating rating, Advisor advisor) throws IOException {
+
+    this(outputDirectory, NO_EXTRA_SOURCE, rating, advisor);
+  }
 
   /**
    * Initializes a new reporter.

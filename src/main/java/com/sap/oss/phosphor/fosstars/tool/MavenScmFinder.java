@@ -201,7 +201,6 @@ public class MavenScmFinder {
    * @throws IOException If something wrong.
    */
   private static Model loadPomFor(GAV gav) throws IOException {
-
     String path = PATH_TEMPLATE
         .replace("{GROUP}", gav.group().replace(".", "/"))
         .replace("{ARTIFACT}", gav.artifact())

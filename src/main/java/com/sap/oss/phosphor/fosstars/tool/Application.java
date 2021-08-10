@@ -136,7 +136,7 @@ public class Application {
             .longOpt("report-file")
             .hasArg()
             .argName("path")
-            .desc("Store a report to a specified file.")
+            .desc("A path to a report.")
             .build());
     options.addOption(
         Option.builder()
@@ -201,6 +201,12 @@ public class Application {
             .longOpt("config")
             .hasArg()
             .desc("A path to a config file.")
+            .build());
+    group.addOption(
+        Option.builder("pom")
+            .hasArg()
+            .longOpt("pom")
+            .desc("A path to a Maven POM file.")
             .build());
     options.addOptionGroup(group);
 
