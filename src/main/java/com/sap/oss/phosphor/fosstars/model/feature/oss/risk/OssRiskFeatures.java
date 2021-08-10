@@ -1,7 +1,7 @@
 package com.sap.oss.phosphor.fosstars.model.feature.oss.risk;
 
-import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.feature.BooleanFeature;
+import com.sap.oss.phosphor.fosstars.model.feature.DataConfidentialityType;
 import com.sap.oss.phosphor.fosstars.model.feature.EnumFeature;
 import com.sap.oss.phosphor.fosstars.model.feature.Likelihood;
 import com.sap.oss.phosphor.fosstars.model.feature.Quantity;
@@ -38,4 +38,11 @@ public class OssRiskFeatures {
    */
   public static final BooleanFeature IS_ADOPTED
       = new BooleanFeature("An open source project has been adopted by a team");
+
+  /**
+   * Describes confidentiality of data that an open source project likely processes.
+   */
+  public static final EnumFeature<DataConfidentialityType> DATA_CONFIDENTIALITY
+      = new EnumFeature<>(DataConfidentialityType.class,
+      "Confidentiality of data that an open source project likely processes");
 }
