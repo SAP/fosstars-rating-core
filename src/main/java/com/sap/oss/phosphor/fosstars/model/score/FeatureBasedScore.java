@@ -74,9 +74,6 @@ public abstract class FeatureBasedScore extends AbstractScore {
   @Override
   public void accept(Visitor visitor) {
     super.accept(visitor);
-    for (Feature<?> feature : features) {
-      feature.accept(visitor);
-    }
   }
 
   @Override
