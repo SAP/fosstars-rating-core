@@ -5,18 +5,18 @@ import static java.util.Objects.requireNonNull;
 
 import com.sap.oss.phosphor.fosstars.model.Label;
 import com.sap.oss.phosphor.fosstars.model.rating.AbstractRating;
+import com.sap.oss.phosphor.fosstars.model.score.oss.risk.CalculatedSecurityRiskIntroducedByOss;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.RiskImpactScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.RiskLikelihoodScore;
-import com.sap.oss.phosphor.fosstars.model.score.oss.risk.SecurityRiskIntroducedByOss;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import java.util.Optional;
 
 /**
  * This rating calculates a security risk introduced by an open source project.
- * The rating is based on {@link SecurityRiskIntroducedByOss}
+ * The rating is based on {@link CalculatedSecurityRiskIntroducedByOss}
  * score and {@link #RISK_MATRIX};
  */
-public class SecurityRiskRatingIntroducedByOss extends AbstractRating  {
+public class SecurityRiskIntroducedByOss extends AbstractRating  {
 
   /**
    * A set of labels for the rating.
@@ -53,26 +53,27 @@ public class SecurityRiskRatingIntroducedByOss extends AbstractRating  {
   /**
    * Creates a new rating procedure with default parameters.
    */
-  SecurityRiskRatingIntroducedByOss() {
-    super("Security risk introduced by an open source project", new SecurityRiskIntroducedByOss());
+  SecurityRiskIntroducedByOss() {
+    super("Security risk introduced by an open source project",
+        new CalculatedSecurityRiskIntroducedByOss());
   }
 
   /**
    * Creates a new rating procedure.
    *
-   * @param score A {@link SecurityRiskIntroducedByOss}.
+   * @param score A {@link CalculatedSecurityRiskIntroducedByOss}.
    */
-  public SecurityRiskRatingIntroducedByOss(SecurityRiskIntroducedByOss score) {
+  public SecurityRiskIntroducedByOss(CalculatedSecurityRiskIntroducedByOss score) {
     super("Security risk introduced by an open source project", score);
   }
 
   /**
    * Get an underlying score.
    *
-   * @return An underlying {@link SecurityRiskIntroducedByOss}.
+   * @return An underlying {@link CalculatedSecurityRiskIntroducedByOss}.
    */
-  public SecurityRiskIntroducedByOss score() {
-    return (SecurityRiskIntroducedByOss) super.score();
+  public CalculatedSecurityRiskIntroducedByOss score() {
+    return (CalculatedSecurityRiskIntroducedByOss) super.score();
   }
 
   @Override

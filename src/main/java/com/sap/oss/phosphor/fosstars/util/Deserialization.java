@@ -39,7 +39,7 @@ import com.sap.oss.phosphor.fosstars.model.rating.example.SecurityRatingExample;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurityRating.ArtifactSecurityLabel;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
-import com.sap.oss.phosphor.fosstars.model.rating.oss.SecurityRiskRatingIntroducedByOss;
+import com.sap.oss.phosphor.fosstars.model.rating.oss.SecurityRiskIntroducedByOss;
 import com.sap.oss.phosphor.fosstars.model.score.AverageCompositeScore;
 import com.sap.oss.phosphor.fosstars.model.score.WeightedCompositeScore;
 import com.sap.oss.phosphor.fosstars.model.score.example.ProjectActivityScoreExample;
@@ -72,6 +72,7 @@ import com.sap.oss.phosphor.fosstars.model.score.oss.UnpatchedVulnerabilitiesSco
 import com.sap.oss.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.VulnerabilityLifetimeScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.AdoptedRiskLikelihoodFactor;
+import com.sap.oss.phosphor.fosstars.model.score.oss.risk.CalculatedSecurityRiskIntroducedByOss;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.DataConfidentialityRiskImpactFactor;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.FunctionalityRiskLikelihoodFactor;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.HandlingUntrustedDataRiskLikelihoodFactor;
@@ -80,7 +81,6 @@ import com.sap.oss.phosphor.fosstars.model.score.oss.risk.RiskImpactScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.RiskLikelihoodCoefficient;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.RiskLikelihoodFactors;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.RiskLikelihoodScore;
-import com.sap.oss.phosphor.fosstars.model.score.oss.risk.SecurityRiskIntroducedByOss;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.UsageRiskLikelihoodFactor;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubOrganization;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
@@ -260,7 +260,7 @@ public abstract class Deserialization {
         SecurityRatingExample.SecurityLabelExample.class,
         OssRulesOfPlayRating.OssRulesOfPlayLabel.class,
         NotApplicableLabel.class,
-        SecurityRiskRatingIntroducedByOss.OssSecurityRiskLabel.class
+        SecurityRiskIntroducedByOss.OssSecurityRiskLabel.class
     );
 
     // scores
@@ -309,7 +309,7 @@ public abstract class Deserialization {
         RiskImpactScore.ConfidentialityRiskImpactFactor.class,
         RiskImpactScore.IntegrityRiskImpactFactor.class,
         RiskImpactScore.AvailabilityRiskImpactFactor.class,
-        SecurityRiskIntroducedByOss.class
+        CalculatedSecurityRiskIntroducedByOss.class
     );
 
     // ratings
@@ -317,7 +317,7 @@ public abstract class Deserialization {
         SecurityRatingExample.class,
         OssSecurityRating.class,
         OssRulesOfPlayScore.class,
-        SecurityRiskRatingIntroducedByOss.class
+        SecurityRiskIntroducedByOss.class
     );
 
     // weights

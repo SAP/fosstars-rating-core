@@ -6,17 +6,17 @@ import com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating.Thresholds;
-import com.sap.oss.phosphor.fosstars.model.rating.oss.SecurityRiskRatingIntroducedByOss;
+import com.sap.oss.phosphor.fosstars.model.rating.oss.SecurityRiskIntroducedByOss;
 import com.sap.oss.phosphor.fosstars.model.score.oss.ArtifactVersionSecurityScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.OssArtifactSecurityScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.OssSecurityScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.ProjectSecurityTestingScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.AdoptedRiskLikelihoodFactor;
+import com.sap.oss.phosphor.fosstars.model.score.oss.risk.CalculatedSecurityRiskIntroducedByOss;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.RiskImpactScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.RiskLikelihoodCoefficient;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.RiskLikelihoodFactors;
 import com.sap.oss.phosphor.fosstars.model.score.oss.risk.RiskLikelihoodScore;
-import com.sap.oss.phosphor.fosstars.model.score.oss.risk.SecurityRiskIntroducedByOss;
 import com.sap.oss.phosphor.fosstars.model.weight.ScoreWeights;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import com.sap.oss.phosphor.fosstars.util.Yaml;
@@ -153,19 +153,19 @@ public class RatingRepository {
   }
 
   /**
-   * Loads a {@link SecurityRiskRatingIntroducedByOss}.
+   * Loads a {@link SecurityRiskIntroducedByOss}.
    *
-   * @return An instance of {@link SecurityRiskRatingIntroducedByOss}.
+   * @return An instance of {@link SecurityRiskIntroducedByOss}.
    */
-  private SecurityRiskRatingIntroducedByOss securityRiskIntroducedByOssRating() {
+  private SecurityRiskIntroducedByOss securityRiskIntroducedByOssRating() {
     OssSecurityScore ossSecurityScore = rating(OssSecurityRating.class).score();
     RiskLikelihoodCoefficient likelihoodCoefficient
         = new RiskLikelihoodCoefficient(ossSecurityScore, new AdoptedRiskLikelihoodFactor());
     RiskLikelihoodScore likelihoodScore
         = new RiskLikelihoodScore(likelihoodCoefficient, new RiskLikelihoodFactors());
-    SecurityRiskIntroducedByOss risk
-        = new SecurityRiskIntroducedByOss(likelihoodScore, new RiskImpactScore());
-    return new SecurityRiskRatingIntroducedByOss(risk);
+    CalculatedSecurityRiskIntroducedByOss risk
+        = new CalculatedSecurityRiskIntroducedByOss(likelihoodScore, new RiskImpactScore());
+    return new SecurityRiskIntroducedByOss(risk);
   }
 
   /**

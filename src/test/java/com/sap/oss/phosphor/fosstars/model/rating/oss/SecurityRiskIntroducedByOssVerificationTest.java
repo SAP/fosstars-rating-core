@@ -10,11 +10,11 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.IN
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.IS_ADOPTED;
 import static com.sap.oss.phosphor.fosstars.model.qa.TestScoreValue.testScoreValue;
 import static com.sap.oss.phosphor.fosstars.model.qa.TestVectorBuilder.newTestVector;
-import static com.sap.oss.phosphor.fosstars.model.rating.oss.SecurityRiskRatingIntroducedByOss.OssSecurityRiskLabel.CRITICAL;
-import static com.sap.oss.phosphor.fosstars.model.rating.oss.SecurityRiskRatingIntroducedByOss.OssSecurityRiskLabel.HIGH;
-import static com.sap.oss.phosphor.fosstars.model.rating.oss.SecurityRiskRatingIntroducedByOss.OssSecurityRiskLabel.LOW;
-import static com.sap.oss.phosphor.fosstars.model.rating.oss.SecurityRiskRatingIntroducedByOss.OssSecurityRiskLabel.MEDIUM;
-import static com.sap.oss.phosphor.fosstars.model.rating.oss.SecurityRiskRatingIntroducedByOss.OssSecurityRiskLabel.NOTE;
+import static com.sap.oss.phosphor.fosstars.model.rating.oss.SecurityRiskIntroducedByOss.OssSecurityRiskLabel.CRITICAL;
+import static com.sap.oss.phosphor.fosstars.model.rating.oss.SecurityRiskIntroducedByOss.OssSecurityRiskLabel.HIGH;
+import static com.sap.oss.phosphor.fosstars.model.rating.oss.SecurityRiskIntroducedByOss.OssSecurityRiskLabel.LOW;
+import static com.sap.oss.phosphor.fosstars.model.rating.oss.SecurityRiskIntroducedByOss.OssSecurityRiskLabel.MEDIUM;
+import static com.sap.oss.phosphor.fosstars.model.rating.oss.SecurityRiskIntroducedByOss.OssSecurityRiskLabel.NOTE;
 
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
 import com.sap.oss.phosphor.fosstars.model.Score;
@@ -30,7 +30,7 @@ import com.sap.oss.phosphor.fosstars.model.qa.VerificationFailedException;
 import com.sap.oss.phosphor.fosstars.model.score.oss.OssSecurityScore;
 import org.junit.Test;
 
-public class SecurityRiskRatingIntroducedByOssVerificationTest {
+public class SecurityRiskIntroducedByOssVerificationTest {
 
   @Test
   public void testVerification() throws VerificationFailedException {
@@ -456,8 +456,8 @@ public class SecurityRiskRatingIntroducedByOssVerificationTest {
             .expectedLabel(MEDIUM)
             .make());
 
-    SecurityRiskRatingIntroducedByOss rating
-        = RatingRepository.INSTANCE.rating(SecurityRiskRatingIntroducedByOss.class);
+    SecurityRiskIntroducedByOss rating
+        = RatingRepository.INSTANCE.rating(SecurityRiskIntroducedByOss.class);
 
     new RatingVerification(rating, vectors).run();
   }
