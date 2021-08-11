@@ -15,7 +15,7 @@ import com.sap.oss.phosphor.fosstars.model.math.DoubleInterval;
 import com.sap.oss.phosphor.fosstars.model.qa.ScoreVerification;
 import com.sap.oss.phosphor.fosstars.model.qa.TestVectors;
 import com.sap.oss.phosphor.fosstars.model.qa.VerificationFailedException;
-import com.sap.oss.phosphor.fosstars.model.rating.oss.SecurityRiskRatingIntroducedByOss;
+import com.sap.oss.phosphor.fosstars.model.rating.oss.SecurityRiskIntroducedByOss;
 import java.util.Optional;
 import org.junit.Test;
 
@@ -54,7 +54,7 @@ public class RiskImpactScoreVerificationTest {
 
     Optional<RiskImpactScore> score = TestUtils.find(
         RiskImpactScore.class,
-        RatingRepository.INSTANCE.rating(SecurityRiskRatingIntroducedByOss.class));
+        RatingRepository.INSTANCE.rating(SecurityRiskIntroducedByOss.class));
 
     if (!score.isPresent()) {
       fail("Could not find the score!");

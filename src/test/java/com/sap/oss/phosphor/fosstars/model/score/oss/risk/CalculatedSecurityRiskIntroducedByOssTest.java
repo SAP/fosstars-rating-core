@@ -31,22 +31,23 @@ import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
 import org.junit.Test;
 
-public class SecurityRiskIntroducedByOssTest {
+public class CalculatedSecurityRiskIntroducedByOssTest {
 
-  private static final SecurityRiskIntroducedByOss SCORE = new SecurityRiskIntroducedByOss();
+  private static final CalculatedSecurityRiskIntroducedByOss SCORE
+      = new CalculatedSecurityRiskIntroducedByOss();
 
   @Test
   public void testJsonSerialization() throws IOException {
-    SecurityRiskIntroducedByOss clone
-        = Json.read(Json.toBytes(SCORE), SecurityRiskIntroducedByOss.class);
+    CalculatedSecurityRiskIntroducedByOss clone
+        = Json.read(Json.toBytes(SCORE), CalculatedSecurityRiskIntroducedByOss.class);
     assertTrue(SCORE.equals(clone) && clone.equals(SCORE));
     assertEquals(SCORE.hashCode(), clone.hashCode());
   }
 
   @Test
   public void testYamlSerialization() throws IOException {
-    SecurityRiskIntroducedByOss clone
-        = Yaml.read(Yaml.toBytes(SCORE), SecurityRiskIntroducedByOss.class);
+    CalculatedSecurityRiskIntroducedByOss clone
+        = Yaml.read(Yaml.toBytes(SCORE), CalculatedSecurityRiskIntroducedByOss.class);
     assertEquals(clone, SCORE);
   }
 

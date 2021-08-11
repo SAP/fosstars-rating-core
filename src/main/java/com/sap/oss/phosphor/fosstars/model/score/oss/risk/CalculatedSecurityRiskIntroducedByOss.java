@@ -20,7 +20,7 @@ import java.util.Set;
  * </ul>
  * <pre>security risk = likelihood * impact</pre>
  */
-public class SecurityRiskIntroducedByOss extends AbstractScore {
+public class CalculatedSecurityRiskIntroducedByOss extends AbstractScore {
 
   /**
    * A scoring function that calculates likelihood.
@@ -35,7 +35,7 @@ public class SecurityRiskIntroducedByOss extends AbstractScore {
   /**
    * Creates a new scoring function with default parameters.
    */
-  public SecurityRiskIntroducedByOss() {
+  public CalculatedSecurityRiskIntroducedByOss() {
     this(new RiskLikelihoodScore(), new RiskImpactScore());
   }
 
@@ -45,7 +45,7 @@ public class SecurityRiskIntroducedByOss extends AbstractScore {
    * @param likelihoodScore A scoring function that calculates likelihood.
    * @param impactScore A scoring function that calculates impact.
    */
-  public SecurityRiskIntroducedByOss(
+  public CalculatedSecurityRiskIntroducedByOss(
       RiskLikelihoodScore likelihoodScore, RiskImpactScore impactScore) {
 
     super("Security risk introduced by an open source project");
