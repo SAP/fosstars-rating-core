@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.Set;
 import org.junit.Test;
 
-public class SecurityRiskIntroducedByOssRatingTest {
+public class SecurityRiskRatingIntroducedByOssTest {
 
   private static final SecurityRiskRatingIntroducedByOss RATING
       = new SecurityRiskRatingIntroducedByOss();

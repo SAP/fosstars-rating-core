@@ -30,11 +30,23 @@ public class RiskLikelihoodCoefficient extends WeightedCompositeScore {
   }
 
   /**
-   * Initializes a new score.
+   * Creates a new scoring function with default parameters.
    */
-  public RiskLikelihoodCoefficient() {
+  RiskLikelihoodCoefficient() {
+    this(new OssSecurityScore(), new AdoptedRiskLikelihoodFactor());
+  }
+
+  /**
+   * Creates a new scoring function.
+   *
+   * @param ossSecurityScore An {@link OssSecurityScore}.
+   * @param adoptedRiskLikelihoodFactor An {@link AdoptedRiskLikelihoodFactor}.
+   */
+  public RiskLikelihoodCoefficient(
+      OssSecurityScore ossSecurityScore, AdoptedRiskLikelihoodFactor adoptedRiskLikelihoodFactor) {
+
     super("Likelihood coefficient for security risk of open source project",
-        setOf(new OssSecurityScore(), new AdoptedRiskLikelihoodFactor()),
+        setOf(ossSecurityScore, adoptedRiskLikelihoodFactor),
         initWeights());
   }
 }

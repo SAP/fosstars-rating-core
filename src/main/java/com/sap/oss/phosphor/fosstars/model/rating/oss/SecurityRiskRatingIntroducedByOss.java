@@ -51,11 +51,19 @@ public class SecurityRiskRatingIntroducedByOss extends AbstractRating  {
   private static final double HIGH_THRESHOLD = 8.0;
 
   /**
-   * Creates a new rating procedure.
+   * Creates a new rating procedure with default parameters.
    */
-  public SecurityRiskRatingIntroducedByOss() {
-    super("Security risk introduced by an open source project",
-        new SecurityRiskIntroducedByOss());
+  SecurityRiskRatingIntroducedByOss() {
+    super("Security risk introduced by an open source project", new SecurityRiskIntroducedByOss());
+  }
+
+  /**
+   * Creates a new rating procedure.
+   *
+   * @param score A {@link SecurityRiskIntroducedByOss}.
+   */
+  public SecurityRiskRatingIntroducedByOss(SecurityRiskIntroducedByOss score) {
+    super("Security risk introduced by an open source project", score);
   }
 
   @Override
