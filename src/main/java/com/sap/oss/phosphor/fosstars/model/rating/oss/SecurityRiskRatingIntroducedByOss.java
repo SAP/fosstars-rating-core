@@ -30,9 +30,9 @@ public class SecurityRiskRatingIntroducedByOss extends AbstractRating  {
    * A matrix for determining a risk label based on impact (rows) and likelihood (columns).
    */
   private static final OssSecurityRiskLabel[][] RISK_MATRIX = new OssSecurityRiskLabel[][] {
-      { OssSecurityRiskLabel.NOTE, OssSecurityRiskLabel.LOW, OssSecurityRiskLabel.MEDIUM },
-      { OssSecurityRiskLabel.LOW, OssSecurityRiskLabel.MEDIUM, OssSecurityRiskLabel.HIGH },
-      { OssSecurityRiskLabel.MEDIUM, OssSecurityRiskLabel.HIGH, OssSecurityRiskLabel.CRITICAL }
+      { OssSecurityRiskLabel.NOTE,    OssSecurityRiskLabel.LOW,     OssSecurityRiskLabel.MEDIUM },
+      { OssSecurityRiskLabel.LOW,     OssSecurityRiskLabel.MEDIUM,  OssSecurityRiskLabel.HIGH },
+      { OssSecurityRiskLabel.MEDIUM,  OssSecurityRiskLabel.HIGH,    OssSecurityRiskLabel.CRITICAL }
   };
 
   /**
