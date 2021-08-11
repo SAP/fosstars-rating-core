@@ -117,4 +117,16 @@ public class TestScoreValue implements Value<Double> {
   public Value<Double> processIfUnknown(Runnable processor) {
     throw new UnsupportedOperationException("Oops! I can't do that!");
   }
+
+  /**
+   * Create a new test score value.
+   *
+   * @param scoreClass A score class.
+   * @param value A score value.
+   * @return A test score value.
+   */
+  public static TestScoreValue testScoreValue(Class<? extends Score> scoreClass, double value) {
+    requireNonNull(scoreClass, "Oops! Score is null!");
+    return new TestScoreValue(scoreClass.getCanonicalName(), value, false, false);
+  }
 }

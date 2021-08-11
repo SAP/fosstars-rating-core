@@ -2,8 +2,10 @@ package com.sap.oss.phosphor.fosstars.model.score.oss.risk;
 
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 
+import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.score.WeightedCompositeScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.OssSecurityScore;
+import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.oss.phosphor.fosstars.model.weight.ImmutableWeight;
 import com.sap.oss.phosphor.fosstars.model.weight.ScoreWeights;
 
@@ -48,5 +50,14 @@ public class RiskLikelihoodCoefficient extends WeightedCompositeScore {
     super("Likelihood coefficient for security risk of open source project",
         setOf(ossSecurityScore, adoptedRiskLikelihoodFactor),
         initWeights());
+  }
+
+  @Override
+  public ScoreValue calculate(Value<?>... values) {
+    ScoreValue scoreValue = super.calculate(values);
+    if (scoreValue.isUnknown() || scoreValue.isNotApplicable()) {
+      return scoreValue;
+    }
+    return scoreValue.set(MAX - scoreValue.get());
   }
 }
