@@ -101,6 +101,12 @@ public abstract class AbstractScore implements Score {
 
   @Override
   public void accept(Visitor visitor) {
+    for (Score subScore : subScores()) {
+      subScore.accept(visitor);
+    }
+    for (Feature feature : features()) {
+      feature.accept(visitor);
+    }
     visitor.visit(this);
   }
 

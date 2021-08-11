@@ -49,6 +49,7 @@ import static org.junit.Assert.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Interval;
+import com.sap.oss.phosphor.fosstars.model.Rating;
 import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
@@ -78,6 +79,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -350,5 +352,24 @@ public class TestUtils {
         .setSign(false)
         .setAuthor("Mr. Pink", "mr.pink@test.com")
         .call();
+  }
+
+  /**
+   * Looks for a score in a rating.
+   *
+   * @param scoreClazz The score's class.
+   * @param rating The rating.
+   * @param <T> A type of the score.
+   * @return The score if found.
+   */
+  public static <T extends Score> Optional<T> find(Class<T> scoreClazz, Rating rating) {
+    ScoreCollector collector = new ScoreCollector();
+    rating.accept(collector);
+    for (Score score : collector.scores()) {
+      if (score.getClass().equals(scoreClazz)) {
+        return Optional.of(scoreClazz.cast(score));
+      }
+    }
+    return Optional.empty();
   }
 }
