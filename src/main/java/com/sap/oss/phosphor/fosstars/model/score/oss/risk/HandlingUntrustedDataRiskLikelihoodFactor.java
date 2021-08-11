@@ -36,7 +36,7 @@ public class HandlingUntrustedDataRiskLikelihoodFactor extends FeatureBasedScore
 
     switch (likelihood.get()) {
       case NEGLIGIBLE:
-        return scoreValue.set(MIN);
+        return scoreValue.set(1.0);
       case LOW:
         return scoreValue.set(2.0);
       case MEDIUM:

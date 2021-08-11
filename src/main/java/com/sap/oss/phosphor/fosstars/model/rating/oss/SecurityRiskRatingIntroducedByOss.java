@@ -66,6 +66,15 @@ public class SecurityRiskRatingIntroducedByOss extends AbstractRating  {
     super("Security risk introduced by an open source project", score);
   }
 
+  /**
+   * Get an underlying score.
+   *
+   * @return An underlying {@link SecurityRiskIntroducedByOss}.
+   */
+  public SecurityRiskIntroducedByOss score() {
+    return (SecurityRiskIntroducedByOss) super.score();
+  }
+
   @Override
   protected Label label(ScoreValue scoreValue) {
     requireNonNull(scoreValue, "Oh no! Score value is null!");
