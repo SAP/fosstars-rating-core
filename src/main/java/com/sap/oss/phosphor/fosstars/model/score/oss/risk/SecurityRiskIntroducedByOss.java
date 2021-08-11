@@ -2,6 +2,7 @@ package com.sap.oss.phosphor.fosstars.model.score.oss.risk;
 
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 import static java.util.Collections.emptySet;
+import static java.util.Objects.requireNonNull;
 
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Score;
@@ -22,20 +23,38 @@ import java.util.Set;
 public class SecurityRiskIntroducedByOss extends AbstractScore {
 
   /**
-   * Calculates likelihood.
+   * A scoring function that calculates likelihood.
    */
-  private final RiskLikelihoodScore likelihoodScore = new RiskLikelihoodScore();
+  private final RiskLikelihoodScore likelihoodScore;
 
   /**
-   * Calculates impact.
+   * A scoring function that calculates impact.
    */
-  private final RiskImpactScore impactScore = new RiskImpactScore();
+  private final RiskImpactScore impactScore;
+
+  /**
+   * Creates a new scoring function with default parameters.
+   */
+  public SecurityRiskIntroducedByOss() {
+    this(new RiskLikelihoodScore(), new RiskImpactScore());
+  }
 
   /**
    * Creates a new scoring function.
+   *
+   * @param likelihoodScore A scoring function that calculates likelihood.
+   * @param impactScore A scoring function that calculates impact.
    */
-  public SecurityRiskIntroducedByOss() {
+  public SecurityRiskIntroducedByOss(
+      RiskLikelihoodScore likelihoodScore, RiskImpactScore impactScore) {
+
     super("Security risk introduced by an open source project");
+
+    requireNonNull(likelihoodScore, "Oops! Likelihood score can't be null!");
+    requireNonNull(impactScore, "Oops! Impact score can't be null!");
+
+    this.likelihoodScore = likelihoodScore;
+    this.impactScore = impactScore;
   }
 
   @Override

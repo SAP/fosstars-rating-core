@@ -2,13 +2,13 @@ package com.sap.oss.phosphor.fosstars.model.score.oss.risk;
 
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 import static java.util.Collections.emptySet;
+import static java.util.Objects.requireNonNull;
 
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.score.AbstractScore;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -26,18 +26,36 @@ public class RiskLikelihoodScore extends AbstractScore {
   /**
    * A scoring function that calculates a likelihood coefficient.
    */
-  private final RiskLikelihoodCoefficient coefficientScore = new RiskLikelihoodCoefficient();
+  private final RiskLikelihoodCoefficient coefficientScore;
 
   /**
    * A scoring function that aggregates likelihood factors.
    */
-  private final RiskLikelihoodFactors factorsScore = new RiskLikelihoodFactors();
+  private final RiskLikelihoodFactors factorsScore;
+
+  /**
+   * Creates a new scoring function with default parameters.
+   */
+  RiskLikelihoodScore() {
+    this(new RiskLikelihoodCoefficient(), new RiskLikelihoodFactors());
+  }
 
   /**
    * Creates a new scoring function.
+   *
+   * @param coefficientScore A scoring function that calculates a likelihood coefficient.
+   * @param factorsScore A scoring function that aggregates likelihood factors.
    */
-  public RiskLikelihoodScore() {
+  public RiskLikelihoodScore(
+      RiskLikelihoodCoefficient coefficientScore, RiskLikelihoodFactors factorsScore) {
+
     super("Likelihood score for security risk of open source project");
+
+    requireNonNull(coefficientScore, "Oops! Coefficient score can't be null!");
+    requireNonNull(factorsScore, "Oops! Likelihood factors score can't be null!");
+
+    this.coefficientScore = coefficientScore;
+    this.factorsScore = factorsScore;
   }
 
   @Override
@@ -52,7 +70,7 @@ public class RiskLikelihoodScore extends AbstractScore {
 
   @Override
   public ScoreValue calculate(Value<?>... values) {
-    Objects.requireNonNull(values, "Oops! Values can't be null!");
+    requireNonNull(values, "Oops! Values can't be null!");
 
     ScoreValue coefficient = calculateIfNecessary(coefficientScore, values);
     ScoreValue factors = calculateIfNecessary(factorsScore, values);
