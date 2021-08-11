@@ -17,6 +17,10 @@ elements:
     feature:
       type: "OwaspDependencyCheckCvssThreshold"
       name: "A CVSS threshold for OWASP Dependency Check to fail the build"
+  - type: "UnknownValue"
+    feature:
+      type: "PackageManagersFeature"
+      name: "A set of package managers"
   expectedScore:
     type: "DoubleInterval"
     from: 0.0
@@ -25,6 +29,7 @@ elements:
     to: 1.0
     openRight: false
     positiveInfinity: false
+  expectedUnknownScore: true
   expectedLabel: null
   alias: "all_unknown"
 
@@ -42,6 +47,13 @@ elements:
       name: "A CVSS threshold for OWASP Dependency Check to fail the build"
     number: 10.0
     specified: false
+  - type: "PackageManagersValue"
+    feature:
+      type: "PackageManagersFeature"
+      name: "A set of package managers"
+    packageManagers:
+      packageManagers:
+        - "MAVEN"
   expectedScore:
     type: "DoubleInterval"
     from: 0.0
@@ -67,6 +79,13 @@ elements:
       name: "A CVSS threshold for OWASP Dependency Check to fail the build"
     number: 3.0
     specified: true
+  - type: "PackageManagersValue"
+    feature:
+      type: "PackageManagersFeature"
+      name: "A set of package managers"
+    packageManagers:
+      packageManagers:
+        - "GRADLE"
   expectedScore:
     type: "DoubleInterval"
     from: 3.0
@@ -92,6 +111,13 @@ elements:
       name: "A CVSS threshold for OWASP Dependency Check to fail the build"
     number: 4.0
     specified: true
+  - type: "PackageManagersValue"
+    feature:
+      type: "PackageManagersFeature"
+      name: "A set of package managers"
+    packageManagers:
+      packageManagers:
+        - "MAVEN"
   expectedScore:
     type: "DoubleInterval"
     from: 7.0
@@ -117,6 +143,13 @@ elements:
       name: "A CVSS threshold for OWASP Dependency Check to fail the build"
     number: 1.0
     specified: true
+  - type: "PackageManagersValue"
+    feature:
+      type: "PackageManagersFeature"
+      name: "A set of package managers"
+    packageManagers:
+      packageManagers:
+        - "GRADLE"
   expectedScore:
     type: "DoubleInterval"
     from: 9.0
