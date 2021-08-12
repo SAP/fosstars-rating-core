@@ -1,6 +1,6 @@
 package com.sap.oss.phosphor.fosstars.model.score.oss.risk;
 
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.HOW_MANY_COMPONENTS_USE_OSS_PROJECT;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.PROJECT_USAGE;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.findValue;
 import static java.lang.String.format;
 
@@ -21,12 +21,12 @@ public class UsageRiskLikelihoodFactor extends FeatureBasedScore {
    */
   public UsageRiskLikelihoodFactor() {
     super("Likelihood factor of usage of an open source project",
-        HOW_MANY_COMPONENTS_USE_OSS_PROJECT);
+        PROJECT_USAGE);
   }
 
   @Override
   public ScoreValue calculate(Value<?>... values) {
-    Value<Quantity> usage = findValue(values, HOW_MANY_COMPONENTS_USE_OSS_PROJECT,
+    Value<Quantity> usage = findValue(values, PROJECT_USAGE,
         "Hey! You have to tell me how much you use the project!");
 
     ScoreValue scoreValue = scoreValue(MIN, usage);

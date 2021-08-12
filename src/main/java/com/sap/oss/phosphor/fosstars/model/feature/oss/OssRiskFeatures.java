@@ -17,7 +17,7 @@ public class OssRiskFeatures {
    * Shows how many components such as applications, services, products, etc.
    * use an open source project.
    */
-  public static final EnumFeature<Quantity> HOW_MANY_COMPONENTS_USE_OSS_PROJECT
+  public static final EnumFeature<Quantity> PROJECT_USAGE
       = new EnumFeature<>(Quantity.class, "How many components use an open source project");
 
   /**
