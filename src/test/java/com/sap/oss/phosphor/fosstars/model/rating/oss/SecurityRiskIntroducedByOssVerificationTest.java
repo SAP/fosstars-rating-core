@@ -5,9 +5,9 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.CO
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.DATA_CONFIDENTIALITY;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.FUNCTIONALITY;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.HANDLING_UNTRUSTED_DATA_LIKELIHOOD;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.HOW_MANY_COMPONENTS_USE_OSS_PROJECT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.INTEGRITY_IMPACT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.IS_ADOPTED;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.PROJECT_USAGE;
 import static com.sap.oss.phosphor.fosstars.model.qa.TestScoreValue.testScoreValue;
 import static com.sap.oss.phosphor.fosstars.model.qa.TestVectorBuilder.newTestVector;
 import static com.sap.oss.phosphor.fosstars.model.rating.oss.SecurityRiskIntroducedByOss.OssSecurityRiskLabel.CRITICAL;
@@ -39,7 +39,7 @@ public class SecurityRiskIntroducedByOssVerificationTest {
     vectors.add(
         newTestVector("good_security|low_likelihood|low_impact")
             .set(testScoreValue(OssSecurityScore.class, Score.MAX))
-            .set(HOW_MANY_COMPONENTS_USE_OSS_PROJECT, Quantity.FEW)
+            .set(PROJECT_USAGE, Quantity.FEW)
             .set(FUNCTIONALITY, Functionality.TESTING)
             .set(HANDLING_UNTRUSTED_DATA_LIKELIHOOD, Likelihood.NEGLIGIBLE)
             .set(IS_ADOPTED.yes())
@@ -54,7 +54,7 @@ public class SecurityRiskIntroducedByOssVerificationTest {
     vectors.add(
         newTestVector("good_security|high_likelihood|low_impact")
             .set(testScoreValue(OssSecurityScore.class, 9.0))
-            .set(HOW_MANY_COMPONENTS_USE_OSS_PROJECT, Quantity.A_LOT)
+            .set(PROJECT_USAGE, Quantity.A_LOT)
             .set(FUNCTIONALITY, Functionality.SDK)
             .set(HANDLING_UNTRUSTED_DATA_LIKELIHOOD, Likelihood.HIGH)
             .set(IS_ADOPTED.yes())
@@ -69,7 +69,7 @@ public class SecurityRiskIntroducedByOssVerificationTest {
     vectors.add(
         newTestVector("good_security|high_likelihood|high_impact")
             .set(testScoreValue(OssSecurityScore.class, 9.0))
-            .set(HOW_MANY_COMPONENTS_USE_OSS_PROJECT, Quantity.A_LOT)
+            .set(PROJECT_USAGE, Quantity.A_LOT)
             .set(FUNCTIONALITY, Functionality.SDK)
             .set(HANDLING_UNTRUSTED_DATA_LIKELIHOOD, Likelihood.HIGH)
             .set(IS_ADOPTED.yes())
@@ -84,7 +84,7 @@ public class SecurityRiskIntroducedByOssVerificationTest {
     vectors.add(
         newTestVector("bad_security|high_likelihood|low_impact")
             .set(testScoreValue(OssSecurityScore.class, Score.MIN))
-            .set(HOW_MANY_COMPONENTS_USE_OSS_PROJECT, Quantity.A_LOT)
+            .set(PROJECT_USAGE, Quantity.A_LOT)
             .set(FUNCTIONALITY, Functionality.SDK)
             .set(HANDLING_UNTRUSTED_DATA_LIKELIHOOD, Likelihood.HIGH)
             .set(IS_ADOPTED.no())
@@ -99,7 +99,7 @@ public class SecurityRiskIntroducedByOssVerificationTest {
     vectors.add(
         newTestVector("bad_security|low_likelihood|high_impact")
             .set(testScoreValue(OssSecurityScore.class, Score.MIN))
-            .set(HOW_MANY_COMPONENTS_USE_OSS_PROJECT, Quantity.FEW)
+            .set(PROJECT_USAGE, Quantity.FEW)
             .set(FUNCTIONALITY, Functionality.NETWORKING)
             .set(HANDLING_UNTRUSTED_DATA_LIKELIHOOD, Likelihood.LOW)
             .set(IS_ADOPTED.no())
@@ -114,7 +114,7 @@ public class SecurityRiskIntroducedByOssVerificationTest {
     vectors.add(
         newTestVector("bad_security|high_likelihood|high_impact")
             .set(testScoreValue(OssSecurityScore.class, Score.MIN))
-            .set(HOW_MANY_COMPONENTS_USE_OSS_PROJECT, Quantity.A_LOT)
+            .set(PROJECT_USAGE, Quantity.A_LOT)
             .set(FUNCTIONALITY, Functionality.APPLICATION_FRAMEWORK)
             .set(HANDLING_UNTRUSTED_DATA_LIKELIHOOD, Likelihood.HIGH)
             .set(IS_ADOPTED.no())
@@ -128,7 +128,7 @@ public class SecurityRiskIntroducedByOssVerificationTest {
 
     vectors.add(
         newTestVector("netty")
-            .set(HOW_MANY_COMPONENTS_USE_OSS_PROJECT, Quantity.QUITE_A_LOT)
+            .set(PROJECT_USAGE, Quantity.QUITE_A_LOT)
             .set(FUNCTIONALITY, Functionality.APPLICATION_FRAMEWORK)
             .set(HANDLING_UNTRUSTED_DATA_LIKELIHOOD, Likelihood.HIGH)
             .set(testScoreValue(OssSecurityScore.class, 7.0))
@@ -143,7 +143,7 @@ public class SecurityRiskIntroducedByOssVerificationTest {
 
     vectors.add(
         newTestVector("junit")
-            .set(HOW_MANY_COMPONENTS_USE_OSS_PROJECT, Quantity.A_LOT)
+            .set(PROJECT_USAGE, Quantity.A_LOT)
             .set(FUNCTIONALITY, Functionality.TESTING)
             .set(HANDLING_UNTRUSTED_DATA_LIKELIHOOD, Likelihood.NEGLIGIBLE)
             .set(testScoreValue(OssSecurityScore.class, 2.0))
@@ -158,7 +158,7 @@ public class SecurityRiskIntroducedByOssVerificationTest {
 
     vectors.add(
         newTestVector("zlib")
-            .set(HOW_MANY_COMPONENTS_USE_OSS_PROJECT, Quantity.SOME)
+            .set(PROJECT_USAGE, Quantity.SOME)
             .set(FUNCTIONALITY, Functionality.OTHER)
             .set(HANDLING_UNTRUSTED_DATA_LIKELIHOOD, Likelihood.HIGH)
             .set(testScoreValue(OssSecurityScore.class, 2.0))
@@ -173,7 +173,7 @@ public class SecurityRiskIntroducedByOssVerificationTest {
 
     vectors.add(
         newTestVector("poi")
-            .set(HOW_MANY_COMPONENTS_USE_OSS_PROJECT, Quantity.SOME)
+            .set(PROJECT_USAGE, Quantity.SOME)
             .set(FUNCTIONALITY, Functionality.PARSER)
             .set(HANDLING_UNTRUSTED_DATA_LIKELIHOOD, Likelihood.HIGH)
             .set(testScoreValue(OssSecurityScore.class, 4.0))
@@ -188,7 +188,7 @@ public class SecurityRiskIntroducedByOssVerificationTest {
 
     vectors.add(
         newTestVector("bc")
-            .set(HOW_MANY_COMPONENTS_USE_OSS_PROJECT, Quantity.SOME)
+            .set(PROJECT_USAGE, Quantity.SOME)
             .set(FUNCTIONALITY, Functionality.SECURITY)
             .set(HANDLING_UNTRUSTED_DATA_LIKELIHOOD, Likelihood.HIGH)
             .set(testScoreValue(OssSecurityScore.class, 3.0))
@@ -203,7 +203,7 @@ public class SecurityRiskIntroducedByOssVerificationTest {
 
     vectors.add(
         newTestVector("codec")
-            .set(HOW_MANY_COMPONENTS_USE_OSS_PROJECT, Quantity.QUITE_A_LOT)
+            .set(PROJECT_USAGE, Quantity.QUITE_A_LOT)
             .set(FUNCTIONALITY, Functionality.PARSER)
             .set(HANDLING_UNTRUSTED_DATA_LIKELIHOOD, Likelihood.MEDIUM)
             .set(testScoreValue(OssSecurityScore.class, 4.0))
@@ -218,7 +218,7 @@ public class SecurityRiskIntroducedByOssVerificationTest {
 
     vectors.add(
         newTestVector("collections")
-            .set(HOW_MANY_COMPONENTS_USE_OSS_PROJECT, Quantity.A_LOT)
+            .set(PROJECT_USAGE, Quantity.A_LOT)
             .set(FUNCTIONALITY, Functionality.OTHER)
             .set(HANDLING_UNTRUSTED_DATA_LIKELIHOOD, Likelihood.LOW)
             .set(testScoreValue(OssSecurityScore.class, 4.0))
@@ -233,7 +233,7 @@ public class SecurityRiskIntroducedByOssVerificationTest {
 
     vectors.add(
         newTestVector("upload")
-            .set(HOW_MANY_COMPONENTS_USE_OSS_PROJECT, Quantity.SOME)
+            .set(PROJECT_USAGE, Quantity.SOME)
             .set(FUNCTIONALITY, Functionality.OTHER)
             .set(HANDLING_UNTRUSTED_DATA_LIKELIHOOD, Likelihood.HIGH)
             .set(testScoreValue(OssSecurityScore.class, 2.0))
@@ -248,7 +248,7 @@ public class SecurityRiskIntroducedByOssVerificationTest {
 
     vectors.add(
         newTestVector("i/o")
-            .set(HOW_MANY_COMPONENTS_USE_OSS_PROJECT, Quantity.A_LOT)
+            .set(PROJECT_USAGE, Quantity.A_LOT)
             .set(FUNCTIONALITY, Functionality.OTHER)
             .set(HANDLING_UNTRUSTED_DATA_LIKELIHOOD, Likelihood.MEDIUM)
             .set(testScoreValue(OssSecurityScore.class, 4.0))
@@ -263,7 +263,7 @@ public class SecurityRiskIntroducedByOssVerificationTest {
 
     vectors.add(
         newTestVector("lang")
-            .set(HOW_MANY_COMPONENTS_USE_OSS_PROJECT, Quantity.SOME)
+            .set(PROJECT_USAGE, Quantity.SOME)
             .set(FUNCTIONALITY, Functionality.OTHER)
             .set(HANDLING_UNTRUSTED_DATA_LIKELIHOOD, Likelihood.LOW)
             .set(testScoreValue(OssSecurityScore.class, 7.0))
@@ -278,7 +278,7 @@ public class SecurityRiskIntroducedByOssVerificationTest {
 
     vectors.add(
         newTestVector("log4j")
-            .set(HOW_MANY_COMPONENTS_USE_OSS_PROJECT, Quantity.A_LOT)
+            .set(PROJECT_USAGE, Quantity.A_LOT)
             .set(FUNCTIONALITY, Functionality.LOGGER)
             .set(HANDLING_UNTRUSTED_DATA_LIKELIHOOD, Likelihood.LOW)
             .set(testScoreValue(OssSecurityScore.class, 0.5))
@@ -293,7 +293,7 @@ public class SecurityRiskIntroducedByOssVerificationTest {
 
     vectors.add(
         newTestVector("client")
-            .set(HOW_MANY_COMPONENTS_USE_OSS_PROJECT, Quantity.QUITE_A_LOT)
+            .set(PROJECT_USAGE, Quantity.QUITE_A_LOT)
             .set(FUNCTIONALITY, Functionality.NETWORKING)
             .set(HANDLING_UNTRUSTED_DATA_LIKELIHOOD, Likelihood.MEDIUM)
             .set(testScoreValue(OssSecurityScore.class, 1.5))
@@ -308,7 +308,7 @@ public class SecurityRiskIntroducedByOssVerificationTest {
 
     vectors.add(
         newTestVector("dom4j")
-            .set(HOW_MANY_COMPONENTS_USE_OSS_PROJECT, Quantity.QUITE_A_LOT)
+            .set(PROJECT_USAGE, Quantity.QUITE_A_LOT)
             .set(FUNCTIONALITY, Functionality.PARSER)
             .set(HANDLING_UNTRUSTED_DATA_LIKELIHOOD, Likelihood.HIGH)
             .set(testScoreValue(OssSecurityScore.class, 1.5))
@@ -323,7 +323,7 @@ public class SecurityRiskIntroducedByOssVerificationTest {
 
     vectors.add(
         newTestVector("databind")
-            .set(HOW_MANY_COMPONENTS_USE_OSS_PROJECT, Quantity.QUITE_A_LOT)
+            .set(PROJECT_USAGE, Quantity.QUITE_A_LOT)
             .set(FUNCTIONALITY, Functionality.PARSER)
             .set(HANDLING_UNTRUSTED_DATA_LIKELIHOOD, Likelihood.HIGH)
             .set(testScoreValue(OssSecurityScore.class, 5))
@@ -338,7 +338,7 @@ public class SecurityRiskIntroducedByOssVerificationTest {
 
     vectors.add(
         newTestVector("http")
-            .set(HOW_MANY_COMPONENTS_USE_OSS_PROJECT, Quantity.QUITE_A_LOT)
+            .set(PROJECT_USAGE, Quantity.QUITE_A_LOT)
             .set(FUNCTIONALITY, Functionality.NETWORKING)
             .set(HANDLING_UNTRUSTED_DATA_LIKELIHOOD, Likelihood.MEDIUM)
             .set(testScoreValue(OssSecurityScore.class, 2))
@@ -353,7 +353,7 @@ public class SecurityRiskIntroducedByOssVerificationTest {
 
     vectors.add(
         newTestVector("olingo")
-            .set(HOW_MANY_COMPONENTS_USE_OSS_PROJECT, Quantity.SOME)
+            .set(PROJECT_USAGE, Quantity.SOME)
             .set(FUNCTIONALITY, Functionality.NETWORKING)
             .set(HANDLING_UNTRUSTED_DATA_LIKELIHOOD, Likelihood.HIGH)
             .set(testScoreValue(OssSecurityScore.class, 1))
@@ -368,7 +368,7 @@ public class SecurityRiskIntroducedByOssVerificationTest {
 
     vectors.add(
         newTestVector("annotations")
-            .set(HOW_MANY_COMPONENTS_USE_OSS_PROJECT, Quantity.QUITE_A_LOT)
+            .set(PROJECT_USAGE, Quantity.QUITE_A_LOT)
             .set(FUNCTIONALITY, Functionality.ANNOTATIONS)
             .set(HANDLING_UNTRUSTED_DATA_LIKELIHOOD, Likelihood.LOW)
             .set(testScoreValue(OssSecurityScore.class, 1))
@@ -383,7 +383,7 @@ public class SecurityRiskIntroducedByOssVerificationTest {
 
     vectors.add(
         newTestVector("spring")
-            .set(HOW_MANY_COMPONENTS_USE_OSS_PROJECT, Quantity.A_LOT)
+            .set(PROJECT_USAGE, Quantity.A_LOT)
             .set(FUNCTIONALITY, Functionality.APPLICATION_FRAMEWORK)
             .set(HANDLING_UNTRUSTED_DATA_LIKELIHOOD, Likelihood.HIGH)
             .set(testScoreValue(OssSecurityScore.class, 7))
@@ -398,7 +398,7 @@ public class SecurityRiskIntroducedByOssVerificationTest {
 
     vectors.add(
         newTestVector("oauth")
-            .set(HOW_MANY_COMPONENTS_USE_OSS_PROJECT, Quantity.A_LOT)
+            .set(PROJECT_USAGE, Quantity.A_LOT)
             .set(FUNCTIONALITY, Functionality.SECURITY)
             .set(HANDLING_UNTRUSTED_DATA_LIKELIHOOD, Likelihood.HIGH)
             .set(testScoreValue(OssSecurityScore.class, 2))
@@ -413,7 +413,7 @@ public class SecurityRiskIntroducedByOssVerificationTest {
 
     vectors.add(
         newTestVector("openssl")
-            .set(HOW_MANY_COMPONENTS_USE_OSS_PROJECT, Quantity.QUITE_A_LOT)
+            .set(PROJECT_USAGE, Quantity.QUITE_A_LOT)
             .set(FUNCTIONALITY, Functionality.SECURITY)
             .set(HANDLING_UNTRUSTED_DATA_LIKELIHOOD, Likelihood.HIGH)
             .set(testScoreValue(OssSecurityScore.class, 8))
@@ -428,7 +428,7 @@ public class SecurityRiskIntroducedByOssVerificationTest {
 
     vectors.add(
         newTestVector("java")
-            .set(HOW_MANY_COMPONENTS_USE_OSS_PROJECT, Quantity.A_LOT)
+            .set(PROJECT_USAGE, Quantity.A_LOT)
             .set(FUNCTIONALITY, Functionality.SDK)
             .set(HANDLING_UNTRUSTED_DATA_LIKELIHOOD, Likelihood.HIGH)
             .set(testScoreValue(OssSecurityScore.class, 2))
@@ -443,7 +443,7 @@ public class SecurityRiskIntroducedByOssVerificationTest {
 
     vectors.add(
         newTestVector("python")
-            .set(HOW_MANY_COMPONENTS_USE_OSS_PROJECT, Quantity.A_LOT)
+            .set(PROJECT_USAGE, Quantity.A_LOT)
             .set(FUNCTIONALITY, Functionality.SDK)
             .set(HANDLING_UNTRUSTED_DATA_LIKELIHOOD, Likelihood.HIGH)
             .set(testScoreValue(OssSecurityScore.class, 7))

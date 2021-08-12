@@ -9,8 +9,8 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.Functionality.OTHE
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.Functionality.SECURITY;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.FUNCTIONALITY;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.HANDLING_UNTRUSTED_DATA_LIKELIHOOD;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.HOW_MANY_COMPONENTS_USE_OSS_PROJECT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.IS_ADOPTED;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.PROJECT_USAGE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -48,7 +48,7 @@ public class RiskLikelihoodFactorsTest {
   public void testCalculate() {
     ValueSet values = new ValueHashSet();
     values.update(OssSecurityScoreTest.defaultValues());
-    values.update(HOW_MANY_COMPONENTS_USE_OSS_PROJECT.value(A_LOT));
+    values.update(PROJECT_USAGE.value(A_LOT));
     values.update(FUNCTIONALITY.value(SECURITY));
     values.update(HANDLING_UNTRUSTED_DATA_LIKELIHOOD.value(HIGH));
     values.update(IS_ADOPTED.yes());
@@ -68,7 +68,7 @@ public class RiskLikelihoodFactorsTest {
   public void testScoreValueSerialization() throws IOException {
     ValueSet values = new ValueHashSet();
     values.update(OssSecurityScoreTest.defaultValues());
-    values.update(HOW_MANY_COMPONENTS_USE_OSS_PROJECT.value(SOME));
+    values.update(PROJECT_USAGE.value(SOME));
     values.update(FUNCTIONALITY.value(OTHER));
     values.update(HANDLING_UNTRUSTED_DATA_LIKELIHOOD.value(LOW));
     values.update(IS_ADOPTED.no());
