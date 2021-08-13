@@ -91,7 +91,7 @@ public class OssRulesOfPlayGitHubIssuesReporter implements Reporter<GitHubProjec
       String issueHeader = printTitle(violation);
       List<GHIssue> existingGitHubIssues = fetcher.gitHubIssuesFor(project, issueHeader.substring(issueHeader.indexOf("["), issueHeader.indexOf("]") + 1));
       if (existingGitHubIssues.isEmpty()) {
-        fetcher.createGitHubIssue(project, printTitle(violation), printBody(violation));
+        fetcher.createGitHubIssue(project, issueHeader, printBody(violation));
         LOGGER.info("New issue: " + issueHeader);
       } else {
         LOGGER.info("Issue already exists: " + issueHeader);
