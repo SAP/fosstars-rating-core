@@ -118,6 +118,8 @@ public class OssRulesOfPlayGitHubIssuesReporterTest extends TestGitHubDataFetche
 
     reporter.createIssuesFor(project);
     verify(repository, times(1)).hasIssues();
+    verify(ghDataFetcher, times(1)).gitHubIssuesFor(project, "[rl-license_file-1]");
+    verify(ghDataFetcher, times(1)).gitHubIssuesFor(project, "[rl-readme_file-1]");
     verify(ghDataFetcher, times(2)).createGitHubIssue(any(), any(), any());
   }
 
