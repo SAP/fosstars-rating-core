@@ -36,8 +36,8 @@ fi
 
 declare -a expected_strings=(
   'https://github.com/apache/poi'
-  'If an open-source project belongs to Apache Foundation: Yes'
-  'If an open-source project belongs to Eclipse Foundation: No'
+  'Does it belong to Apache? Yes'
+  'Does it belong to Eclipse? No'
 )
 
 check_expected_output "${expected_strings[@]}" | tee | grep Failed
