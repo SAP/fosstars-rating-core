@@ -51,6 +51,14 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_U
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES_IN_ARTIFACT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES_IN_PROJECT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.AVAILABILITY_IMPACT;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.CONFIDENTIALITY_IMPACT;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.DATA_CONFIDENTIALITY;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.FUNCTIONALITY;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.HANDLING_UNTRUSTED_DATA_LIKELIHOOD;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.INTEGRITY_IMPACT;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.IS_ADOPTED;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.PROJECT_USAGE;
 
 import com.sap.oss.phosphor.fosstars.advice.Advisor;
 import com.sap.oss.phosphor.fosstars.model.Confidence;
@@ -200,6 +208,16 @@ public abstract class CommonFormatter implements Formatter {
     add(HAS_UNRESOLVED_VULNERABILITY_ALERTS, "Does it have unresolved vulnerability alerts?");
     add(ENABLED_VULNERABILITY_ALERTS_ON_GITHUB, "Are vulnerability alerts enabled?");
     add(SECURITY_REVIEWS, "Info about security reviews");
+    add(PROJECT_USAGE, "How many components use it?");
+    add(FUNCTIONALITY, "What kind of functionality does it provide?");
+    add(HANDLING_UNTRUSTED_DATA_LIKELIHOOD, "How likely does it handle untrusted data?");
+    add(IS_ADOPTED, "Is it adopted by any team?");
+    add(DATA_CONFIDENTIALITY, "What kind of data does it process?");
+    add(CONFIDENTIALITY_IMPACT,
+        "What is potential confidentiality impact in case of a security problem?");
+    add(INTEGRITY_IMPACT, "What is potential integrity impact in case of a security problem?");
+    add(AVAILABILITY_IMPACT,
+        "What is potential availability impact in case of a security problem?");
   }
 
   /**
@@ -301,7 +319,7 @@ public abstract class CommonFormatter implements Formatter {
    * @param value The value to be printed out.
    * @return A formatted value.
    */
-  protected String actualValueOf(Value<?> value) {
+  public String actualValueOf(Value<?> value) {
     if (value.isUnknown()) {
       return "unknown";
     }

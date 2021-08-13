@@ -125,7 +125,7 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
   }
 
   @Override
-  protected String actualValueOf(Value<?> value) {
+  public String actualValueOf(Value<?> value) {
     if (!value.isUnknown() && value.get() instanceof Vulnerabilities) {
       Vulnerabilities vulnerabilities = (Vulnerabilities) value.get();
       if (vulnerabilities.isEmpty()) {

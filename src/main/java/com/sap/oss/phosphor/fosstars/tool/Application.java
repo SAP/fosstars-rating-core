@@ -3,6 +3,7 @@ package com.sap.oss.phosphor.fosstars.tool;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static java.util.Objects.requireNonNull;
+import static java.util.stream.Collectors.joining;
 
 import com.sap.oss.phosphor.fosstars.data.NoUserCallback;
 import com.sap.oss.phosphor.fosstars.data.StandardValueCache;
@@ -18,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
@@ -97,7 +99,8 @@ public class Application {
     handlers = new Handler[] {
         new OssProjectSecurityRatingHandler(),
         new OssArtifactSecurityRatingHandler(),
-        new OssRulesOfPlayRatingHandler()
+        new OssRulesOfPlayRatingHandler(),
+        new SecurityRiskIntroducedByOssHandler()
     };
     defaultHandler = handlers[0];
   }
@@ -117,8 +120,9 @@ public class Application {
         Option.builder("r")
             .longOpt("rating")
             .hasArg()
-            .desc("A rating to use: security, oss-artifact-security, oss-rules-of-play "
-                + "(default is security).")
+            .desc(format("A rating to use: %s (default is %s).",
+                Arrays.stream(handlers).map(Handler::supportedRatingName).collect(joining(", ")),
+                defaultHandler.supportedRatingName()))
             .build());
     options.addOption(
         Option.builder("t")

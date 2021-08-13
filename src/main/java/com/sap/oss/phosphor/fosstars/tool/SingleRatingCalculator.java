@@ -1,6 +1,7 @@
 package com.sap.oss.phosphor.fosstars.tool;
 
 import static java.util.Objects.requireNonNull;
+import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 import com.sap.oss.phosphor.fosstars.data.DataProvider;
 import com.sap.oss.phosphor.fosstars.data.NoUserCallback;
@@ -11,6 +12,7 @@ import com.sap.oss.phosphor.fosstars.model.Rating;
 import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
+import com.sap.oss.phosphor.fosstars.tool.format.PrettyPrinter;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -138,9 +140,14 @@ public class SingleRatingCalculator implements RatingCalculator {
     }
 
     LOGGER.info("Here is what we know about the project:");
+    PrettyPrinter printer = PrettyPrinter.withoutVerboseOutput();
     values.toSet().stream()
         .sorted(Comparator.comparing(value -> value.feature().name()))
-        .forEach(value -> LOGGER.info("   {}: {}", value.feature(), value));
+        .forEach(value -> {
+          String name = printer.nameOf(value.feature());
+          LOGGER.info("   {}{} {}",
+              name, name.endsWith("?") ? EMPTY : ":", printer.actualValueOf(value));
+        });
 
     subject.set(rating.calculate(values));
 
