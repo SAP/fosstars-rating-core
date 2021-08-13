@@ -130,7 +130,7 @@ public class DataProviderSelector {
       = SimpleCompositeDataProvider.forFeature(DATA_CONFIDENTIALITY)
           .withInteractiveProvider(
               AskOptions.forFeature(DATA_CONFIDENTIALITY)
-                  .withQuestion("What kind of data does it process??")
+                  .withQuestion("What kind of data does it process?")
                   .withOptions(DataConfidentialityType.class))
           .withDefaultValue(DATA_CONFIDENTIALITY.value(CONFIDENTIAL)
               .explain("Assumed the worst case"));
@@ -144,7 +144,7 @@ public class DataProviderSelector {
           .withInteractiveProvider(
               AskOptions.forFeature(CONFIDENTIALITY_IMPACT)
                   .withQuestion("What is potential data confidentiality impact "
-                      + "in case of a security problem??")
+                      + "in case of a security problem?")
                   .withOptions(Impact.class))
           .withDefaultValue(CONFIDENTIALITY_IMPACT.value(Impact.HIGH)
               .explain("Assumed the worst case"));
@@ -158,7 +158,7 @@ public class DataProviderSelector {
           .withInteractiveProvider(
               AskOptions.forFeature(INTEGRITY_IMPACT)
                   .withQuestion(
-                      "What is potential data integrity impact in case of a security problem??")
+                      "What is potential data integrity impact in case of a security problem?")
                   .withOptions(Impact.class))
           .withDefaultValue(INTEGRITY_IMPACT.value(Impact.HIGH)
               .explain("Assumed the worst case"));
@@ -172,7 +172,7 @@ public class DataProviderSelector {
           .withInteractiveProvider(
               AskOptions.forFeature(AVAILABILITY_IMPACT)
                   .withQuestion(
-                      "What is potential availability impact in case of a security problem??")
+                      "What is potential availability impact in case of a security problem?")
                   .withOptions(Impact.class))
           .withDefaultValue(AVAILABILITY_IMPACT.value(Impact.HIGH)
               .explain("Assumed the worst case"));

@@ -3,6 +3,7 @@ package com.sap.oss.phosphor.fosstars.tool;
 import static java.lang.String.format;
 import static java.util.Collections.emptyList;
 import static java.util.Objects.requireNonNull;
+import static java.util.Optional.empty;
 
 import com.github.packageurl.PackageURL;
 import com.github.packageurl.PackageURL.StandardTypes;
@@ -472,8 +473,9 @@ public abstract class AbstractHandler implements Handler {
    * @return A reporter.
    * @throws IOException If something went wrong.
    */
-  abstract Optional<Reporter<GitHubProject>> reporterFrom(ReportConfig reportConfig)
-      throws IOException;
+  Optional<Reporter<GitHubProject>> reporterFrom(ReportConfig reportConfig) throws IOException {
+    return empty();
+  }
 
   /**
    * Stores a rating of a subject if a user asked about it.
