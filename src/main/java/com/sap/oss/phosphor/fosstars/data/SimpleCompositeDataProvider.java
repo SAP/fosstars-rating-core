@@ -114,7 +114,7 @@ public class SimpleCompositeDataProvider extends AbstractCachingDataProvider {
       }
     }
 
-    if (interactiveProvider != null) {
+    if (interactiveProvider != null && callback.canTalk()) {
       interactiveProvider.update(subject, values);
       if (weAreHappyWith(values)) {
         return values;
