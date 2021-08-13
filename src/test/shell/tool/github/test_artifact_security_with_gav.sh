@@ -38,8 +38,8 @@ fi
 
 declare -a expected_strings=(
   'pkg:maven/org.apache.poi/poi@5.0.0'
-  'If an open-source project belongs to Apache Foundation: Yes'
-  'If an open-source project belongs to Eclipse Foundation: No'
+  'Does it belong to Apache?'
+  'Does it belong to Eclipse? No'
 )
 
 check_expected_output "${expected_strings[@]}" | tee | grep Failed
