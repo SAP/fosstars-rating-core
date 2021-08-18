@@ -122,6 +122,25 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
   }
 
   @Test
+  public void testLowercaseReadme() throws IOException {
+    GitHubProject project = new GitHubProject("test", "project");
+
+    LocalRepository localRepository = mock(LocalRepository.class);
+    when(localRepository.hasFile("readme.md")).thenReturn(true);
+    TestGitHubDataFetcher.addForTesting(project, localRepository);
+
+    ReadmeInfo provider = new ReadmeInfo(fetcher);
+    provider.set(NoValueCache.create());
+
+    when(localRepository.readTextFrom("readme.md"))
+        .thenReturn(Optional.of(String.join("\n",
+            "This is readme.md"
+        )));
+    ValueSet values = provider.fetchValuesFor(project);
+    assertTrue(checkValue(values, HAS_README, true).get());
+  }
+
+  @Test
   public void testLoadingDefaultConfig() throws IOException {
     Path config = Paths.get(String.format("%s.config.yml", ReadmeInfo.class.getSimpleName()));
     String content = "---\n"
