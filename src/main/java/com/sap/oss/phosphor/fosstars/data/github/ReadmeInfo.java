@@ -38,7 +38,8 @@ public class ReadmeInfo extends GitHubCachingDataProvider {
    * A list of known README file names.
    */
   private static final List<String> KNOWN_README_FILES
-      = Arrays.asList("README", "README.txt", "README.md", "README.rst");
+      = Arrays.asList("README", "README.txt", "README.md", "README.rst",
+          "readme", "readme.txt", "readme.md", "readme.rst");
 
   /**
    * A list of patterns that describe required content in README.
