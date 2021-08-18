@@ -72,10 +72,8 @@ public class SimpleCompositeDataProvider extends AbstractCachingDataProvider {
           "Oh no! The default value doesn't match with the supported feature!");
     }
 
-    Set<Feature<?>> supportedFeatures = singleton(feature);
-
     if (nonInteractiveProvider != null) {
-      if (!nonInteractiveProvider.supportedFeatures().equals(supportedFeatures)) {
+      if (!nonInteractiveProvider.supportedFeatures().contains(feature)) {
         throw new IllegalArgumentException(
             "Oh no! The non-interactive data provider supports unexpected features!");
       }
@@ -86,7 +84,7 @@ public class SimpleCompositeDataProvider extends AbstractCachingDataProvider {
     }
 
     if (interactiveProvider != null) {
-      if (!interactiveProvider.supportedFeatures().equals(supportedFeatures)) {
+      if (!interactiveProvider.supportedFeatures().contains(feature)) {
         throw new IllegalArgumentException(
             "Oh no! The interactive data provider supports unexpected features!");
       }
