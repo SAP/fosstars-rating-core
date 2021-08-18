@@ -19,6 +19,7 @@ import com.sap.oss.phosphor.fosstars.data.artifact.ReleaseInfoFromNpm;
 import com.sap.oss.phosphor.fosstars.data.artifact.VulnerabilitiesFromOwaspDependencyCheck;
 import com.sap.oss.phosphor.fosstars.data.github.CodeqlDataProvider;
 import com.sap.oss.phosphor.fosstars.data.github.ContributingGuidelineInfo;
+import com.sap.oss.phosphor.fosstars.data.github.EstimateImpactUsingKnownVulnerabilities;
 import com.sap.oss.phosphor.fosstars.data.github.FuzzedInOssFuzz;
 import com.sap.oss.phosphor.fosstars.data.github.GitHubDataFetcher;
 import com.sap.oss.phosphor.fosstars.data.github.HasBugBountyProgram;
@@ -135,47 +136,7 @@ public class DataProviderSelector {
           .withDefaultValue(DATA_CONFIDENTIALITY.value(CONFIDENTIAL)
               .explain("Assumed the worst case"));
 
-  /**
-   * This is a composite data provider that tries to figure out potential impact to confidentiality
-   * in case of a security problem.
-   */
-  private static final SimpleCompositeDataProvider CONFIDENTIALITY_IMPACT_PROVIDER
-      = SimpleCompositeDataProvider.forFeature(CONFIDENTIALITY_IMPACT)
-          .withInteractiveProvider(
-              AskOptions.forFeature(CONFIDENTIALITY_IMPACT)
-                  .withQuestion("What is potential data confidentiality impact "
-                      + "in case of a security problem?")
-                  .withOptions(Impact.class))
-          .withDefaultValue(CONFIDENTIALITY_IMPACT.value(Impact.HIGH)
-              .explain("Assumed the worst case"));
 
-  /**
-   * This is a composite data provider that tries to figure out potential impact to integrity
-   * in case of a security problem.
-   */
-  private static final SimpleCompositeDataProvider INTEGRITY_IMPACT_PROVIDER
-      = SimpleCompositeDataProvider.forFeature(INTEGRITY_IMPACT)
-          .withInteractiveProvider(
-              AskOptions.forFeature(INTEGRITY_IMPACT)
-                  .withQuestion(
-                      "What is potential data integrity impact in case of a security problem?")
-                  .withOptions(Impact.class))
-          .withDefaultValue(INTEGRITY_IMPACT.value(Impact.HIGH)
-              .explain("Assumed the worst case"));
-
-  /**
-   * This is a composite data provider that tries to figure out potential impact to availability
-   * in case of a security problem.
-   */
-  private static final SimpleCompositeDataProvider AVAILABILITY_IMPACT_PROVIDER
-      = SimpleCompositeDataProvider.forFeature(AVAILABILITY_IMPACT)
-          .withInteractiveProvider(
-              AskOptions.forFeature(AVAILABILITY_IMPACT)
-                  .withQuestion(
-                      "What is potential availability impact in case of a security problem?")
-                  .withOptions(Impact.class))
-          .withDefaultValue(AVAILABILITY_IMPACT.value(Impact.HIGH)
-              .explain("Assumed the worst case"));
 
   /**
    * A list of available data providers.
@@ -193,6 +154,43 @@ public class DataProviderSelector {
     requireNonNull(fetcher, "Oops! Fetcher can't be null!");
     requireNonNull(nvd, "Oops! NVD can't be null!");
 
+    InfoAboutVulnerabilities infoAboutVulnerabilities = new InfoAboutVulnerabilities(fetcher, nvd);
+    EstimateImpactUsingKnownVulnerabilities estimateImpactUsingKnownVulnerabilities
+        = new EstimateImpactUsingKnownVulnerabilities(infoAboutVulnerabilities);
+
+    SimpleCompositeDataProvider confidentialityImpactProvider
+        = SimpleCompositeDataProvider.forFeature(CONFIDENTIALITY_IMPACT)
+              .withNonInteractiveProvider(estimateImpactUsingKnownVulnerabilities)
+              .withInteractiveProvider(
+                  AskOptions.forFeature(CONFIDENTIALITY_IMPACT)
+                      .withQuestion("What is potential data confidentiality impact "
+                          + "in case of a security problem?")
+                      .withOptions(Impact.class))
+              .withDefaultValue(CONFIDENTIALITY_IMPACT.value(Impact.HIGH)
+                  .explain("Assumed the worst case"));
+
+    SimpleCompositeDataProvider integrityImpactProvider
+        = SimpleCompositeDataProvider.forFeature(INTEGRITY_IMPACT)
+              .withNonInteractiveProvider(estimateImpactUsingKnownVulnerabilities)
+              .withInteractiveProvider(
+                  AskOptions.forFeature(INTEGRITY_IMPACT)
+                      .withQuestion(
+                          "What is potential data integrity impact in case of a security problem?")
+                      .withOptions(Impact.class))
+              .withDefaultValue(INTEGRITY_IMPACT.value(Impact.HIGH)
+                  .explain("Assumed the worst case"));
+
+    SimpleCompositeDataProvider availabilityImpactProvider
+        = SimpleCompositeDataProvider.forFeature(AVAILABILITY_IMPACT)
+              .withNonInteractiveProvider(estimateImpactUsingKnownVulnerabilities)
+              .withInteractiveProvider(
+                  AskOptions.forFeature(AVAILABILITY_IMPACT)
+                      .withQuestion(
+                          "What is potential availability impact in case of a security problem?")
+                      .withOptions(Impact.class))
+              .withDefaultValue(AVAILABILITY_IMPACT.value(Impact.HIGH)
+                  .explain("Assumed the worst case"));
+
     providers = Arrays.asList(
         new NumberOfCommits(fetcher),
         new NumberOfContributors(fetcher),
@@ -202,7 +200,7 @@ public class DataProviderSelector {
         new HasCompanySupport(fetcher),
         new HasSecurityPolicy(fetcher),
         new HasBugBountyProgram(fetcher),
-        new InfoAboutVulnerabilities(fetcher, nvd),
+        infoAboutVulnerabilities,
         new IsApache(fetcher),
         new IsEclipse(fetcher),
         new CodeqlDataProvider(fetcher),
@@ -236,9 +234,9 @@ public class DataProviderSelector {
         HANDLING_UNTRUSTED_DATA_LIKELIHOOD_PROVIDER,
         IS_ADOPTED_PROVIDER,
         DATA_CONFIDENTIALITY_PROVIDER,
-        CONFIDENTIALITY_IMPACT_PROVIDER,
-        INTEGRITY_IMPACT_PROVIDER,
-        AVAILABILITY_IMPACT_PROVIDER,
+        confidentialityImpactProvider,
+        integrityImpactProvider,
+        availabilityImpactProvider,
 
         // currently, interactive data provider have to be added to the end, see issue #133
         new AskAboutSecurityTeam(),
