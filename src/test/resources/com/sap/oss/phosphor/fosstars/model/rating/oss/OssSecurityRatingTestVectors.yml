@@ -248,7 +248,7 @@ elements:
       entries:
       - id: "VULN-134-12"
         cvss:
-          version: "V3"
+          type: "CVSS$V3"
           value: 9.5
         references: []
         resolution: "UNPATCHED"
@@ -363,7 +363,7 @@ elements:
       entries:
       - id: "VULN-123-1"
         cvss:
-          version: "V3"
+          type: "CVSS$V3"
           value: 9.0
         references: []
         resolution: "PATCHED"
@@ -371,7 +371,7 @@ elements:
         fixed: "2019-01-03"
       - id: "VULN-124-2"
         cvss:
-          version: "V3"
+          type: "CVSS$V3"
           value: 7.0
         references: []
         resolution: "PATCHED"
@@ -379,7 +379,7 @@ elements:
         fixed: "2018-12-02"
       - id: "VULN-125-3"
         cvss:
-          version: "V3"
+          type: "CVSS$V3"
           value: 3.0
         references: []
         resolution: "PATCHED"
@@ -503,7 +503,7 @@ elements:
       entries:
       - id: "VULN-123-1"
         cvss:
-          version: "V3"
+          type: "CVSS$V3"
           value: 9.0
         references: []
         resolution: "PATCHED"
@@ -511,7 +511,7 @@ elements:
         fixed: "2019-01-03"
       - id: "VULN-124-2"
         cvss:
-          version: "V3"
+          type: "CVSS$V3"
           value: 7.0
         references: []
         resolution: "PATCHED"
@@ -519,7 +519,7 @@ elements:
         fixed: "2018-12-02"
       - id: "VULN-125-3"
         cvss:
-          version: "V3"
+          type: "CVSS$V3"
           value: 3.0
         references: []
         resolution: "PATCHED"

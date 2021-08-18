@@ -1,6 +1,8 @@
 package com.sap.oss.phosphor.fosstars.data.github;
 
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES_IN_PROJECT;
+import static java.util.Arrays.asList;
+import static java.util.Objects.requireNonNull;
 
 import com.sap.oss.phosphor.fosstars.data.DataProvider;
 import com.sap.oss.phosphor.fosstars.model.Feature;
@@ -11,9 +13,7 @@ import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.oss.phosphor.fosstars.nvd.NVD;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * This data provider tries to fill out the
@@ -43,11 +43,22 @@ public class InfoAboutVulnerabilities
    * @throws IOException If something went wrong.
    */
   public InfoAboutVulnerabilities(GitHubDataFetcher fetcher, NVD nvd) throws IOException {
+    this(fetcher, new UnpatchedVulnerabilities(fetcher), new VulnerabilitiesFromNvd(fetcher, nvd));
+  }
+
+  /**
+   * Initializes a data provider.
+   *
+   * @param fetcher An interface to GitHub.
+   * @param providers Underlying data providers.
+   */
+  InfoAboutVulnerabilities(GitHubDataFetcher fetcher, DataProvider... providers) {
     super(fetcher);
-    Objects.requireNonNull(nvd, "NVD can't be null!");
-    providers = Arrays.asList(
-        new UnpatchedVulnerabilities(fetcher),
-        new VulnerabilitiesFromNvd(fetcher, nvd));
+    requireNonNull(providers, "Oops! Providers can't be null!");
+    if (providers.length == 0) {
+      throw new IllegalArgumentException("Oops! No providers provided!");
+    }
+    this.providers = asList(providers);
   }
 
   @Override

@@ -89,6 +89,7 @@ import com.sap.oss.phosphor.fosstars.model.subject.oss.NpmArtifact;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersionValue;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersionsValue;
 import com.sap.oss.phosphor.fosstars.model.value.BooleanValue;
+import com.sap.oss.phosphor.fosstars.model.value.CVSS;
 import com.sap.oss.phosphor.fosstars.model.value.DateValue;
 import com.sap.oss.phosphor.fosstars.model.value.DoubleValue;
 import com.sap.oss.phosphor.fosstars.model.value.EnumValue;
@@ -331,7 +332,8 @@ public abstract class Deserialization {
 
     // other
     mapper.registerSubtypes(
-        GitHubProject.class, GitHubOrganization.class, DoubleInterval.class, ValueHashSet.class);
+        GitHubProject.class, GitHubOrganization.class, DoubleInterval.class, ValueHashSet.class,
+        CVSS.V2.class, CVSS.V3.class);
 
     return mapper;
   }

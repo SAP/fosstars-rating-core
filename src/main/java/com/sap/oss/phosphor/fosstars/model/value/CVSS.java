@@ -1,14 +1,230 @@
 package com.sap.oss.phosphor.fosstars.model.value;
 
+import static java.lang.String.format;
+
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * The class holds a CVSS score for a vulnerability.
  */
-public class CVSS {
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
+public abstract class CVSS {
+
+  /**
+   * CVSS version 2.
+   */
+  public static class V2 extends CVSS {
+
+    /**
+     * Unknown impact.
+     */
+    public static final Impact UNKNOWN_IMPACT = null;
+
+    /**
+     * Possible impact values.
+     */
+    public enum Impact {
+      NONE, PARTIAL, COMPLETE
+    }
+
+    /**
+     * Confidentiality impact.
+     */
+    @JsonProperty("confidentialityImpact")
+    private final Impact confidentialityImpact;
+
+    /**
+     * Integrity impact.
+     */
+    @JsonProperty("integrityImpact")
+    private final Impact integrityImpact;
+
+    /**
+     * Availability impact.
+     */
+    @JsonProperty("availabilityImpact")
+    private final Impact availabilityImpact;
+
+    /**
+     * Initializes a CVSS score v3.
+     *
+     * @param value A score in the interval [0, 10].
+     * @param confidentialityImpact Confidentiality impact.
+     * @param integrityImpact Integrity impact.
+     * @param availabilityImpact Availability impact.
+     */
+    public V2(
+        @JsonProperty("value") Double value,
+        @JsonProperty("confidentialityImpact") Impact confidentialityImpact,
+        @JsonProperty("integrityImpact") Impact integrityImpact,
+        @JsonProperty("availabilityImpact") Impact availabilityImpact) {
+
+      super(value);
+      this.confidentialityImpact = confidentialityImpact;
+      this.integrityImpact = integrityImpact;
+      this.availabilityImpact = availabilityImpact;
+    }
+
+    /**
+     * Get the confidentiality impact.
+     *
+     * @return The confidentiality impact if available.
+     */
+    public Optional<Impact> confidentialityImpact() {
+      return Optional.ofNullable(confidentialityImpact);
+    }
+
+    /**
+     * Get the integrity impact.
+     *
+     * @return The integrity impact if available.
+     */
+    public Optional<Impact> integrityImpact() {
+      return Optional.ofNullable(integrityImpact);
+    }
+
+    /**
+     * Get the availability impact.
+     *
+     * @return The availability impact if available.
+     */
+    public Optional<Impact> availabilityImpact() {
+      return Optional.ofNullable(availabilityImpact);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (!V2.class.isAssignableFrom(o.getClass())) {
+        return false;
+      }
+      if (!super.equals(o)) {
+        return false;
+      }
+      V2 v2 = (V2) o;
+      return confidentialityImpact == v2.confidentialityImpact
+          && integrityImpact == v2.integrityImpact
+          && availabilityImpact == v2.availabilityImpact;
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(super.hashCode(),
+          confidentialityImpact, integrityImpact, availabilityImpact);
+    }
+  }
+
+  /**
+   * CVSS version 3.
+   */
+  public static class V3 extends CVSS {
+
+    /**
+     * Unknown impact.
+     */
+    public static final Impact UNKNOWN_IMPACT = null;
+
+    /**
+     * Possible impact values.
+     */
+    public enum Impact {
+      NONE, LOW, HIGH
+    }
+
+    /**
+     * Confidentiality impact.
+     */
+    @JsonProperty("confidentialityImpact")
+    private final Impact confidentialityImpact;
+
+    /**
+     * Integrity impact.
+     */
+    @JsonProperty("integrityImpact")
+    private final Impact integrityImpact;
+
+    /**
+     * Availability impact.
+     */
+    @JsonProperty("availabilityImpact")
+    private final Impact availabilityImpact;
+
+    /**
+     * Initializes a CVSS score v3.
+     *
+     * @param value A score in the interval [0, 10].
+     * @param confidentialityImpact Confidentiality impact.
+     * @param integrityImpact Integrity impact.
+     * @param availabilityImpact Availability impact.
+     */
+    public V3(
+        @JsonProperty("value") Double value,
+        @JsonProperty("confidentialityImpact") Impact confidentialityImpact,
+        @JsonProperty("integrityImpact") Impact integrityImpact,
+        @JsonProperty("availabilityImpact") Impact availabilityImpact) {
+
+      super(value);
+      this.confidentialityImpact = confidentialityImpact;
+      this.integrityImpact = integrityImpact;
+      this.availabilityImpact = availabilityImpact;
+    }
+
+    /**
+     * Get the confidentiality impact.
+     *
+     * @return The confidentiality impact if available.
+     */
+    public Optional<Impact> confidentialityImpact() {
+      return Optional.ofNullable(confidentialityImpact);
+    }
+
+    /**
+     * Get the integrity impact.
+     *
+     * @return The integrity impact if available.
+     */
+    public Optional<Impact> integrityImpact() {
+      return Optional.ofNullable(integrityImpact);
+    }
+
+    /**
+     * Get the availability impact.
+     *
+     * @return The availability impact if available.
+     */
+    public Optional<Impact> availabilityImpact() {
+      return Optional.ofNullable(availabilityImpact);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (!V3.class.isAssignableFrom(o.getClass())) {
+        return false;
+      }
+      if (!super.equals(o)) {
+        return false;
+      }
+      V3 v3 = (V3) o;
+      return confidentialityImpact == v3.confidentialityImpact
+          && integrityImpact == v3.integrityImpact
+          && availabilityImpact == v3.availabilityImpact;
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(super.hashCode(),
+          confidentialityImpact, integrityImpact, availabilityImpact);
+    }
+  }
 
   /**
    * The minimum CVSS score.
@@ -21,21 +237,11 @@ public class CVSS {
   public static final double MAX = 10.0;
 
   /**
-   * An unknown CVSS score.
-   */
-  public static final CVSS UNKNOWN = new CVSS(Version.UNKNOWN, null);
-
-  /**
    * CVSS version.
    */
   public enum Version {
-    V2, V3, UNKNOWN
+    V2, V3
   }
-
-  /**
-   * CVSS version.
-   */
-  private final Version version;
 
   /**
    * A score.
@@ -45,16 +251,9 @@ public class CVSS {
   /**
    * Initializes a CVSS score.
    *
-   * @param version CVSS version.
    * @param value A score in the interval [0, 10].
    */
-  public CVSS(
-      @JsonProperty("version") Version version,
-      @JsonProperty("value") Double value) {
-
-    Objects.requireNonNull(version, "Hey! CVSS version can't be null!");
-
-    this.version = version;
+  public CVSS(@JsonProperty("value") Double value) {
     this.value = check(value);
   }
 
@@ -69,60 +268,41 @@ public class CVSS {
   }
 
   /**
-   * Get the CVSS version.
+   * Get the confidentiality impact.
    *
-   * @return The CVSS version.
+   * @return The confidentiality impact if available.
    */
-  @JsonGetter("version")
-  public Version version() {
-    return version;
-  }
+  public abstract Optional<?> confidentialityImpact();
 
   /**
-   * Tells whether the score is unknown or not.
+   * Get the integrity impact.
    *
-   * @return True if the score is unknown, false otherwise.
+   * @return The integrity impact if available.
    */
-  @JsonIgnore
-  public boolean isUnknown() {
-    return value == null;
-  }
+  public abstract Optional<?> integrityImpact();
+
+  /**
+   * Get the availability impact.
+   *
+   * @return The availability impact if available.
+   */
+  public abstract Optional<?> availabilityImpact();
 
   @Override
   public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
-    if (o instanceof CVSS == false) {
+    if (!CVSS.class.isAssignableFrom(o.getClass())) {
       return false;
     }
     CVSS cvss = (CVSS) o;
-    return version == cvss.version && Objects.equals(value, cvss.value);
+    return Objects.equals(value, cvss.value);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(version, value);
-  }
-
-  /**
-   * Creates a CVSS score of version 2.
-   *
-   * @param value The score value.
-   * @return An instance of {@link CVSS}
-   */
-  public static CVSS v2(double value) {
-    return new CVSS(Version.V2, value);
-  }
-
-  /**
-   * Creates a CVSS score of version 3.
-   *
-   * @param value The score value.
-   * @return An instance of {@link CVSS}
-   */
-  public static CVSS v3(double value) {
-    return new CVSS(Version.V3, value);
+    return Objects.hash(value);
   }
 
   /**
@@ -138,7 +318,7 @@ public class CVSS {
     }
 
     if (Double.compare(value, MIN) < 0 || Double.compare(value, MAX) > 0) {
-      throw new IllegalArgumentException(String.format(
+      throw new IllegalArgumentException(format(
           "What the heck? %f doesn't look like a CVSS score!", value));
     }
 

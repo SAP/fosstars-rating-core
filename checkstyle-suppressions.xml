@@ -20,7 +20,7 @@
     lines="99"/>
   <suppress checks="AbbreviationAsWordInName"
     files="CVSS.java"
-    lines="11"/>
+    lines="15"/>
   <suppress checks="AbbreviationAsWordInName"
     files="CVSSv2.java"
     lines="36"/>

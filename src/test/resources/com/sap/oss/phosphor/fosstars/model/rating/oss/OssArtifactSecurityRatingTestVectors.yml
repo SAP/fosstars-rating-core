@@ -209,7 +209,7 @@ defaults:
       entries: 
         - id: "VULN-123-1"
           cvss:
-            version: "V3"
+            type: "CVSS$V3"
             value: 9.0
           references: []
           resolution: "PATCHED"
@@ -221,7 +221,7 @@ defaults:
               versionEnd: 1.1.0
         - id: "VULN-123-2"
           cvss:
-            version: "V3"
+            type: "CVSS$V3"
             value: 9.0
           references: []
           resolution: "PATCHED"
@@ -233,7 +233,7 @@ defaults:
               versionEnd: 2.1.0
         - id: "VULN-124-2"
           cvss:
-            version: "V3"
+            type: "CVSS$V3"
             value: 7.0
           references: []
           resolution: "PATCHED"
@@ -245,7 +245,7 @@ defaults:
               versionEnd: 1.2.0
         - id: "VULN-123-3"
           cvss:
-            version: "V3"
+            type: "CVSS$V3"
             value: 9.0
           references: []
           resolution: "UNPATCHED"
@@ -374,7 +374,7 @@ elements:
           entries:
             - id: "VULN-123-1"
               cvss:
-                version: "V3"
+                type: "CVSS$V3"
                 value: 9.0
               references: []
               resolution: "PATCHED"
@@ -421,7 +421,7 @@ elements:
           entries:
             - id: "VULN-123-2"
               cvss:
-                version: "V3"
+                type: "CVSS$V3"
                 value: 9.0
               references: []
               resolution: "PATCHED"
@@ -433,7 +433,7 @@ elements:
                   versionEnd: 2.1.0
             - id: "VULN-124-2"
               cvss:
-                version: "V3"
+                type: "CVSS$V3"
                 value: 7.0
               references: []
               resolution: "PATCHED"
@@ -475,7 +475,7 @@ elements:
           entries:
             - id: "VULN-123-2"
               cvss:
-                version: "V3"
+                type: "CVSS$V3"
                 value: 9.0
               references: []
               resolution: "PATCHED"
@@ -487,7 +487,7 @@ elements:
                   versionEnd: 2.1.0
             - id: "VULN-124-2"
               cvss:
-                version: "V3"
+                type: "CVSS$V3"
                 value: 7.0
               references: []
               resolution: "PATCHED"
@@ -545,7 +545,7 @@ elements:
           entries:
             - id: "VULN-123-1"
               cvss:
-                version: "V3"
+                type: "CVSS$V3"
                 value: 9.0
               references: []
               resolution: "PATCHED"
@@ -627,7 +627,7 @@ elements:
           entries:
             - id: "VULN-123-3"
               cvss:
-                version: "V3"
+                type: "CVSS$V3"
                 value: 9.0
               references: []
               resolution: "UNPATCHED"

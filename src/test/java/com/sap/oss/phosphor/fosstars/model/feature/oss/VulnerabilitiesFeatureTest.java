@@ -9,6 +9,7 @@ import static org.junit.Assert.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.value.CVSS;
+import com.sap.oss.phosphor.fosstars.model.value.CVSS.V3.Impact;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
 import org.junit.Test;
 
@@ -22,7 +23,7 @@ public class VulnerabilitiesFeatureTest {
         new Vulnerabilities(
             newVulnerability("1")
                 .description("test")
-                .set(CVSS.v3(5.1))
+                .set(new CVSS.V3(5.1, Impact.HIGH, Impact.LOW, Impact.NONE))
                 .set(UNPATCHED)
                 .make()));
     assertNotNull(value);
@@ -34,7 +35,7 @@ public class VulnerabilitiesFeatureTest {
     assertTrue(vulnerabilities.entries().contains(
         newVulnerability("1")
             .description("test")
-            .set(CVSS.v3(5.1))
+            .set(new CVSS.V3(5.1, Impact.HIGH, Impact.LOW, Impact.NONE))
             .set(UNPATCHED)
             .make()));
   }

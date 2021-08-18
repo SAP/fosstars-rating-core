@@ -19,6 +19,8 @@ import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.MavenArtifact;
 import com.sap.oss.phosphor.fosstars.model.value.CVSS;
+import com.sap.oss.phosphor.fosstars.model.value.CVSS.V2;
+import com.sap.oss.phosphor.fosstars.model.value.CVSS.V3;
 import com.sap.oss.phosphor.fosstars.model.value.Reference;
 import com.sap.oss.phosphor.fosstars.model.value.VersionRange;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
@@ -279,14 +281,16 @@ public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider {
    */
   private static CVSS cvssFrom(OwaspDependencyCheckVuln owaspDependencyCheckVuln) {
     if (owaspDependencyCheckVuln.getCvssv3() != null) {
-      return CVSS.v3(owaspDependencyCheckVuln.getCvssv3().getBaseScore());
+      return new CVSS.V3(owaspDependencyCheckVuln.getCvssv3().getBaseScore(),
+          V3.UNKNOWN_IMPACT, V3.UNKNOWN_IMPACT, V3.UNKNOWN_IMPACT);
     }
 
     if (owaspDependencyCheckVuln.getCvssv2() != null) {
-      return CVSS.v2(owaspDependencyCheckVuln.getCvssv2().getScore());
+      return new CVSS.V2(owaspDependencyCheckVuln.getCvssv2().getScore(),
+          V2.UNKNOWN_IMPACT, V2.UNKNOWN_IMPACT, V2.UNKNOWN_IMPACT);
     }
 
-    return CVSS.UNKNOWN;
+    return null;
   }
 
   /**

@@ -3,10 +3,7 @@
     "https://github.com/apache/httpcomponents-client" : {
       "entries" : [ {
         "id" : "https://issues.apache.org/jira/browse/HTTPCLIENT-1973",
-        "cvss" : {
-          "version" : "UNKNOWN",
-          "value" : null
-        },
+        "cvss" : null,
         "references" : [ ],
         "resolution" : "UNPATCHED",
         "introduced" : null,
@@ -16,20 +13,14 @@
     "https://github.com/apache/commons-fileupload" : {
       "entries" : [ {
         "id" : "https://issues.apache.org/jira/browse/FILEUPLOAD-297",
-        "cvss" : {
-          "version" : "UNKNOWN",
-          "value" : null
-        },
+        "cvss" : null,
         "references" : [ ],
         "resolution" : "UNPATCHED",
         "introduced" : null,
         "fixed" : null
       }, {
         "id" : "CVE-2013-0248",
-        "cvss" : {
-          "version" : "UNKNOWN",
-          "value" : null
-        },
+        "cvss" : null,
         "references" : [ {
           "description" : "",
           "url" : "https://issues.apache.org/jira/browse/FILEUPLOAD-298"
@@ -42,20 +33,14 @@
     "https://github.com/spring-projects/spring-security-oauth" : {
       "entries" : [ {
         "id" : "https://github.com/spring-projects/spring-security-oauth/issues/1472",
-        "cvss" : {
-          "version" : "UNKNOWN",
-          "value" : null
-        },
+        "cvss" : null,
         "references" : [ ],
         "resolution" : "UNPATCHED",
         "introduced" : null,
         "fixed" : null
       }, {
         "id" : "https://github.com/spring-projects/spring-security-oauth/issues/1682",
-        "cvss" : {
-          "version" : "UNKNOWN",
-          "value" : null
-        },
+        "cvss" : null,
         "references" : [ ],
         "resolution" : "UNPATCHED",
         "introduced" : null,
@@ -65,10 +50,7 @@
     "https://github.com/apache/batik" : {
       "entries" : [ {
         "id" : "https://issues.apache.org/jira/browse/BATIK-1189",
-        "cvss" : {
-          "version" : "UNKNOWN",
-          "value" : null
-        },
+        "cvss" : null,
         "references" : [ ],
         "resolution" : "UNPATCHED",
         "introduced" : null,
@@ -79,8 +61,11 @@
       "entries" : [ {
         "id" : "CVE-2014-0171",
         "cvss" : {
-          "version" : "V2",
-          "value" : 5.0
+          "type" : "CVSS$V2",
+          "value" : 5.0,
+          "confidentialityImpact": "PARTIAL",
+          "integrityImpact": "NONE",
+          "availabilityImpact": "NONE"
         },
         "references" : [ ],
         "resolution" : "UNPATCHED",
@@ -89,8 +74,11 @@
       }, {
         "id" : "CVE-2016-11023",
         "cvss" : {
-          "version" : "V3",
-          "value" : 9.8
+          "type" : "CVSS$V3",
+          "value" : 9.8,
+          "confidentialityImpact": "HIGH",
+          "integrityImpact": "HIGH",
+          "availabilityImpact": "HIGH"
         },
         "references" : [ {
           "description" : "Public disclosure",
@@ -102,8 +90,11 @@
       }, {
         "id" : "CVE-2016-11024",
         "cvss" : {
-          "version" : "V3",
-          "value" : 9.8
+          "type" : "CVSS$V3",
+          "value" : 9.8,
+          "confidentialityImpact": "HIGH",
+          "integrityImpact": "HIGH",
+          "availabilityImpact": "HIGH"
         },
         "references" : [ {
           "description" : "Public disclosure",

@@ -11,6 +11,7 @@ import com.sap.oss.phosphor.fosstars.model.value.CVSS;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerability;
+import java.util.Optional;
 
 /**
  * <p>The score analyses unpatched vulnerabilities in an open-source project.
@@ -72,8 +73,8 @@ public class UnpatchedVulnerabilitiesScore extends FeatureBasedScore {
         continue;
       }
 
-      CVSS cvss = entry.cvss();
-      double value = cvss.isUnknown() ? DEFAULT_CVSS : cvss.value();
+      Optional<CVSS> cvss = entry.cvss();
+      double value = !cvss.isPresent() ? DEFAULT_CVSS : cvss.get().value();
 
       if (value >= 7.0) {
         highSeverityIssues++;
