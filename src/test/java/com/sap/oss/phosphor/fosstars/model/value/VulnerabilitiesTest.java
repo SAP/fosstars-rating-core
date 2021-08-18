@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sap.oss.phosphor.fosstars.model.value.CVSS.V2.Impact;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerability.Resolution;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import com.sap.oss.phosphor.fosstars.util.Yaml;
@@ -43,12 +44,12 @@ public class VulnerabilitiesTest {
     return new Vulnerabilities(
         newVulnerability("https://bugtracker/1")
             .description("test")
-            .set(CVSS.v2(5.0))
+            .set(new CVSS.V2(5.0, Impact.COMPLETE, Impact.PARTIAL, Impact.NONE))
             .set(Resolution.UNPATCHED)
             .make(),
         newVulnerability("https://bugtracker/2")
             .description("test")
-            .set(CVSS.v2(5.0))
+            .set(new CVSS.V2(5.0, Impact.COMPLETE, Impact.PARTIAL, Impact.NONE))
             .references(Arrays.asList(
                 new Reference("text1", new URL("https://vuln.com/1")),
                 new Reference("text2", new URL("https://vuln.com/2"))))

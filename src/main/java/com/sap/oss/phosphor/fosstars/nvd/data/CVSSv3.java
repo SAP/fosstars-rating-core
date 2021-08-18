@@ -147,6 +147,21 @@ public class CVSSv3 {
     return baseScore;
   }
 
+  @JsonProperty("confidentialityImpact")
+  public CiaType confidentialityImpact() {
+    return confidentialityImpact;
+  }
+
+  @JsonProperty("integrityImpact")
+  public CiaType integrityImpact() {
+    return integrityImpact;
+  }
+
+  @JsonProperty("availabilityImpact")
+  public CiaType availabilityImpact() {
+    return availabilityImpact;
+  }
+
   public enum AttackComplexityType {
 
     HIGH("HIGH"),

@@ -13,7 +13,7 @@ public class Cvssv3 implements Serializable {
   private float baseScore;
 
   @JsonProperty("baseScore")
-  public float getBaseScore() {
+  public double getBaseScore() {
     return baseScore;
   }
 }

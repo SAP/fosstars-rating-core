@@ -5,6 +5,7 @@ import static com.sap.oss.phosphor.fosstars.model.value.Vulnerability.Builder.ne
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.oss.phosphor.fosstars.model.value.CVSS;
+import com.sap.oss.phosphor.fosstars.model.value.CVSS.V2;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerability;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerability.Resolution;
@@ -173,7 +174,7 @@ public class UnpatchedVulnerabilitiesStorage extends AbstractJsonStorage {
     storage.add(
         "https://github.com/odata4j/odata4j",
         newVulnerability("https://nvd.nist.gov/vuln/detail/CVE-2014-0171")
-            .set(CVSS.v2(5.0))
+            .set(new CVSS.V2(5.0, V2.UNKNOWN_IMPACT, V2.UNKNOWN_IMPACT, V2.UNKNOWN_IMPACT))
             .set(Resolution.UNPATCHED)
             .make());
 

@@ -56,7 +56,7 @@ import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersions;
 import com.sap.oss.phosphor.fosstars.model.value.CVSS;
-import com.sap.oss.phosphor.fosstars.model.value.CVSS.Version;
+import com.sap.oss.phosphor.fosstars.model.value.CVSS.V3.Impact;
 import com.sap.oss.phosphor.fosstars.model.value.Languages;
 import com.sap.oss.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.oss.phosphor.fosstars.model.value.PackageManagers;
@@ -239,7 +239,7 @@ public class TestUtils {
         SIGNS_ARTIFACTS.value(true),
         VULNERABILITIES_IN_PROJECT.value(new Vulnerabilities(
             Vulnerability.Builder.newVulnerability("ID-01")
-                .set(new CVSS(Version.V3, 3.0))
+                .set(new CVSS.V3(3.0, Impact.HIGH, Impact.LOW, Impact.NONE))
                 .set(Resolution.PATCHED)
                 .fixed(new Date())
                 .introduced(new Date())
@@ -250,7 +250,7 @@ public class TestUtils {
         )),
         VULNERABILITIES_IN_ARTIFACT.value(new Vulnerabilities(
             Vulnerability.Builder.newVulnerability("ID-02")
-                .set(new CVSS(Version.V3, 3.0))
+                .set(new CVSS.V3(3.0, Impact.HIGH, Impact.LOW, Impact.NONE))
                 .set(Resolution.PATCHED)
                 .fixed(new Date())
                 .introduced(new Date())
@@ -296,7 +296,7 @@ public class TestUtils {
       double cvssValue, String startVersion, String endVersion) {
 
     String id = UUID.randomUUID().toString();
-    CVSS cvss = new CVSS(Version.V3, cvssValue);
+    CVSS cvss = new CVSS.V3(cvssValue, Impact.HIGH, Impact.LOW, Impact.NONE);
     Date introduced = createDate("21-03-21");
     Date fixed = createDate("21-03-22");
     Date published = createDate("21-03-23");
