@@ -53,10 +53,9 @@ mvn clean install
 For projects on GitHub, there is a [GitHub action](https://github.com/SAP/fosstars-rating-core-action)
 that calculates a security rating and generates a badge.
 
-## Command-line tool for calculating security ratings
+## CLI for calculating ratings
 
-There is a command-line tool that takes a URL to a project on GitHub,
-gathers data about it, and calculates a security rating.
+There is a CLI for calculating ratings
 
 The tool can be run with commands like the following:
 
@@ -65,7 +64,7 @@ git clone https://github.com/SAP/fosstars-rating-core.git
 cd fosstars-rating-core
 mvn package -DskipTests
 TOKEN=xyz # use your personal token, see below
-java -jar target/fosstars-github-rating-calc.jar --url https://github.com/curl/curl --verbose --token ${TOKEN}
+java -jar target/fosstars-github-rating-calc.jar --rating security --url https://github.com/curl/curl --verbose --token ${TOKEN}
 ```
 
 The `TOKEN` variable contains a token for accessing the GitHub API.
@@ -81,7 +80,7 @@ In the verbose mode, the tool is going to print out the following:
 
 Here is what the output looks like:
 
-![Command-line tool demo](command_line_tool_demo.gif)
+![CLI demo](command_line_tool_demo.gif)
 
 [Here](EXAMPLE.md) you can find full output.
 
@@ -89,11 +88,20 @@ If `--interactive` option is specified, the tool becomes a bit interactive,
 and may ask the user a couple of questions.
 You can also find more details in the [docs](https://sap.github.io/fosstars-rating-core/getting_oss_security_rating.html).
 
+## Running CLI in Docker
+
+You can also run the CLI in a Docker container:
+
+```
+docker build --tag fosstars --file src/main/docker/cli/Dockerfile .
+docker run -v $(pwd):/work fosstars --rating security --token $TOKEN --url https://github.com/apache/poi
+```
+
 ## Known issues
 
 Please see [GitHub issues](https://github.com/SAP/fosstars-rating-core/issues).
 
-## Support
+## How to obtain support
 
 Please create a new [GitHub issue](https://github.com/SAP/fosstars-rating-core/issues)
 if you found a bug, or you'd like to propose an enhancement.
