@@ -5,7 +5,7 @@
       "type" : "OssRulesOfPlayScore",
       "name" : "Open source rules or play score"
     },
-    "value" : 9.0,
+    "value" : 10.0,
     "weight" : 1.0,
     "confidence" : 10.0,
     "usedValues" : [ {
@@ -54,8 +54,8 @@
         "type" : "BooleanFeature",
         "name" : "If a project's README doesn't contain required info"
       },
-      "flag" : true,
-      "explanation" : [ "The README does not contain required text that should match '# How to obtain support'" ]
+      "flag" : false,
+      "explanation" : [ ]
     }, {
       "type" : "BooleanValue",
       "feature" : {
@@ -161,7 +161,7 @@
       "flag" : true,
       "explanation" : [ ]
     } ],
-    "explanation" : [ "Found 1 recommendations" ],
+    "explanation" : [ "No violated rules found." ],
     "isUnknown" : false,
     "isNotApplicable" : false,
     "feature" : {
@@ -169,5 +169,5 @@
       "name" : "Open source rules or play score"
     }
   },
-  "label" : [ "OssRulesOfPlayRating$OssRulesOfPlayLabel", "PASSED_WITH_WARNING" ]
+  "label" : [ "OssRulesOfPlayRating$OssRulesOfPlayLabel", "PASSED" ]
 }
