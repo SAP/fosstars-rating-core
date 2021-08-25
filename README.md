@@ -114,3 +114,5 @@ If you have a question, please [open a discussion](https://github.com/SAP/fossta
 We appreciate feedback, ideas for improvements and, of course, pull requests.
 
 Please follow [this guideline](CONTRIBUTING.md) if you'd like to contribute to the project.
+
+edit
