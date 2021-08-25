@@ -40,6 +40,7 @@ declare -a expected_strings=(
   'https://github.com/SAP/openui5'
   'Found config for LicenseInfo data provider: LicenseInfo.config.yml'
   'Found config for ContributingGuidelineInfo data provider: ContributingGuidelineInfo.config.yml'
+  'Found config for CodeOfConductGuidelineInfo data provider: CodeOfConductGuidelineInfo.config.yml'
 )
 
 check_expected_output "${expected_strings[@]}" | tee | grep Failed

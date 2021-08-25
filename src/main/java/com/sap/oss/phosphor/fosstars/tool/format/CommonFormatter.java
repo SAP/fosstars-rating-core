@@ -7,6 +7,8 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_AD
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_BUG_BOUNTY_PROGRAM;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_CONTRIBUTING_GUIDELINE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_ENOUGH_ADMINS_ON_GITHUB;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_CODE_OF_CONDUCT;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_REQUIRED_TEXT_IN_CODE_OF_CONDUCT_GUIDELINE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_ENOUGH_TEAMS_ON_GITHUB;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_ENOUGH_TEAM_MEMBERS_ON_GITHUB;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_LICENSE;
@@ -199,6 +201,9 @@ public abstract class CommonFormatter implements Formatter {
     add(HAS_CONTRIBUTING_GUIDELINE, "Does it have a contributing guideline?");
     add(HAS_REQUIRED_TEXT_IN_CONTRIBUTING_GUIDELINE,
         "Does the contributing guideline have required text?");
+    add(HAS_CODE_OF_CONDUCT, "Does it have a code of conduct guideline?");
+    add(HAS_REQUIRED_TEXT_IN_CODE_OF_CONDUCT_GUIDELINE,
+            "Does the contributing guideline have required text?");
     add(HAS_ADMIN_TEAM_ON_GITHUB, "Does it have an admin team on GitHub?");
     add(HAS_ENOUGH_ADMINS_ON_GITHUB, "Does it have enough admins on GitHub?");
     add(HAS_ENOUGH_TEAMS_ON_GITHUB, "Does it have enough teams on GitHub?");

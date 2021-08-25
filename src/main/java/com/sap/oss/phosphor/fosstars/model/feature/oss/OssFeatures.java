@@ -371,6 +371,17 @@ public class OssFeatures {
   public static final BooleanFeature INCOMPLETE_README
       = new BooleanFeature("If a project's README doesn't contain required info");
 
+    /** Shows whether an open source project has a Code of conduct file or not.
+      */
+    public static final BooleanFeature HAS_CODE_OF_CONDUCT
+        = new BooleanFeature("If a project has a code of conduct file");
+
+  /**
+   * Shows whether a project's code of conduct guideline has required text or not.
+   */
+  public static final BooleanFeature HAS_REQUIRED_TEXT_IN_CODE_OF_CONDUCT_GUIDELINE
+      = new BooleanFeature("If a project's code of conduct guideline has required text");
+
   /**
    * Shows whether an open source project has a contributing guideline or not.
    */
