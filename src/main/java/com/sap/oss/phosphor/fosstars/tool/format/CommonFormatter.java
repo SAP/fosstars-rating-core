@@ -203,7 +203,7 @@ public abstract class CommonFormatter implements Formatter {
         "Does the contributing guideline have required text?");
     add(HAS_CODE_OF_CONDUCT, "Does it have a code of conduct guideline?");
     add(HAS_REQUIRED_TEXT_IN_CODE_OF_CONDUCT_GUIDELINE,
-            "Does the contributing guideline have required text?");
+            "Does the code of conduct guideline have required text?");
     add(HAS_ADMIN_TEAM_ON_GITHUB, "Does it have an admin team on GitHub?");
     add(HAS_ENOUGH_ADMINS_ON_GITHUB, "Does it have enough admins on GitHub?");
     add(HAS_ENOUGH_TEAMS_ON_GITHUB, "Does it have enough teams on GitHub?");

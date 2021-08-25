@@ -78,12 +78,8 @@ public class OssRulesOfPlayScore extends FeatureBasedScore {
    * A set of features that are recommended to be true.
    */
   public static final Set<Feature<Boolean>> RECOMMENDED_TRUE = Collections.unmodifiableSet(
-      setOf(HAS_CONTRIBUTING_GUIDELINE, HAS_REQUIRED_TEXT_IN_CONTRIBUTING_GUIDELINE));
-  /**
-   * A set of features that are recommended to be true.
-   */
-  public static final Set<Feature<Boolean>> RECOMMENDED_TRUE_CODE_OF_CONDUCT = Collections.unmodifiableSet(
-      setOf(HAS_CODE_OF_CONDUCT, HAS_REQUIRED_TEXT_IN_CODE_OF_CONDUCT_GUIDELINE));
+      setOf(HAS_CONTRIBUTING_GUIDELINE, HAS_REQUIRED_TEXT_IN_CONTRIBUTING_GUIDELINE,HAS_CODE_OF_CONDUCT, HAS_REQUIRED_TEXT_IN_CODE_OF_CONDUCT_GUIDELINE));
+
   /**
    * A set of features that are recommended to be false.
    */
@@ -97,7 +93,7 @@ public class OssRulesOfPlayScore extends FeatureBasedScore {
     super(
         "Open source rules or play score",
         "The score shows whether an open source project violates rules or not.",
-        merge(EXPECTED_TRUE, EXPECTED_FALSE, RECOMMENDED_TRUE, RECOMMENDED_TRUE_CODE_OF_CONDUCT, RECOMMENDED_FALSE));
+        merge(EXPECTED_TRUE, EXPECTED_FALSE, RECOMMENDED_TRUE, RECOMMENDED_FALSE));
       }
 
   @Override
@@ -167,7 +163,6 @@ public class OssRulesOfPlayScore extends FeatureBasedScore {
     List<Value<Boolean>> violatedRules = new ArrayList<>();
     violatedRules.addAll(findViolatedRulesIn(RECOMMENDED_FALSE, false, usedValues));
     violatedRules.addAll(findViolatedRulesIn(RECOMMENDED_TRUE, true, usedValues));
-    violatedRules.addAll(findViolatedRulesIn(RECOMMENDED_TRUE_CODE_OF_CONDUCT,true,usedValues));
     return violatedRules;
   }
 
