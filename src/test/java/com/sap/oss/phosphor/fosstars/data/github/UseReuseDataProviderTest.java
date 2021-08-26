@@ -39,7 +39,7 @@ import org.mockito.ArgumentMatcher;
 public class UseReuseDataProviderTest extends TestGitHubDataFetcherHolder {
 
   @Test
-  public void testSupportedFeature() {
+  public void testSupportedFeature() throws IOException {
     UseReuseDataProvider provider = new UseReuseDataProvider(fetcher);
     assertTrue(provider.supportedFeatures().contains(USES_REUSE));
     assertTrue(provider.supportedFeatures().contains(README_HAS_REUSE_INFO));
@@ -272,6 +272,39 @@ public class UseReuseDataProviderTest extends TestGitHubDataFetcherHolder {
     when(useReuseDataProvider.httpClient()).thenReturn(client);
 
     ValueSet retrievedValues = useReuseDataProvider.fetchValuesFor(PROJECT);
+    Value<Boolean> isRegisteredValue = retrievedValues.of(REGISTERED_IN_REUSE)
+        .orElseThrow(() -> new Error(
+            format("Could not find an expected feature: %s", REGISTERED_IN_REUSE.name())));
+    assertTrue(isRegisteredValue.get());
+    Value<Boolean> isCompliantValue = retrievedValues.of(IS_REUSE_COMPLIANT)
+        .orElseThrow(() -> new Error(
+            format("Could not find an expected feature: %s", IS_REUSE_COMPLIANT.name())));
+    assertTrue(isCompliantValue.get());
+
+  }
+
+  @Test
+  public void testReuseRepositoryExceptions() throws IOException {
+
+    UseReuseDataProvider provider = new UseReuseDataProvider(fetcher);
+    provider.configure(IOUtils.toInputStream(
+        "---\n"
+            + "repositoryExceptions: https://github.com/org/test\n",
+        "UTF-8"));
+    ValueSet retrievedValues = provider.fetchValuesFor(PROJECT);
+
+    Value<Boolean> usesReuseValue = retrievedValues.of(USES_REUSE)
+        .orElseThrow(() -> new Error(
+            format("Could not find an expected feature: %s", USES_REUSE.name())));
+    assertTrue(usesReuseValue.get());
+    Value<Boolean> readmeHasReuseValue = retrievedValues.of(README_HAS_REUSE_INFO)
+        .orElseThrow(() -> new Error(
+            format("Could not find an expected feature: %s", README_HAS_REUSE_INFO.name())));
+    assertTrue(readmeHasReuseValue.get());
+    Value<Boolean> hasReuseLicensesValue = retrievedValues.of(HAS_REUSE_LICENSES)
+        .orElseThrow(() -> new Error(
+            format("Could not find an expected feature: %s", HAS_REUSE_LICENSES.name())));
+    assertTrue(hasReuseLicensesValue.get());
     Value<Boolean> isRegisteredValue = retrievedValues.of(REGISTERED_IN_REUSE)
         .orElseThrow(() -> new Error(
             format("Could not find an expected feature: %s", REGISTERED_IN_REUSE.name())));

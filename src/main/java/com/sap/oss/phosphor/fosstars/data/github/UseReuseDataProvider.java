@@ -6,6 +6,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.README
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.REGISTERED_IN_REUSE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_REUSE;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
+import static com.sap.oss.phosphor.fosstars.util.Deserialization.readListFrom;
 import static java.lang.String.format;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -16,12 +17,19 @@ import com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.oss.phosphor.fosstars.util.Json;
+import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -54,12 +62,18 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
   static final String REUSE_LICENCES_DIRECTORY = "LICENSES";
 
   /**
+   * A list of repositories that are already known to be compliant.
+   */
+  private final List<String> repositoryExceptionUrls = new ArrayList<>();
+
+  /**
    * Initializes a data provider.
    *
    * @param fetcher An interface to GitHub.
    */
-  public UseReuseDataProvider(GitHubDataFetcher fetcher) {
+  public UseReuseDataProvider(GitHubDataFetcher fetcher) throws IOException {
     super(fetcher);
+    loadDefaultConfigIfAvailable();
   }
 
   @Override
@@ -75,6 +89,18 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
   @Override
   protected ValueSet fetchValuesFor(GitHubProject project) throws IOException {
     logger.info("Figuring out how the project uses REUSE ...");
+
+    // Some repositories apply other copyright annotations and are well-known exceptions.
+    // Those ones will reported as OK by this data provider.
+    if (this.repositoryExceptionUrls.contains(project.toString())) {
+      return ValueHashSet.from(
+          USES_REUSE.value(true),
+          README_HAS_REUSE_INFO.value(true),
+          HAS_REUSE_LICENSES.value(true),
+          REGISTERED_IN_REUSE.value(true),
+          IS_REUSE_COMPLIANT.value(true));
+    }
+
     ValueSet values = ValueHashSet.from(
         useReuse(project),
         readmeHasReuseInfo(project),
@@ -143,7 +169,7 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
   }
 
   /**
-   * Possible results of the REUSE tool registration check
+   * Possible results of the REUSE tool registration check.
    */
   private enum ReuseInfo {
     UNAVAILABLE,
@@ -286,6 +312,12 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
     GitHub github = new GitHubBuilder().withOAuthToken(token).build();
     GitHubDataFetcher fetcher = new GitHubDataFetcher(github, token);
     UseReuseDataProvider provider = new UseReuseDataProvider(fetcher);
+    provider.configure(IOUtils.toInputStream(
+        "---\n"
+            + "repositoryExceptions:\n"
+            + "  - https://github.com/SAP/SapMachine\n"
+            + "  - https://github.com/SAP/async-profiler\n",
+        "UTF-8"));
     GitHubProject project = GitHubProject.parse(url);
     ValueSet values = provider.fetchValuesFor(project);
     print(values, USES_REUSE);
@@ -306,4 +338,57 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
     System.out.printf("%s: %s%n",
         feature.name(), something.map(Value::toString).orElse("not found"));
   }
+
+  @Override
+  public UseReuseDataProvider configure(Path configurationPath) throws IOException {
+    try (InputStream is = Files.newInputStream(configurationPath)) {
+      return configure(is);
+    }
+  }
+
+  /**
+   * Reads a configuration from YAML.
+   *
+   * @param is An input stream with YAML.
+   * @return This data provider.
+   * @throws IOException If something went wrong.
+   */
+  UseReuseDataProvider configure(InputStream is) throws IOException {
+    JsonNode config = Yaml.mapper().readTree(is);
+    repositoryExceptions(readListFrom(config, "repositoryExceptions"));
+    return this;
+  }
+
+  /**
+   * Set a list of repositories that are known to be compliant.
+   *
+   * @param repositoryExceptions The repository URLs.
+   * @return This data provider.
+   */
+  public UseReuseDataProvider repositoryExceptions(String... repositoryExceptions) {
+    return repositoryExceptions(Arrays.asList(repositoryExceptions));
+  }
+
+  /**
+   * Set a list of repositories. that are known to be compliant.
+   *
+   * @param repositoryExceptions The repository URLs.
+   * @return This data provider.
+   */
+  public UseReuseDataProvider repositoryExceptions(List<String> repositoryExceptions) {
+    Objects.requireNonNull(repositoryExceptions, "Oops! Repository URL list is null");
+    repositoryExceptionUrls.clear();
+    repositoryExceptionUrls.addAll(repositoryExceptions);
+    return this;
+  }
+
+  /**
+   * Returns a list of repositories that are known to be compliant.
+   *
+   * @return A list of repository URLs.
+   */
+  List<String> repositoryExceptions() {
+    return new ArrayList<>(repositoryExceptionUrls);
+  }
+
 }
