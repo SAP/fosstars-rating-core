@@ -70,6 +70,7 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
    * Initializes a data provider.
    *
    * @param fetcher An interface to GitHub.
+   * @throws IOException If something went wrong.
    */
   public UseReuseDataProvider(GitHubDataFetcher fetcher) throws IOException {
     super(fetcher);
