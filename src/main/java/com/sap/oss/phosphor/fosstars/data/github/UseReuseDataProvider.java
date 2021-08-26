@@ -143,6 +143,17 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
   }
 
   /**
+   * Possible results of the REUSE tool registration check
+   */
+  private enum ReuseInfo {
+    UNAVAILABLE,
+    UNKNOWN,
+    UNREGISTERED,
+    COMPLIANT,
+    NON_COMPLIANT
+  }
+
+  /**
    * Check if a project is registered in REUSE and its status.
    *
    * @param project The project.
@@ -151,55 +162,96 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
    */
   ValueSet reuseInfo(GitHubProject project) {
     try (CloseableHttpClient client = httpClient()) {
-      String url = format("https://api.reuse.software/status/github.com/%s/%s",
-          project.organization().name(), project.name());
-      HttpGet request = new HttpGet(url);
-      try (CloseableHttpResponse response = client.execute(request)) {
-        if (response.getStatusLine().getStatusCode() != 200) {
-          logger.warn("Oops! Could not fetch info from REUSE API ({})",
-              response.getStatusLine().getStatusCode());
-          return ValueHashSet.from(REGISTERED_IN_REUSE.unknown(), IS_REUSE_COMPLIANT.unknown());
-        }
 
-        JsonNode root = Json.mapper().readTree(response.getEntity().getContent());
-        if (!root.has("status")) {
+      ReuseInfo rawReuseInfo = retrieveReuseInfo(client, project, false);
+      if (rawReuseInfo == ReuseInfo.UNREGISTERED) {
+        rawReuseInfo = retrieveReuseInfo(client, project, true);
+      }
+
+      switch (rawReuseInfo) {
+        case UNAVAILABLE:
           logger.warn("Oops! Could not get REUSE status!");
           String note = "Could not retrieve the project's REUSE status";
           return ValueHashSet.from(
               REGISTERED_IN_REUSE.unknown().explain(note),
               IS_REUSE_COMPLIANT.unknown().explain(note));
-        }
-
-        String note;
-        String status = root.get("status").asText();
-        switch (status) {
-          case "unregistered":
-            note = "The project is not registered in REUSE";
-            return ValueHashSet.from(
-                REGISTERED_IN_REUSE.value(false).explain(note),
-                IS_REUSE_COMPLIANT.value(false).explain(note));
-          case "compliant":
-            return ValueHashSet.from(
-                REGISTERED_IN_REUSE.value(true), IS_REUSE_COMPLIANT.value(true));
-          case "non-compliant":
-            return ValueHashSet.from(
-                REGISTERED_IN_REUSE.value(true),
-                IS_REUSE_COMPLIANT.value(false).explain("The project violates REUSE rules"));
-          default:
-            logger.warn("Oops! Unknown REUSE status ({})", status);
-            note = format("Received unknown an project's REUSE status (%s). "
-                    + "You may want to open an issue for that.", status);
-            return ValueHashSet.from(
-                REGISTERED_IN_REUSE.unknown().explain(note),
-                IS_REUSE_COMPLIANT.unknown().explain(note));
-        }
+        case UNREGISTERED:
+          note = "The project is not registered in REUSE";
+          return ValueHashSet.from(
+              REGISTERED_IN_REUSE.value(false).explain(note),
+              IS_REUSE_COMPLIANT.value(false).explain(note));
+        case COMPLIANT:
+          return ValueHashSet.from(
+              REGISTERED_IN_REUSE.value(true), IS_REUSE_COMPLIANT.value(true));
+        case NON_COMPLIANT:
+          return ValueHashSet.from(
+              REGISTERED_IN_REUSE.value(true),
+              IS_REUSE_COMPLIANT.value(false).explain("The project violates REUSE rules"));
+        case UNKNOWN:
+        default:
+          logger.warn("Oops! Unknown REUSE status");
+          note = format("Received unknown an project's REUSE status. "
+                  + "You may want to open an issue for that.");
+          return ValueHashSet.from(
+              REGISTERED_IN_REUSE.unknown().explain(note),
+              IS_REUSE_COMPLIANT.unknown().explain(note));
       }
+
     } catch (IOException e) {
       logger.warn("Oops! Could not retrieve REUSE status!", e);
       String note = "Could not retrieve the project's REUSE status";
       return ValueHashSet.from(
           REGISTERED_IN_REUSE.unknown().explain(note),
           IS_REUSE_COMPLIANT.unknown().explain(note));
+    }
+  }
+
+  /**
+   * Retrieves the REUSE tool registration information for a given project. Callers can
+   * specify if the project URL should include a trailing slash. Reason: The REUSE tool
+   * registration differentiates between a registration URL
+   * 'https://github.com/org/repo' and
+   * 'https://github.com/org/repo/' though it's the same project.
+   * This might lead to erroneous check results if the registration URL differs from the URL
+   * that is used when the REUSE API is called.
+   * As a consequence, the information retrieval can be executed with both URL variants.
+   *
+   * @param client The HTTP client the REUSE information retrieval should be executed with
+   * @param project The project the REUSE information retrieval should be executed for
+   * @param useTrailingSlash If the REUSE information retrieval should use a trailing URL slash
+   * @return A {@link ReuseInfo} with the retrieval results
+   * @throws IOException If something went wrong.
+   */
+  private ReuseInfo retrieveReuseInfo(CloseableHttpClient client, GitHubProject project,
+      boolean useTrailingSlash) throws IOException {
+
+    String url = format("https://api.reuse.software/status/github.com/%s/%s%s",
+        project.organization().name(), project.name(), useTrailingSlash ? "/" : "");
+    HttpGet request = new HttpGet(url);
+
+    try (CloseableHttpResponse response = client.execute(request)) {
+      if (response.getStatusLine().getStatusCode() != 200) {
+        logger.warn("Oops! Could not fetch info from REUSE API ({})",
+            response.getStatusLine().getStatusCode());
+        return ReuseInfo.UNAVAILABLE;
+      }
+
+      JsonNode root = Json.mapper().readTree(response.getEntity().getContent());
+      if (!root.has("status")) {
+        return ReuseInfo.UNAVAILABLE;
+      }
+
+      String status = root.get("status").asText();
+      switch (status) {
+        case "unregistered":
+          return ReuseInfo.UNREGISTERED;
+        case "compliant":
+          return ReuseInfo.COMPLIANT;
+        case "non-compliant":
+          return ReuseInfo.NON_COMPLIANT;
+        default:
+          return ReuseInfo.UNKNOWN;
+      }
     }
   }
 

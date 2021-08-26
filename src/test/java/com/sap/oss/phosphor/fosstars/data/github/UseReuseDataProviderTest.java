@@ -14,6 +14,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
@@ -33,6 +34,7 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.junit.Test;
+import org.mockito.ArgumentMatcher;
 
 public class UseReuseDataProviderTest extends TestGitHubDataFetcherHolder {
 
@@ -174,9 +176,13 @@ public class UseReuseDataProviderTest extends TestGitHubDataFetcherHolder {
     when(response.getStatusLine()).thenReturn(statusLine);
 
     CloseableHttpClient client = mock(CloseableHttpClient.class);
-    when(client.execute(any(HttpGet.class)))
-        .thenReturn(response)
-        .thenThrow(new AssertionError("Only one GET request was expected!"));
+    if (status == "unregistered") {
+      when(client.execute(any(HttpGet.class))).thenReturn(response).thenReturn(response)
+          .thenThrow(new AssertionError("Maximum two GET requests were expected!"));
+    } else {
+      when(client.execute(any(HttpGet.class))).thenReturn(response)
+          .thenThrow(new AssertionError("Only one GET request was expected!"));
+    }
 
     HttpEntity entity = mock(HttpEntity.class);
     when(entity.getContent())
@@ -189,9 +195,13 @@ public class UseReuseDataProviderTest extends TestGitHubDataFetcherHolder {
     when(response.getStatusLine()).thenReturn(statusLine);
     when(response.getEntity()).thenReturn(entity);
 
-    when(client.execute(any(HttpGet.class)))
-        .thenReturn(response)
-        .thenThrow(new AssertionError("Only one GET request was expected!"));
+    if (status == "unregistered") {
+      when(client.execute(any(HttpGet.class))).thenReturn(response).thenReturn(response)
+          .thenThrow(new AssertionError("Maximum two GET requests were expected!"));
+    } else {
+      when(client.execute(any(HttpGet.class))).thenReturn(response)
+          .thenThrow(new AssertionError("Only one GET request was expected!"));
+    }
 
     UseReuseDataProvider provider = spy(new UseReuseDataProvider(fetcher));
     when(provider.httpClient()).thenReturn(client);
@@ -206,6 +216,71 @@ public class UseReuseDataProviderTest extends TestGitHubDataFetcherHolder {
         assertFalse(value.explanation().isEmpty());
       }
     }
+  }
+
+  static class HttpGetMatcher implements ArgumentMatcher<HttpGet> {
+
+    private final String expectedUrl;
+
+    public HttpGetMatcher(String expectedUrl) {
+      this.expectedUrl = expectedUrl;
+    }
+
+    @Override
+    public boolean matches(HttpGet actualHttpGet) {
+      if (actualHttpGet == null) {
+        return false;
+      }
+      return actualHttpGet.getURI().toString().equals(expectedUrl);
+    }
+
+  }
+
+  @Test
+  public void testReuseCompliantWithTrailingSlash() throws IOException {
+
+    StatusLine statusLine = mock(StatusLine.class);
+    when(statusLine.getStatusCode()).thenReturn(200);
+
+    HttpEntity unregisteredEntity = mock(HttpEntity.class);
+    when(unregisteredEntity.getContent())
+        .thenReturn(IOUtils.toInputStream("{ \"status\" : \"unregistered\"}", UTF_8));
+
+    CloseableHttpResponse unregisteredResponse = mock(CloseableHttpResponse.class);
+    when(unregisteredResponse.getStatusLine()).thenReturn(statusLine);
+    when(unregisteredResponse.getEntity()).thenReturn(unregisteredEntity);
+
+    CloseableHttpClient client = mock(CloseableHttpClient.class);
+
+    when(client.execute(argThat(new HttpGetMatcher(
+        "https://api.reuse.software/status/github.com/org/test"))))
+            .thenReturn(unregisteredResponse);
+
+    HttpEntity compliantEntity = mock(HttpEntity.class);
+    when(compliantEntity.getContent())
+        .thenReturn(IOUtils.toInputStream("{ \"status\" : \"compliant\"}", UTF_8));
+
+    CloseableHttpResponse compliantResponse = mock(CloseableHttpResponse.class);
+    when(compliantResponse.getStatusLine()).thenReturn(statusLine);
+    when(compliantResponse.getEntity()).thenReturn(compliantEntity);
+
+    when(client.execute(argThat(new HttpGetMatcher(
+        "https://api.reuse.software/status/github.com/org/test/"))))
+            .thenReturn(compliantResponse);
+
+    UseReuseDataProvider useReuseDataProvider = spy(new UseReuseDataProvider(fetcher));
+    when(useReuseDataProvider.httpClient()).thenReturn(client);
+
+    ValueSet retrievedValues = useReuseDataProvider.fetchValuesFor(PROJECT);
+    Value<Boolean> isRegisteredValue = retrievedValues.of(REGISTERED_IN_REUSE)
+        .orElseThrow(() -> new Error(
+            format("Could not find an expected feature: %s", REGISTERED_IN_REUSE.name())));
+    assertTrue(isRegisteredValue.get());
+    Value<Boolean> isCompliantValue = retrievedValues.of(IS_REUSE_COMPLIANT)
+        .orElseThrow(() -> new Error(
+            format("Could not find an expected feature: %s", IS_REUSE_COMPLIANT.name())));
+    assertTrue(isCompliantValue.get());
+
   }
 
 }
