@@ -31,6 +31,10 @@ The data provider `ReadmeInfo` allows you to specify which terms or patterns you
 The corresponding option `requiredContentPatterns` expects a list of one or more regular expression patterns.
 If you enter multiple entries, the README file content must match all patterns for the rule to pass.
 
+### REUSE tool
+The data provider `UseReuseDataProvider` allows you to specify exceptions, i.e. which repositories shall not be checked with this data provider, for example, because certain repositories are known to use other means of annotating copyright statements, but have gone through an exception process.
+The option is called `repositoryExceptions` and can accept a list of full repository URLs, e.g. `https://github.com/SAP/fosstars-rating-core`, but can also be left empty if there are no exceptions.
+
 ## Rule IDs and Documentation URL
 
 In order to be able to identify a certain rule better in the final result report, e.g. for follow-up actions, Fosstars expects that all rules are configured with a customized rule ID. That configuration needs to be in a file called `OssRulesOfPlayRatingMarkdownFormatter.config.yaml` and should be placed in the current working directory. The relevant option is called `ruleIds` and expects a list of key/value pairs where the key is the customized rule ID and the value the descriptive name of the rule that is maintained in the [OssFeatures class](../src/main/java/com/sap/oss/phosphor/fosstars/model/feature/oss/OssFeatures.java). 
