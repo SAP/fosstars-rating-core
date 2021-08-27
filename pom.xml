@@ -70,7 +70,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <version.jackson>2.12.4</version.jackson>
+    <version.jackson>2.12.5</version.jackson>
     <version.commons-math3>3.6.1</version.commons-math3>
     <version.commons-cli>1.4</version.commons-cli>
     <version.github-api>1.132</version.github-api>
@@ -80,7 +80,7 @@
     <version.log4j-core>2.14.1</version.log4j-core>
     <version.httpclient>4.5.13</version.httpclient>
     <version.junit>4.13.2</version.junit>
-    <version.mockito-core>3.12.3</version.mockito-core>
+    <version.mockito-core>3.12.4</version.mockito-core>
     <version.packageurl-java>1.4.0</version.packageurl-java>
     <version.commons-collections4>4.4</version.commons-collections4>
     <version.org.eclipse.jgit>5.12.0.202106070339-r</version.org.eclipse.jgit>
