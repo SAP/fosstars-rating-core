@@ -195,7 +195,8 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
         rawReuseInfo = retrieveReuseInfo(client, project, true);
       }
 
-      String note = new String();
+      String note = "Received unknown as project's REUSE status. "
+          + "You may want to open an issue for that.";
       switch (rawReuseInfo) {
         case UNAVAILABLE:
           logger.warn("Oops! Could not get REUSE status!");
@@ -220,8 +221,6 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
         case UNKNOWN:
         default:
           logger.warn("Oops! Unknown REUSE status");
-          note = format("Received unknown an project's REUSE status. "
-                  + "You may want to open an issue for that.");
           return ValueHashSet.from(
               REGISTERED_IN_REUSE.unknown().explain(note),
               IS_REUSE_COMPLIANT.unknown().explain(note));
