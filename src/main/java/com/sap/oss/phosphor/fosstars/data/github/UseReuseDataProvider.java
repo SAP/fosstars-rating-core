@@ -195,10 +195,11 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
         rawReuseInfo = retrieveReuseInfo(client, project, true);
       }
 
+      String note = new String();
       switch (rawReuseInfo) {
         case UNAVAILABLE:
           logger.warn("Oops! Could not get REUSE status!");
-          String note = "Could not retrieve the project's REUSE status";
+          note = "Could not retrieve the project's REUSE status";
           return ValueHashSet.from(
               REGISTERED_IN_REUSE.unknown().explain(note),
               IS_REUSE_COMPLIANT.unknown().explain(note));
@@ -209,11 +210,13 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
               IS_REUSE_COMPLIANT.value(false).explain(note));
         case COMPLIANT:
           return ValueHashSet.from(
-              REGISTERED_IN_REUSE.value(true), IS_REUSE_COMPLIANT.value(true));
+              REGISTERED_IN_REUSE.value(true),
+              IS_REUSE_COMPLIANT.value(true));
         case NON_COMPLIANT:
+          note = "The project violates REUSE rules";
           return ValueHashSet.from(
               REGISTERED_IN_REUSE.value(true),
-              IS_REUSE_COMPLIANT.value(false).explain("The project violates REUSE rules"));
+              IS_REUSE_COMPLIANT.value(false).explain(note));
         case UNKNOWN:
         default:
           logger.warn("Oops! Unknown REUSE status");
@@ -236,9 +239,9 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
   /**
    * Retrieves the REUSE tool registration information for a given project. Callers can
    * specify if the project URL should include a trailing slash. Reason: The REUSE tool
-   * registration differentiates between a registration URL
+   * registration differentiates between the registration URLs
    * 'https://github.com/org/repo' and
-   * 'https://github.com/org/repo/' though it's the same project.
+   * 'https://github.com/org/repo/', although it's the same project.
    * This might lead to erroneous check results if the registration URL differs from the URL
    * that is used when the REUSE API is called.
    * As a consequence, the information retrieval can be executed with both URL variants.
