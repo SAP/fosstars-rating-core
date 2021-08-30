@@ -5,9 +5,9 @@
       "type" : "OssRulesOfPlayScore",
       "name" : "Open source rules or play score"
     },
-    "value" : 10.0,
+    "value" : 0.0,
     "weight" : 1.0,
-    "confidence" : 10.0,
+    "confidence" : 5.7894736842105265,
     "usedValues" : [ {
       "type" : "BooleanValue",
       "feature" : {
@@ -17,20 +17,18 @@
       "flag" : true,
       "explanation" : [ ]
     }, {
-      "type" : "BooleanValue",
+      "type" : "UnknownValue",
       "feature" : {
         "type" : "BooleanFeature",
         "name" : "If a project has a team with push privileges"
       },
-      "flag" : true,
       "explanation" : [ ]
     }, {
-      "type" : "BooleanValue",
+      "type" : "UnknownValue",
       "feature" : {
         "type" : "BooleanFeature",
         "name" : "If a project has enough team members on GitHub"
       },
-      "flag" : true,
       "explanation" : [ ]
     }, {
       "type" : "BooleanValue",
@@ -38,8 +36,8 @@
         "type" : "BooleanFeature",
         "name" : "If vulnerability alerts are enabled for a project on GitHub"
       },
-      "flag" : true,
-      "explanation" : [ ]
+      "flag" : false,
+      "explanation" : [ "Vulnerability alerts are not enabled in the project" ]
     }, {
       "type" : "BooleanValue",
       "feature" : {
@@ -62,8 +60,8 @@
         "type" : "BooleanFeature",
         "name" : "If a project has a license"
       },
-      "flag" : true,
-      "explanation" : [ ]
+      "flag" : false,
+      "explanation" : [ "No license found in the project" ]
     }, {
       "type" : "BooleanValue",
       "feature" : {
@@ -73,20 +71,18 @@
       "flag" : true,
       "explanation" : [ ]
     }, {
-      "type" : "BooleanValue",
+      "type" : "UnknownValue",
       "feature" : {
         "type" : "BooleanFeature",
         "name" : "If a project has an admin team on GitHub"
       },
-      "flag" : true,
       "explanation" : [ ]
     }, {
-      "type" : "BooleanValue",
+      "type" : "UnknownValue",
       "feature" : {
         "type" : "BooleanFeature",
         "name" : "If a project has enough admins on GitHub"
       },
-      "flag" : true,
       "explanation" : [ ]
     }, {
       "type" : "BooleanValue",
@@ -97,12 +93,11 @@
       "flag" : true,
       "explanation" : [ ]
     }, {
-      "type" : "BooleanValue",
+      "type" : "UnknownValue",
       "feature" : {
         "type" : "BooleanFeature",
         "name" : "If a project has enough teams on GitHub"
       },
-      "flag" : true,
       "explanation" : [ ]
     }, {
       "type" : "BooleanValue",
@@ -113,28 +108,25 @@
       "flag" : true,
       "explanation" : [ ]
     }, {
-      "type" : "BooleanValue",
+      "type" : "UnknownValue",
       "feature" : {
         "type" : "BooleanFeature",
         "name" : "If a license has disallowed text"
       },
-      "flag" : false,
       "explanation" : [ ]
     }, {
-      "type" : "BooleanValue",
+      "type" : "UnknownValue",
       "feature" : {
         "type" : "BooleanFeature",
         "name" : "If a project has unresolved vulnerability alerts"
       },
-      "flag" : false,
-      "explanation" : [ ]
+      "explanation" : [ "Could not retrieve vulnerability alerts" ]
     }, {
-      "type" : "BooleanValue",
+      "type" : "UnknownValue",
       "feature" : {
         "type" : "BooleanFeature",
         "name" : "If a project uses an allowed license"
       },
-      "flag" : true,
       "explanation" : [ ]
     }, {
       "type" : "BooleanValue",
@@ -161,7 +153,7 @@
       "flag" : true,
       "explanation" : [ ]
     } ],
-    "explanation" : [ "No violated rules found." ],
+    "explanation" : [ "Found 2 violated rules" ],
     "isUnknown" : false,
     "isNotApplicable" : false,
     "feature" : {
@@ -169,5 +161,5 @@
       "name" : "Open source rules or play score"
     }
   },
-  "label" : [ "OssRulesOfPlayRating$OssRulesOfPlayLabel", "PASSED" ]
+  "label" : [ "OssRulesOfPlayRating$OssRulesOfPlayLabel", "FAILED" ]
 }
