@@ -50,7 +50,7 @@ public class CodeOfConductGuidelinInfoTest extends TestGitHubDataFetcherHolder {
         .thenReturn(Optional.of(String.join("\n",
             "Here is the code of conduct for our project.", "This is the text.")));
 
-    provider.knownCodeOfConductGuidelineFiles("HOW_TO_CODE_OF_CONDUCT.md");
+    provider.knownCodeofConductGuidelineFiles("HOW_TO_CODE_OF_CONDUCT.md");
     provider.requiredContentPatterns("Extra text.");
     values = provider.fetchValuesFor(project);
     checkValue(values, HAS_CODE_OF_CONDUCT, true);
@@ -64,7 +64,7 @@ public class CodeOfConductGuidelinInfoTest extends TestGitHubDataFetcherHolder {
     when(localRepository.readTextFrom(anyString())).thenReturn(Optional.empty());
     TestGitHubDataFetcher.addForTesting(project, localRepository);
 
-    CodeOfConductGuidelineInfo provider = new CodeOfConductGuidelinInfoTest(fetcher);
+    CodeOfConductGuidelineInfo provider = new CodeOfConductGuidelineInfo(fetcher);
 
     ValueSet values = provider.fetchValuesFor(project);
     checkValue(values, HAS_CODE_OF_CONDUCT, false);
