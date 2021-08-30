@@ -6,6 +6,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.README
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.REGISTERED_IN_REUSE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_REUSE;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
+import static com.sap.oss.phosphor.fosstars.util.Deserialization.readListFrom;
 import static java.lang.String.format;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -16,12 +17,19 @@ import com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.oss.phosphor.fosstars.util.Json;
+import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -54,12 +62,19 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
   static final String REUSE_LICENCES_DIRECTORY = "LICENSES";
 
   /**
+   * A list of repositories that are already known to be compliant.
+   */
+  private final List<String> repositoryExceptionUrls = new ArrayList<>();
+
+  /**
    * Initializes a data provider.
    *
    * @param fetcher An interface to GitHub.
+   * @throws IOException If something went wrong.
    */
-  public UseReuseDataProvider(GitHubDataFetcher fetcher) {
+  public UseReuseDataProvider(GitHubDataFetcher fetcher) throws IOException {
     super(fetcher);
+    loadDefaultConfigIfAvailable();
   }
 
   @Override
@@ -75,6 +90,18 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
   @Override
   protected ValueSet fetchValuesFor(GitHubProject project) throws IOException {
     logger.info("Figuring out how the project uses REUSE ...");
+
+    // Some repositories apply other copyright annotations and are well-known exceptions.
+    // Those ones will reported as OK by this data provider.
+    if (this.repositoryExceptionUrls.contains(project.toString())) {
+      return ValueHashSet.from(
+          USES_REUSE.value(true),
+          README_HAS_REUSE_INFO.value(true),
+          HAS_REUSE_LICENSES.value(true),
+          REGISTERED_IN_REUSE.value(true),
+          IS_REUSE_COMPLIANT.value(true));
+    }
+
     ValueSet values = ValueHashSet.from(
         useReuse(project),
         readmeHasReuseInfo(project),
@@ -143,6 +170,17 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
   }
 
   /**
+   * Possible results of the REUSE tool registration check.
+   */
+  private enum ReuseInfo {
+    UNAVAILABLE,
+    UNKNOWN,
+    UNREGISTERED,
+    COMPLIANT,
+    NON_COMPLIANT
+  }
+
+  /**
    * Check if a project is registered in REUSE and its status.
    *
    * @param project The project.
@@ -151,55 +189,98 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
    */
   ValueSet reuseInfo(GitHubProject project) {
     try (CloseableHttpClient client = httpClient()) {
-      String url = format("https://api.reuse.software/status/github.com/%s/%s",
-          project.organization().name(), project.name());
-      HttpGet request = new HttpGet(url);
-      try (CloseableHttpResponse response = client.execute(request)) {
-        if (response.getStatusLine().getStatusCode() != 200) {
-          logger.warn("Oops! Could not fetch info from REUSE API ({})",
-              response.getStatusLine().getStatusCode());
-          return ValueHashSet.from(REGISTERED_IN_REUSE.unknown(), IS_REUSE_COMPLIANT.unknown());
-        }
 
-        JsonNode root = Json.mapper().readTree(response.getEntity().getContent());
-        if (!root.has("status")) {
+      ReuseInfo rawReuseInfo = retrieveReuseInfo(client, project, false);
+      if (rawReuseInfo == ReuseInfo.UNREGISTERED) {
+        rawReuseInfo = retrieveReuseInfo(client, project, true);
+      }
+
+      String note = "Received unknown as project's REUSE status. "
+          + "You may want to open an issue for that.";
+      switch (rawReuseInfo) {
+        case UNAVAILABLE:
           logger.warn("Oops! Could not get REUSE status!");
-          String note = "Could not retrieve the project's REUSE status";
+          note = "Could not retrieve the project's REUSE status";
           return ValueHashSet.from(
               REGISTERED_IN_REUSE.unknown().explain(note),
               IS_REUSE_COMPLIANT.unknown().explain(note));
-        }
-
-        String note;
-        String status = root.get("status").asText();
-        switch (status) {
-          case "unregistered":
-            note = "The project is not registered in REUSE";
-            return ValueHashSet.from(
-                REGISTERED_IN_REUSE.value(false).explain(note),
-                IS_REUSE_COMPLIANT.value(false).explain(note));
-          case "compliant":
-            return ValueHashSet.from(
-                REGISTERED_IN_REUSE.value(true), IS_REUSE_COMPLIANT.value(true));
-          case "non-compliant":
-            return ValueHashSet.from(
-                REGISTERED_IN_REUSE.value(true),
-                IS_REUSE_COMPLIANT.value(false).explain("The project violates REUSE rules"));
-          default:
-            logger.warn("Oops! Unknown REUSE status ({})", status);
-            note = format("Received unknown an project's REUSE status (%s). "
-                    + "You may want to open an issue for that.", status);
-            return ValueHashSet.from(
-                REGISTERED_IN_REUSE.unknown().explain(note),
-                IS_REUSE_COMPLIANT.unknown().explain(note));
-        }
+        case UNREGISTERED:
+          note = "The project is not registered in REUSE";
+          return ValueHashSet.from(
+              REGISTERED_IN_REUSE.value(false).explain(note),
+              IS_REUSE_COMPLIANT.value(false).explain(note));
+        case COMPLIANT:
+          return ValueHashSet.from(
+              REGISTERED_IN_REUSE.value(true),
+              IS_REUSE_COMPLIANT.value(true));
+        case NON_COMPLIANT:
+          note = "The project violates REUSE rules";
+          return ValueHashSet.from(
+              REGISTERED_IN_REUSE.value(true),
+              IS_REUSE_COMPLIANT.value(false).explain(note));
+        case UNKNOWN:
+        default:
+          logger.warn("Oops! Unknown REUSE status");
+          return ValueHashSet.from(
+              REGISTERED_IN_REUSE.unknown().explain(note),
+              IS_REUSE_COMPLIANT.unknown().explain(note));
       }
+
     } catch (IOException e) {
       logger.warn("Oops! Could not retrieve REUSE status!", e);
       String note = "Could not retrieve the project's REUSE status";
       return ValueHashSet.from(
           REGISTERED_IN_REUSE.unknown().explain(note),
           IS_REUSE_COMPLIANT.unknown().explain(note));
+    }
+  }
+
+  /**
+   * Retrieves the REUSE tool registration information for a given project. Callers can
+   * specify if the project URL should include a trailing slash. Reason: The REUSE tool
+   * registration differentiates between the registration URLs
+   * 'https://github.com/org/repo' and
+   * 'https://github.com/org/repo/', although it's the same project.
+   * This might lead to erroneous check results if the registration URL differs from the URL
+   * that is used when the REUSE API is called.
+   * As a consequence, the information retrieval can be executed with both URL variants.
+   *
+   * @param client The HTTP client the REUSE information retrieval should be executed with
+   * @param project The project the REUSE information retrieval should be executed for
+   * @param useTrailingSlash If the REUSE information retrieval should use a trailing URL slash
+   * @return A {@link ReuseInfo} with the retrieval results
+   * @throws IOException If something went wrong.
+   */
+  private ReuseInfo retrieveReuseInfo(CloseableHttpClient client, GitHubProject project,
+      boolean useTrailingSlash) throws IOException {
+
+    String url = format("https://api.reuse.software/status/github.com/%s/%s%s",
+        project.organization().name(), project.name(), useTrailingSlash ? "/" : "");
+    HttpGet request = new HttpGet(url);
+
+    try (CloseableHttpResponse response = client.execute(request)) {
+      if (response.getStatusLine().getStatusCode() != 200) {
+        logger.warn("Oops! Could not fetch info from REUSE API ({})",
+            response.getStatusLine().getStatusCode());
+        return ReuseInfo.UNAVAILABLE;
+      }
+
+      JsonNode root = Json.mapper().readTree(response.getEntity().getContent());
+      if (!root.has("status")) {
+        return ReuseInfo.UNAVAILABLE;
+      }
+
+      String status = root.get("status").asText();
+      switch (status) {
+        case "unregistered":
+          return ReuseInfo.UNREGISTERED;
+        case "compliant":
+          return ReuseInfo.COMPLIANT;
+        case "non-compliant":
+          return ReuseInfo.NON_COMPLIANT;
+        default:
+          return ReuseInfo.UNKNOWN;
+      }
     }
   }
 
@@ -234,6 +315,12 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
     GitHub github = new GitHubBuilder().withOAuthToken(token).build();
     GitHubDataFetcher fetcher = new GitHubDataFetcher(github, token);
     UseReuseDataProvider provider = new UseReuseDataProvider(fetcher);
+    provider.configure(IOUtils.toInputStream(
+        "---\n"
+            + "repositoryExceptions:\n"
+            + "  - https://github.com/SAP/SapMachine\n"
+            + "  - https://github.com/SAP/async-profiler\n",
+        "UTF-8"));
     GitHubProject project = GitHubProject.parse(url);
     ValueSet values = provider.fetchValuesFor(project);
     print(values, USES_REUSE);
@@ -254,4 +341,57 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
     System.out.printf("%s: %s%n",
         feature.name(), something.map(Value::toString).orElse("not found"));
   }
+
+  @Override
+  public UseReuseDataProvider configure(Path configurationPath) throws IOException {
+    try (InputStream is = Files.newInputStream(configurationPath)) {
+      return configure(is);
+    }
+  }
+
+  /**
+   * Reads a configuration from YAML.
+   *
+   * @param is An input stream with YAML.
+   * @return This data provider.
+   * @throws IOException If something went wrong.
+   */
+  UseReuseDataProvider configure(InputStream is) throws IOException {
+    JsonNode config = Yaml.mapper().readTree(is);
+    repositoryExceptions(readListFrom(config, "repositoryExceptions"));
+    return this;
+  }
+
+  /**
+   * Set a list of repositories that are known to be compliant.
+   *
+   * @param repositoryExceptions The repository URLs.
+   * @return This data provider.
+   */
+  public UseReuseDataProvider repositoryExceptions(String... repositoryExceptions) {
+    return repositoryExceptions(Arrays.asList(repositoryExceptions));
+  }
+
+  /**
+   * Set a list of repositories. that are known to be compliant.
+   *
+   * @param repositoryExceptions The repository URLs.
+   * @return This data provider.
+   */
+  public UseReuseDataProvider repositoryExceptions(List<String> repositoryExceptions) {
+    Objects.requireNonNull(repositoryExceptions, "Oops! Repository URL list is null");
+    repositoryExceptionUrls.clear();
+    repositoryExceptionUrls.addAll(repositoryExceptions);
+    return this;
+  }
+
+  /**
+   * Returns a list of repositories that are known to be compliant.
+   *
+   * @return A list of repository URLs.
+   */
+  List<String> repositoryExceptions() {
+    return new ArrayList<>(repositoryExceptionUrls);
+  }
+
 }
