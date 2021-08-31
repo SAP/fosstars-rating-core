@@ -54,7 +54,7 @@ public class CodeOfConductGuidelineInfoTest extends TestGitHubDataFetcherHolder 
     provider.knownCodeofConductGuidelineFiles("HOW_TO_CODE_OF_CONDUCT.md");
     provider.requiredContentPatterns("Extra text.");
     values = provider.fetchValuesFor(project);
-    checkValue(values, HAS_CODE_OF_CONDUCT, true);
+    checkValue(values, HAS_CODE_OF_CONDUCT, false);
     checkValue(values, HAS_REQUIRED_TEXT_IN_CODE_OF_CONDUCT_GUIDELINE, false);
   }
 
@@ -91,10 +91,10 @@ public class CodeOfConductGuidelineInfoTest extends TestGitHubDataFetcherHolder 
     provider.configure(IOUtils.toInputStream(
                     "---\n"
                   + "requiredContentPatterns:\n"
-                  + "  - \"(?!Contributor(\\\\s+)Covenant)\""));
+                  + "  - \"Contributor Covenant"));
 
     ValueSet values = provider.fetchValuesFor(project);
-    checkValue(values, HAS_CODE_OF_CONDUCT, true);
+    checkValue(values, HAS_CODE_OF_CONDUCT, true);//true
     checkValue(values, HAS_REQUIRED_TEXT_IN_CODE_OF_CONDUCT_GUIDELINE, false);
 
     values = provider.fetchValuesFor(project);
@@ -109,17 +109,14 @@ public class CodeOfConductGuidelineInfoTest extends TestGitHubDataFetcherHolder 
     String content =
         "---\n"
         + "requiredContentPatterns:\n"
-        + "  - \"(?!Contributor(\\\\s+)Covenant)\"";
+        + "Contributor Covenant";
     Files.write(config, content.getBytes());
     try {
       ContributingGuidelineInfo provider = new ContributingGuidelineInfo(fetcher);
-      assertEquals(2, provider.requiredContentPatterns().size());
+      assertEquals(1, provider.requiredContentPatterns().size());
       assertEquals(
-          "Contributor Convenant",
+          "Contributor Covenant",
           provider.requiredContentPatterns().get(0).pattern());
-      assertEquals(
-          "- \"(?!Contributor(\\\\s+)Covenant)\"",
-          provider.requiredContentPatterns().get(1).pattern());
     } finally {
       FileUtils.forceDeleteOnExit(config.toFile());
     }
@@ -127,6 +124,7 @@ public class CodeOfConductGuidelineInfoTest extends TestGitHubDataFetcherHolder 
 
   private static void checkValue(ValueSet values, Feature<Boolean> feature, boolean expected) {
     Optional<Value<Boolean>> something = values.of(feature);
+    System.out.println(something.isPresent());
     assertTrue(something.isPresent());
     Value<Boolean> value = something.get();
     assertEquals(expected, value.get());
