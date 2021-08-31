@@ -82,7 +82,6 @@ public class ContributingGuidelineInfo extends GitHubCachingDataProvider {
     return this;
   }
 
-
   /**
    * Get a list of patterns that describe required content in contributing guidelines.
    *
