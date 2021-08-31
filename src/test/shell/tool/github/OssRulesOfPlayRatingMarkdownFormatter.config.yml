@@ -19,5 +19,5 @@ ruleIds:
   rl-reuse_tool-4: If a project is compliant with REUSE rules
   rl-security_policy-1: If an open-source project has a security policy
   rl-security_policy-1: If an open-source project has a security policy
-  rl-code_of_conduct_file-1: If a project has a code of conduct guideline
+  rl-code_of_conduct_file-1: If a project has a code of conduct file
   rl-code_of_conduct_file-2: If a project's code of conduct guideline has required text
