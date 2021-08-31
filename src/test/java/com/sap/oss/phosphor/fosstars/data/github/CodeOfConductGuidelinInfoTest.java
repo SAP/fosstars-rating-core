@@ -94,12 +94,12 @@ public class CodeOfConductGuidelinInfoTest extends TestGitHubDataFetcherHolder {
                   + "  - \"(?!Contributor(\\\\s+)Covenant)\""));
 
     ValueSet values = provider.fetchValuesFor(project);
-    checkValue(values, HAS_CONTRIBUTING_GUIDELINE, true);
-    checkValue(values, HAS_REQUIRED_TEXT_IN_CONTRIBUTING_GUIDELINE, false);
+    checkValue(values, HAS_CODE_OF_CONDUCT, true);
+    checkValue(values, HAS_REQUIRED_TEXT_IN_CODE_OF_CONDUCT_GUIDELINE, false);
 
     values = provider.fetchValuesFor(project);
-    checkValue(values, HAS_CONTRIBUTING_GUIDELINE, true);
-    checkValue(values, HAS_REQUIRED_TEXT_IN_CONTRIBUTING_GUIDELINE, true);
+    checkValue(values, HAS_CODE_OF_CONDUCT, true);
+    checkValue(values, HAS_REQUIRED_TEXT_IN_CODE_OF_CONDUCT_GUIDELINE, true);
   }
 
   @Test
