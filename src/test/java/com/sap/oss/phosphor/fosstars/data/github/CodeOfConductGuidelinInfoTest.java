@@ -107,10 +107,10 @@ public class CodeOfConductGuidelinInfoTest extends TestGitHubDataFetcherHolder {
     Path config = Paths.get(String.format("%s.config.yml",
         ContributingGuidelineInfo.class.getSimpleName()));
     String content =
-              "---\n"
-            + "requiredContentPatterns:\n"
-            + "  - \"(?!Contributor(\\\\s+)Covenant)\"";
-            Files.write(config, content.getBytes());
+        "---\n"
+        + "requiredContentPatterns:\n"
+        + "  - \"(?!Contributor(\\\\s+)Covenant)\"";
+    Files.write(config, content.getBytes());
     try {
       ContributingGuidelineInfo provider = new ContributingGuidelineInfo(fetcher);
       assertEquals(2, provider.requiredContentPatterns().size());
@@ -118,12 +118,13 @@ public class CodeOfConductGuidelinInfoTest extends TestGitHubDataFetcherHolder {
           "Contributor Convenant",
           provider.requiredContentPatterns().get(0).pattern());
       assertEquals(
-        "  - \"(?!Contributor(\\\\s+)Covenant)\"",
+          "- \"(?!Contributor(\\\\s+)Covenant)\"",
           provider.requiredContentPatterns().get(1).pattern());
     } finally {
       FileUtils.forceDeleteOnExit(config.toFile());
     }
   }
+
   private static void checkValue(ValueSet values, Feature<Boolean> feature, boolean expected) {
     Optional<Value<Boolean>> something = values.of(feature);
     assertTrue(something.isPresent());
