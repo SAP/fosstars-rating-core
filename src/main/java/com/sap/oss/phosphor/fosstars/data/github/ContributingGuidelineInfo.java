@@ -46,7 +46,7 @@ public class ContributingGuidelineInfo extends GitHubCachingDataProvider {
    * A list of paths to contributing guidelines.
    */
   private final List<String> knownContributingGuidelineFiles = new ArrayList<>();
-
+  
   /**
    * A list of patterns that describe required content in contributing guidelines.
    */
@@ -82,6 +82,7 @@ public class ContributingGuidelineInfo extends GitHubCachingDataProvider {
 
     return this;
   }
+
 
   /**
    * Get a list of patterns that describe required content in contributing guidelines.

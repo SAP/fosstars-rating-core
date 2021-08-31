@@ -14,11 +14,10 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.IS
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.PROJECT_USAGE;
 import static java.util.Objects.requireNonNull;
 
-
-import com.sap.oss.phosphor.fosstars.data.github.CodeOfConductGuidelineInfo;
 import com.sap.oss.phosphor.fosstars.data.artifact.ReleaseInfoFromMaven;
 import com.sap.oss.phosphor.fosstars.data.artifact.ReleaseInfoFromNpm;
 import com.sap.oss.phosphor.fosstars.data.artifact.VulnerabilitiesFromOwaspDependencyCheck;
+import com.sap.oss.phosphor.fosstars.data.github.CodeOfConductGuidelineInfo;
 import com.sap.oss.phosphor.fosstars.data.github.CodeqlDataProvider;
 import com.sap.oss.phosphor.fosstars.data.github.ContributingGuidelineInfo;
 import com.sap.oss.phosphor.fosstars.data.github.EstimateImpactUsingKnownVulnerabilities;

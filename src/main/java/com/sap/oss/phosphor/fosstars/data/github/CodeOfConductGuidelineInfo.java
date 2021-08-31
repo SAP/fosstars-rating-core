@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
- * This data provider gathers info about project's code of conduct
+ * This data provider gathers info about project's code of conduct.
  * <ul>
  *   <li>{@link OssFeatures#HAS_CODE_OF_CONDUCT}</li>
  *   <li>{@link OssFeatures#HAS_REQUIRED_TEXT_IN_CODE_OF_CONDUCT_GUIDELINE}</li>
@@ -39,7 +39,9 @@ public class CodeOfConductGuidelineInfo extends GitHubCachingDataProvider {
    * A list of files that may be a code of conduct guideline.
    */
   private static final List<String> DEFAULT_KNOWN_CODE_OF_CONDUCT_GUIDELINE_FILES
-      = asList("CODE_OF_CONDUCT", "CODE_OF_CONDUCT.md", "CODE_OF_CONDUCT.txt","code_of_conduct.md","code_of_conduct","code_of_conduct.txt");
+      = asList("CODE_OF_CONDUCT", "CODE_OF_CONDUCT.md", 
+          "CODE_OF_CONDUCT.txt","code_of_conduct.md",
+              "code_of_conduct","code_of_conduct.txt");
 
   /**
    * A list of paths to code of conduct guidelines.
