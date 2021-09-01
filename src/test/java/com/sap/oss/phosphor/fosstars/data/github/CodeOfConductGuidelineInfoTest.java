@@ -73,43 +73,13 @@ public class CodeOfConductGuidelineInfoTest extends TestGitHubDataFetcherHolder 
   }
 
   @Test
-  public void testLoadingConfig() throws IOException {
-    GitHubProject project = new GitHubProject("test", "project");
-    LocalRepository localRepository = mock(LocalRepository.class);
-    when(localRepository.readTextFrom("CODE_OF_CONDUCT.md"))
-        .thenReturn(Optional.of(String.join("\n",
-            "Here is how to contribute to the project.",
-            "## Contributor Covenant",
-            "This is the text.")))
-        .thenReturn(Optional.of(String.join("\n",
-            "Here is how to contribute to the project.",
-            "## Contributor Covenant",
-            "This is the text.")));
-    TestGitHubDataFetcher.addForTesting(project, localRepository);
-
-    ContributingGuidelineInfo provider = new ContributingGuidelineInfo(fetcher);
-    provider.configure(IOUtils.toInputStream(
-                    "---\n"
-                  + "requiredContentPatterns:\n"
-                  + "  - \"Contributor Covenant"));
-
-    ValueSet values = provider.fetchValuesFor(project);
-    checkValue(values, HAS_CODE_OF_CONDUCT, true);//true
-    checkValue(values, HAS_REQUIRED_TEXT_IN_CODE_OF_CONDUCT_GUIDELINE, false);
-
-    values = provider.fetchValuesFor(project);
-    checkValue(values, HAS_CODE_OF_CONDUCT, true);
-    checkValue(values, HAS_REQUIRED_TEXT_IN_CODE_OF_CONDUCT_GUIDELINE, true);
-  }
-
-  @Test
   public void testLoadingDefaultConfig() throws IOException {
     Path config = Paths.get(String.format("%s.config.yml",
         ContributingGuidelineInfo.class.getSimpleName()));
     String content =
         "---\n"
         + "requiredContentPatterns:\n"
-        + "Contributor Covenant";
+        + "  - \"Contributor Covenant\"";
     Files.write(config, content.getBytes());
     try {
       ContributingGuidelineInfo provider = new ContributingGuidelineInfo(fetcher);
@@ -124,7 +94,6 @@ public class CodeOfConductGuidelineInfoTest extends TestGitHubDataFetcherHolder 
 
   private static void checkValue(ValueSet values, Feature<Boolean> feature, boolean expected) {
     Optional<Value<Boolean>> something = values.of(feature);
-    System.out.println(something.isPresent());
     assertTrue(something.isPresent());
     Value<Boolean> value = something.get();
     assertEquals(expected, value.get());
