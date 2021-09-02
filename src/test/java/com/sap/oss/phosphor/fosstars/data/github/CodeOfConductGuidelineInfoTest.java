@@ -73,6 +73,29 @@ public class CodeOfConductGuidelineInfoTest extends TestGitHubDataFetcherHolder 
   }
 
   @Test
+  public void testLoadingConfig() throws IOException {
+    GitHubProject project = new GitHubProject("test", "project");
+    LocalRepository localRepository = mock(LocalRepository.class);
+    when(localRepository.readTextFrom("CODE_OF_CONDUCT.md"))
+         .thenReturn(Optional.of(String.join("\n",
+            "Here is how to contribute to the project.",
+            "Contributor Covenant",
+            "This is the Contributor Covenant")));
+    TestGitHubDataFetcher.addForTesting(project, localRepository);
+
+    CodeOfConductGuidelineInfo provider = new CodeOfConductGuidelineInfo(fetcher);
+    provider.configure(IOUtils.toInputStream(
+                    "---\n"
+                  + "requiredContentPatterns:\n"
+                  + "  - \"Contributor Covenant\""));
+
+    ValueSet values = provider.fetchValuesFor(project);
+    checkValue(values, HAS_CODE_OF_CONDUCT, true);
+    checkValue(values, HAS_REQUIRED_TEXT_IN_CODE_OF_CONDUCT_GUIDELINE, true);
+  }
+
+
+  @Test
   public void testLoadingDefaultConfig() throws IOException {
     Path config = Paths.get(String.format("%s.config.yml",
         ContributingGuidelineInfo.class.getSimpleName()));
