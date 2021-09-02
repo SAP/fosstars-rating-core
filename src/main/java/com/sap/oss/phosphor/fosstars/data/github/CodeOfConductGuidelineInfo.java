@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
- * This data provider gathers info about project's code of conduct.
+ * This data provider gathers info about project's code of conduct. more information - https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/adding-a-code-of-conduct-to-your-project
  * <ul>
  *   <li>{@link OssFeatures#HAS_CODE_OF_CONDUCT}</li>
  *   <li>{@link OssFeatures#HAS_REQUIRED_TEXT_IN_CODE_OF_CONDUCT_GUIDELINE}</li>
