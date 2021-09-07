@@ -2,13 +2,16 @@ package com.sap.oss.phosphor.fosstars.tool;
 
 import static com.sap.oss.phosphor.fosstars.maven.MavenUtils.readModel;
 import static com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject.isOnGitHub;
+import static java.lang.String.format;
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.apache.commons.lang3.StringUtils.strip;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.sap.oss.phosphor.fosstars.maven.GAV;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.Optional;
@@ -55,7 +58,48 @@ public class MavenScmFinder {
       return Optional.empty();
     }
 
-    return Optional.ofNullable(scm.getUrl());
+    return gitHubUrlParser(scm.getUrl());
+  }
+ 
+  /**
+   * The method tries to resolve a GitHub project path from the given URI syntax.
+   * 
+   * @param url The input URL to be parsed and converted into a GitHub URL.
+   * @return A GitHub URL is parsing is successful. Otherwise an #Optional.empty().
+   * @throws IOException If something goes wrong.
+   */
+  static Optional<String> gitHubUrlParser(String url) throws IOException {
+    final String github = "github";
+    if (url == null || !url.contains(github)) {
+      return Optional.empty();
+    }
+
+    if (url.startsWith("http")) {
+      return Optional.ofNullable(strip(url, "/"));
+    }
+
+    Optional<String> path = extractProjectPath(url);
+    if (!path.isPresent()) {
+      return Optional.empty();
+    }
+
+    return Optional
+        .ofNullable(format("https://%s.com/%s", github, strip(path.get(), "/")));
+  }
+
+  /**
+   * The method identifies and extracts path from the given URL by matching known syntaxes.
+   * 
+   * @param url The input URL is parsed to identify the project path.
+   * @return A GitHub project path if found. Otherwise an #Optional.empty().
+   */
+  private static Optional<String> extractProjectPath(String url) {
+    if (url.matches("^\\w+\\@github\\.com\\:(\\/?\\w+)+\\.git\\/?$")) {
+      return Optional.ofNullable(url.split(":")[1]);
+    }
+
+    URI uri = URI.create(url);
+    return Optional.ofNullable(uri.getPath());
   }
 
   /**
@@ -210,7 +254,7 @@ public class MavenScmFinder {
 
     return readModel(IOUtils.toInputStream(content, UTF_8));
   }
-
+  
   /**
    * Entry point for demo and testing purposes.
    *
@@ -218,7 +262,7 @@ public class MavenScmFinder {
    * @throws IOException If something went wrong.
    */
   public static void main(String... args) throws IOException {
-    String coordinates = args.length > 0 ? args[0] : "org.apache.commons:commons-text";
+    String coordinates = args.length > 0 ? args[0] : "org.apache.rocketmq:rocketmq-all:4.9.0";
     Optional<GitHubProject> project
         = new MavenScmFinder().findGithubProjectFor(GAV.parse(coordinates));
     System.out.println(
