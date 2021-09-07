@@ -261,7 +261,7 @@ public class MavenScmFinder {
 
     return readModel(IOUtils.toInputStream(content, UTF_8));
   }
-
+  
   /**
    * Entry point for demo and testing purposes.
    *
