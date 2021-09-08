@@ -70,21 +70,27 @@ public class MavenScmFinder {
    */
   static Optional<String> gitHubUrlParser(String url) throws IOException {
     final String github = "github";
+    Optional<String> path = Optional.empty();
+
     if (url == null || !url.contains(github)) {
-      return Optional.empty();
+      return path;
     }
 
     if (url.startsWith("http")) {
       return Optional.ofNullable(strip(url, "/"));
     }
 
-    Optional<String> path = extractProjectPath(url);
-    if (!path.isPresent()) {
-      return Optional.empty();
+    try {
+      path = extractProjectPath(url);
+    } catch (IllegalArgumentException e) {
+      throw new IOException(format("Oh no!!! The %s is not parseable", url), e);
     }
 
-    return Optional
-        .ofNullable(format("https://%s.com/%s", github, strip(path.get(), "/")));
+    if (path.isPresent()) {
+      return Optional.ofNullable(format("https://%s.com/%s", github, strip(path.get(), "/")));
+    }
+
+    return path;
   }
 
   /**
@@ -92,8 +98,9 @@ public class MavenScmFinder {
    * 
    * @param url The input URL is parsed to identify the project path.
    * @return A GitHub project path if found. Otherwise an #Optional.empty().
+   * @throws IllegalArgumentException If something goes wrong.
    */
-  private static Optional<String> extractProjectPath(String url) {
+  private static Optional<String> extractProjectPath(String url) throws IllegalArgumentException {
     if (url.matches("^\\w+\\@github\\.com\\:(\\/?\\w+)+\\.git\\/?$")) {
       return Optional.ofNullable(url.split(":")[1]);
     }

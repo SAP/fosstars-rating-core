@@ -43,10 +43,12 @@ public class MavenScmFinderTest {
     }
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test(expected = IOException.class)
   public void testNonParseableUrls() throws IOException {
-    List<String> inputSyntaxes = Arrays.asList("github.com/path/to/repo.git/",
-        "git@github.com:.git", "git@github.com:/repo.git");
+    List<String> inputSyntaxes = Arrays.asList(
+        "github.com/path/to/repo.git/",
+        "git@github.com:.git",
+        "git@github.com:/repo.git");
 
     for (String url : inputSyntaxes) {
       gitHubUrlParser(url);
