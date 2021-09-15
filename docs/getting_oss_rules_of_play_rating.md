@@ -18,6 +18,11 @@ The data provider `ContributingGuidelineInfo` allows you to specify 2 types of r
 - The content that you expect must not be part of the contributing guidelines.
 The option is called `requiredContentPatterns` and expects a list of one or multiple Regex. If you enter multiple entries, the contribution guidelines must comply with all the patterns for the rule to pass.
 
+### Code of Conduct Guidelines
+The data provider `CodeOfConductGuidelineInfo` allows you to specify 1 type of regular expression pattern
+- The content that you expect to be part of the code of conduct guidelines.
+The option is called `requiredContentPatterns` and expects a list of one or multiple Regex. If you enter multiple entries, the code of conduct guidelines must comply with all the patterns for the rule to pass.
+
 ### Licensing
 The data provider `LicenseInfo` allows you to specify which license(s) should be allowed in the analyzed project.
 This option is called `allowedLicenses` and expects a list of one or more SPDX license IDs.
@@ -113,28 +118,30 @@ If everything is correctly set up, the output is going to look like the followin
 [+]   Value:........9.0  out of 10.0
 [+]   Confidence:...Max (10.0 out of 10.0)
 [+]   Based on:...19 features
-[+]       Are vulnerability alerts enabled?......................Yes
-[+]       Does README mention REUSE?.............................Yes
-[+]       Does it have LICENSES directory with licenses?.........Yes
-[+]       Does it have a README file?............................Yes
-[+]       Does it have a contributing guideline?.................Yes
-[+]       Does it have a license file?...........................Yes
-[+]       Does it have a security policy?........................Yes
-[+]       Does it have a team with push privileges on GitHub?....Yes
-[+]       Does it have an admin team on GitHub?..................Yes
-[+]       Does it have enough admins on GitHub?..................Yes
-[+]       Does it have enough teams on GitHub?...................Yes
-[+]       Does it have unresolved vulnerability alerts?..........No
-[+]       Does it use an allowed license?........................Yes
-[+]       Does teams have enough members on GitHub?..............Yes
-[+]       Does the contributing guideline have required text?....Yes
-[+]       Does the license have disallowed content?..............No
-[+]       If a project's README doesn't contain required info:...Yes
-[+]       Is it compliant with REUSE rules?......................Yes
-[+]       Is it registered in REUSE?.............................Yes
-[+]   Explanation:..Found 1 recommendations
+[+]       Are vulnerability alerts enabled?.........................Yes
+[+]       Does README mention REUSE?................................Yes
+[+]       Does it have LICENSES directory with licenses?............Yes
+[+]       Does it have a README file?...............................Yes
+[+]       Does it have a code of conduct guideline?.................No
+[+]       Does it have a contributing guideline?....................Yes
+[+]       Does it have a license file?..............................Yes
+[+]       Does it have a security policy?...........................Yes
+[+]       Does it have a team with push privileges on GitHub?.......Yes
+[+]       Does it have an admin team on GitHub?.....................Yes
+[+]       Does it have enough admins on GitHub?.....................Yes
+[+]       Does it have enough teams on GitHub?......................Yes
+[+]       Does it have unresolved vulnerability alerts?.............No
+[+]       Does it use an allowed license?...........................No
+[+]       Does teams have enough members on GitHub?.................Yes
+[+]       Does the code of conduct guideline have required text?....No
+[+]       Does the contributing guideline have required text?.......Yes
+[+]       Does the license have disallowed content?.................No
+[+]       Is README incomplete?.....................................No
+[+]       Is it compliant with REUSE rules?.........................Yes
+[+]       Is it registered in REUSE?................................Yes
+[+]   Explanation:..Found 1 violated rule
 [+]
-[+] Rating:     9.0  out of 10.0 -> PASSED_WITH_WARNING
+[+] Rating:     0,0  out of 10,0 -> FAILED
 [+] Confidence: Max (10.0 out of 10.0)
 [+]
 [+] Bye!
