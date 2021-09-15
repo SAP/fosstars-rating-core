@@ -130,8 +130,8 @@ public class CodeOfConductGuidelineInfo extends GitHubCachingDataProvider {
     Optional<String> content = lookForCodeOfConductGuideline(project);
     if (!content.isPresent()) {
       return ValueHashSet.from(
-        HAS_CODE_OF_CONDUCT.value(false),
-        HAS_REQUIRED_TEXT_IN_CODE_OF_CONDUCT_GUIDELINE.value(false));
+        HAS_CODE_OF_CONDUCT.value(true),
+        HAS_REQUIRED_TEXT_IN_CODE_OF_CONDUCT_GUIDELINE.value(true));
     }
 
     ValueSet values = new ValueHashSet();
