@@ -84,14 +84,14 @@ public class CodeOfConductGuidelineInfoTest extends TestGitHubDataFetcherHolder 
   @Test
   public void testLoadingDefaultConfig() throws IOException {
     Path config = Paths.get(String.format("%s.config.yml",
-        ContributingGuidelineInfo.class.getSimpleName()));
+        CodeOfConductGuidelineInfo.class.getSimpleName()));
     String content =
         "---\n"
         + "requiredContentPatterns:\n"
         + "  - \"Contributor Covenant\"";
     Files.write(config, content.getBytes());
     try {
-      ContributingGuidelineInfo provider = new ContributingGuidelineInfo(fetcher);
+      CodeOfConductGuidelineInfo provider = new CodeOfConductGuidelineInfo(fetcher);
       assertEquals(1, provider.requiredContentPatterns().size());
       assertEquals(
           "Contributor Covenant",

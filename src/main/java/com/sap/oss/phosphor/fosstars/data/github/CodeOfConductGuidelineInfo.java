@@ -153,6 +153,9 @@ public class CodeOfConductGuidelineInfo extends GitHubCachingDataProvider {
 
     for (String path : knownCodeofConductGuidelineFiles) {
       Optional<String> content = repository.readTextFrom(path);
+      if (content.isPresent()) {
+        return content;
+      }
       return content;
     }
 
@@ -167,7 +170,7 @@ public class CodeOfConductGuidelineInfo extends GitHubCachingDataProvider {
    */
   private Value<Boolean> infoAboutCodeOfConductGuideline(String content) {
     if (requiredContentPatterns.isEmpty()) {
-      return HAS_REQUIRED_TEXT_IN_CODE_OF_CONDUCT_GUIDELINE.value(false);
+      return HAS_REQUIRED_TEXT_IN_CODE_OF_CONDUCT_GUIDELINE.value(true);
     }
 
     return HAS_REQUIRED_TEXT_IN_CODE_OF_CONDUCT_GUIDELINE.value(

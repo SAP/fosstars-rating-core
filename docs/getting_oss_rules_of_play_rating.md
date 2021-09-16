@@ -21,7 +21,7 @@ The option is called `requiredContentPatterns` and expects a list of one or mult
 ### Code of Conduct Guidelines
 The data provider `CodeOfConductGuidelineInfo` allows you to specify 1 type of regular expression pattern
 - The content that you expect to be part of the code of conduct guidelines.
-The option is called `requiredContentPatterns` and expects a list of one or multiple Regex. If you enter multiple entries, the code of conduct guidelines must comply with all the patterns for the rule to pass.
+The option is called `requiredContentPatterns` and expects a list of one Regex. If you enter multiple entries, the code of conduct guidelines must comply with all the patterns for the rule to pass.
 
 ### Licensing
 The data provider `LicenseInfo` allows you to specify which license(s) should be allowed in the analyzed project.
