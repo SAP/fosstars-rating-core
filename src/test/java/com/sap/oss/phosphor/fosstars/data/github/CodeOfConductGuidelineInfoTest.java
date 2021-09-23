@@ -80,7 +80,6 @@ public class CodeOfConductGuidelineInfoTest extends TestGitHubDataFetcherHolder 
     checkValue(values, HAS_REQUIRED_TEXT_IN_CODE_OF_CONDUCT_GUIDELINE, true);
   }
 
-
   @Test
   public void testLoadingDefaultConfig() throws IOException {
     Path config = Paths.get(String.format("%s.config.yml",
