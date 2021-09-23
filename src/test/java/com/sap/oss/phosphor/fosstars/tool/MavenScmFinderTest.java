@@ -1,6 +1,6 @@
 package com.sap.oss.phosphor.fosstars.tool;
 
-import static com.sap.oss.phosphor.fosstars.tool.MavenScmFinder.gitHubUrlParser;
+import static com.sap.oss.phosphor.fosstars.tool.MavenScmFinder.normalizeGitHubProjectPath;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -24,7 +24,7 @@ public class MavenScmFinderTest {
         "git@github.com:path/to/repo.git");
 
     for (String url : inputSyntaxes) {
-      Optional<String> parsedUrl = gitHubUrlParser(url);
+      Optional<String> parsedUrl = normalizeGitHubProjectPath(url);
       assertTrue(parsedUrl.isPresent());
       assertEquals("https://github.com/path/to/repo.git", parsedUrl.get());
     }
@@ -38,7 +38,7 @@ public class MavenScmFinderTest {
             "ssh://user@xyz.com/path/to/repo.git/");
 
     for (String url : inputSyntaxes) {
-      Optional<String> parsedUrl = gitHubUrlParser(url);
+      Optional<String> parsedUrl = normalizeGitHubProjectPath(url);
       assertTrue(!parsedUrl.isPresent());
     }
   }
@@ -51,7 +51,7 @@ public class MavenScmFinderTest {
         "git@github.com:/repo.git");
 
     for (String url : inputSyntaxes) {
-      gitHubUrlParser(url);
+      normalizeGitHubProjectPath(url);
     }
   }
 }

@@ -58,17 +58,17 @@ public class MavenScmFinder {
       return Optional.empty();
     }
 
-    return gitHubUrlParser(scm.getUrl());
+    return normalizeGitHubProjectPath(scm.getUrl());
   }
  
   /**
-   * The method tries to resolve a GitHub project path from the given URI syntax.
+   * The method tries to normalize and resolve a GitHub project path from the given URI syntax.
    * 
    * @param url The input URL to be parsed and converted into a GitHub URL.
-   * @return A GitHub URL is parsing is successful. Otherwise an #Optional.empty().
+   * @return A GitHub URL if parsing is successful. Otherwise an #Optional.empty().
    * @throws IOException If something goes wrong.
    */
-  static Optional<String> gitHubUrlParser(String url) throws IOException {
+  static Optional<String> normalizeGitHubProjectPath(String url) throws IOException {
     final String github = "github";
     Optional<String> path = Optional.empty();
 
