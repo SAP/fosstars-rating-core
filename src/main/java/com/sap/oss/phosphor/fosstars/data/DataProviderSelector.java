@@ -17,6 +17,7 @@ import static java.util.Objects.requireNonNull;
 import com.sap.oss.phosphor.fosstars.data.artifact.ReleaseInfoFromMaven;
 import com.sap.oss.phosphor.fosstars.data.artifact.ReleaseInfoFromNpm;
 import com.sap.oss.phosphor.fosstars.data.artifact.VulnerabilitiesFromOwaspDependencyCheck;
+import com.sap.oss.phosphor.fosstars.data.github.CodeOfConductGuidelineInfo;
 import com.sap.oss.phosphor.fosstars.data.github.CodeqlDataProvider;
 import com.sap.oss.phosphor.fosstars.data.github.ContributingGuidelineInfo;
 import com.sap.oss.phosphor.fosstars.data.github.EstimateImpactUsingKnownVulnerabilities;
@@ -227,6 +228,7 @@ public class DataProviderSelector {
         new ContributingGuidelineInfo(fetcher),
         new VulnerabilityAlertsInfo(fetcher),
         new SecurityReviewsFromOpenSSF(fetcher),
+        new CodeOfConductGuidelineInfo(fetcher),
         new NumberOfDependentProjectOnGitHub(fetcher),
         new VulnerabilitiesFromOwaspDependencyCheck(),
         PROJECT_USAGE_PROVIDER,

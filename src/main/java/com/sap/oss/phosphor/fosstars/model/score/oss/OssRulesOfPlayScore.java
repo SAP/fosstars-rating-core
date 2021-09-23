@@ -3,12 +3,14 @@ package com.sap.oss.phosphor.fosstars.model.score.oss;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ALLOWED_LICENSE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ENABLED_VULNERABILITY_ALERTS_ON_GITHUB;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_ADMIN_TEAM_ON_GITHUB;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_CODE_OF_CONDUCT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_CONTRIBUTING_GUIDELINE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_ENOUGH_ADMINS_ON_GITHUB;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_ENOUGH_TEAMS_ON_GITHUB;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_ENOUGH_TEAM_MEMBERS_ON_GITHUB;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_LICENSE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_README;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_REQUIRED_TEXT_IN_CODE_OF_CONDUCT_GUIDELINE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_REQUIRED_TEXT_IN_CONTRIBUTING_GUIDELINE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_REUSE_LICENSES;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
@@ -75,7 +77,8 @@ public class OssRulesOfPlayScore extends FeatureBasedScore {
    * A set of features that are recommended to be true.
    */
   public static final Set<Feature<Boolean>> RECOMMENDED_TRUE = Collections.unmodifiableSet(
-      setOf(HAS_CONTRIBUTING_GUIDELINE, HAS_REQUIRED_TEXT_IN_CONTRIBUTING_GUIDELINE));
+      setOf(HAS_CONTRIBUTING_GUIDELINE, HAS_REQUIRED_TEXT_IN_CONTRIBUTING_GUIDELINE,
+          HAS_CODE_OF_CONDUCT, HAS_REQUIRED_TEXT_IN_CODE_OF_CONDUCT_GUIDELINE));
 
   /**
    * A set of features that are recommended to be false.

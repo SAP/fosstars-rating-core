@@ -18,6 +18,11 @@ The data provider `ContributingGuidelineInfo` allows you to specify 2 types of r
 - The content that you expect must not be part of the contributing guidelines.
 The option is called `requiredContentPatterns` and expects a list of one or multiple Regex. If you enter multiple entries, the contribution guidelines must comply with all the patterns for the rule to pass.
 
+### Code of Conduct Guidelines
+The data provider `CodeOfConductGuidelineInfo` allows you to specify 1 type of regular expression pattern
+- The content that you expect to be part of the code of conduct guidelines.
+The option is called `requiredContentPatterns` and expects a list of one Regex. If you enter multiple entries, the code of conduct guidelines must comply with all the patterns for the rule to pass.
+
 ### Licensing
 The data provider `LicenseInfo` allows you to specify which license(s) should be allowed in the analyzed project.
 This option is called `allowedLicenses` and expects a list of one or more SPDX license IDs.
@@ -73,70 +78,75 @@ In addition, remember to keep the `OssRulesOfPlayRatingMarkdownFormatter.config.
 If everything is correctly set up, the output is going to look like the following:
 
 ```
-[+] The default value cache doesn't exist yet.
 [+] Okay, we have a GitHub token, let's try to use it
+[+] The default value cache doesn't exist yet: .fosstars/github_project_value_cache.json
 [+] Let's gather info and calculate a rating for:
 [+]   https://github.com/SAP/code-pal-for-abap
 [+] Gathering info about project's README file ...
 [+] Cloning https://github.com/SAP/code-pal-for-abap ...
 [+] Fetching info about project's teams ...
+[+] Gathering info about project's code of conduct guidelines ...
 [+] Gathering info about vulnerability alerts ...
 [+] Gathering info about project's contributing guidelines ...
 [+] Gathering info about project's license ...
 [+] Figuring out how the project uses REUSE ...
 [+] Figuring out if the project has a security policy ...
 [+] Here is what we know about the project:
-[+]    If a license has disallowed text: No
-[+]    If a project has a LICENSES folder with licenses: Yes
-[+]    If a project has a README file: Yes
-[+]    If a project has a contributing guideline: Yes
-[+]    If a project has a license: Yes
-[+]    If a project has a team with push privileges: Yes
-[+]    If a project has an admin team on GitHub: Yes
-[+]    If a project has enough admins on GitHub: Yes
-[+]    If a project has enough team members on GitHub: Yes
-[+]    If a project has enough teams on GitHub: Yes
-[+]    If a project has unresolved vulnerability alerts: No
-[+]    If a project is compliant with REUSE rules: Yes
-[+]    If a project is registered in REUSE: Yes
-[+]    If a project uses REUSE tool: Yes
-[+]    If a project uses an allowed license: Yes
-[+]    If a project's README doesn't contain required info: Yes
-[+]    If a project's contributing guideline has required text: Yes
-[+]    If an open-source project has a security policy: Yes
-[+]    If project's README has info about REUSE: Yes
-[+]    If vulnerability alerts are enabled for a project on GitHub: Yes
+[+]    Does the license have disallowed content? No
+[+]    Does it have LICENSES directory with licenses? Yes
+[+]    Does it have a README file? Yes
+[+]    Does it have a code of conduct guideline? Yes
+[+]    Does it have a contributing guideline? Yes
+[+]    Does it have a license file? Yes
+[+]    Does it have a team with push privileges on GitHub? Yes
+[+]    Does it have an admin team on GitHub? Yes
+[+]    Does it have enough admins on GitHub? Yes
+[+]    Does teams have enough members on GitHub? Yes
+[+]    Does it have enough teams on GitHub? Yes
+[+]    Does it have unresolved vulnerability alerts? No
+[+]    Is it compliant with REUSE rules? Yes
+[+]    Is it registered in REUSE? Yes
+[+]    Does the project use REUSE? Yes
+[+]    Does it use an allowed license? Yes
+[+]    Is README incomplete? No
+[+]    Does the code of conduct guideline have required text? Yes
+[+]    Does the contributing guideline have required text? Yes
+[+]    Does it have a security policy? Yes
+[+]    Does README mention REUSE? Yes
+[+]    Are vulnerability alerts enabled? Yes
 [+] Here is how the rating was calculated:
 [+]   Score:........Open source rules or play score
 [+]   Description:..The score shows whether an open source project
 [+]                 violates rules or not.
-[+]   Value:........9.0  out of 10.0
-[+]   Confidence:...Max (10.0 out of 10.0)
-[+]   Based on:...19 features
-[+]       Are vulnerability alerts enabled?......................Yes
-[+]       Does README mention REUSE?.............................Yes
-[+]       Does it have LICENSES directory with licenses?.........Yes
-[+]       Does it have a README file?............................Yes
-[+]       Does it have a contributing guideline?.................Yes
-[+]       Does it have a license file?...........................Yes
-[+]       Does it have a security policy?........................Yes
-[+]       Does it have a team with push privileges on GitHub?....Yes
-[+]       Does it have an admin team on GitHub?..................Yes
-[+]       Does it have enough admins on GitHub?..................Yes
-[+]       Does it have enough teams on GitHub?...................Yes
-[+]       Does it have unresolved vulnerability alerts?..........No
-[+]       Does it use an allowed license?........................Yes
-[+]       Does teams have enough members on GitHub?..............Yes
-[+]       Does the contributing guideline have required text?....Yes
-[+]       Does the license have disallowed content?..............No
-[+]       If a project's README doesn't contain required info:...Yes
-[+]       Is it compliant with REUSE rules?......................Yes
-[+]       Is it registered in REUSE?.............................Yes
-[+]   Explanation:..Found 1 recommendations
-[+]
-[+] Rating:     9.0  out of 10.0 -> PASSED_WITH_WARNING
-[+] Confidence: Max (10.0 out of 10.0)
-[+]
+[+]   Value:........10,0 out of 10,0
+[+]   Confidence:...Max (10,0 out of 10,0)
+[+]   Based on:...21 features
+[+]       Are vulnerability alerts enabled?.........................Yes
+[+]       Does README mention REUSE?................................Yes
+[+]       Does it have LICENSES directory with licenses?............Yes
+[+]       Does it have a README file?...............................Yes
+[+]       Does it have a code of conduct guideline?.................Yes
+[+]       Does it have a contributing guideline?....................Yes
+[+]       Does it have a license file?..............................Yes
+[+]       Does it have a security policy?...........................Yes
+[+]       Does it have a team with push privileges on GitHub?.......Yes
+[+]       Does it have an admin team on GitHub?.....................Yes
+[+]       Does it have enough admins on GitHub?.....................Yes
+[+]       Does it have enough teams on GitHub?......................Yes
+[+]       Does it have unresolved vulnerability alerts?.............No
+[+]       Does it use an allowed license?...........................Yes
+[+]       Does teams have enough members on GitHub?.................Yes
+[+]       Does the code of conduct guideline have required text?....Yes
+[+]       Does the contributing guideline have required text?.......Yes
+[+]       Does the license have disallowed content?.................No
+[+]       Is README incomplete?.....................................No
+[+]       Is it compliant with REUSE rules?.........................Yes
+[+]       Is it registered in REUSE?................................Yes
+[+]   Explanation:..No violated rules found.
+[+] 
+[+] Rating:     10,0 out of 10,0 -> PASSED
+[+] Confidence: Max (10,0 out of 10,0)
+[+] 
 [+] Bye!
 ```
 
