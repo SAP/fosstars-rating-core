@@ -2,9 +2,9 @@ package com.sap.oss.phosphor.fosstars.data.github;
 
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_CODE_OF_CONDUCT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_REQUIRED_TEXT_IN_CODE_OF_CONDUCT_GUIDELINE;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -13,6 +13,8 @@ import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -73,7 +75,7 @@ public class CodeOfConductGuidelineInfoTest extends TestGitHubDataFetcherHolder 
     provider.configure(IOUtils.toInputStream(
                     "---\n"
                   + "requiredContentPatterns:\n"
-                  + "  - \"Contributor Covenant\""));
+                  + "  - \"Contributor Covenant\"", UTF_8.name()));
 
     ValueSet values = provider.fetchValuesFor(project);
     checkValue(values, HAS_CODE_OF_CONDUCT, true);
