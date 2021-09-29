@@ -484,19 +484,19 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2017-9868](https://nvd.nist.gov/vuln/detail/CVE-2017-9868): In Mosquitto through 1.4.12, mosquitto.db (aka the persistence file) is world readable, which allows local users to obtain sensitive MQTT topic information.
-1.  [CVE-2017-7650](https://nvd.nist.gov/vuln/detail/CVE-2017-7650): In Mosquitto before 1.4.12, pattern based ACLs can be bypassed by clients that set their username/client id to '#' or '+'. This allows locally or remotely connected clients to access MQTT topics that they do have the rights to. The same issue may be present in third party authentication/access control plugins for Mosquitto.
-1.  [CVE-2017-7651](https://nvd.nist.gov/vuln/detail/CVE-2017-7651): In Eclipse Mosquitto 1.4.14, a user can shutdown the Mosquitto server simply by filling the RAM memory with a lot of connections with large payload. This can be done without authentications if occur in connection phase of MQTT protocol.
-1.  [CVE-2017-7652](https://nvd.nist.gov/vuln/detail/CVE-2017-7652): In Eclipse Mosquitto 1.4.14, if a Mosquitto instance is set running with a configuration file, then sending a HUP signal to server triggers the configuration to be reloaded from disk. If there are lots of clients connected so that there are no more file descriptors/sockets available (default limit typically 1024 file descriptors on Linux), then opening the configuration file will fail.
-1.  [CVE-2017-7653](https://nvd.nist.gov/vuln/detail/CVE-2017-7653): The Eclipse Mosquitto broker up to version 1.4.15 does not reject strings that are not valid UTF-8. A malicious client could cause other clients that do reject invalid UTF-8 strings to disconnect themselves from the broker by sending a topic string which is not valid UTF-8, and so cause a denial of service for the clients.
-1.  [CVE-2018-12543](https://nvd.nist.gov/vuln/detail/CVE-2018-12543): In Eclipse Mosquitto versions 1.5 to 1.5.2 inclusive, if a message is published to Mosquitto that has a topic starting with $, but that is not $SYS, e.g. $test/test, then an assert is triggered that should otherwise not be reachable and Mosquitto will exit.
-1.  [CVE-2018-20145](https://nvd.nist.gov/vuln/detail/CVE-2018-20145): Eclipse Mosquitto 1.5.x before 1.5.5 allows ACL bypass: if the option per_listener_settings was set to true, and the default listener was in use, and the default listener specified an acl_file, then the acl file was being ignored.
-1.  [CVE-2018-12546](https://nvd.nist.gov/vuln/detail/CVE-2018-12546): In Eclipse Mosquitto version 1.0 to 1.5.5 (inclusive) when a client publishes a retained message to a topic, then has its access to that topic revoked, the retained message will still be published to clients that subscribe to that topic in the future. In some applications this may result in clients being able cause effects that would otherwise not be allowed.
-1.  [CVE-2019-11778](https://nvd.nist.gov/vuln/detail/CVE-2019-11778): If an MQTT v5 client connects to Eclipse Mosquitto versions 1.6.0 to 1.6.4 inclusive, sets a last will and testament, sets a will delay interval, sets a session expiry interval, and the will delay interval is set longer than the session expiry interval, then a use after free error occurs, which has the potential to cause a crash in some situations.
-1.  [CVE-2019-11779](https://nvd.nist.gov/vuln/detail/CVE-2019-11779): In Eclipse Mosquitto 1.5.0 to 1.6.5 inclusive, if a malicious MQTT client sends a SUBSCRIBE packet containing a topic that consists of approximately 65400 or more '/' characters, i.e. the topic hierarchy separator, then a stack overflow will occur.
-1.  [CVE-2021-28166](https://nvd.nist.gov/vuln/detail/CVE-2021-28166): In Eclipse Mosquitto version 2.0.0 to 2.0.9, if an authenticated client that had connected with MQTT v5 sent a crafted CONNACK message to the broker, a NULL pointer dereference would occur.
-1.  [CVE-2021-34431](https://nvd.nist.gov/vuln/detail/CVE-2021-34431): In Eclipse Mosquitto version 1.6 to 2.0.10, if an authenticated client that had connected with MQTT v5 sent a crafted CONNECT message to the broker a memory leak would occur, which could be used to provide a DoS attack against the broker.
-1.  [CVE-2021-34432](https://nvd.nist.gov/vuln/detail/CVE-2021-34432): In Eclipse Mosquitto versions 2.07 and earlier, the server will crash if the client tries to send a PUBLISH packet with topic length = 0.
-1.  [CVE-2021-34434](https://nvd.nist.gov/vuln/detail/CVE-2021-34434): In Eclipse Mosquitto versions 2.0 to 2.0.11, when using the dynamic security plugin, if the ability for a client to make subscriptions on a topic is revoked when a durable client is offline, then existing subscriptions for that client are not revoked.
+1.  [CVE-2017-9868](https://nvd.nist.gov/vuln/detail/CVE-2017-9868)
+1.  [CVE-2017-7650](https://nvd.nist.gov/vuln/detail/CVE-2017-7650)
+1.  [CVE-2017-7651](https://nvd.nist.gov/vuln/detail/CVE-2017-7651)
+1.  [CVE-2017-7652](https://nvd.nist.gov/vuln/detail/CVE-2017-7652)
+1.  [CVE-2017-7653](https://nvd.nist.gov/vuln/detail/CVE-2017-7653)
+1.  [CVE-2018-12543](https://nvd.nist.gov/vuln/detail/CVE-2018-12543)
+1.  [CVE-2018-20145](https://nvd.nist.gov/vuln/detail/CVE-2018-20145)
+1.  [CVE-2018-12546](https://nvd.nist.gov/vuln/detail/CVE-2018-12546)
+1.  [CVE-2019-11778](https://nvd.nist.gov/vuln/detail/CVE-2019-11778)
+1.  [CVE-2019-11779](https://nvd.nist.gov/vuln/detail/CVE-2019-11779)
+1.  [CVE-2021-28166](https://nvd.nist.gov/vuln/detail/CVE-2021-28166)
+1.  [CVE-2021-34431](https://nvd.nist.gov/vuln/detail/CVE-2021-34431)
+1.  [CVE-2021-34432](https://nvd.nist.gov/vuln/detail/CVE-2021-34432)
+1.  [CVE-2021-34434](https://nvd.nist.gov/vuln/detail/CVE-2021-34434)
 
 

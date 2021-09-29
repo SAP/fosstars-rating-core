@@ -2,10 +2,10 @@
 
 |                  |                                                         | # or projects             |  % or projects              |
 | :--------------- | :------------------------------------------------------ | ------------------------: | --------------------------: |
-| Total            |                                                         | 111      |                        100% |
-| BAD ratings      | score below 4.43                        | 34      |      30.6% |
-| MODERATE ratings | score between 4.43 and 5.54 | 46 | 41.4% |
-| GOOD ratings     | score above 5.54                            | 31     |     27.9% |
+| Total            |                                                         | 131      |                        100% |
+| BAD ratings      | score below 4.43                        | 39      |      29.8% |
+| MODERATE ratings | score between 4.43 and 5.54 | 56 | 42.7% |
+| GOOD ratings     | score above 5.54                            | 36     |     27.5% |
 | UNCLEAR ratings  | confidence below 8.00                    | 0  |  0.0% |
 | UNKNOWN ratings  |                                                         | 0  |  0.0% |
 
@@ -13,7 +13,9 @@
 
 | Project | Stars | Score<br>from&nbsp;0&nbsp;to&nbsp;10 | Rating | Confidence | Last<br>updated |
 | ------- | ----: | -----------------------------------: | :----- | :--------- | --------------- |
+| [spring-projects/spring-boot](spring-projects/spring-boot.md) | [57422](https://github.com/spring-projects/spring-boot) | 6.16 | [GOOD](spring-projects/spring-boot.md) | 9.65 | Sep 29, 2021 |
 | [apache/echarts](apache/echarts.md) | [48194](https://github.com/apache/echarts) | 6.16 | [GOOD](apache/echarts.md) | 10.00 | Sep 29, 2021 |
+| [spring-projects/spring-framework](spring-projects/spring-framework.md) | [44472](https://github.com/spring-projects/spring-framework) | 5.27 | [MODERATE](spring-projects/spring-framework.md) | 9.65 | Sep 29, 2021 |
 | [apache/superset](apache/superset.md) | [40682](https://github.com/apache/superset) | 6.58 | [GOOD](apache/superset.md) | 10.00 | Sep 29, 2021 |
 | [apache/dubbo](apache/dubbo.md) | [36222](https://github.com/apache/dubbo) | 5.84 | [GOOD](apache/dubbo.md) | 9.65 | Sep 29, 2021 |
 | [apache/spark](apache/spark.md) | [30945](https://github.com/apache/spark) | 5.30 | [MODERATE](apache/spark.md) | 9.65 | Sep 29, 2021 |
@@ -44,15 +46,19 @@
 | [apache/apisix](apache/apisix.md) | [6512](https://github.com/apache/apisix) | 5.87 | [GOOD](apache/apisix.md) | 9.51 | Sep 29, 2021 |
 | [apache/dolphinscheduler](apache/dolphinscheduler.md) | [6508](https://github.com/apache/dolphinscheduler) | 5.40 | [MODERATE](apache/dolphinscheduler.md) | 9.65 | Sep 29, 2021 |
 | [apache/storm](apache/storm.md) | [6278](https://github.com/apache/storm) | 4.66 | [MODERATE](apache/storm.md) | 9.65 | Sep 29, 2021 |
+| [spring-projects/spring-security](spring-projects/spring-security.md) | [6252](https://github.com/spring-projects/spring-security) | 5.03 | [MODERATE](spring-projects/spring-security.md) | 9.65 | Sep 29, 2021 |
 | [apache/tomcat](apache/tomcat.md) | [5622](https://github.com/apache/tomcat) | 5.74 | [GOOD](apache/tomcat.md) | 10.00 | Sep 29, 2021 |
 | [apache/jmeter](apache/jmeter.md) | [5573](https://github.com/apache/jmeter) | 5.57 | [GOOD](apache/jmeter.md) | 9.65 | Sep 29, 2021 |
 | [apache/openwhisk](apache/openwhisk.md) | [5414](https://github.com/apache/openwhisk) | 4.73 | [MODERATE](apache/openwhisk.md) | 9.65 | Sep 29, 2021 |
 | [apache/zeppelin](apache/zeppelin.md) | [5402](https://github.com/apache/zeppelin) | 5.20 | [MODERATE](apache/zeppelin.md) | 9.65 | Sep 29, 2021 |
 | [apache/dubbo-spring-boot-project](apache/dubbo-spring-boot-project.md) | [5188](https://github.com/apache/dubbo-spring-boot-project) | 4.71 | [MODERATE](apache/dubbo-spring-boot-project.md) | 10.00 | Sep 29, 2021 |
 | [eclipse/mosquitto](eclipse/mosquitto.md) | [5103](https://github.com/eclipse/mosquitto) | 4.79 | [MODERATE](eclipse/mosquitto.md) | 9.65 | Sep 29, 2021 |
+| [spring-projects/spring-petclinic](spring-projects/spring-petclinic.md) | [5102](https://github.com/spring-projects/spring-petclinic) | 5.22 | [MODERATE](spring-projects/spring-petclinic.md) | 9.65 | Sep 29, 2021 |
 | [apache/couchdb](apache/couchdb.md) | [5076](https://github.com/apache/couchdb) | 4.20 | [BAD](apache/couchdb.md) | 9.65 | Sep 29, 2021 |
 | [apache/beam](apache/beam.md) | [5005](https://github.com/apache/beam) | 5.25 | [MODERATE](apache/beam.md) | 9.65 | Sep 29, 2021 |
+| [spring-projects/spring-mvc-showcase](spring-projects/spring-mvc-showcase.md) | [4956](https://github.com/spring-projects/spring-mvc-showcase) | 4.50 | [MODERATE](spring-projects/spring-mvc-showcase.md) | 9.65 | Sep 29, 2021 |
 | [apache/mesos](apache/mesos.md) | [4795](https://github.com/apache/mesos) | 4.26 | [BAD](apache/mesos.md) | 9.65 | Sep 29, 2021 |
+| [spring-projects/spring-security-oauth](spring-projects/spring-security-oauth.md) | [4467](https://github.com/spring-projects/spring-security-oauth) | 5.09 | [MODERATE](spring-projects/spring-security-oauth.md) | 10.00 | Sep 29, 2021 |
 | [apache/groovy](apache/groovy.md) | [4280](https://github.com/apache/groovy) | 4.64 | [MODERATE](apache/groovy.md) | 9.65 | Sep 29, 2021 |
 | [apache/hbase](apache/hbase.md) | [4214](https://github.com/apache/hbase) | 4.98 | [MODERATE](apache/hbase.md) | 9.65 | Sep 29, 2021 |
 | [apache/lucene-solr](apache/lucene-solr.md) | [4184](https://github.com/apache/lucene-solr) | 3.58 | [BAD](apache/lucene-solr.md) | 9.65 | Sep 29, 2021 |
@@ -71,12 +77,16 @@
 | [apache/nifi](apache/nifi.md) | [2791](https://github.com/apache/nifi) | 5.76 | [GOOD](apache/nifi.md) | 9.65 | Sep 29, 2021 |
 | [apache/httpd](apache/httpd.md) | [2786](https://github.com/apache/httpd) | 5.85 | [GOOD](apache/httpd.md) | 9.65 | Sep 29, 2021 |
 | [apache/maven](apache/maven.md) | [2767](https://github.com/apache/maven) | 5.13 | [MODERATE](apache/maven.md) | 9.65 | Sep 29, 2021 |
+| [spring-projects/spring-authorization-serve<br>r](spring-projects/spring-authorization-server.md) | [2749](https://github.com/spring-projects/spring-authorization-server) | 4.56 | [MODERATE](spring-projects/spring-authorization-server.md) | 9.51 | Sep 29, 2021 |
 | [apache/calcite](apache/calcite.md) | [2690](https://github.com/apache/calcite) | 5.14 | [MODERATE](apache/calcite.md) | 9.65 | Sep 29, 2021 |
 | [apache/curator](apache/curator.md) | [2618](https://github.com/apache/curator) | 5.19 | [MODERATE](apache/curator.md) | 10.00 | Sep 29, 2021 |
+| [spring-projects/spring-loaded](spring-projects/spring-loaded.md) | [2589](https://github.com/spring-projects/spring-loaded) | 3.55 | [BAD](spring-projects/spring-loaded.md) | 9.65 | Sep 29, 2021 |
+| [spring-projects/spring-data-elasticsearch](spring-projects/spring-data-elasticsearch.md) | [2529](https://github.com/spring-projects/spring-data-elasticsearch) | 5.99 | [GOOD](spring-projects/spring-data-elasticsearch.md) | 10.00 | Sep 29, 2021 |
 | [apache/singa](apache/singa.md) | [2366](https://github.com/apache/singa) | 4.51 | [MODERATE](apache/singa.md) | 9.65 | Sep 29, 2021 |
 | [apache/hudi](apache/hudi.md) | [2303](https://github.com/apache/hudi) | 5.81 | [GOOD](apache/hudi.md) | 9.65 | Sep 29, 2021 |
 | [eclipse/paho.mqtt.android](eclipse/paho.mqtt.android.md) | [2284](https://github.com/eclipse/paho.mqtt.android) | 4.18 | [BAD](eclipse/paho.mqtt.android.md) | 9.65 | Sep 29, 2021 |
 | [apache/nutch](apache/nutch.md) | [2241](https://github.com/apache/nutch) | 3.37 | [BAD](apache/nutch.md) | 9.65 | Sep 29, 2021 |
+| [spring-projects/spring-data-jpa](spring-projects/spring-data-jpa.md) | [2183](https://github.com/spring-projects/spring-data-jpa) | 5.53 | [MODERATE](spring-projects/spring-data-jpa.md) | 10.00 | Sep 29, 2021 |
 | [apache/flume](apache/flume.md) | [2177](https://github.com/apache/flume) | 4.09 | [BAD](apache/flume.md) | 9.65 | Sep 29, 2021 |
 | [apache/commons-lang](apache/commons-lang.md) | [2165](https://github.com/apache/commons-lang) | 6.66 | [GOOD](apache/commons-lang.md) | 10.00 | Sep 29, 2021 |
 | [apache/iceberg](apache/iceberg.md) | [2025](https://github.com/apache/iceberg) | 4.63 | [MODERATE](apache/iceberg.md) | 9.65 | Sep 29, 2021 |
@@ -84,6 +94,7 @@
 | [apache/geode](apache/geode.md) | [1985](https://github.com/apache/geode) | 5.24 | [MODERATE](apache/geode.md) | 9.65 | Sep 29, 2021 |
 | [apache/gobblin](apache/gobblin.md) | [1971](https://github.com/apache/gobblin) | 4.36 | [BAD](apache/gobblin.md) | 9.65 | Sep 29, 2021 |
 | [apache/mahout](apache/mahout.md) | [1949](https://github.com/apache/mahout) | 3.97 | [BAD](apache/mahout.md) | 9.65 | Sep 29, 2021 |
+| [spring-projects/spring-batch](spring-projects/spring-batch.md) | [1948](https://github.com/spring-projects/spring-batch) | 5.93 | [GOOD](spring-projects/spring-batch.md) | 10.00 | Sep 29, 2021 |
 | [apache/activemq](apache/activemq.md) | [1942](https://github.com/apache/activemq) | 4.37 | [BAD](apache/activemq.md) | 9.65 | Sep 29, 2021 |
 | [apache/avro](apache/avro.md) | [1934](https://github.com/apache/avro) | 5.47 | [MODERATE](apache/avro.md) | 10.00 | Sep 29, 2021 |
 | [apache/servicecomb-pack](apache/servicecomb-pack.md) | [1870](https://github.com/apache/servicecomb-pack) | 4.03 | [BAD](apache/servicecomb-pack.md) | 9.65 | Sep 29, 2021 |
@@ -95,26 +106,35 @@
 | [qos-ch/slf4j](qos-ch/slf4j.md) | [1726](https://github.com/qos-ch/slf4j) | 3.38 | [BAD](qos-ch/slf4j.md) | 10.00 | Sep 29, 2021 |
 | [apache/netbeans](apache/netbeans.md) | [1681](https://github.com/apache/netbeans) | 4.62 | [MODERATE](apache/netbeans.md) | 9.65 | Sep 29, 2021 |
 | [apache/lucenenet](apache/lucenenet.md) | [1656](https://github.com/apache/lucenenet) | 4.82 | [MODERATE](apache/lucenenet.md) | 9.65 | Sep 29, 2021 |
+| [spring-projects/spring-session](spring-projects/spring-session.md) | [1644](https://github.com/spring-projects/spring-session) | 4.12 | [BAD](spring-projects/spring-session.md) | 9.65 | Sep 29, 2021 |
 | [apache/iotdb](apache/iotdb.md) | [1598](https://github.com/apache/iotdb) | 4.77 | [MODERATE](apache/iotdb.md) | 9.65 | Sep 29, 2021 |
 | [apache/drill](apache/drill.md) | [1596](https://github.com/apache/drill) | 4.34 | [BAD](apache/drill.md) | 9.65 | Sep 29, 2021 |
 | [eclipse/paho.mqtt.java](eclipse/paho.mqtt.java.md) | [1579](https://github.com/eclipse/paho.mqtt.java) | 3.98 | [BAD](eclipse/paho.mqtt.java.md) | 9.65 | Sep 29, 2021 |
+| [spring-projects/spring-retry](spring-projects/spring-retry.md) | [1565](https://github.com/spring-projects/spring-retry) | 5.64 | [GOOD](spring-projects/spring-retry.md) | 10.00 | Sep 29, 2021 |
 | [apache/ambari](apache/ambari.md) | [1548](https://github.com/apache/ambari) | 3.40 | [BAD](apache/ambari.md) | 9.65 | Sep 29, 2021 |
 | [apache/pdfbox](apache/pdfbox.md) | [1513](https://github.com/apache/pdfbox) | 4.37 | [BAD](apache/pdfbox.md) | 9.65 | Sep 29, 2021 |
 | [apache/kudu](apache/kudu.md) | [1475](https://github.com/apache/kudu) | 4.37 | [BAD](apache/kudu.md) | 9.65 | Sep 29, 2021 |
 | [eclipse/paho.mqtt.python](eclipse/paho.mqtt.python.md) | [1450](https://github.com/eclipse/paho.mqtt.python) | 3.85 | [BAD](eclipse/paho.mqtt.python.md) | 9.65 | Sep 29, 2021 |
 | [apache/rocketmq-spring](apache/rocketmq-spring.md) | [1447](https://github.com/apache/rocketmq-spring) | 4.26 | [BAD](apache/rocketmq-spring.md) | 9.65 | Sep 29, 2021 |
+| [spring-projects/spring-kafka](spring-projects/spring-kafka.md) | [1439](https://github.com/spring-projects/spring-kafka) | 5.33 | [MODERATE](spring-projects/spring-kafka.md) | 9.65 | Sep 29, 2021 |
 | [apache/tinkerpop](apache/tinkerpop.md) | [1398](https://github.com/apache/tinkerpop) | 5.51 | [MODERATE](apache/tinkerpop.md) | 9.65 | Sep 29, 2021 |
 | [apache/parquet-mr](apache/parquet-mr.md) | [1390](https://github.com/apache/parquet-mr) | 4.24 | [BAD](apache/parquet-mr.md) | 9.65 | Sep 29, 2021 |
 | [apache/bookkeeper](apache/bookkeeper.md) | [1388](https://github.com/apache/bookkeeper) | 4.46 | [MODERATE](apache/bookkeeper.md) | 10.00 | Sep 29, 2021 |
 | [apache/trafficserver](apache/trafficserver.md) | [1355](https://github.com/apache/trafficserver) | 4.31 | [BAD](apache/trafficserver.md) | 9.65 | Sep 29, 2021 |
+| [spring-projects/spring-data-redis](spring-projects/spring-data-redis.md) | [1352](https://github.com/spring-projects/spring-data-redis) | 5.14 | [MODERATE](spring-projects/spring-data-redis.md) | 9.65 | Sep 29, 2021 |
+| [spring-projects/greenhouse](spring-projects/greenhouse.md) | [1325](https://github.com/spring-projects/greenhouse) | 3.89 | [BAD](spring-projects/greenhouse.md) | 9.51 | Sep 29, 2021 |
+| [spring-projects/spring-data-mongodb](spring-projects/spring-data-mongodb.md) | [1324](https://github.com/spring-projects/spring-data-mongodb) | 6.18 | [GOOD](spring-projects/spring-data-mongodb.md) | 10.00 | Sep 29, 2021 |
 | [apache/logging-log4j2](apache/logging-log4j2.md) | [1276](https://github.com/apache/logging-log4j2) | 6.01 | [GOOD](apache/logging-log4j2.md) | 10.00 | Sep 29, 2021 |
 | [apache/servicecomb-service-center](apache/servicecomb-service-center.md) | [1274](https://github.com/apache/servicecomb-service-center) | 4.83 | [MODERATE](apache/servicecomb-service-center.md) | 9.65 | Sep 29, 2021 |
 | [apache/carbondata](apache/carbondata.md) | [1261](https://github.com/apache/carbondata) | 4.39 | [BAD](apache/carbondata.md) | 10.00 | Sep 29, 2021 |
 | [apache/poi](apache/poi.md) | [1258](https://github.com/apache/poi) | 6.03 | [GOOD](apache/poi.md) | 10.00 | Sep 29, 2021 |
 | [apache/tika](apache/tika.md) | [1251](https://github.com/apache/tika) | 4.34 | [BAD](apache/tika.md) | 9.65 | Sep 29, 2021 |
 | [eclipse/mraa](eclipse/mraa.md) | [1231](https://github.com/eclipse/mraa) | 3.57 | [BAD](eclipse/mraa.md) | 9.65 | Sep 29, 2021 |
+| [spring-projects/spring-data-book](spring-projects/spring-data-book.md) | [1231](https://github.com/spring-projects/spring-data-book) | 4.30 | [BAD](spring-projects/spring-data-book.md) | 9.65 | Sep 29, 2021 |
 | [eclipse/sumo](eclipse/sumo.md) | [1214](https://github.com/eclipse/sumo) | 4.98 | [MODERATE](eclipse/sumo.md) | 9.65 | Sep 29, 2021 |
+| [spring-projects/spring-integration](spring-projects/spring-integration.md) | [1210](https://github.com/spring-projects/spring-integration) | 4.51 | [MODERATE](spring-projects/spring-integration.md) | 10.00 | Sep 29, 2021 |
 | [eclipse/paho.mqtt.c](eclipse/paho.mqtt.c.md) | [1197](https://github.com/eclipse/paho.mqtt.c) | 3.48 | [BAD](eclipse/paho.mqtt.c.md) | 9.65 | Sep 29, 2021 |
+| [spring-projects/spring-statemachine](spring-projects/spring-statemachine.md) | [1174](https://github.com/spring-projects/spring-statemachine) | 4.20 | [BAD](spring-projects/spring-statemachine.md) | 9.65 | Sep 29, 2021 |
 | [apache/arrow-datafusion](apache/arrow-datafusion.md) | [1144](https://github.com/apache/arrow-datafusion) | 4.23 | [BAD](apache/arrow-datafusion.md) | 9.51 | Sep 29, 2021 |
 | [apache/nano](apache/nano.md) | [1123](https://github.com/apache/nano) | 3.83 | [BAD](apache/nano.md) | 9.65 | Sep 29, 2021 |
 | [apache/httpcomponents-client](apache/httpcomponents-client.md) | [1123](https://github.com/apache/httpcomponents-client) | 4.91 | [MODERATE](apache/httpcomponents-client.md) | 10.00 | Sep 29, 2021 |
