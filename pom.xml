@@ -81,7 +81,7 @@
     <version.httpclient>4.5.13</version.httpclient>
     <version.junit>4.13.2</version.junit>
     <version.mockito-core>3.12.4</version.mockito-core>
-    <version.packageurl-java>1.4.0</version.packageurl-java>
+    <version.packageurl-java>1.4.1</version.packageurl-java>
     <version.commons-collections4>4.4</version.commons-collections4>
     <version.org.eclipse.jgit>5.13.0.202109080827-r</version.org.eclipse.jgit>
     <version.commons-text>1.9</version.commons-text>
