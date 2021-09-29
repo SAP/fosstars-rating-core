@@ -495,11 +495,11 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2002-0059](https://nvd.nist.gov/vuln/detail/CVE-2002-0059): The decompression algorithm in zlib 1.1.3 and earlier, as used in many different utilities and packages, causes inflateEnd to release certain memory more than once (a "double free"), which may allow local and remote attackers to execute arbitrary code via a block of malformed compression data.
-1.  [CVE-2003-0107](https://nvd.nist.gov/vuln/detail/CVE-2003-0107): Buffer overflow in the gzprintf function in zlib 1.1.4, when zlib is compiled without vsnprintf or when long inputs are truncated using vsnprintf, allows attackers to cause a denial of service or possibly execute arbitrary code.
-1.  [CVE-2004-0797](https://nvd.nist.gov/vuln/detail/CVE-2004-0797): The error handling in the (1) inflate and (2) inflateBack functions in ZLib compression library 1.2.x allows local users to cause a denial of service (application crash).
-1.  [CVE-2005-2096](https://nvd.nist.gov/vuln/detail/CVE-2005-2096): zlib 1.2 and later versions allows remote attackers to cause a denial of service (crash) via a crafted compressed stream with an incomplete code description of a length greater than 1, which leads to a buffer overflow, as demonstrated using a crafted PNG file.
-1.  [CVE-2005-1849](https://nvd.nist.gov/vuln/detail/CVE-2005-1849): inftrees.h in zlib 1.2.2 allows remote attackers to cause a denial of service (application crash) via an invalid file that causes a large dynamic tree to be produced.
-1.  [CVE-2016-9843](https://nvd.nist.gov/vuln/detail/CVE-2016-9843): The crc32_big function in crc32.c in zlib 1.2.8 might allow context-dependent attackers to have unspecified impact via vectors involving big-endian CRC calculation.
+1.  [CVE-2002-0059](https://nvd.nist.gov/vuln/detail/CVE-2002-0059)
+1.  [CVE-2003-0107](https://nvd.nist.gov/vuln/detail/CVE-2003-0107)
+1.  [CVE-2004-0797](https://nvd.nist.gov/vuln/detail/CVE-2004-0797)
+1.  [CVE-2005-2096](https://nvd.nist.gov/vuln/detail/CVE-2005-2096)
+1.  [CVE-2005-1849](https://nvd.nist.gov/vuln/detail/CVE-2005-1849)
+1.  [CVE-2016-9843](https://nvd.nist.gov/vuln/detail/CVE-2016-9843)
 
 
