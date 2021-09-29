@@ -487,6 +487,6 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2020-1947](https://nvd.nist.gov/vuln/detail/CVE-2020-1947): In Apache ShardingSphere(incubator) 4.0.0-RC3 and 4.0.0, the ShardingSphere's web console uses the SnakeYAML library for parsing YAML inputs to load datasource configuration. SnakeYAML allows to unmarshal data to a Java type By using the YAML tag. Unmarshalling untrusted data can lead to security flaws of RCE.
+1.  [CVE-2020-1947](https://nvd.nist.gov/vuln/detail/CVE-2020-1947)
 
 

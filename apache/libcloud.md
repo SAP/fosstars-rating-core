@@ -458,8 +458,8 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2010-4340](https://nvd.nist.gov/vuln/detail/CVE-2010-4340): libcloud before 0.4.1 does not verify SSL certificates for HTTPS connections, which allows remote attackers to spoof certificates and bypass intended access restrictions via a man-in-the-middle (MITM) attack.
-1.  [CVE-2012-3446](https://nvd.nist.gov/vuln/detail/CVE-2012-3446): Apache Libcloud before 0.11.1 uses an incorrect regular expression during verification of whether the server hostname matches a domain name in the subject's Common Name (CN) or subjectAltName field of the X.509 certificate, which allows man-in-the-middle attackers to spoof SSL servers via a crafted certificate.
-1.  [CVE-2013-6480](https://nvd.nist.gov/vuln/detail/CVE-2013-6480): Libcloud 0.12.3 through 0.13.2 does not set the scrub_data parameter for the destroy DigitalOcean API, which allows local users to obtain sensitive information by leveraging a new VM.
+1.  [CVE-2010-4340](https://nvd.nist.gov/vuln/detail/CVE-2010-4340)
+1.  [CVE-2012-3446](https://nvd.nist.gov/vuln/detail/CVE-2012-3446)
+1.  [CVE-2013-6480](https://nvd.nist.gov/vuln/detail/CVE-2013-6480)
 
 

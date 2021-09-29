@@ -507,7 +507,7 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2019-11404](https://nvd.nist.gov/vuln/detail/CVE-2019-11404): arrow-kt Arrow before 0.9.0 resolved Gradle build artifacts (for compiling and building the published JARs) over HTTP instead of HTTPS. Any of these dependent artifacts could have been maliciously compromised by an MITM attack.
-1.  [CVE-2019-12410](https://nvd.nist.gov/vuln/detail/CVE-2019-12410): While investigating UBSAN errors in https://github.com/apache/arrow/pull/5365 it was discovered Apache Arrow versions 0.12.0 to 0.14.1, left memory Array data uninitialized when reading RLE null data from parquet. This affected the C++, Python, Ruby and R implementations. The uninitialized memory could potentially be shared if are transmitted over the wire (for instance with Flight) or persisted in the streaming IPC and file formats.
+1.  [CVE-2019-11404](https://nvd.nist.gov/vuln/detail/CVE-2019-11404)
+1.  [CVE-2019-12410](https://nvd.nist.gov/vuln/detail/CVE-2019-12410)
 
 

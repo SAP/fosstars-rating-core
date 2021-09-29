@@ -479,10 +479,10 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2015-0225](https://nvd.nist.gov/vuln/detail/CVE-2015-0225): The default configuration in Apache Cassandra 1.2.0 through 1.2.19, 2.0.0 through 2.0.13, and 2.1.0 through 2.1.3 binds an unauthenticated JMX/RMI interface to all network interfaces, which allows remote attackers to execute arbitrary Java code via an RMI request.
-1.  [CVE-2016-4970](https://nvd.nist.gov/vuln/detail/CVE-2016-4970): handler/ssl/OpenSslEngine.java in Netty 4.0.x before 4.0.37.Final and 4.1.x before 4.1.1.Final allows remote attackers to cause a denial of service (infinite loop).
-1.  [CVE-2018-8016](https://nvd.nist.gov/vuln/detail/CVE-2018-8016): The default configuration in Apache Cassandra 3.8 through 3.11.1 binds an unauthenticated JMX/RMI interface to all network interfaces, which allows remote attackers to execute arbitrary Java code via an RMI request. This issue is a regression of CVE-2015-0225. The regression was introduced in https://issues.apache.org/jira/browse/CASSANDRA-12109. The fix for the regression is implemented in https://issues.apache.org/jira/browse/CASSANDRA-14173. This fix is contained in the 3.11.2 release of Apache Cassandra.
-1.  [CVE-2020-13946](https://nvd.nist.gov/vuln/detail/CVE-2020-13946): In Apache Cassandra, all versions prior to 2.1.22, 2.2.18, 3.0.22, 3.11.8 and 4.0-beta2, it is possible for a local attacker without access to the Apache Cassandra process or configuration files to manipulate the RMI registry to perform a man-in-the-middle attack and capture user names and passwords used to access the JMX interface. The attacker can then use these credentials to access the JMX interface and perform unauthorised operations. Users should also be aware of CVE-2019-2684, a JRE vulnerability that enables this issue to be exploited remotely.
-1.  [CVE-2020-17516](https://nvd.nist.gov/vuln/detail/CVE-2020-17516): Apache Cassandra versions 2.1.0 to 2.1.22, 2.2.0 to 2.2.19, 3.0.0 to 3.0.23, and 3.11.0 to 3.11.9, when using 'dc' or 'rack' internode_encryption setting, allows both encrypted and unencrypted internode connections. A misconfigured node or a malicious user can use the unencrypted connection despite not being in the same rack or dc, and bypass mutual TLS requirement.
+1.  [CVE-2015-0225](https://nvd.nist.gov/vuln/detail/CVE-2015-0225)
+1.  [CVE-2016-4970](https://nvd.nist.gov/vuln/detail/CVE-2016-4970)
+1.  [CVE-2018-8016](https://nvd.nist.gov/vuln/detail/CVE-2018-8016)
+1.  [CVE-2020-13946](https://nvd.nist.gov/vuln/detail/CVE-2020-13946)
+1.  [CVE-2020-17516](https://nvd.nist.gov/vuln/detail/CVE-2020-17516)
 
 

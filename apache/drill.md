@@ -505,8 +505,8 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2017-12630](https://nvd.nist.gov/vuln/detail/CVE-2017-12630): In Apache Drill 1.11.0 and earlier when submitting form from Query page users are able to pass arbitrary script or HTML which will take effect on Profile page afterwards. Example: after submitting special script that returns cookie information from Query page, malicious user may obtain this information from Profile page afterwards.
-1.  [CVE-2020-13956](https://nvd.nist.gov/vuln/detail/CVE-2020-13956): Apache HttpClient versions prior to version 4.5.13 and 5.0.3 can misinterpret malformed authority component in request URIs passed to the library as java.net.URI object and pick the wrong target host for request execution.
-1.  [CVE-2021-36090](https://nvd.nist.gov/vuln/detail/CVE-2021-36090): When reading a specially crafted ZIP archive, Compress can be made to allocate large amounts of memory that finally leads to an out of memory error even for very small inputs. This could be used to mount a denial of service attack against services that use Compress' zip package.
+1.  [CVE-2017-12630](https://nvd.nist.gov/vuln/detail/CVE-2017-12630)
+1.  [CVE-2020-13956](https://nvd.nist.gov/vuln/detail/CVE-2020-13956)
+1.  [CVE-2021-36090](https://nvd.nist.gov/vuln/detail/CVE-2021-36090)
 
 

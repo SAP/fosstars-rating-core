@@ -492,6 +492,6 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2019-17195](https://nvd.nist.gov/vuln/detail/CVE-2019-17195): Connect2id Nimbus JOSE+JWT before v7.9 can throw various uncaught exceptions while parsing a JWT, which could result in an application crash (potential information disclosure) or a potential authentication bypass.
+1.  [CVE-2019-17195](https://nvd.nist.gov/vuln/detail/CVE-2019-17195)
 
 

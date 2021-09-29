@@ -487,10 +487,10 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2015-3253](https://nvd.nist.gov/vuln/detail/CVE-2015-3253): The MethodClosure class in runtime/MethodClosure.java in Apache Groovy 1.7.0 through 2.4.3 allows remote attackers to execute arbitrary code or cause a denial of service via a crafted serialized object.
-1.  [CVE-2016-6814](https://nvd.nist.gov/vuln/detail/CVE-2016-6814): When an application with unsupported Codehaus versions of Groovy from 1.7.0 to 2.4.3, Apache Groovy 2.4.4 to 2.4.7 on classpath uses standard Java serialization mechanisms, e.g. to communicate between servers or to store local data, it was possible for an attacker to bake a special serialized object that will execute code directly when deserialized. All applications which rely on serialization and do not isolate the code which deserializes objects were subject to this vulnerability.
-1.  [CVE-2019-1003006](https://nvd.nist.gov/vuln/detail/CVE-2019-1003006): A sandbox bypass vulnerability exists in Jenkins Groovy Plugin 2.0 and earlier in src/main/java/hudson/plugins/groovy/StringScriptSource.java that allows attackers with Overall/Read permission to provide a Groovy script to an HTTP endpoint that can result in arbitrary code execution on the Jenkins master JVM.
-1.  [CVE-2019-1003033](https://nvd.nist.gov/vuln/detail/CVE-2019-1003033): A sandbox bypass vulnerability exists in Jenkins Groovy Plugin 2.1 and earlier in pom.xml, src/main/java/hudson/plugins/groovy/StringScriptSource.java that allows attackers with Overall/Read permission to execute arbitrary code on the Jenkins master JVM.
-1.  [CVE-2020-17521](https://nvd.nist.gov/vuln/detail/CVE-2020-17521): Apache Groovy provides extension methods to aid with creating temporary directories. Prior to this fix, Groovy's implementation of those extension methods was using a now superseded Java JDK method call that is potentially not secure on some operating systems in some contexts. Users not using the extension methods mentioned in the advisory are not affected, but may wish to read the advisory for further details. Versions Affected: 2.0 to 2.4.20, 2.5.0 to 2.5.13, 3.0.0 to 3.0.6, and 4.0.0-alpha-1. Fixed in versions 2.4.21, 2.5.14, 3.0.7, 4.0.0-alpha-2.
+1.  [CVE-2015-3253](https://nvd.nist.gov/vuln/detail/CVE-2015-3253)
+1.  [CVE-2016-6814](https://nvd.nist.gov/vuln/detail/CVE-2016-6814)
+1.  [CVE-2019-1003006](https://nvd.nist.gov/vuln/detail/CVE-2019-1003006)
+1.  [CVE-2019-1003033](https://nvd.nist.gov/vuln/detail/CVE-2019-1003033)
+1.  [CVE-2020-17521](https://nvd.nist.gov/vuln/detail/CVE-2020-17521)
 
 

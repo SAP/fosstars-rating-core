@@ -492,14 +492,14 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2017-5649](https://nvd.nist.gov/vuln/detail/CVE-2017-5649): Apache Geode before 1.1.1, when a cluster has enabled security by setting the security-manager property, allows remote authenticated users with CLUSTER:READ but not DATA:READ permission to access the data browser page in Pulse and consequently execute an OQL query that exposes data stored in the cluster.
-1.  [CVE-2017-9794](https://nvd.nist.gov/vuln/detail/CVE-2017-9794): When a cluster is operating in secure mode, a user with read privileges for specific data regions can use the gfsh command line utility to execute queries. In Apache Geode before 1.2.1, the query results may contain data from another user's concurrently executing gfsh query, potentially revealing data that the user is not authorized to view.
-1.  [CVE-2017-9797](https://nvd.nist.gov/vuln/detail/CVE-2017-9797): When an Apache Geode cluster before v1.2.1 is operating in secure mode, an unauthenticated client can enter multi-user authentication mode and send metadata messages. These metadata operations could leak information about application data types. In addition, an attacker could perform a denial of service attack on the cluster.
-1.  [CVE-2017-12622](https://nvd.nist.gov/vuln/detail/CVE-2017-12622): When an Apache Geode cluster before v1.3.0 is operating in secure mode and an authenticated user connects to a Geode cluster using the gfsh tool with HTTP, the user is able to obtain status information and control cluster members even without CLUSTER:MANAGE privileges.
-1.  [CVE-2017-15696](https://nvd.nist.gov/vuln/detail/CVE-2017-15696): When an Apache Geode cluster before v1.4.0 is operating in secure mode, the Geode configuration service does not properly authorize configuration requests. This allows an unprivileged user who gains access to the Geode locator to extract configuration data and previously deployed application code.
-1.  [CVE-2017-15693](https://nvd.nist.gov/vuln/detail/CVE-2017-15693): In Apache Geode before v1.4.0, the Geode server stores application objects in serialized form. Certain cluster operations and API invocations cause these objects to be deserialized. A user with DATA:WRITE access to the cluster may be able to cause remote code execution if certain classes are present on the classpath.
-1.  [CVE-2017-15695](https://nvd.nist.gov/vuln/detail/CVE-2017-15695): When an Apache Geode server versions 1.0.0 to 1.4.0 is configured with a security manager, a user with DATA:WRITE privileges is allowed to deploy code by invoking an internal Geode function. This allows remote code execution. Code deployment should be restricted to users with DATA:MANAGE privilege.
-1.  [CVE-2017-15694](https://nvd.nist.gov/vuln/detail/CVE-2017-15694): When an Apache Geode server versions 1.0.0 to 1.8.0 is operating in secure mode, a user with write permissions for specific data regions can modify internal cluster metadata. A malicious user could modify this data in a way that affects the operation of the cluster.
-1.  [CVE-2019-10091](https://nvd.nist.gov/vuln/detail/CVE-2019-10091): When TLS is enabled with ssl-endpoint-identification-enabled set to true, Apache Geode fails to perform hostname verification of the entries in the certificate SAN during the SSL handshake. This could compromise intra-cluster communication using a man-in-the-middle attack.
+1.  [CVE-2017-5649](https://nvd.nist.gov/vuln/detail/CVE-2017-5649)
+1.  [CVE-2017-9794](https://nvd.nist.gov/vuln/detail/CVE-2017-9794)
+1.  [CVE-2017-9797](https://nvd.nist.gov/vuln/detail/CVE-2017-9797)
+1.  [CVE-2017-12622](https://nvd.nist.gov/vuln/detail/CVE-2017-12622)
+1.  [CVE-2017-15696](https://nvd.nist.gov/vuln/detail/CVE-2017-15696)
+1.  [CVE-2017-15693](https://nvd.nist.gov/vuln/detail/CVE-2017-15693)
+1.  [CVE-2017-15695](https://nvd.nist.gov/vuln/detail/CVE-2017-15695)
+1.  [CVE-2017-15694](https://nvd.nist.gov/vuln/detail/CVE-2017-15694)
+1.  [CVE-2019-10091](https://nvd.nist.gov/vuln/detail/CVE-2019-10091)
 
 

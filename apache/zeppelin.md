@@ -487,7 +487,7 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2018-1317](https://nvd.nist.gov/vuln/detail/CVE-2018-1317): In Apache Zeppelin prior to 0.8.0 the cron scheduler was enabled by default and could allow users to run paragraphs as other users without authentication.
-1.  [CVE-2019-10095](https://nvd.nist.gov/vuln/detail/CVE-2019-10095): bash command injection vulnerability in Apache Zeppelin allows an attacker to inject system commands into Spark interpreter settings. This issue affects Apache Zeppelin Apache Zeppelin version 0.9.0 and prior versions.
+1.  [CVE-2018-1317](https://nvd.nist.gov/vuln/detail/CVE-2018-1317)
+1.  [CVE-2019-10095](https://nvd.nist.gov/vuln/detail/CVE-2019-10095)
 
 

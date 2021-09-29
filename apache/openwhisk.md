@@ -491,7 +491,7 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2006-2473](https://nvd.nist.gov/vuln/detail/CVE-2006-2473): ** DISPUTED **  Cross-site scripting (XSS) vulnerability in ow.asp in OpenWiki 0.78 allows remote attackers to inject arbitrary web script or HTML via the p parameter.  NOTE: this issue has been disputed by the vendor and a third party who is affiliated with the product.  The vendor states "You cannot insert code in a wikipage or via URL parameters as they are all escaped before usage, so nothing can be compromised at other sites."
-1.  [CVE-2018-11757](https://nvd.nist.gov/vuln/detail/CVE-2018-11757): In Docker Skeleton Runtime for Apache OpenWhisk, a Docker action inheriting the Docker tag openwhisk/dockerskeleton:1.3.0 (or earlier) may allow an attacker to replace the user function inside the container if the user code is vulnerable to code exploitation.
+1.  [CVE-2006-2473](https://nvd.nist.gov/vuln/detail/CVE-2006-2473)
+1.  [CVE-2018-11757](https://nvd.nist.gov/vuln/detail/CVE-2018-11757)
 
 

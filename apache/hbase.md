@@ -512,15 +512,15 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2002-2017](https://nvd.nist.gov/vuln/detail/CVE-2002-2017): sastcpd in SAS/Base 8.0 allows local users to execute arbitrary code by setting the authprog environment variable to reference a malicious program, which is then executed by sastcpd.
-1.  [CVE-2006-1505](https://nvd.nist.gov/vuln/detail/CVE-2006-1505): base_maintenance.php in Basic Analysis and Security Engine (BASE) before 1.2.4 (melissa), when running in standalone mode, allows remote attackers to bypass authentication, possibly by setting the standalone parameter to "yes".
-1.  [CVE-2009-4592](https://nvd.nist.gov/vuln/detail/CVE-2009-4592): Unspecified vulnerability in base_local_rules.php in Basic Analysis and Security Engine (BASE) before 1.4.4 allows remote attackers to include arbitrary local files via unknown vectors.
-1.  [CVE-2012-1017](https://nvd.nist.gov/vuln/detail/CVE-2012-1017): Multiple SQL injection vulnerabilities in base_qry_main.php in Basic Analysis and Security Engine (BASE) 1.4.5 allow remote attackers to execute arbitrary SQL commands via the (1) ip_addr[0][1], (2) ip_addr[0][2], or (3) ip_addr[0][9] parameters.
-1.  [CVE-2014-2980](https://nvd.nist.gov/vuln/detail/CVE-2014-2980): Tools/gdomap.c in gdomap in GNUstep Base 1.24.6 and earlier, when run in daemon mode, does not properly handle the file descriptor for the logger, which allows remote attackers to cause a denial of service (abort) via an invalid request.
-1.  [CVE-2013-2193](https://nvd.nist.gov/vuln/detail/CVE-2013-2193): Apache HBase 0.92.x before 0.92.3 and 0.94.x before 0.94.9, when the Kerberos features are enabled, allows man-in-the-middle attackers to disable bidirectional authentication and obtain sensitive information via unspecified vectors.
-1.  [CVE-2015-1836](https://nvd.nist.gov/vuln/detail/CVE-2015-1836): Apache HBase 0.98 before 0.98.12.1, 1.0 before 1.0.1.1, and 1.1 before 1.1.0.1, as used in IBM InfoSphere BigInsights 3.0, 3.0.0.1, and 3.0.0.2 and other products, uses incorrect ACLs for ZooKeeper coordination state, which allows remote attackers to cause a denial of service (daemon outage), obtain sensitive information, or modify data via unspecified client traffic.
-1.  [CVE-2018-8025](https://nvd.nist.gov/vuln/detail/CVE-2018-8025): CVE-2018-8025 describes an issue in Apache HBase that affects the optional "Thrift 1" API server when running over HTTP. There is a race-condition which could lead to authenticated sessions being incorrectly applied to users, e.g. one authenticated user would be considered a different user or an unauthenticated user would be treated as an authenticated user. https://issues.apache.org/jira/browse/HBASE-20664 implements a fix for this issue. It has been fixed in versions: 1.2.6.1, 1.3.2.1, 1.4.5, 2.0.1.
-1.  [CVE-2019-0212](https://nvd.nist.gov/vuln/detail/CVE-2019-0212): In all previously released Apache HBase 2.x versions (2.0.0-2.0.4, 2.1.0-2.1.3), authorization was incorrectly applied to users of the HBase REST server. Requests sent to the HBase REST server were executed with the permissions of the REST server itself, not with the permissions of the end-user. This issue is only relevant when HBase is configured with Kerberos authentication, HBase authorization is enabled, and the REST server is configured with SPNEGO authentication. This issue does not extend beyond the HBase REST server.
-1.  [CVE-2019-15544](https://nvd.nist.gov/vuln/detail/CVE-2019-15544): An issue was discovered in the protobuf crate before 2.6.0 for Rust. Attackers can exhaust all memory via Vec::reserve calls.
+1.  [CVE-2002-2017](https://nvd.nist.gov/vuln/detail/CVE-2002-2017)
+1.  [CVE-2006-1505](https://nvd.nist.gov/vuln/detail/CVE-2006-1505)
+1.  [CVE-2009-4592](https://nvd.nist.gov/vuln/detail/CVE-2009-4592)
+1.  [CVE-2012-1017](https://nvd.nist.gov/vuln/detail/CVE-2012-1017)
+1.  [CVE-2014-2980](https://nvd.nist.gov/vuln/detail/CVE-2014-2980)
+1.  [CVE-2013-2193](https://nvd.nist.gov/vuln/detail/CVE-2013-2193)
+1.  [CVE-2015-1836](https://nvd.nist.gov/vuln/detail/CVE-2015-1836)
+1.  [CVE-2018-8025](https://nvd.nist.gov/vuln/detail/CVE-2018-8025)
+1.  [CVE-2019-0212](https://nvd.nist.gov/vuln/detail/CVE-2019-0212)
+1.  [CVE-2019-15544](https://nvd.nist.gov/vuln/detail/CVE-2019-15544)
 
 

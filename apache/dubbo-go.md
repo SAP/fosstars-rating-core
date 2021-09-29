@@ -469,11 +469,11 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2019-17564](https://nvd.nist.gov/vuln/detail/CVE-2019-17564): Unsafe deserialization occurs within a Dubbo application which has HTTP remoting enabled. An attacker may submit a POST request with a Java object in it to completely compromise a Provider instance of Apache Dubbo, if this instance enables HTTP. This issue affected Apache Dubbo 2.7.0 to 2.7.4, 2.6.0 to 2.6.7, and all 2.5.x versions.
-1.  [CVE-2020-1948](https://nvd.nist.gov/vuln/detail/CVE-2020-1948): This vulnerability can affect all Dubbo users stay on version 2.7.6 or lower. An attacker can send RPC requests with unrecognized service name or method name along with some malicious parameter payloads. When the malicious parameter is deserialized, it will execute some malicious code. More details can be found below.
-1.  [CVE-2020-11995](https://nvd.nist.gov/vuln/detail/CVE-2020-11995): A deserialization vulnerability existed in dubbo 2.7.5 and its earlier versions, which could lead to malicious code execution. Most Dubbo users use Hessian2 as the default serialization/deserialization protool, during Hessian2 deserializing the HashMap object, some functions in the classes stored in HasMap will be executed after a series of program calls, however, those special functions may cause remote command execution. For example, the hashCode() function of the EqualsBean class in rome-1.7.0.jar will cause the remotely load malicious classes and execute malicious code by constructing a malicious request. This issue was fixed in Apache Dubbo 2.6.9 and 2.7.8.
-1.  [CVE-2021-30181](https://nvd.nist.gov/vuln/detail/CVE-2021-30181): Apache Dubbo prior to 2.6.9 and 2.7.9 supports Script routing which will enable a customer to route the request to the right server. These rules are used by the customers when making a request in order to find the right endpoint. When parsing these rules, Dubbo customers use ScriptEngine and run the rule provided by the script which by default may enable executing arbitrary code.
-1.  [CVE-2021-36162](https://nvd.nist.gov/vuln/detail/CVE-2021-36162): Apache Dubbo supports various rules to support configuration override or traffic routing (called routing in Dubbo). These rules are loaded into the configuration center (eg: Zookeeper, Nacos, ...) and retrieved by the customers when making a request in order to find the right endpoint. When parsing these YAML rules, Dubbo customers will use SnakeYAML library to load the rules which by default will enable calling arbitrary constructors. An attacker with access to the configuration center he will be able to poison the rule so when retrieved by the consumers, it will get RCE on all of them. This was fixed in Dubbo 2.7.13, 3.0.2
-1.  [CVE-2021-36161](https://nvd.nist.gov/vuln/detail/CVE-2021-36161): Some component in Dubbo will try to print the formated string of the input arguments, which will possibly cause RCE for a maliciously customized bean with special toString method. In the latest version, we fix the toString call in timeout, cache and some other places. Fixed in Apache Dubbo 2.7.13
+1.  [CVE-2019-17564](https://nvd.nist.gov/vuln/detail/CVE-2019-17564)
+1.  [CVE-2020-1948](https://nvd.nist.gov/vuln/detail/CVE-2020-1948)
+1.  [CVE-2020-11995](https://nvd.nist.gov/vuln/detail/CVE-2020-11995)
+1.  [CVE-2021-30181](https://nvd.nist.gov/vuln/detail/CVE-2021-30181)
+1.  [CVE-2021-36162](https://nvd.nist.gov/vuln/detail/CVE-2021-36162)
+1.  [CVE-2021-36161](https://nvd.nist.gov/vuln/detail/CVE-2021-36161)
 
 

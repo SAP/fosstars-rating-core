@@ -473,15 +473,15 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2002-0817](https://nvd.nist.gov/vuln/detail/CVE-2002-0817): Format string vulnerability in super for Linux allows local users to gain root privileges via a long command line argument.
-1.  [CVE-2004-0579](https://nvd.nist.gov/vuln/detail/CVE-2004-0579): Format string vulnerability in super before 3.23 allows local users to execute arbitrary code as root.
-1.  [CVE-2011-2776](https://nvd.nist.gov/vuln/detail/CVE-2011-2776): Buffer overflow in the Error function in super.c in Super 3.30.0 might allow local users to execute arbitrary code via vectors related to syslog logging.  NOTE: some of these details are obtained from third party information.
-1.  [CVE-2014-0470](https://nvd.nist.gov/vuln/detail/CVE-2014-0470): super.c in Super 3.30.0 does not check the return value of the setuid function when the -F flag is set, which allows local users to gain privileges via unspecified vectors, aka an RLIMIT_NPROC attack.
-1.  [CVE-2018-8021](https://nvd.nist.gov/vuln/detail/CVE-2018-8021): Versions of Superset prior to 0.23 used an unsafe load method from the pickle library to deserialize data leading to possible remote code execution. Note Superset 0.23 was released prior to any Superset release under the Apache Software Foundation.
-1.  [CVE-2020-1932](https://nvd.nist.gov/vuln/detail/CVE-2020-1932): An information disclosure issue was found in Apache Superset 0.34.0, 0.34.1, 0.35.0, and 0.35.1. Authenticated Apache Superset users are able to retrieve other users' information, including hashed passwords, by accessing an unused and undocumented API endpoint on Apache Superset.
-1.  [CVE-2020-13948](https://nvd.nist.gov/vuln/detail/CVE-2020-13948): While investigating a bug report on Apache Superset, it was determined that an authenticated user could craft requests via a number of templated text fields in the product that would allow arbitrary access to Python’s `os` package in the web application process in versions < 0.37.1. It was thus possible for an authenticated user to list and access files, environment variables, and process information. Additionally it was possible to set environment variables for the current process, create and update files in folders writable by the web process, and execute arbitrary programs accessible by the web process. All other operations available to the `os` package in Python were also available, even if not explicitly enumerated in this CVE.
-1.  [CVE-2020-13952](https://nvd.nist.gov/vuln/detail/CVE-2020-13952): In the course of work on the open source project it was discovered that authenticated users running queries against Hive and Presto database engines could access information via a number of templated fields including the contents of query description metadata database, the hashed version of the authenticated users’ password, and access to connection information including the plaintext password for the current connection. It would also be possible to run arbitrary methods on the database connection object for the Presto or Hive connection, allowing the user to bypass security controls internal to Superset. This vulnerability is present in every Apache Superset version < 0.37.2.
-1.  [CVE-2021-27907](https://nvd.nist.gov/vuln/detail/CVE-2021-27907): Apache Superset up to and including 0.38.0 allowed the creation of a Markdown component on a Dashboard page for describing chart's related information. Abusing this functionality, a malicious user could inject javascript code executing unwanted action in the context of the user's browser. The javascript code will be automatically executed (Stored XSS) when a legitimate user surfs on the dashboard page. The vulnerability is exploitable creating a “div” section and embedding in it a “svg” element with javascript code.
-1.  [CVE-2021-28125](https://nvd.nist.gov/vuln/detail/CVE-2021-28125): Apache Superset up to and including 1.0.1 allowed for the creation of an external URL that could be malicious. By not checking user input for open redirects the URL shortener functionality would allow for a malicious user to create a short URL for a dashboard that could convince the user to click the link.
+1.  [CVE-2002-0817](https://nvd.nist.gov/vuln/detail/CVE-2002-0817)
+1.  [CVE-2004-0579](https://nvd.nist.gov/vuln/detail/CVE-2004-0579)
+1.  [CVE-2011-2776](https://nvd.nist.gov/vuln/detail/CVE-2011-2776)
+1.  [CVE-2014-0470](https://nvd.nist.gov/vuln/detail/CVE-2014-0470)
+1.  [CVE-2018-8021](https://nvd.nist.gov/vuln/detail/CVE-2018-8021)
+1.  [CVE-2020-1932](https://nvd.nist.gov/vuln/detail/CVE-2020-1932)
+1.  [CVE-2020-13948](https://nvd.nist.gov/vuln/detail/CVE-2020-13948)
+1.  [CVE-2020-13952](https://nvd.nist.gov/vuln/detail/CVE-2020-13952)
+1.  [CVE-2021-27907](https://nvd.nist.gov/vuln/detail/CVE-2021-27907)
+1.  [CVE-2021-28125](https://nvd.nist.gov/vuln/detail/CVE-2021-28125)
 
 

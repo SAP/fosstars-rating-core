@@ -479,6 +479,6 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2006-6803](https://nvd.nist.gov/vuln/detail/CVE-2006-6803): SQL injection vulnerability in Types.asp in Enthrallweb eCars 1.0 allows remote attackers to execute arbitrary SQL commands via the Type_id parameter.
+1.  [CVE-2006-6803](https://nvd.nist.gov/vuln/detail/CVE-2006-6803)
 
 

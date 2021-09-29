@@ -492,8 +492,8 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2017-12610](https://nvd.nist.gov/vuln/detail/CVE-2017-12610): In Apache Kafka 0.10.0.0 to 0.10.2.1 and 0.11.0.0 to 0.11.0.1, authenticated Kafka clients may use impersonation via a manually crafted protocol message with SASL/PLAIN or SASL/SCRAM authentication when using the built-in PLAIN or SCRAM server implementations in Apache Kafka.
-1.  [CVE-2018-17196](https://nvd.nist.gov/vuln/detail/CVE-2018-17196): In Apache Kafka versions between 0.11.0.0 and 2.1.0, it is possible to manually craft a Produce request which bypasses transaction/idempotent ACL validation. Only authenticated clients with Write permission on the respective topics are able to exploit this vulnerability. Users should upgrade to 2.1.1 or later where this vulnerability has been fixed.
-1.  [CVE-2019-12399](https://nvd.nist.gov/vuln/detail/CVE-2019-12399): When Connect workers in Apache Kafka 2.0.0, 2.0.1, 2.1.0, 2.1.1, 2.2.0, 2.2.1, or 2.3.0 are configured with one or more config providers, and a connector is created/updated on that Connect cluster to use an externalized secret variable in a substring of a connector configuration property value, then any client can issue a request to the same Connect cluster to obtain the connector's task configuration and the response will contain the plaintext secret rather than the externalized secrets variables.
+1.  [CVE-2017-12610](https://nvd.nist.gov/vuln/detail/CVE-2017-12610)
+1.  [CVE-2018-17196](https://nvd.nist.gov/vuln/detail/CVE-2018-17196)
+1.  [CVE-2019-12399](https://nvd.nist.gov/vuln/detail/CVE-2019-12399)
 
 

@@ -512,32 +512,32 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2010-1244](https://nvd.nist.gov/vuln/detail/CVE-2010-1244): Cross-site request forgery (CSRF) vulnerability in createDestination.action in Apache ActiveMQ before 5.3.1 allows remote attackers to hijack the authentication of unspecified victims for requests that create queues via the JMSDestination parameter in a queue action.
-1.  [CVE-2010-1587](https://nvd.nist.gov/vuln/detail/CVE-2010-1587): The Jetty ResourceHandler in Apache ActiveMQ 5.x before 5.3.2 and 5.4.x before 5.4.0 allows remote attackers to read JSP source code via a // (slash slash) initial substring in a URI for (1) admin/index.jsp, (2) admin/queues.jsp, or (3) admin/topics.jsp.
-1.  [CVE-2011-4905](https://nvd.nist.gov/vuln/detail/CVE-2011-4905): Apache ActiveMQ before 5.6.0 allows remote attackers to cause a denial of service (file-descriptor exhaustion and broker crash or hang) by sending many openwire failover:tcp:// connection requests.
-1.  [CVE-2012-5784](https://nvd.nist.gov/vuln/detail/CVE-2012-5784): Apache Axis 1.4 and earlier, as used in PayPal Payments Pro, PayPal Mass Pay, PayPal Transactional Information SOAP, the Java Message Service implementation in Apache ActiveMQ, and other products, does not verify that the server hostname matches a domain name in the subject's Common Name (CN) or subjectAltName field of the X.509 certificate, which allows man-in-the-middle attackers to spoof SSL servers via an arbitrary valid certificate.
-1.  [CVE-2013-3060](https://nvd.nist.gov/vuln/detail/CVE-2013-3060): The web console in Apache ActiveMQ before 5.8.0 does not require authentication, which allows remote attackers to obtain sensitive information or cause a denial of service via HTTP requests.
-1.  [CVE-2013-1879](https://nvd.nist.gov/vuln/detail/CVE-2013-1879): Cross-site scripting (XSS) vulnerability in scheduled.jsp in Apache ActiveMQ 5.8.0 and earlier allows remote attackers to inject arbitrary web script or HTML via vectors involving the "cron of a message."
-1.  [CVE-2013-1880](https://nvd.nist.gov/vuln/detail/CVE-2013-1880): Cross-site scripting (XSS) vulnerability in the Portfolio publisher servlet in the demo web application in Apache ActiveMQ before 5.9.0 allows remote attackers to inject arbitrary web script or HTML via the refresh parameter to demo/portfolioPublish, a different vulnerability than CVE-2012-6092.
-1.  [CVE-2014-8110](https://nvd.nist.gov/vuln/detail/CVE-2014-8110): Multiple cross-site scripting (XSS) vulnerabilities in the web based administration console in Apache ActiveMQ 5.x before 5.10.1 allow remote attackers to inject arbitrary web script or HTML via unspecified vectors.
-1.  [CVE-2014-3576](https://nvd.nist.gov/vuln/detail/CVE-2014-3576): The processControlCommand function in broker/TransportConnection.java in Apache ActiveMQ before 5.11.0 allows remote attackers to cause a denial of service (shutdown) via a shutdown command.
-1.  [CVE-2015-1830](https://nvd.nist.gov/vuln/detail/CVE-2015-1830): Directory traversal vulnerability in the fileserver upload/download functionality for blob messages in Apache ActiveMQ 5.x before 5.11.2 for Windows allows remote attackers to create JSP files in arbitrary directories via unspecified vectors.
-1.  [CVE-2015-6524](https://nvd.nist.gov/vuln/detail/CVE-2015-6524): The LDAPLoginModule implementation in the Java Authentication and Authorization Service (JAAS) in Apache ActiveMQ 5.x before 5.10.1 allows wildcard operators in usernames, which allows remote attackers to obtain credentials via a brute force attack. NOTE: this identifier was SPLIT from CVE-2014-3612 per ADT2 due to different vulnerability types.
-1.  [CVE-2015-5254](https://nvd.nist.gov/vuln/detail/CVE-2015-5254): Apache ActiveMQ 5.x before 5.13.0 does not restrict the classes that can be serialized in the broker, which allows remote attackers to execute arbitrary code via a crafted serialized Java Message Service (JMS) ObjectMessage object.
-1.  [CVE-2016-0734](https://nvd.nist.gov/vuln/detail/CVE-2016-0734): The web-based administration console in Apache ActiveMQ 5.x before 5.13.2 does not send an X-Frame-Options HTTP header, which makes it easier for remote attackers to conduct clickjacking attacks via a crafted web page that contains a (1) FRAME or (2) IFRAME element.
-1.  [CVE-2016-3088](https://nvd.nist.gov/vuln/detail/CVE-2016-3088): The Fileserver web application in Apache ActiveMQ 5.x before 5.14.0 allows remote attackers to upload and execute arbitrary files via an HTTP PUT followed by an HTTP MOVE request.
-1.  [CVE-2016-0782](https://nvd.nist.gov/vuln/detail/CVE-2016-0782): The administration web console in Apache ActiveMQ 5.x before 5.11.4, 5.12.x before 5.12.3, and 5.13.x before 5.13.2 allows remote authenticated users to conduct cross-site scripting (XSS) attacks and consequently obtain sensitive information from a Java memory dump via vectors related to creating a queue.
-1.  [CVE-2014-3600](https://nvd.nist.gov/vuln/detail/CVE-2014-3600): XML external entity (XXE) vulnerability in Apache ActiveMQ 5.x before 5.10.1 allows remote consumers to have unspecified impact via vectors involving an XPath based selector when dequeuing XML messages.
-1.  [CVE-2016-6810](https://nvd.nist.gov/vuln/detail/CVE-2016-6810): In Apache ActiveMQ 5.x before 5.14.2, an instance of a cross-site scripting vulnerability was identified to be present in the web based administration console. The root cause of this issue is improper user data output validation.
-1.  [CVE-2017-15709](https://nvd.nist.gov/vuln/detail/CVE-2017-15709): When using the OpenWire protocol in ActiveMQ versions 5.14.0 to 5.15.2 it was found that certain system details (such as the OS and kernel version) are exposed as plain text.
-1.  [CVE-2018-11775](https://nvd.nist.gov/vuln/detail/CVE-2018-11775): TLS hostname verification when using the Apache ActiveMQ Client before 5.15.6 was missing which could make the client vulnerable to a MITM attack between a Java application using the ActiveMQ client and the ActiveMQ server. This is now enabled by default.
-1.  [CVE-2018-8006](https://nvd.nist.gov/vuln/detail/CVE-2018-8006): An instance of a cross-site scripting vulnerability was identified to be present in the web based administration console on the queue.jsp page of Apache ActiveMQ versions 5.0.0 to 5.15.5. The root cause of this issue is improper data filtering of the QueueFilter parameter.
-1.  [CVE-2019-0222](https://nvd.nist.gov/vuln/detail/CVE-2019-0222): In Apache ActiveMQ 5.0.0 - 5.15.8, unmarshalling corrupt MQTT frame can lead to broker Out of Memory exception making it unresponsive.
-1.  [CVE-2015-7559](https://nvd.nist.gov/vuln/detail/CVE-2015-7559): It was found that the Apache ActiveMQ client before 5.15.5 exposed a remote shutdown command in the ActiveMQConnection class. An attacker logged into a compromised broker could use this flaw to achieve denial of service on a connected client.
-1.  [CVE-2020-1941](https://nvd.nist.gov/vuln/detail/CVE-2020-1941): In Apache ActiveMQ 5.0.0 to 5.15.11, the webconsole admin GUI is open to XSS, in the view that lists the contents of a queue.
-1.  [CVE-2020-11998](https://nvd.nist.gov/vuln/detail/CVE-2020-11998): A regression has been introduced in the commit preventing JMX re-bind. By passing an empty environment map to RMIConnectorServer, instead of the map that contains the authentication credentials, it leaves ActiveMQ open to the following attack: https://docs.oracle.com/javase/8/docs/technotes/guides/management/agent.html "A remote client could create a javax.management.loading.MLet MBean and use it to create new MBeans from arbitrary URLs, at least if there is no security manager. In other words, a rogue remote client could make your Java application execute arbitrary code." Mitigation: Upgrade to Apache ActiveMQ 5.15.13
-1.  [CVE-2020-26217](https://nvd.nist.gov/vuln/detail/CVE-2020-26217): XStream before version 1.4.14 is vulnerable to Remote Code Execution.The vulnerability may allow a remote attacker to run arbitrary shell commands only by manipulating the processed input stream. Only users who rely on blocklists are affected. Anyone using XStream's Security Framework allowlist is not affected. The linked advisory provides code workarounds for users who cannot upgrade. The issue is fixed in version 1.4.14.
-1.  [CVE-2021-26117](https://nvd.nist.gov/vuln/detail/CVE-2021-26117): The optional ActiveMQ LDAP login module can be configured to use anonymous access to the LDAP server. In this case, for Apache ActiveMQ Artemis prior to version 2.16.0 and Apache ActiveMQ prior to versions 5.16.1 and 5.15.14, the anonymous context is used to verify a valid users password in error, resulting in no check on the password.
-1.  [CVE-2020-13947](https://nvd.nist.gov/vuln/detail/CVE-2020-13947): An instance of a cross-site scripting vulnerability was identified to be present in the web based administration console on the message.jsp page of Apache ActiveMQ versions 5.15.12 through 5.16.0.
+1.  [CVE-2010-1244](https://nvd.nist.gov/vuln/detail/CVE-2010-1244)
+1.  [CVE-2010-1587](https://nvd.nist.gov/vuln/detail/CVE-2010-1587)
+1.  [CVE-2011-4905](https://nvd.nist.gov/vuln/detail/CVE-2011-4905)
+1.  [CVE-2012-5784](https://nvd.nist.gov/vuln/detail/CVE-2012-5784)
+1.  [CVE-2013-3060](https://nvd.nist.gov/vuln/detail/CVE-2013-3060)
+1.  [CVE-2013-1879](https://nvd.nist.gov/vuln/detail/CVE-2013-1879)
+1.  [CVE-2013-1880](https://nvd.nist.gov/vuln/detail/CVE-2013-1880)
+1.  [CVE-2014-8110](https://nvd.nist.gov/vuln/detail/CVE-2014-8110)
+1.  [CVE-2014-3576](https://nvd.nist.gov/vuln/detail/CVE-2014-3576)
+1.  [CVE-2015-1830](https://nvd.nist.gov/vuln/detail/CVE-2015-1830)
+1.  [CVE-2015-6524](https://nvd.nist.gov/vuln/detail/CVE-2015-6524)
+1.  [CVE-2015-5254](https://nvd.nist.gov/vuln/detail/CVE-2015-5254)
+1.  [CVE-2016-0734](https://nvd.nist.gov/vuln/detail/CVE-2016-0734)
+1.  [CVE-2016-3088](https://nvd.nist.gov/vuln/detail/CVE-2016-3088)
+1.  [CVE-2016-0782](https://nvd.nist.gov/vuln/detail/CVE-2016-0782)
+1.  [CVE-2014-3600](https://nvd.nist.gov/vuln/detail/CVE-2014-3600)
+1.  [CVE-2016-6810](https://nvd.nist.gov/vuln/detail/CVE-2016-6810)
+1.  [CVE-2017-15709](https://nvd.nist.gov/vuln/detail/CVE-2017-15709)
+1.  [CVE-2018-11775](https://nvd.nist.gov/vuln/detail/CVE-2018-11775)
+1.  [CVE-2018-8006](https://nvd.nist.gov/vuln/detail/CVE-2018-8006)
+1.  [CVE-2019-0222](https://nvd.nist.gov/vuln/detail/CVE-2019-0222)
+1.  [CVE-2015-7559](https://nvd.nist.gov/vuln/detail/CVE-2015-7559)
+1.  [CVE-2020-1941](https://nvd.nist.gov/vuln/detail/CVE-2020-1941)
+1.  [CVE-2020-11998](https://nvd.nist.gov/vuln/detail/CVE-2020-11998)
+1.  [CVE-2020-26217](https://nvd.nist.gov/vuln/detail/CVE-2020-26217)
+1.  [CVE-2021-26117](https://nvd.nist.gov/vuln/detail/CVE-2021-26117)
+1.  [CVE-2020-13947](https://nvd.nist.gov/vuln/detail/CVE-2020-13947)
 
 

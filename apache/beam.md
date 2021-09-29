@@ -507,8 +507,8 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2020-1929](https://nvd.nist.gov/vuln/detail/CVE-2020-1929): The Apache Beam MongoDB connector in versions 2.10.0 to 2.16.0 has an option to disable SSL trust verification. However this configuration is not respected and the certificate verification disables trust verification in every case. This exclusion also gets registered globally which disables trust checking for any code running in the same JVM.
-1.  [CVE-2020-27216](https://nvd.nist.gov/vuln/detail/CVE-2020-27216): In Eclipse Jetty versions 1.0 thru 9.4.32.v20200930, 10.0.0.alpha1 thru 10.0.0.beta2, and 11.0.0.alpha1 thru 11.0.0.beta2O, on Unix like systems, the system's temporary directory is shared between all users on that system. A collocated user can observe the process of creating a temporary sub directory in the shared temporary directory and race to complete the creation of the temporary subdirectory. If the attacker wins the race then they will have read and write permission to the subdirectory used to unpack web applications, including their WEB-INF/lib jar files and JSP files. If any code is ever executed out of this temporary directory, this can lead to a local privilege escalation vulnerability.
-1.  [CVE-2021-28027](https://nvd.nist.gov/vuln/detail/CVE-2021-28027): An issue was discovered in the bam crate before 0.1.3 for Rust. There is an integer underflow and out-of-bounds write during the loading of a bgzip block.
+1.  [CVE-2020-1929](https://nvd.nist.gov/vuln/detail/CVE-2020-1929)
+1.  [CVE-2020-27216](https://nvd.nist.gov/vuln/detail/CVE-2020-27216)
+1.  [CVE-2021-28027](https://nvd.nist.gov/vuln/detail/CVE-2021-28027)
 
 

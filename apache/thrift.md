@@ -507,14 +507,14 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2015-3254](https://nvd.nist.gov/vuln/detail/CVE-2015-3254): The client libraries in Apache Thrift before 0.9.3 might allow remote authenticated users to cause a denial of service (infinite recursion) via vectors involving the skip function.
-1.  [CVE-2016-5397](https://nvd.nist.gov/vuln/detail/CVE-2016-5397): The Apache Thrift Go client library exposed the potential during code generation for command injection due to using an external formatting tool. Affected Apache Thrift 0.9.3 and older, Fixed in Apache Thrift 0.10.0.
-1.  [CVE-2018-1320](https://nvd.nist.gov/vuln/detail/CVE-2018-1320): Apache Thrift Java client library versions 0.5.0 through 0.11.0 can bypass SASL negotiation isComplete validation in the org.apache.thrift.transport.TSaslTransport class. An assert used to determine if the SASL handshake had successfully completed could be disabled in production settings making the validation incomplete.
-1.  [CVE-2019-3552](https://nvd.nist.gov/vuln/detail/CVE-2019-3552): C++ Facebook Thrift servers (using cpp2) would not error upon receiving messages with containers of fields of unknown type. As a result, malicious clients could send short messages which would take a long time for the server to parse, potentially leading to denial of service. This issue affects Facebook Thrift prior to v2019.02.18.00.
-1.  [CVE-2019-0210](https://nvd.nist.gov/vuln/detail/CVE-2019-0210): In Apache Thrift 0.9.3 to 0.12.0, a server implemented in Go using TJSONProtocol or TSimpleJSONProtocol may panic when feed with invalid input data.
-1.  [CVE-2019-3553](https://nvd.nist.gov/vuln/detail/CVE-2019-3553): C++ Facebook Thrift servers would not error upon receiving messages declaring containers of sizes larger than the payload. As a result, malicious clients could send short messages which would result in a large memory allocation, potentially leading to denial of service. This issue affects Facebook Thrift prior to v2020.02.03.00.
-1.  [CVE-2019-11939](https://nvd.nist.gov/vuln/detail/CVE-2019-11939): Golang Facebook Thrift servers would not error upon receiving messages declaring containers of sizes larger than the payload. As a result, malicious clients could send short messages which would result in a large memory allocation, potentially leading to denial of service. This issue affects Facebook Thrift prior to v2020.03.16.00.
-1.  [CVE-2020-13949](https://nvd.nist.gov/vuln/detail/CVE-2020-13949): In Apache Thrift 0.9.3 to 0.13.0, malicious RPC clients could send short messages which would result in a large memory allocation, potentially leading to denial of service.
-1.  [CVE-2021-24028](https://nvd.nist.gov/vuln/detail/CVE-2021-24028): An invalid free in Thrift's table-based serialization can cause the application to crash or potentially result in code execution or other undesirable effects. This issue affects Facebook Thrift prior to v2021.02.22.00.
+1.  [CVE-2015-3254](https://nvd.nist.gov/vuln/detail/CVE-2015-3254)
+1.  [CVE-2016-5397](https://nvd.nist.gov/vuln/detail/CVE-2016-5397)
+1.  [CVE-2018-1320](https://nvd.nist.gov/vuln/detail/CVE-2018-1320)
+1.  [CVE-2019-3552](https://nvd.nist.gov/vuln/detail/CVE-2019-3552)
+1.  [CVE-2019-0210](https://nvd.nist.gov/vuln/detail/CVE-2019-0210)
+1.  [CVE-2019-3553](https://nvd.nist.gov/vuln/detail/CVE-2019-3553)
+1.  [CVE-2019-11939](https://nvd.nist.gov/vuln/detail/CVE-2019-11939)
+1.  [CVE-2020-13949](https://nvd.nist.gov/vuln/detail/CVE-2020-13949)
+1.  [CVE-2021-24028](https://nvd.nist.gov/vuln/detail/CVE-2021-24028)
 
 

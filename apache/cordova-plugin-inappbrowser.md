@@ -473,6 +473,6 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2014-0073](https://nvd.nist.gov/vuln/detail/CVE-2014-0073): The CDVInAppBrowser class in the Apache Cordova In-App-Browser standalone plugin (org.apache.cordova.inappbrowser) before 0.3.2 for iOS and the In-App-Browser plugin for iOS from Cordova 2.6.0 through 2.9.0 does not properly validate callback identifiers, which allows remote attackers to execute arbitrary JavaScript in the host page and consequently gain privileges via a crafted gap-iab: URI.
+1.  [CVE-2014-0073](https://nvd.nist.gov/vuln/detail/CVE-2014-0073)
 
 

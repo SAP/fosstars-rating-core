@@ -492,8 +492,8 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2017-3152](https://nvd.nist.gov/vuln/detail/CVE-2017-3152): Apache Atlas versions 0.6.0-incubating and 0.7.0-incubating were found vulnerable to DOM XSS in the edit-tag functionality.
-1.  [CVE-2019-10070](https://nvd.nist.gov/vuln/detail/CVE-2019-10070): Apache Atlas versions 0.8.3 and 1.1.0 were found vulnerable to Stored Cross-Site Scripting in the search functionality
-1.  [CVE-2020-13928](https://nvd.nist.gov/vuln/detail/CVE-2020-13928): Apache Atlas before 2.1.0 contain a XSS vulnerability. While saving search or rendering elements values are not sanitized correctly and because of that it triggers the XSS vulnerability.
+1.  [CVE-2017-3152](https://nvd.nist.gov/vuln/detail/CVE-2017-3152)
+1.  [CVE-2019-10070](https://nvd.nist.gov/vuln/detail/CVE-2019-10070)
+1.  [CVE-2020-13928](https://nvd.nist.gov/vuln/detail/CVE-2020-13928)
 
 

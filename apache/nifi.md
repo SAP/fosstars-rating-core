@@ -507,19 +507,19 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2017-7667](https://nvd.nist.gov/vuln/detail/CVE-2017-7667): Apache NiFi before 0.7.4 and 1.x before 1.3.0 need to establish the response header telling browsers to only allow framing with the same origin.
-1.  [CVE-2017-12623](https://nvd.nist.gov/vuln/detail/CVE-2017-12623): An authorized user could upload a template which contained malicious code and accessed sensitive files via an XML External Entity (XXE) attack. The fix to properly handle XML External Entities was applied on the Apache NiFi 1.4.0 release. Users running a prior 1.x release should upgrade to the appropriate release.
-1.  [CVE-2017-5636](https://nvd.nist.gov/vuln/detail/CVE-2017-5636): In Apache NiFi before 0.7.2 and 1.x before 1.1.2 in a cluster environment, the proxy chain serialization/deserialization is vulnerable to an injection attack where a carefully crafted username could impersonate another user and gain their permissions on a replicated request to another node.
-1.  [CVE-2017-12632](https://nvd.nist.gov/vuln/detail/CVE-2017-12632): A malicious host header in an incoming HTTP request could cause NiFi to load resources from an external server. The fix to sanitize host headers and compare to a controlled whitelist was applied on the Apache NiFi 1.5.0 release. Users running a prior 1.x release should upgrade to the appropriate release.
-1.  [CVE-2017-15703](https://nvd.nist.gov/vuln/detail/CVE-2017-15703): Any authenticated user (valid client certificate but without ACL permissions) could upload a template which contained malicious code and caused a denial of service via Java deserialization attack. The fix to properly handle Java deserialization was applied on the Apache NiFi 1.4.0 release. Users running a prior 1.x release should upgrade to the appropriate release.
-1.  [CVE-2018-1310](https://nvd.nist.gov/vuln/detail/CVE-2018-1310): Apache NiFi JMS Deserialization issue because of ActiveMQ client vulnerability. Malicious JMS content could cause denial of service. See ActiveMQ CVE-2015-5254 announcement for more information. The fix to upgrade the activemq-client library to 5.15.3 was applied on the Apache NiFi 1.6.0 release. Users running a prior 1.x release should upgrade to the appropriate release.
-1.  [CVE-2018-17195](https://nvd.nist.gov/vuln/detail/CVE-2018-17195): The template upload API endpoint accepted requests from different domain when sent in conjunction with ARP spoofing + man in the middle (MiTM) attack, resulting in a CSRF attack. The required attack vector is complex, requiring a scenario with client certificate authentication, same subnet access, and injecting malicious code into an unprotected (plaintext HTTP) website which the targeted user later visits, but the possible damage warranted a Severe severity level. Mitigation: The fix to apply Cross-Origin Resource Sharing (CORS) policy request filtering was applied on the Apache NiFi 1.8.0 release. Users running a prior 1.x release should upgrade to the appropriate release.
-1.  [CVE-2019-10086](https://nvd.nist.gov/vuln/detail/CVE-2019-10086): In Apache Commons Beanutils 1.9.2, a special BeanIntrospector class was added which allows suppressing the ability for an attacker to access the classloader via the class property available on all Java objects. We, however were not using this by default characteristic of the PropertyUtilsBean.
-1.  [CVE-2019-10083](https://nvd.nist.gov/vuln/detail/CVE-2019-10083): When updating a Process Group via the API in NiFi versions 1.3.0 to 1.9.2, the response to the request includes all of its contents (at the top most level, not recursively). The response included details about processors and controller services which the user may not have had read access to.
-1.  [CVE-2020-1928](https://nvd.nist.gov/vuln/detail/CVE-2020-1928): An information disclosure vulnerability was found in Apache NiFi 1.10.0. The sensitive parameter parser would log parsed values for debugging purposes. This would expose literal values entered in a sensitive property when no parameter was present.
-1.  [CVE-2020-1942](https://nvd.nist.gov/vuln/detail/CVE-2020-1942): In Apache NiFi 0.0.1 to 1.11.0, the flow fingerprint factory generated flow fingerprints which included sensitive property descriptor values. In the event a node attempted to join a cluster and the cluster flow was not inheritable, the flow fingerprint of both the cluster and local flow was printed, potentially containing sensitive values in plaintext.
-1.  [CVE-2020-9491](https://nvd.nist.gov/vuln/detail/CVE-2020-9491): In Apache NiFi 1.2.0 to 1.11.4, the NiFi UI and API were protected by mandating TLS v1.2, as well as listening connections established by processors like ListenHTTP, HandleHttpRequest, etc. However intracluster communication such as cluster request replication, Site-to-Site, and load balanced queues continued to support TLS v1.0 or v1.1.
-1.  [CVE-2021-20190](https://nvd.nist.gov/vuln/detail/CVE-2021-20190): A flaw was found in jackson-databind before 2.9.10.7. FasterXML mishandles the interaction between serialization gadgets and typing. The highest threat from this vulnerability is to data confidentiality and integrity as well as system availability.
-1.  [CVE-2020-27223](https://nvd.nist.gov/vuln/detail/CVE-2020-27223): In Eclipse Jetty 9.4.6.v20170531 to 9.4.36.v20210114 (inclusive), 10.0.0, and 11.0.0 when Jetty handles a request containing multiple Accept headers with a large number of “quality” (i.e. q) parameters, the server may enter a denial of service (DoS) state due to high CPU usage processing those quality values, resulting in minutes of CPU time exhausted processing those quality values.
+1.  [CVE-2017-7667](https://nvd.nist.gov/vuln/detail/CVE-2017-7667)
+1.  [CVE-2017-12623](https://nvd.nist.gov/vuln/detail/CVE-2017-12623)
+1.  [CVE-2017-5636](https://nvd.nist.gov/vuln/detail/CVE-2017-5636)
+1.  [CVE-2017-12632](https://nvd.nist.gov/vuln/detail/CVE-2017-12632)
+1.  [CVE-2017-15703](https://nvd.nist.gov/vuln/detail/CVE-2017-15703)
+1.  [CVE-2018-1310](https://nvd.nist.gov/vuln/detail/CVE-2018-1310)
+1.  [CVE-2018-17195](https://nvd.nist.gov/vuln/detail/CVE-2018-17195)
+1.  [CVE-2019-10086](https://nvd.nist.gov/vuln/detail/CVE-2019-10086)
+1.  [CVE-2019-10083](https://nvd.nist.gov/vuln/detail/CVE-2019-10083)
+1.  [CVE-2020-1928](https://nvd.nist.gov/vuln/detail/CVE-2020-1928)
+1.  [CVE-2020-1942](https://nvd.nist.gov/vuln/detail/CVE-2020-1942)
+1.  [CVE-2020-9491](https://nvd.nist.gov/vuln/detail/CVE-2020-9491)
+1.  [CVE-2021-20190](https://nvd.nist.gov/vuln/detail/CVE-2021-20190)
+1.  [CVE-2020-27223](https://nvd.nist.gov/vuln/detail/CVE-2020-27223)
 
 

@@ -499,13 +499,13 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2016-5017](https://nvd.nist.gov/vuln/detail/CVE-2016-5017): Buffer overflow in the C cli shell in Apache Zookeeper before 3.4.9 and 3.5.x before 3.5.3, when using the "cmd:" batch mode syntax, allows attackers to have unspecified impact via a long command string.
-1.  [CVE-2017-5637](https://nvd.nist.gov/vuln/detail/CVE-2017-5637): Two four letter word commands "wchp/wchc" are CPU intensive and could cause spike of CPU utilization on Apache ZooKeeper server if abused, which leads to the server unable to serve legitimate client requests. Apache ZooKeeper thru version 3.4.9 and 3.5.2 suffer from this issue, fixed in 3.4.10, 3.5.3, and later.
-1.  [CVE-2018-8012](https://nvd.nist.gov/vuln/detail/CVE-2018-8012): No authentication/authorization is enforced when a server attempts to join a quorum in Apache ZooKeeper before 3.4.10, and 3.5.0-alpha through 3.5.3-beta. As a result an arbitrary end point could join the cluster and begin propagating counterfeit changes to the leader.
-1.  [CVE-2019-0201](https://nvd.nist.gov/vuln/detail/CVE-2019-0201): An issue is present in Apache ZooKeeper 1.0.0 to 3.4.13 and 3.5.0-alpha to 3.5.4-beta. ZooKeeper’s getACL() command doesn’t check any permission when retrieves the ACLs of the requested node and returns all information contained in the ACL Id field as plaintext string. DigestAuthenticationProvider overloads the Id field with the hash value that is used for user authentication. As a consequence, if Digest Authentication is in use, the unsalted hash value will be disclosed by getACL() request for unauthenticated or unprivileged users.
-1.  [CVE-2021-21409](https://nvd.nist.gov/vuln/detail/CVE-2021-21409): Netty is an open-source, asynchronous event-driven network application framework for rapid development of maintainable high performance protocol servers & clients. In Netty (io.netty:netty-codec-http2) before version 4.1.61.Final there is a vulnerability that enables request smuggling. The content-length header is not correctly validated if the request only uses a single Http2HeaderFrame with the endStream set to to true. This could lead to request smuggling if the request is proxied to a remote peer and translated to HTTP/1.1. This is a followup of GHSA-wm47-8v5p-wjpj/CVE-2021-21295 which did miss to fix this one case. This was fixed as part of 4.1.61.Final.
-1.  [CVE-2021-28164](https://nvd.nist.gov/vuln/detail/CVE-2021-28164): In Eclipse Jetty 9.4.37.v20210219 to 9.4.38.v20210224, the default compliance mode allows requests with URIs that contain %2e or %2e%2e segments to access protected resources within the WEB-INF directory. For example a request to /context/%2e/WEB-INF/web.xml can retrieve the web.xml file. This can reveal sensitive information regarding the implementation of a web application.
-1.  [CVE-2021-29425](https://nvd.nist.gov/vuln/detail/CVE-2021-29425): In Apache Commons IO before 2.7, When invoking the method FileNameUtils.normalize with an improper input string, like "//../foo", or "\\..\foo", the result would be the same value, thus possibly providing access to files in the parent directory, but not further above (thus "limited" path traversal), if the calling code would use the result to construct a path value.
-1.  [CVE-2021-34429](https://nvd.nist.gov/vuln/detail/CVE-2021-34429): For Eclipse Jetty versions 9.4.37-9.4.42, 10.0.1-10.0.5 & 11.0.1-11.0.5, URIs can be crafted using some encoded characters to access the content of the WEB-INF directory and/or bypass some security constraints. This is a variation of the vulnerability reported in CVE-2021-28164/GHSA-v7ff-8wcx-gmc5.
+1.  [CVE-2016-5017](https://nvd.nist.gov/vuln/detail/CVE-2016-5017)
+1.  [CVE-2017-5637](https://nvd.nist.gov/vuln/detail/CVE-2017-5637)
+1.  [CVE-2018-8012](https://nvd.nist.gov/vuln/detail/CVE-2018-8012)
+1.  [CVE-2019-0201](https://nvd.nist.gov/vuln/detail/CVE-2019-0201)
+1.  [CVE-2021-21409](https://nvd.nist.gov/vuln/detail/CVE-2021-21409)
+1.  [CVE-2021-28164](https://nvd.nist.gov/vuln/detail/CVE-2021-28164)
+1.  [CVE-2021-29425](https://nvd.nist.gov/vuln/detail/CVE-2021-29425)
+1.  [CVE-2021-34429](https://nvd.nist.gov/vuln/detail/CVE-2021-34429)
 
 

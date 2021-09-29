@@ -512,17 +512,17 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2015-3271](https://nvd.nist.gov/vuln/detail/CVE-2015-3271): Apache Tika server (aka tika-server) in Apache Tika 1.9 might allow remote attackers to read arbitrary files via the HTTP fileUrl header.
-1.  [CVE-2016-6809](https://nvd.nist.gov/vuln/detail/CVE-2016-6809): Apache Tika before 1.14 allows Java code execution for serialized objects embedded in MATLAB files. The issue exists because Tika invokes JMatIO to do native deserialization.
-1.  [CVE-2016-4434](https://nvd.nist.gov/vuln/detail/CVE-2016-4434): Apache Tika before 1.13 does not properly initialize the XML parser or choose handlers, which might allow remote attackers to conduct XML External Entity (XXE) attacks via vectors involving (1) spreadsheets in OOXML files and (2) XMP metadata in PDF and other file formats, a related issue to CVE-2016-2175.
-1.  [CVE-2018-1339](https://nvd.nist.gov/vuln/detail/CVE-2018-1339): A carefully crafted (or fuzzed) file can trigger an infinite loop in Apache Tika's ChmParser in versions of Apache Tika before 1.18.
-1.  [CVE-2018-11761](https://nvd.nist.gov/vuln/detail/CVE-2018-11761): In Apache Tika 0.1 to 1.18, the XML parsers were not configured to limit entity expansion. They were therefore vulnerable to an entity expansion vulnerability which can lead to a denial of service attack.
-1.  [CVE-2018-11796](https://nvd.nist.gov/vuln/detail/CVE-2018-11796): In Apache Tika 1.19 (CVE-2018-11761), we added an entity expansion limit for XML parsing. However, Tika reuses SAXParsers and calls reset() after each parse, which, for Xerces2 parsers, as per the documentation, removes the user-specified SecurityManager and thus removes entity expansion limits after the first parse. Apache Tika versions from 0.1 to 1.19 are therefore still vulnerable to entity expansions which can lead to a denial of service attack. Users should upgrade to 1.19.1 or later.
-1.  [CVE-2018-17197](https://nvd.nist.gov/vuln/detail/CVE-2018-17197): A carefully crafted or corrupt sqlite file can cause an infinite loop in Apache Tika's SQLite3Parser in versions 1.8-1.19.1 of Apache Tika.
-1.  [CVE-2019-10094](https://nvd.nist.gov/vuln/detail/CVE-2019-10094): A carefully crafted package/compressed file that, when unzipped/uncompressed yields the same file (a quine), causes a StackOverflowError in Apache Tika's RecursiveParserWrapper in versions 1.7-1.21. Apache Tika users should upgrade to 1.22 or later.
-1.  [CVE-2020-1950](https://nvd.nist.gov/vuln/detail/CVE-2020-1950): A carefully crafted or corrupt PSD file can cause excessive memory usage in Apache Tika's PSDParser in versions 1.0-1.23.
-1.  [CVE-2020-9489](https://nvd.nist.gov/vuln/detail/CVE-2020-9489): A carefully crafted or corrupt file may trigger a System.exit in Tika's OneNote Parser. Crafted or corrupted files can also cause out of memory errors and/or infinite loops in Tika's ICNSParser, MP3Parser, MP4Parser, SAS7BDATParser, OneNoteParser and ImageParser. Apache Tika users should upgrade to 1.24.1 or later. The vulnerabilities in the MP4Parser were partially fixed by upgrading the com.googlecode:isoparser:1.1.22 dependency to org.tallison:isoparser:1.9.41.2. For unrelated security reasons, we upgraded org.apache.cxf to 3.3.6 as part of the 1.24.1 release.
-1.  [CVE-2021-28657](https://nvd.nist.gov/vuln/detail/CVE-2021-28657): A carefully crafted or corrupt file may trigger an infinite loop in Tika's MP3Parser up to and including Tika 1.25. Apache Tika users should upgrade to 1.26 or later.
-1.  [CVE-2021-33813](https://nvd.nist.gov/vuln/detail/CVE-2021-33813): An XXE issue in SAXBuilder in JDOM through 2.0.6 allows attackers to cause a denial of service via a crafted HTTP request.
+1.  [CVE-2015-3271](https://nvd.nist.gov/vuln/detail/CVE-2015-3271)
+1.  [CVE-2016-6809](https://nvd.nist.gov/vuln/detail/CVE-2016-6809)
+1.  [CVE-2016-4434](https://nvd.nist.gov/vuln/detail/CVE-2016-4434)
+1.  [CVE-2018-1339](https://nvd.nist.gov/vuln/detail/CVE-2018-1339)
+1.  [CVE-2018-11761](https://nvd.nist.gov/vuln/detail/CVE-2018-11761)
+1.  [CVE-2018-11796](https://nvd.nist.gov/vuln/detail/CVE-2018-11796)
+1.  [CVE-2018-17197](https://nvd.nist.gov/vuln/detail/CVE-2018-17197)
+1.  [CVE-2019-10094](https://nvd.nist.gov/vuln/detail/CVE-2019-10094)
+1.  [CVE-2020-1950](https://nvd.nist.gov/vuln/detail/CVE-2020-1950)
+1.  [CVE-2020-9489](https://nvd.nist.gov/vuln/detail/CVE-2020-9489)
+1.  [CVE-2021-28657](https://nvd.nist.gov/vuln/detail/CVE-2021-28657)
+1.  [CVE-2021-33813](https://nvd.nist.gov/vuln/detail/CVE-2021-33813)
 
 

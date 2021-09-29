@@ -492,7 +492,7 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2020-11974](https://nvd.nist.gov/vuln/detail/CVE-2020-11974): In DolphinScheduler 1.2.0 and 1.2.1, with mysql connectorj a remote code execution vulnerability exists when choosing mysql as database.
-1.  [CVE-2020-13922](https://nvd.nist.gov/vuln/detail/CVE-2020-13922): Versions of Apache DolphinScheduler prior to 1.3.2 allowed an ordinary user under any tenant to override another users password through the API interface.
+1.  [CVE-2020-11974](https://nvd.nist.gov/vuln/detail/CVE-2020-11974)
+1.  [CVE-2020-13922](https://nvd.nist.gov/vuln/detail/CVE-2020-13922)
 
 

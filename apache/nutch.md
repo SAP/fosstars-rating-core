@@ -474,7 +474,7 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2016-6809](https://nvd.nist.gov/vuln/detail/CVE-2016-6809): Apache Tika before 1.14 allows Java code execution for serialized objects embedded in MATLAB files. The issue exists because Tika invokes JMatIO to do native deserialization.
-1.  [CVE-2021-23901](https://nvd.nist.gov/vuln/detail/CVE-2021-23901): An XML external entity (XXE) injection vulnerability was discovered in the Nutch DmozParser and is known to affect Nutch versions < 1.18. XML external entity injection (also known as XXE) is a web security vulnerability that allows an attacker to interfere with an application's processing of XML data. It often allows an attacker to view files on the application server filesystem, and to interact with any back-end or external systems that the application itself can access. This issue is fixed in Apache Nutch 1.18.
+1.  [CVE-2016-6809](https://nvd.nist.gov/vuln/detail/CVE-2016-6809)
+1.  [CVE-2021-23901](https://nvd.nist.gov/vuln/detail/CVE-2021-23901)
 
 

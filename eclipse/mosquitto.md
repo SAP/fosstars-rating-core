@@ -1,14 +1,14 @@
-# apache/cordova-ios
+# eclipse/mosquitto
 
-https://github.com/apache/cordova-ios
+https://github.com/eclipse/mosquitto
 
 Last updated on Sep 29, 2021
 
-**Rating**: **BAD**
+**Rating**: **MODERATE**
 
-**Score**: **4.31**, max score value is 10.0
+**Score**: **4.79**, max score value is 10.0
 
-**Confidence**: Max (10.0, max confidence value is 10.0)
+**Confidence**: High (9.65, max confidence value is 10.0)
 
 ## Details
 
@@ -20,16 +20,16 @@ The rating is based on **security score for open-source projects**.
 
 It used the following sub-scores:
 
-1.  **[Security testing](#security-testing)**: **2.02** (weight is 1.0)
-    1.  **[Dependency testing](#dependency-testing)**: **6.0** (weight is 1.0)
-        1.  **[Dependabot score](#dependabot-score)**: **6.0** (weight is 1.0)
+1.  **[Security testing](#security-testing)**: **2.66** (weight is 1.0)
+    1.  **[Dependency testing](#dependency-testing)**: **N/A** (weight is 1.0)
+        1.  **[Dependabot score](#dependabot-score)**: **N/A** (weight is 1.0)
             
         1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
             
-    1.  **[Static analysis](#static-analysis)**: **2.5** (weight is 1.0)
-        1.  **[LGTM score](#lgtm-score)**: **5.0** (weight is 1.0)
+    1.  **[Static analysis](#static-analysis)**: **8.5** (weight is 1.0)
+        1.  **[LGTM score](#lgtm-score)**: **7.0** (weight is 1.0)
             
-        1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
+        1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
             
         1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
             
@@ -42,16 +42,16 @@ It used the following sub-scores:
 1.  **[Security awareness](#security-awareness)**: **5.0** (weight is 0.9)
     
 1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: **0.0** (weight is 0.6)
-    1.  **[Security testing](#security-testing)**: **2.02** (weight is 1.0)
-        1.  **[Dependency testing](#dependency-testing)**: **6.0** (weight is 1.0)
-            1.  **[Dependabot score](#dependabot-score)**: **6.0** (weight is 1.0)
+    1.  **[Security testing](#security-testing)**: **2.66** (weight is 1.0)
+        1.  **[Dependency testing](#dependency-testing)**: **N/A** (weight is 1.0)
+            1.  **[Dependabot score](#dependabot-score)**: **N/A** (weight is 1.0)
                 
             1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
                 
-        1.  **[Static analysis](#static-analysis)**: **2.5** (weight is 1.0)
-            1.  **[LGTM score](#lgtm-score)**: **5.0** (weight is 1.0)
+        1.  **[Static analysis](#static-analysis)**: **8.5** (weight is 1.0)
+            1.  **[LGTM score](#lgtm-score)**: **7.0** (weight is 1.0)
                 
-            1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
+            1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
                 
             1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
                 
@@ -65,9 +65,9 @@ It used the following sub-scores:
     
 1.  **[Community commitment](#community-commitment)**: **7.0** (weight is 0.5)
     
-1.  **[Project activity](#project-activity)**: **0.46** (weight is 0.5)
+1.  **[Project activity](#project-activity)**: **7.75** (weight is 0.5)
     
-1.  **[Project popularity](#project-popularity)**: **10.0** (weight is 0.5)
+1.  **[Project popularity](#project-popularity)**: **5.96** (weight is 0.5)
     
 1.  **[Security reviews](#security-reviews)**: **0.0** (weight is 0.2)
     
@@ -80,19 +80,9 @@ More info:
 1.  [How to enable LGTM checks for pull requests](https://lgtm.com/help/lgtm/about-automated-code-review)
 
 
-You can open a pull request to enable CodeQL scans in the project. Make sure that the scans are run on pull requests.
-More info:
-1.  [How to enable CodeQL checks for pull requests](https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#enabling-code-scanning-using-actions)
-
-
-You can open a pull request to enable CodeQL scans in the project.
-More info:
-1.  [How to enable CodeQL checks](https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#enabling-code-scanning-using-actions)
-
-
 You can fix the issues reported by LGTM for the project.
 More info:
-1.  [List of issues on LGTM](https://lgtm.com/projects/g/apache/cordova-ios)
+1.  [List of issues on LGTM](https://lgtm.com/projects/g/eclipse/mosquitto)
 
 
 You can open a pull request to enable FindSecBugs for the project.
@@ -120,11 +110,6 @@ More info:
 1.  [The OSS-Fuzz project](https://github.com/google/oss-fuzz)
 
 
-You can configure Dependabot by creating a configuration file.
-More info:
-1.  [Configuration options for dependency updates](https://docs.github.com/en/github/administering-a-repository/configuration-options-for-dependency-updates)
-
-
 You can enable artifact signing in the project's build pipeline.
 More info:
 1.  [Apache Maven Jarsigner Plugin](https://maven.apache.org/plugins/maven-jarsigner-plugin/)
@@ -142,7 +127,7 @@ Below are the details about all the used sub-scores.
 
 ### Security testing
 
-Score: **2.02**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **2.66**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -152,15 +137,15 @@ This sub-score is based on the following sub-scores:
 
 
 
-1.  **[Dependency testing](#dependency-testing)**: **6.0** (weight is 1.0)
-    1.  **[Dependabot score](#dependabot-score)**: **6.0** (weight is 1.0)
+1.  **[Dependency testing](#dependency-testing)**: **N/A** (weight is 1.0)
+    1.  **[Dependabot score](#dependabot-score)**: **N/A** (weight is 1.0)
         
     1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
         
-1.  **[Static analysis](#static-analysis)**: **2.5** (weight is 1.0)
-    1.  **[LGTM score](#lgtm-score)**: **5.0** (weight is 1.0)
+1.  **[Static analysis](#static-analysis)**: **8.5** (weight is 1.0)
+    1.  **[LGTM score](#lgtm-score)**: **7.0** (weight is 1.0)
         
-    1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
+    1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
         
     1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
         
@@ -215,16 +200,16 @@ This sub-score is based on the following sub-score:
 
 
 
-1.  **[Security testing](#security-testing)**: **2.02** (weight is 1.0)
-    1.  **[Dependency testing](#dependency-testing)**: **6.0** (weight is 1.0)
-        1.  **[Dependabot score](#dependabot-score)**: **6.0** (weight is 1.0)
+1.  **[Security testing](#security-testing)**: **2.66** (weight is 1.0)
+    1.  **[Dependency testing](#dependency-testing)**: **N/A** (weight is 1.0)
+        1.  **[Dependabot score](#dependabot-score)**: **N/A** (weight is 1.0)
             
         1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
             
-    1.  **[Static analysis](#static-analysis)**: **2.5** (weight is 1.0)
-        1.  **[LGTM score](#lgtm-score)**: **5.0** (weight is 1.0)
+    1.  **[Static analysis](#static-analysis)**: **8.5** (weight is 1.0)
+        1.  **[LGTM score](#lgtm-score)**: **7.0** (weight is 1.0)
             
-        1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
+        1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
             
         1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
             
@@ -270,30 +255,31 @@ This sub-score is based on 3 features:
 
 
 
-1.  **Does it belong to Apache?** Yes
-1.  **Does it belong to Eclipse?** No
+1.  **Does it belong to Apache?** No
+1.  **Does it belong to Eclipse?** Yes
 1.  **Is it supported by a company?** No
 
 
 ### Project activity
 
-Score: **0.46**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **7.75**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-3 commits in the last 3 months results to 0.46 points
+42 commits in the last 3 months results to 6.46 points
+5 contributors increase the score value from 6.46 to 7.75
 
 This sub-score is based on 2 features:
 
 
 
-1.  **Number of commits in the last three months:** 3
-1.  **Number of contributors in the last three months:** 1
+1.  **Number of commits in the last three months:** 42
+1.  **Number of contributors in the last three months:** 5
 
 
 ### Project popularity
 
-Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **5.96**, confidence is 6.67 (low), weight is 0.5 (medium)
 
 This scoring function is based on number of stars, watchers and dependent projects.
 
@@ -303,9 +289,9 @@ This sub-score is based on 3 features:
 
 
 
-1.  **Number of projects on GitHub that use an open source project:** 58582
-1.  **Number of stars for a GitHub repository:** 2012
-1.  **Number of watchers for a GitHub repository:** 191
+1.  **Number of projects on GitHub that use an open source project:** unknown
+1.  **Number of stars for a GitHub repository:** 5103
+1.  **Number of watchers for a GitHub repository:** 257
 
 
 ### Security reviews
@@ -325,7 +311,7 @@ This sub-score is based on 1 feature:
 
 ### Dependency testing
 
-Score: **6.0**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **N/A**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -335,7 +321,7 @@ This sub-score is based on the following sub-scores:
 
 
 
-1.  **[Dependabot score](#dependabot-score)**: **6.0** (weight is 1.0)
+1.  **[Dependabot score](#dependabot-score)**: **N/A** (weight is 1.0)
     
 1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
     
@@ -343,7 +329,7 @@ This sub-score is based on the following sub-scores:
 
 ### Static analysis
 
-Score: **2.5**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **8.5**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -353,9 +339,9 @@ This sub-score is based on the following sub-scores:
 
 
 
-1.  **[LGTM score](#lgtm-score)**: **5.0** (weight is 1.0)
+1.  **[LGTM score](#lgtm-score)**: **7.0** (weight is 1.0)
     
-1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
+1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
     
 1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
     
@@ -374,7 +360,7 @@ This sub-score is based on 2 features:
 
 
 1.  **Is it included to OSS-Fuzz?** No
-1.  **Programming languages:** C, RUBY, PYTHON, JAVASCRIPT, OTHER
+1.  **Programming languages:** C, CPP, PYTHON, OTHER
 
 
 ### Memory-safety testing
@@ -392,7 +378,7 @@ This sub-score is based on 4 features:
 1.  **Does it use AddressSanitizer?** No
 1.  **Does it use MemorySanitizer?** No
 1.  **Does it use UndefinedBehaviorSanitizer?** No
-1.  **Programming languages:** C, RUBY, PYTHON, JAVASCRIPT, OTHER
+1.  **Programming languages:** C, CPP, PYTHON, OTHER
 
 
 ### nohttp tool
@@ -408,12 +394,12 @@ This sub-score is based on 2 features:
 
 
 1.  **Does it use nohttp?** No
-1.  **Package managers:** NPM, YARN
+1.  **Package managers:** None
 
 
 ### Dependabot score
 
-Score: **6.0**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **N/A**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -425,8 +411,8 @@ This sub-score is based on 4 features:
 
 1.  **Does it use Dependabot?** No
 1.  **Does it use GitHub as the main development platform?** Yes
-1.  **Package managers:** NPM, YARN
-1.  **Programming languages:** C, RUBY, PYTHON, JAVASCRIPT, OTHER
+1.  **Package managers:** None
+1.  **Programming languages:** C, CPP, PYTHON, OTHER
 
 
 ### OWASP Dependency Check score
@@ -442,13 +428,13 @@ This sub-score is based on 3 features:
 
 
 1.  **How is OWASP Dependency Check used?** Not used
-1.  **Package managers:** NPM, YARN
+1.  **Package managers:** None
 1.  **What is the threshold for OWASP Dependency Check?** Not specified
 
 
 ### LGTM score
 
-Score: **5.0**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **7.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -458,13 +444,13 @@ This sub-score is based on 2 features:
 
 
 
-1.  **Programming languages:** C, RUBY, PYTHON, JAVASCRIPT, OTHER
-1.  **The worst LGTM grade of the project:** C
+1.  **Programming languages:** C, CPP, PYTHON, OTHER
+1.  **The worst LGTM grade of the project:** B
 
 
 ### How a project uses CodeQL
 
-Score: **0.0**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **10.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -474,10 +460,10 @@ This sub-score is based on 4 features:
 
 
 
-1.  **Does it run CodeQL scans?** No
-1.  **Does it use CodeQL checks for pull requests?** No
+1.  **Does it run CodeQL scans?** Yes
+1.  **Does it use CodeQL checks for pull requests?** Yes
 1.  **Does it use LGTM checks?** No
-1.  **Programming languages:** C, RUBY, PYTHON, JAVASCRIPT, OTHER
+1.  **Programming languages:** C, CPP, PYTHON, OTHER
 
 
 ### FindSecBugs score
@@ -493,20 +479,24 @@ This sub-score is based on 2 features:
 
 
 1.  **Does it use FindSecBugs?** No
-1.  **Programming languages:** C, RUBY, PYTHON, JAVASCRIPT, OTHER
+1.  **Programming languages:** C, CPP, PYTHON, OTHER
 
 
 ## Known vulnerabilities
 
-1.  [CVE-2012-6637](https://nvd.nist.gov/vuln/detail/CVE-2012-6637)
-1.  [CVE-2014-3500](https://nvd.nist.gov/vuln/detail/CVE-2014-3500)
-1.  [CVE-2015-8320](https://nvd.nist.gov/vuln/detail/CVE-2015-8320)
-1.  [CVE-2015-5207](https://nvd.nist.gov/vuln/detail/CVE-2015-5207)
-1.  [CVE-2016-6799](https://nvd.nist.gov/vuln/detail/CVE-2016-6799)
-1.  [CVE-2015-1835](https://nvd.nist.gov/vuln/detail/CVE-2015-1835)
-1.  [CVE-2014-0073](https://nvd.nist.gov/vuln/detail/CVE-2014-0073)
-1.  [CVE-2017-3160](https://nvd.nist.gov/vuln/detail/CVE-2017-3160)
-1.  [CVE-2020-11990](https://nvd.nist.gov/vuln/detail/CVE-2020-11990)
-1.  [CVE-2021-21315](https://nvd.nist.gov/vuln/detail/CVE-2021-21315)
+1.  [CVE-2017-9868](https://nvd.nist.gov/vuln/detail/CVE-2017-9868): In Mosquitto through 1.4.12, mosquitto.db (aka the persistence file) is world readable, which allows local users to obtain sensitive MQTT topic information.
+1.  [CVE-2017-7650](https://nvd.nist.gov/vuln/detail/CVE-2017-7650): In Mosquitto before 1.4.12, pattern based ACLs can be bypassed by clients that set their username/client id to '#' or '+'. This allows locally or remotely connected clients to access MQTT topics that they do have the rights to. The same issue may be present in third party authentication/access control plugins for Mosquitto.
+1.  [CVE-2017-7651](https://nvd.nist.gov/vuln/detail/CVE-2017-7651): In Eclipse Mosquitto 1.4.14, a user can shutdown the Mosquitto server simply by filling the RAM memory with a lot of connections with large payload. This can be done without authentications if occur in connection phase of MQTT protocol.
+1.  [CVE-2017-7652](https://nvd.nist.gov/vuln/detail/CVE-2017-7652): In Eclipse Mosquitto 1.4.14, if a Mosquitto instance is set running with a configuration file, then sending a HUP signal to server triggers the configuration to be reloaded from disk. If there are lots of clients connected so that there are no more file descriptors/sockets available (default limit typically 1024 file descriptors on Linux), then opening the configuration file will fail.
+1.  [CVE-2017-7653](https://nvd.nist.gov/vuln/detail/CVE-2017-7653): The Eclipse Mosquitto broker up to version 1.4.15 does not reject strings that are not valid UTF-8. A malicious client could cause other clients that do reject invalid UTF-8 strings to disconnect themselves from the broker by sending a topic string which is not valid UTF-8, and so cause a denial of service for the clients.
+1.  [CVE-2018-12543](https://nvd.nist.gov/vuln/detail/CVE-2018-12543): In Eclipse Mosquitto versions 1.5 to 1.5.2 inclusive, if a message is published to Mosquitto that has a topic starting with $, but that is not $SYS, e.g. $test/test, then an assert is triggered that should otherwise not be reachable and Mosquitto will exit.
+1.  [CVE-2018-20145](https://nvd.nist.gov/vuln/detail/CVE-2018-20145): Eclipse Mosquitto 1.5.x before 1.5.5 allows ACL bypass: if the option per_listener_settings was set to true, and the default listener was in use, and the default listener specified an acl_file, then the acl file was being ignored.
+1.  [CVE-2018-12546](https://nvd.nist.gov/vuln/detail/CVE-2018-12546): In Eclipse Mosquitto version 1.0 to 1.5.5 (inclusive) when a client publishes a retained message to a topic, then has its access to that topic revoked, the retained message will still be published to clients that subscribe to that topic in the future. In some applications this may result in clients being able cause effects that would otherwise not be allowed.
+1.  [CVE-2019-11778](https://nvd.nist.gov/vuln/detail/CVE-2019-11778): If an MQTT v5 client connects to Eclipse Mosquitto versions 1.6.0 to 1.6.4 inclusive, sets a last will and testament, sets a will delay interval, sets a session expiry interval, and the will delay interval is set longer than the session expiry interval, then a use after free error occurs, which has the potential to cause a crash in some situations.
+1.  [CVE-2019-11779](https://nvd.nist.gov/vuln/detail/CVE-2019-11779): In Eclipse Mosquitto 1.5.0 to 1.6.5 inclusive, if a malicious MQTT client sends a SUBSCRIBE packet containing a topic that consists of approximately 65400 or more '/' characters, i.e. the topic hierarchy separator, then a stack overflow will occur.
+1.  [CVE-2021-28166](https://nvd.nist.gov/vuln/detail/CVE-2021-28166): In Eclipse Mosquitto version 2.0.0 to 2.0.9, if an authenticated client that had connected with MQTT v5 sent a crafted CONNACK message to the broker, a NULL pointer dereference would occur.
+1.  [CVE-2021-34431](https://nvd.nist.gov/vuln/detail/CVE-2021-34431): In Eclipse Mosquitto version 1.6 to 2.0.10, if an authenticated client that had connected with MQTT v5 sent a crafted CONNECT message to the broker a memory leak would occur, which could be used to provide a DoS attack against the broker.
+1.  [CVE-2021-34432](https://nvd.nist.gov/vuln/detail/CVE-2021-34432): In Eclipse Mosquitto versions 2.07 and earlier, the server will crash if the client tries to send a PUBLISH packet with topic length = 0.
+1.  [CVE-2021-34434](https://nvd.nist.gov/vuln/detail/CVE-2021-34434): In Eclipse Mosquitto versions 2.0 to 2.0.11, when using the dynamic security plugin, if the ability for a client to make subscriptions on a topic is revoked when a durable client is offline, then existing subscriptions for that client are not revoked.
 
 

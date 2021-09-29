@@ -512,16 +512,16 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2014-0228](https://nvd.nist.gov/vuln/detail/CVE-2014-0228): Apache Hive before 0.13.1, when in SQL standards based authorization mode, does not properly check the file permissions for (1) import and (2) export statements, which allows remote authenticated users to obtain sensitive information via a crafted URI.
-1.  [CVE-2015-1772](https://nvd.nist.gov/vuln/detail/CVE-2015-1772): The LDAP implementation in HiveServer2 in Apache Hive before 1.0.1 and 1.1.x before 1.1.1, as used in IBM InfoSphere BigInsights 3.0, 3.0.0.1, and 3.0.0.2 and other products, mishandles simple unauthenticated and anonymous bind configurations, which allows remote attackers to bypass authentication via a crafted LDAP request.
-1.  [CVE-2015-7521](https://nvd.nist.gov/vuln/detail/CVE-2015-7521): The authorization framework in Apache Hive 1.0.0, 1.0.1, 1.1.0, 1.1.1, 1.2.0 and 1.2.1, on clusters protected by Ranger and SqlStdHiveAuthorization, allows attackers to bypass intended parent table access restrictions via unspecified partition-level operations.
-1.  [CVE-2016-3083](https://nvd.nist.gov/vuln/detail/CVE-2016-3083): Apache Hive (JDBC + HiveServer2) implements SSL for plain TCP and HTTP connections (it supports both transport modes). While validating the server's certificate during the connection setup, the client in Apache Hive before 1.2.2 and 2.0.x before 2.0.1 doesn't seem to be verifying the common name attribute of the certificate. In this way, if a JDBC client sends an SSL request to server abc.com, and the server responds with a valid certificate (certified by CA) but issued to xyz.com, the client will accept that as a valid certificate and the SSL handshake will go through.
-1.  [CVE-2017-12625](https://nvd.nist.gov/vuln/detail/CVE-2017-12625): Apache Hive 2.1.x before 2.1.2, 2.2.x before 2.2.1, and 2.3.x before 2.3.1 expose an interface through which masking policies can be defined on tables or views, e.g., using Apache Ranger. When a view is created over a given table, the policy enforcement does not happen correctly on the table for masked columns.
-1.  [CVE-2018-1282](https://nvd.nist.gov/vuln/detail/CVE-2018-1282): This vulnerability in Apache Hive JDBC driver 0.7.1 to 2.3.2 allows carefully crafted arguments to be used to bypass the argument escaping/cleanup that JDBC driver does in PreparedStatement implementation.
-1.  [CVE-2018-11777](https://nvd.nist.gov/vuln/detail/CVE-2018-11777): In Apache Hive 2.3.3, 3.1.0 and earlier, local resources on HiveServer2 machines are not properly protected against malicious user if ranger, sentry or sql standard authorizer is not in use.
-1.  [CVE-2018-21234](https://nvd.nist.gov/vuln/detail/CVE-2018-21234): Jodd before 5.0.4 performs Deserialization of Untrusted JSON Data when setClassMetadataName is set.
-1.  [CVE-2020-5421](https://nvd.nist.gov/vuln/detail/CVE-2020-5421): In Spring Framework versions 5.2.0 - 5.2.8, 5.1.0 - 5.1.17, 5.0.0 - 5.0.18, 4.3.0 - 4.3.28, and older unsupported versions, the protections against RFD attacks from CVE-2015-5211 may be bypassed depending on the browser used through the use of a jsessionid path parameter.
-1.  [CVE-2020-13949](https://nvd.nist.gov/vuln/detail/CVE-2020-13949): In Apache Thrift 0.9.3 to 0.13.0, malicious RPC clients could send short messages which would result in a large memory allocation, potentially leading to denial of service.
-1.  [CVE-2020-1926](https://nvd.nist.gov/vuln/detail/CVE-2020-1926): Apache Hive cookie signature verification used a non constant time comparison which is known to be vulnerable to timing attacks. This could allow recovery of another users cookie signature. The issue was addressed in Apache Hive 2.3.8
+1.  [CVE-2014-0228](https://nvd.nist.gov/vuln/detail/CVE-2014-0228)
+1.  [CVE-2015-1772](https://nvd.nist.gov/vuln/detail/CVE-2015-1772)
+1.  [CVE-2015-7521](https://nvd.nist.gov/vuln/detail/CVE-2015-7521)
+1.  [CVE-2016-3083](https://nvd.nist.gov/vuln/detail/CVE-2016-3083)
+1.  [CVE-2017-12625](https://nvd.nist.gov/vuln/detail/CVE-2017-12625)
+1.  [CVE-2018-1282](https://nvd.nist.gov/vuln/detail/CVE-2018-1282)
+1.  [CVE-2018-11777](https://nvd.nist.gov/vuln/detail/CVE-2018-11777)
+1.  [CVE-2018-21234](https://nvd.nist.gov/vuln/detail/CVE-2018-21234)
+1.  [CVE-2020-5421](https://nvd.nist.gov/vuln/detail/CVE-2020-5421)
+1.  [CVE-2020-13949](https://nvd.nist.gov/vuln/detail/CVE-2020-13949)
+1.  [CVE-2020-1926](https://nvd.nist.gov/vuln/detail/CVE-2020-1926)
 
 

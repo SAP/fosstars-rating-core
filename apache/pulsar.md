@@ -511,6 +511,6 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2021-22160](https://nvd.nist.gov/vuln/detail/CVE-2021-22160): If Apache Pulsar is configured to authenticate clients using tokens based on JSON Web Tokens (JWT), the signature of the token is not validated if the algorithm of the presented token is set to "none". This allows an attacker to connect to Pulsar instances as any user (incl. admins).
+1.  [CVE-2021-22160](https://nvd.nist.gov/vuln/detail/CVE-2021-22160)
 
 

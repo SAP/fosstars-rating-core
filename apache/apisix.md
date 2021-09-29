@@ -481,6 +481,6 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2020-13945](https://nvd.nist.gov/vuln/detail/CVE-2020-13945): In Apache APISIX, the user enabled the Admin API and deleted the Admin API access IP restriction rules. Eventually, the default token is allowed to access APISIX management data. This affects versions 1.2, 1.3, 1.4, 1.5.
+1.  [CVE-2020-13945](https://nvd.nist.gov/vuln/detail/CVE-2020-13945)
 
 

@@ -512,6 +512,6 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2020-1952](https://nvd.nist.gov/vuln/detail/CVE-2020-1952): An issue was found in Apache IoTDB .9.0 to 0.9.1 and 0.8.0 to 0.8.2. When starting IoTDB, the JMX port 31999 is exposed with no certification.Then, clients could execute code remotely.
+1.  [CVE-2020-1952](https://nvd.nist.gov/vuln/detail/CVE-2020-1952)
 
 

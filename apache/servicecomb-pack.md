@@ -486,6 +486,6 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2021-21501](https://nvd.nist.gov/vuln/detail/CVE-2021-21501): Improper configuration will cause ServiceComb ServiceCenter Directory Traversal problem in ServcieCenter 1.x.x versions and fixed in 2.0.0.
+1.  [CVE-2021-21501](https://nvd.nist.gov/vuln/detail/CVE-2021-21501)
 
 
