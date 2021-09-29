@@ -488,6 +488,6 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2020-36457](https://nvd.nist.gov/vuln/detail/CVE-2020-36457): An issue was discovered in the lever crate before 0.1.1 for Rust. AtomicBox<T> implements the Send and Sync traits for all types T.
+1.  [CVE-2020-36457](https://nvd.nist.gov/vuln/detail/CVE-2020-36457)
 
 

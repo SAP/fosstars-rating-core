@@ -489,9 +489,9 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2001-1438](https://nvd.nist.gov/vuln/detail/CVE-2001-1438): Handspring Visor 1.0 and 1.0.1 with the VisorPhone Springboard module installed allows remote attackers to cause a denial of service (PalmOS crash and VisorPhone database corruption) by sending a large or crafted SMS image.
-1.  [CVE-2018-16359](https://nvd.nist.gov/vuln/detail/CVE-2018-16359): Google gVisor before 2018-08-23, within the seccomp sandbox, permits access to the renameat system call, which allows attackers to rename files on the host OS.
-1.  [CVE-2018-19333](https://nvd.nist.gov/vuln/detail/CVE-2018-19333): pkg/sentry/kernel/shm/shm.go in Google gVisor before 2018-11-01 allows attackers to overwrite memory locations in processes running as root (but not escape the sandbox) via vectors involving IPC_RMID shmctl calls, because reference counting is mishandled.
-1.  [CVE-2018-20168](https://nvd.nist.gov/vuln/detail/CVE-2018-20168): Google gVisor before 2018-08-22 reuses a pagetable in a different level with the paging-structure cache intact, which allows attackers to cause a denial of service ("physical address not valid" panic) via a crafted application.
+1.  [CVE-2001-1438](https://nvd.nist.gov/vuln/detail/CVE-2001-1438)
+1.  [CVE-2018-16359](https://nvd.nist.gov/vuln/detail/CVE-2018-16359)
+1.  [CVE-2018-19333](https://nvd.nist.gov/vuln/detail/CVE-2018-19333)
+1.  [CVE-2018-20168](https://nvd.nist.gov/vuln/detail/CVE-2018-20168)
 
 

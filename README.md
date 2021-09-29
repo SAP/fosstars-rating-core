@@ -2,10 +2,10 @@
 
 |                  |                                                         | # or projects             |  % or projects              |
 | :--------------- | :------------------------------------------------------ | ------------------------: | --------------------------: |
-| Total            |                                                         | 188      |                        100% |
-| BAD ratings      | score below 4.43                        | 58      |      30.9% |
-| MODERATE ratings | score between 4.43 and 5.54 | 80 | 42.6% |
-| GOOD ratings     | score above 5.54                            | 50     |     26.6% |
+| Total            |                                                         | 191      |                        100% |
+| BAD ratings      | score below 4.43                        | 60      |      31.4% |
+| MODERATE ratings | score between 4.43 and 5.54 | 81 | 42.4% |
+| GOOD ratings     | score above 5.54                            | 50     |     26.2% |
 | UNCLEAR ratings  | confidence below 8.00                    | 0  |  0.0% |
 | UNKNOWN ratings  |                                                         | 0  |  0.0% |
 
@@ -70,6 +70,7 @@
 | [apache/shardingsphere-elasticjob](apache/shardingsphere-elasticjob.md) | [7249](https://github.com/apache/shardingsphere-elasticjob) | 6.02 | [GOOD](apache/shardingsphere-elasticjob.md) | 9.65 | Sep 29, 2021 |
 | [apache/tvm](apache/tvm.md) | [7192](https://github.com/apache/tvm) | 5.53 | [MODERATE](apache/tvm.md) | 9.65 | Sep 29, 2021 |
 | [aws/aws-sdk-go](aws/aws-sdk-go.md) | [7133](https://github.com/aws/aws-sdk-go) | 5.22 | [MODERATE](aws/aws-sdk-go.md) | 10.00 | Sep 29, 2021 |
+| [FasterXML/jackson](FasterXML/jackson.md) | [6900](https://github.com/FasterXML/jackson) | 2.80 | [BAD](FasterXML/jackson.md) | 9.51 | Sep 29, 2021 |
 | [apache/cassandra](apache/cassandra.md) | [6879](https://github.com/apache/cassandra) | 4.81 | [MODERATE](apache/cassandra.md) | 9.65 | Sep 29, 2021 |
 | [aws/aws-sdk-js](aws/aws-sdk-js.md) | [6764](https://github.com/aws/aws-sdk-js) | 5.74 | [GOOD](aws/aws-sdk-js.md) | 10.00 | Sep 29, 2021 |
 | [eclipse/che](eclipse/che.md) | [6532](https://github.com/eclipse/che) | 6.17 | [GOOD](eclipse/che.md) | 9.65 | Sep 29, 2021 |
@@ -110,6 +111,7 @@
 | [eclipse/jetty.project](eclipse/jetty.project.md) | [3211](https://github.com/eclipse/jetty.project) | 5.60 | [GOOD](eclipse/jetty.project.md) | 9.65 | Sep 29, 2021 |
 | [apache/kylin](apache/kylin.md) | [3162](https://github.com/apache/kylin) | 4.29 | [BAD](apache/kylin.md) | 10.00 | Sep 29, 2021 |
 | [madler/zlib](madler/zlib.md) | [3101](https://github.com/madler/zlib) | 3.14 | [BAD](madler/zlib.md) | 9.65 | Sep 29, 2021 |
+| [FasterXML/jackson-databind](FasterXML/jackson-databind.md) | [2899](https://github.com/FasterXML/jackson-databind) | 5.08 | [MODERATE](FasterXML/jackson-databind.md) | 10.00 | Sep 29, 2021 |
 | [apache/nifi](apache/nifi.md) | [2791](https://github.com/apache/nifi) | 5.76 | [GOOD](apache/nifi.md) | 9.65 | Sep 29, 2021 |
 | [apache/httpd](apache/httpd.md) | [2786](https://github.com/apache/httpd) | 5.85 | [GOOD](apache/httpd.md) | 9.65 | Sep 29, 2021 |
 | [apache/maven](apache/maven.md) | [2767](https://github.com/apache/maven) | 5.13 | [MODERATE](apache/maven.md) | 9.65 | Sep 29, 2021 |
@@ -130,6 +132,7 @@
 | [apache/iceberg](apache/iceberg.md) | [2025](https://github.com/apache/iceberg) | 4.63 | [MODERATE](apache/iceberg.md) | 9.65 | Sep 29, 2021 |
 | [apache/cordova-ios](apache/cordova-ios.md) | [2012](https://github.com/apache/cordova-ios) | 4.31 | [BAD](apache/cordova-ios.md) | 10.00 | Sep 29, 2021 |
 | [apache/geode](apache/geode.md) | [1985](https://github.com/apache/geode) | 5.24 | [MODERATE](apache/geode.md) | 9.65 | Sep 29, 2021 |
+| [FasterXML/jackson-core](FasterXML/jackson-core.md) | [1983](https://github.com/FasterXML/jackson-core) | 4.33 | [BAD](FasterXML/jackson-core.md) | 10.00 | Sep 29, 2021 |
 | [apache/gobblin](apache/gobblin.md) | [1971](https://github.com/apache/gobblin) | 4.36 | [BAD](apache/gobblin.md) | 9.65 | Sep 29, 2021 |
 | [apache/mahout](apache/mahout.md) | [1949](https://github.com/apache/mahout) | 3.97 | [BAD](apache/mahout.md) | 9.65 | Sep 29, 2021 |
 | [spring-projects/spring-batch](spring-projects/spring-batch.md) | [1948](https://github.com/spring-projects/spring-batch) | 5.93 | [GOOD](spring-projects/spring-batch.md) | 10.00 | Sep 29, 2021 |

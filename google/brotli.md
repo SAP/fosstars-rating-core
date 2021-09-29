@@ -501,6 +501,6 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2020-8927](https://nvd.nist.gov/vuln/detail/CVE-2020-8927): A buffer overflow exists in the Brotli library versions prior to 1.0.8 where an attacker controlling the input length of a "one-shot" decompression request to a script can trigger a crash, which happens when copying over chunks of data larger than 2 GiB. It is recommended to update your Brotli library to 1.0.8 or later. If one cannot update, we recommend to use the "streaming" API as opposed to the "one-shot" API, and impose chunk size limits.
+1.  [CVE-2020-8927](https://nvd.nist.gov/vuln/detail/CVE-2020-8927)
 
 
