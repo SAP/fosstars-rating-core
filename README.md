@@ -2,10 +2,10 @@
 
 |                  |                                                         | # or projects             |  % or projects              |
 | :--------------- | :------------------------------------------------------ | ------------------------: | --------------------------: |
-| Total            |                                                         | 131      |                        100% |
-| BAD ratings      | score below 4.43                        | 39      |      29.8% |
-| MODERATE ratings | score between 4.43 and 5.54 | 56 | 42.7% |
-| GOOD ratings     | score above 5.54                            | 36     |     27.5% |
+| Total            |                                                         | 132      |                        100% |
+| BAD ratings      | score below 4.43                        | 40      |      30.3% |
+| MODERATE ratings | score between 4.43 and 5.54 | 56 | 42.4% |
+| GOOD ratings     | score above 5.54                            | 36     |     27.3% |
 | UNCLEAR ratings  | confidence below 8.00                    | 0  |  0.0% |
 | UNKNOWN ratings  |                                                         | 0  |  0.0% |
 
@@ -112,6 +112,7 @@
 | [eclipse/paho.mqtt.java](eclipse/paho.mqtt.java.md) | [1579](https://github.com/eclipse/paho.mqtt.java) | 3.98 | [BAD](eclipse/paho.mqtt.java.md) | 9.65 | Sep 29, 2021 |
 | [spring-projects/spring-retry](spring-projects/spring-retry.md) | [1565](https://github.com/spring-projects/spring-retry) | 5.64 | [GOOD](spring-projects/spring-retry.md) | 10.00 | Sep 29, 2021 |
 | [apache/ambari](apache/ambari.md) | [1548](https://github.com/apache/ambari) | 3.40 | [BAD](apache/ambari.md) | 9.65 | Sep 29, 2021 |
+| [bcgit/bc-java](bcgit/bc-java.md) | [1514](https://github.com/bcgit/bc-java) | 3.66 | [BAD](bcgit/bc-java.md) | 10.00 | Sep 29, 2021 |
 | [apache/pdfbox](apache/pdfbox.md) | [1513](https://github.com/apache/pdfbox) | 4.37 | [BAD](apache/pdfbox.md) | 9.65 | Sep 29, 2021 |
 | [apache/kudu](apache/kudu.md) | [1475](https://github.com/apache/kudu) | 4.37 | [BAD](apache/kudu.md) | 9.65 | Sep 29, 2021 |
 | [eclipse/paho.mqtt.python](eclipse/paho.mqtt.python.md) | [1450](https://github.com/eclipse/paho.mqtt.python) | 3.85 | [BAD](eclipse/paho.mqtt.python.md) | 9.65 | Sep 29, 2021 |

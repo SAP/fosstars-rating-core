@@ -487,7 +487,7 @@ This sub-score is based on 2 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2019-3772](https://nvd.nist.gov/vuln/detail/CVE-2019-3772): Spring Integration (spring-integration-xml and spring-integration-ws modules), versions 4.3.18, 5.0.10, 5.1.1, and older unsupported versions, were susceptible to XML External Entity Injection (XXE) when receiving XML data from untrusted sources.
-1.  [CVE-2020-5413](https://nvd.nist.gov/vuln/detail/CVE-2020-5413): Spring Integration framework provides Kryo Codec implementations as an alternative for Java (de)serialization. When Kryo is configured with default options, all unregistered classes are resolved on demand. This leads to the "deserialization gadgets" exploit when provided data contains malicious code for execution during deserialization. In order to protect against this type of attack, Kryo can be configured to require a set of trusted classes for (de)serialization. Spring Integration should be proactive against blocking unknown "deserialization gadgets" when configuring Kryo in code.
+1.  [CVE-2019-3772](https://nvd.nist.gov/vuln/detail/CVE-2019-3772)
+1.  [CVE-2020-5413](https://nvd.nist.gov/vuln/detail/CVE-2020-5413)
 
 
