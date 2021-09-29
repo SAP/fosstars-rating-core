@@ -2,11 +2,11 @@
 
 https://github.com/madler/zlib
 
-Last updated on Aug 4, 2021
+Last updated on Sep 29, 2021
 
 **Rating**: **BAD**
 
-**Score**: **3.13**, max score value is 10.0
+**Score**: **3.14**, max score value is 10.0
 
 **Confidence**: High (9.65, max confidence value is 10.0)
 
@@ -26,10 +26,6 @@ It used the following sub-scores:
             
         1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
             
-    1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
-        
-    1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
-        
     1.  **[Static analysis](#static-analysis)**: **4.5** (weight is 1.0)
         1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
             
@@ -37,6 +33,10 @@ It used the following sub-scores:
             
         1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
             
+    1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
+        
+    1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
+        
     1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
         
 1.  **[Security awareness](#security-awareness)**: **1.0** (weight is 0.9)
@@ -48,10 +48,6 @@ It used the following sub-scores:
                 
             1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
                 
-        1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
-            
-        1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
-            
         1.  **[Static analysis](#static-analysis)**: **4.5** (weight is 1.0)
             1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
                 
@@ -59,6 +55,10 @@ It used the following sub-scores:
                 
             1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
                 
+        1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
+            
+        1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
+            
         1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
             
 1.  **[Unpatched vulnerabilities](#unpatched-vulnerabilities)**: **10.0** (weight is 0.5)
@@ -67,7 +67,7 @@ It used the following sub-scores:
     
 1.  **[Project activity](#project-activity)**: **0.0** (weight is 0.5)
     
-1.  **[Project popularity](#project-popularity)**: **3.56** (weight is 0.5)
+1.  **[Project popularity](#project-popularity)**: **3.64** (weight is 0.5)
     
 1.  **[Security reviews](#security-reviews)**: **6.6** (weight is 0.2)
     
@@ -154,10 +154,6 @@ This sub-score is based on the following sub-scores:
         
     1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
         
-1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
-    
-1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
-    
 1.  **[Static analysis](#static-analysis)**: **4.5** (weight is 1.0)
     1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
         
@@ -165,6 +161,10 @@ This sub-score is based on the following sub-scores:
         
     1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
         
+1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
+    
+1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
+    
 1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
     
 
@@ -218,10 +218,6 @@ This sub-score is based on the following sub-score:
             
         1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
             
-    1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
-        
-    1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
-        
     1.  **[Static analysis](#static-analysis)**: **4.5** (weight is 1.0)
         1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
             
@@ -229,6 +225,10 @@ This sub-score is based on the following sub-score:
             
         1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
             
+    1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
+        
+    1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
+        
     1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
         
 
@@ -290,7 +290,7 @@ This sub-score is based on 2 features:
 
 ### Project popularity
 
-Score: **3.56**, confidence is 6.67 (low), weight is 0.5 (medium)
+Score: **3.64**, confidence is 6.67 (low), weight is 0.5 (medium)
 
 This scoring function is based on number of stars, watchers and dependent projects.
 
@@ -301,8 +301,8 @@ This sub-score is based on 3 features:
 
 
 1.  **Number of projects on GitHub that use an open source project:** unknown
-1.  **Number of stars for a GitHub repository:** 3015
-1.  **Number of watchers for a GitHub repository:** 164
+1.  **Number of stars for a GitHub repository:** 3101
+1.  **Number of watchers for a GitHub repository:** 162
 
 
 ### Security reviews
@@ -338,6 +338,26 @@ This sub-score is based on the following sub-scores:
     
 
 
+### Static analysis
+
+Score: **4.5**, confidence is 10.0 (max), weight is 1.0 (high)
+
+
+
+
+
+This sub-score is based on the following sub-scores:
+
+
+
+1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
+    
+1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
+    
+1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
+    
+
+
 ### Fuzzing
 
 Score: **10.0**, confidence is 10.0 (max), weight is 1.0 (high)
@@ -370,26 +390,6 @@ This sub-score is based on 4 features:
 1.  **Does it use MemorySanitizer?** No
 1.  **Does it use UndefinedBehaviorSanitizer?** No
 1.  **Programming languages:** C, CPP, C_SHARP, OTHER
-
-
-### Static analysis
-
-Score: **4.5**, confidence is 10.0 (max), weight is 1.0 (high)
-
-
-
-
-
-This sub-score is based on the following sub-scores:
-
-
-
-1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
-    
-1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
-    
-1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
-    
 
 
 ### nohttp tool

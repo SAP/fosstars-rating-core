@@ -2,11 +2,11 @@
 
 https://github.com/curl/curl
 
-Last updated on Aug 4, 2021
+Last updated on Sep 29, 2021
 
-**Rating**: **GOOD**
+**Rating**: **MODERATE**
 
-**Score**: **5.92**, max score value is 10.0
+**Score**: **5.5**, max score value is 10.0
 
 **Confidence**: High (9.65, max confidence value is 10.0)
 
@@ -20,45 +20,45 @@ The rating is based on **security score for open-source projects**.
 
 It used the following sub-scores:
 
-1.  **[Security testing](#security-testing)**: **5.62** (weight is 1.0)
+1.  **[Security testing](#security-testing)**: **4.53** (weight is 1.0)
     1.  **[Dependency testing](#dependency-testing)**: **N/A** (weight is 1.0)
         1.  **[Dependabot score](#dependabot-score)**: **N/A** (weight is 1.0)
             
         1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
             
+    1.  **[Static analysis](#static-analysis)**: **4.5** (weight is 1.0)
+        1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
+            
+        1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
+            
+        1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
+            
     1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
         
     1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
         
-    1.  **[Static analysis](#static-analysis)**: **8.0** (weight is 1.0)
-        1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
-            
-        1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **7.0** (weight is 1.0)
-            
-        1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
-            
     1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
         
-1.  **[Security awareness](#security-awareness)**: **8.0** (weight is 0.9)
+1.  **[Security awareness](#security-awareness)**: **7.0** (weight is 0.9)
     
 1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: **0.0** (weight is 0.6)
-    1.  **[Security testing](#security-testing)**: **5.62** (weight is 1.0)
+    1.  **[Security testing](#security-testing)**: **4.53** (weight is 1.0)
         1.  **[Dependency testing](#dependency-testing)**: **N/A** (weight is 1.0)
             1.  **[Dependabot score](#dependabot-score)**: **N/A** (weight is 1.0)
                 
             1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
                 
+        1.  **[Static analysis](#static-analysis)**: **4.5** (weight is 1.0)
+            1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
+                
+            1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
+                
+            1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
+                
         1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
             
         1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
             
-        1.  **[Static analysis](#static-analysis)**: **8.0** (weight is 1.0)
-            1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
-                
-            1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **7.0** (weight is 1.0)
-                
-            1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
-                
         1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
             
 1.  **[Unpatched vulnerabilities](#unpatched-vulnerabilities)**: **10.0** (weight is 0.5)
@@ -74,6 +74,11 @@ It used the following sub-scores:
 
 
 # ## How to improve the rating
+
+You can ask the project maintainers to enable LGTM checks for pull requests in the project.
+More info:
+1.  [How to enable LGTM checks for pull requests](https://lgtm.com/help/lgtm/about-automated-code-review)
+
 
 You can open a pull request to enable CodeQL scans in the project. Make sure that the scans are run on pull requests.
 More info:
@@ -127,7 +132,7 @@ Below are the details about all the used sub-scores.
 
 ### Security testing
 
-Score: **5.62**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **4.53**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -142,24 +147,24 @@ This sub-score is based on the following sub-scores:
         
     1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
         
+1.  **[Static analysis](#static-analysis)**: **4.5** (weight is 1.0)
+    1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
+        
+    1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
+        
+    1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
+        
 1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
     
 1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
     
-1.  **[Static analysis](#static-analysis)**: **8.0** (weight is 1.0)
-    1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
-        
-    1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **7.0** (weight is 1.0)
-        
-    1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
-        
 1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
     
 
 
 ### Security awareness
 
-Score: **8.0**, confidence is 10.0 (max), weight is 0.9 (high)
+Score: **7.0**, confidence is 10.0 (max), weight is 0.9 (high)
 
 The score shows how a project is aware of security. If the project has a security policy, then the score adds 2.00. If the project has a security team, then the score adds 3.00. If the project uses verified signed commits, then the score adds 0.50. If the project has a bug bounty program, then the score adds 4.00. If the project signs its artifacts, then the score adds 0.50. If the project uses a security tool or library, then the score adds 1.00.
 
@@ -176,7 +181,7 @@ This sub-score is based on 17 features:
 1.  **Does it use AddressSanitizer?** No
 1.  **Does it use Dependabot?** No
 1.  **Does it use FindSecBugs?** No
-1.  **Does it use LGTM checks?** Yes
+1.  **Does it use LGTM checks?** No
 1.  **Does it use MemorySanitizer?** No
 1.  **Does it use OWASP ESAPI?** No
 1.  **Does it use OWASP Java Encoder?** No
@@ -200,23 +205,23 @@ This sub-score is based on the following sub-score:
 
 
 
-1.  **[Security testing](#security-testing)**: **5.62** (weight is 1.0)
+1.  **[Security testing](#security-testing)**: **4.53** (weight is 1.0)
     1.  **[Dependency testing](#dependency-testing)**: **N/A** (weight is 1.0)
         1.  **[Dependabot score](#dependabot-score)**: **N/A** (weight is 1.0)
             
         1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
             
+    1.  **[Static analysis](#static-analysis)**: **4.5** (weight is 1.0)
+        1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
+            
+        1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
+            
+        1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
+            
     1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
         
     1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
         
-    1.  **[Static analysis](#static-analysis)**: **8.0** (weight is 1.0)
-        1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
-            
-        1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **7.0** (weight is 1.0)
-            
-        1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
-            
     1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
         
 
@@ -225,7 +230,7 @@ This sub-score is based on 1 feature:
 
 
 
-1.  **Info about vulnerabilities in the project:** 74 vulnerabilities, [details below](#known-vulnerabilities)
+1.  **Info about vulnerabilities in the project:** 78 vulnerabilities, [details below](#known-vulnerabilities)
 
 
 ### Unpatched vulnerabilities
@@ -240,7 +245,7 @@ This sub-score is based on 1 feature:
 
 
 
-1.  **Info about vulnerabilities in the project:** 74 vulnerabilities, [details below](#known-vulnerabilities)
+1.  **Info about vulnerabilities in the project:** 78 vulnerabilities, [details below](#known-vulnerabilities)
 
 
 ### Community commitment
@@ -266,15 +271,15 @@ Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-381 commits in the last 3 months results to 10.00 points
-9 contributors increase the score value from 10.00 to 12.00
+307 commits in the last 3 months results to 10.00 points
+10 contributors increase the score value from 10.00 to 12.00
 
 This sub-score is based on 2 features:
 
 
 
-1.  **Number of commits in the last three months:** 381
-1.  **Number of contributors in the last three months:** 9
+1.  **Number of commits in the last three months:** 307
+1.  **Number of contributors in the last three months:** 10
 
 
 ### Project popularity
@@ -290,8 +295,8 @@ This sub-score is based on 3 features:
 
 
 1.  **Number of projects on GitHub that use an open source project:** unknown
-1.  **Number of stars for a GitHub repository:** 21434
-1.  **Number of watchers for a GitHub repository:** 702
+1.  **Number of stars for a GitHub repository:** 21967
+1.  **Number of watchers for a GitHub repository:** 704
 
 
 ### Security reviews
@@ -327,6 +332,26 @@ This sub-score is based on the following sub-scores:
     
 
 
+### Static analysis
+
+Score: **4.5**, confidence is 10.0 (max), weight is 1.0 (high)
+
+
+
+
+
+This sub-score is based on the following sub-scores:
+
+
+
+1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
+    
+1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
+    
+1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
+    
+
+
 ### Fuzzing
 
 Score: **10.0**, confidence is 10.0 (max), weight is 1.0 (high)
@@ -359,26 +384,6 @@ This sub-score is based on 4 features:
 1.  **Does it use MemorySanitizer?** No
 1.  **Does it use UndefinedBehaviorSanitizer?** No
 1.  **Programming languages:** C, CPP, PYTHON, OTHER
-
-
-### Static analysis
-
-Score: **8.0**, confidence is 10.0 (max), weight is 1.0 (high)
-
-
-
-
-
-This sub-score is based on the following sub-scores:
-
-
-
-1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
-    
-1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **7.0** (weight is 1.0)
-    
-1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
-    
 
 
 ### nohttp tool
@@ -450,7 +455,7 @@ This sub-score is based on 2 features:
 
 ### How a project uses CodeQL
 
-Score: **7.0**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **0.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -462,7 +467,7 @@ This sub-score is based on 4 features:
 
 1.  **Does it run CodeQL scans?** No
 1.  **Does it use CodeQL checks for pull requests?** No
-1.  **Does it use LGTM checks?** Yes
+1.  **Does it use LGTM checks?** No
 1.  **Programming languages:** C, CPP, PYTHON, OTHER
 
 
@@ -528,5 +533,6 @@ This sub-score is based on 2 features:
 1.  [CVE-2016-4606](https://nvd.nist.gov/vuln/detail/CVE-2016-4606): Curl before 7.49.1 in Apple OS X before macOS Sierra prior to 10.12 allows remote or local attackers to execute arbitrary code, gain sensitive information, cause denial-of-service conditions, bypass security restrictions, and perform unauthorized actions. This may aid in other attacks.
 1.  [CVE-2020-8284](https://nvd.nist.gov/vuln/detail/CVE-2020-8284): A malicious server can use the FTP PASV response to trick curl 7.73.0 and earlier into connecting back to a given IP address and port, and this way potentially make curl extract information about services that are otherwise private and not disclosed, for example doing port scanning and service banner extractions.
 1.  [CVE-2021-22897](https://nvd.nist.gov/vuln/detail/CVE-2021-22897): curl 7.61.0 through 7.76.1 suffers from exposure of data element to wrong session due to a mistake in the code for CURLOPT_SSL_CIPHER_LIST when libcurl is built to use the Schannel TLS library. The selected cipher set was stored in a single "static" variable in the library, which has the surprising side-effect that if an application sets up multiple concurrent transfers, the last one that sets the ciphers will accidentally control the set used by all transfers. In a worst-case scenario, this weakens transport security significantly.
+1.  [CVE-2021-22922](https://nvd.nist.gov/vuln/detail/CVE-2021-22922): When curl is instructed to download content using the metalink feature, thecontents is verified against a hash provided in the metalink XML file.The metalink XML file points out to the client how to get the same contentfrom a set of different URLs, potentially hosted by different servers and theclient can then download the file from one or several of them. In a serial orparallel manner.If one of the servers hosting the contents has been breached and the contentsof the specific file on that server is replaced with a modified payload, curlshould detect this when the hash of the file mismatches after a completeddownload. It should remove the contents and instead try getting the contentsfrom another URL. This is not done, and instead such a hash mismatch is onlymentioned in text and the potentially malicious content is kept in the file ondisk.
 
 

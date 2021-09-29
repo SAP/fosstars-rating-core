@@ -2,7 +2,7 @@
 
 https://github.com/envoyproxy/envoy
 
-Last updated on Aug 4, 2021
+Last updated on Sep 29, 2021
 
 **Rating**: **MODERATE**
 
@@ -26,10 +26,6 @@ It used the following sub-scores:
             
         1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
             
-    1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
-        
-    1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
-        
     1.  **[Static analysis](#static-analysis)**: **3.5** (weight is 1.0)
         1.  **[LGTM score](#lgtm-score)**: **7.0** (weight is 1.0)
             
@@ -37,6 +33,10 @@ It used the following sub-scores:
             
         1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
             
+    1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
+        
+    1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
+        
     1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
         
 1.  **[Security awareness](#security-awareness)**: **4.5** (weight is 0.9)
@@ -48,10 +48,6 @@ It used the following sub-scores:
                 
             1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
                 
-        1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
-            
-        1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
-            
         1.  **[Static analysis](#static-analysis)**: **3.5** (weight is 1.0)
             1.  **[LGTM score](#lgtm-score)**: **7.0** (weight is 1.0)
                 
@@ -59,6 +55,10 @@ It used the following sub-scores:
                 
             1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
                 
+        1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
+            
+        1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
+            
         1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
             
 1.  **[Unpatched vulnerabilities](#unpatched-vulnerabilities)**: **10.0** (weight is 0.5)
@@ -69,7 +69,7 @@ It used the following sub-scores:
     
 1.  **[Project popularity](#project-popularity)**: **10.0** (weight is 0.5)
     
-1.  **[Security reviews](#security-reviews)**: **0.02** (weight is 0.2)
+1.  **[Security reviews](#security-reviews)**: **0.03** (weight is 0.2)
     
 
 
@@ -147,10 +147,6 @@ This sub-score is based on the following sub-scores:
         
     1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
         
-1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
-    
-1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
-    
 1.  **[Static analysis](#static-analysis)**: **3.5** (weight is 1.0)
     1.  **[LGTM score](#lgtm-score)**: **7.0** (weight is 1.0)
         
@@ -158,6 +154,10 @@ This sub-score is based on the following sub-scores:
         
     1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
         
+1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
+    
+1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
+    
 1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
     
 
@@ -211,10 +211,6 @@ This sub-score is based on the following sub-score:
             
         1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
             
-    1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
-        
-    1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
-        
     1.  **[Static analysis](#static-analysis)**: **3.5** (weight is 1.0)
         1.  **[LGTM score](#lgtm-score)**: **7.0** (weight is 1.0)
             
@@ -222,6 +218,10 @@ This sub-score is based on the following sub-score:
             
         1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
             
+    1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
+        
+    1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
+        
     1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
         
 
@@ -230,7 +230,7 @@ This sub-score is based on 1 feature:
 
 
 
-1.  **Info about vulnerabilities in the project:** 34 vulnerabilities, [details below](#known-vulnerabilities)
+1.  **Info about vulnerabilities in the project:** 42 vulnerabilities, [details below](#known-vulnerabilities)
 
 
 ### Unpatched vulnerabilities
@@ -245,7 +245,7 @@ This sub-score is based on 1 feature:
 
 
 
-1.  **Info about vulnerabilities in the project:** 34 vulnerabilities, [details below](#known-vulnerabilities)
+1.  **Info about vulnerabilities in the project:** 42 vulnerabilities, [details below](#known-vulnerabilities)
 
 
 ### Community commitment
@@ -271,14 +271,14 @@ Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-594 commits in the last 3 months results to 10.00 points
+555 commits in the last 3 months results to 10.00 points
 2 contributors increase the score value from 10.00 to 10.50
 
 This sub-score is based on 2 features:
 
 
 
-1.  **Number of commits in the last three months:** 594
+1.  **Number of commits in the last three months:** 555
 1.  **Number of contributors in the last three months:** 2
 
 
@@ -295,13 +295,13 @@ This sub-score is based on 3 features:
 
 
 1.  **Number of projects on GitHub that use an open source project:** unknown
-1.  **Number of stars for a GitHub repository:** 17602
-1.  **Number of watchers for a GitHub repository:** 603
+1.  **Number of stars for a GitHub repository:** 18039
+1.  **Number of watchers for a GitHub repository:** 601
 
 
 ### Security reviews
 
-Score: **0.02**, confidence is 10.0 (max), weight is 0.2 (low)
+Score: **0.03**, confidence is 10.0 (max), weight is 0.2 (low)
 
 
 
@@ -329,6 +329,26 @@ This sub-score is based on the following sub-scores:
 1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
     
 1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
+    
+
+
+### Static analysis
+
+Score: **3.5**, confidence is 10.0 (max), weight is 1.0 (high)
+
+
+
+
+
+This sub-score is based on the following sub-scores:
+
+
+
+1.  **[LGTM score](#lgtm-score)**: **7.0** (weight is 1.0)
+    
+1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
+    
+1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
     
 
 
@@ -364,26 +384,6 @@ This sub-score is based on 4 features:
 1.  **Does it use MemorySanitizer?** No
 1.  **Does it use UndefinedBehaviorSanitizer?** No
 1.  **Programming languages:** C, CPP, PYTHON, GO, OTHER
-
-
-### Static analysis
-
-Score: **3.5**, confidence is 10.0 (max), weight is 1.0 (high)
-
-
-
-
-
-This sub-score is based on the following sub-scores:
-
-
-
-1.  **[LGTM score](#lgtm-score)**: **7.0** (weight is 1.0)
-    
-1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
-    
-1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
-    
 
 
 ### nohttp tool
@@ -505,5 +505,7 @@ This sub-score is based on 2 features:
 1.  [CVE-2021-28683](https://nvd.nist.gov/vuln/detail/CVE-2021-28683): An issue was discovered in Envoy through 1.71.1. There is a remotely exploitable NULL pointer dereference and crash in TLS when an unknown TLS alert code is received.
 1.  [CVE-2021-29492](https://nvd.nist.gov/vuln/detail/CVE-2021-29492): Envoy is a cloud-native edge/middle/service proxy. Envoy does not decode escaped slash sequences `%2F` and `%5C` in HTTP URL paths in versions 1.18.2 and before. A remote attacker may craft a path with escaped slashes, e.g. `/something%2F..%2Fadmin`, to bypass access control, e.g. a block on `/admin`. A backend server could then decode slash sequences and normalize path and provide an attacker access beyond the scope provided for by the access control policy. ### Impact Escalation of Privileges when using RBAC or JWT filters with enforcement based on URL path. Users with back end servers that interpret `%2F` and `/` and `%5C` and `\` interchangeably are impacted. ### Attack Vector URL paths containing escaped slash characters delivered by untrusted client. Patches in versions 1.18.3, 1.17.3, 1.16.4, 1.15.5 contain new path normalization option to decode escaped slash characters. As a workaround, if back end servers treat `%2F` and `/` and `%5C` and `\` interchangeably and a URL path based access control is configured, one may reconfigure the back end server to not treat `%2F` and `/` and `%5C` and `\` interchangeably.
 1.  [CVE-2020-25752](https://nvd.nist.gov/vuln/detail/CVE-2020-25752): An issue was discovered on Enphase Envoy R3.x and D4.x devices. There are hardcoded web-panel login passwords for the installer and Enphase accounts. The passwords for these accounts are hardcoded values derived from the MD5 hash of the username and serial number mixed with some static strings. The serial number can be retrieved by an unauthenticated user at /info.xml. These passwords can be easily calculated by an attacker; users are unable to change these passwords.
+1.  [CVE-2021-32778](https://nvd.nist.gov/vuln/detail/CVE-2021-32778): Envoy is an open source L7 proxy and communication bus designed for large modern service oriented architectures. In affected versions envoy’s procedure for resetting a HTTP/2 stream has O(N^2) complexity, leading to high CPU utilization when a large number of streams are reset. Deployments are susceptible to Denial of Service when Envoy is configured with high limit on H/2 concurrent streams. An attacker wishing to exploit this vulnerability would require a client opening and closing a large number of H/2 streams. Envoy versions 1.19.1, 1.18.4, 1.17.4, 1.16.5 contain fixes to reduce time complexity of resetting HTTP/2 streams. As a workaround users may limit the number of simultaneous HTTP/2 dreams for upstream and downstream peers to a low number, i.e. 100.
+1.  [CVE-2021-39162](https://nvd.nist.gov/vuln/detail/CVE-2021-39162): Pomerium is an open source identity-aware access proxy. Envoy, which Pomerium is based on, can abnormally terminate if an H/2 GOAWAY and SETTINGS frame are received in the same IO event. This can lead to a DoS in the presence of untrusted *upstream* servers. 0.15.1 contains an upgraded envoy binary with this vulnerability patched. If only trusted upstreams are configured, there is not substantial risk of this condition being triggered.
 
 
