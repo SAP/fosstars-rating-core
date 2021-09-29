@@ -2,10 +2,10 @@
 
 |                  |                                                         | # or projects             |  % or projects              |
 | :--------------- | :------------------------------------------------------ | ------------------------: | --------------------------: |
-| Total            |                                                         | 164      |                        100% |
-| BAD ratings      | score below 4.43                        | 52      |      31.7% |
-| MODERATE ratings | score between 4.43 and 5.54 | 68 | 41.5% |
-| GOOD ratings     | score above 5.54                            | 44     |     26.8% |
+| Total            |                                                         | 188      |                        100% |
+| BAD ratings      | score below 4.43                        | 58      |      30.9% |
+| MODERATE ratings | score between 4.43 and 5.54 | 80 | 42.6% |
+| GOOD ratings     | score above 5.54                            | 50     |     26.6% |
 | UNCLEAR ratings  | confidence below 8.00                    | 0  |  0.0% |
 | UNKNOWN ratings  |                                                         | 0  |  0.0% |
 
@@ -16,25 +16,49 @@
 | [spring-projects/spring-boot](spring-projects/spring-boot.md) | [57422](https://github.com/spring-projects/spring-boot) | 6.16 | [GOOD](spring-projects/spring-boot.md) | 9.65 | Sep 29, 2021 |
 | [apache/echarts](apache/echarts.md) | [48194](https://github.com/apache/echarts) | 6.16 | [GOOD](apache/echarts.md) | 10.00 | Sep 29, 2021 |
 | [spring-projects/spring-framework](spring-projects/spring-framework.md) | [44472](https://github.com/spring-projects/spring-framework) | 5.27 | [MODERATE](spring-projects/spring-framework.md) | 9.65 | Sep 29, 2021 |
+| [google/guava](google/guava.md) | [42505](https://github.com/google/guava) | 6.03 | [GOOD](google/guava.md) | 10.00 | Sep 29, 2021 |
 | [apache/superset](apache/superset.md) | [40682](https://github.com/apache/superset) | 6.58 | [GOOD](apache/superset.md) | 10.00 | Sep 29, 2021 |
 | [apache/dubbo](apache/dubbo.md) | [36222](https://github.com/apache/dubbo) | 5.84 | [GOOD](apache/dubbo.md) | 9.65 | Sep 29, 2021 |
 | [apache/spark](apache/spark.md) | [30945](https://github.com/apache/spark) | 5.30 | [MODERATE](apache/spark.md) | 9.65 | Sep 29, 2021 |
 | [netty/netty](netty/netty.md) | [27679](https://github.com/netty/netty) | 5.82 | [GOOD](netty/netty.md) | 9.65 | Sep 29, 2021 |
+| [google/leveldb](google/leveldb.md) | [26565](https://github.com/google/leveldb) | 4.57 | [MODERATE](google/leveldb.md) | 9.65 | Sep 29, 2021 |
 | [GoogleChrome/lighthouse](GoogleChrome/lighthouse.md) | [23465](https://github.com/GoogleChrome/lighthouse) | 5.22 | [MODERATE](GoogleChrome/lighthouse.md) | 10.00 | Sep 29, 2021 |
 | [apache/airflow](apache/airflow.md) | [23232](https://github.com/apache/airflow) | 7.75 | [GOOD](apache/airflow.md) | 9.65 | Sep 29, 2021 |
+| [google/zx](google/zx.md) | [23061](https://github.com/google/zx) | 5.26 | [MODERATE](google/zx.md) | 9.87 | Sep 29, 2021 |
 | [curl/curl](curl/curl.md) | [21967](https://github.com/curl/curl) | 5.50 | [MODERATE](curl/curl.md) | 9.65 | Sep 29, 2021 |
+| [google/iosched](google/iosched.md) | [20816](https://github.com/google/iosched) | 3.65 | [BAD](google/iosched.md) | 9.65 | Sep 29, 2021 |
+| [google/python-fire](google/python-fire.md) | [20179](https://github.com/google/python-fire) | 4.41 | [BAD](google/python-fire.md) | 10.00 | Sep 29, 2021 |
+| [google/gson](google/gson.md) | [20083](https://github.com/google/gson) | 6.05 | [GOOD](google/gson.md) | 10.00 | Sep 29, 2021 |
 | [apache/kafka](apache/kafka.md) | [20016](https://github.com/apache/kafka) | 5.44 | [MODERATE](apache/kafka.md) | 9.65 | Sep 29, 2021 |
+| [google/web-starter-kit](google/web-starter-kit.md) | [18503](https://github.com/google/web-starter-kit) | 4.68 | [MODERATE](google/web-starter-kit.md) | 9.65 | Sep 29, 2021 |
+| [google/ExoPlayer](google/ExoPlayer.md) | [18323](https://github.com/google/ExoPlayer) | 5.58 | [GOOD](google/ExoPlayer.md) | 9.65 | Sep 29, 2021 |
 | [envoyproxy/envoy](envoyproxy/envoy.md) | [18039](https://github.com/envoyproxy/envoy) | 5.24 | [MODERATE](envoyproxy/envoy.md) | 9.65 | Sep 29, 2021 |
 | [apache/skywalking](apache/skywalking.md) | [17842](https://github.com/apache/skywalking) | 6.29 | [GOOD](apache/skywalking.md) | 9.65 | Sep 29, 2021 |
 | [apache/flink](apache/flink.md) | [17215](https://github.com/apache/flink) | 5.78 | [GOOD](apache/flink.md) | 9.65 | Sep 29, 2021 |
+| [google/flexbox-layout](google/flexbox-layout.md) | [17027](https://github.com/google/flexbox-layout) | 4.06 | [BAD](google/flexbox-layout.md) | 9.65 | Sep 29, 2021 |
+| [google/flatbuffers](google/flatbuffers.md) | [16849](https://github.com/google/flatbuffers) | 6.16 | [GOOD](google/flatbuffers.md) | 10.00 | Sep 29, 2021 |
 | [openssl/openssl](openssl/openssl.md) | [16575](https://github.com/openssl/openssl) | 5.33 | [MODERATE](openssl/openssl.md) | 9.65 | Sep 29, 2021 |
+| [google/dagger](google/dagger.md) | [16291](https://github.com/google/dagger) | 5.26 | [MODERATE](google/dagger.md) | 9.51 | Sep 29, 2021 |
 | [apache/rocketmq](apache/rocketmq.md) | [15457](https://github.com/apache/rocketmq) | 5.84 | [GOOD](apache/rocketmq.md) | 9.65 | Sep 29, 2021 |
 | [apache/shardingsphere](apache/shardingsphere.md) | [14602](https://github.com/apache/shardingsphere) | 6.21 | [GOOD](apache/shardingsphere.md) | 9.65 | Sep 29, 2021 |
+| [google/jax](google/jax.md) | [14322](https://github.com/google/jax) | 5.61 | [GOOD](google/jax.md) | 10.00 | Sep 29, 2021 |
+| [google/mediapipe](google/mediapipe.md) | [14037](https://github.com/google/mediapipe) | 3.74 | [BAD](google/mediapipe.md) | 10.00 | Sep 29, 2021 |
+| [google/deepdream](google/deepdream.md) | [12885](https://github.com/google/deepdream) | 3.62 | [BAD](google/deepdream.md) | 9.51 | Sep 29, 2021 |
+| [google/libphonenumber](google/libphonenumber.md) | [12796](https://github.com/google/libphonenumber) | 5.38 | [MODERATE](google/libphonenumber.md) | 9.65 | Sep 29, 2021 |
+| [google/guetzli](google/guetzli.md) | [12590](https://github.com/google/guetzli) | 4.71 | [MODERATE](google/guetzli.md) | 9.65 | Sep 29, 2021 |
+| [google/cadvisor](google/cadvisor.md) | [12576](https://github.com/google/cadvisor) | 4.85 | [MODERATE](google/cadvisor.md) | 10.00 | Sep 29, 2021 |
 | [apache/predictionio](apache/predictionio.md) | [12521](https://github.com/apache/predictionio) | 4.43 | [MODERATE](apache/predictionio.md) | 9.65 | Sep 29, 2021 |
 | [eclipse/deeplearning4j](eclipse/deeplearning4j.md) | [12207](https://github.com/eclipse/deeplearning4j) | 5.59 | [GOOD](eclipse/deeplearning4j.md) | 9.65 | Sep 29, 2021 |
+| [google/yapf](google/yapf.md) | [12065](https://github.com/google/yapf) | 4.75 | [MODERATE](google/yapf.md) | 10.00 | Sep 29, 2021 |
 | [apache/hadoop](apache/hadoop.md) | [11983](https://github.com/apache/hadoop) | 5.92 | [GOOD](apache/hadoop.md) | 10.00 | Sep 29, 2021 |
+| [google/filament](google/filament.md) | [11872](https://github.com/google/filament) | 5.03 | [MODERATE](google/filament.md) | 10.00 | Sep 29, 2021 |
+| [google/gvisor](google/gvisor.md) | [11720](https://github.com/google/gvisor) | 5.94 | [GOOD](google/gvisor.md) | 9.65 | Sep 29, 2021 |
+| [google/tink](google/tink.md) | [11622](https://github.com/google/tink) | 5.47 | [MODERATE](google/tink.md) | 10.00 | Sep 29, 2021 |
 | [aws/aws-cli](aws/aws-cli.md) | [11484](https://github.com/aws/aws-cli) | 6.27 | [GOOD](aws/aws-cli.md) | 10.00 | Sep 29, 2021 |
 | [apache/druid](apache/druid.md) | [11199](https://github.com/apache/druid) | 6.69 | [GOOD](apache/druid.md) | 9.65 | Sep 29, 2021 |
+| [google/guice](google/guice.md) | [10447](https://github.com/google/guice) | 4.74 | [MODERATE](google/guice.md) | 10.00 | Sep 29, 2021 |
+| [google/brotli](google/brotli.md) | [10447](https://github.com/google/brotli) | 5.37 | [MODERATE](google/brotli.md) | 10.00 | Sep 29, 2021 |
+| [google/grumpy](google/grumpy.md) | [10382](https://github.com/google/grumpy) | 3.79 | [BAD](google/grumpy.md) | 9.65 | Sep 29, 2021 |
 | [apache/zookeeper](apache/zookeeper.md) | [9864](https://github.com/apache/zookeeper) | 5.04 | [MODERATE](apache/zookeeper.md) | 9.65 | Sep 29, 2021 |
 | [apache/pulsar](apache/pulsar.md) | [9668](https://github.com/apache/pulsar) | 5.68 | [GOOD](apache/pulsar.md) | 9.65 | Sep 29, 2021 |
 | [apache/thrift](apache/thrift.md) | [8669](https://github.com/apache/thrift) | 5.94 | [GOOD](apache/thrift.md) | 10.00 | Sep 29, 2021 |
