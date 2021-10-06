@@ -50,7 +50,8 @@ do
 
   # Generate a report
   echo "" > report.log
-  java -jar fosstars-rating-core/target/fosstars-github-rating-calc.jar \
+  java -jar -Xms2048M -Xmx2048M \
+            fosstars-rating-core/target/fosstars-github-rating-calc.jar \
             --config $CONFIG \
             --token $TOKEN \
             --cleanup \
