@@ -50,7 +50,7 @@ do
 
   # Generate a report
   echo "" > report.log
-  java -jar -Xms2048M -Xmx2048M -XX:MaxPermSize=2048M -XX:MaxHeapSize=2048M \
+  java -jar -Xms2048M -Xmx2048M \
             fosstars-rating-core/target/fosstars-github-rating-calc.jar \
             --config $CONFIG \
             --token $TOKEN \
