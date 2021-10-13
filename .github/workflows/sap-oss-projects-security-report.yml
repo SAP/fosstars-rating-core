@@ -12,3 +12,4 @@ jobs:
           config-file: sap.yml
           token: ${{ secrets.GITHUB_TOKEN }}
           cleanup: Yes
+          report-branch: sap-oss-security-report
