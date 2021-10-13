@@ -1,0 +1,13 @@
+# this is a configuration for generating a report for Apache projects
+cache: .fosstars/project_rating_cache.json
+reports:
+  - type: markdown
+    where: .
+    source: github_projects.json
+  - type: json
+    where: github_projects.json
+finder:
+  organizations:
+      - name: SAP
+        exclude:
+          - .github
