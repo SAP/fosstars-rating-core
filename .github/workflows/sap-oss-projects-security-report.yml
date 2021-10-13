@@ -1,0 +1,14 @@
+name: "Fosstars OSS security report"
+on: workflow_dispatch
+
+jobs:
+  sap:
+    runs-on: ubuntu-latest
+    name: "SAP projects"
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - uses: ./.github/actions/project-security-report-action
+        with:
+          config-file: sap.yml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          cleanup: Yes
