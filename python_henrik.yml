@@ -1,0 +1,102 @@
+# this is a configuration for generating a report for other projects
+cache: .fosstars/project_rating_python_cache.json
+reports:
+  - type: markdown
+    where: ./python-reports_henrik
+    source: ./python-reports/github_python_henrik_projects.json
+  - type: json
+    where: ./python-reports/github_python_henrik_projects.json
+finder:
+  repositories:
+# Good ratings below
+    - organization: apache
+      name: airflow
+    - organization: aws
+      name: aws-cli
+    - organization: google
+      name: flatbuffers
+    - organization: facebookresearch
+      name: hydra
+    - organization: google
+      name: jax
+    - organization: apache
+      name: arrow
+    - organization: python
+      name: cpython
+    - organization: Azure
+      name: azure-sdk-for-python
+# Moderate ratings below
+    - organization: google
+      name: sentencepiece
+    - organization: huggingface
+      name: transformers
+    - organization: facebookresearch
+      name: visdom
+    - organization: pallets
+      name: werkzeug
+    - organization: google
+      name: yapf
+    - organization: tensorflow
+      name: tensorflow
+    - organization: tensorflow
+      name: tensorboard
+    - organization: apache
+      name: spark
+    - organization: numpy
+      name: numpy
+# Bad ratings below
+    - organization: Azure
+      name: azure-sdk
+    - organization: tiangolo
+      name: fastapi
+    - organization: google
+      name: python-fire
+    - organization: googleapis
+      name: python-dlp
+    - organization: jupyter
+      name: jupyter
+    - organization: keras-team
+      name: keras
+    - organization: google
+      name: oauth2client
+    - organization: scipy
+      name: scipy
+    - organization: ronaldoussoren
+      name: pyobjc
+# Most popular libraries
+    - organization: pallets
+      name: flask
+    - organization: django
+      name: django
+    - organization: keras-team
+      name: keras
+    - organization: httpie
+      name: httpie
+    - organization: ansible
+      name: ansible
+    - organization: psf
+      name: requests
+    - organization: scikit-learn
+      name: scikit-learn
+    - organization: pytorch
+      name: pytorch
+    - organization: scrapy
+      name: scrapy
+    - organization: pandas-dev
+      name: pandas
+    - organization: getsentry
+      name: sentry
+    - organization: pypa
+      name: pipenv
+    - organization: fastai
+      name: fastai
+    - organization: urllib3
+      name: urllib3
+    - organization: boto
+      name: botocore
+    - organization: pypa
+      name: setuptools
+    - organization: benjaminp
+      name: six
+    - organization: boto
+      name: s3transfer
