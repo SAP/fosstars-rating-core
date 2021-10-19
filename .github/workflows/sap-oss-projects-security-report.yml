@@ -13,3 +13,14 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           cleanup: Yes
           report-branch: sap-oss-security-report
+  henrik_python:
+    runs-on: ubuntu-latest
+    name: "Henrik Python projects"
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - uses: ./.github/actions/project-security-report-action
+        with:
+          config-file: python_henrik.yml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          cleanup: Yes
+          report-branch: oss-security-report-py-test
