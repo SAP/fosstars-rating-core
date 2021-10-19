@@ -1,11 +1,11 @@
 # this is a configuration for generating a report for other projects
-cache: .fosstars/project_rating_python_cache.json
+cache: .fosstars/project_rating_cache.json
 reports:
   - type: markdown
-    where: ./python-reports_henrik
-    source: ./python-reports/github_python_henrik_projects.json
+    where: .
+    source: github_projects.json
   - type: json
-    where: ./python-reports/github_python_henrik_projects.json
+    where: github_projects.json
 finder:
   repositories:
 # Good ratings below
