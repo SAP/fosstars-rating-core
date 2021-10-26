@@ -3,19 +3,24 @@ package com.sap.oss.phosphor.fosstars.tool.report;
 import static com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScore.findViolatedRulesIn;
 
 import com.sap.oss.phosphor.fosstars.advice.Advisor;
+import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating.OssRulesOfPlayLabel;
+import com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScore;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
-import com.sap.oss.phosphor.fosstars.tool.format.Formatter;
 import com.sap.oss.phosphor.fosstars.tool.format.OssRulesOfPlayRatingMarkdownFormatter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -55,7 +60,7 @@ public class OssRulesOfPlayMarkdownReporter extends AbstractReporter<GitHubProje
   /**
    * A formatter for rating values.
    */
-  private final Formatter formatter;
+  private final OssRulesOfPlayRatingMarkdownFormatter formatter;
 
   /**
    * Initializes a new reporter.
@@ -89,6 +94,14 @@ public class OssRulesOfPlayMarkdownReporter extends AbstractReporter<GitHubProje
 
   @Override
   public void runFor(List<GitHubProject> projects) throws IOException {
+    
+    Map<Feature<Boolean>, Set<String>> featureResults = 
+        new HashMap<Feature<Boolean>, Set<String>>();
+    OssRulesOfPlayScore.EXPECTED_TRUE.stream()
+        .forEach(feature -> featureResults.put(feature, new HashSet<String>()));
+    OssRulesOfPlayScore.EXPECTED_FALSE.stream()
+        .forEach(feature -> featureResults.put(feature, new HashSet<String>()));
+    
     int total = 0;
     long numberOfPassed = 0;
     long numberOfWarnings = 0;
@@ -129,6 +142,9 @@ public class OssRulesOfPlayMarkdownReporter extends AbstractReporter<GitHubProje
       Files.write(
           organizationDirectory.resolve(projectReportFilename),
           formatter.print(project).getBytes());
+      
+      OssRulesOfPlayScore.findViolatedRulesIn(ratingValue.scoreValue().usedValues()).stream()
+        .forEach(value -> featureResults.get(value.feature()).add(project.name()));
     }
 
     double percentOfPass = (double) numberOfPassed / total * 100;
@@ -146,11 +162,42 @@ public class OssRulesOfPlayMarkdownReporter extends AbstractReporter<GitHubProje
         .replace("%PERCENT_PASSED_PROJECTS%", String.format("%2.1f", percentOfPass))
         .replace("%PERCENT_PROJECTS_WITH_WARNINGS%", String.format("%2.1f", percentOfWarnings))
         .replace("%PERCENT_UNCLEAR_PROJECTS%", String.format("%2.1f", percentOfUnclear))
+        .replace("%PER_RULE_STATISTICS%", perRuleStatistics(featureResults, projects.size()))
         .replace("%PROJECT_TABLE%", tableOf(projects));
 
     Path path = outputDirectory.resolve(REPORT_FILENAME);
     logger.info("Storing a report to {}", path);
     Files.write(path, content.getBytes());
+  }
+  
+  /**
+   * Builds a statistics table per rule.
+   *
+   * @param featureResults The results per rule.
+   * @return A table with the statistics.
+   */
+  private String perRuleStatistics(Map<Feature<Boolean>, Set<String>> featureResults, int total) {
+    StringBuffer statisticsTable = new StringBuffer();
+    for (Feature<Boolean> feature : featureResults.keySet()) {
+      statisticsTable.append(String.format("\n### Project statistics for %s (%s)\n\n", 
+          formatter.identifierOf(feature).orElseGet(() -> "unknown"), formatter.nameOf(feature)));
+      Set<String> resultsForFeature = featureResults.get(feature);
+      if (resultsForFeature.isEmpty()) {
+        statisticsTable.append("*All projects are compliant with this rule.*\n");
+      } else {
+        statisticsTable.append("|   | # of projects | % of projects |\n");
+        statisticsTable.append("| -------  | :----- | :------------------ |\n");
+        statisticsTable.append(String.format("| Passed | %d | %2.1f%% |\n", 
+            total - resultsForFeature.size(), 
+            (double) (total - resultsForFeature.size()) / total * 100));
+        statisticsTable.append(String.format("| Failed | %d | %2.1f%% |\n\n", 
+            resultsForFeature.size(), (double) resultsForFeature.size() / total * 100));
+        statisticsTable.append("**Failed projects:**\n");
+        resultsForFeature.stream()
+            .forEach(result -> statisticsTable.append(String.format("- %s\n", result)));
+      }
+    }
+    return statisticsTable.toString();
   }
 
   /**
