@@ -13,8 +13,11 @@ import com.sap.oss.phosphor.fosstars.advice.oss.OssRulesOfPlayAdvisor;
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
 import com.sap.oss.phosphor.fosstars.model.Score;
+import com.sap.oss.phosphor.fosstars.model.Weight;
+import com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
+import com.sap.oss.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import java.io.BufferedReader;
@@ -48,11 +51,20 @@ public class OssRulesOfPlayMarkdownReporterTest {
               new ScoreValue(rating.score()).set(SCORE_WITH_WARNING).confidence(9.0),
               PASSED_WITH_WARNING));
 
-      GitHubProject failedProject = new GitHubProject("org", "failed");
-      failedProject.set(
+      BooleanValue failedReadme = new BooleanValue(OssFeatures.HAS_LICENSE, false);
+      BooleanValue failedReuse = new BooleanValue(OssFeatures.README_HAS_REUSE_INFO, false);
+      GitHubProject failedProject1 = new GitHubProject("org", "failed1");
+      failedProject1.set(
           new RatingValue(
-              new ScoreValue(rating.score()).set(Score.MIN).confidence(8.0),
-              FAILED));
+              new ScoreValue(rating.score(), Score.MIN, Weight.MAX, Confidence.MIN, 
+                  Arrays.asList(failedReadme, failedReuse))
+              .set(Score.MIN).confidence(8.0), FAILED));
+      GitHubProject failedProject2 = new GitHubProject("org", "failed2");
+      failedProject2.set(
+          new RatingValue(
+              new ScoreValue(rating.score(), Score.MIN, Weight.MAX, Confidence.MIN, 
+                  Arrays.asList(failedReadme))
+              .set(Score.MIN).confidence(8.0), FAILED));
 
       GitHubProject unclearProject = new GitHubProject("org", "unclear");
       unclearProject.set(
@@ -61,7 +73,7 @@ public class OssRulesOfPlayMarkdownReporterTest {
               UNCLEAR));
 
       List<GitHubProject> projects = Arrays.asList(
-          passedProject, projectWithWarnings, failedProject, unclearProject
+          passedProject, projectWithWarnings, failedProject1, failedProject2, unclearProject
       );
 
       OssRulesOfPlayMarkdownReporter reporter
@@ -69,7 +81,8 @@ public class OssRulesOfPlayMarkdownReporterTest {
               outputDirectory.toString(), new OssRulesOfPlayAdvisor());
       reporter.runFor(projects);
 
-      Path reportFileName = outputDirectory.resolve(OssRulesOfPlayMarkdownReporter.REPORT_FILENAME);
+      Path reportFileName = 
+          outputDirectory.resolve(OssRulesOfPlayMarkdownReporter.REPORT_FILENAME);
       assertTrue(Files.exists(reportFileName));
 
       String report = new String(Files.readAllBytes(reportFileName));
@@ -85,8 +98,18 @@ public class OssRulesOfPlayMarkdownReporterTest {
       assertTrue(report.contains("org/warnings"));
       assertTrue(report.contains("org/failed"));
       assertTrue(report.contains("org/unclear"));
+      assertTrue(report.contains("Does README mention REUSE?"));
+      assertTrue(report.contains("Is it registered in REUSE?"));
+      assertTrue(report.contains("[Failed](org/failed1.md) | 2 violated rules |"));
+      assertTrue(report.contains("[Failed](org/failed2.md) | 1 violated rule |"));
       assertEquals(1, linesWith("100%", report));
-      assertEquals(4, linesWith("25.0%", report));
+      assertEquals(4, linesWith("20.0%", report));
+      assertEquals(2, linesWith("40.0%", report));
+      assertEquals(1, linesWith("60.0%", report));
+      assertEquals(1, linesWith("80.0%", report));
+      assertEquals(2, linesWith("- failed1", report));
+      assertEquals(1, linesWith("- failed2", report));
+      assertEquals(15, linesWith("### Project statistics for ", report));
     } finally {
       FileUtils.forceDeleteOnExit(outputDirectory.toFile());
     }
