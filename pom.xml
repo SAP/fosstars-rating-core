@@ -73,7 +73,7 @@
     <version.jackson>2.13.0</version.jackson>
     <version.commons-math3>3.6.1</version.commons-math3>
     <version.commons-cli>1.5.0</version.commons-cli>
-    <version.github-api>1.135</version.github-api>
+    <version.github-api>1.300</version.github-api>
     <version.nist-data-mirror>1.5.1</version.nist-data-mirror>
     <version.maven-model>3.8.4</version.maven-model>
     <version.log4j-api>2.14.1</version.log4j-api>
