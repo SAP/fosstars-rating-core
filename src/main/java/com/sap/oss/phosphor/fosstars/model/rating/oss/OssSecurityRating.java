@@ -11,8 +11,8 @@ import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import java.util.Objects;
 
 /**
- * This is a security rating for open-source projects
- * that is based on a security score for open-source project.
+ * This is a security rating for open-source projects that is based on a security score for
+ * open-source project.
  */
 public class OssSecurityRating extends AbstractRating {
 
@@ -20,7 +20,6 @@ public class OssSecurityRating extends AbstractRating {
    * A set of labels for the rating.
    */
   public enum SecurityLabel implements Label {
-
     BAD, MODERATE, GOOD, UNCLEAR
   }
 
@@ -39,7 +38,7 @@ public class OssSecurityRating extends AbstractRating {
   /**
    * Initializes a security rating based on a security score for open-source projects.
    *
-   * @param score The security score.
+   * @param score      The security score.
    * @param thresholds Thresholds for labels.
    */
   @JsonCreator
@@ -116,8 +115,8 @@ public class OssSecurityRating extends AbstractRating {
      * Initialize thresholds.
      *
      * @param moderate A threshold for the moderate label.
-     * @param good A threshold for the good label.
-     * @param unclear A threshold for the unclear label.
+     * @param good     A threshold for the good label.
+     * @param unclear  A threshold for the unclear label.
      */
     @JsonCreator
     public Thresholds(
@@ -166,5 +165,4 @@ public class OssSecurityRating extends AbstractRating {
       return unclear;
     }
   }
-
 }

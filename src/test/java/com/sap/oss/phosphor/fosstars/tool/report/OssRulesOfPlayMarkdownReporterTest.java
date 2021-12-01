@@ -79,7 +79,7 @@ public class OssRulesOfPlayMarkdownReporterTest {
       OssRulesOfPlayMarkdownReporter reporter
           = new OssRulesOfPlayMarkdownReporter(
               outputDirectory.toString(), new OssRulesOfPlayAdvisor());
-      reporter.runFor(projects);
+      reporter. runFor(projects);
 
       Path reportFileName = 
           outputDirectory.resolve(OssRulesOfPlayMarkdownReporter.REPORT_FILENAME);

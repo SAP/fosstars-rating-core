@@ -10,6 +10,7 @@ import com.sap.oss.phosphor.fosstars.model.subject.AbstractSubject;
 import java.util.Objects;
 import java.util.Optional;
 import javax.annotation.Nullable;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Maven artifact.
@@ -40,10 +41,10 @@ public class MavenArtifact extends AbstractSubject implements Artifact {
   /**
    * Initializes a Maven artifact.
    *
-   * @param group A group id of the artifact.
+   * @param group    A group id of the artifact.
    * @param artifact An artifact id of the artifact.
-   * @param version The version of the artifact. It may be null.
-   * @param project A {@link GitHubProject}. It may be null.
+   * @param version  The version of the artifact. It may be null.
+   * @param project  A {@link GitHubProject}. It may be null.
    */
   @JsonCreator
   public MavenArtifact(
@@ -88,6 +89,16 @@ public class MavenArtifact extends AbstractSubject implements Artifact {
     return Optional.ofNullable(version);
   }
 
+  /**
+   * Return the artifact in GAV format.
+   *
+   * @return GAV format of the artifact.
+   */
+  public String gav() {
+    String versionPrint = StringUtils.isEmpty(version) ? "" : String.format(":%s", version);
+    return String.format("%s:%s%s", group, artifact, versionPrint);
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -120,5 +131,11 @@ public class MavenArtifact extends AbstractSubject implements Artifact {
     }
 
     return format("pkg:maven/%s/%s@%s", group, artifact, version);
+  }
+
+  @Override
+  public String toString() {
+    String scmPrint = project == null ? "" : String.format(" -> %s", project);
+    return String.format("%s%s", gav(), scmPrint);
   }
 }

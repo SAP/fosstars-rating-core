@@ -3,6 +3,8 @@ package com.sap.oss.phosphor.fosstars.tool;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sap.oss.phosphor.fosstars.tool.finder.AbstractEntityFinder;
+import com.sap.oss.phosphor.fosstars.tool.finder.FinderConfig;
 import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,21 +28,21 @@ public class Config {
   final List<ReportConfig> reportConfigs;
 
   /**
-   * A config for {@link GitHubProjectFinder}.
+   * A config for {@link AbstractEntityFinder}.
    */
-  final GitHubProjectFinder.Config finderConfig;
+  final FinderConfig finderConfig;
 
   /**
    * Creates a new config.
    *
    * @param cacheFilename Where a cache file is located.
    * @param reportConfigs A config for reporting.
-   * @param finderConfig A configuration from {@link GitHubProjectFinder}.
+   * @param finderConfig A configuration from {@link FinderConfig}.
    */
   Config(
       @JsonProperty("cache") String cacheFilename,
       @JsonProperty("reports") List<ReportConfig> reportConfigs,
-      @JsonProperty("finder") GitHubProjectFinder.Config finderConfig) {
+      @JsonProperty("finder") FinderConfig finderConfig) {
 
     this.cacheFilename = cacheFilename;
     this.reportConfigs = reportConfigs;

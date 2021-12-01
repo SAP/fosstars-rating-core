@@ -7,12 +7,11 @@ import static java.lang.String.format;
 import static java.util.Collections.singletonList;
 import static java.util.Objects.requireNonNull;
 
-import com.sap.oss.phosphor.fosstars.advice.Advisor;
-import com.sap.oss.phosphor.fosstars.advice.oss.github.OssSecurityGithubAdvisor;
 import com.sap.oss.phosphor.fosstars.maven.AbstractModelVisitor;
 import com.sap.oss.phosphor.fosstars.maven.GAV;
 import com.sap.oss.phosphor.fosstars.maven.MavenUtils;
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
+import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.tool.format.Formatter;
@@ -27,6 +26,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -36,12 +36,7 @@ import org.apache.maven.model.Model;
 /**
  * This handler calculates {@link OssSecurityRating}.
  */
-public class OssProjectSecurityRatingHandler extends AbstractHandler {
-
-  /**
-   * An advisor for calculated security ratings.
-   */
-  private static final Advisor OSS_SECURITY_GITHUB_ADVISOR = new OssSecurityGithubAdvisor();
+public class OssProjectSecurityRatingHandler extends AbstractHandler<GitHubProject> {
 
   /**
    * Initializes a handler.
@@ -94,7 +89,24 @@ public class OssProjectSecurityRatingHandler extends AbstractHandler {
   @Override
   void processConfig(String filename) throws IOException {
     nvd.preload();
-    super.processConfig(filename);
+    logger.info("Loading config from {}", filename);
+    Config config = Config.from(filename);
+
+    // try to create reporters earlier to catch a possible misconfiguration
+    // before calculating ratings
+    final List<Reporter<GitHubProject>> reporters = makeReporters(config);
+
+    logger.info("Look for projects ...");
+    List<GitHubProject> projects = new GitHubProjectFinder(fetcher.github())
+        .set(config.finderConfig)
+        .run();
+    logger.info("Found {} project{}", projects.size(), projects.size() > 1 ? "s" : "");
+    for (GitHubProject project : projects) {
+      logger.info("  {}", project.scm());
+    }
+
+    String projectCacheFile = projectCacheFile(config);
+    process(projects, reporters, projectCacheFile);
   }
 
   @Override
@@ -133,6 +145,24 @@ public class OssProjectSecurityRatingHandler extends AbstractHandler {
     }
   }
 
+  @Override
+  void processUrl(String url) throws IOException {
+    process(GitHubProject.parse(url));
+  }
+
+  @Override
+  void process(GitHubProject project) throws IOException {
+    calculator().calculateFor(project);
+
+    if (!project.ratingValue().isPresent()) {
+      throw new IOException("Could not calculate a rating!");
+    }
+
+    Arrays.stream(createFormatter("text").print(project).split("\n")).forEach(logger::info);
+    logger.info("");
+    storeReportIfRequested(project, commandLine);
+  }
+
   /**
    * Calculate a rating for a single project identified by GAV coordinates.
    *
@@ -155,7 +185,7 @@ public class OssProjectSecurityRatingHandler extends AbstractHandler {
   /**
    * Calculate a rating for a single project.
    *
-   * @param identifier An identifier of the project.
+   * @param identifier            An identifier of the project.
    * @param gitHubProjectResolver A resolver that looks for a GitHub repository for the project.
    * @throws IOException If something went wrong.
    */
@@ -168,6 +198,45 @@ public class OssProjectSecurityRatingHandler extends AbstractHandler {
     }
 
     processUrl(project.get().scm().toString());
+  }
+
+  @Override
+  void process(List<GitHubProject> projects, List<Reporter<GitHubProject>> reporters,
+      String projectCacheFile) throws IOException {
+
+    logger.info("Starting calculating ratings ...");
+    MultipleRatingsCalculator multipleRatingsCalculator =
+        new MultipleRatingsCalculator(calculator())
+            .set(loadSubjectCache(projectCacheFile))
+            .storeCacheTo(projectCacheFile)
+            .calculateFor(projects);
+
+    logger.info("Okay, we've done calculating the ratings");
+
+    List<Subject> failedSubjects = multipleRatingsCalculator.failedSubjects();
+    if (!failedSubjects.isEmpty()) {
+      logger.warn("Ratings couldn't be calculated for {} project{}",
+          failedSubjects.size(), failedSubjects.size() == 1 ? "" : "s");
+      for (GitHubProject project : projects) {
+        logger.info("    {}", project.scm());
+      }
+    }
+
+    if (!reporters.isEmpty()) {
+      logger.info("Now let's generate reports");
+      for (Reporter<GitHubProject> reporter : reporters) {
+        reporter.runFor(projects);
+      }
+    }
+  }
+
+  /**
+   * Returns the {@link OssSecurityRating}.
+   *
+   * @return The {@link OssSecurityRating}.
+   */
+  private OssSecurityRating rating() {
+    return (OssSecurityRating) rating;
   }
 
   @Override
@@ -199,17 +268,8 @@ public class OssProjectSecurityRatingHandler extends AbstractHandler {
   }
 
   /**
-   * Returns the {@link OssSecurityRating}.
-   *
-   * @return The {@link OssSecurityRating}.
-   */
-  private OssSecurityRating rating() {
-    return (OssSecurityRating) rating;
-  }
-
-  /**
-   * A functional interface of a resolves that resolves an identifier
-   * to something of a specified result type.
+   * A functional interface of a resolves that resolves an identifier to something of a specified
+   * result type.
    *
    * @param <R> A type of the result.
    */

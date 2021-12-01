@@ -1,6 +1,6 @@
 package com.sap.oss.phosphor.fosstars.tool;
 
-import static com.sap.oss.phosphor.fosstars.tool.GitHubProjectFinder.EMPTY_EXCLUDE_LIST;
+import static com.sap.oss.phosphor.fosstars.tool.finder.OrganizationConfig.EMPTY_EXCLUDE_LIST;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -11,10 +11,10 @@ import static org.mockito.Mockito.when;
 
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubOrganization;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
-import com.sap.oss.phosphor.fosstars.tool.GitHubProjectFinder.Config;
-import com.sap.oss.phosphor.fosstars.tool.GitHubProjectFinder.ConfigParser;
-import com.sap.oss.phosphor.fosstars.tool.GitHubProjectFinder.OrganizationConfig;
-import com.sap.oss.phosphor.fosstars.tool.GitHubProjectFinder.ProjectConfig;
+import com.sap.oss.phosphor.fosstars.tool.finder.AbstractEntityFinder.ConfigParser;
+import com.sap.oss.phosphor.fosstars.tool.finder.FinderConfig;
+import com.sap.oss.phosphor.fosstars.tool.finder.OrganizationConfig;
+import com.sap.oss.phosphor.fosstars.tool.finder.ProjectConfig;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -33,27 +33,27 @@ public class GitHubProjectFinderTest {
   public void parseValidConfig() throws IOException {
     ConfigParser parser = new ConfigParser();
     try (InputStream is = getClass().getResourceAsStream("ValidProjectFinderConfig.yml")) {
-      Config config = parser.parse(is);
+      FinderConfig config = parser.parse(is);
       assertNotNull(config);
-      assertNotNull(config.organizationConfigs);
-      assertEquals(3, config.organizationConfigs.size());
+      assertNotNull(config.organizationConfigs());
+      assertEquals(3, config.organizationConfigs().size());
       assertThat(
-          config.organizationConfigs,
+          config.organizationConfigs(),
           hasItem(
               new OrganizationConfig("apache", Arrays.asList("incubator", "incubating"), 100)));
-      assertThat(config.organizationConfigs,
+      assertThat(config.organizationConfigs(),
           hasItem(
               new OrganizationConfig("eclipse", Collections.singletonList("incubator"), 0)));
-      assertThat(config.organizationConfigs,
+      assertThat(config.organizationConfigs(),
           hasItem(
               new OrganizationConfig("spring-projects", EMPTY_EXCLUDE_LIST, 0)));
-      assertNotNull(config.projectConfigs);
-      assertEquals(2, config.projectConfigs.size());
+      assertNotNull(config.projectConfigs());
+      assertEquals(2, config.projectConfigs().size());
       assertThat(
-          config.projectConfigs,
+          config.projectConfigs(),
           hasItem(new ProjectConfig("FasterXML", "jackson-databind")));
       assertThat(
-          config.projectConfigs,
+          config.projectConfigs(),
           hasItem(new ProjectConfig("FasterXML", "jackson-dataformat-xml")));
     }
   }
@@ -74,7 +74,7 @@ public class GitHubProjectFinderTest {
     repositories.add(projectZ);
 
     PagedIterable<GHRepository> pagedIterable = mock(PagedIterable.class);
-    when(pagedIterable.asList()).thenReturn(repositories);
+    when(pagedIterable.toList()).thenReturn(repositories);
 
     GHOrganization organization = mock(GHOrganization.class);
     when(organization.listRepositories(anyInt())).thenReturn(pagedIterable);
@@ -105,17 +105,17 @@ public class GitHubProjectFinderTest {
     ConfigParser parser = new ConfigParser();
     final String resource = "NoOrganizationsProjectFinderConfig.yml";
     try (InputStream is = getClass().getResourceAsStream(resource)) {
-      Config config = parser.parse(is);
+      FinderConfig config = parser.parse(is);
       assertNotNull(config);
-      assertNotNull(config.organizationConfigs);
-      assertEquals(0, config.organizationConfigs.size());
-      assertNotNull(config.projectConfigs);
-      assertEquals(2, config.projectConfigs.size());
+      assertNotNull(config.organizationConfigs());
+      assertEquals(0, config.organizationConfigs().size());
+      assertNotNull(config.projectConfigs());
+      assertEquals(2, config.projectConfigs().size());
       assertThat(
-          config.projectConfigs,
+          config.projectConfigs(),
           hasItem(new ProjectConfig("FasterXML", "jackson-databind")));
       assertThat(
-          config.projectConfigs,
+          config.projectConfigs(),
           hasItem(new ProjectConfig("FasterXML", "jackson-dataformat-xml")));
     }
   }

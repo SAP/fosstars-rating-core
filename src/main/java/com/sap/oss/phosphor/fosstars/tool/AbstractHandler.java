@@ -7,6 +7,8 @@ import static java.util.Optional.empty;
 
 import com.github.packageurl.PackageURL;
 import com.github.packageurl.PackageURL.StandardTypes;
+import com.sap.oss.phosphor.fosstars.advice.Advisor;
+import com.sap.oss.phosphor.fosstars.advice.oss.github.OssSecurityGithubAdvisor;
 import com.sap.oss.phosphor.fosstars.data.DataProvider;
 import com.sap.oss.phosphor.fosstars.data.DataProviderSelector;
 import com.sap.oss.phosphor.fosstars.data.NoUserCallback;
@@ -28,7 +30,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +46,12 @@ import org.apache.logging.log4j.Logger;
 /**
  * A base class for command-line handlers.
  */
-public abstract class AbstractHandler implements Handler {
+public abstract class AbstractHandler<T extends Subject> implements Handler {
+
+  /**
+   * An advisor for calculated security ratings.
+   */
+  static final Advisor OSS_SECURITY_GITHUB_ADVISOR = new OssSecurityGithubAdvisor();
 
   /**
    * No configuration file.
@@ -249,67 +255,36 @@ public abstract class AbstractHandler implements Handler {
    * Calculate a rating for a single subject identified by a URL to its SCM.
    *
    * @param url A URL of the project repository.
-   * @return The processed {@link Subject}.
    * @throws IOException If something went wrong.
    */
-  void processUrl(String url) throws IOException {
-    process(GitHubProject.parse(url));
-  }
+  abstract void processUrl(String url) throws IOException;
 
   /**
-   * Process a GitHub project.
+   * Calculate a rating for projects specified in a config.
    *
-   * @param project The project.
+   * @param filename A path to the config.
    * @throws IOException If something went wrong.
    */
-  void process(GitHubProject project) throws IOException {
-    calculator().calculateFor(project);
-
-    if (!project.ratingValue().isPresent()) {
-      throw new IOException("Could not calculate a rating!");
-    }
-
-    Arrays.stream(createFormatter("text").print(project).split("\n")).forEach(logger::info);
-    logger.info("");
-    storeReportIfRequested(project, commandLine);
-  }
+  abstract void processConfig(String filename) throws IOException;
 
   /**
-   * Calculate ratings for a number of projects.
+   * Process a Subject.
    *
-   * @param projects The projects.
-   * @param reporters A list of reporters to be applied to the calculated ratings.
-   * @param projectCacheFile A path to projects cache.
+   * @param subject The subject.
    * @throws IOException If something went wrong.
    */
-  void process(List<GitHubProject> projects, List<Reporter<GitHubProject>> reporters,
-      String projectCacheFile) throws IOException {
+  abstract void process(T subject) throws IOException;
 
-    logger.info("Starting calculating ratings ...");
-    MultipleRatingsCalculator multipleRatingsCalculator =
-        new MultipleRatingsCalculator(calculator())
-            .set(loadSubjectCache(projectCacheFile))
-            .storeCacheTo(projectCacheFile)
-            .calculateFor(projects);
-
-    logger.info("Okay, we've done calculating the ratings");
-
-    List<Subject> failedSubjects = multipleRatingsCalculator.failedSubjects();
-    if (!failedSubjects.isEmpty()) {
-      logger.warn("Ratings couldn't be calculated for {} project{}",
-          failedSubjects.size(), failedSubjects.size() == 1 ? "" : "s");
-      for (GitHubProject project : projects) {
-        logger.info("    {}", project.scm());
-      }
-    }
-
-    if (!reporters.isEmpty()) {
-      logger.info("Now let's generate reports");
-      for (Reporter<GitHubProject> reporter : reporters) {
-        reporter.runFor(projects);
-      }
-    }
-  }
+  /**
+   * Calculate ratings for a number of subjects.
+   *
+   * @param subjects         The subjects.
+   * @param reporters        A list of reporters to be applied to the calculated ratings.
+   * @param projectCacheFile A path to subjects cache.
+   * @throws IOException If something went wrong.
+   */
+  abstract void process(List<T> subjects, List<Reporter<T>> reporters,
+      String projectCacheFile) throws IOException;
 
   /**
    * Process a Maven artifact.
@@ -380,33 +355,6 @@ public abstract class AbstractHandler implements Handler {
   }
 
   /**
-   * Calculate a rating for projects specified in a config.
-   *
-   * @param filename A path to the config.
-   * @throws IOException If something went wrong.
-   */
-  void processConfig(String filename) throws IOException {
-    logger.info("Loading config from {}", filename);
-    Config config = Config.from(filename);
-
-    // try to create reporters earlier to catch a possible misconfiguration
-    // before calculating ratings
-    final List<Reporter<GitHubProject>> reporters = makeReporters(config);
-
-    logger.info("Look for projects ...");
-    List<GitHubProject> projects = new GitHubProjectFinder(fetcher.github())
-        .set(config.finderConfig)
-        .run();
-    logger.info("Found {} project{}", projects.size(), projects.size() > 1 ? "s" : "");
-    for (GitHubProject project : projects) {
-      logger.info("  {}", project.scm());
-    }
-
-    String projectCacheFile = projectCacheFile(config);
-    process(projects, reporters, projectCacheFile);
-  }
-
-  /**
    * Calculate ratings for dependencies in a POm file.
    *
    * @param filename A path to the POM file.
@@ -417,8 +365,8 @@ public abstract class AbstractHandler implements Handler {
   }
 
   /**
-   * Loads a cache of projects from a file.
-   * If the file doesn't exist, then the method returns an empty cache.
+   * Loads a cache of projects from a file. If the file doesn't exist, then the method returns an
+   * empty cache.
    *
    * @param filename A path to the file.
    * @return A loaded cache of projects.
@@ -439,26 +387,26 @@ public abstract class AbstractHandler implements Handler {
    * @param config A config of the tool.
    * @return A file from the config if available, the default cache file otherwise.
    */
-  private String projectCacheFile(Config config) {
+  protected String projectCacheFile(Config config) {
     return config.hasCacheFile()
         ? config.cacheFilename
         : baseDirectory + File.separator + "project_cache.json";
   }
 
   /**
-   * Create a reporter from a config.
-   * The method returns a list with only {@link Reporter#dummy()} if the config is null.
+   * Create a list of reporters from a config. The method returns a list with only {@link
+   * Reporter#dummy()} if the config is null.
    *
    * @param config The config.
-   * @return A reporter.
+   * @return A list of reporters.
    * @throws IllegalArgumentException If the type is unknown.
    */
-  List<Reporter<GitHubProject>> makeReporters(Config config) throws IOException {
+  List<Reporter<T>> makeReporters(Config config) throws IOException {
     if (config == NO_CONFIG || config.reportConfigs == null) {
       return emptyList();
     }
 
-    List<Reporter<GitHubProject>> reporters = new ArrayList<>();
+    List<Reporter<T>> reporters = new ArrayList<>();
     for (ReportConfig reportConfig : config.reportConfigs) {
       reporterFrom(reportConfig).ifPresent(reporters::add);
     }
@@ -473,14 +421,14 @@ public abstract class AbstractHandler implements Handler {
    * @return A reporter.
    * @throws IOException If something went wrong.
    */
-  Optional<Reporter<GitHubProject>> reporterFrom(ReportConfig reportConfig) throws IOException {
+  Optional<Reporter<T>> reporterFrom(ReportConfig reportConfig) throws IOException {
     return empty();
   }
 
   /**
    * Stores a rating of a subject if a user asked about it.
    *
-   * @param subject The subject.
+   * @param subject     The subject.
    * @param commandLine Command-line options.
    * @throws IOException If something went wrong.
    */
