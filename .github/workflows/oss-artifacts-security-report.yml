@@ -1,4 +1,4 @@
-name: "Fosstars OSS security report"
+name: "Fosstars OSS artifact security report"
 on: workflow_dispatch
 
 jobs:

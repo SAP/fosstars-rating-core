@@ -1,4 +1,4 @@
-name: "Calculate label thresholds"
+name: "Calculate label thresholds for artifact"
 on: workflow_dispatch
 
 jobs:
