@@ -1,0 +1,13 @@
+name: "Calculate label thresholds"
+on: workflow_dispatch
+
+jobs:
+  thresholds:
+    runs-on: ubuntu-latest
+    name: "Calculate label thresholds"
+    steps:
+      - uses: actions/checkout@v2.4.0
+      - uses: ./.github/actions/artifact-security-label-threshold-action
+        with:
+          input-file: maven_artifacts.json
+          fosstars-version: master

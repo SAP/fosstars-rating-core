@@ -1,0 +1,94 @@
+name: "Fosstars OSS security report"
+on: workflow_dispatch
+
+jobs:
+  other:
+    runs-on: ubuntu-latest
+    name: "Other projects"
+    steps:
+      - uses: actions/checkout@v2.4.0
+      - uses: ./.github/actions/artifact-security-report-action
+        with:
+          config-file: other.yml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          cleanup: Yes
+  apache:
+    runs-on: ubuntu-latest
+    name: "Apache projects"
+    needs: other
+    steps:
+      - uses: actions/checkout@v2.4.0
+      - uses: ./.github/actions/project-security-report-action
+        with:
+          config-file: apache.yml
+          token: ${{ secrets.GITHUB_TOKEN }}
+  eclipse:
+    runs-on: ubuntu-latest
+    name: "Eclipse projects"
+    needs: apache
+    steps:
+      - uses: actions/checkout@v2.4.0
+      - uses: ./.github/actions/project-security-report-action
+        with:
+          config-file: eclipse.yml
+          token: ${{ secrets.GITHUB_TOKEN }}
+  spring:
+    runs-on: ubuntu-latest
+    name: "Spring projects"
+    needs: eclipse
+    steps:
+      - uses: actions/checkout@v2.4.0
+      - uses: ./.github/actions/project-security-report-action
+        with:
+          config-file: spring.yml
+          token: ${{ secrets.GITHUB_TOKEN }}
+  bouncy_castle:
+    runs-on: ubuntu-latest
+    name: "Bouncy Castle projects"
+    needs: spring
+    steps:
+      - uses: actions/checkout@v2.4.0
+      - uses: ./.github/actions/project-security-report-action
+        with:
+          config-file: bouncycastle.yml
+          token: ${{ secrets.GITHUB_TOKEN }}
+  aws:
+    runs-on: ubuntu-latest
+    name: "AWS projects"
+    needs: bouncy_castle
+    steps:
+      - uses: actions/checkout@v2.4.0
+      - uses: ./.github/actions/project-security-report-action
+        with:
+          config-file: aws.yml
+          token: ${{ secrets.GITHUB_TOKEN }}
+  google:
+    runs-on: ubuntu-latest
+    name: "Google projects"
+    needs: aws
+    steps:
+      - uses: actions/checkout@v2.4.0
+      - uses: ./.github/actions/project-security-report-action
+        with:
+          config-file: google.yml
+          token: ${{ secrets.GITHUB_TOKEN }}
+  jackson:
+    runs-on: ubuntu-latest
+    name: "Jackson projects"
+    needs: google
+    steps:
+      - uses: actions/checkout@v2.4.0
+      - uses: ./.github/actions/project-security-report-action
+        with:
+          config-file: jackson.yml
+          token: ${{ secrets.GITHUB_TOKEN }}
+  thresholds:
+    runs-on: ubuntu-latest
+    name: "Calculate label thresholds"
+    needs: jackson
+    steps:
+      - uses: actions/checkout@v2.4.0
+      - uses: ./.github/actions/project-security-label-threshold-action
+        with:
+          input-file: github_projects.json
+          fosstars-version: master
