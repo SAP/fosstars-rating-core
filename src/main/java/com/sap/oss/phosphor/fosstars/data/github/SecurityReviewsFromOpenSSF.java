@@ -161,10 +161,10 @@ public class SecurityReviewsFromOpenSSF
   boolean purlBelongsTo(GitHubProject project, String purl) {
     try {
       /* The PURL sometimes needs to be trimmed
-         - One of the issues is redundant "pkg:" occurance at the beginning of the text.
+         - One of the issues is redundant "pkg:" occurrence at the beginning of the text.
          - A PR is created to resolve this https://github.com/ossf/security-reviews/pull/66
       */
-      PackageURL packageUrl = new PackageURL(purl.replaceAll("([\\:\\w]+)\\1", "$1"));
+      PackageURL packageUrl = new PackageURL(purl.replaceAll("(pkg\\:)(\\1)*", "$1"));
       return "github".equalsIgnoreCase(packageUrl.getType())
           && packageUrl.getNamespace() != null
           && packageUrl.getName() != null

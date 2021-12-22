@@ -50,6 +50,8 @@ public class SecurityReviewsFromOpenSSFTest extends TestGitHubDataFetcherHolder 
     assertFalse(provider.purlBelongsTo(project, "pkg:github/org/other"));
     assertFalse(provider.purlBelongsTo(project, "pkg:github/other/test"));
     assertFalse(provider.purlBelongsTo(project, "pkg:github/noname"));
+    assertTrue(provider.purlBelongsTo(project, "pkg:pkg:github/org/test"));
+    assertTrue(provider.purlBelongsTo(project, "pkg:pkg:pkg:pkg:github/org/test"));
   }
 
   @Test
