@@ -223,6 +223,22 @@ public class OssFeatures {
       = new BooleanFeature("If a project runs CodeQL checks for commits");
 
   /**
+   * Shows if an open-source project runs Bandit scans.
+   *
+   * @see <a href="https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository">Enabling code scanning for a repository</a>
+   */
+  public static final Feature<Boolean> RUNS_BANDIT_SCANS
+      = new BooleanFeature("If a project runs Bandit scans");
+
+  /**
+   * Shows if an open-source project runs Bandit checks for commits.
+   *
+   * @see <a href="https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository">Enabling code scanning for a repository</a>
+   */
+  public static final Feature<Boolean> USES_BANDIT_SCAN_CHECKS
+      = new BooleanFeature("If a project runs Bandit scan checks for commits");
+
+  /**
    * Shows if an open-source project uses <a href="https://lgtm.com">LGTM</a> checks for commits.
    */
   public static final Feature<Boolean> USES_LGTM_CHECKS

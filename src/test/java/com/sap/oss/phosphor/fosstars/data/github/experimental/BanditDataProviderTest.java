@@ -1,7 +1,7 @@
-package com.sap.oss.phosphor.fosstars.data.github;
+package com.sap.oss.phosphor.fosstars.data.github.experimental;
 
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_CODEQL_SCANS;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_CODEQL_CHECKS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_BANDIT_SCANS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_BANDIT_SCAN_CHECKS;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -11,6 +11,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.sap.oss.phosphor.fosstars.data.github.LocalRepository;
+import com.sap.oss.phosphor.fosstars.data.github.PackageManagementTest;
+import com.sap.oss.phosphor.fosstars.data.github.TestGitHubDataFetcherHolder;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
@@ -29,9 +32,11 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class CodeqlDataProviderTest extends TestGitHubDataFetcherHolder {
+public class BanditDataProviderTest extends TestGitHubDataFetcherHolder {
 
   private static final GitHubProject PROJECT = new GitHubProject("org", "test");
+
+  private static final String GITHUB_WORKFLOW_FILENAME = ".github/workflows/bandit.yml";
 
   private static Path repositoryDirectory;
 
@@ -50,42 +55,57 @@ public class CodeqlDataProviderTest extends TestGitHubDataFetcherHolder {
 
   @Test
   public void testNotInteractive() {
-    assertFalse(new CodeqlDataProvider(fetcher).interactive());
+    assertFalse(new BanditDataProvider(fetcher).interactive());
   }
 
   @Test
   public void testSupportedFeatures() {
-    Set<Feature<?>> features = new CodeqlDataProvider(fetcher).supportedFeatures();
+    Set<Feature<?>> features = new BanditDataProvider(fetcher).supportedFeatures();
     assertEquals(2, features.size());
-    assertThat(features, hasItem(RUNS_CODEQL_SCANS));
-    assertThat(features, hasItem(USES_CODEQL_CHECKS));
+    assertThat(features, hasItem(RUNS_BANDIT_SCANS));
+    assertThat(features, hasItem(USES_BANDIT_SCAN_CHECKS));
   }
 
   @Test
-  public void testWithoutCodeqlRuns() throws IOException {
-    try (InputStream content = getClass().getResourceAsStream("no-codeql-analysis.yml")) {
-      testCodeqlRuns(".github/workflows/action.yml", content,
-          USES_CODEQL_CHECKS.value(false), RUNS_CODEQL_SCANS.value(false));
+  public void testWithBanditRunsAndChecks() throws IOException {
+    try (InputStream content = getClass().getResourceAsStream("bandit-analysis-with-run.yml")) {
+      testBanditRuns(GITHUB_WORKFLOW_FILENAME, content,
+          RUNS_BANDIT_SCANS.value(true),
+          USES_BANDIT_SCAN_CHECKS.value(true));
     }
   }
 
   @Test
-  public void testWithCodeqlRunsAndChecks() throws IOException {
-    try (InputStream content = getClass().getResourceAsStream("codeql-analysis-with-pr.yml")) {
-      testCodeqlRuns(".github/workflows/codeql.yml", content,
-          USES_CODEQL_CHECKS.value(true), RUNS_CODEQL_SCANS.value(true));
+  public void testWithBanditRunsAndMultipleJobs() throws IOException {
+    try (InputStream content = getClass().getResourceAsStream(
+        "bandit-analysis-with-multiple-jobs.yml")) {
+      testBanditRuns(GITHUB_WORKFLOW_FILENAME, content,
+          RUNS_BANDIT_SCANS.value(true),
+          USES_BANDIT_SCAN_CHECKS.value(false));
     }
   }
 
   @Test
-  public void testWithCodeqlRunsButWithoutChecks() throws IOException {
-    try (InputStream content = getClass().getResourceAsStream("codeql-analysis-without-pr.yml")) {
-      testCodeqlRuns(".github/workflows/codeql.yml", content,
-          USES_CODEQL_CHECKS.value(false), RUNS_CODEQL_SCANS.value(true));
+  public void testWithNoBanditRunsButInstallBandit() throws IOException {
+    try (InputStream content = getClass().getResourceAsStream(
+        "bandit-analysis-with-no-bandit-run.yml")) {
+      testBanditRuns(GITHUB_WORKFLOW_FILENAME, content,
+          RUNS_BANDIT_SCANS.value(false),
+          USES_BANDIT_SCAN_CHECKS.value(false));
     }
   }
 
-  private void testCodeqlRuns(String filename, InputStream content, Value<?>... expectedValues)
+  @Test
+  public void testWithNoBanditRunsButInstallsBanditAndUsesBandit() throws IOException {
+    try (InputStream content = getClass().getResourceAsStream(
+        "bandit-analysis-with-no-bandit-run-but-uses-bandit.yml")) {
+      testBanditRuns(GITHUB_WORKFLOW_FILENAME, content,
+          RUNS_BANDIT_SCANS.value(false),
+          USES_BANDIT_SCAN_CHECKS.value(false));
+    }
+  }
+
+  private void testBanditRuns(String filename, InputStream content, Value<?>... expectedValues)
       throws IOException {
 
     Path file = repositoryDirectory.resolve(filename);
@@ -94,7 +114,7 @@ public class CodeqlDataProviderTest extends TestGitHubDataFetcherHolder {
     IOUtils.copy(content, Files.newOutputStream(file));
     when(localRepository.files(any(), any())).thenReturn(Collections.singletonList(file));
 
-    CodeqlDataProvider provider = new CodeqlDataProvider(fetcher);
+    BanditDataProvider provider = new BanditDataProvider(fetcher);
     ValueSet values = provider.fetchValuesFor(PROJECT);
 
     assertEquals(2, values.size());
@@ -113,5 +133,4 @@ public class CodeqlDataProviderTest extends TestGitHubDataFetcherHolder {
       throw new UncheckedIOException(e);
     }
   }
-
 }
