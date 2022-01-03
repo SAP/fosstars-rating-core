@@ -40,6 +40,22 @@ If an open-source project uses FindSecBugs:
     links:
       - name: FindSecBugs home page
         url: https://find-sec-bugs.github.io/
+If a project runs Bandit scans:
+  - advice: >
+      You can open a pull request to run Bandit scans in the project using GitHub action workflow.
+    links:
+      - name: GitHub workflow action job config to run Bandit code scanning for a repository.
+        url: https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#jobsjob_idstepsrun
+      - name: An example to run Bandit scan check as part of GitHub action workflow.
+        url: https://github.com/TNLinc/CV/blob/main/.github/workflows/bandit.yml#L28
+If a project runs Bandit scan checks for commits:
+  - advice: >
+      You can open a pull request to trigger Bandit scans job in the project using GitHub action workflow for every pull-request.
+    links:
+      - name: GitHub workflow action config to run Bandit code scanning job on every PR of a project.
+        url: https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#example-using-a-list-of-events
+      - name: An eample to trigger Bandit scan check on every pull-request.
+        url: https://github.com/TNLinc/CV/blob/main/.github/workflows/bandit.yml#L3
 If an open-source project uses AddressSanitizer:
   - advice: >
       You can open a pull request to enable AddressSanitizer for the project.

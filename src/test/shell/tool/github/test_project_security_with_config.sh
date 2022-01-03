@@ -41,6 +41,7 @@ declare -a expected_strings=(
   'Figuring out if the project uses GitHub for development'
   'Figuring out if the project uses sanitizers'
   'Figuring out if the project uses FindSecBugs'
+  'Figuring out how the project uses Bandit'
   'Figuring out if the project signs jar files'
   'Looking for vulnerabilities in the project'
   'Figuring out if the project has any unpatched vulnerability'
