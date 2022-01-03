@@ -1,4 +1,4 @@
-package com.sap.oss.phosphor.fosstars.data.github.experimental;
+package com.sap.oss.phosphor.fosstars.data.github;
 
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_BANDIT_SCANS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_BANDIT_SCAN_CHECKS;
@@ -11,6 +11,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.sap.oss.phosphor.fosstars.data.github.BanditDataProvider;
 import com.sap.oss.phosphor.fosstars.data.github.LocalRepository;
 import com.sap.oss.phosphor.fosstars.data.github.PackageManagementTest;
 import com.sap.oss.phosphor.fosstars.data.github.TestGitHubDataFetcherHolder;

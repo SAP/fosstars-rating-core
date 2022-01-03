@@ -49,6 +49,7 @@ import com.sap.oss.phosphor.fosstars.model.score.oss.ArtifactLatestReleaseAgeSco
 import com.sap.oss.phosphor.fosstars.model.score.oss.ArtifactReleaseHistoryScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.ArtifactVersionUpToDateScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.ArtifactVersionVulnerabilityScore;
+import com.sap.oss.phosphor.fosstars.model.score.oss.BanditScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.CommunityCommitmentScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.DependabotScore;
@@ -310,7 +311,8 @@ public abstract class Deserialization {
         RiskImpactScore.ConfidentialityRiskImpactFactor.class,
         RiskImpactScore.IntegrityRiskImpactFactor.class,
         RiskImpactScore.AvailabilityRiskImpactFactor.class,
-        CalculatedSecurityRiskIntroducedByOss.class
+        CalculatedSecurityRiskIntroducedByOss.class,
+        BanditScore.class
     );
 
     // ratings

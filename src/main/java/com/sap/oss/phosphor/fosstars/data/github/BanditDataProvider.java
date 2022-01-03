@@ -1,12 +1,9 @@
-package com.sap.oss.phosphor.fosstars.data.github.experimental;
+package com.sap.oss.phosphor.fosstars.data.github;
 
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_BANDIT_SCANS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_BANDIT_SCAN_CHECKS;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 
-import com.sap.oss.phosphor.fosstars.data.github.GitHubCachingDataProvider;
-import com.sap.oss.phosphor.fosstars.data.github.GitHubDataFetcher;
-import com.sap.oss.phosphor.fosstars.data.github.LocalRepository;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
