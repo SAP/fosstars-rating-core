@@ -7,7 +7,7 @@
     },
     "value" : 0.0,
     "weight" : 1.0,
-    "confidence" : 5.7894736842105265,
+    "confidence" : 6.190476190476191,
     "usedValues" : [ {
       "type" : "BooleanValue",
       "feature" : {
@@ -29,6 +29,14 @@
         "type" : "BooleanFeature",
         "name" : "If a project has enough team members on GitHub"
       },
+      "explanation" : [ ]
+    }, {
+      "type" : "BooleanValue",
+      "feature" : {
+        "type" : "BooleanFeature",
+        "name" : "If a project has a code of conduct file"
+      },
+      "flag" : true,
       "explanation" : [ ]
     }, {
       "type" : "BooleanValue",
@@ -113,6 +121,14 @@
         "type" : "BooleanFeature",
         "name" : "If a license has disallowed text"
       },
+      "explanation" : [ ]
+    }, {
+      "type" : "BooleanValue",
+      "feature" : {
+        "type" : "BooleanFeature",
+        "name" : "If a project's code of conduct guideline has required text"
+      },
+      "flag" : true,
       "explanation" : [ ]
     }, {
       "type" : "UnknownValue",
