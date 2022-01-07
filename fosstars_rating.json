@@ -202,7 +202,7 @@
         }
       }
     },
-    "value" : 6.085408669344839,
+    "value" : 6.052781828100977,
     "weight" : 1.0,
     "confidence" : 9.645390070921986,
     "usedValues" : [ {
@@ -1006,7 +1006,7 @@
         "type" : "ProjectActivityScore",
         "name" : "Open-source project activity score"
       },
-      "value" : 4.461538461538462,
+      "value" : 4.153846153846154,
       "weight" : 0.5,
       "confidence" : 10.0,
       "usedValues" : [ {
@@ -1015,7 +1015,7 @@
           "type" : "PositiveIntegerFeature",
           "name" : "Number of commits in the last three months"
         },
-        "number" : 29,
+        "number" : 27,
         "explanation" : [ ]
       }, {
         "type" : "IntegerValue",
@@ -1026,7 +1026,7 @@
         "number" : 1,
         "explanation" : [ ]
       } ],
-      "explanation" : [ "29 commits in the last 3 months results to 4.46 points" ],
+      "explanation" : [ "27 commits in the last 3 months results to 4.15 points" ],
       "isUnknown" : false,
       "isNotApplicable" : false,
       "feature" : {
@@ -1805,7 +1805,7 @@
         "type" : "ProjectPopularityScore",
         "name" : "Open-source project popularity score"
       },
-      "value" : 0.07766666666666666,
+      "value" : 0.07866666666666666,
       "weight" : 0.5,
       "confidence" : 6.666666666666667,
       "usedValues" : [ {
@@ -1814,7 +1814,7 @@
           "type" : "PositiveIntegerFeature",
           "name" : "Number of stars for a GitHub repository"
         },
-        "number" : 41,
+        "number" : 42,
         "explanation" : [ ]
       }, {
         "type" : "IntegerValue",
