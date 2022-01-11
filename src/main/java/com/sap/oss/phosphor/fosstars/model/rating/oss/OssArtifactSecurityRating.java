@@ -6,13 +6,13 @@ import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Label;
 import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.rating.AbstractRating;
+import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel;
 import com.sap.oss.phosphor.fosstars.model.score.oss.OssArtifactSecurityScore;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import java.util.Objects;
 
 /**
- * This is a security rating for artifacts of an open-source project.
- * The rating is based on {@link
+ * This is a security rating for artifacts of an open-source project. The rating is based on {@link
  * com.sap.oss.phosphor.fosstars.model.score.oss.OssArtifactSecurityScore}.
  */
 public class OssArtifactSecurityRating extends AbstractRating {
@@ -21,7 +21,6 @@ public class OssArtifactSecurityRating extends AbstractRating {
    * A set of labels for the rating.
    */
   public enum ArtifactSecurityLabel implements Label {
-
     BAD, MODERATE, GOOD, UNCLEAR, UNKNOWN;
   }
 
@@ -41,7 +40,7 @@ public class OssArtifactSecurityRating extends AbstractRating {
    * Initializes a new rating.
    *
    * @param score An instance of
-   *              {@link com.sap.oss.phosphor.fosstars.model.score.oss.OssArtifactSecurityScore}.
+   * {@link com.sap.oss.phosphor.fosstars.model.score.oss.OssArtifactSecurityScore}.
    * @param thresholds Thresholds for labels.
    */
   @JsonCreator
@@ -50,8 +49,7 @@ public class OssArtifactSecurityRating extends AbstractRating {
       @JsonProperty("thresholds") Thresholds thresholds) {
 
     super("Security rating for artifact versions of an open-source project", score);
-    Objects.requireNonNull(thresholds, "Oh no! Thresholds is null!");
-    this.thresholds = thresholds;
+    this.thresholds = Objects.requireNonNull(thresholds, "Oh no! Thresholds is null!");
   }
 
   @Override
@@ -85,6 +83,15 @@ public class OssArtifactSecurityRating extends AbstractRating {
   }
 
   /**
+   * Return thresholds for the labels.
+   *
+   * @return The thresholds for the labels.
+   */
+  public Thresholds thresholds() {
+    return thresholds;
+  }
+
+  /**
    * Holds thresholds for labels.
    */
   public static class Thresholds {
@@ -113,8 +120,8 @@ public class OssArtifactSecurityRating extends AbstractRating {
      * Initialize thresholds.
      *
      * @param moderate A threshold for the moderate label.
-     * @param good A threshold for the good label.
-     * @param unclear A threshold for the unclear label.
+     * @param good     A threshold for the good label.
+     * @param unclear  A threshold for the unclear label.
      */
     @JsonCreator
     public Thresholds(
@@ -135,6 +142,32 @@ public class OssArtifactSecurityRating extends AbstractRating {
       this.good = good;
       this.unclear = unclear;
     }
-  }
 
+    /**
+     * Returns the threshold for {@link SecurityLabel#MODERATE} label.
+     *
+     * @return The threshold.
+     */
+    public double forModerate() {
+      return moderate;
+    }
+
+    /**
+     * Returns the threshold for {@link SecurityLabel#GOOD} label.
+     *
+     * @return The threshold.
+     */
+    public double forGood() {
+      return good;
+    }
+
+    /**
+     * Returns the threshold for {@link SecurityLabel#UNCLEAR} label.
+     *
+     * @return The threshold.
+     */
+    public double forUnclear() {
+      return unclear;
+    }
+  }
 }

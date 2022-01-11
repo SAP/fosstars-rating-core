@@ -1,0 +1,7 @@
+# %ARTIFACT_NAME%
+
+%MAVEN_ARTIFACT_ID%
+
+Last updated on %UPDATED_DATE%
+
+%DETAILS%

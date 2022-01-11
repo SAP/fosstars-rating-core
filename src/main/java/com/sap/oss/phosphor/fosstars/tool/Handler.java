@@ -3,6 +3,7 @@ package com.sap.oss.phosphor.fosstars.tool;
 import com.sap.oss.phosphor.fosstars.data.SubjectValueCache;
 import com.sap.oss.phosphor.fosstars.data.UserCallback;
 import com.sap.oss.phosphor.fosstars.data.github.GitHubDataFetcher;
+import java.io.IOException;
 import java.util.List;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;

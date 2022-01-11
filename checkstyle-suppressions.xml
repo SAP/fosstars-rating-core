@@ -54,6 +54,12 @@
   <suppress checks="AbbreviationAsWordInName"
     files="GAV.java"
     lines="12"/>
+  <suppress checks="AbbreviationAsWordInName"
+    files="AbstractReporter.java"
+    lines="35"/>
+  <suppress checks="MemberName"
+    files="AbstractReporter.java"
+    lines="35"/>
   <suppress checks="LineLength"
     files="package-info.java"
     lines="142"/>

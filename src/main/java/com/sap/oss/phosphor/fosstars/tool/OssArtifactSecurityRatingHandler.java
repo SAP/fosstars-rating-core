@@ -5,14 +5,19 @@ import static java.util.Objects.requireNonNull;
 
 import com.sap.oss.phosphor.fosstars.maven.GAV;
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
+import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.Artifact;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.MavenArtifact;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.NpmArtifact;
+import com.sap.oss.phosphor.fosstars.tool.finder.MavenArtifactFinder;
+import com.sap.oss.phosphor.fosstars.tool.report.MergedArtifactJsonReporter;
+import com.sap.oss.phosphor.fosstars.tool.report.OssArtifactSecurityRatingMarkdownReporter;
 import com.sap.oss.phosphor.fosstars.tool.report.Reporter;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -20,7 +25,7 @@ import java.util.Set;
  * This handler calculates
  * {@link com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurityRating}.
  */
-public class OssArtifactSecurityRatingHandler extends AbstractHandler {
+public class OssArtifactSecurityRatingHandler extends AbstractHandler<MavenArtifact> {
 
   /**
    * No project on GitHub.
@@ -41,7 +46,7 @@ public class OssArtifactSecurityRatingHandler extends AbstractHandler {
 
   @Override
   Set<String> supportedSubjectOptions() {
-    return setOf("--gav", "--npm", "--purl");
+    return setOf("--gav", "--npm", "--purl", "--config");
   }
 
   @Override
@@ -113,17 +118,80 @@ public class OssArtifactSecurityRatingHandler extends AbstractHandler {
 
   @Override
   void processUrl(String url) {
-    throw new UnsupportedOperationException("Oops! I don't support URL!");
+    throw new UnsupportedOperationException("Oops! I don't support processing of this url!");
   }
 
   @Override
-  void processConfig(String filename) {
-    throw new UnsupportedOperationException("Oops! I don't support configs!");
+  void process(MavenArtifact subject) throws IOException {
+    throw new UnsupportedOperationException("Oops! I don't support processing of this artifact!");
   }
 
   @Override
-  Optional<Reporter<GitHubProject>> reporterFrom(ReportConfig reportConfig) {
-    return Optional.empty();
+  void process(List<MavenArtifact> artifacts, List<Reporter<MavenArtifact>> reporters,
+      String artifactCacheFile) throws IOException {
+    logger.info("Starting calculating ratings ...");
+    MultipleRatingsCalculator multipleRatingsCalculator =
+        new MultipleRatingsCalculator(calculator())
+            .set(loadSubjectCache(artifactCacheFile))
+            .storeCacheTo(artifactCacheFile)
+            .calculateFor(artifacts);
+
+    logger.info("Okay, we've done calculating the ratings");
+
+    List<Subject> failedSubjects = multipleRatingsCalculator.failedSubjects();
+    if (!failedSubjects.isEmpty()) {
+      logger.warn("Ratings couldn't be calculated for {} artifact{}",
+          failedSubjects.size(), failedSubjects.size() == 1 ? "" : "s");
+      for (MavenArtifact artifact : artifacts) {
+        logger.info("    {}", artifact);
+      }
+    }
+
+    if (!reporters.isEmpty()) {
+      logger.info("Now let's generate reports");
+      for (Reporter<MavenArtifact> reporter : reporters) {
+        reporter.runFor(artifacts);
+      }
+    }
+  }
+
+  @Override
+  void processConfig(String filename) throws IOException {
+    nvd.preload();
+    logger.info("Loading config from {}", filename);
+    Config config = Config.from(filename);
+
+    // try to create reporters earlier to catch a possible misconfiguration
+    // before calculating ratings
+    final List<Reporter<MavenArtifact>> reporters = makeReporters(config);
+
+    logger.info("Look for artifacts ...");
+    List<MavenArtifact> artifacts = new MavenArtifactFinder()
+        .set(config.finderConfig)
+        .run();
+    logger.info("Found {} artifact{}", artifacts.size(), artifacts.size() > 1 ? "s" : "");
+    for (MavenArtifact artifact : artifacts) {
+      logger.info("  {}", artifact);
+    }
+
+    String artifactCacheFile = projectCacheFile(config);
+    process(artifacts, reporters, artifactCacheFile);
+  }
+
+  @Override
+  Optional<Reporter<MavenArtifact>> reporterFrom(ReportConfig reportConfig) throws IOException {
+    requireNonNull(reportConfig.type, "Hey! Reporter type can't be null!");
+    switch (reportConfig.type) {
+      case JSON:
+        return Optional.of(new MergedArtifactJsonReporter(reportConfig.where));
+      case MARKDOWN:
+        return Optional.of(
+            new OssArtifactSecurityRatingMarkdownReporter(reportConfig.where, reportConfig.source,
+                rating(), OSS_SECURITY_GITHUB_ADVISOR));
+      default:
+        logger.warn("Oops! That's an unknown type of report: {}", reportConfig.type);
+        return Optional.empty();
+    }
   }
 
   @Override
@@ -142,5 +210,14 @@ public class OssArtifactSecurityRatingHandler extends AbstractHandler {
 
       return Optional.empty();
     });
+  }
+
+  /**
+   * Returns the {@link OssArtifactSecurityRating}.
+   *
+   * @return The {@link OssArtifactSecurityRating}.
+   */
+  private OssArtifactSecurityRating rating() {
+    return (OssArtifactSecurityRating) rating;
   }
 }

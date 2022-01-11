@@ -1,0 +1,14 @@
+name: "Fosstars OSS artifact security report"
+on: workflow_dispatch
+
+jobs:
+  other:
+    runs-on: ubuntu-latest
+    name: "Other artifacts"
+    steps:
+      - uses: actions/checkout@v2.4.0
+      - uses: ./.github/actions/artifact-security-report-action
+        with:
+          config-file: artifacts.yml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          cleanup: Yes

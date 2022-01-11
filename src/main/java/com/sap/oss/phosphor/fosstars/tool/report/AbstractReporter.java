@@ -1,8 +1,9 @@
 package com.sap.oss.phosphor.fosstars.tool.report;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
-import com.sap.oss.phosphor.fosstars.model.subject.oss.OpenSourceProject;
+import com.sap.oss.phosphor.fosstars.model.subject.oss.MavenArtifact;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,13 +27,13 @@ import org.apache.logging.log4j.Logger;
  *
  * @param <T> A type of projects.
  */
-abstract class AbstractReporter<T extends OpenSourceProject> implements Reporter<T> {
+abstract class AbstractReporter<T extends Subject> implements Reporter<T> {
 
   /**
-   * A type reference of a list of {@link GitHubProject}s for deserialization.
+   * A type reference of a list of {@link Subject}s for deserialization.
    */
-  static final TypeReference<List<GitHubProject>> LIST_OF_GITHUB_PROJECTS_TYPE
-      = new TypeReference<List<GitHubProject>>() {};
+  final TypeReference<List<T>> LIST_OF_SUBJECTS_REF_TYPE
+      = new TypeReference<List<T>>() {};
 
   /**
    * A logger.
@@ -68,6 +69,34 @@ abstract class AbstractReporter<T extends OpenSourceProject> implements Reporter
   }
 
   /**
+   * Merges two lists of artifacts. The merge is based on artifacts with versions.
+   * If there are two artifacts with the same versions,
+   * then the method uses the project from the first list.
+   *
+   * @param artifacts The first list of artifacts.
+   * @param extraArtifacts The second list of artifacts.
+   * @return A list of artifacts which contains all artifacts from the original lists.
+   */
+  static List<MavenArtifact> mergeArtifacts(
+      List<MavenArtifact> artifacts, List<MavenArtifact> extraArtifacts) {
+
+    Map<String, MavenArtifact> map = new HashMap<>();
+    for (MavenArtifact extraArtifact : extraArtifacts) {
+      map.put(extraArtifact.gav(), extraArtifact);
+    }
+    for (MavenArtifact artifact : artifacts) {
+      map.put(artifact.gav(), artifact);
+    }
+
+    List<MavenArtifact> allArtifacts = new ArrayList<>();
+    for (Map.Entry<String, MavenArtifact> entry : map.entrySet()) {
+      allArtifacts.add(entry.getValue());
+    }
+
+    return allArtifacts;
+  }
+
+  /**
    * Loads projects from a JSON file.
    * If the file doesn't exist, then the method returns an empty list.
    *
@@ -75,7 +104,7 @@ abstract class AbstractReporter<T extends OpenSourceProject> implements Reporter
    * @return A list of loaded extra projects.
    * @throws IOException If the projects couldn't be loaded.
    */
-  List<GitHubProject> loadProjects(String extraSourceFileName) throws IOException {
+  List<T> loadProjects(String extraSourceFileName) throws IOException {
     if (extraSourceFileName == null) {
       return Collections.emptyList();
     }
@@ -90,7 +119,7 @@ abstract class AbstractReporter<T extends OpenSourceProject> implements Reporter
    * @return A list of loaded extra projects.
    * @throws IOException If the projects couldn't be loaded.
    */
-  List<GitHubProject> loadProjects(Path extraSourceFileName) throws IOException {
+  List<T> loadProjects(Path extraSourceFileName) throws IOException {
     if (extraSourceFileName == null) {
       return Collections.emptyList();
     }
@@ -99,7 +128,7 @@ abstract class AbstractReporter<T extends OpenSourceProject> implements Reporter
       return Collections.emptyList();
     }
     try (InputStream is = Files.newInputStream(extraSourceFileName)) {
-      return Json.mapper().readValue(is, LIST_OF_GITHUB_PROJECTS_TYPE);
+      return Json.mapper().readValue(is, LIST_OF_SUBJECTS_REF_TYPE);
     }
   }
 
