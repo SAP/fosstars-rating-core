@@ -123,7 +123,7 @@ public class VulnerabilitiesFromNpmAudit implements DataProvider {
    * No configuration is required for this data provider.
    */
   @Override
-  public VulnerabilitiesFromNpmAudit configure(Path config) throws IOException {
+  public VulnerabilitiesFromNpmAudit configure(Path config) {
     return this;
   }
 
@@ -142,10 +142,9 @@ public class VulnerabilitiesFromNpmAudit implements DataProvider {
     Vulnerabilities vulnerabilities = new Vulnerabilities();
     for (CVEMetadata cveMetadata : cves) {
       Optional<NvdEntry> nvdEntry = nvd.searchNvd(nvdEntryFrom(cveMetadata.cveID));
-      if (nvdEntry.isPresent()) {
-        vulnerabilities.add(Vulnerability
-            .Builder.from(nvdEntry.get()).set(cveMetadata.resolution).make());
-      }
+      nvdEntry.ifPresent(entry ->
+          vulnerabilities.add(Vulnerability
+              .Builder.from(entry).set(cveMetadata.resolution).make()));
     }
 
     values.update(VULNERABILITIES_IN_ARTIFACT.value(vulnerabilities));

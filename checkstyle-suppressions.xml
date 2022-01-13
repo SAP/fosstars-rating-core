@@ -56,7 +56,7 @@
     lines="12"/>
   <suppress checks="AbbreviationAsWordInName"
     files="VulnerabilitiesFromNpmAudit.java"
-    lines="223"/>
+    lines="222"/>
   <suppress checks="LineLength"
     files="package-info.java"
     lines="142"/>
