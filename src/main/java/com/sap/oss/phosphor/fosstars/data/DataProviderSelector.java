@@ -16,6 +16,7 @@ import static java.util.Objects.requireNonNull;
 
 import com.sap.oss.phosphor.fosstars.data.artifact.ReleaseInfoFromMaven;
 import com.sap.oss.phosphor.fosstars.data.artifact.ReleaseInfoFromNpm;
+import com.sap.oss.phosphor.fosstars.data.artifact.VulnerabilitiesFromNpmAudit;
 import com.sap.oss.phosphor.fosstars.data.artifact.VulnerabilitiesFromOwaspDependencyCheck;
 import com.sap.oss.phosphor.fosstars.data.github.CodeOfConductGuidelineInfo;
 import com.sap.oss.phosphor.fosstars.data.github.CodeqlDataProvider;
@@ -137,8 +138,6 @@ public class DataProviderSelector {
           .withDefaultValue(DATA_CONFIDENTIALITY.value(CONFIDENTIAL)
               .explain("Assumed the worst case"));
 
-
-
   /**
    * A list of available data providers.
    */
@@ -231,6 +230,7 @@ public class DataProviderSelector {
         new CodeOfConductGuidelineInfo(fetcher),
         new NumberOfDependentProjectOnGitHub(fetcher),
         new VulnerabilitiesFromOwaspDependencyCheck(),
+        new VulnerabilitiesFromNpmAudit(nvd),
         PROJECT_USAGE_PROVIDER,
         FUNCTIONALITY_PROVIDER,
         HANDLING_UNTRUSTED_DATA_LIKELIHOOD_PROVIDER,
