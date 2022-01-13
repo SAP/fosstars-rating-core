@@ -102,6 +102,8 @@ Here is what [the project's page](https://github.com/ossf/scorecard) says about 
 > 1. Use this data to proactively improve the security posture of the critical projects the world depends on.
 >
 
+For details check the [comparison between Fosstars and OSSF Scorecard](compare_with_score-card.md)
+
 ## Others
 
 There are several other projects which collect data about project activity,
