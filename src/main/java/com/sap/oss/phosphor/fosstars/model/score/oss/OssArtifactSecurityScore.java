@@ -76,9 +76,9 @@ public class OssArtifactSecurityScore extends AbstractScore {
   @Override
   public ScoreValue calculate(Value<?>... values) {
     ScoreValue artifactVersionSecurityScore = calculateIfNecessary(
-        new ArtifactVersionSecurityScore(), new ValueHashSet(values));
+        this.artifactVersionSecurityScore, new ValueHashSet(values));
     ScoreValue projectSecurityScore = calculateIfNecessary(
-        new OssSecurityScore(), new ValueHashSet(values));
+        this.ossSecurityScore, new ValueHashSet(values));
 
     ScoreValue scoreValue =
         scoreValue(Score.MIN, artifactVersionSecurityScore, projectSecurityScore);
