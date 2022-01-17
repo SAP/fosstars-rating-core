@@ -97,7 +97,7 @@ public class CodeqlDataProviderTest extends TestGitHubDataFetcherHolder {
     CodeqlDataProvider provider = new CodeqlDataProvider(fetcher);
     ValueSet values = provider.fetchValuesFor(PROJECT);
 
-    assertEquals(2, values.size());
+    assertEquals(2, expectedValues.length);
     for (Value<?> expectedValue : expectedValues) {
       Optional<? extends Value<?>> something = values.of(expectedValue.feature());
       assertTrue(something.isPresent());

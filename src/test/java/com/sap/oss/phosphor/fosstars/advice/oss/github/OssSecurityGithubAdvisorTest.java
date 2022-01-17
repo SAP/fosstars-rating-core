@@ -13,6 +13,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_U
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.allUnknown;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.C;
+import static com.sap.oss.phosphor.fosstars.model.value.Language.PYTHON;
 import static com.sap.oss.phosphor.fosstars.model.value.LgtmGrade.B;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -132,6 +133,7 @@ public class OssSecurityGithubAdvisorTest {
     final ValueSet values = new ValueHashSet();
     values.update(allUnknown(rating.score().allFeatures()));
 
+    values.update(LANGUAGES.value(Languages.of(PYTHON)));
     // expect an advice if the project doesn't run Bandit
     values.update(RUNS_BANDIT_SCANS.value(false));
     values.update(USES_BANDIT_SCAN_CHECKS.value(true));

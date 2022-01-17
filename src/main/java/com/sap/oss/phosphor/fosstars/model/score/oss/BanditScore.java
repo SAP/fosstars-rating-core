@@ -65,6 +65,11 @@ public class BanditScore extends FeatureBasedScore {
           "The score value is unknown because all required features are unknown.");
     }
 
+    if (languages.isUnknown()) {
+      return scoreValue.makeNotApplicable().explain(
+          "The score is N/A because the project does not confirm which languages are used.");
+    }
+
     if (!languages.isUnknown() && !SUPPORTED_LANGUAGES.containsAnyOf(languages.get())) {
       return scoreValue.makeNotApplicable().explain(
           "The score is N/A because the project uses languages that are not supported by Bandit.");

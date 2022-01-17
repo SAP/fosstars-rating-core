@@ -225,7 +225,7 @@ public class OssFeatures {
   /**
    * Shows if an open-source project runs Bandit scans.
    *
-   * @see <a href="https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#jobsjob_idstepsrun">GitHub workflow action job config to run Bandit code scanning for a repository</a>
+   * @see <a href="https://github.com/PyCQA/bandit#usage">Trigger Bandit code scanning for a repository</a>
    */
   public static final Feature<Boolean> RUNS_BANDIT_SCANS
       = new BooleanFeature("If a project runs Bandit scans");
@@ -233,7 +233,7 @@ public class OssFeatures {
   /**
    * Shows if an open-source project runs Bandit checks for commits.
    *
-   * @see <a href="https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#example-using-a-list-of-events">GitHub workflow action config to run Bandit code scanning job on every PR of a project</a>
+   * @see <a href="https://github.com/PyCQA/bandit#usage">Trigger Bandit code scanning job on every PR of a project</a>
    */
   public static final Feature<Boolean> USES_BANDIT_SCAN_CHECKS
       = new BooleanFeature("If a project runs Bandit scan checks for commits");

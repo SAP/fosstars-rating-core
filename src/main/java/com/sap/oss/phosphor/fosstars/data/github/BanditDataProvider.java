@@ -47,7 +47,7 @@ public class BanditDataProvider extends GitHubCachingDataProvider {
       = Arrays.asList(".yaml", ".yml");
 
   /**
-   * A step in a GitHub action that triggers analysis with CodeQL.
+   * A step in a GitHub action that triggers analysis with Bandit.
    */
   private static final Pattern RUN_STEP_BANDIT_REGEX_PATTERN
       = Pattern.compile("^.*bandit .*$", Pattern.DOTALL);
