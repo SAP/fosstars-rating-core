@@ -49,7 +49,7 @@ elements:
               organization:
                 type: "GitHubOrganization"
                 name: "org"
-            date: "2021-01-02"
+            date: "2022-01-02"
     expectedScore:
       type: "DoubleInterval"
       from: 9.5

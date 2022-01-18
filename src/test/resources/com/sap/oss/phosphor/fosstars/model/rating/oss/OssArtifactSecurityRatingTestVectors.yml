@@ -537,6 +537,11 @@ elements:
           type: "LgtmGradeFeature"
           name: "The worst LGTM grade of a project"
         value: "C"
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs CodeQL scans"
+        flag: true
       - type: "VulnerabilitiesValue"
         feature:
           type: "VulnerabilitiesFeature"
