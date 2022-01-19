@@ -1,6 +1,6 @@
-# Open source rules of play
+# Open Source Rules of Play
 
-## Projects stats
+## Overall Statistics
 
 |                           | # or projects                    | % or projects                      |
 | :------------------------ | -------------------------------: | ---------------------------------: |
@@ -9,6 +9,9 @@
 | Passed with&nbsp;warnings |  %NUMBER_PROJECTS_WITH_WARNINGS% |  %PERCENT_PROJECTS_WITH_WARNINGS%% |
 | Passed                    |         %NUMBER_PASSED_PROJECTS% |         %PERCENT_PASSED_PROJECTS%% |
 | Unclear                   |        %NUMBER_UNCLEAR_PROJECTS% |        %PERCENT_UNCLEAR_PROJECTS%% |
+
+## Statistics per Rule
+%PER_RULE_STATISTICS%
 
 ## Projects
 

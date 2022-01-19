@@ -15,6 +15,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -217,6 +218,22 @@ public class NVD {
     }
 
     return result;
+  }
+
+  /**
+   * Looks for an NVD entry for the given cveId.
+   *
+   * @param matcher The {@link Matcher}.
+   * @return An {@link NvdEntry}.
+   * @throws IOException If something went wrong.
+   */
+  public Optional<NvdEntry> searchNvd(Matcher matcher) throws IOException {
+    updateIfNecessary();
+    List<NvdEntry> nvdEntries = search(matcher);
+    if (nvdEntries.size() == 1) {
+      return Optional.ofNullable(nvdEntries.get(0));
+    }
+    return Optional.empty();
   }
 
   /**
