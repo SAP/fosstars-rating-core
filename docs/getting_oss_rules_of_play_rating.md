@@ -23,6 +23,10 @@ The data provider `CodeOfConductGuidelineInfo` allows you to specify 1 type of r
 - The content that you expect to be part of the code of conduct guidelines.
 The option is called `requiredContentPatterns` and expects a list of one Regex. If you enter multiple entries, the code of conduct guidelines must comply with all the patterns for the rule to pass.
 
+### Code Scan Alerts
+The data provider `CodeqlDataProvider` allows you to check if the code scans are enabled for the project or not.
+It also checks if the code scans are availble on pull requests or not.
+
 ### Licensing
 The data provider `LicenseInfo` allows you to specify which license(s) should be allowed in the analyzed project.
 This option is called `allowedLicenses` and expects a list of one or more SPDX license IDs.
