@@ -20,3 +20,5 @@ ruleIds:
   rl-security_policy-1: If an open-source project has a security policy
   rl-code_of_conduct_file-1: If a project has a code of conduct file
   rl-code_of_conduct_file-2: If a project's code of conduct guideline has required text
+  rl-codescan_alerts-1: If a project has code scan enabled
+  rl-codescan_alerts-2: If a project has code scan on pull requests enabled 

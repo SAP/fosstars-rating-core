@@ -21,6 +21,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.IS_REU
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.LICENSE_HAS_DISALLOWED_CONTENT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.README_HAS_REUSE_INFO;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.REGISTERED_IN_REUSE;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_CODEQL_SCANS;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 
 import com.sap.oss.phosphor.fosstars.model.Feature;
@@ -78,7 +79,7 @@ public class OssRulesOfPlayScore extends FeatureBasedScore {
    */
   public static final Set<Feature<Boolean>> RECOMMENDED_TRUE = Collections.unmodifiableSet(
       setOf(HAS_CONTRIBUTING_GUIDELINE, HAS_REQUIRED_TEXT_IN_CONTRIBUTING_GUIDELINE,
-          HAS_CODE_OF_CONDUCT, HAS_REQUIRED_TEXT_IN_CODE_OF_CONDUCT_GUIDELINE));
+          HAS_CODE_OF_CONDUCT, HAS_REQUIRED_TEXT_IN_CODE_OF_CONDUCT_GUIDELINE,RUNS_CODEQL_SCANS));
 
   /**
    * A set of features that are recommended to be false.

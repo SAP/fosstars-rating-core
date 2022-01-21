@@ -19,6 +19,7 @@ import com.sap.oss.phosphor.fosstars.data.artifact.ReleaseInfoFromNpm;
 import com.sap.oss.phosphor.fosstars.data.artifact.VulnerabilitiesFromNpmAudit;
 import com.sap.oss.phosphor.fosstars.data.artifact.VulnerabilitiesFromOwaspDependencyCheck;
 import com.sap.oss.phosphor.fosstars.data.github.CodeOfConductGuidelineInfo;
+import com.sap.oss.phosphor.fosstars.data.github.CodeScanAlertsInfo;
 import com.sap.oss.phosphor.fosstars.data.github.CodeqlDataProvider;
 import com.sap.oss.phosphor.fosstars.data.github.ContributingGuidelineInfo;
 import com.sap.oss.phosphor.fosstars.data.github.EstimateImpactUsingKnownVulnerabilities;
@@ -226,6 +227,7 @@ public class DataProviderSelector {
         new TeamsInfo(fetcher),
         new ContributingGuidelineInfo(fetcher),
         new VulnerabilityAlertsInfo(fetcher),
+        new CodeScanAlertsInfo(fetcher),
         new SecurityReviewsFromOpenSSF(fetcher),
         new CodeOfConductGuidelineInfo(fetcher),
         new NumberOfDependentProjectOnGitHub(fetcher),
