@@ -81,7 +81,7 @@ public class OssRulesOfPlayScore extends FeatureBasedScore {
   public static final Set<Feature<Boolean>> RECOMMENDED_TRUE = Collections.unmodifiableSet(
       setOf(HAS_CONTRIBUTING_GUIDELINE, HAS_REQUIRED_TEXT_IN_CONTRIBUTING_GUIDELINE,
           HAS_CODE_OF_CONDUCT, HAS_REQUIRED_TEXT_IN_CODE_OF_CONDUCT_GUIDELINE,
-          RUNS_CODEQL_SCANS,USES_CODEQL_CHECKS));
+          RUNS_CODEQL_SCANS, USES_CODEQL_CHECKS));
 
   /**
    * A set of features that are recommended to be false.
