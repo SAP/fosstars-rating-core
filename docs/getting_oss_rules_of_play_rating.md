@@ -24,8 +24,10 @@ The data provider `CodeOfConductGuidelineInfo` allows you to specify 1 type of r
 The option is called `requiredContentPatterns` and expects a list of one Regex. If you enter multiple entries, the code of conduct guidelines must comply with all the patterns for the rule to pass.
 
 ### Code Scan Alerts
-The data provider `CodeqlDataProvider` allows you to check if the code scans are enabled for the project or not.
-It also checks if the code scans are availble on pull requests or not.
+The data provider `CodeqlDataProvider` allows you to check for the following things -
+1. If the code scans are enabled for the project or not.
+2. If the code scans are availble on pull requests or not.
+The information about the codeQL scans can be found [here](https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/about-code-scanning-with-codeql).
 
 ### Licensing
 The data provider `LicenseInfo` allows you to specify which license(s) should be allowed in the analyzed project.
