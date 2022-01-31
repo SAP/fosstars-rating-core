@@ -1,0 +1,4 @@
+---
+requiredContentPatterns:
+  - "Developer Certificate of Origin"
+  - "(?!Contributor(\\s+)License(\\s+)Agreement)"
