@@ -319,7 +319,8 @@ public class UseReuseDataProvider extends GitHubCachingDataProvider {
         "---\n"
             + "repositoryExceptions:\n"
             + "  - https://github.com/SAP/SapMachine\n"
-            + "  - https://github.com/SAP/async-profiler\n",
+            + "  - https://github.com/SAP/async-profiler\n"
+            + "  - https://github.com/SAP/jmc\n",
         "UTF-8"));
     GitHubProject project = GitHubProject.parse(url);
     ValueSet values = provider.fetchValuesFor(project);

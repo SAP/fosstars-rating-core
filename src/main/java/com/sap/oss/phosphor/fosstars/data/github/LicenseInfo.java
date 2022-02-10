@@ -356,7 +356,8 @@ public class LicenseInfo extends GitHubCachingDataProvider {
             + "disallowedLicensePatterns:\n"
             + "  - API\n"
             + "repositoryExceptions:\n"
-            + "  - https://github.com/SAP/SapMachine\n",
+            + "  - https://github.com/SAP/SapMachine\n"
+            + "  - https://github.com/SAP/jmc\n",
         "UTF-8"));
     ValueSet values = provider.fetchValuesFor(project);
     for (Value<?> value : values) {
