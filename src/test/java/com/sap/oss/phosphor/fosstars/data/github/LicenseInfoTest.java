@@ -166,7 +166,8 @@ public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
             + "disallowedLicensePatterns:\n"
             + "  - Disallowed text\n"
             + "repositoryExceptions:\n"
-            + "  - https://github.com/SAP/SapMachine\n",
+            + "  - https://github.com/SAP/SapMachine\n"
+            + "  - https://github.com/SAP/jmc\n",
         "UTF-8"));
     assertEquals(4, provider.allowedLicenses().size());
     assertEquals(provider.allowedLicenses().get(0), "Apache-2.0");
@@ -175,7 +176,7 @@ public class LicenseInfoTest extends TestGitHubDataFetcherHolder {
     assertEquals(provider.allowedLicenses().get(3), "EPL-2.0");
     assertEquals(1, provider.disallowedLicensePatterns().size());
     assertEquals(provider.disallowedLicensePatterns().get(0).pattern(), "Disallowed text");
-    assertEquals(1, provider.repositoryExceptions().size());
+    assertEquals(2, provider.repositoryExceptions().size());
     assertEquals(provider.repositoryExceptions().get(0), "https://github.com/SAP/SapMachine");
   }
 

@@ -23,6 +23,12 @@ The data provider `CodeOfConductGuidelineInfo` allows you to specify 1 type of r
 - The content that you expect to be part of the code of conduct guidelines.
 The option is called `requiredContentPatterns` and expects a list of one Regex. If you enter multiple entries, the code of conduct guidelines must comply with all the patterns for the rule to pass.
 
+### Code Scan Alerts
+The data provider `CodeqlDataProvider` allows you to check for the following things -
+1. If the code scans are enabled for the project or not.
+2. If the code scans are availble on pull requests or not.
+The information about the codeQL scans can be found [here](https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/about-code-scanning-with-codeql).
+
 ### Licensing
 The data provider `LicenseInfo` allows you to specify which license(s) should be allowed in the analyzed project.
 This option is called `allowedLicenses` and expects a list of one or more SPDX license IDs.
@@ -79,11 +85,11 @@ If everything is correctly set up, the output is going to look like the followin
 
 ```
 [+] Okay, we have a GitHub token, let's try to use it
-[+] The default value cache doesn't exist yet: .fosstars/github_project_value_cache.json
 [+] Let's gather info and calculate a rating for:
-[+]   https://github.com/SAP/code-pal-for-abap
+[+]   https://github.com/SAP/ui5-webcomponents-react
 [+] Gathering info about project's README file ...
-[+] Cloning https://github.com/SAP/code-pal-for-abap ...
+[+] Cloning https://github.com/SAP/ui5-webcomponents-react ...
+[+] Figuring out how the project uses CodeQL ...
 [+] Fetching info about project's teams ...
 [+] Gathering info about project's code of conduct guidelines ...
 [+] Gathering info about vulnerability alerts ...
@@ -103,9 +109,11 @@ If everything is correctly set up, the output is going to look like the followin
 [+]    Does it have enough admins on GitHub? Yes
 [+]    Does teams have enough members on GitHub? Yes
 [+]    Does it have enough teams on GitHub? Yes
-[+]    Does it have unresolved vulnerability alerts? No
+[+]    Does it have unresolved vulnerability alerts? Yes
 [+]    Is it compliant with REUSE rules? Yes
 [+]    Is it registered in REUSE? Yes
+[+]    Does it use CodeQL checks for pull requests? Yes
+[+]    Does it run CodeQL scans? Yes
 [+]    Does the project use REUSE? Yes
 [+]    Does it use an allowed license? Yes
 [+]    Is README incomplete? No
@@ -118,9 +126,9 @@ If everything is correctly set up, the output is going to look like the followin
 [+]   Score:........Open source rules or play score
 [+]   Description:..The score shows whether an open source project
 [+]                 violates rules or not.
-[+]   Value:........10,0 out of 10,0
+[+]   Value:........9,0  out of 10,0
 [+]   Confidence:...Max (10,0 out of 10,0)
-[+]   Based on:...21 features
+[+]   Based on:...23 features
 [+]       Are vulnerability alerts enabled?.........................Yes
 [+]       Does README mention REUSE?................................Yes
 [+]       Does it have LICENSES directory with licenses?............Yes
@@ -133,7 +141,9 @@ If everything is correctly set up, the output is going to look like the followin
 [+]       Does it have an admin team on GitHub?.....................Yes
 [+]       Does it have enough admins on GitHub?.....................Yes
 [+]       Does it have enough teams on GitHub?......................Yes
-[+]       Does it have unresolved vulnerability alerts?.............No
+[+]       Does it have unresolved vulnerability alerts?.............Yes
+[+]       Does it run CodeQL scans?.................................Yes
+[+]       Does it use CodeQL checks for pull requests?..............Yes
 [+]       Does it use an allowed license?...........................Yes
 [+]       Does teams have enough members on GitHub?.................Yes
 [+]       Does the code of conduct guideline have required text?....Yes
@@ -142,9 +152,9 @@ If everything is correctly set up, the output is going to look like the followin
 [+]       Is README incomplete?.....................................No
 [+]       Is it compliant with REUSE rules?.........................Yes
 [+]       Is it registered in REUSE?................................Yes
-[+]   Explanation:..No violated rules found.
+[+]   Explanation:..Found 1 recommendations
 [+] 
-[+] Rating:     10,0 out of 10,0 -> PASSED
+[+] Rating:     9,0  out of 10,0 -> PASSED_WITH_WARNING
 [+] Confidence: Max (10,0 out of 10,0)
 [+] 
 [+] Bye!

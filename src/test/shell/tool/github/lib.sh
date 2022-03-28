@@ -113,6 +113,8 @@ declare -a oss_rop_default_expected_strings=(
   'Is it compliant with REUSE rules?'
   'Is it registered in REUSE?'
   'Does the project use REUSE?'
+  'Does it run CodeQL scans?'
+  'Does it use CodeQL checks for pull requests?'
   'Does it use an allowed license?'
   'Is README incomplete?'
   'Does the contributing guideline have required text?'
