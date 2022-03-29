@@ -6,6 +6,7 @@ elements:
       com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore: 0.0
       com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore: 0.0
       com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore: 0.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.BanditScore: 0.0
     expectedScore:
       type: "DoubleInterval"
       from: 0.0
@@ -22,6 +23,7 @@ elements:
       com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore: 10.0
       com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore: 10.0
       com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore: 10.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.BanditScore: 10.0
     expectedScore:
       type: "DoubleInterval"
       from: 10.0
@@ -38,6 +40,7 @@ elements:
       com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore: 5.0
       com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore: 8.0
       com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore: 2.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.BanditScore: 2.0
     expectedScore:
       type: "DoubleInterval"
       from: 5.0
@@ -54,6 +57,7 @@ elements:
       com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore: 2.0
       com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore: 1.0
       com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore: 3.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.BanditScore: 4.0
     expectedScore:
       type: "DoubleInterval"
       from: 1.0
@@ -91,6 +95,16 @@ elements:
         score:
           type: "FindSecBugsScore"
           name: "How a project uses FindSecBugs"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: true
+      - type: "ScoreValue"
+        score:
+          type: "BanditScore"
+          name: "How a project uses Bandit"
         value: 0.0
         weight: 1.0
         confidence: 10.0
@@ -113,6 +127,7 @@ elements:
       com.sap.oss.phosphor.fosstars.model.score.oss.CodeqlScore: 0.0
       com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore: 1.0
       com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore: 3.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.BanditScore: 2.0
     expectedScore:
       type: "DoubleInterval"
       from: 1.0
@@ -156,6 +171,16 @@ elements:
         usedValues: []
         explanation: []
         isNotApplicable: true
+      - type: "ScoreValue"
+        score:
+          type: "BanditScore"
+          name: "How a project uses Bandit"
+        value: 5.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
     expectedScore:
       type: "DoubleInterval"
       from: 5.0
@@ -183,6 +208,59 @@ elements:
         score:
           type: "LgtmScore"
           name: "How a project addresses issues reported by LGTM"
+        value: 5.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "FindSecBugsScore"
+          name: "How a project uses FindSecBugs"
+        value: 4.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: true
+      - type: "ScoreValue"
+        score:
+          type: "BanditScore"
+          name: "How a project uses Bandit"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: true
+    expectedScore:
+      type: "DoubleInterval"
+      from: 5.0
+      openLeft: false
+      negativeInfinity: false
+      to: 5.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    expectedNotApplicableScore: false
+    alias: "bandit_not_applicable"
+  - type: "StandardTestVector"
+    values:
+      - type: "ScoreValue"
+        score:
+          type: "CodeqlScore"
+          name: "How a project uses CodeQL"
+        value: 5.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: [ ]
+        explanation: [ ]
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "LgtmScore"
+          name: "How a project addresses issues reported by LGTM"
         value: 0.0
         weight: 1.0
         confidence: 10.0
@@ -198,6 +276,16 @@ elements:
         confidence: 10.0
         usedValues: []
         explanation: []
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "BanditScore"
+          name: "How a project uses Bandit"
+        value: 4.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: [ ]
+        explanation: [ ]
         isNotApplicable: false
     expectedScore:
       type: "DoubleInterval"
@@ -219,8 +307,8 @@ elements:
         value: 5.0
         weight: 1.0
         confidence: 10.0
-        usedValues: [ ]
-        explanation: [ ]
+        usedValues: []
+        explanation: []
         isNotApplicable: true
       - type: "ScoreValue"
         score:
@@ -241,6 +329,16 @@ elements:
         confidence: 10.0
         usedValues: []
         explanation: []
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "BanditScore"
+          name: "How a project uses Bandit"
+        value: 3.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: [ ]
+        explanation: [ ]
         isNotApplicable: false
     expectedScore:
       type: "DoubleInterval"
@@ -279,6 +377,14 @@ elements:
         feature:
           type: "BooleanFeature"
           name: "If an open-source project uses FindSecBugs"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs Bandit scan checks for commits"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs Bandit scans"
     expectedScore:
       type: "DoubleInterval"
       from: 0.0

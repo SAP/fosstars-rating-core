@@ -18,6 +18,7 @@ import com.sap.oss.phosphor.fosstars.data.artifact.ReleaseInfoFromMaven;
 import com.sap.oss.phosphor.fosstars.data.artifact.ReleaseInfoFromNpm;
 import com.sap.oss.phosphor.fosstars.data.artifact.VulnerabilitiesFromNpmAudit;
 import com.sap.oss.phosphor.fosstars.data.artifact.VulnerabilitiesFromOwaspDependencyCheck;
+import com.sap.oss.phosphor.fosstars.data.github.BanditDataProvider;
 import com.sap.oss.phosphor.fosstars.data.github.CodeOfConductGuidelineInfo;
 import com.sap.oss.phosphor.fosstars.data.github.CodeqlDataProvider;
 import com.sap.oss.phosphor.fosstars.data.github.ContributingGuidelineInfo;
@@ -204,6 +205,7 @@ public class DataProviderSelector {
         new IsApache(fetcher),
         new IsEclipse(fetcher),
         new CodeqlDataProvider(fetcher),
+        new BanditDataProvider(fetcher),
         new LgtmDataProvider(fetcher),
         new UsesSignedCommits(fetcher),
         new UsesDependabot(fetcher),
