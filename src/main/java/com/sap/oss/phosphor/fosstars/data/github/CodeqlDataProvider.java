@@ -4,7 +4,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_C
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_CODEQL_CHECKS;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 
-import com.sap.oss.phosphor.fosstars.model.Feature;
+import com.sap.oss.phosphor.fosstars.data.AbstractStaticScanToolsDataProvider;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures;
@@ -15,13 +15,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import org.apache.commons.collections4.IteratorUtils;
 
 /**
@@ -34,18 +29,7 @@ import org.apache.commons.collections4.IteratorUtils;
  *
  * @see LgtmDataProvider
  */
-public class CodeqlDataProvider extends GitHubCachingDataProvider {
-
-  /**
-   * A directory where GitHub Actions configs are stored.
-   */
-  private static final String GITHUB_ACTIONS_DIRECTORY = ".github/workflows";
-
-  /**
-   * A list of extensions of GitHub Actions configs.
-   */
-  private static final List<String> GITHUB_ACTIONS_CONFIG_EXTENSIONS
-      = Arrays.asList(".yaml", ".yml");
+public class CodeqlDataProvider extends AbstractStaticScanToolsDataProvider {
 
   /**
    * A step in a GitHub action that triggers analysis with CodeQL.
@@ -58,12 +42,7 @@ public class CodeqlDataProvider extends GitHubCachingDataProvider {
    * @param fetcher An interface to GitHub.
    */
   public CodeqlDataProvider(GitHubDataFetcher fetcher) {
-    super(fetcher);
-  }
-
-  @Override
-  public Set<Feature<?>> supportedFeatures() {
-    return setOf(RUNS_CODEQL_SCANS, USES_CODEQL_CHECKS);
+    super(fetcher, setOf(RUNS_CODEQL_SCANS, USES_CODEQL_CHECKS));
   }
 
   @Override
@@ -80,7 +59,7 @@ public class CodeqlDataProvider extends GitHubCachingDataProvider {
     for (Path configPath : findGitHubActionsIn(repository)) {
       try (InputStream content = Files.newInputStream(configPath)) {
         Map<String, Object> githubAction = Yaml.readMap(content);
-        if (triggersCodeqlScan(githubAction)) {
+        if (triggersScan(githubAction)) {
           runsCodeqlScans = RUNS_CODEQL_SCANS.value(true);
           if (runsOnPullRequests(githubAction)) {
             usesCodeqlChecks = USES_CODEQL_CHECKS.value(true);
@@ -93,30 +72,8 @@ public class CodeqlDataProvider extends GitHubCachingDataProvider {
     return ValueHashSet.from(usesCodeqlChecks, runsCodeqlScans);
   }
 
-  /**
-   * Looks for GitHub actions in a repository.
-   *
-   * @param repository The repository to be checked.
-   * @return A list of paths to GitHub Action configs.
-   * @throws IOException If something went wrong.
-   */
-  private static List<Path> findGitHubActionsIn(LocalRepository repository) throws IOException {
-    Path path = Paths.get(GITHUB_ACTIONS_DIRECTORY);
-
-    if (!repository.hasDirectory(path)) {
-      return Collections.emptyList();
-    }
-
-    return repository.files(path, CodeqlDataProvider::isGitHubActionConfig);
-  }
-
-  /**
-   * Checks if a GitHub action triggers a CodeQL scan.
-   *
-   * @param githubAction A config for the action.
-   * @return True if the action triggers a CodeQL scan, false otherwise.
-   */
-  private static boolean triggersCodeqlScan(Map<?, ?> githubAction) {
+  @Override
+  public boolean triggersScan(Map<?, ?> githubAction) {
     return Optional.ofNullable(githubAction.get("jobs"))
         .filter(Map.class::isInstance)
         .map(Map.class::cast)
@@ -145,30 +102,5 @@ public class CodeqlDataProvider extends GitHubCachingDataProvider {
         .filter(String.class::isInstance)
         .map(String.class::cast)
         .anyMatch(uses -> uses.startsWith(CODEQL_ANALYZE_STEP_TASK));
-  }
-
-  /**
-   * Checks if a GitHub action runs on pull requests.
-   *
-   * @param githubAction A config of the action.
-   * @return True if the action runs on pull requests, false otherwise.
-   */
-  private static boolean runsOnPullRequests(Map<?, ?> githubAction) {
-    return Optional.ofNullable(githubAction.get("on"))
-        .filter(Map.class::isInstance)
-        .map(Map.class::cast)
-        .map(on -> on.containsKey("pull_request"))
-        .orElse(false);
-  }
-
-  /**
-   * Checks if a file is a config for a GitHub action.
-   *
-   * @param path A path to the file.
-   * @return True if a file looks like a config for a GitHub action, false otherwise.
-   */
-  private static boolean isGitHubActionConfig(Path path) {
-    return GITHUB_ACTIONS_CONFIG_EXTENSIONS
-        .stream().anyMatch(ext -> path.getFileName().toString().endsWith(ext));
   }
 }

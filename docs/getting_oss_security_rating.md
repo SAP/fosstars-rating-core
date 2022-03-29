@@ -32,7 +32,7 @@ A URL to SCM can be passed to the tool by using `--url` command-line parameter.
 For example, here is how a security rating may be calculated for Apache Beam:
 
 ```
-java -jar target/fosstars-github-rating-calc.jar --token ${TOKEN} --url https://github.com/apache/beam --verbose
+java -jar target/fosstars-github-rating-calc.jar --token ${TOKEN} --url https://github.com/FasterXML/jackson-databind --verbose
 ```
 
 The environment variable `TOKEN` contains a token for accessing the GitHub API.
@@ -47,159 +47,146 @@ The output is going to look like the following:
 
 ```
 [+] Okay, we have a GitHub token, let's try to use it
-[+] Let's gather info and calculate a security rating for:
-[+]   https://github.com/apache/beam
-[+] Counting how many commits have been done in the last three months ...
-[+] Pulling updates from https://github.com/apache/beam ...
-[+] Counting how many people contributed to the project in the last three months ...
-[+] Counting how many stars the project has ...
-[+] Counting how many watchers the project has ...
-[+] Figuring out if the project has a security team ...
-[+] Figuring out if the project is supported by a company ...
-[+] Figuring out if the project has a security policy ...
-[+] Figuring out if the project has a bug bounty program ...
-[+] Looking for vulnerabilities in the project ...
-[+] Figuring out if the project has any unpatched vulnerability ...
-[+] Looking for vulnerabilities in NVD ...
-[+] Figuring out if the project belongs to the Apache Software Foundation ...
-[+] Figuring out if the project belongs to the Eclipse Software Foundation ...
-[+] Figuring out how the project uses CodeQL ...
-[+] Figuring out how the project uses LGTM ...
-[+] Figuring out if the project uses signed commits ...
-[+] Checking if the project uses Dependabot ...
-[+] Looking for programming languages that are used in the project...
-[+] Looking for package managers ...
-[+] Looking for programming languages that are used in the project...
-[+] Figuring out if the project uses nohttp ...
-[+] Figuring out if the project uses GitHub for development ...
-[+] Figuring out if the project uses OWASP Dependency Check ...
-[+] Figuring out if the project uses sanitizers ...
-[+] Figuring out if the project uses FindSecBugs ...
-[+] Figuring out if the project is fuzzed in OSS-Fuzz ...
-[+] Figuring out if the project signs jar files ...
-[+] Figuring out if the project uses OWASP security libraries ...
+[+] Let's gather info and calculate a rating for:
+[+]   https://github.com/FasterXML/jackson-databind
 [+] Here is what we know about the project:
-[+]    A CVSS threshold for OWASP Dependency Check to fail the build: Not specified
-[+]    A set of package managers: GRADLE
-[+]    A set of programming languages: C, JAVA, PYTHON, JAVASCRIPT, TYPESCRIPT, GO, OTHER
-[+]    How OWASP Dependency Check is used: NOT_USED
-[+]    If a project has a bug bounty program: No
-[+]    If a project runs CodeQL checks for commits: No
-[+]    If a project runs CodeQL scans: No
-[+]    If a project signs artifacts: No
-[+]    If a project uses Dependabot: No
-[+]    If a project uses GitHub as the main development platform: Yes
-[+]    If a project uses LGTM checks for commits: No
-[+]    If a project uses OWASP Enterprise Security API (ESAPI): No
-[+]    If a project uses OWASP Java Encoder: No
-[+]    If a project uses OWASP Java HTML Sanitizer: No
-[+]    If a project uses nohttp tool: No
-[+]    If a project uses signed commits: No
-[+]    If an open-source project belongs to Apache Foundation: Yes
-[+]    If an open-source project belongs to Eclipse Foundation: No
-[+]    If an open-source project has a security policy: No
-[+]    If an open-source project has a security team: Yes
-[+]    If an open-source project is included to OSS-Fuzz project: No
-[+]    If an open-source project is supported by a company: No
-[+]    If an open-source project uses AddressSanitizer: No
-[+]    If an open-source project uses FindSecBugs: No
-[+]    If an open-source project uses MemorySanitizer: No
-[+]    If an open-source project uses UndefinedBehaviorSanitizer: No
-[+]    Info about vulnerabilities in open-source project: 1 vulnerability
-[+]    Number of commits in the last three months: 944
-[+]    Number of contributors in the last three months: 60
-[+]    Number of stars for a GitHub repository: 4487
-[+]    Number of watchers for a GitHub repository: 258
-[+]    The worst LGTM grade of a project: C
+[+]    What is the threshold for OWASP Dependency Check? Not specified
+[+]    Package managers: MAVEN
+[+]    Programming languages: JAVA, OTHER
+[+]    How is OWASP Dependency Check used? Not used
+[+]    Does it have a bug bounty program? No
+[+]    Does the project have open pull requests from Dependabot? No
+[+]    If a project runs Bandit scan checks for commits: No
+[+]    If a project runs Bandit scans: No
+[+]    Does it use CodeQL checks for pull requests? Yes
+[+]    Does it run CodeQL scans? Yes
+[+]    Does it sign artifacts? No
+[+]    Does it use Dependabot? No
+[+]    Does it use GitHub as the main development platform? Yes
+[+]    Does it use LGTM checks? No
+[+]    Does it use OWASP ESAPI? No
+[+]    Does it use OWASP Java Encoder? No
+[+]    Does it use OWASP Java HTML Sanitizer? No
+[+]    Does it use nohttp? No
+[+]    Does it use verified signed commits? No
+[+]    Does it belong to Apache? No
+[+]    Does it belong to Eclipse? No
+[+]    Does it have a security policy? Yes
+[+]    Does it have a security team? No
+[+]    Is it included to OSS-Fuzz? Yes
+[+]    Is it supported by a company? No
+[+]    Does it use AddressSanitizer? No
+[+]    Does it use FindSecBugs? No
+[+]    Does it use MemorySanitizer? No
+[+]    Does it use UndefinedBehaviorSanitizer? No
+[+]    Info about vulnerabilities in the project: 64 vulnerabilities
+[+]    Number of commits in the last three months: 60
+[+]    Number of contributors in the last three months: 2
+[+]    Number of projects on GitHub that use an open source project: 453913
+[+]    Number of stars for a GitHub repository: 2963
+[+]    Number of watchers for a GitHub repository: 162
+[+]    Info about security reviews: 0 security reviews
+[+]    The worst LGTM grade of the project: A
 [+] Here is how the rating was calculated:
 [+]   Score:........Security of project
-[+]   Value:........4.65 out of 10.0
+[+]   Value:........5.05 out of 10.0
 [+]   Confidence:...Max (10.0 out of 10.0)
-[+]   Based on:.....7 sub-scores
+[+]   Based on:.....8 sub-scores
 [+]       Sub-score:....Security testing
 [+]       Importance:...High (weight 1.0  out of  1.0)
-[+]       Value:........0.44 out of 10.0
+[+]       Value:........6.18 out of 10.0
 [+]       Confidence:...Max (10.0 out of 10.0)
 [+]       Based on:.....5 sub-scores
 [+]           Sub-score:....Dependency testing
 [+]           Importance:...High (weight 1.0  out of  1.0)
-[+]           Value:........0.0  out of 10.0
+[+]           Value:........6.0  out of 10.0
 [+]           Confidence:...Max (10.0 out of 10.0)
 [+]           Based on:.....2 sub-scores
 [+]               Sub-score:....Dependabot score
 [+]               Importance:...High (weight 1.0  out of  1.0)
-[+]               Value:........0.0  out of 10.0
+[+]               Value:........6.0  out of 10.0
 [+]               Confidence:...Max (10.0 out of 10.0)
 [+]               Based on:...4 features
-[+]                   A set of package managers:..............................GRADLE
-[+]                   A set of programming languages:.........................C, JAVA, PYTHON, JAVASCRIPT, TYPESCRIPT, GO, OTHER
 [+]                   Does it use Dependabot?.................................No
 [+]                   Does it use GitHub as the main development platform?....Yes
+[+]                   Package managers:.......................................MAVEN
+[+]                   Programming languages:..................................JAVA, OTHER
 [+] 
 [+]               Sub-score:....OWASP Dependency Check score
 [+]               Importance:...High (weight 1.0  out of  1.0)
 [+]               Value:........0.0  out of 10.0
 [+]               Confidence:...Max (10.0 out of 10.0)
-[+]               Based on:...2 features
+[+]               Based on:...3 features
 [+]                   How is OWASP Dependency Check used?..................Not used
+[+]                   Package managers:....................................MAVEN
 [+]                   What is the threshold for OWASP Dependency Check?....Not specified
-[+] 
-[+]           Sub-score:....Fuzzing
-[+]           Importance:...High (weight 1.0  out of  1.0)
-[+]           Value:........0.0  out of 10.0
-[+]           Confidence:...Max (10.0 out of 10.0)
-[+]           Based on:...2 features
-[+]               A set of programming languages:...C, JAVA, PYTHON, JAVASCRIPT, TYPESCRIPT, GO, OTHER
-[+]               Is it included to OSS-Fuzz?.......No
-[+] 
-[+]           Sub-score:....Memory-safety testing
-[+]           Importance:...High (weight 1.0  out of  1.0)
-[+]           Value:........0.0  out of 10.0
-[+]           Confidence:...Max (10.0 out of 10.0)
-[+]           Based on:...4 features
-[+]               A set of programming languages:............C, JAVA, PYTHON, JAVASCRIPT, TYPESCRIPT, GO, OTHER
-[+]               Does it use AddressSanitizer?..............No
-[+]               Does it use MemorySanitizer?...............No
-[+]               Does it use UndefinedBehaviorSanitizer?....No
 [+] 
 [+]           Sub-score:....Static analysis
 [+]           Importance:...High (weight 1.0  out of  1.0)
-[+]           Value:........2.0  out of 10.0
+[+]           Value:........7.6  out of 10.0
 [+]           Confidence:...Max (10.0 out of 10.0)
-[+]           Based on:.....3 sub-scores
+[+]           Based on:.....4 sub-scores
 [+]               Sub-score:....LGTM score
 [+]               Importance:...High (weight 1.0  out of  1.0)
-[+]               Value:........5.0  out of 10.0
+[+]               Value:........9.0  out of 10.0
 [+]               Confidence:...Max (10.0 out of 10.0)
 [+]               Based on:...2 features
-[+]                   A set of programming languages:........C, JAVA, PYTHON, JAVASCRIPT, TYPESCRIPT, GO, OTHER
-[+]                   The worst LGTM grade of the project:...C
+[+]                   Programming languages:.................JAVA, OTHER
+[+]                   The worst LGTM grade of the project:...A
 [+] 
 [+]               Sub-score:....How a project uses CodeQL
 [+]               Importance:...High (weight 1.0  out of  1.0)
-[+]               Value:........0.0  out of 10.0
+[+]               Value:........10.0 out of 10.0
 [+]               Confidence:...Max (10.0 out of 10.0)
 [+]               Based on:...4 features
-[+]                   A set of programming languages:................C, JAVA, PYTHON, JAVASCRIPT, TYPESCRIPT, GO, OTHER
-[+]                   Does it use LGTM checks?.......................No
-[+]                   If a project runs CodeQL checks for commits:...No
-[+]                   If a project runs CodeQL scans:................No
+[+]                   Does it run CodeQL scans?.......................Yes
+[+]                   Does it use CodeQL checks for pull requests?....Yes
+[+]                   Does it use LGTM checks?........................No
+[+]                   Programming languages:..........................JAVA, OTHER
+[+] 
+[+]               Sub-score:....How a project uses Bandit
+[+]               Importance:...Medium (weight 0.5  out of  1.0)
+[+]               Value:........N/A  
+[+]               Confidence:...Max (10.0 out of 10.0)
+[+]               Based on:...3 features
+[+]                   If a project runs Bandit scan checks for commits:...No
+[+]                   If a project runs Bandit scans:.....................No
+[+]                   Programming languages:..............................JAVA, OTHER
+[+]               Explanation:..The score is N/A because the project uses languages that are not supported by Bandit.
 [+] 
 [+]               Sub-score:....FindSecBugs score
 [+]               Importance:...Medium (weight 0.5  out of  1.0)
 [+]               Value:........0.0  out of 10.0
 [+]               Confidence:...Max (10.0 out of 10.0)
 [+]               Based on:...2 features
-[+]                   A set of programming languages:...C, JAVA, PYTHON, JAVASCRIPT, TYPESCRIPT, GO, OTHER
-[+]                   Does it use FindSecBugs?..........No
+[+]                   Does it use FindSecBugs?....No
+[+]                   Programming languages:......JAVA, OTHER
+[+] 
+[+]           Sub-score:....Fuzzing
+[+]           Importance:...High (weight 1.0  out of  1.0)
+[+]           Value:........N/A  
+[+]           Confidence:...Max (10.0 out of 10.0)
+[+]           Based on:...2 features
+[+]               Is it included to OSS-Fuzz?....Yes
+[+]               Programming languages:.........JAVA, OTHER
+[+] 
+[+]           Sub-score:....Memory-safety testing
+[+]           Importance:...High (weight 1.0  out of  1.0)
+[+]           Value:........N/A  
+[+]           Confidence:...Max (10.0 out of 10.0)
+[+]           Based on:...4 features
+[+]               Does it use AddressSanitizer?..............No
+[+]               Does it use MemorySanitizer?...............No
+[+]               Does it use UndefinedBehaviorSanitizer?....No
+[+]               Programming languages:.....................JAVA, OTHER
 [+] 
 [+]           Sub-score:....nohttp tool
-[+]           Importance:...Medium (weight 0.5  out of  1.0)
+[+]           Importance:...Low (weight 0.2  out of  1.0)
 [+]           Value:........0.0  out of 10.0
 [+]           Confidence:...Max (10.0 out of 10.0)
 [+]           Based on:...2 features
-[+]               A set of package managers:...GRADLE
-[+]               Does it use nohttp?..........No
+[+]               Does it use nohttp?....No
+[+]               Package managers:......MAVEN
 [+] 
 [+]       Sub-score:....Security awareness
 [+]       Description:..The score shows how a project is aware of
@@ -217,8 +204,8 @@ The output is going to look like the following:
 [+]       Confidence:...Max (10.0 out of 10.0)
 [+]       Based on:...17 features
 [+]           Does it have a bug bounty program?.........No
-[+]           Does it have a security policy?............No
-[+]           Does it have a security team?..............Yes
+[+]           Does it have a security policy?............Yes
+[+]           Does it have a security team?..............No
 [+]           Does it sign artifacts?....................No
 [+]           Does it use AddressSanitizer?..............No
 [+]           Does it use Dependabot?....................No
@@ -232,15 +219,7 @@ The output is going to look like the following:
 [+]           Does it use nohttp?........................No
 [+]           Does it use verified signed commits?.......No
 [+]           How is OWASP Dependency Check used?........Not used
-[+]           Is it included to OSS-Fuzz?................No
-[+] 
-[+]       Sub-score:....Unpatched vulnerabilities
-[+]       Importance:...High (weight 0.8  out of  1.0)
-[+]       Value:........10.0 out of 10.0
-[+]       Confidence:...Max (10.0 out of 10.0)
-[+]       Based on:...1 features
-[+]           Info about vulnerabilities:...1 vulnerability
-[+]       Explanation:..No unpatched vulnerabilities found which is good
+[+]           Is it included to OSS-Fuzz?................Yes
 [+] 
 [+]       Sub-score:....Vulnerability discovery and security testing
 [+]       Description:..The scores checks how security testing is done and
@@ -257,17 +236,25 @@ The output is going to look like the following:
 [+]       Based on:.....1 sub-scores
 [+]           Sub-score:....Security testing
 [+]           Importance:...High (weight 1.0  out of  1.0)
-[+]           Value:........0.44 out of 10.0
+[+]           Value:........6.18 out of 10.0
 [+]           Confidence:...Max (10.0 out of 10.0)
 [+]       Based on:...1 features
-[+]           Info about vulnerabilities:...1 vulnerability
+[+]           Info about vulnerabilities in the project:...64 vulnerabilities
+[+] 
+[+]       Sub-score:....Unpatched vulnerabilities
+[+]       Importance:...Medium (weight 0.5  out of  1.0)
+[+]       Value:........10.0 out of 10.0
+[+]       Confidence:...Max (10.0 out of 10.0)
+[+]       Based on:...1 features
+[+]           Info about vulnerabilities in the project:...64 vulnerabilities
+[+]       Explanation:..No unpatched vulnerabilities found which is good
 [+] 
 [+]       Sub-score:....Community commitment
 [+]       Importance:...Medium (weight 0.5  out of  1.0)
-[+]       Value:........7.0  out of 10.0
+[+]       Value:........0.0  out of 10.0
 [+]       Confidence:...Max (10.0 out of 10.0)
 [+]       Based on:...3 features
-[+]           Does it belong to Apache?........Yes
+[+]           Does it belong to Apache?........No
 [+]           Does it belong to Eclipse?.......No
 [+]           Is it supported by a company?....No
 [+] 
@@ -276,34 +263,34 @@ The output is going to look like the following:
 [+]                     based on number of commits and contributors in the
 [+]                     last 3 months.
 [+]       Importance:...Medium (weight 0.5  out of  1.0)
-[+]       Value:........10.0 out of 10.0
+[+]       Value:........9.69 out of 10.0
 [+]       Confidence:...Max (10.0 out of 10.0)
 [+]       Based on:...2 features
-[+]           Number of commits in the last three months:........944
-[+]           Number of contributors in the last three months:...60
-[+]       Explanation:..944 commits in the last 3 months results to 10.00 points
-[+]                     60 contributors increase the score value from 10.00 to 12.00
+[+]           Number of commits in the last three months:........60
+[+]           Number of contributors in the last three months:...2
+[+]       Explanation:..60 commits in the last 3 months results to 9.23 points
+[+]                     2 contributors increase the score value from 9.23 to 9.69
 [+] 
 [+]       Sub-score:....Project popularity
-[+]       Description:..The score is based on number of stars and
-[+]                     watchers.
-[+]                     Here is how a number of stars
-[+]                     contributes to the score:
-[+]                     0 -> 0.00 (min), 2500 ->
-[+]                     2.50, 5000 -> 5.00, 10000 -> 10.00 (max)
-[+]                     Here is
-[+]                     how a number of watchers contributes to the
-[+]                     score:
-[+]                     0 -> 0.00 (min), 450 -> 1.50, 750 -> 2.50,
-[+]                     3000 -> 10.00 (max)
+[+]       Description:..This scoring function is based on number of stars,
+[+]                     watchers and dependent projects.
 [+]       Importance:...Medium (weight 0.5  out of  1.0)
-[+]       Value:........5.35 out of 10.0
+[+]       Value:........10.0 out of 10.0
 [+]       Confidence:...Max (10.0 out of 10.0)
-[+]       Based on:...2 features
-[+]           Number of stars for a GitHub repository:......4487
-[+]           Number of watchers for a GitHub repository:...258
+[+]       Based on:...3 features
+[+]           Number of projects on GitHub that use an open source project:...453913
+[+]           Number of stars for a GitHub repository:........................2963
+[+]           Number of watchers for a GitHub repository:.....................162
 [+] 
-[+] Rating:     4.65 out of 10.0 -> MODERATE
+[+]       Sub-score:....Security reviews
+[+]       Importance:...Low (weight 0.2  out of  1.0)
+[+]       Value:........0.0  out of 10.0
+[+]       Confidence:...Max (10.0 out of 10.0)
+[+]       Based on:...1 features
+[+]           Info about security reviews:...0 security reviews
+[+]       Explanation:..No security reviews have been done
+[+] 
+[+] Rating:     5.05 out of 10.0 -> MODERATE
 [+] Confidence: Max (10.0 out of 10.0)
 [+] 
 [+] Here is how the rating may be improved:
@@ -312,56 +299,62 @@ The output is going to look like the following:
 [+]    More info:
 [+]    1. How to enable LGTM checks for pull requests:
 [+]       https://lgtm.com/help/lgtm/about-automated-code-review
-[+] 2. You can open a pull request to enable CodeQL scans
-[+]    in the project. Make sure that the scans are run
-[+]    on pull requests.
-[+]    More info:
-[+]    1. How to enable CodeQL checks for pull requests:
-[+]       https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#enabling-code-scanning-using-actions
-[+] 3. You can open a pull request to enable CodeQL scans
-[+]    in the project.
-[+]    More info:
-[+]    1. How to enable CodeQL checks:
-[+]       https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#enabling-code-scanning-using-actions
-[+] 4. You can fix the issues reported by LGTM for the
+[+] 2. You can fix the issues reported by LGTM for the
 [+]    project.
 [+]    More info:
 [+]    1. List of issues on LGTM:
-[+]       https://lgtm.com/projects/g/apache/beam
-[+] 5. You can open a pull request to add a security
-[+]    policy for the project.
-[+]    More info:
-[+]    1. About adding a security policy to a repository on GitHub:
-[+]       https://docs.github.com/en/free-pro-team@latest/github/managing-security-vulnerabilities/adding-a-security-policy-to-your-repository
-[+]    2. An example of a security policy:
-[+]       https://github.com/apache/nifi/blob/main/SECURITY.md
-[+]    3. Suggest a security policy for the project:
-[+]       https://github.com/apache/beam/security/policy
-[+] 6. You can open a pull request to enable FindSecBugs
+[+]       https://lgtm.com/projects/g/FasterXML/jackson-databind
+[+] 3. You can open a pull request to enable FindSecBugs
 [+]    for the project.
 [+]    More info:
 [+]    1. FindSecBugs home page:
 [+]       https://find-sec-bugs.github.io/
-[+] 7. You can open a pull request to enable
-[+]    AddressSanitizer for the project.
+[+] 4. You can configure Dependabot by creating a
+[+]    configuration file.
 [+]    More info:
-[+]    1. About AdddressSanitizer:
-[+]       https://github.com/google/sanitizers/wiki/AddressSanitizer
-[+] 8. You can open a pull request to enable
-[+]    MemorySanitizer for the project.
+[+]    1. Configuration options for dependency updates:
+[+]       https://docs.github.com/en/github/administering-a-repository/configuration-options-for-dependency-updates
+[+] 5. You can add OWASP Dependency Check to the
+[+]    project's build pipeline.
 [+]    More info:
-[+]    1. About AdddressSanitizer:
-[+]       https://github.com/google/sanitizers/wiki/MemorySanitizer
-[+] 9. You can open a pull request to enable
-[+]    UndefinedBehaviorSanitizer for the project.
+[+]    1. OWASP Dependnecy Check:
+[+]       https://jeremylong.github.io/DependencyCheck/
+[+]    2. How to use OWASP Dependency Check with Maven:
+[+]       https://jeremylong.github.io/DependencyCheck/dependency-check-maven
+[+]    3. How to use OWASP Dependnecy Check with Gradle:
+[+]       https://github.com/dependency-check/dependency-check-gradle
+[+] 6. You can set a CVSS threshold for vulnerabilities
+[+]    reported by OWASP Dependency Check.
 [+]    More info:
-[+]    1. About AdddressSanitizer:
-[+]       https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html
-[+] 10. You can include the project to OSS-Fuzz. Then, the
-[+]    project is going to be regularly fuzzed.
+[+]    1. OWASP Dependnecy Check:
+[+]       https://jeremylong.github.io/DependencyCheck/
+[+]    2. Configuring OWASP Dependency Check:
+[+]       https://jeremylong.github.io/DependencyCheck/dependency-check-maven/configuration.html
+[+] 7. You can enable artifact signing in the project's
+[+]    build pipeline.
 [+]    More info:
-[+]    1. The OSS-Fuzz project:
-[+]       https://github.com/google/oss-fuzz
+[+]    1. Apache Maven Jarsigner Plugin:
+[+]       https://maven.apache.org/plugins/maven-jarsigner-plugin/
+[+] 8. You can enable NoHttp tool in the project's build
+[+]    pipeline.
+[+]    More info:
+[+]    1. NoHttp tool home page:
+[+]       https://github.com/spring-io/nohttp
+[+] 9. You can open a pull request to run Bandit scans in
+[+]    the project using GitHub action workflow.
+[+]    More info:
+[+]    1. GitHub workflow action job config to run Bandit code scanning for a repository.:
+[+]       https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#jobsjob_idstepsrun
+[+]    2. An example to run Bandit scan check as part of GitHub action workflow.:
+[+]       https://github.com/TNLinc/CV/blob/main/.github/workflows/bandit.yml#L28
+[+] 10. You can open a pull request to trigger Bandit
+[+]    scans job in the project using GitHub action
+[+]    workflow for every pull-request.
+[+]    More info:
+[+]    1. GitHub workflow action config to run Bandit code scanning job on every PR of a project.:
+[+]       https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#example-using-a-list-of-events
+[+]    2. An eample to trigger Bandit scan check on every pull-request.:
+[+]       https://github.com/TNLinc/CV/blob/main/.github/workflows/bandit.yml#L3
 [+] 
 [+] Bye!
 ```
