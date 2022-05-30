@@ -88,7 +88,9 @@ public class OssArtifactSecurityScore extends AbstractScore {
     }
 
     final double updatedScore;
-    if (artifactVersionSecurityScore.get() >= 9.0) {
+    if (projectSecurityScore.isUnknown()) {
+      updatedScore = artifactVersionSecurityScore.get();
+    } else if (artifactVersionSecurityScore.get() >= 9.0) {
       updatedScore = 0.11 * artifactVersionSecurityScore.get() * projectSecurityScore.get();
     } else {
       updatedScore = 0.1 * (0.9 + artifactVersionSecurityScore.get()) * projectSecurityScore.get();
