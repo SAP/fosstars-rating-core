@@ -59,7 +59,7 @@ public class OssRulesOfPlayMarkdownReporterTest {
               new ScoreValue(rating.score(), Score.MIN, Weight.MAX, Confidence.MIN, 
                   Arrays.asList(failedReadme, failedReuse))
               .set(Score.MIN).confidence(8.0), FAILED));
-      GitHubProject failedProject2 = new GitHubProject("org", "failed2");
+      GitHubProject failedProject2 = new GitHubProject("org2", "failed2");
       failedProject2.set(
           new RatingValue(
               new ScoreValue(rating.score(), Score.MIN, Weight.MAX, Confidence.MIN, 
@@ -97,18 +97,19 @@ public class OssRulesOfPlayMarkdownReporterTest {
       assertTrue(report.contains("org/passed"));
       assertTrue(report.contains("org/warnings"));
       assertTrue(report.contains("org/failed"));
+      assertTrue(report.contains("org2/failed2"));
       assertTrue(report.contains("org/unclear"));
       assertTrue(report.contains("Does README mention REUSE?"));
       assertTrue(report.contains("Is it registered in REUSE?"));
       assertTrue(report.contains("[Failed](org/failed1.md) | 2 violated rules |"));
-      assertTrue(report.contains("[Failed](org/failed2.md) | 1 violated rule |"));
+      assertTrue(report.contains("[Failed](org2/failed2.md) | 1 violated rule |"));
       assertEquals(1, linesWith("100%", report));
       assertEquals(4, linesWith("20.0%", report));
       assertEquals(2, linesWith("40.0%", report));
       assertEquals(1, linesWith("60.0%", report));
       assertEquals(1, linesWith("80.0%", report));
-      assertEquals(2, linesWith("- failed1", report));
-      assertEquals(1, linesWith("- failed2", report));
+      assertEquals(2, linesWith("- org/failed1", report));
+      assertEquals(1, linesWith("- org2/failed2", report));
       assertEquals(15, linesWith("### Project statistics for ", report));
     } finally {
       FileUtils.forceDeleteOnExit(outputDirectory.toFile());
