@@ -83,14 +83,12 @@ public class OssArtifactSecurityScore extends AbstractScore {
     ScoreValue scoreValue =
         scoreValue(Score.MIN, artifactVersionSecurityScore, projectSecurityScore);
 
-    if (artifactVersionSecurityScore.isUnknown()) {
+    if (artifactVersionSecurityScore.isUnknown() || projectSecurityScore.isUnknown()) {
       return scoreValue.withMinConfidence().makeUnknown();
     }
 
     final double updatedScore;
-    if (projectSecurityScore.isUnknown()) {
-      updatedScore = artifactVersionSecurityScore.get();
-    } else if (artifactVersionSecurityScore.get() >= 9.0) {
+    if (artifactVersionSecurityScore.get() >= 9.0) {
       updatedScore = 0.11 * artifactVersionSecurityScore.get() * projectSecurityScore.get();
     } else {
       updatedScore = 0.1 * (0.9 + artifactVersionSecurityScore.get()) * projectSecurityScore.get();

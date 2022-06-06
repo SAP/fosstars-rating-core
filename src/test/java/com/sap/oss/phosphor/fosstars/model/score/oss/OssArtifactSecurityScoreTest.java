@@ -64,8 +64,7 @@ public class OssArtifactSecurityScoreTest {
     values.add(VULNERABILITIES_IN_ARTIFACT.value(new Vulnerabilities()));
 
     ScoreValue scoreValue = ossArtifactSecurityScore.calculate(values);
-    assertTrue(DoubleInterval.closed(7, 8).contains(scoreValue.get()));
-    checkUsedValues(scoreValue);
+    assertTrue(scoreValue.isUnknown());
   }
 
   @Test
