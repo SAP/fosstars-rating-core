@@ -145,7 +145,7 @@ public class OssRulesOfPlayMarkdownReporter extends AbstractReporter<GitHubProje
       
       OssRulesOfPlayScore.findViolatedRulesIn(ratingValue.scoreValue().usedValues()).stream()
           .forEach(value -> featureResults.get(value.feature())
-            .add(project.organization().name() + "/" + project.name()));
+            .add(String.format("%s/%s", project.organization().name(), project.name())));
     }
 
     double percentOfPass = (double) numberOfPassed / total * 100;
