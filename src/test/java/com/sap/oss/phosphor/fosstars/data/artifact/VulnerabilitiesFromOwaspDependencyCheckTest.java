@@ -48,9 +48,8 @@ public class VulnerabilitiesFromOwaspDependencyCheckTest {
     Vulnerabilities vulnerabilities = values.of(VULNERABILITIES_IN_ARTIFACT).get().get();
     assertEquals(3, vulnerabilities.size());
 
-    Set<String> vulnerabilityIds = new HashSet<>();
-    vulnerabilities.entries().forEach((vulnerability) -> vulnerabilityIds.add(vulnerability.id()));
-    assertTrue(vulnerabilityIds.contains("CVE-2018-11307"));
+    assertTrue(vulnerabilities.entries().stream()
+        .anyMatch(vulnerability -> "CVE-2018-11307".equals(vulnerability.id())));
   }
 
   @Test
