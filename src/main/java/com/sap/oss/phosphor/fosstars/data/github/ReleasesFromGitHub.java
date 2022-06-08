@@ -56,6 +56,7 @@ public class ReleasesFromGitHub extends CachedSingleFeatureGitHubDataProvider<Ar
           .collect(Collectors.toSet());
     } else {
       artifactVersions = releases.stream()
+        .filter(Objects::nonNull)
         .map(r -> new ArtifactVersion(r.getName(), convertToLocalDate(r.getPublished_at())))
         .collect(Collectors.toSet());
     }
