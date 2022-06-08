@@ -14,9 +14,7 @@ import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 import org.junit.Test;
 
 public class VulnerabilitiesFromOwaspDependencyCheckTest {
