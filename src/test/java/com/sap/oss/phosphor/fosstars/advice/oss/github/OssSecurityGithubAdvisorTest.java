@@ -3,7 +3,9 @@ package com.sap.oss.phosphor.fosstars.advice.oss.github;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.FUZZED_IN_OSS_FUZZ;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.LANGUAGES;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_BANDIT_SCANS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_ADDRESS_SANITIZER;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_BANDIT_SCAN_CHECKS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_FIND_SEC_BUGS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM_CHECKS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_MEMORY_SANITIZER;
@@ -11,6 +13,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_U
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.allUnknown;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.C;
+import static com.sap.oss.phosphor.fosstars.model.value.Language.PYTHON;
 import static com.sap.oss.phosphor.fosstars.model.value.LgtmGrade.B;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -120,6 +123,48 @@ public class OssSecurityGithubAdvisorTest {
     boolean foundLinkForSuggestingSecurityPolicy = advice.content().links().stream().anyMatch(
         link -> "https://find-sec-bugs.github.io/".equals(link.url.toString()));
     assertTrue(foundLinkForSuggestingSecurityPolicy);
+  }
+
+  @Test
+  public void testAdviseForBandit() throws IOException {
+    final OssSecurityGithubAdvisor advisor = new OssSecurityGithubAdvisor();
+    final GitHubProject project = new GitHubProject("org", "test");
+    final Rating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
+    final ValueSet values = new ValueHashSet();
+    values.update(allUnknown(rating.score().allFeatures()));
+
+    values.update(LANGUAGES.value(Languages.of(PYTHON)));
+    // expect an advice if the project doesn't run Bandit
+    values.update(RUNS_BANDIT_SCANS.value(false));
+    values.update(USES_BANDIT_SCAN_CHECKS.value(true));
+    project.set(rating.calculate(values));
+    List<Advice> adviceList = advisor.adviceFor(project);
+    assertEquals(1, adviceList.size());
+    Advice advice = adviceList.get(0);
+    assertFalse(advice.content().text().isEmpty());
+    assertFalse(advice.content().links().isEmpty());
+    boolean foundLinkForSuggestingRunBanditScan = advice.content().links().stream().anyMatch(
+        link -> "https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#jobsjob_idstepsrun".equals(link.url.toString()));
+    assertTrue(foundLinkForSuggestingRunBanditScan);
+    boolean foundLinkForExampleRunBanditScan = advice.content().links().stream().anyMatch(
+        link -> "https://github.com/TNLinc/CV/blob/main/.github/workflows/bandit.yml#L28".equals(link.url.toString()));
+    assertTrue(foundLinkForExampleRunBanditScan);
+
+    // expect an advice if the project doesn't check Bandit scans for commits
+    values.update(RUNS_BANDIT_SCANS.value(true));
+    values.update(USES_BANDIT_SCAN_CHECKS.value(false));
+    project.set(rating.calculate(values));
+    adviceList = advisor.adviceFor(project);
+    assertEquals(1, adviceList.size());
+    advice = adviceList.get(0);
+    assertFalse(advice.content().text().isEmpty());
+    assertFalse(advice.content().links().isEmpty());
+    boolean foundLinkForSuggestingCheckBanditScanInPr = advice.content().links().stream().anyMatch(
+        link -> "https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#example-using-a-list-of-events".equals(link.url.toString()));
+    assertTrue(foundLinkForSuggestingCheckBanditScanInPr);
+    boolean foundLinkForExampleCheckBanditScanInPr = advice.content().links().stream().anyMatch(
+        link -> "https://github.com/TNLinc/CV/blob/main/.github/workflows/bandit.yml#L3".equals(link.url.toString()));
+    assertTrue(foundLinkForExampleCheckBanditScanInPr);
   }
 
   @Test

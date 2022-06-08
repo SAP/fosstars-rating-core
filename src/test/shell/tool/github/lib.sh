@@ -27,6 +27,7 @@ declare -a project_security_default_expected_strings=(
   'Figuring out if the project uses GitHub for development'
   'Figuring out if the project uses sanitizers'
   'Figuring out if the project uses FindSecBugs'
+  'Figuring out how the project uses Bandit'
   'Figuring out if the project signs jar files'
   'Looking for vulnerabilities in the project'
   'Figuring out if the project has any unpatched vulnerability'
@@ -69,6 +70,7 @@ declare -a project_security_default_expected_strings=(
   'Sub-score:....Project activity'
   'Sub-score:....Project popularity'
   'Sub-score:....Security reviews'
+  'Sub-score:....How a project uses Bandit'
 )
 
 declare -a artifact_security_default_expected_strings=(
@@ -111,6 +113,8 @@ declare -a oss_rop_default_expected_strings=(
   'Is it compliant with REUSE rules?'
   'Is it registered in REUSE?'
   'Does the project use REUSE?'
+  'Does it run CodeQL scans?'
+  'Does it use CodeQL checks for pull requests?'
   'Does it use an allowed license?'
   'Is README incomplete?'
   'Does the contributing guideline have required text?'

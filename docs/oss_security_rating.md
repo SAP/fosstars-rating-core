@@ -66,6 +66,8 @@ To assess these factors, the security rating uses the following info about the o
 1.  The worst LGTM grade for the project.
 1.  Whether the project uses FindSecBugs or not.
 1.  Whether the project uses Dependabot or not.
+1.  Whether the project runs Bandit checks or not.
+1.  Whether the project runs Bandit scans or not.
 1.  Whether the project uses OWASP Dependency Check or not.
 1.  Whether the project has a CVSS threshold for OWASP Dependency Check to fail the build or not.
 1.  Whether the project uses AddressSanitizer or not.
