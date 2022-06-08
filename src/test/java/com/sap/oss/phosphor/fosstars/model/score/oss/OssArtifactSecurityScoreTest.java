@@ -52,6 +52,20 @@ public class OssArtifactSecurityScoreTest {
     ScoreValue scoreValue = score.calculate(Utils.allUnknown(score.allFeatures()));
     assertTrue(scoreValue.isUnknown());
   }
+  
+  @Test
+  public void testCalculateOssSecurityScoreUnknown() {
+    Score ossSecurityScore = new OssSecurityScore();
+    Set<Value<?>> values = Utils.allUnknown(ossSecurityScore.allFeatures());
+    
+    OssArtifactSecurityScore ossArtifactSecurityScore = new OssArtifactSecurityScore();
+    values.add(RELEASED_ARTIFACT_VERSIONS.value(testArtifactVersions(false)));
+    values.add(ARTIFACT_VERSION.value(new ArtifactVersion("1.2.0", LocalDateTime.now())));
+    values.add(VULNERABILITIES_IN_ARTIFACT.value(new Vulnerabilities()));
+
+    ScoreValue scoreValue = ossArtifactSecurityScore.calculate(values);
+    assertTrue(scoreValue.isUnknown());
+  }
 
   @Test
   public void testCalculateWithCurrentVersion() {
