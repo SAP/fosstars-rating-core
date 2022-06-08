@@ -70,11 +70,11 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <version.jackson-databind>2.13.2.2</version.jackson-databind>
-    <version.jackson-dataformat-yaml>2.13.2</version.jackson-dataformat-yaml>
+    <version.jackson-databind>2.13.3</version.jackson-databind>
+    <version.jackson-dataformat-yaml>2.13.3</version.jackson-dataformat-yaml>
     <version.commons-math3>3.6.1</version.commons-math3>
     <version.commons-cli>1.5.0</version.commons-cli>
-    <version.github-api>1.303</version.github-api>
+    <version.github-api>1.306</version.github-api>
     <version.nist-data-mirror>1.6.0</version.nist-data-mirror>
     <version.maven-model>3.8.5</version.maven-model>
     <version.log4j-api>2.17.2</version.log4j-api>
@@ -87,10 +87,10 @@
     <version.org.eclipse.jgit>5.13.0.202109080827-r</version.org.eclipse.jgit>
     <version.commons-text>1.9</version.commons-text>
     <version.maven-artifact>3.8.5</version.maven-artifact>
-    <version.dependency-check-core>7.0.4</version.dependency-check-core>
+    <version.dependency-check-core>7.1.0</version.dependency-check-core>
     <version.slf4j-simple>1.7.36</version.slf4j-simple>
     <version.javax.annotation-api>1.3.2</version.javax.annotation-api>
-    <version.jsoup>1.14.3</version.jsoup>
+    <version.jsoup>1.15.1</version.jsoup>
   </properties>
 
   <build>
@@ -229,7 +229,7 @@
           <plugin>
             <groupId>org.sonatype.plugins</groupId>
             <artifactId>nexus-staging-maven-plugin</artifactId>
-            <version>1.6.12</version>
+            <version>1.6.13</version>
             <extensions>true</extensions>
             <configuration>
               <serverId>ossrh</serverId>
