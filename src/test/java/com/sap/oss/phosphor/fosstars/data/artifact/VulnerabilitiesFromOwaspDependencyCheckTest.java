@@ -11,7 +11,6 @@ import com.sap.oss.phosphor.fosstars.data.owasp.model.OwaspDependencyCheckEntry;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.MavenArtifact;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
-import com.sap.oss.phosphor.fosstars.model.value.Vulnerability;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.File;
 import java.io.IOException;
@@ -49,8 +48,8 @@ public class VulnerabilitiesFromOwaspDependencyCheckTest {
     Vulnerabilities vulnerabilities = values.of(VULNERABILITIES_IN_ARTIFACT).get().get();
     assertEquals(3, vulnerabilities.size());
 
-    Vulnerability vulnerability = vulnerabilities.entries().iterator().next();
-    assertEquals("CVE-2018-11307", vulnerability.id());
+    assertTrue(vulnerabilities.entries().stream()
+        .anyMatch(vulnerability -> "CVE-2018-11307".equals(vulnerability.id())));
   }
 
   @Test
