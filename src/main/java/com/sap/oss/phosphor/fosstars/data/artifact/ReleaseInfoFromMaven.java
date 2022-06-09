@@ -45,7 +45,7 @@ public class ReleaseInfoFromMaven extends AbstractReleaseInfoLoader {
     String preparedQuery = String.format("%s+AND+%s", groupQuery, artifactQuery);
 
     String url =
-        String.format("https://search.maven.org/solrsearch/select?q=%s&core=gav&wt=json&rows=10000",
+        String.format("https://search.maven.org/solrsearch/select?q=%s&core=gav&wt=json&rows=200",
             preparedQuery);
     return fetch(url);
   }
