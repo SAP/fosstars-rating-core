@@ -7,12 +7,20 @@
     },
     "value" : 0.0,
     "weight" : 1.0,
-    "confidence" : 6.190476190476191,
+    "confidence" : 6.521739130434782,
     "usedValues" : [ {
       "type" : "BooleanValue",
       "feature" : {
         "type" : "BooleanFeature",
         "name" : "If a project has a README file"
+      },
+      "flag" : true,
+      "explanation" : [ ]
+    }, {
+      "type" : "BooleanValue",
+      "feature" : {
+        "type" : "BooleanFeature",
+        "name" : "If a project runs CodeQL scans"
       },
       "flag" : true,
       "explanation" : [ ]
@@ -137,6 +145,14 @@
         "name" : "If a project has unresolved vulnerability alerts"
       },
       "explanation" : [ "Could not retrieve vulnerability alerts" ]
+    }, {
+      "type" : "BooleanValue",
+      "feature" : {
+        "type" : "BooleanFeature",
+        "name" : "If a project runs CodeQL checks for commits"
+      },
+      "flag" : true,
+      "explanation" : [ ]
     }, {
       "type" : "UnknownValue",
       "feature" : {
