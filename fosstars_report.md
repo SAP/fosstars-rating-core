@@ -1,6 +1,6 @@
 **Rating**: **GOOD**
 
-**Score**: **6.05**, max score value is 10.0
+**Score**: **5.94**, max score value is 10.0
 
 **Confidence**: High (9.65, max confidence value is 10.0)
 
@@ -14,18 +14,20 @@ The rating is based on **security score for open-source projects**.
 
 It used the following sub-scores:
 
-1.  **[Security testing](#security-testing)**: **8.0** (weight is 1.0)
-    1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
-        1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
-            
-        1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
-            
-    1.  **[Static analysis](#static-analysis)**: **7.6** (weight is 1.0)
+1.  **[Security testing](#security-testing)**: **7.42** (weight is 1.0)
+    1.  **[Static analysis](#static-analysis)**: **6.33** (weight is 1.0)
         1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
             
         1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
             
+        1.  **[How a project uses Bandit](#how-a-project-uses-bandit)**: **0.0** (weight is 0.5)
+            
         1.  **[FindSecBugs score](#findsecbugs-score)**: **0.0** (weight is 0.5)
+            
+    1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
+        1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
+            
+        1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
             
     1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
         
@@ -36,18 +38,20 @@ It used the following sub-scores:
 1.  **[Security awareness](#security-awareness)**: **3.5** (weight is 0.9)
     
 1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: **10.0** (weight is 0.6)
-    1.  **[Security testing](#security-testing)**: **8.0** (weight is 1.0)
-        1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
-            1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
-                
-            1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
-                
-        1.  **[Static analysis](#static-analysis)**: **7.6** (weight is 1.0)
+    1.  **[Security testing](#security-testing)**: **7.42** (weight is 1.0)
+        1.  **[Static analysis](#static-analysis)**: **6.33** (weight is 1.0)
             1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
                 
             1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
                 
+            1.  **[How a project uses Bandit](#how-a-project-uses-bandit)**: **0.0** (weight is 0.5)
+                
             1.  **[FindSecBugs score](#findsecbugs-score)**: **0.0** (weight is 0.5)
+                
+        1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
+            1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
+                
+            1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
                 
         1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
             
@@ -59,7 +63,7 @@ It used the following sub-scores:
     
 1.  **[Community commitment](#community-commitment)**: **8.0** (weight is 0.5)
     
-1.  **[Project activity](#project-activity)**: **4.46** (weight is 0.5)
+1.  **[Project activity](#project-activity)**: **4.62** (weight is 0.5)
     
 1.  **[Project popularity](#project-popularity)**: **0.08** (weight is 0.5)
     
@@ -102,6 +106,18 @@ More info:
 1.  [NoHttp tool home page](https://github.com/spring-io/nohttp)
 
 
+You can open a pull request to run Bandit scans in the project using GitHub action workflow.
+More info:
+1.  [GitHub workflow action job config to run Bandit code scanning for a repository.](https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#jobsjob_idstepsrun)
+1.  [An example to run Bandit scan check as part of GitHub action workflow.](https://github.com/TNLinc/CV/blob/main/.github/workflows/bandit.yml#L28)
+
+
+You can open a pull request to trigger Bandit scans job in the project using GitHub action workflow for every pull-request.
+More info:
+1.  [GitHub workflow action config to run Bandit code scanning job on every PR of a project.](https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#example-using-a-list-of-events)
+1.  [An eample to trigger Bandit scan check on every pull-request.](https://github.com/TNLinc/CV/blob/main/.github/workflows/bandit.yml#L3)
+
+
 
 ## Sub-scores
 
@@ -109,7 +125,7 @@ Below are the details about all the used sub-scores.
 
 ### Security testing
 
-Score: **8.0**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **7.42**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -119,17 +135,19 @@ This sub-score is based on the following sub-scores:
 
 
 
-1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
-    1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
-        
-    1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
-        
-1.  **[Static analysis](#static-analysis)**: **7.6** (weight is 1.0)
+1.  **[Static analysis](#static-analysis)**: **6.33** (weight is 1.0)
     1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
         
     1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
         
+    1.  **[How a project uses Bandit](#how-a-project-uses-bandit)**: **0.0** (weight is 0.5)
+        
     1.  **[FindSecBugs score](#findsecbugs-score)**: **0.0** (weight is 0.5)
+        
+1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
+    1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
+        
+    1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
         
 1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
     
@@ -182,18 +200,20 @@ This sub-score is based on the following sub-score:
 
 
 
-1.  **[Security testing](#security-testing)**: **8.0** (weight is 1.0)
-    1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
-        1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
-            
-        1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
-            
-    1.  **[Static analysis](#static-analysis)**: **7.6** (weight is 1.0)
+1.  **[Security testing](#security-testing)**: **7.42** (weight is 1.0)
+    1.  **[Static analysis](#static-analysis)**: **6.33** (weight is 1.0)
         1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
             
         1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
             
+        1.  **[How a project uses Bandit](#how-a-project-uses-bandit)**: **0.0** (weight is 0.5)
+            
         1.  **[FindSecBugs score](#findsecbugs-score)**: **0.0** (weight is 0.5)
+            
+    1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
+        1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
+            
+        1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
             
     1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
         
@@ -244,17 +264,17 @@ This sub-score is based on 3 features:
 
 ### Project activity
 
-Score: **4.46**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **4.62**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-29 commits in the last 3 months results to 4.46 points
+30 commits in the last 3 months results to 4.62 points
 
 This sub-score is based on 2 features:
 
 
 
-1.  **Number of commits in the last three months:** 29
+1.  **Number of commits in the last three months:** 30
 1.  **Number of contributors in the last three months:** 1
 
 
@@ -290,6 +310,28 @@ This sub-score is based on 1 feature:
 1.  **Info about security reviews:** 0 security reviews
 
 
+### Static analysis
+
+Score: **6.33**, confidence is 10.0 (max), weight is 1.0 (high)
+
+
+
+
+
+This sub-score is based on the following sub-scores:
+
+
+
+1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
+    
+1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
+    
+1.  **[How a project uses Bandit](#how-a-project-uses-bandit)**: **0.0** (weight is 0.5)
+    
+1.  **[FindSecBugs score](#findsecbugs-score)**: **0.0** (weight is 0.5)
+    
+
+
 ### Dependency testing
 
 Score: **10.0**, confidence is 10.0 (max), weight is 1.0 (high)
@@ -305,26 +347,6 @@ This sub-score is based on the following sub-scores:
 1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
     
 1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
-    
-
-
-### Static analysis
-
-Score: **7.6**, confidence is 10.0 (max), weight is 1.0 (high)
-
-
-
-
-
-This sub-score is based on the following sub-scores:
-
-
-
-1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
-    
-1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
-    
-1.  **[FindSecBugs score](#findsecbugs-score)**: **0.0** (weight is 0.5)
     
 
 
@@ -378,41 +400,6 @@ This sub-score is based on 2 features:
 1.  **Package managers:** MAVEN
 
 
-### Dependabot score
-
-Score: **10.0**, confidence is 10.0 (max), weight is 1.0 (high)
-
-
-
-
-
-This sub-score is based on 4 features:
-
-
-
-1.  **Does it use Dependabot?** Yes
-1.  **Does it use GitHub as the main development platform?** Yes
-1.  **Package managers:** MAVEN
-1.  **Programming languages:** JAVA, PYTHON, OTHER
-
-
-### OWASP Dependency Check score
-
-Score: **0.0**, confidence is 10.0 (max), weight is 1.0 (high)
-
-
-
-
-
-This sub-score is based on 3 features:
-
-
-
-1.  **How is OWASP Dependency Check used?** Not used
-1.  **Package managers:** MAVEN
-1.  **What is the threshold for OWASP Dependency Check?** Not specified
-
-
 ### LGTM score
 
 Score: **9.0**, confidence is 10.0 (max), weight is 1.0 (high)
@@ -447,6 +434,23 @@ This sub-score is based on 4 features:
 1.  **Programming languages:** JAVA, PYTHON, OTHER
 
 
+### How a project uses Bandit
+
+Score: **0.0**, confidence is 10.0 (max), weight is 0.5 (medium)
+
+
+
+
+
+This sub-score is based on 3 features:
+
+
+
+1.  **If a project runs Bandit scan checks for commits:** No
+1.  **If a project runs Bandit scans:** No
+1.  **Programming languages:** JAVA, PYTHON, OTHER
+
+
 ### FindSecBugs score
 
 Score: **0.0**, confidence is 10.0 (max), weight is 0.5 (medium)
@@ -461,6 +465,41 @@ This sub-score is based on 2 features:
 
 1.  **Does it use FindSecBugs?** No
 1.  **Programming languages:** JAVA, PYTHON, OTHER
+
+
+### Dependabot score
+
+Score: **10.0**, confidence is 10.0 (max), weight is 1.0 (high)
+
+
+
+
+
+This sub-score is based on 4 features:
+
+
+
+1.  **Does it use Dependabot?** Yes
+1.  **Does it use GitHub as the main development platform?** Yes
+1.  **Package managers:** MAVEN
+1.  **Programming languages:** JAVA, PYTHON, OTHER
+
+
+### OWASP Dependency Check score
+
+Score: **0.0**, confidence is 10.0 (max), weight is 1.0 (high)
+
+
+
+
+
+This sub-score is based on 3 features:
+
+
+
+1.  **How is OWASP Dependency Check used?** Not used
+1.  **Package managers:** MAVEN
+1.  **What is the threshold for OWASP Dependency Check?** Not specified
 
 
 ## Known vulnerabilities
