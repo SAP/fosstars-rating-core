@@ -109,6 +109,26 @@ public class ReleasesFromGitHubTest extends TestGitHubDataFetcherHolder {
     when(pagedTagIterable.toList()).thenReturn(Collections.emptyList());
     when(repository.listTags()).thenReturn(pagedTagIterable);
 
+    evaluateRepository(repository);
+  }
+
+  @Test
+  public void testGitHubRepoWhenReleasesHaveNulls() throws IOException {
+    final GHRepository repository = mock(GHRepository.class);
+
+    PagedIterable<GHRelease> pagedIterable = mock(PagedIterable.class);
+    List<GHRelease> releases = Arrays.asList(new GHRelease[] {null});
+    when(pagedIterable.toList()).thenReturn(releases);
+    when(repository.listReleases()).thenReturn(pagedIterable);
+
+    PagedIterable<GHTag> pagedTagIterable = mock(PagedIterable.class);
+    when(pagedTagIterable.toList()).thenReturn(Collections.emptyList());
+    when(repository.listTags()).thenReturn(pagedTagIterable);
+
+    evaluateRepository(repository);
+  }
+  
+  private void evaluateRepository(final GHRepository repository) throws IOException {
     when(fetcher.github().getRepository(any())).thenReturn(repository);
     releasesFromGitHub = new ReleasesFromGitHub(fetcher);
 
