@@ -46,23 +46,7 @@ public class ReleaseInfoFromMavenTest {
 
     try (InputStream content = getClass().getResourceAsStream("ReleaseInfoFromMaven.json")) {
       when(entity.getContent()).thenReturn(content);
-
-      ValueHashSet values = new ValueHashSet();
-      assertEquals(0, values.size());
-
-      provider.update(MAVEN_ARTIFACT, values);
-
-      assertEquals(2, values.size());
-      assertTrue(values.has(RELEASED_ARTIFACT_VERSIONS));
-      assertTrue(values.of(RELEASED_ARTIFACT_VERSIONS).isPresent());
-      assertFalse(values.of(RELEASED_ARTIFACT_VERSIONS).get().isUnknown());
-      assertFalse(values.of(RELEASED_ARTIFACT_VERSIONS).get().get().empty());
-      assertEquals(20, values.of(RELEASED_ARTIFACT_VERSIONS).get().get().size());
-      assertTrue(values.of(RELEASED_ARTIFACT_VERSIONS).get().get().get("1.10.10").isPresent());
-      assertFalse(values.of(ARTIFACT_VERSION).get().isUnknown());
-      ArtifactVersion foundArtifactVersion = values.of(ARTIFACT_VERSION).get().get();
-      assertEquals("1.10.10", foundArtifactVersion.version());
-      assertEquals(asLocalDateTime(1618200022000L), foundArtifactVersion.releaseDate());
+      processProvider(provider);
     }
   }
 
@@ -114,23 +98,7 @@ public class ReleaseInfoFromMavenTest {
     try (InputStream content1 = getClass().getResourceAsStream("ReleaseInfoFromMavenPage1.json");
         InputStream content2 = getClass().getResourceAsStream("ReleaseInfoFromMavenPage2.json")) {
       when(entity.getContent()).thenReturn(content1).thenReturn(content2);
-
-      ValueHashSet values = new ValueHashSet();
-      assertEquals(0, values.size());
-
-      provider.update(MAVEN_ARTIFACT, values);
-
-      assertEquals(2, values.size());
-      assertTrue(values.has(RELEASED_ARTIFACT_VERSIONS));
-      assertTrue(values.of(RELEASED_ARTIFACT_VERSIONS).isPresent());
-      assertFalse(values.of(RELEASED_ARTIFACT_VERSIONS).get().isUnknown());
-      assertFalse(values.of(RELEASED_ARTIFACT_VERSIONS).get().get().empty());
-      assertEquals(20, values.of(RELEASED_ARTIFACT_VERSIONS).get().get().size());
-      assertTrue(values.of(RELEASED_ARTIFACT_VERSIONS).get().get().get("1.10.10").isPresent());
-      assertFalse(values.of(ARTIFACT_VERSION).get().isUnknown());
-      ArtifactVersion foundArtifactVersion = values.of(ARTIFACT_VERSION).get().get();
-      assertEquals("1.10.10", foundArtifactVersion.version());
-      assertEquals(asLocalDateTime(1618200022000L), foundArtifactVersion.releaseDate());
+      processProvider(provider);
     }
   }
 
@@ -151,24 +119,27 @@ public class ReleaseInfoFromMavenTest {
     try (InputStream content =
         getClass().getResourceAsStream("ReleaseInfoFromMavenNumFoundLess.json")) {
       when(entity.getContent()).thenReturn(content);
-
-      ValueHashSet values = new ValueHashSet();
-      assertEquals(0, values.size());
-
-      provider.update(MAVEN_ARTIFACT, values);
-
-      assertEquals(2, values.size());
-      assertTrue(values.has(RELEASED_ARTIFACT_VERSIONS));
-      assertTrue(values.of(RELEASED_ARTIFACT_VERSIONS).isPresent());
-      assertFalse(values.of(RELEASED_ARTIFACT_VERSIONS).get().isUnknown());
-      assertFalse(values.of(RELEASED_ARTIFACT_VERSIONS).get().get().empty());
-      assertEquals(20, values.of(RELEASED_ARTIFACT_VERSIONS).get().get().size());
-      assertTrue(values.of(RELEASED_ARTIFACT_VERSIONS).get().get().get("1.10.10").isPresent());
-      assertFalse(values.of(ARTIFACT_VERSION).get().isUnknown());
-      ArtifactVersion foundArtifactVersion = values.of(ARTIFACT_VERSION).get().get();
-      assertEquals("1.10.10", foundArtifactVersion.version());
-      assertEquals(asLocalDateTime(1618200022000L), foundArtifactVersion.releaseDate());
+      processProvider(provider);
     }
+  }
+
+  private void processProvider(ReleaseInfoFromMaven provider) throws IOException {
+    ValueHashSet values = new ValueHashSet();
+    assertEquals(0, values.size());
+
+    provider.update(MAVEN_ARTIFACT, values);
+
+    assertEquals(2, values.size());
+    assertTrue(values.has(RELEASED_ARTIFACT_VERSIONS));
+    assertTrue(values.of(RELEASED_ARTIFACT_VERSIONS).isPresent());
+    assertFalse(values.of(RELEASED_ARTIFACT_VERSIONS).get().isUnknown());
+    assertFalse(values.of(RELEASED_ARTIFACT_VERSIONS).get().get().empty());
+    assertEquals(20, values.of(RELEASED_ARTIFACT_VERSIONS).get().get().size());
+    assertTrue(values.of(RELEASED_ARTIFACT_VERSIONS).get().get().get("1.10.10").isPresent());
+    assertFalse(values.of(ARTIFACT_VERSION).get().isUnknown());
+    ArtifactVersion foundArtifactVersion = values.of(ARTIFACT_VERSION).get().get();
+    assertEquals("1.10.10", foundArtifactVersion.version());
+    assertEquals(asLocalDateTime(1618200022000L), foundArtifactVersion.releaseDate());
   }
 
   private static LocalDateTime asLocalDateTime(long epochMilli) {
