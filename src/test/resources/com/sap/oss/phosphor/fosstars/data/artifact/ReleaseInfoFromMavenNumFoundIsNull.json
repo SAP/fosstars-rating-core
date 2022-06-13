@@ -15,7 +15,6 @@
         }
     },
     "response": {
-        "numFound": null,
         "start": 0,
         "docs": []
     }
