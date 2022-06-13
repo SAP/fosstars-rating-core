@@ -77,7 +77,7 @@ public class ReleaseInfoFromMaven extends AbstractReleaseInfoLoader {
     }
 
     int numFound = json.at("/response/numFound").asInt();
-    if (numFound > artifactVersions.size() && numFound > start) {
+    if (numFound > artifactVersions.size()) {
       return fetchVersions(mavenArtifact, artifactVersions, start + 100);
     }
     return artifactVersions;
