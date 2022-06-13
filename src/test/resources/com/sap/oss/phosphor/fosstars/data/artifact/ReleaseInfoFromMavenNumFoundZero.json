@@ -1,0 +1,22 @@
+{
+    "responseHeader": {
+        "status": 0,
+        "QTime": 2,
+        "params": {
+            "q": "g:\"org.apache.ant\" AND a:\"ant\"",
+            "core": "gav",
+            "indent": "off",
+            "fl": "id,g,a,v,p,ec,timestamp,tags",
+            "start": "",
+            "sort": "score desc,timestamp desc,g asc,a asc,v desc",
+            "rows": "20",
+            "wt": "json",
+            "version": "2.2"
+        }
+    },
+    "response": {
+        "numFound": 0,
+        "start": 0,
+        "docs": []
+    }
+}

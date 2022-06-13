@@ -67,20 +67,9 @@ public class ReleaseInfoFromMavenTest {
     InputStream content = IOUtils.toInputStream("");
     when(entity.getContent()).thenReturn(content);
 
-    ValueHashSet values = new ValueHashSet();
-    assertEquals(0, values.size());
-
-    provider.update(MAVEN_ARTIFACT, values);
-
-    assertEquals(2, values.size());
-    assertTrue(values.has(RELEASED_ARTIFACT_VERSIONS));
-    assertTrue(values.of(RELEASED_ARTIFACT_VERSIONS).isPresent());
-    assertTrue(values.of(RELEASED_ARTIFACT_VERSIONS).get().isUnknown());
-    assertTrue(values.has(ARTIFACT_VERSION));
-    assertTrue(values.of(ARTIFACT_VERSION).isPresent());
-    assertTrue(values.of(ARTIFACT_VERSION).get().isUnknown());
+    processProviderForUnknownResult(provider);
   }
-  
+
   @Test
   public void testGetMavenArtifactsByPagination() throws IOException {
     ReleaseInfoFromMaven provider = new ReleaseInfoFromMaven();
@@ -121,6 +110,63 @@ public class ReleaseInfoFromMavenTest {
       when(entity.getContent()).thenReturn(content);
       processProvider(provider);
     }
+  }
+
+  @Test
+  public void testGetMavenArtifactsWhenNumFoundIsZero() throws IOException {
+    ReleaseInfoFromMaven provider = new ReleaseInfoFromMaven();
+    provider = spy(provider);
+
+    CloseableHttpClient httpClient = mock(CloseableHttpClient.class);
+    when(provider.httpClient()).thenReturn(httpClient);
+
+    CloseableHttpResponse response = mock(CloseableHttpResponse.class);
+    when(httpClient.execute(any())).thenReturn(response);
+
+    HttpEntity entity = mock(HttpEntity.class);
+    when(response.getEntity()).thenReturn(entity);
+
+    try (InputStream content =
+        getClass().getResourceAsStream("ReleaseInfoFromMavenNumFoundZero.json")) {
+      when(entity.getContent()).thenReturn(content);
+      processProviderForUnknownResult(provider);
+    }
+  }
+
+  @Test
+  public void testGetMavenArtifactsWhenNumFoundIsNull() throws IOException {
+    ReleaseInfoFromMaven provider = new ReleaseInfoFromMaven();
+    provider = spy(provider);
+
+    CloseableHttpClient httpClient = mock(CloseableHttpClient.class);
+    when(provider.httpClient()).thenReturn(httpClient);
+
+    CloseableHttpResponse response = mock(CloseableHttpResponse.class);
+    when(httpClient.execute(any())).thenReturn(response);
+
+    HttpEntity entity = mock(HttpEntity.class);
+    when(response.getEntity()).thenReturn(entity);
+
+    try (InputStream content =
+        getClass().getResourceAsStream("ReleaseInfoFromMavenNumFoundIsNull.json")) {
+      when(entity.getContent()).thenReturn(content);
+      processProviderForUnknownResult(provider);
+    }
+  }
+
+  private void processProviderForUnknownResult(ReleaseInfoFromMaven provider) throws IOException {
+    ValueHashSet values = new ValueHashSet();
+    assertEquals(0, values.size());
+
+    provider.update(MAVEN_ARTIFACT, values);
+
+    assertEquals(2, values.size());
+    assertTrue(values.has(RELEASED_ARTIFACT_VERSIONS));
+    assertTrue(values.of(RELEASED_ARTIFACT_VERSIONS).isPresent());
+    assertTrue(values.of(RELEASED_ARTIFACT_VERSIONS).get().isUnknown());
+    assertTrue(values.has(ARTIFACT_VERSION));
+    assertTrue(values.of(ARTIFACT_VERSION).isPresent());
+    assertTrue(values.of(ARTIFACT_VERSION).get().isUnknown());
   }
 
   private void processProvider(ReleaseInfoFromMaven provider) throws IOException {
