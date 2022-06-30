@@ -141,6 +141,44 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
   }
 
   @Test
+  public void testLowercaseReadmeAdoc() throws IOException {
+    GitHubProject project = new GitHubProject("test", "project");
+
+    LocalRepository localRepository = mock(LocalRepository.class);
+    when(localRepository.hasFile("readme.adoc")).thenReturn(true);
+    TestGitHubDataFetcher.addForTesting(project, localRepository);
+
+    ReadmeInfo provider = new ReadmeInfo(fetcher);
+    provider.set(NoValueCache.create());
+
+    when(localRepository.readTextFrom("readme.adoc"))
+        .thenReturn(Optional.of(String.join("\n",
+            "This is readme.adoc"
+        )));
+    ValueSet values = provider.fetchValuesFor(project);
+    assertTrue(checkValue(values, HAS_README, true).get());
+  }
+
+  @Test
+  public void testReadmeAdoc() throws IOException {
+    GitHubProject project = new GitHubProject("test", "project");
+
+    LocalRepository localRepository = mock(LocalRepository.class);
+    when(localRepository.hasFile("README.adoc")).thenReturn(true);
+    TestGitHubDataFetcher.addForTesting(project, localRepository);
+
+    ReadmeInfo provider = new ReadmeInfo(fetcher);
+    provider.set(NoValueCache.create());
+
+    when(localRepository.readTextFrom("README.adoc"))
+        .thenReturn(Optional.of(String.join("\n",
+            "This is README.adoc"
+        )));
+    ValueSet values = provider.fetchValuesFor(project);
+    assertTrue(checkValue(values, HAS_README, true).get());
+  }
+
+  @Test
   public void testLoadingDefaultConfig() throws IOException {
     Path config = Paths.get(String.format("%s.config.yml", ReadmeInfo.class.getSimpleName()));
     String content = "---\n"
