@@ -140,36 +140,28 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
     assertTrue(checkValue(values, HAS_README, true).get());
   }
 
-  @Test
-  public void testLowercaseReadmeAdoc() throws IOException {
+  void readmMeAdocTest(String fileName) throws IOException {
     GitHubProject project = new GitHubProject("test", "project");
 
     LocalRepository localRepository = mock(LocalRepository.class);
-    when(localRepository.hasFile("readme.adoc")).thenReturn(true);
+    when(localRepository.hasFile(fileName)).thenReturn(true);
     TestGitHubDataFetcher.addForTesting(project, localRepository);
 
     ReadmeInfo provider = new ReadmeInfo(fetcher);
     provider.set(NoValueCache.create());
 
-    when(localRepository.readTextFrom("readme.adoc"))
+    when(localRepository.readTextFrom(fileName))
         .thenReturn(Optional.of(String.join("\n",
-            "This is readme.adoc"
+            "This is " + fileName
         )));
     ValueSet values = provider.fetchValuesFor(project);
     assertTrue(checkValue(values, HAS_README, true).get());
+  }
 
-    localRepository = mock(LocalRepository.class);
-    when(localRepository.hasFile("README.adoc")).thenReturn(true);
-    TestGitHubDataFetcher.addForTesting(project, localRepository);
-
-    provider = new ReadmeInfo(fetcher);
-    provider.set(NoValueCache.create());
-    when(localRepository.readTextFrom("README.adoc"))
-        .thenReturn(Optional.of(String.join("\n",
-            "This is README.adoc"
-        )));
-    values = provider.fetchValuesFor(project);
-    assertTrue(checkValue(values, HAS_README, true).get());
+  @Test
+  public void testLowercaseReadmeAdoc() throws IOException {
+    readmMeAdocTest("readme.adoc");
+    readmMeAdocTest("README.adoc");
   }
 
   @Test
