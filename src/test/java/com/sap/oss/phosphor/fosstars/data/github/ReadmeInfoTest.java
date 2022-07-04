@@ -33,20 +33,19 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
     assertTrue(features.contains(INCOMPLETE_README));
   }
 
-  @Test
-  public void testWithReadme() throws IOException {
+  void readmeTest(String fileName) throws IOException {
     GitHubProject project = new GitHubProject("test", "project");
     LocalRepository localRepository = mock(LocalRepository.class);
-    when(localRepository.hasFile("README")).thenReturn(true);
+    when(localRepository.hasFile(fileName)).thenReturn(true);
     TestGitHubDataFetcher.addForTesting(project, localRepository);
 
     ReadmeInfo provider = new ReadmeInfo(fetcher);
     provider.requiredContentPatterns("# Mandatory header", "^((?!Prohibited phrase).)*$");
     provider.set(NoValueCache.create());
 
-    when(localRepository.readTextFrom("README"))
+    when(localRepository.readTextFrom(fileName))
         .thenReturn(Optional.of(String.join("\n",
-            "This is README",
+            "This is ", fileName,
             "",
             "# Mandatory header",
             "",
@@ -58,9 +57,9 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
     value = checkValue(values, INCOMPLETE_README, false);
     assertTrue(value.explanation().isEmpty());
 
-    when(localRepository.readTextFrom("README"))
+    when(localRepository.readTextFrom(fileName))
         .thenReturn(Optional.of(String.join("\n",
-            "This is README",
+            "This is ", fileName,
             "",
             "# Another header"
         )));
@@ -71,9 +70,9 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
     assertFalse(value.explanation().isEmpty());
     assertTrue(value.explanation().get(0).contains("Mandatory header"));
 
-    when(localRepository.readTextFrom("README"))
+    when(localRepository.readTextFrom(fileName))
         .thenReturn(Optional.of(String.join("\n",
-            "This is README",
+            "This is ", fileName,
             "",
             "# Mandatory header",
             "",
@@ -86,6 +85,12 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
     value = checkValue(values, INCOMPLETE_README, true);
     assertFalse(value.explanation().isEmpty());
     assertTrue(value.explanation().get(0).contains("Prohibited phrase"));
+  }
+
+  @Test
+  public void testWithReadme() throws IOException {
+    readmMeTest("README");
+    readmMeTest("readme");
   }
 
   @Test
@@ -102,45 +107,20 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
     value = checkValue(values, INCOMPLETE_README, true);
     assertFalse(value.explanation().isEmpty());
   }
-  
+
   @Test
   public void testWithRstReadme() throws IOException {
-    GitHubProject project = new GitHubProject("test", "project");
-    LocalRepository localRepository = mock(LocalRepository.class);
-    when(localRepository.hasFile("README.rst")).thenReturn(true);
-    TestGitHubDataFetcher.addForTesting(project, localRepository);
-    
-    ReadmeInfo provider = new ReadmeInfo(fetcher);
-    provider.set(NoValueCache.create());
-
-    when(localRepository.readTextFrom("README.rst"))
-        .thenReturn(Optional.of(String.join("\n",
-            "This is README.rst"
-        )));
-    ValueSet values = provider.fetchValuesFor(project);
-    assertTrue(checkValue(values, HAS_README, true).get());
+    readmMeTest("readme.rst");
+    readmMeTest("README.rst");
   }
-
+  
   @Test
   public void testLowercaseReadme() throws IOException {
-    GitHubProject project = new GitHubProject("test", "project");
-
-    LocalRepository localRepository = mock(LocalRepository.class);
-    when(localRepository.hasFile("readme.md")).thenReturn(true);
-    TestGitHubDataFetcher.addForTesting(project, localRepository);
-
-    ReadmeInfo provider = new ReadmeInfo(fetcher);
-    provider.set(NoValueCache.create());
-
-    when(localRepository.readTextFrom("readme.md"))
-        .thenReturn(Optional.of(String.join("\n",
-            "This is readme.md"
-        )));
-    ValueSet values = provider.fetchValuesFor(project);
-    assertTrue(checkValue(values, HAS_README, true).get());
+    readmMeTest("readme.md");
+    readmMeTest("README.md");
   }
 
-  void readmMeAdocTest(String fileName) throws IOException {
+  void readmMeTest(String fileName) throws IOException {
     GitHubProject project = new GitHubProject("test", "project");
 
     LocalRepository localRepository = mock(LocalRepository.class);
@@ -160,9 +140,15 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
 
   @Test
   public void testReadmeAdoc() throws IOException {
-    readmMeAdocTest("readme.adoc");
-    readmMeAdocTest("README.adoc");
+    readmMeTest("readme.adoc");
+    readmMeTest("README.adoc");
   }
+
+  @Test
+  public void testReadmeTxt() throws IOException {
+    readmMeTest("README.txt");
+    readmMeTest("readme.txt");
+  }  
 
   @Test
   public void testLoadingDefaultConfig() throws IOException {
