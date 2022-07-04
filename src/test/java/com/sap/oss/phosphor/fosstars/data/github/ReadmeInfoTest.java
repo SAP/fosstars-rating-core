@@ -152,7 +152,7 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
 
     when(localRepository.readTextFrom(fileName))
         .thenReturn(Optional.of(String.join("\n",
-            "This is " + fileName
+            "This is ", fileName
         )));
     ValueSet values = provider.fetchValuesFor(project);
     assertTrue(checkValue(values, HAS_README, true).get());
