@@ -89,8 +89,8 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
 
   @Test
   public void testWithReadme() throws IOException {
-    readmMeTest("README");
-    readmMeTest("readme");
+    readMeTestGen("README");
+    readMeTestGen("readme");
   }
 
   @Test
@@ -110,17 +110,17 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
 
   @Test
   public void testWithRstReadme() throws IOException {
-    readmMeTest("readme.rst");
-    readmMeTest("README.rst");
+    readMeTestGen("readme.rst");
+    readMeTestGen("README.rst");
   }
   
   @Test
   public void testLowercaseReadme() throws IOException {
-    readmMeTest("readme.md");
-    readmMeTest("README.md");
+    readMeTestGen("readme.md");
+    readMeTestGen("README.md");
   }
 
-  void readmMeTest(String fileName) throws IOException {
+  void readMeTestGen(String fileName) throws IOException {
     GitHubProject project = new GitHubProject("test", "project");
 
     LocalRepository localRepository = mock(LocalRepository.class);
@@ -140,14 +140,14 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
 
   @Test
   public void testReadmeAdoc() throws IOException {
-    readmMeTest("readme.adoc");
-    readmMeTest("README.adoc");
+    readMeTestGen("readme.adoc");
+    readMeTestGen("README.adoc");
   }
 
   @Test
   public void testReadmeTxt() throws IOException {
-    readmMeTest("README.txt");
-    readmMeTest("readme.txt");
+    readMeTestGen("README.txt");
+    readMeTestGen("readme.txt");
   }  
 
   @Test
