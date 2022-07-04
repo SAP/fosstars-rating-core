@@ -159,7 +159,7 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
   }
 
   @Test
-  public void testLowercaseReadmeAdoc() throws IOException {
+  public void testReadmeAdoc() throws IOException {
     readmMeAdocTest("readme.adoc");
     readmMeAdocTest("README.adoc");
   }
