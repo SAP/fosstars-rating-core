@@ -140,6 +140,30 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
     assertTrue(checkValue(values, HAS_README, true).get());
   }
 
+  void readmMeAdocTest(String fileName) throws IOException {
+    GitHubProject project = new GitHubProject("test", "project");
+
+    LocalRepository localRepository = mock(LocalRepository.class);
+    when(localRepository.hasFile(fileName)).thenReturn(true);
+    TestGitHubDataFetcher.addForTesting(project, localRepository);
+
+    ReadmeInfo provider = new ReadmeInfo(fetcher);
+    provider.set(NoValueCache.create());
+
+    when(localRepository.readTextFrom(fileName))
+        .thenReturn(Optional.of(String.join("\n",
+            "This is ", fileName
+        )));
+    ValueSet values = provider.fetchValuesFor(project);
+    assertTrue(checkValue(values, HAS_README, true).get());
+  }
+
+  @Test
+  public void testReadmeAdoc() throws IOException {
+    readmMeAdocTest("readme.adoc");
+    readmMeAdocTest("README.adoc");
+  }
+
   @Test
   public void testLoadingDefaultConfig() throws IOException {
     Path config = Paths.get(String.format("%s.config.yml", ReadmeInfo.class.getSimpleName()));
