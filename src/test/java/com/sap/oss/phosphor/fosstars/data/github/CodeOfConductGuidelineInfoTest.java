@@ -4,7 +4,10 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_CO
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_REQUIRED_TEXT_IN_CODE_OF_CONDUCT_GUIDELINE;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -57,6 +60,20 @@ public class CodeOfConductGuidelineInfoTest extends TestGitHubDataFetcherHolder 
     provider.requiredContentPatterns("Extra text.");
     values = provider.fetchValuesFor(project);
     checkValue(values, HAS_CODE_OF_CONDUCT, true);
+    checkValue(values, HAS_REQUIRED_TEXT_IN_CODE_OF_CONDUCT_GUIDELINE, false);
+  }
+
+  @Test
+  public void testProjectWithoutCodeOfConductGuideline() throws IOException {
+    GitHubProject project = new GitHubProject("test", "project");
+    LocalRepository localRepository = mock(LocalRepository.class);
+    when(localRepository.readTextFrom(anyString())).thenReturn(Optional.empty());
+    TestGitHubDataFetcher.addForTesting(project, localRepository);
+
+    CodeOfConductGuidelineInfo provider = new CodeOfConductGuidelineInfo(fetcher);
+
+    ValueSet values = provider.fetchValuesFor(project);
+    checkValue(values, HAS_CODE_OF_CONDUCT, false);
     checkValue(values, HAS_REQUIRED_TEXT_IN_CODE_OF_CONDUCT_GUIDELINE, false);
   }
 
