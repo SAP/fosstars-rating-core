@@ -101,7 +101,7 @@ public class MavenScmFinder {
    * @throws IllegalArgumentException If something goes wrong.
    */
   private static Optional<String> extractProjectPath(String url) throws IllegalArgumentException {
-    if (url.matches("^\\w+\\@github\\.com\\:(\\/?\\w+)+\\.git\\/?$")) {
+    if (url.matches("^\\w+\\@github\\.com\\:(\\/?[\\w-]+)+\\.git\\/?$")) {
       return Optional.ofNullable(url.split(":")[1]);
     }
 
