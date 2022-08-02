@@ -54,4 +54,12 @@ public class MavenScmFinderTest {
       normalizeGitHubProjectPath(url);
     }
   }
+  
+  @Test
+  public void testGitHubUrlParserWithHyphen() throws IOException {
+    String inputSyntax = "git@github.com:codelibs/elasticsearch-module.git";
+    Optional<String> parsedUrl = normalizeGitHubProjectPath(inputSyntax);
+    assertTrue(parsedUrl.isPresent());
+    assertEquals("https://github.com/codelibs/elasticsearch-module.git", parsedUrl.get());
+  }
 }
