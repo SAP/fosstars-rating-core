@@ -68,7 +68,7 @@ public class MavenScmFinder {
    * @return A GitHub URL if parsing is successful. Otherwise an #Optional.empty().
    * @throws IOException If something goes wrong.
    */
-  static Optional<String> normalizeGitHubProjectPath(String url) throws IOException {
+  public static Optional<String> normalizeGitHubProjectPath(String url) throws IOException {
     final String github = "github";
     Optional<String> path = Optional.empty();
 
