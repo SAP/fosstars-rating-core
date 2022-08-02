@@ -68,7 +68,7 @@ public class MavenScmFinder {
    * @return A GitHub URL if parsing is successful. Otherwise an #Optional.empty().
    * @throws IOException If something goes wrong.
    */
-  static Optional<String> normalizeGitHubProjectPath(String url) throws IOException {
+  public static Optional<String> normalizeGitHubProjectPath(String url) throws IOException {
     final String github = "github";
     Optional<String> path = Optional.empty();
 
@@ -101,7 +101,7 @@ public class MavenScmFinder {
    * @throws IllegalArgumentException If something goes wrong.
    */
   private static Optional<String> extractProjectPath(String url) throws IllegalArgumentException {
-    if (url.matches("^\\w+\\@github\\.com\\:(\\/?\\w+)+\\.git\\/?$")) {
+    if (url.matches("^\\w+\\@github\\.com\\:(\\/?[\\w-]+)+\\.git\\/?$")) {
       return Optional.ofNullable(url.split(":")[1]);
     }
 
