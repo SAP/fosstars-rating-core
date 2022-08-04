@@ -53,10 +53,7 @@ public class HasExecutableBinaries extends CachedSingleFeatureGitHubDataProvider
 
     LocalRepository localRepository = loadLocalRepository(project);
     List<Path> paths = localRepository.files(FILE_EXTENSIONS_PREDICATE);
-    if (paths.size() > 0) {
-      return HAS_EXECUTABLE_BINARIES.value(true);
-    }
-    return HAS_EXECUTABLE_BINARIES.value(false);
+    return HAS_EXECUTABLE_BINARIES.value(!paths.isEmpty());
   }
 
   /**
@@ -78,21 +75,5 @@ public class HasExecutableBinaries extends CachedSingleFeatureGitHubDataProvider
    */
   private static boolean isExecutableBinary(Path path) {
     return FILE_EXTENSIONS.stream().anyMatch(ext -> path.getFileName().toString().endsWith(ext));
-  }
-
-  /**
-   * This is for testing and demo purposes.
-   *
-   * @param args Command-line options (option 1: API token, option 2: project URL).
-   * @throws Exception If something went wrong.
-   */
-  public static void main(String... args) throws Exception {
-    String token = args.length > 0 ? args[0] : "";
-    String url = args.length > 1 ? args[1] : "https://github.com/FasterXML/jackson-databind";
-    GitHubProject project = GitHubProject.parse(url);
-    GitHub github = new GitHubBuilder().withOAuthToken(token).build();
-    HasExecutableBinaries provider =
-        new HasExecutableBinaries(new GitHubDataFetcher(github, token));
-    System.out.println(provider.fetchValueFor(project));
   }
 }
