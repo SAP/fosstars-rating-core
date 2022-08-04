@@ -3,6 +3,7 @@ package com.sap.oss.phosphor.fosstars.model.score.oss;
 import static com.sap.oss.phosphor.fosstars.TestUtils.DELTA;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.FUZZED_IN_OSS_FUZZ;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_BUG_BOUNTY_PROGRAM;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_EXECUTABLE_BINARIES;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_TEAM;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.IS_APACHE;
@@ -131,7 +132,8 @@ public class OssSecurityScoreTest {
         OWASP_DEPENDENCY_CHECK_USAGE.value(MANDATORY),
         OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.value(7.0),
         PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)),
-        SECURITY_REVIEWS.value(noReviews()));
+        SECURITY_REVIEWS.value(noReviews()),
+        HAS_EXECUTABLE_BINARIES.value(false));
   }
 
   private static void checkUsedValues(ScoreValue scoreValue) {

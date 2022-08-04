@@ -55,6 +55,11 @@ defaults:
     type: "BooleanFeature"
     name: "If a project uses OWASP Java Encoder"
   flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If a project has executable binaries"
+  flag: false
 - type: "OwaspDependencyCheckUsageValue"
   feature:
     type: "OwaspDependencyCheckUsageFeature"
