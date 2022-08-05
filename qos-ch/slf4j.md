@@ -6,9 +6,9 @@ Last updated on Aug 5, 2022
 
 **Rating**: **BAD**
 
-**Score**: **3.56**, max score value is 10.0
+**Score**: **3.2**, max score value is 10.0
 
-**Confidence**: High (9.65, max confidence value is 10.0)
+**Confidence**: Max (10.0, max confidence value is 10.0)
 
 ## Details
 
@@ -41,7 +41,7 @@ It used the following sub-scores:
         
     1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
         
-1.  **[Security awareness](#security-awareness)**: **3.5** (weight is 0.9)
+1.  **[Security awareness](#security-awareness)**: **1.5** (weight is 0.9)
     
 1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: **2.0** (weight is 0.6)
     1.  **[Security testing](#security-testing)**: **3.09** (weight is 1.0)
@@ -71,7 +71,7 @@ It used the following sub-scores:
     
 1.  **[Project activity](#project-activity)**: **2.37** (weight is 0.5)
     
-1.  **[Project popularity](#project-popularity)**: **2.34** (weight is 0.5)
+1.  **[Project popularity](#project-popularity)**: **2.58** (weight is 0.5)
     
 1.  **[Security reviews](#security-reviews)**: **9.62** (weight is 0.2)
     
@@ -180,19 +180,20 @@ This sub-score is based on the following sub-scores:
 
 ### Security awareness
 
-Score: **3.5**, confidence is 10.0 (max), weight is 0.9 (high)
+Score: **1.5**, confidence is 10.0 (max), weight is 0.9 (high)
 
-The score shows how a project is aware of security. If the project has a security policy, then the score adds 2.00. If the project has a security team, then the score adds 3.00. If the project uses verified signed commits, then the score adds 0.50. If the project has a bug bounty program, then the score adds 4.00. If the project signs its artifacts, then the score adds 0.50. If the project uses a security tool or library, then the score adds 1.00.
+The score shows how a project is aware of security. If the project has a security policy, then the score adds 2.00. If the project has a security team, then the score adds 3.00. If the project uses verified signed commits, then the score adds 0.50. If the project has a bug bounty program, then the score adds 4.00. If the project signs its artifacts, then the score adds 0.50. If the project uses a security tool or library, then the score adds 1.00. If the project has executable binaries, then the score subtracts 2.00.
 
 
 
-This sub-score is based on 17 features:
+This sub-score is based on 18 features:
 
 
 
 1.  **Does it have a bug bounty program?** No
 1.  **Does it have a security policy?** Yes
 1.  **Does it have a security team?** No
+1.  **Does it have executable binaries?** Yes
 1.  **Does it sign artifacts?** Yes
 1.  **Does it use AddressSanitizer?** No
 1.  **Does it use Dependabot?** No
@@ -302,7 +303,7 @@ This sub-score is based on 2 features:
 
 ### Project popularity
 
-Score: **2.34**, confidence is 6.67 (low), weight is 0.5 (medium)
+Score: **2.58**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 This scoring function is based on number of stars, watchers and dependent projects.
 
@@ -312,7 +313,7 @@ This sub-score is based on 3 features:
 
 
 
-1.  **Number of projects on GitHub that use an open source project:** unknown
+1.  **Number of projects on GitHub that use an open source project:** 350
 1.  **Number of stars for a GitHub repository:** 1967
 1.  **Number of watchers for a GitHub repository:** 113
 

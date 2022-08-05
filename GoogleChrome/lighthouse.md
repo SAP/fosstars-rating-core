@@ -176,17 +176,18 @@ This sub-score is based on the following sub-scores:
 
 Score: **1.5**, confidence is 10.0 (max), weight is 0.9 (high)
 
-The score shows how a project is aware of security. If the project has a security policy, then the score adds 2.00. If the project has a security team, then the score adds 3.00. If the project uses verified signed commits, then the score adds 0.50. If the project has a bug bounty program, then the score adds 4.00. If the project signs its artifacts, then the score adds 0.50. If the project uses a security tool or library, then the score adds 1.00.
+The score shows how a project is aware of security. If the project has a security policy, then the score adds 2.00. If the project has a security team, then the score adds 3.00. If the project uses verified signed commits, then the score adds 0.50. If the project has a bug bounty program, then the score adds 4.00. If the project signs its artifacts, then the score adds 0.50. If the project uses a security tool or library, then the score adds 1.00. If the project has executable binaries, then the score subtracts 2.00.
 
 
 
-This sub-score is based on 17 features:
+This sub-score is based on 18 features:
 
 
 
 1.  **Does it have a bug bounty program?** No
 1.  **Does it have a security policy?** No
 1.  **Does it have a security team?** No
+1.  **Does it have executable binaries?** No
 1.  **Does it sign artifacts?** No
 1.  **Does it use AddressSanitizer?** No
 1.  **Does it use Dependabot?** Yes
@@ -305,7 +306,7 @@ This sub-score is based on 3 features:
 
 
 
-1.  **Number of projects on GitHub that use an open source project:** 10871
+1.  **Number of projects on GitHub that use an open source project:** 10868
 1.  **Number of stars for a GitHub repository:** 25008
 1.  **Number of watchers for a GitHub repository:** 570
 
