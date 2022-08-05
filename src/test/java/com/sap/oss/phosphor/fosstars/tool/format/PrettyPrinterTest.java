@@ -3,6 +3,7 @@ package com.sap.oss.phosphor.fosstars.tool.format;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.FIRST_COMMIT_DATE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.FUZZED_IN_OSS_FUZZ;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_BUG_BOUNTY_PROGRAM;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_EXECUTABLE_BINARIES;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_TEAM;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.IS_APACHE;
@@ -112,7 +113,8 @@ public class PrettyPrinterTest {
       OWASP_DEPENDENCY_CHECK_USAGE.value(NOT_USED),
       OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.notSpecifiedValue(),
       PACKAGE_MANAGERS.value(new PackageManagers(MAVEN)),
-      SECURITY_REVIEWS.value(noReviews()));
+      SECURITY_REVIEWS.value(noReviews()),
+      HAS_EXECUTABLE_BINARIES.value(false));
 
   private static Locale savedLocale;
 

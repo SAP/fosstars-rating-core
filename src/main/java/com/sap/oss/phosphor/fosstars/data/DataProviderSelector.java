@@ -27,6 +27,7 @@ import com.sap.oss.phosphor.fosstars.data.github.FuzzedInOssFuzz;
 import com.sap.oss.phosphor.fosstars.data.github.GitHubDataFetcher;
 import com.sap.oss.phosphor.fosstars.data.github.HasBugBountyProgram;
 import com.sap.oss.phosphor.fosstars.data.github.HasCompanySupport;
+import com.sap.oss.phosphor.fosstars.data.github.HasExecutableBinaries;
 import com.sap.oss.phosphor.fosstars.data.github.HasSecurityPolicy;
 import com.sap.oss.phosphor.fosstars.data.github.HasSecurityTeam;
 import com.sap.oss.phosphor.fosstars.data.github.InfoAboutVulnerabilities;
@@ -235,6 +236,7 @@ public class DataProviderSelector {
         new NumberOfDependentProjectOnGitHub(fetcher),
         new VulnerabilitiesFromOwaspDependencyCheck(),
         new VulnerabilitiesFromNpmAudit(nvd),
+        new HasExecutableBinaries(fetcher),
         PROJECT_USAGE_PROVIDER,
         FUNCTIONALITY_PROVIDER,
         HANDLING_UNTRUSTED_DATA_LIKELIHOOD_PROVIDER,

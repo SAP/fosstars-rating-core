@@ -305,6 +305,12 @@ public class OssFeatures {
       = new BooleanFeature("If a project signs artifacts");
 
   /**
+   * Shows if an open-source project has executable binaries (for example, .class, .pyc, .exe).
+   */
+  public static final Feature<Boolean> HAS_EXECUTABLE_BINARIES
+      = new BooleanFeature("If a project has executable binaries");
+
+  /**
    * Shows if OWASP Dependency Check is used to scan a project. It is either used as a mandatory
    * step, optional step or not used at all.
    */

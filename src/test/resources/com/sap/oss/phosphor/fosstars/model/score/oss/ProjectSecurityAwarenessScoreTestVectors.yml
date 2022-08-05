@@ -60,6 +60,11 @@ defaults:
     type: "BooleanFeature"
     name: "If a project uses OWASP Java Encoder"
   flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If a project has executable binaries"
+  flag: false
 - type: "OwaspDependencyCheckUsageValue"
   feature:
     type: "OwaspDependencyCheckUsageFeature"
@@ -492,6 +497,142 @@ elements:
     positiveInfinity: false
   expectedLabel: null
   alias: "test_vector_9"
+- type: "StandardTestVector"
+  values:
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If an open-source project has a security team"
+    flag: true
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If an open-source project has a security policy"
+    flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses signed commits"
+    flag: true
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project has a bug bounty program"
+    flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project signs artifacts"
+    flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses Dependabot"
+    flag: true
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If an open-source project uses FindSecBugs"
+    flag: true
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project has executable binaries"
+    flag: true
+  expectedScore:
+    type: "DoubleInterval"
+    from: 3.0
+    openLeft: false
+    negativeInfinity: false
+    to: 5.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_10"
+- type: "StandardTestVector"
+  values:
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If an open-source project has a security policy"
+    flag: true
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses signed commits"
+    flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If an open-source project has a security team"
+    flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project has a bug bounty program"
+    flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project signs artifacts"
+    flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project has executable binaries"
+    flag: true
+  expectedScore:
+    type: "DoubleInterval"
+    from: 0.0
+    openLeft: false
+    negativeInfinity: false
+    to: 1.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_11"
+- type: "StandardTestVector"
+  values:
+    - type: "BooleanValue"
+      feature:
+        type: "BooleanFeature"
+        name: "If an open-source project has a security policy"
+      flag: true
+    - type: "BooleanValue"
+      feature:
+        type: "BooleanFeature"
+        name: "If an open-source project has a security team"
+      flag: true
+    - type: "BooleanValue"
+      feature:
+        type: "BooleanFeature"
+        name: "If a project uses signed commits"
+      flag: false
+    - type: "BooleanValue"
+      feature:
+        type: "BooleanFeature"
+        name: "If a project has a bug bounty program"
+      flag: true
+    - type: "BooleanValue"
+      feature:
+        type: "BooleanFeature"
+        name: "If a project signs artifacts"
+      flag: false
+    - type: "BooleanValue"
+      feature:
+        type: "BooleanFeature"
+        name: "If a project has executable binaries"
+      flag: true
+  expectedScore:
+    type: "DoubleInterval"
+    from: 6.0
+    openLeft: false
+    negativeInfinity: false
+    to: 8.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "test_vector_12"
 - type: "StandardTestVector"
   values:
     - type: "BooleanValue"
