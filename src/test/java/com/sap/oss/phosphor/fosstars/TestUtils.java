@@ -3,6 +3,7 @@ package com.sap.oss.phosphor.fosstars;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ARTIFACT_VERSION;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.FUZZED_IN_OSS_FUZZ;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_BUG_BOUNTY_PROGRAM;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_EXECUTABLE_BINARIES;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_TEAM;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.IS_APACHE;
@@ -212,7 +213,8 @@ public class TestUtils {
         OWASP_DEPENDENCY_CHECK_USAGE.value(MANDATORY),
         OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.value(7.0),
         PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)),
-        SECURITY_REVIEWS.value(noReviews()));
+        SECURITY_REVIEWS.value(noReviews()),
+        HAS_EXECUTABLE_BINARIES.value(false));
   }
 
   /**
@@ -286,7 +288,8 @@ public class TestUtils {
         OWASP_DEPENDENCY_CHECK_USAGE.value(MANDATORY),
         OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.value(4.0),
         PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)),
-        SECURITY_REVIEWS.value(new SecurityReviews(new SecurityReview(new Date(), 0.0))));
+        SECURITY_REVIEWS.value(new SecurityReviews(new SecurityReview(new Date(), 0.0))),
+        HAS_EXECUTABLE_BINARIES.value(true));
   }
 
   /**

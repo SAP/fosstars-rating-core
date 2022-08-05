@@ -211,6 +211,11 @@ defaults:
       type: "PositiveIntegerFeature"
       name: "Number of projects on GitHub that use an open source project"
     number: 5
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project has executable binaries"
+    flag: false
   - type: "VulnerabilitiesValue"
     feature:
       type: "VulnerabilitiesFeature"
