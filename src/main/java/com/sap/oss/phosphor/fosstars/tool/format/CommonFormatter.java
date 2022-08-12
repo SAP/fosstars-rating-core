@@ -12,6 +12,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_EN
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_ENOUGH_TEAM_MEMBERS_ON_GITHUB;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_LICENSE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_OPEN_PULL_REQUEST_FROM_SNYK;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_README;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_REQUIRED_TEXT_IN_CODE_OF_CONDUCT_GUIDELINE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_REQUIRED_TEXT_IN_CONTRIBUTING_GUIDELINE;
@@ -49,6 +50,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_O
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_OWASP_JAVA_HTML_SANITIZER;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_REUSE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SIGNED_COMMITS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SNYK;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_UNDEFINED_BEHAVIOR_SANITIZER;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES_IN_ARTIFACT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES_IN_PROJECT;
@@ -81,6 +83,7 @@ import com.sap.oss.phosphor.fosstars.model.score.oss.ProjectPopularityScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.ProjectSecurityAwarenessScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.ProjectSecurityTestingScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.SecurityReviewScore;
+import com.sap.oss.phosphor.fosstars.model.score.oss.SnykDependencyScanScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.StaticAnalysisScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.UnpatchedVulnerabilitiesScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore;
@@ -122,6 +125,7 @@ public abstract class CommonFormatter implements Formatter {
     add(VulnerabilityLifetimeScore.class, "Vulnerability lifetime");
     add(MemorySafetyTestingScore.class, "Memory-safety testing");
     add(DependabotScore.class, "Dependabot score");
+    add(SnykDependencyScanScore.class, "Snyk score");
     add(OwaspDependencyScanScore.class, "OWASP Dependency Check score");
     add(DependencyScanScore.class, "Dependency testing");
     add(FuzzingScore.class, "Fuzzing");
@@ -174,6 +178,7 @@ public abstract class CommonFormatter implements Formatter {
     add(USES_OWASP_JAVA_ENCODER, "Does it use OWASP Java Encoder?");
     add(USES_OWASP_JAVA_HTML_SANITIZER, "Does it use OWASP Java HTML Sanitizer?");
     add(USES_DEPENDABOT, "Does it use Dependabot?");
+    add(USES_SNYK, "Does it use Snyk?");
     add(USES_LGTM_CHECKS, "Does it use LGTM checks?");
     add(HAS_BUG_BOUNTY_PROGRAM, "Does it have a bug bounty program?");
     add(SIGNS_ARTIFACTS, "Does it sign artifacts?");
@@ -189,6 +194,8 @@ public abstract class CommonFormatter implements Formatter {
     add(IS_REUSE_COMPLIANT, "Is it compliant with REUSE rules?");
     add(HAS_OPEN_PULL_REQUEST_FROM_DEPENDABOT,
         "Does the project have open pull requests from Dependabot?");
+    add(HAS_OPEN_PULL_REQUEST_FROM_SNYK,
+        "Does the project have open pull requests from Snyk?");
     add(PACKAGE_MANAGERS, "Package managers");
     add(LANGUAGES, "Programming languages");
     add(RUNS_CODEQL_SCANS, "Does it run CodeQL scans?");

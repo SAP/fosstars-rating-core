@@ -55,6 +55,7 @@ import com.sap.oss.phosphor.fosstars.data.github.UsesNoHttpTool;
 import com.sap.oss.phosphor.fosstars.data.github.UsesOwaspDependencyCheck;
 import com.sap.oss.phosphor.fosstars.data.github.UsesSanitizers;
 import com.sap.oss.phosphor.fosstars.data.github.UsesSignedCommits;
+import com.sap.oss.phosphor.fosstars.data.github.UsesSnyk;
 import com.sap.oss.phosphor.fosstars.data.github.VulnerabilityAlertsInfo;
 import com.sap.oss.phosphor.fosstars.data.interactive.AskAboutSecurityTeam;
 import com.sap.oss.phosphor.fosstars.data.interactive.AskAboutUnpatchedVulnerabilities;
@@ -209,6 +210,7 @@ public class DataProviderSelector {
         new LgtmDataProvider(fetcher),
         new UsesSignedCommits(fetcher),
         new UsesDependabot(fetcher),
+        new UsesSnyk(fetcher),
         new ProgrammingLanguages(fetcher),
         new PackageManagement(fetcher),
         new UsesNoHttpTool(fetcher),

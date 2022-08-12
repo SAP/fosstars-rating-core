@@ -2,11 +2,12 @@ package com.sap.oss.phosphor.fosstars.model.score.oss;
 
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.LANGUAGES;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.PACKAGE_MANAGERS;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_DEPENDABOT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GITHUB_FOR_DEVELOPMENT;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SNYK;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.CPP;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.C_SHARP;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.F_SHARP;
+import static com.sap.oss.phosphor.fosstars.model.value.Language.GO;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.JAVA;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.JAVASCRIPT;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.PHP;
@@ -16,6 +17,7 @@ import static com.sap.oss.phosphor.fosstars.model.value.Language.SCALA;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.VISUALBASIC;
 import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.COMPOSER;
 import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.DOTNET;
+import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.GOMODULES;
 import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.MAVEN;
 import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.NPM;
 import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.PIP;
@@ -24,7 +26,6 @@ import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.YARN;
 
 import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.Value;
-import com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.oss.phosphor.fosstars.model.score.FeatureBasedScore;
 import com.sap.oss.phosphor.fosstars.model.value.Languages;
 import com.sap.oss.phosphor.fosstars.model.value.PackageManager;
@@ -33,27 +34,8 @@ import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * The scores assesses how an open-source project uses Dependabot to scan
- * dependencies for known vulnerabilities. It is based on the following features:
- * <ul>
- *   <li>{@link OssFeatures#USES_DEPENDABOT}</li>
- *   <li>{@link OssFeatures#USES_GITHUB_FOR_DEVELOPMENT}</li>
- *   <li>{@link OssFeatures#PACKAGE_MANAGERS}</li>
- *   <li>{@link OssFeatures#LANGUAGES}</li>
- * </ul>
- */
-public class DependabotScore extends FeatureBasedScore {
+public class SnykDependencyScanScore extends FeatureBasedScore {
 
-  /**
-   * The supported package ecosystems and languages
-   * that GitHub can detect vulnerabilities and dependencies for.
-   *
-   * @see <a href="https://help.github.com/en/github/managing-security-vulnerabilities/about-security-alerts-for-vulnerable-dependencies#alerts-and-automated-security-updates-for-vulnerable-dependencies">
-   *   Alerts and automated security updates for vulnerable dependencies</a>
-   * @see <a href="https://help.github.com/en/github/visualizing-repository-data-with-graphs/listing-the-packages-that-a-repository-depends-on#supported-package-ecosystems">
-   *   Supported package ecosystems</a>
-   */
   private static final Map<PackageManager, Languages> SUPPORTED_LANGUAGES = new HashMap<>();
 
   static {
@@ -64,20 +46,20 @@ public class DependabotScore extends FeatureBasedScore {
     SUPPORTED_LANGUAGES.put(PIP, Languages.of(PYTHON));
     SUPPORTED_LANGUAGES.put(RUBYGEMS, Languages.of(RUBY));
     SUPPORTED_LANGUAGES.put(COMPOSER, Languages.of(PHP));
+    SUPPORTED_LANGUAGES.put(GOMODULES, Languages.of(GO));
   }
 
   /**
-   * A score value that is returned if it's likely
-   * that a project uses the security alerts on GitHub.
+   * A score value that is returned if it's likely that a project uses the security alerts on
+   * GitHub.
    */
   private static final double GITHUB_ALERTS_SCORE_VALUE = 3.0;
 
-  /**
-   * Initializes a new score.
-   */
-  public DependabotScore() {
-    super("How a project uses Dependabot",
-        USES_DEPENDABOT,
+  /** Initializes a new score. */
+  public SnykDependencyScanScore() {
+    super(
+        "How a project uses Snyk",
+        USES_SNYK,
         USES_GITHUB_FOR_DEVELOPMENT,
         PACKAGE_MANAGERS,
         LANGUAGES);
@@ -85,21 +67,20 @@ public class DependabotScore extends FeatureBasedScore {
 
   @Override
   public ScoreValue calculate(Value<?>... values) {
-    Value<Boolean> usesDependabot = find(USES_DEPENDABOT, values);
+    Value<Boolean> usesSnyk = find(USES_SNYK, values);
     Value<Boolean> usesGithub = find(USES_GITHUB_FOR_DEVELOPMENT, values);
     Value<Languages> languages = find(LANGUAGES, values);
     Value<PackageManagers> packageManagers = find(PACKAGE_MANAGERS, values);
 
-    ScoreValue scoreValue = scoreValue(Score.MIN,
-        usesDependabot, usesGithub, packageManagers, languages);
+    ScoreValue scoreValue = scoreValue(Score.MIN, usesSnyk, usesGithub, packageManagers, languages);
 
     if (allUnknown(scoreValue.usedValues())) {
       return scoreValue.makeUnknown();
     }
 
-    // if the project uses Dependabot,
+    // if the project uses Snyk,
     // then we're happy
-    if (usesDependabot.orElse(false)) {
+    if (usesSnyk.orElse(false)) {
       return scoreValue.set(Score.MAX);
     }
 
@@ -107,19 +88,20 @@ public class DependabotScore extends FeatureBasedScore {
     // then there is a chance that it takes advantage of security alerts,
     // although we can't tell for sure
     if (usesGithub.orElse(false)) {
-      boolean dependabotCanBeUsed = packageManagers.orElse(PackageManagers.empty()).list().stream()
-          .anyMatch(SUPPORTED_LANGUAGES::containsKey);
+      boolean snykCanBeUsed =
+          packageManagers.orElse(PackageManagers.empty()).list().stream()
+              .anyMatch(SUPPORTED_LANGUAGES::containsKey);
 
-      // if the project does not use any package ecosystem that is supported by Dependabot,
+      // if the project does not use any package ecosystem that is supported by Snyk,
       // then a score is not applicable
-      if (!dependabotCanBeUsed) {
+      if (!snykCanBeUsed) {
         return scoreValue.makeNotApplicable();
       }
 
       Languages usedLanguages = languages.orElse(Languages.empty());
       for (PackageManager packageManager : packageManagers.orElse(PackageManagers.empty())) {
-        Languages supportedLanguages
-            = SUPPORTED_LANGUAGES.getOrDefault(packageManager, Languages.empty());
+        Languages supportedLanguages =
+            SUPPORTED_LANGUAGES.getOrDefault(packageManager, Languages.empty());
         if (supportedLanguages.containsAnyOf(usedLanguages)) {
           return scoreValue.set(GITHUB_ALERTS_SCORE_VALUE);
         }

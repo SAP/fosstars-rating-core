@@ -89,6 +89,12 @@ If a project uses Dependabot:
     links:
       - name: Configuration options for dependency updates
         url: https://docs.github.com/en/github/administering-a-repository/configuration-options-for-dependency-updates
+If a project uses Snyk:
+  - advice: >
+      You can create Snyk account and configure your project.
+    links:
+      - name: Getting started with snyk for open source
+        url: https://docs.snyk.io/products/snyk-open-source/getting-started-snyk-open-source
 How OWASP Dependency Check is used:
   - advice: >
       You can add OWASP Dependency Check to the project's build pipeline.

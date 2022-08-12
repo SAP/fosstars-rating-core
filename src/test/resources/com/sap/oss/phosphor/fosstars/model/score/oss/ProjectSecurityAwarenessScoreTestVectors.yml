@@ -8,6 +8,11 @@ defaults:
 - type: "BooleanValue"
   feature:
     type: "BooleanFeature"
+    name: "If a project uses Snyk"
+  flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
     name: "If an open-source project uses FindSecBugs"
   flag: false
 - type: "BooleanValue"

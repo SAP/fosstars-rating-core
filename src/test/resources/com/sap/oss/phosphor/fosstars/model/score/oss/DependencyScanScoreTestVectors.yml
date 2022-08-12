@@ -1,7 +1,12 @@
 ---
 
 # default values for test vectors
-defaults: []
+defaults:
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If a project uses Snyk"
+  flag: false
 
 # test vectors
 elements:
@@ -21,6 +26,10 @@ elements:
     feature:
       type: "BooleanFeature"
       name: "If a project uses Dependabot"
+  - type: "UnknownValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses Snyk"
   - type: "UnknownValue"
     feature:
       type: "BooleanFeature"
@@ -125,6 +134,7 @@ elements:
       packageManagers:
         packageManagers:
         - "MAVEN"
+        - "GOMODULES"
     - type: "LanguagesValue"
       feature:
         type: "LanguagesFeature"
@@ -132,6 +142,7 @@ elements:
       languages:
         elements:
         - "JAVA"
+        - "GO"
   expectedScore:
     type: "DoubleInterval"
     from: 5.0

@@ -68,6 +68,7 @@ import com.sap.oss.phosphor.fosstars.model.score.oss.ProjectPopularityScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.ProjectSecurityAwarenessScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.ProjectSecurityTestingScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.SecurityReviewScore;
+import com.sap.oss.phosphor.fosstars.model.score.oss.SnykDependencyScanScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.StaticAnalysisScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.UnpatchedVulnerabilitiesScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.VulnerabilityDiscoveryAndSecurityTestingScore;
@@ -289,6 +290,7 @@ public abstract class Deserialization {
         FuzzingScore.class,
         StaticAnalysisScore.class,
         DependabotScore.class,
+        SnykDependencyScanScore.class,
         OwaspDependencyScanScore.class,
         VulnerabilityDiscoveryAndSecurityTestingScore.class,
         SecurityReviewScore.class,
