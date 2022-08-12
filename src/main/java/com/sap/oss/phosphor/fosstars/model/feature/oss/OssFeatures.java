@@ -185,6 +185,7 @@ public class OssFeatures {
   public static final Feature<Boolean> USES_SNYK
       = new BooleanFeature("If a project uses Snyk");
 
+
   /**
    * Shows if an open source project has open pull requests from Snyk which means that
    * there are dependencies with known vulnerabilities.
