@@ -10,8 +10,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
-import org.kohsuke.github.GitHub;
-import org.kohsuke.github.GitHubBuilder;
 
 /**
  * The data provider tries to figure out if an open-source project has executable binaries (for

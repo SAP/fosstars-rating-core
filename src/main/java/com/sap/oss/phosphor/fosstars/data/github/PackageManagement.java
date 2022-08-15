@@ -86,7 +86,7 @@ public class PackageManagement extends CachedSingleFeatureGitHubDataProvider<Pac
         ".vcxproj"::equals, ".fsproj"::equals, "packages.config"::equals);
     register(RUBYGEMS, "Gemfile.lock"::equals, "Gemfile"::equals, ".gemspec"::endsWith);
     register(COMPOSER, "composer.json"::equals, "composer.lock"::equals);
-    register(GOMODULES, "go.mod"::equals);
+    register(GOMODULES, "go.mod"::equals, "go.sum"::equals);
   }
 
   /**
