@@ -65,7 +65,7 @@ public class SnykAdvisorTest {
 
   @Test
   public void testAdviceWhenSnykScoreIsNotApplicable() throws MalformedURLException {
-    final DependabotAdvisor advisor = new DependabotAdvisor(WITH_EMPTY_CONTEXT);
+    final SnykAdvisor advisor = new SnykAdvisor(WITH_EMPTY_CONTEXT);
     final GitHubProject project = new GitHubProject("org", "test");
 
     Rating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
