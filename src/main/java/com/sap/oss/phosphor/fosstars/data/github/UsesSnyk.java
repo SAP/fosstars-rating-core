@@ -72,7 +72,9 @@ public class UsesSnyk extends GitHubCachingDataProvider {
    */
   private static final String SNYK_PATTERN = "snyk";
 
-  /** Period of time to be checked. */
+  /** 
+    * Period of time to be checked.
+    */
   private static final Duration ONE_YEAR = Duration.ofDays(365);
 
   /**
