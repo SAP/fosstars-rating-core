@@ -36,7 +36,7 @@ public class SnykAdvisorTest {
 
   @Test
   public void testAdviseForSnyk() throws MalformedURLException {
-    SnykAdvisor advisor = new SnykAdvisor(WITH_EMPTY_CONTEXT);
+    final SnykAdvisor advisor = new SnykAdvisor(WITH_EMPTY_CONTEXT);
     GitHubProject project = new GitHubProject("org", "test");
 
     // no advice if no rating value is set
