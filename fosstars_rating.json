@@ -216,7 +216,7 @@
         }
       }
     },
-    "value" : 5.908245796756434,
+    "value" : 6.003990477607498,
     "weight" : 1.0,
     "confidence" : 9.645390070921986,
     "usedValues" : [ {
@@ -870,7 +870,7 @@
         "type" : "ProjectSecurityAwarenessScore",
         "name" : "How well open-source community is aware about security"
       },
-      "value" : 3.5,
+      "value" : 4.0,
       "weight" : 0.9,
       "confidence" : 10.0,
       "usedValues" : [ {
@@ -895,7 +895,7 @@
           "type" : "BooleanFeature",
           "name" : "If a project uses signed commits"
         },
-        "flag" : false,
+        "flag" : true,
         "explanation" : [ ]
       }, {
         "type" : "BooleanValue",
