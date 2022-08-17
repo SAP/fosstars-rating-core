@@ -36,6 +36,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_O
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_OWASP_JAVA_ENCODER;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_OWASP_JAVA_HTML_SANITIZER;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SIGNED_COMMITS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SNYK;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_UNDEFINED_BEHAVIOR_SANITIZER;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES_IN_PROJECT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
@@ -97,6 +98,7 @@ public class OssSecurityRatingMarkdownFormatterTest {
       USES_GITHUB_FOR_DEVELOPMENT.value(false),
       USES_NOHTTP.value(false),
       USES_DEPENDABOT.value(false),
+      USES_SNYK.value(false),
       USES_ADDRESS_SANITIZER.value(false),
       USES_MEMORY_SANITIZER.value(false),
       USES_UNDEFINED_BEHAVIOR_SANITIZER.value(false),

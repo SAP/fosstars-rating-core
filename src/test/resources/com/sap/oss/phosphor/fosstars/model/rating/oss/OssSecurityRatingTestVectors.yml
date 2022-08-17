@@ -10,6 +10,11 @@ defaults:
 - type: "BooleanValue"
   feature:
     type: "BooleanFeature"
+    name: "If a project uses Snyk"
+  flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
     name: "If a project uses GitHub as the main development platform"
   flag: false
 - type: "PackageManagersValue"
@@ -131,6 +136,10 @@ elements:
     feature:
       type: "BooleanFeature"
       name: "If a project uses Dependabot"
+  - type: "UnknownValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses Snyk"
   - type: "UnknownValue"
     feature:
       type: "BooleanFeature"

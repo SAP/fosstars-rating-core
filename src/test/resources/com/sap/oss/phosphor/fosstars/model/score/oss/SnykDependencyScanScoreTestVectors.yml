@@ -12,7 +12,7 @@ elements:
   - type: "UnknownValue"
     feature:
       type: "BooleanFeature"
-      name: "If a project uses Dependabot"
+      name: "If a project uses Snyk"
   - type: "UnknownValue"
     feature:
       type: "BooleanFeature"
@@ -43,7 +43,7 @@ elements:
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
-      name: "If a project uses Dependabot"
+      name: "If a project uses Snyk"
     flag: false
   - type: "BooleanValue"
     feature:
@@ -81,7 +81,7 @@ elements:
     - type: "BooleanValue"
       feature:
         type: "BooleanFeature"
-        name: "If a project uses Dependabot"
+        name: "If a project uses Snyk"
       flag: false
     - type: "BooleanValue"
       feature:
@@ -119,7 +119,7 @@ elements:
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
-      name: "If a project uses Dependabot"
+      name: "If a project uses Snyk"
     flag: true
   - type: "BooleanValue"
     feature:

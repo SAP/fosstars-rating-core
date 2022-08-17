@@ -37,6 +37,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_O
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_OWASP_JAVA_ENCODER;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_OWASP_JAVA_HTML_SANITIZER;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SIGNED_COMMITS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SNYK;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_UNDEFINED_BEHAVIOR_SANITIZER;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES_IN_ARTIFACT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES_IN_PROJECT;
@@ -200,6 +201,7 @@ public class TestUtils {
         WORST_LGTM_GRADE.value(LgtmGrade.B),
         USES_NOHTTP.value(true),
         USES_DEPENDABOT.value(true),
+        USES_SNYK.value(false),
         USES_GITHUB_FOR_DEVELOPMENT.value(true),
         LANGUAGES.value(Languages.of(JAVA)),
         USES_ADDRESS_SANITIZER.value(false),
@@ -275,6 +277,7 @@ public class TestUtils {
         WORST_LGTM_GRADE.value(LgtmGrade.A_PLUS),
         USES_NOHTTP.value(true),
         USES_DEPENDABOT.value(true),
+        USES_SNYK.value(true),
         USES_GITHUB_FOR_DEVELOPMENT.value(true),
         LANGUAGES.value(Languages.of(JAVA)),
         USES_ADDRESS_SANITIZER.value(true),

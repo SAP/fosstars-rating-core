@@ -172,6 +172,29 @@ public class OssFeatures {
       = new BooleanFeature("If a project has open pull requests from Dependabot");
 
   /**
+   * <p>Shows if a project uses Snyk.</p>
+   * <p><a href="https://snyk.io/">Snyk introduction</a> offers</p>
+   * <ul>
+   *   <li>Static Application Security Testing (SAST)</li>
+   *   <li>Automatic dependency updates</li>
+   * </ul>
+   *<p> In particular for automatic dependency updates,
+   * when Snyk finds a vulnerability in dependencies,
+   * it opens a pull request to update the vulnerable dependency to the safe version.</p>
+   */
+  public static final Feature<Boolean> USES_SNYK
+      = new BooleanFeature("If a project uses Snyk");
+
+  /**
+   * Shows if an open source project has open pull requests from Snyk which means that
+   * there are dependencies with known vulnerabilities.
+   *
+   * @see <a href="https://snyk.io/">Snyk</a>
+   */
+  public static final BooleanFeature HAS_OPEN_PULL_REQUEST_FROM_SNYK
+      = new BooleanFeature("If a project has open pull requests from Snyk");
+
+  /**
    * Shows how many GitHub users starred an open-source project.
    */
   public static final Feature<Integer> NUMBER_OF_GITHUB_STARS
