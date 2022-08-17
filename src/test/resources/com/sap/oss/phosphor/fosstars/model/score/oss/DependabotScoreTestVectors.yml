@@ -104,7 +104,7 @@ elements:
         - "JAVA"
   expectedScore:
     type: "DoubleInterval"
-    from: 5
+    from: 5.0
     openLeft: false
     negativeInfinity: false
     to: 8
