@@ -107,7 +107,7 @@ elements:
     from: 5.0
     openLeft: false
     negativeInfinity: false
-    to: 8
+    to: 8.0
     openRight: false
     positiveInfinity: false
   expectedLabel: null
