@@ -145,10 +145,10 @@ elements:
         - "GO"
   expectedScore:
     type: "DoubleInterval"
-    from: 5.0
+    from: 8.0
     openLeft: false
     negativeInfinity: false
-    to: 8.0
+    to: 10.0
     openRight: false
     positiveInfinity: false
   expectedLabel: null

@@ -53,7 +53,7 @@ public class SnykDependencyScanScore extends FeatureBasedScore {
    * A score value that is returned if it's likely that a project uses the security alerts on
    * GitHub.
    */
-  private static final double GITHUB_ALERTS_SCORE_VALUE = 3.0;
+  private static final double GITHUB_ALERTS_SCORE_VALUE = 5.0;
 
   /** Initializes a new score. */
   public SnykDependencyScanScore() {

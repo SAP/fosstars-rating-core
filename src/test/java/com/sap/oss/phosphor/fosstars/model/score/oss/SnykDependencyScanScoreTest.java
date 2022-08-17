@@ -14,7 +14,6 @@ import static org.junit.Assert.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Score;
-import com.sap.oss.phosphor.fosstars.model.math.DoubleInterval;
 import com.sap.oss.phosphor.fosstars.model.other.Utils;
 import com.sap.oss.phosphor.fosstars.model.value.Languages;
 import com.sap.oss.phosphor.fosstars.model.value.PackageManagers;
@@ -40,7 +39,7 @@ public class SnykDependencyScanScoreTest {
   @Test
   public void testCalculateWhenSnykIsNotUsed() {
     assertScore(
-        Score.makeInterval(0, 3),
+        Score.makeInterval(0, 5),
         SCORE,
         setOf(
             USES_GITHUB_FOR_DEVELOPMENT.value(true),
