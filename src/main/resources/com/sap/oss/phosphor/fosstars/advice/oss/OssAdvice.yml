@@ -56,6 +56,30 @@ If a project runs Bandit scan checks for commits:
         url: https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#example-using-a-list-of-events
       - name: An eample to trigger Bandit scan check on every pull-request.
         url: https://github.com/TNLinc/CV/blob/main/.github/workflows/bandit.yml#L3
+If a project runs Securego scans:
+  - advice: >
+      You can open a pull request to run Securego scans in the project using GitHub action workflow.
+    links:
+      - name: GitHub workflow action job config to run Securego code scanning for a repository.
+        url: https://github.com/securego/gosec#github-action
+      - name: An example to run Securego scan check as part of GitHub action workflow.
+        url: https://github.com/gofiber/fiber/blob/master/.github/workflows/security.yml#L10
+If a project runs Securego scans with rules:
+  - advice: >
+      You can run Securego scans with default rules.
+    links:
+      - name: GitHub workflow action job config to run Securego code scanning for a repository.
+        url: https://github.com/securego/gosec#github-action
+      - name: Configuration to run the Securego scan in default mode.
+        url: https://github.com/securego/gosec#usage
+If a project runs Securego scan checks for commits:
+  - advice: >
+      You can open a pull request to trigger Securego scans job in the project using GitHub action workflow for every pull-request.
+    links:
+      - name: GitHub workflow action config to run Securego code scanning job on every PR of a project.
+        url: https://github.com/securego/gosec#github-action
+      - name: An eample to trigger Securego scan check on every pull-request.
+        url: https://github.com/gofiber/fiber/blob/master/.github/workflows/security.yml#L10
 If an open-source project uses AddressSanitizer:
   - advice: >
       You can open a pull request to enable AddressSanitizer for the project.
