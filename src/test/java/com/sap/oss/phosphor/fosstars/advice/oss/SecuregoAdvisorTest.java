@@ -43,20 +43,28 @@ public class SecuregoAdvisorTest {
     values.update(USES_SECUREGO_SCAN_CHECKS.value(false));
     values.update(USES_SECUREGO_WITH_RULES.value(false));
     project.set(rating.calculate(values));
-    assertEquals(2, advisor.adviceFor(project).size());
+    assertEquals(1, advisor.adviceFor(project).size());
 
     // expect two advices if the scans are not enabled
     values.update(RUNS_SECUREGO_SCANS.value(false));
     values.update(USES_SECUREGO_SCAN_CHECKS.value(true));
     values.update(USES_SECUREGO_WITH_RULES.value(false));
     project.set(rating.calculate(values));
-    assertEquals(2, advisor.adviceFor(project).size());
+    assertEquals(1, advisor.adviceFor(project).size());
 
     // expect an advice if all the checks and scans are not enabled
     values.update(RUNS_SECUREGO_SCANS.value(false));
     values.update(USES_SECUREGO_SCAN_CHECKS.value(false));
     values.update(USES_SECUREGO_WITH_RULES.value(false));
     project.set(rating.calculate(values));
-    assertEquals(3, advisor.adviceFor(project).size());
+    assertEquals(2, advisor.adviceFor(project).size());
+
+    // expect an advice if the scans are enabled with rules
+    values.update(RUNS_SECUREGO_SCANS.value(true));
+    values.update(USES_SECUREGO_SCAN_CHECKS.value(true));
+    values.update(USES_SECUREGO_WITH_RULES.value(true));
+    project.set(rating.calculate(values));
+    assertEquals(1, advisor.adviceFor(project).size());
+
   }
 }
