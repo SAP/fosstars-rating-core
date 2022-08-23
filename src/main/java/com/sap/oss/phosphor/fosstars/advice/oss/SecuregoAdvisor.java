@@ -13,7 +13,6 @@ import com.sap.oss.phosphor.fosstars.model.Value;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * An advisor for features related to Securego.
