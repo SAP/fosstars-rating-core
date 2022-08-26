@@ -66,9 +66,9 @@ public class SecuregoDataProviderTest extends TestGitHubDataFetcherHolder {
   }
 
   @Test
-  public void testWithSecuregoRunsAndChecks() throws IOException {
+  public void testWithSecuregoInUsesAndChecks() throws IOException {
     try (InputStream content = getClass().getResourceAsStream(
-        "securego-analysis-with-run.yml")) {
+        "securego-analysis-with-uses.yml")) {
       testSecuregoRuns(GITHUB_WORKFLOW_FILENAME, content,
           RUNS_SECUREGO_SCANS.value(true),
           USES_SECUREGO_SCAN_CHECKS.value(true),
@@ -105,6 +105,39 @@ public class SecuregoDataProviderTest extends TestGitHubDataFetcherHolder {
       testSecuregoRuns(GITHUB_WORKFLOW_FILENAME, content,
           RUNS_SECUREGO_SCANS.value(true),
           USES_SECUREGO_SCAN_CHECKS.value(false),
+          USES_SECUREGO_WITH_RULES.value(false));
+    }
+  }
+
+  @Test
+  public void testWithSecuregoRunAndChecks() throws IOException {
+    try (InputStream content = getClass().getResourceAsStream(
+        "securego-analysis-with-run.yml")) {
+      testSecuregoRuns(GITHUB_WORKFLOW_FILENAME, content,
+          RUNS_SECUREGO_SCANS.value(true),
+          USES_SECUREGO_SCAN_CHECKS.value(true),
+          USES_SECUREGO_WITH_RULES.value(false));
+    }
+  }
+
+  @Test
+  public void testWithSecuregoRunAndChecksWithRules() throws IOException {
+    try (InputStream content = getClass().getResourceAsStream(
+        "securego-analysis-run-with-rules.yml")) {
+      testSecuregoRuns(GITHUB_WORKFLOW_FILENAME, content,
+          RUNS_SECUREGO_SCANS.value(true),
+          USES_SECUREGO_SCAN_CHECKS.value(true),
+          USES_SECUREGO_WITH_RULES.value(true));
+    }
+  }
+
+  @Test
+  public void testWithSecuregoRunAndChecksWithoutRules() throws IOException {
+    try (InputStream content = getClass().getResourceAsStream(
+        "securego-analysis-run-without-rules.yml")) {
+      testSecuregoRuns(GITHUB_WORKFLOW_FILENAME, content,
+          RUNS_SECUREGO_SCANS.value(true),
+          USES_SECUREGO_SCAN_CHECKS.value(true),
           USES_SECUREGO_WITH_RULES.value(false));
     }
   }

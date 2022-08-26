@@ -136,8 +136,10 @@ public class SecuregoDataProvider extends AbstractStaticScanToolsDataProvider {
         .map(Map.class::cast)
         .forEach(
             step -> {
-              if (usesSecurego(step.get("uses"))) {
+              if (securegoConfigExists(step.get("uses"))) {
                 usesWithRules.set(hasArgsWithRules(step.get("with")));
+              } else if (securegoConfigExists(step.get("run"))) {
+                usesWithRules.set(runsSecuregoWithRules(step.get("run")));
               }
             });
     return usesWithRules.get();
@@ -149,11 +151,25 @@ public class SecuregoDataProvider extends AbstractStaticScanToolsDataProvider {
    * @param step The step to be checked.
    * @return True if the step contains config to run Securego scan, false otherwise.
    */
-  private static boolean usesSecurego(Object step) {
+  private static boolean securegoConfigExists(Object step) {
     return Optional.ofNullable(step)
         .filter(String.class::isInstance)
         .map(String.class::cast)
         .filter(run -> RUN_STEP_SECUREGO_REGEX_PATTERN.matcher(run).matches())
+        .isPresent();
+  }
+
+  /**
+   * Checks if a step contains config to run Securego scans with rules.
+   *
+   * @param step The step to be checked.
+   * @return True if the step contains config to run Securego scan with rules, false otherwise.
+   */
+  private static boolean runsSecuregoWithRules(Object step) {
+    return Optional.ofNullable(step)
+        .filter(String.class::isInstance)
+        .map(String.class::cast)
+        .filter(run -> containsAnyRulesPattern(run))
         .isPresent();
   }
 
@@ -170,11 +186,19 @@ public class SecuregoDataProvider extends AbstractStaticScanToolsDataProvider {
         .map(with -> with.get("args"))
         .filter(String.class::isInstance)
         .map(String.class::cast)
-        .filter(
-            args ->
-                RUN_STEP_SECUREGO_WITH_INCLUDE_REGEX_PATTERN.matcher(args).matches()
-                    || RUN_STEP_SECUREGO_WITH_EXCLUDE_REGEX_PATTERN.matcher(args).matches())
+        .filter(args -> containsAnyRulesPattern(args))
         .isPresent();
+  }
+
+  /**
+   * Checks if a step contains any pattern to run Securego with rules.
+   *
+   * @param stepInfo The string info of a step
+   * @return True if the step matches any pattern to run Securego scan with rules, false otherwise.
+   */
+  private static boolean containsAnyRulesPattern(String stepInfo) {
+    return RUN_STEP_SECUREGO_WITH_INCLUDE_REGEX_PATTERN.matcher(stepInfo).matches()
+        || RUN_STEP_SECUREGO_WITH_EXCLUDE_REGEX_PATTERN.matcher(stepInfo).matches();
   }
 
   @Override
@@ -202,7 +226,7 @@ public class SecuregoDataProvider extends AbstractStaticScanToolsDataProvider {
         .map(job -> job.get("steps"))
         .filter(Iterable.class::isInstance)
         .map(Iterable.class::cast)
-        .filter(SecuregoDataProvider::hasSecuregoRunStep)
+        .filter(SecuregoDataProvider::hasSecuregoStep)
         .findAny()
         .isPresent();
   }
@@ -214,11 +238,22 @@ public class SecuregoDataProvider extends AbstractStaticScanToolsDataProvider {
    * @param steps The steps to be checked.
    * @return True if the steps contain a step that triggers a Securego scan, false otherwise.
    */
-  private static boolean hasSecuregoRunStep(Iterable<?> steps) {
+  private static boolean hasSecuregoStep(Iterable<?> steps) {
+    return hasSecuregoStep(steps, "uses") || hasSecuregoStep(steps, "run");
+  }
+
+  /**
+   * Checks if a collection of steps from a GitHub action contains a step that triggers a Securego
+   * scan.
+   *
+   * @param steps The steps to be checked.
+   * @return True if the steps contain a step that triggers a Securego scan, false otherwise.
+   */
+  private static boolean hasSecuregoStep(Iterable<?> steps, String stepKeyToCheck) {
     return IteratorUtils.toList(steps.iterator()).stream()
         .filter(Map.class::isInstance)
         .map(Map.class::cast)
-        .map(step -> step.get("uses"))
+        .map(step -> step.get(stepKeyToCheck))
         .filter(String.class::isInstance)
         .map(String.class::cast)
         .filter(run -> RUN_STEP_SECUREGO_REGEX_PATTERN.matcher(run).matches())
