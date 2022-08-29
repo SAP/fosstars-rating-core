@@ -34,7 +34,9 @@ import org.apache.commons.collections4.IteratorUtils;
  */
 public class SecuregoDataProvider extends AbstractStaticScanToolsDataProvider {
 
-  /** A step in a GitHub action that triggers analysis with Securego. */
+  /** 
+    * A step in a GitHub action that triggers analysis with Securego.
+    */
   private static final Pattern RUN_STEP_SECUREGO_REGEX_PATTERN =
       Pattern.compile("^.*securego/gosec.*$", Pattern.DOTALL);
 
