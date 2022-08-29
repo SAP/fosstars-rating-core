@@ -56,14 +56,6 @@ If a project runs Bandit scan checks for commits:
         url: https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#example-using-a-list-of-events
       - name: An eample to trigger Bandit scan check on every pull-request.
         url: https://github.com/TNLinc/CV/blob/main/.github/workflows/bandit.yml#L3
-If a project runs GoSec scans:
-  - advice: >
-      You can open a pull request to run GoSec scans in the project using GitHub action workflow.
-    links:
-      - name: GitHub workflow action job config to run GoSec code scanning for a repository.
-        url: https://github.com/securego/gosec#github-action
-      - name: An example to run GoSec scan check as part of GitHub action workflow.
-        url: https://github.com/gofiber/fiber/blob/master/.github/workflows/security.yml#L10
 If a project runs GoSec scans with rules:
   - advice: >
       You can run GoSec scans with default rules.
@@ -78,8 +70,6 @@ If a project runs GoSec scan checks for commits:
     links:
       - name: GitHub workflow action config to run GoSec code scanning job on every PR of a project.
         url: https://github.com/securego/gosec#github-action
-      - name: An example to trigger GoSec scan check on every pull-request.
-        url: https://github.com/gofiber/fiber/blob/master/.github/workflows/security.yml#L10
 If an open-source project uses AddressSanitizer:
   - advice: >
       You can open a pull request to enable AddressSanitizer for the project.

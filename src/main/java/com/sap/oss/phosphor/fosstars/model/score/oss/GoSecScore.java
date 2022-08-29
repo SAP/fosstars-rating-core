@@ -36,17 +36,17 @@ public class GoSecScore extends FeatureBasedScore {
   /**
    * Defines how the score value is increased if a project runs GoSec checks for commits.
    */
-  private static final double GOSEC_SCANS_SELECTED_RULES_POINTS = 2.0;
+  private static final double GOSEC_SCANS_SELECTED_RULES_POINTS = 4.0;
 
   /**
    * Defines how the score value is increased if a project runs GoSec scans.
    */
-  private static final double GOSEC_SCANS_POINTS = 7.0;
+  private static final double GOSEC_SCANS_POINTS = 6.0;
 
   /**
    * Defines how the score value is increased if a project runs GoSec checks for commits.
    */
-  private static final double GOSEC_CHECKS_POINTS = 8.0;
+  private static final double GOSEC_CHECKS_POINTS = 7.0;
 
   /**
    * Initializes a new {@link GoSecScore}.

@@ -30,7 +30,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class GosecDataProviderTest extends TestGitHubDataFetcherHolder {
+public class GoSecDataProviderTest extends TestGitHubDataFetcherHolder {
 
   private static final GitHubProject PROJECT = new GitHubProject("org", "test");
 
