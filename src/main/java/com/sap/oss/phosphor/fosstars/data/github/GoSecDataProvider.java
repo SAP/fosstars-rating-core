@@ -1,8 +1,8 @@
 package com.sap.oss.phosphor.fosstars.data.github;
 
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_SECUREGO_SCANS;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SECUREGO_SCAN_CHECKS;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SECUREGO_WITH_RULES;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_GOSEC_SCANS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GOSEC_SCAN_CHECKS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GOSEC_WITH_RULES;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 
 import com.sap.oss.phosphor.fosstars.data.AbstractStaticScanToolsDataProvider;
@@ -23,29 +23,29 @@ import java.util.regex.Pattern;
 import org.apache.commons.collections4.IteratorUtils;
 
 /**
- * The data provider gathers info about how a project uses SecureGo for static analysis. In
+ * The data provider gathers info about how a project uses GoSec for static analysis. In
  * particular, it tries to fill out the following features:
  *
  * <ul>
- *   <li>{@link OssFeatures#USES_SECUREGO_SCAN_CHECKS}
- *   <li>{@link OssFeatures#RUNS_SECUREGO_SCANS}
- *   <li>{@link OssFeatures#USES_SECUREGO_SCAN_CHECKS}
+ *   <li>{@link OssFeatures#USES_GOSEC_SCAN_CHECKS}
+ *   <li>{@link OssFeatures#RUNS_GOSEC_SCANS}
+ *   <li>{@link OssFeatures#USES_GOSEC_SCAN_CHECKS}
  * </ul>
  */
-public class SecuregoDataProvider extends AbstractStaticScanToolsDataProvider {
+public class GoSecDataProvider extends AbstractStaticScanToolsDataProvider {
 
   /** 
-    * A step in a GitHub action that triggers analysis with Securego.
+    * A step in a GitHub action that triggers analysis with GoSec.
     */
-  private static final Pattern RUN_STEP_SECUREGO_REGEX_PATTERN =
+  private static final Pattern RUN_STEP_GOSEC_REGEX_PATTERN =
       Pattern.compile("^.*securego/gosec.*$", Pattern.DOTALL);
 
-  /** A step config of a GitHub action that triggers Securego scans with include rule. */
-  private static final Pattern RUN_STEP_SECUREGO_WITH_INCLUDE_REGEX_PATTERN =
+  /** A step config of a GitHub action that triggers GoSec scans with include rule. */
+  private static final Pattern RUN_STEP_GOSEC_WITH_INCLUDE_REGEX_PATTERN =
       Pattern.compile("^.*-include=.*$", Pattern.DOTALL);
 
-  /** A step config of a GitHub action that triggers Securego scans with include rule. */
-  private static final Pattern RUN_STEP_SECUREGO_WITH_EXCLUDE_REGEX_PATTERN =
+  /** A step config of a GitHub action that triggers GoSec scans with include rule. */
+  private static final Pattern RUN_STEP_GOSEC_WITH_EXCLUDE_REGEX_PATTERN =
       Pattern.compile("^.*-exclude=.*$", Pattern.DOTALL);
 
   /**
@@ -53,46 +53,46 @@ public class SecuregoDataProvider extends AbstractStaticScanToolsDataProvider {
    *
    * @param fetcher An interface to GitHub.
    */
-  public SecuregoDataProvider(GitHubDataFetcher fetcher) {
-    super(fetcher, setOf(USES_SECUREGO_SCAN_CHECKS, RUNS_SECUREGO_SCANS, USES_SECUREGO_WITH_RULES));
+  public GoSecDataProvider(GitHubDataFetcher fetcher) {
+    super(fetcher, setOf(USES_GOSEC_SCAN_CHECKS, RUNS_GOSEC_SCANS, USES_GOSEC_WITH_RULES));
   }
 
   @Override
   protected ValueSet fetchValuesFor(GitHubProject project) throws IOException {
-    logger.info("Figuring out how the project uses Securego ...");
+    logger.info("Figuring out how the project uses GoSec ...");
 
     LocalRepository repository = GitHubDataFetcher.localRepositoryFor(project);
 
-    Value<Boolean> runsSecurego = RUNS_SECUREGO_SCANS.value(false);
-    Value<Boolean> usesSecuregoScanChecks = USES_SECUREGO_SCAN_CHECKS.value(false);
-    Value<Boolean> usesSecuregoWithSelectedRules = USES_SECUREGO_WITH_RULES.value(false);
+    Value<Boolean> runsGoSec = RUNS_GOSEC_SCANS.value(false);
+    Value<Boolean> usesGoSecScanChecks = USES_GOSEC_SCAN_CHECKS.value(false);
+    Value<Boolean> usesGoSecWithSelectedRules = USES_GOSEC_WITH_RULES.value(false);
 
-    // ideally, we're looking for a GitHub action that runs Securego scan on pull requests
-    // but if we just find an action that runs Securego scans with or without rules is also fine
+    // ideally, we're looking for a GitHub action that runs GoSec scan on pull requests
+    // but if we just find an action that runs GoSec scans with or without rules is also fine
     for (Path configPath : findGitHubActionsIn(repository)) {
       try (InputStream content = Files.newInputStream(configPath)) {
         Map<String, Object> githubAction = Yaml.readMap(content);
         if (triggersScan(githubAction)) {
-          runsSecurego = RUNS_SECUREGO_SCANS.value(true);
+          runsGoSec = RUNS_GOSEC_SCANS.value(true);
           if (runsOnPullRequests(githubAction)) {
-            usesSecuregoScanChecks = USES_SECUREGO_SCAN_CHECKS.value(true);
+            usesGoSecScanChecks = USES_GOSEC_SCAN_CHECKS.value(true);
           }
           if (runsWithSelectedRules(githubAction)) {
-            usesSecuregoWithSelectedRules = USES_SECUREGO_WITH_RULES.value(true);
+            usesGoSecWithSelectedRules = USES_GOSEC_WITH_RULES.value(true);
             break;
           }
         }
       }
     }
 
-    return ValueHashSet.from(runsSecurego, usesSecuregoWithSelectedRules, usesSecuregoScanChecks);
+    return ValueHashSet.from(runsGoSec, usesGoSecWithSelectedRules, usesGoSecScanChecks);
   }
 
   /**
-   * Checks if the Github action uses Securego sacn with rules.
+   * Checks if the Github action uses GoSec sacn with rules.
    *
    * @param githubAction A config of the action
-   * @return True if the Github Action has config to run Securego with rules.
+   * @return True if the Github Action has config to run GoSec with rules.
    */
   private boolean runsWithSelectedRules(Map<?, ?> githubAction) {
     return Optional.ofNullable(githubAction.get("jobs"))
@@ -101,15 +101,15 @@ public class SecuregoDataProvider extends AbstractStaticScanToolsDataProvider {
         .map(jobs -> jobs.values())
         .filter(Iterable.class::isInstance)
         .map(Iterable.class::cast)
-        .map(SecuregoDataProvider::checkAllJobs)
+        .map(GoSecDataProvider::checkAllJobs)
         .get();
   }
 
   /**
-   * Checks if any step in a collection of jobs triggers a Securego scan with rules.
+   * Checks if any step in a collection of jobs triggers a GoSec scan with rules.
    *
    * @param jobs The collection of jobs from GitHub action.
-   * @return True if a step triggers a Securego scan with rules, false otherwise.
+   * @return True if a step triggers a GoSec scan with rules, false otherwise.
    */
   private static boolean checkAllJobs(Iterable<?> jobs) {
     return IteratorUtils.toList(jobs.iterator()).stream()
@@ -118,17 +118,17 @@ public class SecuregoDataProvider extends AbstractStaticScanToolsDataProvider {
         .map(job -> job.get("steps"))
         .filter(Iterable.class::isInstance)
         .map(Iterable.class::cast)
-        .map(SecuregoDataProvider::checkAllSteps)
+        .map(GoSecDataProvider::checkAllSteps)
         .findAny()
         .get();
   }
 
   /**
-   * Checks if a collection of steps from a GitHub action contains a step that triggers a Securego
+   * Checks if a collection of steps from a GitHub action contains a step that triggers a GoSec
    * scan with rules.
    *
    * @param steps The steps to be checked.
-   * @return True if the steps contain a step that triggers a Securego scan with rules, false
+   * @return True if the steps contain a step that triggers a GoSec scan with rules, false
    *     otherwise.
    */
   private static boolean checkAllSteps(Iterable<?> steps) {
@@ -138,48 +138,48 @@ public class SecuregoDataProvider extends AbstractStaticScanToolsDataProvider {
         .map(Map.class::cast)
         .forEach(
             step -> {
-              if (securegoConfigExists(step.get("uses"))) {
+              if (goSecConfigExists(step.get("uses"))) {
                 usesWithRules.set(hasArgsWithRules(step.get("with")));
-              } else if (securegoConfigExists(step.get("run"))) {
-                usesWithRules.set(runsSecuregoWithRules(step.get("run")));
+              } else if (goSecConfigExists(step.get("run"))) {
+                usesWithRules.set(runsGoSecWithRules(step.get("run")));
               }
             });
     return usesWithRules.get();
   }
 
   /**
-   * Checks if a step contains config to run Securego.
+   * Checks if a step contains config to run GoSec.
    *
    * @param step The step to be checked.
-   * @return True if the step contains config to run Securego scan, false otherwise.
+   * @return True if the step contains config to run GoSec scan, false otherwise.
    */
-  private static boolean securegoConfigExists(Object step) {
+  private static boolean goSecConfigExists(Object step) {
     return Optional.ofNullable(step)
         .filter(String.class::isInstance)
         .map(String.class::cast)
-        .filter(run -> RUN_STEP_SECUREGO_REGEX_PATTERN.matcher(run).matches())
-        .isPresent();
+        .map(run -> RUN_STEP_GOSEC_REGEX_PATTERN.matcher(run).matches())
+        .orElse(false);
   }
 
   /**
-   * Checks if a step contains config to run Securego scans with rules.
+   * Checks if a step contains config to run GoSec scans with rules.
    *
    * @param step The step to be checked.
-   * @return True if the step contains config to run Securego scan with rules, false otherwise.
+   * @return True if the step contains config to run GoSec scan with rules, false otherwise.
    */
-  private static boolean runsSecuregoWithRules(Object step) {
+  private static boolean runsGoSecWithRules(Object step) {
     return Optional.ofNullable(step)
         .filter(String.class::isInstance)
         .map(String.class::cast)
-        .filter(run -> containsAnyRulesPattern(run))
-        .isPresent();
+        .map(run -> containsAnyRulesPattern(run))
+        .orElse(false);
   }
 
   /**
-   * Checks if a step contains argument config to run Securego scans with rules.
+   * Checks if a step contains argument config to run GoSec scans with rules.
    *
    * @param step The step to be checked.
-   * @return True if the step contains arguments to run Securego scan with rules, false otherwise.
+   * @return True if the step contains arguments to run GoSec scan with rules, false otherwise.
    */
   private static boolean hasArgsWithRules(Object step) {
     return Optional.ofNullable(step)
@@ -188,19 +188,19 @@ public class SecuregoDataProvider extends AbstractStaticScanToolsDataProvider {
         .map(with -> with.get("args"))
         .filter(String.class::isInstance)
         .map(String.class::cast)
-        .filter(args -> containsAnyRulesPattern(args))
-        .isPresent();
+        .map(args -> containsAnyRulesPattern(args))
+        .orElse(false);
   }
 
   /**
-   * Checks if a step contains any pattern to run Securego with rules.
+   * Checks if a step contains any pattern to run GoSec with rules.
    *
    * @param stepInfo The string info of a step
-   * @return True if the step matches any pattern to run Securego scan with rules, false otherwise.
+   * @return True if the step matches any pattern to run GoSec scan with rules, false otherwise.
    */
   private static boolean containsAnyRulesPattern(String stepInfo) {
-    return RUN_STEP_SECUREGO_WITH_INCLUDE_REGEX_PATTERN.matcher(stepInfo).matches()
-        || RUN_STEP_SECUREGO_WITH_EXCLUDE_REGEX_PATTERN.matcher(stepInfo).matches();
+    return RUN_STEP_GOSEC_WITH_INCLUDE_REGEX_PATTERN.matcher(stepInfo).matches()
+        || RUN_STEP_GOSEC_WITH_EXCLUDE_REGEX_PATTERN.matcher(stepInfo).matches();
   }
 
   @Override
@@ -211,15 +211,15 @@ public class SecuregoDataProvider extends AbstractStaticScanToolsDataProvider {
         .map(jobs -> jobs.values())
         .filter(Iterable.class::isInstance)
         .map(Iterable.class::cast)
-        .map(SecuregoDataProvider::scanJobs)
+        .map(GoSecDataProvider::scanJobs)
         .orElse(false);
   }
 
   /**
-   * Checks if any step in a collection of jobs triggers a Securego scan.
+   * Checks if any step in a collection of jobs triggers a GoSec scan.
    *
    * @param jobs The collection of jobs from GitHub action.
-   * @return True if a step triggers a Securego scan, false otherwise.
+   * @return True if a step triggers a GoSec scan, false otherwise.
    */
   private static boolean scanJobs(Iterable<?> jobs) {
     return IteratorUtils.toList(jobs.iterator()).stream()
@@ -228,38 +228,34 @@ public class SecuregoDataProvider extends AbstractStaticScanToolsDataProvider {
         .map(job -> job.get("steps"))
         .filter(Iterable.class::isInstance)
         .map(Iterable.class::cast)
-        .filter(SecuregoDataProvider::hasSecuregoStep)
-        .findAny()
-        .isPresent();
+        .anyMatch(GoSecDataProvider::hasGoSecStep);
   }
 
   /**
-   * Checks if a collection of steps from a GitHub action contains a step that triggers a Securego
+   * Checks if a collection of steps from a GitHub action contains a step that triggers a GoSec
    * scan.
    *
    * @param steps The steps to be checked.
-   * @return True if the steps contain a step that triggers a Securego scan, false otherwise.
+   * @return True if the steps contain a step that triggers a GoSec scan, false otherwise.
    */
-  private static boolean hasSecuregoStep(Iterable<?> steps) {
-    return hasSecuregoStep(steps, "uses") || hasSecuregoStep(steps, "run");
+  private static boolean hasGoSecStep(Iterable<?> steps) {
+    return hasGoSecStep(steps, "uses") || hasGoSecStep(steps, "run");
   }
 
   /**
-   * Checks if a collection of steps from a GitHub action contains a step that triggers a Securego
+   * Checks if a collection of steps from a GitHub action contains a step that triggers a GoSec
    * scan.
    *
    * @param steps The steps to be checked.
-   * @return True if the steps contain a step that triggers a Securego scan, false otherwise.
+   * @return True if the steps contain a step that triggers a GoSec scan, false otherwise.
    */
-  private static boolean hasSecuregoStep(Iterable<?> steps, String stepKeyToCheck) {
+  private static boolean hasGoSecStep(Iterable<?> steps, String stepKeyToCheck) {
     return IteratorUtils.toList(steps.iterator()).stream()
         .filter(Map.class::isInstance)
         .map(Map.class::cast)
         .map(step -> step.get(stepKeyToCheck))
         .filter(String.class::isInstance)
         .map(String.class::cast)
-        .filter(run -> RUN_STEP_SECUREGO_REGEX_PATTERN.matcher(run).matches())
-        .findAny()
-        .isPresent();
+        .anyMatch(run -> RUN_STEP_GOSEC_REGEX_PATTERN.matcher(run).matches());
   }
 }

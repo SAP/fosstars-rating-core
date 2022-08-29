@@ -115,17 +115,17 @@ defaults:
 - type: "BooleanValue"
   feature:
     type: "BooleanFeature"
-    name: "If a project runs Securego scans"
+    name: "If a project runs GoSec scans"
   flag: false
 - type: "BooleanValue"
   feature:
     type: "BooleanFeature"
-    name: "If a project runs Securego scans with rules"
+    name: "If a project runs GoSec scans with rules"
   flag: false
 - type: "BooleanValue"
   feature:
     type: "BooleanFeature"
-    name: "If a project runs Securego scan checks for commits"
+    name: "If a project runs GoSec scan checks for commits"
   flag: false
 - type: "BooleanValue"
   feature:

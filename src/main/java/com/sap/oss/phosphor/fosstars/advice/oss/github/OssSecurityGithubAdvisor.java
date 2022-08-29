@@ -7,11 +7,11 @@ import com.sap.oss.phosphor.fosstars.advice.oss.CodeqlAdvisor;
 import com.sap.oss.phosphor.fosstars.advice.oss.DependabotAdvisor;
 import com.sap.oss.phosphor.fosstars.advice.oss.FindSecBugsAdvisor;
 import com.sap.oss.phosphor.fosstars.advice.oss.FuzzingAdvisor;
+import com.sap.oss.phosphor.fosstars.advice.oss.GoSecAdvisor;
 import com.sap.oss.phosphor.fosstars.advice.oss.LgtmAdvisor;
 import com.sap.oss.phosphor.fosstars.advice.oss.MemorySafetyAdvisor;
 import com.sap.oss.phosphor.fosstars.advice.oss.NoHttpAdvisor;
 import com.sap.oss.phosphor.fosstars.advice.oss.OwaspDependencyCheckAdvisor;
-import com.sap.oss.phosphor.fosstars.advice.oss.SecuregoAdvisor;
 import com.sap.oss.phosphor.fosstars.advice.oss.SecurityPolicyAdvisor;
 import com.sap.oss.phosphor.fosstars.advice.oss.SigningAdvisor;
 
@@ -38,6 +38,6 @@ public class OssSecurityGithubAdvisor extends CompositeAdvisor {
         new SigningAdvisor(AdviceForGitHubContextFactory.INSTANCE),
         new NoHttpAdvisor(AdviceForGitHubContextFactory.INSTANCE),
         new BanditAdvisor(AdviceForGitHubContextFactory.INSTANCE),
-        new SecuregoAdvisor(AdviceForGitHubContextFactory.INSTANCE));
+        new GoSecAdvisor(AdviceForGitHubContextFactory.INSTANCE));
   }
 }

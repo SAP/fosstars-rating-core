@@ -2,9 +2,9 @@ package com.sap.oss.phosphor.fosstars.model.score.oss;
 
 import static com.sap.oss.phosphor.fosstars.TestUtils.assertScore;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.LANGUAGES;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_SECUREGO_SCANS;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SECUREGO_SCAN_CHECKS;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SECUREGO_WITH_RULES;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_GOSEC_SCANS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GOSEC_SCAN_CHECKS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GOSEC_WITH_RULES;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.GO;
 import static org.junit.Assert.assertEquals;
@@ -17,17 +17,17 @@ import com.sap.oss.phosphor.fosstars.model.value.Languages;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import org.junit.Test;
 
-public class SecuregoScoreTest {
+public class GoSecScoreTest {
 
-  private static final SecuregoScore SCORE = new SecuregoScore();
+  private static final GoSecScore SCORE = new GoSecScore();
 
   @Test
   public void testBasics() {
     assertFalse(SCORE.name().isEmpty());
     assertEquals(4, SCORE.features().size());
-    assertTrue(SCORE.features().contains(USES_SECUREGO_SCAN_CHECKS));
-    assertTrue(SCORE.features().contains(USES_SECUREGO_WITH_RULES));
-    assertTrue(SCORE.features().contains(RUNS_SECUREGO_SCANS));
+    assertTrue(SCORE.features().contains(USES_GOSEC_SCAN_CHECKS));
+    assertTrue(SCORE.features().contains(USES_GOSEC_WITH_RULES));
+    assertTrue(SCORE.features().contains(RUNS_GOSEC_SCANS));
     assertTrue(SCORE.features().contains(LANGUAGES));
     assertTrue(SCORE.subScores().isEmpty());
   }
@@ -44,28 +44,28 @@ public class SecuregoScoreTest {
         Score.INTERVAL,
         SCORE,
         setOf(
-            USES_SECUREGO_SCAN_CHECKS.value(true),
-            USES_SECUREGO_WITH_RULES.value(true),
-            RUNS_SECUREGO_SCANS.value(true),
+            USES_GOSEC_SCAN_CHECKS.value(true),
+            USES_GOSEC_WITH_RULES.value(true),
+            RUNS_GOSEC_SCANS.value(true),
             LANGUAGES.value(Languages.of(GO))));
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void testCalculateWithoutUsesSecuregoChecksValue() {
-    SCORE.calculate(RUNS_SECUREGO_SCANS.unknown(), LANGUAGES.unknown());
+  public void testCalculateWithoutUsesGoSecChecksValue() {
+    SCORE.calculate(RUNS_GOSEC_SCANS.unknown(), LANGUAGES.unknown());
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void testCalculateWithoutRunsSecuregoScanChecksValue() {
-    SCORE.calculate(USES_SECUREGO_SCAN_CHECKS.unknown(), LANGUAGES.unknown());
+  public void testCalculateWithoutRunsGoSecScanChecksValue() {
+    SCORE.calculate(USES_GOSEC_SCAN_CHECKS.unknown(), LANGUAGES.unknown());
   }
 
   @Test
   public void testCalculateWithAllUnknownValues() {
     assertTrue(SCORE.calculate(
-        USES_SECUREGO_SCAN_CHECKS.unknown(),
-        USES_SECUREGO_WITH_RULES.unknown(),
-        RUNS_SECUREGO_SCANS.unknown(),
+        USES_GOSEC_SCAN_CHECKS.unknown(),
+        USES_GOSEC_WITH_RULES.unknown(),
+        RUNS_GOSEC_SCANS.unknown(),
         LANGUAGES.unknown()).isUnknown());
   }
 }

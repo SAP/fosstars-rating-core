@@ -170,8 +170,8 @@ elements:
         explanation: []
       - type: "ScoreValue"
         score:
-          type: "SecuregoScore"
-          name: "How a project uses Securego"
+          type: "GoSecScore"
+          name: "How a project uses GoSec"
         value: 0.0
         weight: 1.0
         confidence: 10.0
@@ -267,8 +267,8 @@ elements:
         explanation: []
       - type: "ScoreValue"
         score:
-          type: "SecuregoScore"
-          name: "How a project uses Securego"
+          type: "GoSecScore"
+          name: "How a project uses GoSec"
         value: 6.0
         weight: 1.0
         confidence: 10.0
@@ -363,8 +363,8 @@ elements:
         explanation: []
       - type: "ScoreValue"
         score:
-          type: "SecuregoScore"
-          name: "How a project uses Securego"
+          type: "GoSecScore"
+          name: "How a project uses GoSec"
         value: 0.0
         weight: 1.0
         confidence: 10.0
@@ -459,8 +459,8 @@ elements:
         isNotApplicable: true
       - type: "ScoreValue"
         score:
-          type: "SecuregoScore"
-          name: "How a project uses Securego"
+          type: "GoSecScore"
+          name: "How a project uses GoSec"
         value: 0.0
         weight: 1.0
         confidence: 10.0
@@ -478,7 +478,7 @@ elements:
     expectedLabel: null
     alias: "bandit_not_applicable"
 
-  # SecuregoScore is N/A
+  # GoSecScore is N/A
   - type: "StandardTestVector"
     values:
       - type: "ScoreValue"
@@ -556,8 +556,8 @@ elements:
         isNotApplicable: false
       - type: "ScoreValue"
         score:
-          type: "SecuregoScore"
-          name: "How a project uses Securego"
+          type: "GoSecScore"
+          name: "How a project uses GoSec"
         value: 0.0
         weight: 1.0
         confidence: 10.0
@@ -573,4 +573,4 @@ elements:
       openRight: false
       positiveInfinity: false
     expectedLabel: null
-    alias: "SecuregoScore_not_applicable"
+    alias: "GoSecScore_not_applicable"

@@ -1,8 +1,8 @@
 package com.sap.oss.phosphor.fosstars.data.github;
 
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_SECUREGO_SCANS;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SECUREGO_SCAN_CHECKS;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SECUREGO_WITH_RULES;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_GOSEC_SCANS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GOSEC_SCAN_CHECKS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GOSEC_WITH_RULES;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -30,7 +30,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class SecuregoDataProviderTest extends TestGitHubDataFetcherHolder {
+public class GosecDataProviderTest extends TestGitHubDataFetcherHolder {
 
   private static final GitHubProject PROJECT = new GitHubProject("org", "test");
 
@@ -53,96 +53,96 @@ public class SecuregoDataProviderTest extends TestGitHubDataFetcherHolder {
 
   @Test
   public void testNotInteractive() {
-    assertFalse(new SecuregoDataProvider(fetcher).interactive());
+    assertFalse(new GoSecDataProvider(fetcher).interactive());
   }
 
   @Test
   public void testSupportedFeatures() {
-    Set<Feature<?>> features = new SecuregoDataProvider(fetcher).supportedFeatures();
+    Set<Feature<?>> features = new GoSecDataProvider(fetcher).supportedFeatures();
     assertEquals(3, features.size());
-    assertThat(features, hasItem(RUNS_SECUREGO_SCANS));
-    assertThat(features, hasItem(USES_SECUREGO_SCAN_CHECKS));
-    assertThat(features, hasItem(USES_SECUREGO_WITH_RULES));
+    assertThat(features, hasItem(RUNS_GOSEC_SCANS));
+    assertThat(features, hasItem(USES_GOSEC_SCAN_CHECKS));
+    assertThat(features, hasItem(USES_GOSEC_WITH_RULES));
   }
 
   @Test
-  public void testWithSecuregoInUsesAndChecks() throws IOException {
+  public void testWithGosecInUsesAndChecks() throws IOException {
     try (InputStream content = getClass().getResourceAsStream(
-        "securego-analysis-with-uses.yml")) {
-      testSecuregoRuns(GITHUB_WORKFLOW_FILENAME, content,
-          RUNS_SECUREGO_SCANS.value(true),
-          USES_SECUREGO_SCAN_CHECKS.value(true),
-          USES_SECUREGO_WITH_RULES.value(false));
+        "gosec-analysis-with-uses.yml")) {
+      testGoSecRuns(GITHUB_WORKFLOW_FILENAME, content,
+          RUNS_GOSEC_SCANS.value(true),
+          USES_GOSEC_SCAN_CHECKS.value(true),
+          USES_GOSEC_WITH_RULES.value(false));
     }
   }
 
   @Test
-  public void testWithSecuregoRunsWithRulesAndMultipleJobs() throws IOException {
+  public void testWithGoSecRunsWithRulesAndMultipleJobs() throws IOException {
     try (InputStream content = getClass().getResourceAsStream(
-        "securego-analysis-with-multiple-jobs.yml")) {
-      testSecuregoRuns(GITHUB_WORKFLOW_FILENAME, content,
-          RUNS_SECUREGO_SCANS.value(true),
-          USES_SECUREGO_SCAN_CHECKS.value(true),
-          USES_SECUREGO_WITH_RULES.value(true));
+        "gosec-analysis-with-multiple-jobs.yml")) {
+      testGoSecRuns(GITHUB_WORKFLOW_FILENAME, content,
+          RUNS_GOSEC_SCANS.value(true),
+          USES_GOSEC_SCAN_CHECKS.value(true),
+          USES_GOSEC_WITH_RULES.value(true));
     }
   }
 
   @Test
-  public void testWithNoSecuregoRunStep() throws IOException {
+  public void testWithNoGoSecRunStep() throws IOException {
     try (InputStream content = getClass().getResourceAsStream(
-        "securego-analysis-with-no-securego-run.yml")) {
-      testSecuregoRuns(GITHUB_WORKFLOW_FILENAME, content,
-          RUNS_SECUREGO_SCANS.value(false),
-          USES_SECUREGO_SCAN_CHECKS.value(false),
-          USES_SECUREGO_WITH_RULES.value(false));
+        "gosec-analysis-with-no-gosec-run.yml")) {
+      testGoSecRuns(GITHUB_WORKFLOW_FILENAME, content,
+          RUNS_GOSEC_SCANS.value(false),
+          USES_GOSEC_SCAN_CHECKS.value(false),
+          USES_GOSEC_WITH_RULES.value(false));
     }
   }
 
   @Test
-  public void testWithSecuregoRunsAndRulesInDifferentStep() throws IOException {
+  public void testWithGoSecRunsAndRulesInDifferentStep() throws IOException {
     try (InputStream content = getClass().getResourceAsStream(
-        "securego-analysis-with-rules-in-different-step.yml")) {
-      testSecuregoRuns(GITHUB_WORKFLOW_FILENAME, content,
-          RUNS_SECUREGO_SCANS.value(true),
-          USES_SECUREGO_SCAN_CHECKS.value(false),
-          USES_SECUREGO_WITH_RULES.value(false));
+        "gosec-analysis-with-rules-in-different-step.yml")) {
+      testGoSecRuns(GITHUB_WORKFLOW_FILENAME, content,
+          RUNS_GOSEC_SCANS.value(true),
+          USES_GOSEC_SCAN_CHECKS.value(false),
+          USES_GOSEC_WITH_RULES.value(false));
     }
   }
 
   @Test
-  public void testWithSecuregoRunAndChecks() throws IOException {
+  public void testWithGoSecRunAndChecks() throws IOException {
     try (InputStream content = getClass().getResourceAsStream(
-        "securego-analysis-with-run.yml")) {
-      testSecuregoRuns(GITHUB_WORKFLOW_FILENAME, content,
-          RUNS_SECUREGO_SCANS.value(true),
-          USES_SECUREGO_SCAN_CHECKS.value(true),
-          USES_SECUREGO_WITH_RULES.value(false));
+        "gosec-analysis-with-run.yml")) {
+      testGoSecRuns(GITHUB_WORKFLOW_FILENAME, content,
+          RUNS_GOSEC_SCANS.value(true),
+          USES_GOSEC_SCAN_CHECKS.value(true),
+          USES_GOSEC_WITH_RULES.value(false));
     }
   }
 
   @Test
-  public void testWithSecuregoRunAndChecksWithRules() throws IOException {
+  public void testWithGoSecRunAndChecksWithRules() throws IOException {
     try (InputStream content = getClass().getResourceAsStream(
-        "securego-analysis-run-with-rules.yml")) {
-      testSecuregoRuns(GITHUB_WORKFLOW_FILENAME, content,
-          RUNS_SECUREGO_SCANS.value(true),
-          USES_SECUREGO_SCAN_CHECKS.value(true),
-          USES_SECUREGO_WITH_RULES.value(true));
+        "gosec-analysis-run-with-rules.yml")) {
+      testGoSecRuns(GITHUB_WORKFLOW_FILENAME, content,
+          RUNS_GOSEC_SCANS.value(true),
+          USES_GOSEC_SCAN_CHECKS.value(true),
+          USES_GOSEC_WITH_RULES.value(true));
     }
   }
 
   @Test
-  public void testWithSecuregoRunAndChecksWithoutRules() throws IOException {
+  public void testWithGoSecRunAndChecksWithoutRules() throws IOException {
     try (InputStream content = getClass().getResourceAsStream(
-        "securego-analysis-run-without-rules.yml")) {
-      testSecuregoRuns(GITHUB_WORKFLOW_FILENAME, content,
-          RUNS_SECUREGO_SCANS.value(true),
-          USES_SECUREGO_SCAN_CHECKS.value(true),
-          USES_SECUREGO_WITH_RULES.value(false));
+        "gosec-analysis-run-without-rules.yml")) {
+      testGoSecRuns(GITHUB_WORKFLOW_FILENAME, content,
+          RUNS_GOSEC_SCANS.value(true),
+          USES_GOSEC_SCAN_CHECKS.value(true),
+          USES_GOSEC_WITH_RULES.value(false));
     }
   }
 
-  private void testSecuregoRuns(String filename, InputStream content, Value<?>... expectedValues)
+  private void testGoSecRuns(String filename, InputStream content, Value<?>... expectedValues)
       throws IOException {
 
     Path file = repositoryDirectory.resolve(filename);
@@ -151,7 +151,7 @@ public class SecuregoDataProviderTest extends TestGitHubDataFetcherHolder {
     IOUtils.copy(content, Files.newOutputStream(file));
     when(localRepository.files(any(), any())).thenReturn(Collections.singletonList(file));
 
-    SecuregoDataProvider provider = new SecuregoDataProvider(fetcher);
+    GoSecDataProvider provider = new GoSecDataProvider(fetcher);
     ValueSet values = provider.fetchValuesFor(PROJECT);
 
     assertEquals(3, values.size());

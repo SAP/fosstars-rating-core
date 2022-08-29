@@ -85,8 +85,8 @@ public abstract class AbstractStaticScanToolsDataProvider extends
 
   @Override
   public boolean runsOnPullRequests(Map<?, ?> githubAction) {
-    return runsOnPullRequestDefinedAsArray(githubAction)
-        || runsOnPullRequestDefinedAsMap(githubAction);
+    return runsOnPullRequestArrayType(githubAction)
+        || runsOnPullRequestMapType(githubAction);
   }
 
   /**

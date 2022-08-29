@@ -262,28 +262,28 @@ public class OssFeatures {
       = new BooleanFeature("If a project runs Bandit scan checks for commits");
 
   /**
-   * Shows if an open-source project runs Securego scans.
+   * Shows if an open-source project runs GoSec scans.
    *
-   * @see <a href="https://github.com/securego/gosec#gosec---golang-security-checker">Trigger Securego code scanning for a repository</a>
+   * @see <a href="https://github.com/securego/gosec#gosec---golang-security-checker">Trigger GoSec code scanning for a repository</a>
    */
-  public static final Feature<Boolean> RUNS_SECUREGO_SCANS
-      = new BooleanFeature("If a project runs Securego scans");
+  public static final Feature<Boolean> RUNS_GOSEC_SCANS
+      = new BooleanFeature("If a project runs GoSec scans");
 
   /**
-   * Shows if an open-source project runs Securego checks for commits.
+   * Shows if an open-source project runs GoSec checks for commits.
    *
-   * @see <a href="https://github.com/securego/gosec#usage">Trigger Securego code scanning job on every PR of a project</a>
+   * @see <a href="https://github.com/securego/gosec#usage">Trigger GoSec code scanning job on every PR of a project</a>
    */
-  public static final Feature<Boolean> USES_SECUREGO_SCAN_CHECKS
-      = new BooleanFeature("If a project runs Securego scan checks for commits");
+  public static final Feature<Boolean> USES_GOSEC_SCAN_CHECKS
+      = new BooleanFeature("If a project runs GoSec scan checks for commits");
 
   /**
-   * Shows if an open-source project runs Securego scans with the selected rules.
+   * Shows if an open-source project runs GoSec scans with the selected rules.
    *
-   * @see <a href="https://github.com/securego/gosec#usage">Trigger Securego code scanning for a repository with rules</a>
+   * @see <a href="https://github.com/securego/gosec#usage">Trigger GoSec code scanning for a repository with rules</a>
    */
-  public static final Feature<Boolean> USES_SECUREGO_WITH_RULES
-      = new BooleanFeature("If a project runs Securego scans with rules");
+  public static final Feature<Boolean> USES_GOSEC_WITH_RULES
+      = new BooleanFeature("If a project runs GoSec scans with rules");
 
   /**
    * Shows if an open-source project uses <a href="https://lgtm.com">LGTM</a> checks for commits.

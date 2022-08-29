@@ -7,7 +7,7 @@ elements:
       com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore: 0.0
       com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore: 0.0
       com.sap.oss.phosphor.fosstars.model.score.oss.BanditScore: 0.0
-      com.sap.oss.phosphor.fosstars.model.score.oss.SecuregoScore: 0.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.GoSecScore: 0.0
     expectedScore:
       type: "DoubleInterval"
       from: 0.0
@@ -25,7 +25,7 @@ elements:
       com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore: 10.0
       com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore: 10.0
       com.sap.oss.phosphor.fosstars.model.score.oss.BanditScore: 10.0
-      com.sap.oss.phosphor.fosstars.model.score.oss.SecuregoScore: 10.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.GoSecScore: 10.0
     expectedScore:
       type: "DoubleInterval"
       from: 10.0
@@ -43,7 +43,7 @@ elements:
       com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore: 8.0
       com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore: 2.0
       com.sap.oss.phosphor.fosstars.model.score.oss.BanditScore: 2.0
-      com.sap.oss.phosphor.fosstars.model.score.oss.SecuregoScore: 5.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.GoSecScore: 5.0
     expectedScore:
       type: "DoubleInterval"
       from: 5.0
@@ -61,7 +61,7 @@ elements:
       com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore: 1.0
       com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore: 3.0
       com.sap.oss.phosphor.fosstars.model.score.oss.BanditScore: 4.0
-      com.sap.oss.phosphor.fosstars.model.score.oss.SecuregoScore: 4.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.GoSecScore: 4.0
     expectedScore:
       type: "DoubleInterval"
       from: 1.0
@@ -117,8 +117,8 @@ elements:
         isNotApplicable: true
       - type: "ScoreValue"
         score:
-          type: "SecuregoScore"
-          name: "How a project uses Securego"
+          type: "GoSecScore"
+          name: "How a project uses GoSec"
         value: 0.0
         weight: 1.0
         confidence: 10.0
@@ -142,7 +142,7 @@ elements:
       com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore: 1.0
       com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore: 3.0
       com.sap.oss.phosphor.fosstars.model.score.oss.BanditScore: 2.0
-      com.sap.oss.phosphor.fosstars.model.score.oss.SecuregoScore: 2.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.GoSecScore: 2.0
     expectedScore:
       type: "DoubleInterval"
       from: 1.0
@@ -198,8 +198,8 @@ elements:
         isNotApplicable: false
       - type: "ScoreValue"
         score:
-          type: "SecuregoScore"
-          name: "How a project uses Securego"
+          type: "GoSecScore"
+          name: "How a project uses GoSec"
         value: 5.0
         weight: 1.0
         confidence: 10.0
@@ -261,8 +261,8 @@ elements:
         isNotApplicable: true
       - type: "ScoreValue"
         score:
-          type: "SecuregoScore"
-          name: "How a project uses Securego"
+          type: "GoSecScore"
+          name: "How a project uses GoSec"
         value: 5.0
         weight: 1.0
         confidence: 10.0
@@ -324,8 +324,8 @@ elements:
         isNotApplicable: false
       - type: "ScoreValue"
         score:
-          type: "SecuregoScore"
-          name: "How a project uses Securego"
+          type: "GoSecScore"
+          name: "How a project uses GoSec"
         value: 4.0
         weight: 1.0
         confidence: 10.0
@@ -387,8 +387,8 @@ elements:
         isNotApplicable: false
       - type: "ScoreValue"
         score:
-          type: "SecuregoScore"
-          name: "How a project uses Securego"
+          type: "GoSecScore"
+          name: "How a project uses GoSec"
         value: 3.0
         weight: 1.0
         confidence: 10.0
@@ -450,8 +450,8 @@ elements:
         isNotApplicable: false
       - type: "ScoreValue"
         score:
-          type: "SecuregoScore"
-          name: "How a project uses Securego"
+          type: "GoSecScore"
+          name: "How a project uses GoSec"
         value: 3.0
         weight: 1.0
         confidence: 10.0
@@ -468,7 +468,7 @@ elements:
       positiveInfinity: false
     expectedLabel: null
     expectedNotApplicableScore: false
-    alias: "securego_not_applicable"
+    alias: "gosec_not_applicable"
   - type: "StandardTestVector"
     values:
       - type: "UnknownValue"
@@ -506,15 +506,15 @@ elements:
       - type: "UnknownValue"
         feature:
           type: "BooleanFeature"
-          name: "If a project runs Securego scan checks for commits"
+          name: "If a project runs GoSec scan checks for commits"
       - type: "UnknownValue"
         feature:
           type: "BooleanFeature"
-          name: "If a project runs Securego scans with rules"
+          name: "If a project runs GoSec scans with rules"
       - type: "UnknownValue"
         feature:
           type: "BooleanFeature"
-          name: "If a project runs Securego scans"
+          name: "If a project runs GoSec scans"
     expectedScore:
       type: "DoubleInterval"
       from: 0.0

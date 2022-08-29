@@ -1,9 +1,9 @@
 package com.sap.oss.phosphor.fosstars.advice.oss;
 
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.LANGUAGES;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_SECUREGO_SCANS;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SECUREGO_SCAN_CHECKS;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SECUREGO_WITH_RULES;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_GOSEC_SCANS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GOSEC_SCAN_CHECKS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GOSEC_WITH_RULES;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.allUnknown;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.GO;
 import static org.junit.Assert.assertEquals;
@@ -20,11 +20,11 @@ import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import java.net.MalformedURLException;
 import org.junit.Test;
 
-public class SecuregoAdvisorTest {
+public class GoSecAdvisorTest {
 
   @Test
-  public void testAdviseForSecurego() throws MalformedURLException {
-    SecuregoAdvisor advisor = new SecuregoAdvisor(OssAdviceContextFactory.WITH_EMPTY_CONTEXT);
+  public void testAdviseForGoSec() throws MalformedURLException {
+    GoSecAdvisor advisor = new GoSecAdvisor(OssAdviceContextFactory.WITH_EMPTY_CONTEXT);
     GitHubProject project = new GitHubProject("org", "test");
 
     // no advice if no rating value is set
@@ -39,30 +39,30 @@ public class SecuregoAdvisorTest {
 
     values.update(LANGUAGES.value(Languages.of(GO)));
     // expect an advice if the checks are not enabled
-    values.update(RUNS_SECUREGO_SCANS.value(true));
-    values.update(USES_SECUREGO_SCAN_CHECKS.value(false));
-    values.update(USES_SECUREGO_WITH_RULES.value(false));
+    values.update(RUNS_GOSEC_SCANS.value(true));
+    values.update(USES_GOSEC_SCAN_CHECKS.value(false));
+    values.update(USES_GOSEC_WITH_RULES.value(false));
     project.set(rating.calculate(values));
     assertEquals(1, advisor.adviceFor(project).size());
 
     // expect two advices if the scans are not enabled
-    values.update(RUNS_SECUREGO_SCANS.value(false));
-    values.update(USES_SECUREGO_SCAN_CHECKS.value(true));
-    values.update(USES_SECUREGO_WITH_RULES.value(false));
+    values.update(RUNS_GOSEC_SCANS.value(false));
+    values.update(USES_GOSEC_SCAN_CHECKS.value(true));
+    values.update(USES_GOSEC_WITH_RULES.value(false));
     project.set(rating.calculate(values));
     assertEquals(1, advisor.adviceFor(project).size());
 
     // expect an advice if all the checks and scans are not enabled
-    values.update(RUNS_SECUREGO_SCANS.value(false));
-    values.update(USES_SECUREGO_SCAN_CHECKS.value(false));
-    values.update(USES_SECUREGO_WITH_RULES.value(false));
+    values.update(RUNS_GOSEC_SCANS.value(false));
+    values.update(USES_GOSEC_SCAN_CHECKS.value(false));
+    values.update(USES_GOSEC_WITH_RULES.value(false));
     project.set(rating.calculate(values));
     assertEquals(2, advisor.adviceFor(project).size());
 
     // expect an advice if the scans are enabled with rules
-    values.update(RUNS_SECUREGO_SCANS.value(true));
-    values.update(USES_SECUREGO_SCAN_CHECKS.value(true));
-    values.update(USES_SECUREGO_WITH_RULES.value(true));
+    values.update(RUNS_GOSEC_SCANS.value(true));
+    values.update(USES_GOSEC_SCAN_CHECKS.value(true));
+    values.update(USES_GOSEC_WITH_RULES.value(true));
     project.set(rating.calculate(values));
     assertEquals(1, advisor.adviceFor(project).size());
 
