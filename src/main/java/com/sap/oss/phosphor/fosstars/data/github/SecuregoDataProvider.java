@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.collections4.IteratorUtils;
 
 /**
- * The data provider gathers info about how a project uses Bandit for static analysis. In
+ * The data provider gathers info about how a project uses SecureGo for static analysis. In
  * particular, it tries to fill out the following features:
  *
  * <ul>
