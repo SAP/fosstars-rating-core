@@ -109,7 +109,7 @@ public abstract class AbstractStaticScanToolsDataProvider extends
    * @param githubAction A config of the action.
    * @return True if the action runs on pull requests, false otherwise.
    */
-  private boolean runsOnPullRequestDefinedAsMap(Map<?, ?> githubAction) {
+  private boolean runsOnPullRequestMapType(Map<?, ?> githubAction) {
     return Optional.ofNullable(githubAction.get("on"))
         .filter(Map.class::isInstance)
         .map(Map.class::cast)
