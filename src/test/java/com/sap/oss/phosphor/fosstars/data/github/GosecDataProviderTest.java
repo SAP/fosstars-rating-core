@@ -142,6 +142,17 @@ public class GosecDataProviderTest extends TestGitHubDataFetcherHolder {
     }
   }
 
+  @Test
+  public void testWithGoSecUsesWithoutWithKey() throws IOException {
+    try (InputStream content = getClass().getResourceAsStream(
+        "gosec-analysis-uses-without-with-key.yml")) {
+      testGoSecRuns(GITHUB_WORKFLOW_FILENAME, content,
+          RUNS_GOSEC_SCANS.value(true),
+          USES_GOSEC_SCAN_CHECKS.value(true),
+          USES_GOSEC_WITH_RULES.value(false));
+    }
+  }
+
   private void testGoSecRuns(String filename, InputStream content, Value<?>... expectedValues)
       throws IOException {
 

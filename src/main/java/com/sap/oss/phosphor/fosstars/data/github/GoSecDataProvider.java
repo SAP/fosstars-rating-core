@@ -102,7 +102,7 @@ public class GoSecDataProvider extends AbstractStaticScanToolsDataProvider {
         .filter(Iterable.class::isInstance)
         .map(Iterable.class::cast)
         .map(GoSecDataProvider::checkAllJobs)
-        .get();
+        .orElse(false);
   }
 
   /**
@@ -118,9 +118,7 @@ public class GoSecDataProvider extends AbstractStaticScanToolsDataProvider {
         .map(job -> job.get("steps"))
         .filter(Iterable.class::isInstance)
         .map(Iterable.class::cast)
-        .map(GoSecDataProvider::checkAllSteps)
-        .findAny()
-        .get();
+        .anyMatch(GoSecDataProvider::checkAllSteps);
   }
 
   /**
