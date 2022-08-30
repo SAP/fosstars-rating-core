@@ -573,4 +573,4 @@ elements:
       openRight: false
       positiveInfinity: false
     expectedLabel: null
-    alias: "GoSecScore_not_applicable"
+    alias: "gosec_not_applicable"
