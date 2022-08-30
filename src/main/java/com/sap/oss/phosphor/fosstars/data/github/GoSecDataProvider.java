@@ -106,7 +106,7 @@ public class GoSecDataProvider extends AbstractStaticScanToolsDataProvider {
   }
 
   /**
-   * Checks if any step in a collection of jobs triggers a GoSec scan with rules.
+   * Checks if any job triggers a GoSec scan with rules.
    *
    * @param jobs The collection of jobs from GitHub action.
    * @return True if a step triggers a GoSec scan with rules, false otherwise.
