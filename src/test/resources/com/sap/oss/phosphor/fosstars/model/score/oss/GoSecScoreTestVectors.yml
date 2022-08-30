@@ -179,7 +179,7 @@ elements:
       positiveInfinity: false
     expectedLabel: null
     expectedNotApplicableScore: true
-    alias: "test_vector_5"
+    alias: "not_applicable_test_vector_1"
   - type: "StandardTestVector"
     values:
       - type: "BooleanValue"
@@ -211,4 +211,4 @@ elements:
       positiveInfinity: false
     expectedLabel: null
     expectedNotApplicableScore: true
-    alias: "test_vector_6"
+    alias: "not_applicable_test_vector_2"
