@@ -285,6 +285,25 @@ public class OssFeatures {
   public static final Feature<Boolean> USES_GOSEC_WITH_RULES
       = new BooleanFeature("If a project runs GoSec scans with rules");
 
+  /*
+   * Shows if an open-source project runs Pylint scans.
+   *
+   * @see <a href="https://pylint.pycqa.org/en/latest/user_guide/installation/index.html">Trigger
+   *      Pylint code scanning for a repository</a>
+   */
+  public static final Feature<Boolean> RUNS_PYLINT_SCANS =
+      new BooleanFeature("If a project runs Pylint scans");
+
+  /**
+   * Shows if an open-source project runs Pylint checks before commits.
+   *
+   * @see <a href=
+   *      "https://pylint.pycqa.org/en/latest/user_guide/installation/pre-commit-integration.html">Trigger
+   *      Pylint code scanning job before every commit to a repository</a>
+   */
+  public static final Feature<Boolean> USES_PYLINT_SCAN_CHECKS =
+      new BooleanFeature("If a project runs Pylint scan checks for commits");
+
   /**
    * Shows if an open-source project uses <a href="https://lgtm.com">LGTM</a> checks for commits.
    */

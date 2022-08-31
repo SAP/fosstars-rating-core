@@ -10,31 +10,36 @@ import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
-import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
-import org.apache.commons.collections4.IteratorUtils;
 
 /**
  * The data provider gathers info about how a project uses Bandit for static analysis. In
  * particular, it tries to fill out the following features:
  * <ul>
- *   <li>{@link OssFeatures#RUNS_BANDIT_SCANS}</li>
- *   <li>{@link OssFeatures#USES_BANDIT_SCAN_CHECKS}</li>
+ *  <li>{@link OssFeatures#RUNS_BANDIT_SCANS}</li>
+ *  <li>{@link OssFeatures#USES_BANDIT_SCAN_CHECKS}</li>
  * </ul>
  */
 public class BanditDataProvider extends AbstractStaticScanToolsDataProvider {
 
   /**
-   * A step in a GitHub action that triggers analysis with Bandit.
+   * A Predicate to check the any step in a GitHub action that triggers analysis with Bandit.
    */
-  private static final Pattern RUN_STEP_BANDIT_REGEX_PATTERN
-      = Pattern.compile("^.*bandit .*$", Pattern.DOTALL);
+  private static final Map<String, Predicate<String>> MATCH_BANDIT_PREDICATE = new HashMap<>();
+
+  static {
+    {
+      MATCH_BANDIT_PREDICATE.put("uses",
+          step -> Pattern.compile(".*bandit.*$", Pattern.DOTALL).matcher(step).matches());
+      MATCH_BANDIT_PREDICATE.put("run",
+          step -> Pattern.compile("^.*bandit .*$", Pattern.DOTALL).matcher(step).matches());
+    }
+  }
 
   /**
    * Initializes a data provider.
@@ -51,69 +56,14 @@ public class BanditDataProvider extends AbstractStaticScanToolsDataProvider {
 
     LocalRepository repository = GitHubDataFetcher.localRepositoryFor(project);
 
-    Value<Boolean> runsBandit = RUNS_BANDIT_SCANS.value(false);
-    Value<Boolean> usesBanditScanChecks = USES_BANDIT_SCAN_CHECKS.value(false);
-
     // ideally, we're looking for a GitHub action that runs Bandit scan on pull requests
     // but if we just find an action that runs Bandit scans, that's also fine
-    for (Path configPath : findGitHubActionsIn(repository)) {
-      try (InputStream content = Files.newInputStream(configPath)) {
-        Map<String, Object> githubAction = Yaml.readMap(content);
-        if (triggersScan(githubAction)) {
-          runsBandit = RUNS_BANDIT_SCANS.value(true);
-          if (runsOnPullRequests(githubAction)) {
-            usesBanditScanChecks = USES_BANDIT_SCAN_CHECKS.value(true);
-            break;
-          }
-        }
-      }
-    }
+    Visitor visitor = withVisitor();
+    browse(repository, MATCH_BANDIT_PREDICATE, Collections.emptyMap(), visitor);
+
+    Value<Boolean> runsBandit = RUNS_BANDIT_SCANS.value(visitor.runCheck);
+    Value<Boolean> usesBanditScanChecks = USES_BANDIT_SCAN_CHECKS.value(visitor.usesCheck);
 
     return ValueHashSet.from(runsBandit, usesBanditScanChecks);
-  }
-
-  @Override
-  public boolean triggersScan(Map<?, ?> githubAction) {
-    return Optional.ofNullable(githubAction.get("jobs"))
-        .filter(Map.class::isInstance)
-        .map(Map.class::cast)
-        .map(jobs -> jobs.values())
-        .filter(Iterable.class::isInstance)
-        .map(Iterable.class::cast)
-        .map(BanditDataProvider::scanJobs)
-        .orElse(false);
-  }
-
-  /**
-   * Checks if any step in a collection of jobs triggers a Bandit scan.
-   *
-   * @param jobs The collection of jobs from GitHub action.
-   * @return True if a step triggers a Bandit scan, false otherwise.
-   */
-  private static boolean scanJobs(Iterable<?> jobs) {
-    return IteratorUtils.toList(jobs.iterator()).stream()
-        .filter(Map.class::isInstance)
-        .map(Map.class::cast)
-        .map(job -> job.get("steps"))
-        .filter(Iterable.class::isInstance)
-        .map(Iterable.class::cast)
-        .anyMatch(BanditDataProvider::hasBanditRunStep);
-  }
-
-  /**
-   * Checks if a collection of steps from a GitHub action contains a step that triggers a Bandit
-   * scan.
-   *
-   * @param steps The steps to be checked.
-   * @return True if the steps contain a step that triggers a Bandit scan, false otherwise.
-   */
-  private static boolean hasBanditRunStep(Iterable<?> steps) {
-    return IteratorUtils.toList(steps.iterator()).stream()
-        .filter(Map.class::isInstance)
-        .map(Map.class::cast)
-        .map(step -> step.get("run"))
-        .filter(String.class::isInstance)
-        .map(String.class::cast)
-        .anyMatch(run -> RUN_STEP_BANDIT_REGEX_PATTERN.matcher(run).matches());
   }
 }

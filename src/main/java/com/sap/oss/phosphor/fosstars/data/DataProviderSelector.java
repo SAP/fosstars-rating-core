@@ -44,6 +44,7 @@ import com.sap.oss.phosphor.fosstars.data.github.NumberOfWatchers;
 import com.sap.oss.phosphor.fosstars.data.github.OwaspSecurityLibraries;
 import com.sap.oss.phosphor.fosstars.data.github.PackageManagement;
 import com.sap.oss.phosphor.fosstars.data.github.ProgrammingLanguages;
+import com.sap.oss.phosphor.fosstars.data.github.PylintDataProvider;
 import com.sap.oss.phosphor.fosstars.data.github.ReadmeInfo;
 import com.sap.oss.phosphor.fosstars.data.github.ReleasesFromGitHub;
 import com.sap.oss.phosphor.fosstars.data.github.SecurityReviewsFromOpenSSF;
@@ -239,6 +240,7 @@ public class DataProviderSelector {
         new VulnerabilitiesFromOwaspDependencyCheck(),
         new VulnerabilitiesFromNpmAudit(nvd),
         new HasExecutableBinaries(fetcher),
+        new PylintDataProvider(fetcher),
         PROJECT_USAGE_PROVIDER,
         FUNCTIONALITY_PROVIDER,
         HANDLING_UNTRUSTED_DATA_LIKELIHOOD_PROVIDER,
