@@ -60,5 +60,3 @@ public class SnykDependencyScanScoreTest {
     new DependencyScanScore().calculate();
   }
 }
-
-
