@@ -11,6 +11,7 @@ import com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -55,7 +56,7 @@ public class MyPyDataProvider extends AbstractStaticScanToolsDataProvider {
     LocalRepository repository = GitHubDataFetcher.localRepositoryFor(project);
 
     Visitor visitor = withVisitor();
-    browse(repository, MATCH_PYLINT_PREDICATE_MAP, visitor);
+    browse(repository, MATCH_PYLINT_PREDICATE_MAP, Collections.emptyMap(), visitor);
 
     Value<Boolean> runsPylint = RUNS_MYPY_SCANS.value(visitor.runCheck);
     Value<Boolean> usesPylintScanChecks = USES_MYPY_SCAN_CHECKS.value(visitor.usesCheck);
