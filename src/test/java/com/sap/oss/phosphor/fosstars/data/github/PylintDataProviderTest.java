@@ -110,7 +110,7 @@ public class PylintDataProviderTest extends TestGitHubDataFetcherHolder {
   public void testWithPylintInRepo() throws IOException {
     try (InputStream content =
         getClass().getResourceAsStream("pylint-analysis-with-pylint-in-repo.yml")) {
-      testPylintPathCheck(GITHUB_PRE_COMMIT_HOOK_CONFIG_FILENAME, content,
+      testPylintFileStreamCheck(GITHUB_PRE_COMMIT_HOOK_CONFIG_FILENAME, content,
           RUNS_PYLINT_SCANS.value(true), 
           USES_PYLINT_SCAN_CHECKS.value(true));
     }
@@ -120,7 +120,7 @@ public class PylintDataProviderTest extends TestGitHubDataFetcherHolder {
   public void testWithPylintInEntry() throws IOException {
     try (InputStream content =
         getClass().getResourceAsStream("pylint-analysis-with-pylint-in-entry.yml")) {
-      testPylintPathCheck(GITHUB_PRE_COMMIT_HOOK_CONFIG_FILENAME, content,
+      testPylintFileStreamCheck(GITHUB_PRE_COMMIT_HOOK_CONFIG_FILENAME, content,
           RUNS_PYLINT_SCANS.value(true),
           USES_PYLINT_SCAN_CHECKS.value(true));
     }
@@ -130,7 +130,7 @@ public class PylintDataProviderTest extends TestGitHubDataFetcherHolder {
   public void testWithPylintInRev() throws IOException {
     try (InputStream content =
         getClass().getResourceAsStream("pylint-analysis-with-pylint-in-rev.yml")) {
-      testPylintPathCheck(GITHUB_PRE_COMMIT_HOOK_CONFIG_FILENAME, content,
+      testPylintFileStreamCheck(GITHUB_PRE_COMMIT_HOOK_CONFIG_FILENAME, content,
           RUNS_PYLINT_SCANS.value(true), 
           USES_PYLINT_SCAN_CHECKS.value(true));
     }
@@ -140,7 +140,7 @@ public class PylintDataProviderTest extends TestGitHubDataFetcherHolder {
   public void testWithNoPylintAsPreCommitHookConfig() throws IOException {
     try (InputStream content =
         getClass().getResourceAsStream("pylint-analysis-no-pylint-hook.yml")) {
-      testPylintPathCheck(GITHUB_PRE_COMMIT_HOOK_CONFIG_FILENAME, content,
+      testPylintFileStreamCheck(GITHUB_PRE_COMMIT_HOOK_CONFIG_FILENAME, content,
           RUNS_PYLINT_SCANS.value(false),
           USES_PYLINT_SCAN_CHECKS.value(false));
     }
@@ -150,7 +150,7 @@ public class PylintDataProviderTest extends TestGitHubDataFetcherHolder {
   public void testWithPylintProspector() throws IOException {
     try (InputStream content =
         getClass().getResourceAsStream("pylint-analysis-with-prospector.yml")) {
-      testPylintPathCheck(GITHUB_PRE_COMMIT_HOOK_CONFIG_FILENAME, content,
+      testPylintFileStreamCheck(GITHUB_PRE_COMMIT_HOOK_CONFIG_FILENAME, content,
           RUNS_PYLINT_SCANS.value(true),
           USES_PYLINT_SCAN_CHECKS.value(true));
     }
@@ -193,13 +193,14 @@ public class PylintDataProviderTest extends TestGitHubDataFetcherHolder {
     }
   }
   
-  private void testPylintPathCheck(String filename, InputStream content,
+  private void testPylintFileStreamCheck(String filename, InputStream content,
       Value<?>... expectedValues) throws IOException {
     Path file = repositoryDirectory.resolve(filename);
     Files.createDirectories(file.getParent());
     when(localRepository.hasDirectory(any(Path.class))).thenReturn(true);
     IOUtils.copy(content, Files.newOutputStream(file));
-    when(localRepository.path(any())).thenReturn(Optional.of(file));
+    when(localRepository.fileStream(any(String.class)))
+        .thenReturn(Optional.of(Files.newInputStream(file)));
 
     PylintDataProvider provider = new PylintDataProvider(fetcher);
     ValueSet values = provider.fetchValuesFor(PROJECT);

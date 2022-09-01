@@ -432,18 +432,16 @@ public abstract class AbstractStaticScanToolsDataProvider extends
     @Override
     public void visitPreCommitHook(LocalRepository repository,
         Map<String, Predicate<String>> matchers, Set<Location> locations) throws IOException {
-      Optional<Path> preCommitConfigPath = repository.path(PRE_COMMIT_HOOK_CONFIG);
-      if (!preCommitConfigPath.isPresent()) {
+      Optional<InputStream> content = repository.fileStream(PRE_COMMIT_HOOK_CONFIG);
+      if (!content.isPresent()) {
         return;
       }
-
-      try (InputStream content = Files.newInputStream(preCommitConfigPath.get())) {
-        Map<String, Object> config = Yaml.readMap(content);
-        if (hasPreCommitHook(config, matchers)) {
-          runCheck = true;
-          usesCheck = true;
-        }
+      Map<String, Object> config = Yaml.readMap(content.get());
+      if (hasPreCommitHook(config, matchers)) {
+        runCheck = true;
+        usesCheck = true;
       }
+
     }
 
     @Override
