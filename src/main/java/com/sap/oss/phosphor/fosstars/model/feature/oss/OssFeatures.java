@@ -303,6 +303,24 @@ public class OssFeatures {
    */
   public static final Feature<Boolean> USES_PYLINT_SCAN_CHECKS =
       new BooleanFeature("If a project runs Pylint scan checks for commits");
+  
+  /**
+   * Shows if an open-source project runs Mypy scans.
+   *
+   * @see <a href="https://github.com/marketplace/actions/mypy-action">Trigger Mypy code scanning
+   *      for a repository</a>
+   */
+  public static final Feature<Boolean> RUNS_MYPY_SCANS =
+      new BooleanFeature("If a project runs Mypy scans");
+
+  /**
+   * Shows if an open-source project runs Mypy checks before commits.
+   *
+   * @see <a href="https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository">Enabling
+   *      code scanning for a repository</a>
+   */
+  public static final Feature<Boolean> USES_MYPY_SCAN_CHECKS =
+      new BooleanFeature("If a project runs Mypy scan checks for commits");
 
   /**
    * Shows if an open-source project uses <a href="https://lgtm.com">LGTM</a> checks for commits.

@@ -436,12 +436,12 @@ public abstract class AbstractStaticScanToolsDataProvider extends
       if (!content.isPresent()) {
         return;
       }
+
       Map<String, Object> config = Yaml.readMap(content.get());
       if (hasPreCommitHook(config, matchers)) {
         runCheck = true;
         usesCheck = true;
       }
-
     }
 
     @Override
@@ -451,6 +451,7 @@ public abstract class AbstractStaticScanToolsDataProvider extends
         try (Stream<String> lines = Files.lines(configPath)) {
           if (hasIniConfig(lines, matchers)) {
             runCheck = true;
+            break;
           }
         }
       }
