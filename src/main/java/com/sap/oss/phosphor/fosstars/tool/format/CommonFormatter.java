@@ -34,6 +34,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.PACKAG
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.README_HAS_REUSE_INFO;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.REGISTERED_IN_REUSE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_CODEQL_SCANS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_GOSEC_SCANS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SECURITY_REVIEWS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SIGNS_ARTIFACTS;
@@ -43,6 +44,8 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_C
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_DEPENDABOT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_FIND_SEC_BUGS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GITHUB_FOR_DEVELOPMENT;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GOSEC_SCAN_CHECKS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GOSEC_WITH_RULES;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM_CHECKS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_MEMORY_SANITIZER;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_NOHTTP;
@@ -74,6 +77,7 @@ import com.sap.oss.phosphor.fosstars.model.score.oss.DependabotScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore;
+import com.sap.oss.phosphor.fosstars.model.score.oss.GoSecScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore;
@@ -133,6 +137,7 @@ public abstract class CommonFormatter implements Formatter {
     add(StaticAnalysisScore.class, "Static analysis");
     add(NoHttpToolScore.class, "nohttp tool");
     add(LgtmScore.class, "LGTM score");
+    add(GoSecScore.class, "GoSec score");
     add(FindSecBugsScore.class, "FindSecBugs score");
     add(VulnerabilityDiscoveryAndSecurityTestingScore.class,
         "Vulnerability discovery and security testing");
@@ -184,6 +189,9 @@ public abstract class CommonFormatter implements Formatter {
     add(HAS_BUG_BOUNTY_PROGRAM, "Does it have a bug bounty program?");
     add(SIGNS_ARTIFACTS, "Does it sign artifacts?");
     add(WORST_LGTM_GRADE, "The worst LGTM grade of the project");
+    add(RUNS_GOSEC_SCANS, "Does it run GoSec scans?");
+    add(USES_GOSEC_WITH_RULES, "Does it run GoSec scans with rules?");
+    add(USES_GOSEC_SCAN_CHECKS, "Does it run GoSec scans on all pull requests?");
     add(FUZZED_IN_OSS_FUZZ, "Is it included to OSS-Fuzz?");
     add(OWASP_DEPENDENCY_CHECK_USAGE, "How is OWASP Dependency Check used?");
     add(OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD,

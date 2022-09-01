@@ -7,6 +7,7 @@ import com.sap.oss.phosphor.fosstars.model.Feature;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -84,6 +85,31 @@ public abstract class AbstractStaticScanToolsDataProvider extends
 
   @Override
   public boolean runsOnPullRequests(Map<?, ?> githubAction) {
+    return runsOnPullRequestArrayType(githubAction)
+        || runsOnPullRequestMapType(githubAction);
+  }
+
+  /**
+   * Checks if a GitHub action runs on pull requests is defined as Array.
+   *
+   * @param githubAction A config of the action.
+   * @return True if the action runs on pull requests, false otherwise.
+   */
+  private boolean runsOnPullRequestArrayType(Map<?, ?> githubAction) {
+    return Optional.ofNullable(githubAction.get("on"))
+        .filter(ArrayList.class::isInstance)
+        .map(ArrayList.class::cast)
+        .map(on -> on.contains("pull_request"))
+        .orElse(false);
+  }
+
+  /**
+   * Checks if a GitHub action runs on pull requests is defined as Map.
+   *
+   * @param githubAction A config of the action.
+   * @return True if the action runs on pull requests, false otherwise.
+   */
+  private boolean runsOnPullRequestMapType(Map<?, ?> githubAction) {
     return Optional.ofNullable(githubAction.get("on"))
         .filter(Map.class::isInstance)
         .map(Map.class::cast)

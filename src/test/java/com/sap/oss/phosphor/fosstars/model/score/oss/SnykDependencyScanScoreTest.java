@@ -59,4 +59,10 @@ public class SnykDependencyScanScoreTest {
   public void testWithNoInfo() {
     new DependencyScanScore().calculate();
   }
+<<<<<<< HEAD
 }
+=======
+}
+
+
+>>>>>>> 2e3c5339fcc1340cbc3dc1bdb289195df4bc2a34
