@@ -1,0 +1,16 @@
+on: [push]
+name: Security
+jobs:
+  Gosec:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch Repository
+        uses: actions/checkout@v3
+      - name: Run Gosec
+        uses: securego/gosec@master
+        with:
+          args: -exclude-dir=internal/*/ ./...
+      - name: Run dummy Security Scanner
+        uses: dummy/gosec@v2.12.0
+        with:
+          args: '-exclude=G104,G304,G402 ./...'

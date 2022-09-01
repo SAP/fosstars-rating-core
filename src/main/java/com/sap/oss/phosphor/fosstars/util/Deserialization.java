@@ -56,6 +56,7 @@ import com.sap.oss.phosphor.fosstars.model.score.oss.DependabotScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore;
+import com.sap.oss.phosphor.fosstars.model.score.oss.GoSecScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore;
@@ -314,7 +315,8 @@ public abstract class Deserialization {
         RiskImpactScore.IntegrityRiskImpactFactor.class,
         RiskImpactScore.AvailabilityRiskImpactFactor.class,
         CalculatedSecurityRiskIntroducedByOss.class,
-        BanditScore.class
+        BanditScore.class,
+        GoSecScore.class
     );
 
     // ratings

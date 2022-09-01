@@ -25,6 +25,7 @@ import com.sap.oss.phosphor.fosstars.data.github.ContributingGuidelineInfo;
 import com.sap.oss.phosphor.fosstars.data.github.EstimateImpactUsingKnownVulnerabilities;
 import com.sap.oss.phosphor.fosstars.data.github.FuzzedInOssFuzz;
 import com.sap.oss.phosphor.fosstars.data.github.GitHubDataFetcher;
+import com.sap.oss.phosphor.fosstars.data.github.GoSecDataProvider;
 import com.sap.oss.phosphor.fosstars.data.github.HasBugBountyProgram;
 import com.sap.oss.phosphor.fosstars.data.github.HasCompanySupport;
 import com.sap.oss.phosphor.fosstars.data.github.HasExecutableBinaries;
@@ -208,6 +209,7 @@ public class DataProviderSelector {
         new IsEclipse(fetcher),
         new CodeqlDataProvider(fetcher),
         new BanditDataProvider(fetcher),
+        new GoSecDataProvider(fetcher),
         new LgtmDataProvider(fetcher),
         new UsesSignedCommits(fetcher),
         new UsesDependabot(fetcher),

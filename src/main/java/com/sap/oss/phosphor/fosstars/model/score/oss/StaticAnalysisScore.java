@@ -14,6 +14,7 @@ import com.sap.oss.phosphor.fosstars.model.weight.ScoreWeights;
  *   <li>{@link LgtmScore}</li>
  *   <li>{@link FindSecBugsScore}</li>
  *   <li>{@link BanditScore}</li>
+ *   <li>{@link GoSecScore}</li>
  * </ul>
  * <p>The above sub-scores may not apply to all projects. The score considers only the sub-scores
  * that is applicable to a particular project.</p>
@@ -30,7 +31,8 @@ public class StaticAnalysisScore extends WeightedCompositeScore {
         .set(CodeqlScore.class, new ImmutableWeight(1.0))
         .set(LgtmScore.class, new ImmutableWeight(1.0))
         .set(FindSecBugsScore.class, new ImmutableWeight(0.5))
-        .set(BanditScore.class, new ImmutableWeight(0.5));
+        .set(BanditScore.class, new ImmutableWeight(0.5))
+        .set(GoSecScore.class, new ImmutableWeight(0.5));
   }
 
   /**
@@ -38,7 +40,7 @@ public class StaticAnalysisScore extends WeightedCompositeScore {
    */
   public StaticAnalysisScore() {
     super("How a project uses static analysis for security testing",
-        setOf(new CodeqlScore(), new LgtmScore(), new FindSecBugsScore(), new BanditScore()),
-        initWeights());
+        setOf(new CodeqlScore(), new LgtmScore(), new FindSecBugsScore(), new BanditScore(),
+            new GoSecScore()), initWeights());
   }
 }
