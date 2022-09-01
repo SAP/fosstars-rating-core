@@ -74,7 +74,7 @@ declare -a project_security_default_expected_strings=(
   'Sub-score:....Project popularity'
   'Sub-score:....Security reviews'
   'Sub-score:....How a project uses Bandit'
-  'Sub-score:....How a project uses GoSec'
+  'Sub-score:....GoSec score'
 )
 
 declare -a artifact_security_default_expected_strings=(
