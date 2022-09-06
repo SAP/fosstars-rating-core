@@ -70,7 +70,7 @@ public class PylintScore extends FeatureBasedScore {
           "The score is N/A because the project does not confirm which languages are used.");
     }
 
-    if (!languages.isUnknown() && !SUPPORTED_LANGUAGES.containsAnyOf(languages.get())) {
+    if (!SUPPORTED_LANGUAGES.containsAnyOf(languages.get())) {
       return scoreValue.makeNotApplicable().explain(
           "The score is N/A because the project uses languages that are not supported by Pylint.");
     }
