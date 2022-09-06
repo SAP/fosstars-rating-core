@@ -285,7 +285,7 @@ public class OssFeatures {
   public static final Feature<Boolean> USES_GOSEC_WITH_RULES
       = new BooleanFeature("If a project runs GoSec scans with rules");
 
-  /*
+  /**
    * Shows if an open-source project runs Pylint scans.
    *
    * @see <a href="https://pylint.pycqa.org/en/latest/user_guide/installation/index.html">Trigger

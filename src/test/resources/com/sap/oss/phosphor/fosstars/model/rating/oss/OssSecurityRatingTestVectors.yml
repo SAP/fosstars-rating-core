@@ -132,6 +132,26 @@ defaults:
     type: "BooleanFeature"
     name: "If a project has executable binaries"
   flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If a project runs Mypy scans"
+  flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If a project runs Mypy scan checks for commits"
+  flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If a project runs Pylint scans"
+  flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If a project runs Pylint scan checks for commits"
+  flag: false
 - type: "SecurityReviewsValue"
   feature:
     type: "SecurityReviewsFeature"
