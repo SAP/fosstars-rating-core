@@ -6,12 +6,16 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.LANGUA
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_BANDIT_SCANS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_CODEQL_SCANS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_GOSEC_SCANS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_MYPY_SCANS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_PYLINT_SCANS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_BANDIT_SCAN_CHECKS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_CODEQL_CHECKS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_FIND_SEC_BUGS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GOSEC_SCAN_CHECKS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GOSEC_WITH_RULES;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM_CHECKS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_MYPY_SCAN_CHECKS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_PYLINT_SCAN_CHECKS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.JAVA;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.PYTHON;
@@ -45,6 +49,10 @@ public class StaticAnalysisScoreTest {
         RUNS_GOSEC_SCANS.value(false),
         USES_GOSEC_SCAN_CHECKS.value(false),
         USES_GOSEC_WITH_RULES.value(false),
+        RUNS_PYLINT_SCANS.value(false),
+        USES_PYLINT_SCAN_CHECKS.value(false),
+        RUNS_MYPY_SCANS.value(false),
+        USES_MYPY_SCAN_CHECKS.value(false),
         LANGUAGES.value(Languages.of(JAVA)),
         USES_FIND_SEC_BUGS.value(false));
 
@@ -53,7 +61,7 @@ public class StaticAnalysisScoreTest {
     assertTrue(Score.INTERVAL.contains(scoreValue.get()));
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     assertSame(score, scoreValue.score());
-    assertEquals(5, scoreValue.usedValues().size());
+    assertEquals(7, scoreValue.usedValues().size());
   }
 
   @Test
@@ -70,6 +78,10 @@ public class StaticAnalysisScoreTest {
         RUNS_GOSEC_SCANS.value(false),
         USES_GOSEC_SCAN_CHECKS.value(false),
         USES_GOSEC_WITH_RULES.value(false),
+        RUNS_PYLINT_SCANS.value(false),
+        USES_PYLINT_SCAN_CHECKS.value(false),
+        RUNS_MYPY_SCANS.value(false),
+        USES_MYPY_SCAN_CHECKS.value(false),
         LANGUAGES.value(Languages.of(PYTHON)),
         USES_FIND_SEC_BUGS.value(false));
 
@@ -78,7 +90,7 @@ public class StaticAnalysisScoreTest {
     assertTrue(Score.INTERVAL.contains(scoreValue.get()));
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     assertSame(score, scoreValue.score());
-    assertEquals(5, scoreValue.usedValues().size());
+    assertEquals(7, scoreValue.usedValues().size());
   }
 
   @Test
@@ -95,9 +107,10 @@ public class StaticAnalysisScoreTest {
         RUNS_GOSEC_SCANS.value(true),
         USES_GOSEC_SCAN_CHECKS.value(true),
         USES_GOSEC_WITH_RULES.value(true),
-        RUNS_GOSEC_SCANS.value(false),
-        USES_GOSEC_SCAN_CHECKS.value(false),
-        USES_GOSEC_WITH_RULES.value(false),
+        RUNS_PYLINT_SCANS.value(false),
+        USES_PYLINT_SCAN_CHECKS.value(false),
+        RUNS_MYPY_SCANS.value(false),
+        USES_MYPY_SCAN_CHECKS.value(false),
         LANGUAGES.value(Languages.of(PYTHON)),
         USES_FIND_SEC_BUGS.value(false));
 
@@ -106,7 +119,65 @@ public class StaticAnalysisScoreTest {
     assertTrue(Score.INTERVAL.contains(scoreValue.get()));
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     assertSame(score, scoreValue.score());
-    assertEquals(5, scoreValue.usedValues().size());
+    assertEquals(7, scoreValue.usedValues().size());
+  }
+
+  @Test
+  public void testCalculateWithPylintScanRunValues() {
+    StaticAnalysisScore score = new StaticAnalysisScore();
+
+    ScoreValue scoreValue = score.calculate(
+        WORST_LGTM_GRADE.value(D),
+        USES_LGTM_CHECKS.value(false),
+        USES_CODEQL_CHECKS.value(false),
+        RUNS_CODEQL_SCANS.value(false),
+        USES_BANDIT_SCAN_CHECKS.value(false),
+        RUNS_BANDIT_SCANS.value(false),
+        RUNS_GOSEC_SCANS.value(false),
+        USES_GOSEC_SCAN_CHECKS.value(false),
+        USES_GOSEC_WITH_RULES.value(false),
+        RUNS_PYLINT_SCANS.value(true),
+        USES_PYLINT_SCAN_CHECKS.value(true),
+        RUNS_MYPY_SCANS.value(false),
+        USES_MYPY_SCAN_CHECKS.value(false),
+        LANGUAGES.value(Languages.of(PYTHON)),
+        USES_FIND_SEC_BUGS.value(false));
+
+    assertFalse(scoreValue.isUnknown());
+    assertFalse(scoreValue.isNotApplicable());
+    assertTrue(Score.INTERVAL.contains(scoreValue.get()));
+    assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
+    assertSame(score, scoreValue.score());
+    assertEquals(7, scoreValue.usedValues().size());
+  }
+
+  @Test
+  public void testCalculateWithMyPyScanRunValues() {
+    StaticAnalysisScore score = new StaticAnalysisScore();
+
+    ScoreValue scoreValue = score.calculate(
+        WORST_LGTM_GRADE.value(D),
+        USES_LGTM_CHECKS.value(false),
+        USES_CODEQL_CHECKS.value(false),
+        RUNS_CODEQL_SCANS.value(false),
+        USES_BANDIT_SCAN_CHECKS.value(false),
+        RUNS_BANDIT_SCANS.value(false),
+        RUNS_GOSEC_SCANS.value(false),
+        USES_GOSEC_SCAN_CHECKS.value(false),
+        USES_GOSEC_WITH_RULES.value(false),
+        RUNS_PYLINT_SCANS.value(false),
+        USES_PYLINT_SCAN_CHECKS.value(false),
+        RUNS_MYPY_SCANS.value(true),
+        USES_MYPY_SCAN_CHECKS.value(true),
+        LANGUAGES.value(Languages.of(PYTHON)),
+        USES_FIND_SEC_BUGS.value(false));
+
+    assertFalse(scoreValue.isUnknown());
+    assertFalse(scoreValue.isNotApplicable());
+    assertTrue(Score.INTERVAL.contains(scoreValue.get()));
+    assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
+    assertSame(score, scoreValue.score());
+    assertEquals(7, scoreValue.usedValues().size());
   }
 
   @Test
@@ -123,6 +194,10 @@ public class StaticAnalysisScoreTest {
         RUNS_GOSEC_SCANS.unknown(),
         USES_GOSEC_SCAN_CHECKS.unknown(),
         USES_GOSEC_WITH_RULES.unknown(),
+        RUNS_PYLINT_SCANS.unknown(),
+        USES_PYLINT_SCAN_CHECKS.unknown(),
+        RUNS_MYPY_SCANS.unknown(),
+        USES_MYPY_SCAN_CHECKS.unknown(),
         LANGUAGES.unknown(),
         USES_FIND_SEC_BUGS.unknown());
 
@@ -130,7 +205,7 @@ public class StaticAnalysisScoreTest {
     assertFalse(scoreValue.isNotApplicable());
     assertEquals(Confidence.MIN, scoreValue.confidence(), DELTA);
     assertSame(score, scoreValue.score());
-    assertEquals(5, scoreValue.usedValues().size());
+    assertEquals(7, scoreValue.usedValues().size());
   }
 
   @Test
@@ -152,20 +227,29 @@ public class StaticAnalysisScoreTest {
     ScoreValue goSecScoreValue = new ScoreValue(new GoSecScore())
         .makeNotApplicable()
         .confidence(Confidence.MAX);
+    ScoreValue pylintValue = new ScoreValue(new PylintScore())
+        .makeNotApplicable()
+        .confidence(Confidence.MAX);
+    ScoreValue mypyValue = new ScoreValue(new MyPyScore())
+        .makeNotApplicable()
+        .confidence(Confidence.MAX);
 
     ScoreValue scoreValue = score.calculate(
         codeqlScoreValue, lgtmScoreValue, findSecBugsScoreValue, banditScoreValue,
-        goSecScoreValue);
+        goSecScoreValue, pylintValue, mypyValue);
 
     assertFalse(scoreValue.isUnknown());
     assertTrue(scoreValue.isNotApplicable());
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     assertSame(score, scoreValue.score());
-    assertEquals(5, scoreValue.usedValues().size());
+    assertEquals(7, scoreValue.usedValues().size());
     assertTrue(scoreValue.usedValues().contains(lgtmScoreValue));
     assertTrue(scoreValue.usedValues().contains(findSecBugsScoreValue));
     assertTrue(scoreValue.usedValues().contains(banditScoreValue));
     assertTrue(scoreValue.usedValues().contains(goSecScoreValue));
+    assertTrue(scoreValue.usedValues().contains(codeqlScoreValue));
+    assertTrue(scoreValue.usedValues().contains(pylintValue));
+    assertTrue(scoreValue.usedValues().contains(mypyValue));
   }
 
   @Test
@@ -187,20 +271,30 @@ public class StaticAnalysisScoreTest {
     ScoreValue goSecScoreValue = new ScoreValue(new GoSecScore())
         .set(MIN)
         .confidence(Confidence.MAX);
+    ScoreValue pylintValue = new ScoreValue(new PylintScore())
+        .set(MIN)
+        .confidence(Confidence.MAX);
+    ScoreValue mypyValue = new ScoreValue(new MyPyScore())
+        .set(MIN)
+        .confidence(Confidence.MAX);
 
     ScoreValue scoreValue = score.calculate(
         codeqlScoreValue, lgtmScoreValue, findSecBugsScoreValue, banditScoreValue,
-        goSecScoreValue);
+        goSecScoreValue, pylintValue, mypyValue);
 
     assertFalse(scoreValue.isUnknown());
     assertFalse(scoreValue.isNotApplicable());
     assertEquals(MIN, scoreValue.get(), DELTA);
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     assertSame(score, scoreValue.score());
-    assertEquals(5, scoreValue.usedValues().size());
+    assertEquals(7, scoreValue.usedValues().size());
     assertTrue(scoreValue.usedValues().contains(lgtmScoreValue));
     assertTrue(scoreValue.usedValues().contains(findSecBugsScoreValue));
     assertTrue(scoreValue.usedValues().contains(banditScoreValue));
+    assertTrue(scoreValue.usedValues().contains(goSecScoreValue));
+    assertTrue(scoreValue.usedValues().contains(codeqlScoreValue));
+    assertTrue(scoreValue.usedValues().contains(pylintValue));
+    assertTrue(scoreValue.usedValues().contains(mypyValue));
   }
 
   @Test
@@ -224,21 +318,30 @@ public class StaticAnalysisScoreTest {
     ScoreValue goSecScoreValue = new ScoreValue(new GoSecScore())
         .set(value)
         .confidence(Confidence.MAX);
+    ScoreValue pylintValue = new ScoreValue(new PylintScore())
+        .set(value)
+        .confidence(Confidence.MAX);
+    ScoreValue mypyValue = new ScoreValue(new MyPyScore())
+        .set(value)
+        .confidence(Confidence.MAX);
 
     ScoreValue scoreValue = score.calculate(
         codeqlScoreValue, lgtmScoreValue, findSecBugsScoreValue, banditScoreValue,
-        goSecScoreValue);
+        goSecScoreValue, pylintValue, mypyValue);
 
     assertFalse(scoreValue.isUnknown());
     assertFalse(scoreValue.isNotApplicable());
     assertEquals(value, scoreValue.get(), DELTA);
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     assertSame(score, scoreValue.score());
-    assertEquals(5, scoreValue.usedValues().size());
+    assertEquals(7, scoreValue.usedValues().size());
     assertTrue(scoreValue.usedValues().contains(lgtmScoreValue));
     assertTrue(scoreValue.usedValues().contains(findSecBugsScoreValue));
     assertTrue(scoreValue.usedValues().contains(banditScoreValue));
     assertTrue(scoreValue.usedValues().contains(goSecScoreValue));
+    assertTrue(scoreValue.usedValues().contains(codeqlScoreValue));
+    assertTrue(scoreValue.usedValues().contains(pylintValue));
+    assertTrue(scoreValue.usedValues().contains(mypyValue));
   }
 
   @Test
@@ -262,21 +365,30 @@ public class StaticAnalysisScoreTest {
     ScoreValue goSecScoreValue = new ScoreValue(new GoSecScore())
         .set(value)
         .confidence(Confidence.MAX);
+    ScoreValue pylintValue = new ScoreValue(new PylintScore())
+        .set(value)
+        .confidence(Confidence.MAX);
+    ScoreValue mypyValue = new ScoreValue(new MyPyScore())
+        .set(value)
+        .confidence(Confidence.MAX);
 
     ScoreValue scoreValue = score.calculate(
         codeqlScoreValue, lgtmScoreValue, findSecBugsScoreValue, banditScoreValue,
-        goSecScoreValue);
+        goSecScoreValue, pylintValue, mypyValue);
 
     assertFalse(scoreValue.isUnknown());
     assertFalse(scoreValue.isNotApplicable());
     assertEquals(value, scoreValue.get(), DELTA);
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     assertSame(score, scoreValue.score());
-    assertEquals(5, scoreValue.usedValues().size());
+    assertEquals(7, scoreValue.usedValues().size());
     assertTrue(scoreValue.usedValues().contains(lgtmScoreValue));
     assertTrue(scoreValue.usedValues().contains(findSecBugsScoreValue));
     assertTrue(scoreValue.usedValues().contains(banditScoreValue));
     assertTrue(scoreValue.usedValues().contains(goSecScoreValue));
+    assertTrue(scoreValue.usedValues().contains(codeqlScoreValue));
+    assertTrue(scoreValue.usedValues().contains(pylintValue));
+    assertTrue(scoreValue.usedValues().contains(mypyValue));
   }
 
   @Test
@@ -300,21 +412,124 @@ public class StaticAnalysisScoreTest {
     ScoreValue goSecScoreValue = new ScoreValue(new GoSecScore())
         .makeNotApplicable()
         .confidence(Confidence.MAX);
+    ScoreValue pylintValue = new ScoreValue(new PylintScore())
+        .set(value)
+        .confidence(Confidence.MAX);
+    ScoreValue mypyValue = new ScoreValue(new MyPyScore())
+        .set(value)
+        .confidence(Confidence.MAX);
 
     ScoreValue scoreValue = score.calculate(
         codeqlScoreValue, lgtmScoreValue, findSecBugsScoreValue, banditScoreValue,
-        goSecScoreValue);
+        goSecScoreValue, pylintValue, mypyValue);
 
     assertFalse(scoreValue.isUnknown());
     assertFalse(scoreValue.isNotApplicable());
     assertEquals(value, scoreValue.get(), DELTA);
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     assertSame(score, scoreValue.score());
-    assertEquals(5, scoreValue.usedValues().size());
+    assertEquals(7, scoreValue.usedValues().size());
     assertTrue(scoreValue.usedValues().contains(lgtmScoreValue));
     assertTrue(scoreValue.usedValues().contains(findSecBugsScoreValue));
     assertTrue(scoreValue.usedValues().contains(banditScoreValue));
     assertTrue(scoreValue.usedValues().contains(goSecScoreValue));
+    assertTrue(scoreValue.usedValues().contains(codeqlScoreValue));
+    assertTrue(scoreValue.usedValues().contains(pylintValue));
+    assertTrue(scoreValue.usedValues().contains(mypyValue));
+  }
+
+  @Test
+  public void testCalculateWithPylintNotApplicable() {
+    StaticAnalysisScore score = new StaticAnalysisScore();
+
+    final double value = 5.5;
+
+    ScoreValue codeqlScoreValue = new ScoreValue(new CodeqlScore())
+        .set(value)
+        .confidence(Confidence.MAX);
+    ScoreValue lgtmScoreValue = new ScoreValue(new LgtmScore())
+        .set(value)
+        .confidence(Confidence.MAX);
+    ScoreValue findSecBugsScoreValue = new ScoreValue(new FindSecBugsScore())
+        .set(value)
+        .confidence(Confidence.MAX);
+    ScoreValue banditScoreValue = new ScoreValue(new BanditScore())
+        .set(value)
+        .confidence(Confidence.MAX);
+    ScoreValue goSecScoreValue = new ScoreValue(new GoSecScore())
+        .set(value)
+        .confidence(Confidence.MAX);
+    ScoreValue pylintValue = new ScoreValue(new PylintScore())
+        .makeNotApplicable()
+        .confidence(Confidence.MAX);
+    ScoreValue mypyValue = new ScoreValue(new MyPyScore())
+        .set(value)
+        .confidence(Confidence.MAX);
+
+    ScoreValue scoreValue = score.calculate(
+        codeqlScoreValue, lgtmScoreValue, findSecBugsScoreValue, banditScoreValue,
+        goSecScoreValue, pylintValue, mypyValue);
+
+    assertFalse(scoreValue.isUnknown());
+    assertFalse(scoreValue.isNotApplicable());
+    assertEquals(value, scoreValue.get(), DELTA);
+    assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
+    assertSame(score, scoreValue.score());
+    assertEquals(7, scoreValue.usedValues().size());
+    assertTrue(scoreValue.usedValues().contains(lgtmScoreValue));
+    assertTrue(scoreValue.usedValues().contains(findSecBugsScoreValue));
+    assertTrue(scoreValue.usedValues().contains(banditScoreValue));
+    assertTrue(scoreValue.usedValues().contains(goSecScoreValue));
+    assertTrue(scoreValue.usedValues().contains(codeqlScoreValue));
+    assertTrue(scoreValue.usedValues().contains(pylintValue));
+    assertTrue(scoreValue.usedValues().contains(mypyValue));
+  }
+  
+  @Test
+  public void testCalculateWithMyPyNotApplicable() {
+    StaticAnalysisScore score = new StaticAnalysisScore();
+
+    final double value = 5.5;
+
+    ScoreValue codeqlScoreValue = new ScoreValue(new CodeqlScore())
+        .set(value)
+        .confidence(Confidence.MAX);
+    ScoreValue lgtmScoreValue = new ScoreValue(new LgtmScore())
+        .set(value)
+        .confidence(Confidence.MAX);
+    ScoreValue findSecBugsScoreValue = new ScoreValue(new FindSecBugsScore())
+        .set(value)
+        .confidence(Confidence.MAX);
+    ScoreValue banditScoreValue = new ScoreValue(new BanditScore())
+        .set(value)
+        .confidence(Confidence.MAX);
+    ScoreValue goSecScoreValue = new ScoreValue(new GoSecScore())
+        .set(value)
+        .confidence(Confidence.MAX);
+    ScoreValue pylintValue = new ScoreValue(new PylintScore())
+        .set(value)
+        .confidence(Confidence.MAX);
+    ScoreValue mypyValue = new ScoreValue(new MyPyScore())
+        .makeNotApplicable()
+        .confidence(Confidence.MAX);
+
+    ScoreValue scoreValue = score.calculate(
+        codeqlScoreValue, lgtmScoreValue, findSecBugsScoreValue, banditScoreValue,
+        goSecScoreValue, pylintValue, mypyValue);
+
+    assertFalse(scoreValue.isUnknown());
+    assertFalse(scoreValue.isNotApplicable());
+    assertEquals(value, scoreValue.get(), DELTA);
+    assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
+    assertSame(score, scoreValue.score());
+    assertEquals(7, scoreValue.usedValues().size());
+    assertTrue(scoreValue.usedValues().contains(lgtmScoreValue));
+    assertTrue(scoreValue.usedValues().contains(findSecBugsScoreValue));
+    assertTrue(scoreValue.usedValues().contains(banditScoreValue));
+    assertTrue(scoreValue.usedValues().contains(goSecScoreValue));
+    assertTrue(scoreValue.usedValues().contains(codeqlScoreValue));
+    assertTrue(scoreValue.usedValues().contains(pylintValue));
+    assertTrue(scoreValue.usedValues().contains(mypyValue));
   }
 
   @Test

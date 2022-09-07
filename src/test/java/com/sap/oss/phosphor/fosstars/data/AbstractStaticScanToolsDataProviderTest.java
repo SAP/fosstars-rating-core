@@ -15,7 +15,6 @@ import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.io.IOException;
-import java.util.Map;
 import java.util.Set;
 import org.apache.commons.lang3.NotImplementedException;
 import org.junit.Test;
@@ -48,11 +47,6 @@ public class AbstractStaticScanToolsDataProviderTest extends GitHubDataFetcherTe
         GitHubDataFetcher fetcher,
         Set<Feature<?>> supportedFeatures) {
       super(fetcher, supportedFeatures);
-    }
-
-    @Override
-    public boolean triggersScan(Map<?, ?> githubAction) {
-      return false;
     }
 
     @Override

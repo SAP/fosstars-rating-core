@@ -35,6 +35,8 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.README
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.REGISTERED_IN_REUSE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_CODEQL_SCANS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_GOSEC_SCANS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_MYPY_SCANS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_PYLINT_SCANS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SCANS_FOR_VULNERABLE_DEPENDENCIES;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SECURITY_REVIEWS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SIGNS_ARTIFACTS;
@@ -48,10 +50,12 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_G
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GOSEC_WITH_RULES;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM_CHECKS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_MEMORY_SANITIZER;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_MYPY_SCAN_CHECKS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_NOHTTP;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_OWASP_ESAPI;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_OWASP_JAVA_ENCODER;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_OWASP_JAVA_HTML_SANITIZER;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_PYLINT_SCAN_CHECKS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_REUSE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SIGNED_COMMITS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SNYK;
@@ -72,6 +76,7 @@ import com.sap.oss.phosphor.fosstars.advice.Advisor;
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Value;
+import com.sap.oss.phosphor.fosstars.model.score.oss.BanditScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.CommunityCommitmentScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.DependabotScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore;
@@ -136,6 +141,7 @@ public abstract class CommonFormatter implements Formatter {
     add(FuzzingScore.class, "Fuzzing");
     add(StaticAnalysisScore.class, "Static analysis");
     add(NoHttpToolScore.class, "nohttp tool");
+    add(BanditScore.class, "Bandit score");
     add(LgtmScore.class, "LGTM score");
     add(GoSecScore.class, "GoSec score");
     add(FindSecBugsScore.class, "FindSecBugs score");
@@ -240,6 +246,10 @@ public abstract class CommonFormatter implements Formatter {
     add(AVAILABILITY_IMPACT,
         "What is potential availability impact in case of a security problem?");
     add(HAS_EXECUTABLE_BINARIES, "Does it have executable binaries?");
+    add(RUNS_PYLINT_SCANS, "Does it run Pylint scans?");
+    add(USES_PYLINT_SCAN_CHECKS, "Does it run Pylint scans on all commits?");
+    add(RUNS_MYPY_SCANS, "Does it run MyPy scans?");
+    add(USES_MYPY_SCAN_CHECKS, "Does it run MyPy scans on all commits?");
   }
 
   /**

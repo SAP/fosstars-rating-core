@@ -1,0 +1,14 @@
+repos:
+  - repo: https://github.com/pycqa/test
+    rev: test-2.6.0
+    hooks:
+    - id: test
+      name: test
+      entry: test
+      language: system
+      types: [python]
+      args:
+        [
+          "-rn", # Only display messages
+          "-sn", # Don't display the score
+        ]
