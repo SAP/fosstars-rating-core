@@ -286,6 +286,43 @@ public class OssFeatures {
       = new BooleanFeature("If a project runs GoSec scans with rules");
 
   /**
+   * Shows if an open-source project runs Pylint scans.
+   *
+   * @see <a href="https://pylint.pycqa.org/en/latest/user_guide/installation/index.html">Trigger
+   *      Pylint code scanning for a repository</a>
+   */
+  public static final Feature<Boolean> RUNS_PYLINT_SCANS =
+      new BooleanFeature("If a project runs Pylint scans");
+
+  /**
+   * Shows if an open-source project runs Pylint checks before commits.
+   *
+   * @see <a href=
+   *      "https://pylint.pycqa.org/en/latest/user_guide/installation/pre-commit-integration.html">Trigger
+   *      Pylint code scanning job before every commit to a repository</a>
+   */
+  public static final Feature<Boolean> USES_PYLINT_SCAN_CHECKS =
+      new BooleanFeature("If a project runs Pylint scan checks for commits");
+  
+  /**
+   * Shows if an open-source project runs Mypy scans.
+   *
+   * @see <a href="https://github.com/marketplace/actions/mypy-action">Trigger Mypy code scanning
+   *      for a repository</a>
+   */
+  public static final Feature<Boolean> RUNS_MYPY_SCANS =
+      new BooleanFeature("If a project runs Mypy scans");
+
+  /**
+   * Shows if an open-source project runs Mypy checks before commits.
+   *
+   * @see <a href="https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository">Enabling
+   *      code scanning for a repository</a>
+   */
+  public static final Feature<Boolean> USES_MYPY_SCAN_CHECKS =
+      new BooleanFeature("If a project runs Mypy scan checks for commits");
+
+  /**
    * Shows if an open-source project uses <a href="https://lgtm.com">LGTM</a> checks for commits.
    */
   public static final Feature<Boolean> USES_LGTM_CHECKS
