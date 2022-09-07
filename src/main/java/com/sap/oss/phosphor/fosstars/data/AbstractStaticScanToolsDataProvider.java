@@ -71,7 +71,7 @@ public abstract class AbstractStaticScanToolsDataProvider extends
       (context, matchers) -> {
         for (Map.Entry<String, Predicate<String>> entry : matchers.entrySet()) {
           final String key = entry.getKey();
-          if (context.containsKey(entry.getKey())
+          if (context.containsKey(key)
               && entry.getValue().test(context.get(key).toString())) {
             return true;
           }
