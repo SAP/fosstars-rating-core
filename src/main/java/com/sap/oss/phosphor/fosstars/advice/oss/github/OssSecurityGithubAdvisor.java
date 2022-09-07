@@ -14,6 +14,7 @@ import com.sap.oss.phosphor.fosstars.advice.oss.NoHttpAdvisor;
 import com.sap.oss.phosphor.fosstars.advice.oss.OwaspDependencyCheckAdvisor;
 import com.sap.oss.phosphor.fosstars.advice.oss.SecurityPolicyAdvisor;
 import com.sap.oss.phosphor.fosstars.advice.oss.SigningAdvisor;
+import com.sap.oss.phosphor.fosstars.advice.oss.SnykAdvisor;
 
 /**
  * This is an advisor for open-source projects hosted on GitHub.
@@ -38,6 +39,7 @@ public class OssSecurityGithubAdvisor extends CompositeAdvisor {
         new SigningAdvisor(AdviceForGitHubContextFactory.INSTANCE),
         new NoHttpAdvisor(AdviceForGitHubContextFactory.INSTANCE),
         new BanditAdvisor(AdviceForGitHubContextFactory.INSTANCE),
+        new SnykAdvisor(AdviceForGitHubContextFactory.INSTANCE),
         new GoSecAdvisor(AdviceForGitHubContextFactory.INSTANCE));
   }
 }

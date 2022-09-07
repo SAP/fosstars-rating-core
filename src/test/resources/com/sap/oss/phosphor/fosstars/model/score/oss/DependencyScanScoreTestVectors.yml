@@ -134,6 +134,7 @@ elements:
       packageManagers:
         packageManagers:
         - "MAVEN"
+        - "GOMODULES"
     - type: "LanguagesValue"
       feature:
         type: "LanguagesFeature"
@@ -141,6 +142,7 @@ elements:
       languages:
         elements:
         - "JAVA"
+        - "GO"
   expectedScore:
     type: "DoubleInterval"
     from: 8.0

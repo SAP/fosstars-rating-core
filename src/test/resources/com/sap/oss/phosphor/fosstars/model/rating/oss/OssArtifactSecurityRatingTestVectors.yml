@@ -683,6 +683,11 @@ elements:
           type: "BooleanFeature"
           name: "If a project uses Dependabot"
         flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses Snyk"
+        flag: false
       - type: "VulnerabilitiesValue"
         feature:
           type: "VulnerabilitiesFeature"
