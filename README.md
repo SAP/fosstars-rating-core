@@ -38,7 +38,7 @@ The [jars](https://mvnrepository.com/artifact/com.sap.oss.phosphor/fosstars-rati
 <dependency>
     <groupId>com.sap.oss.phosphor</groupId>
     <artifactId>fosstars-rating-core</artifactId>
-    <version>1.10.1</version>
+    <version>1.11.0</version>
 </dependency>
 ```
 
