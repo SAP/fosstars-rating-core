@@ -39,10 +39,7 @@ public class OssSecurityGithubAdvisor extends CompositeAdvisor {
         new SigningAdvisor(AdviceForGitHubContextFactory.INSTANCE),
         new NoHttpAdvisor(AdviceForGitHubContextFactory.INSTANCE),
         new BanditAdvisor(AdviceForGitHubContextFactory.INSTANCE),
-<<<<<<< HEAD
-        new SnykAdvisor(AdviceForGitHubContextFactory.INSTANCE));
-=======
+        new SnykAdvisor(AdviceForGitHubContextFactory.INSTANCE),
         new GoSecAdvisor(AdviceForGitHubContextFactory.INSTANCE));
->>>>>>> 2e3c5339fcc1340cbc3dc1bdb289195df4bc2a34
   }
 }

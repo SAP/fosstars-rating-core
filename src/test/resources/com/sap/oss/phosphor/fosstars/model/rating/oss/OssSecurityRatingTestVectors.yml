@@ -115,8 +115,6 @@ defaults:
 - type: "BooleanValue"
   feature:
     type: "BooleanFeature"
-<<<<<<< HEAD
-=======
     name: "If a project runs GoSec scans"
   flag: false
 - type: "BooleanValue"
@@ -132,7 +130,6 @@ defaults:
 - type: "BooleanValue"
   feature:
     type: "BooleanFeature"
->>>>>>> 2e3c5339fcc1340cbc3dc1bdb289195df4bc2a34
     name: "If a project has executable binaries"
   flag: false
 - type: "BooleanValue"
