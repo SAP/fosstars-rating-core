@@ -432,7 +432,7 @@ public abstract class AbstractStaticScanToolsDataProvider extends
     @Override
     public void visitPreCommitHook(LocalRepository repository,
         Map<String, Predicate<String>> matchers, Set<Location> locations) throws IOException {
-      Optional<InputStream> content = repository.fileStream(PRE_COMMIT_HOOK_CONFIG);
+      Optional<InputStream> content = repository.read(PRE_COMMIT_HOOK_CONFIG);
       if (!content.isPresent()) {
         return;
       }

@@ -213,37 +213,6 @@ public class LocalRepository implements AutoCloseable {
       return Optional.of(IOUtils.toString(is, UTF_8));
     }
   }
-  
-  /**
-   * Returns a content of a file if it exists.
-   *
-   * @param file The file name.
-   * @return A inputstream of the file.
-   * @throws IOException If something went wrong.
-   */
-  public Optional<InputStream> fileStream(String file) throws IOException {
-    Objects.requireNonNull(file, "On no! File name is null!");
-    return fileStream(Paths.get(file));
-  }
-  
-  /**
-   * Returns a content of a file if it exists.
-   *
-   * @param file The file name.
-   * @return A inputstream of the file.
-   * @throws IOException If something went wrong.
-   */
-  public Optional<InputStream> fileStream(Path file) throws IOException {
-    Objects.requireNonNull(file, "On no! File name is null!");
-    Path path = info.path().resolve(file);
-    if (!Files.isRegularFile(path)) {
-      return Optional.empty();
-    }
-
-    try (InputStream is = Files.newInputStream(path)) {
-      return Optional.ofNullable(is);
-    }
-  }
 
   /**
    * Checks if the repository has a specified directory.
