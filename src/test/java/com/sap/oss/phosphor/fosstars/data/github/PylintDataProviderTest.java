@@ -199,7 +199,7 @@ public class PylintDataProviderTest extends TestGitHubDataFetcherHolder {
     Files.createDirectories(file.getParent());
     when(localRepository.hasDirectory(any(Path.class))).thenReturn(true);
     IOUtils.copy(content, Files.newOutputStream(file));
-    when(localRepository.fileStream(any(String.class)))
+    when(localRepository.read(any(String.class)))
         .thenReturn(Optional.of(Files.newInputStream(file)));
 
     PylintDataProvider provider = new PylintDataProvider(fetcher);

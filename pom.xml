@@ -6,7 +6,7 @@
 
   <groupId>com.sap.oss.phosphor</groupId>
   <artifactId>fosstars-rating-core</artifactId>
-  <version>1.12.0-SNAPSHOT</version>
+  <version>1.11.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>Fosstars Rating Core</name>
