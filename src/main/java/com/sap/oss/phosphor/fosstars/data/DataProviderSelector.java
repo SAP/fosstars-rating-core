@@ -25,8 +25,10 @@ import com.sap.oss.phosphor.fosstars.data.github.ContributingGuidelineInfo;
 import com.sap.oss.phosphor.fosstars.data.github.EstimateImpactUsingKnownVulnerabilities;
 import com.sap.oss.phosphor.fosstars.data.github.FuzzedInOssFuzz;
 import com.sap.oss.phosphor.fosstars.data.github.GitHubDataFetcher;
+import com.sap.oss.phosphor.fosstars.data.github.GoSecDataProvider;
 import com.sap.oss.phosphor.fosstars.data.github.HasBugBountyProgram;
 import com.sap.oss.phosphor.fosstars.data.github.HasCompanySupport;
+import com.sap.oss.phosphor.fosstars.data.github.HasExecutableBinaries;
 import com.sap.oss.phosphor.fosstars.data.github.HasSecurityPolicy;
 import com.sap.oss.phosphor.fosstars.data.github.HasSecurityTeam;
 import com.sap.oss.phosphor.fosstars.data.github.InfoAboutVulnerabilities;
@@ -34,6 +36,7 @@ import com.sap.oss.phosphor.fosstars.data.github.IsApache;
 import com.sap.oss.phosphor.fosstars.data.github.IsEclipse;
 import com.sap.oss.phosphor.fosstars.data.github.LgtmDataProvider;
 import com.sap.oss.phosphor.fosstars.data.github.LicenseInfo;
+import com.sap.oss.phosphor.fosstars.data.github.MyPyDataProvider;
 import com.sap.oss.phosphor.fosstars.data.github.NumberOfCommits;
 import com.sap.oss.phosphor.fosstars.data.github.NumberOfContributors;
 import com.sap.oss.phosphor.fosstars.data.github.NumberOfDependentProjectOnGitHub;
@@ -42,6 +45,7 @@ import com.sap.oss.phosphor.fosstars.data.github.NumberOfWatchers;
 import com.sap.oss.phosphor.fosstars.data.github.OwaspSecurityLibraries;
 import com.sap.oss.phosphor.fosstars.data.github.PackageManagement;
 import com.sap.oss.phosphor.fosstars.data.github.ProgrammingLanguages;
+import com.sap.oss.phosphor.fosstars.data.github.PylintDataProvider;
 import com.sap.oss.phosphor.fosstars.data.github.ReadmeInfo;
 import com.sap.oss.phosphor.fosstars.data.github.ReleasesFromGitHub;
 import com.sap.oss.phosphor.fosstars.data.github.SecurityReviewsFromOpenSSF;
@@ -55,6 +59,7 @@ import com.sap.oss.phosphor.fosstars.data.github.UsesNoHttpTool;
 import com.sap.oss.phosphor.fosstars.data.github.UsesOwaspDependencyCheck;
 import com.sap.oss.phosphor.fosstars.data.github.UsesSanitizers;
 import com.sap.oss.phosphor.fosstars.data.github.UsesSignedCommits;
+import com.sap.oss.phosphor.fosstars.data.github.UsesSnyk;
 import com.sap.oss.phosphor.fosstars.data.github.VulnerabilityAlertsInfo;
 import com.sap.oss.phosphor.fosstars.data.interactive.AskAboutSecurityTeam;
 import com.sap.oss.phosphor.fosstars.data.interactive.AskAboutUnpatchedVulnerabilities;
@@ -206,9 +211,11 @@ public class DataProviderSelector {
         new IsEclipse(fetcher),
         new CodeqlDataProvider(fetcher),
         new BanditDataProvider(fetcher),
+        new GoSecDataProvider(fetcher),
         new LgtmDataProvider(fetcher),
         new UsesSignedCommits(fetcher),
         new UsesDependabot(fetcher),
+        new UsesSnyk(fetcher),
         new ProgrammingLanguages(fetcher),
         new PackageManagement(fetcher),
         new UsesNoHttpTool(fetcher),
@@ -233,6 +240,9 @@ public class DataProviderSelector {
         new NumberOfDependentProjectOnGitHub(fetcher),
         new VulnerabilitiesFromOwaspDependencyCheck(),
         new VulnerabilitiesFromNpmAudit(nvd),
+        new HasExecutableBinaries(fetcher),
+        new PylintDataProvider(fetcher),
+        new MyPyDataProvider(fetcher),
         PROJECT_USAGE_PROVIDER,
         FUNCTIONALITY_PROVIDER,
         HANDLING_UNTRUSTED_DATA_LIKELIHOOD_PROVIDER,

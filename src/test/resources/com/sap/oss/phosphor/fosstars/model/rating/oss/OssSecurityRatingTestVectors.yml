@@ -10,6 +10,11 @@ defaults:
 - type: "BooleanValue"
   feature:
     type: "BooleanFeature"
+    name: "If a project uses Snyk"
+  flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
     name: "If a project uses GitHub as the main development platform"
   flag: false
 - type: "PackageManagersValue"
@@ -107,6 +112,46 @@ defaults:
     type: "BooleanFeature"
     name: "If a project runs Bandit scan checks for commits"
   flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If a project runs GoSec scans"
+  flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If a project runs GoSec scans with rules"
+  flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If a project runs GoSec scan checks for commits"
+  flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If a project has executable binaries"
+  flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If a project runs Mypy scans"
+  flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If a project runs Mypy scan checks for commits"
+  flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If a project runs Pylint scans"
+  flag: false
+- type: "BooleanValue"
+  feature:
+    type: "BooleanFeature"
+    name: "If a project runs Pylint scan checks for commits"
+  flag: false
 - type: "SecurityReviewsValue"
   feature:
     type: "SecurityReviewsFeature"
@@ -126,6 +171,10 @@ elements:
     feature:
       type: "BooleanFeature"
       name: "If a project uses Dependabot"
+  - type: "UnknownValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses Snyk"
   - type: "UnknownValue"
     feature:
       type: "BooleanFeature"

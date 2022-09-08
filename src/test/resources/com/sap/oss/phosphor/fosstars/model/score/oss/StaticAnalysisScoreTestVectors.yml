@@ -7,6 +7,9 @@ elements:
       com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore: 0.0
       com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore: 0.0
       com.sap.oss.phosphor.fosstars.model.score.oss.BanditScore: 0.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.GoSecScore: 0.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.MyPyScore: 0.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.PylintScore: 0.0
     expectedScore:
       type: "DoubleInterval"
       from: 0.0
@@ -24,6 +27,9 @@ elements:
       com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore: 10.0
       com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore: 10.0
       com.sap.oss.phosphor.fosstars.model.score.oss.BanditScore: 10.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.GoSecScore: 10.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.MyPyScore: 10.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.PylintScore: 10.0
     expectedScore:
       type: "DoubleInterval"
       from: 10.0
@@ -41,6 +47,9 @@ elements:
       com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore: 8.0
       com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore: 2.0
       com.sap.oss.phosphor.fosstars.model.score.oss.BanditScore: 2.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.GoSecScore: 5.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.MyPyScore: 5.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.PylintScore: 5.0
     expectedScore:
       type: "DoubleInterval"
       from: 5.0
@@ -58,6 +67,9 @@ elements:
       com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore: 1.0
       com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore: 3.0
       com.sap.oss.phosphor.fosstars.model.score.oss.BanditScore: 4.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.GoSecScore: 4.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.MyPyScore: 4.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.PylintScore: 4.0
     expectedScore:
       type: "DoubleInterval"
       from: 1.0
@@ -105,6 +117,36 @@ elements:
         score:
           type: "BanditScore"
           name: "How a project uses Bandit"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: true
+      - type: "ScoreValue"
+        score:
+          type: "GoSecScore"
+          name: "How a project uses GoSec"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: true
+      - type: "ScoreValue"
+        score:
+          type: "PylintScore"
+          name: "How a project uses Pylint"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: true
+      - type: "ScoreValue"
+        score:
+          type: "MyPyScore"
+          name: "How a project uses MyPy"
         value: 0.0
         weight: 1.0
         confidence: 10.0
@@ -128,6 +170,9 @@ elements:
       com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore: 1.0
       com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore: 3.0
       com.sap.oss.phosphor.fosstars.model.score.oss.BanditScore: 2.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.GoSecScore: 2.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.MyPyScore: 2.0
+      com.sap.oss.phosphor.fosstars.model.score.oss.PylintScore: 2.0
     expectedScore:
       type: "DoubleInterval"
       from: 1.0
@@ -175,6 +220,36 @@ elements:
         score:
           type: "BanditScore"
           name: "How a project uses Bandit"
+        value: 5.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "GoSecScore"
+          name: "How a project uses GoSec"
+        value: 5.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "PylintScore"
+          name: "How a project uses Pylint"
+        value: 5.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "MyPyScore"
+          name: "How a project uses MyPy"
         value: 5.0
         weight: 1.0
         confidence: 10.0
@@ -234,6 +309,36 @@ elements:
         usedValues: []
         explanation: []
         isNotApplicable: true
+      - type: "ScoreValue"
+        score:
+          type: "GoSecScore"
+          name: "How a project uses GoSec"
+        value: 5.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "PylintScore"
+          name: "How a project uses Pylint"
+        value: 5.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "MyPyScore"
+          name: "How a project uses MyPy"
+        value: 5.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
     expectedScore:
       type: "DoubleInterval"
       from: 5.0
@@ -286,6 +391,36 @@ elements:
         confidence: 10.0
         usedValues: [ ]
         explanation: [ ]
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "GoSecScore"
+          name: "How a project uses GoSec"
+        value: 4.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: [ ]
+        explanation: [ ]
+        isNotApplicable: true
+      - type: "ScoreValue"
+        score:
+          type: "PylintScore"
+          name: "How a project uses Pylint"
+        value: 4.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "MyPyScore"
+          name: "How a project uses MyPy"
+        value: 4.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
         isNotApplicable: false
     expectedScore:
       type: "DoubleInterval"
@@ -340,6 +475,36 @@ elements:
         usedValues: [ ]
         explanation: [ ]
         isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "GoSecScore"
+          name: "How a project uses GoSec"
+        value: 3.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: [ ]
+        explanation: [ ]
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "PylintScore"
+          name: "How a project uses Pylint"
+        value: 3.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "MyPyScore"
+          name: "How a project uses MyPy"
+        value: 3.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
     expectedScore:
       type: "DoubleInterval"
       from: 3.0
@@ -351,6 +516,255 @@ elements:
     expectedLabel: null
     expectedNotApplicableScore: false
     alias: "codeql_not_applicable"
+  - type: "StandardTestVector"
+    values:
+      - type: "ScoreValue"
+        score:
+          type: "CodeqlScore"
+          name: "How a project uses CodeQL"
+        value: 5.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "LgtmScore"
+          name: "How a project addresses issues reported by LGTM"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "FindSecBugsScore"
+          name: "How a project uses FindSecBugs"
+        value: 3.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: true
+      - type: "ScoreValue"
+        score:
+          type: "BanditScore"
+          name: "How a project uses Bandit"
+        value: 5.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: [ ]
+        explanation: [ ]
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "GoSecScore"
+          name: "How a project uses GoSec"
+        value: 3.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: [ ]
+        explanation: [ ]
+        isNotApplicable: true
+      - type: "ScoreValue"
+        score:
+          type: "PylintScore"
+          name: "How a project uses Pylint"
+        value: 3.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "MyPyScore"
+          name: "How a project uses MyPy"
+        value: 3.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
+    expectedScore:
+      type: "DoubleInterval"
+      from: 3.0
+      openLeft: false
+      negativeInfinity: false
+      to: 3.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    expectedNotApplicableScore: false
+    alias: "gosec_not_applicable"
+  - type: "StandardTestVector"
+    values:
+      - type: "ScoreValue"
+        score:
+          type: "CodeqlScore"
+          name: "How a project uses CodeQL"
+        value: 5.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "LgtmScore"
+          name: "How a project addresses issues reported by LGTM"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "FindSecBugsScore"
+          name: "How a project uses FindSecBugs"
+        value: 3.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: true
+      - type: "ScoreValue"
+        score:
+          type: "BanditScore"
+          name: "How a project uses Bandit"
+        value: 5.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: [ ]
+        explanation: [ ]
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "GoSecScore"
+          name: "How a project uses GoSec"
+        value: 3.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: [ ]
+        explanation: [ ]
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "PylintScore"
+          name: "How a project uses Pylint"
+        value: 3.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: true
+      - type: "ScoreValue"
+        score:
+          type: "MyPyScore"
+          name: "How a project uses MyPy"
+        value: 3.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
+    expectedScore:
+      type: "DoubleInterval"
+      from: 3.0
+      openLeft: false
+      negativeInfinity: false
+      to: 3.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    expectedNotApplicableScore: false
+    alias: "pylint_not_applicable"
+  - type: "StandardTestVector"
+    values:
+      - type: "ScoreValue"
+        score:
+          type: "CodeqlScore"
+          name: "How a project uses CodeQL"
+        value: 5.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "LgtmScore"
+          name: "How a project addresses issues reported by LGTM"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "FindSecBugsScore"
+          name: "How a project uses FindSecBugs"
+        value: 3.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: true
+      - type: "ScoreValue"
+        score:
+          type: "BanditScore"
+          name: "How a project uses Bandit"
+        value: 5.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: [ ]
+        explanation: [ ]
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "GoSecScore"
+          name: "How a project uses GoSec"
+        value: 3.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: [ ]
+        explanation: [ ]
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "PylintScore"
+          name: "How a project uses Pylint"
+        value: 3.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "MyPyScore"
+          name: "How a project uses MyPy"
+        value: 3.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: true
+    expectedScore:
+      type: "DoubleInterval"
+      from: 3.0
+      openLeft: false
+      negativeInfinity: false
+      to: 3.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    expectedNotApplicableScore: false
+    alias: "mypy_not_applicable"
   - type: "StandardTestVector"
     values:
       - type: "UnknownValue"
@@ -385,6 +799,34 @@ elements:
         feature:
           type: "BooleanFeature"
           name: "If a project runs Bandit scans"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs GoSec scan checks for commits"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs GoSec scans with rules"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs GoSec scans"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs Pylint scan checks for commits"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs Pylint scans"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs Mypy scan checks for commits"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs Mypy scans"
     expectedScore:
       type: "DoubleInterval"
       from: 0.0

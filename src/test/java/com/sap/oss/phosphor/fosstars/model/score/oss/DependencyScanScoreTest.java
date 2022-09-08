@@ -7,6 +7,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.OWASP_
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.PACKAGE_MANAGERS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_DEPENDABOT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GITHUB_FOR_DEVELOPMENT;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SNYK;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.JAVA;
 import static com.sap.oss.phosphor.fosstars.model.value.OwaspDependencyCheckUsage.MANDATORY;
@@ -33,12 +34,13 @@ public class DependencyScanScoreTest {
         OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.value(7.0),
         USES_GITHUB_FOR_DEVELOPMENT.value(true),
         USES_DEPENDABOT.value(true),
+        USES_SNYK.value(false),
         LANGUAGES.value(Languages.of(JAVA)),
         PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN))
     ));
 
     assertTrue(Score.INTERVAL.contains(scoreValue.get()));
-    assertEquals(2, scoreValue.usedValues().size());
+    assertEquals(3, scoreValue.usedValues().size());
   }
 
   @Test

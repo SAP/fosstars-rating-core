@@ -168,6 +168,33 @@ elements:
         confidence: 10.0
         usedValues: []
         explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "GoSecScore"
+          name: "How a project uses GoSec"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "PylintScore"
+          name: "How a project uses Pylint"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "MyPyScore"
+          name: "How a project uses MyPy"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
     expectedScore:
       type: "DoubleInterval"
       from: 5.0
@@ -251,6 +278,33 @@ elements:
         score:
           type: "BanditScore"
           name: "How a project uses Bandit"
+        value: 6.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "GoSecScore"
+          name: "How a project uses GoSec"
+        value: 6.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "PylintScore"
+          name: "How a project uses Pylint"
+        value: 6.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "MyPyScore"
+          name: "How a project uses MyPy"
         value: 6.0
         weight: 1.0
         confidence: 10.0
@@ -343,12 +397,39 @@ elements:
         confidence: 10.0
         usedValues: []
         explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "GoSecScore"
+          name: "How a project uses GoSec"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "PylintScore"
+          name: "How a project uses Pylint"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "MyPyScore"
+          name: "How a project uses MyPy"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
     expectedScore:
       type: "DoubleInterval"
-      from: 5.5
+      from: 5.1
       openLeft: false
       negativeInfinity: false
-      to: 6.5
+      to: 6.3
       openRight: false
       positiveInfinity: false
     expectedLabel: null
@@ -430,13 +511,394 @@ elements:
         usedValues: []
         explanation: []
         isNotApplicable: true
+      - type: "ScoreValue"
+        score:
+          type: "GoSecScore"
+          name: "How a project uses GoSec"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "PylintScore"
+          name: "How a project uses Pylint"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "MyPyScore"
+          name: "How a project uses MyPy"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
     expectedScore:
       type: "DoubleInterval"
-      from: 5.5
+      from: 5.1
       openLeft: false
       negativeInfinity: false
-      to: 6.5
+      to: 6.3
       openRight: false
       positiveInfinity: false
     expectedLabel: null
     alias: "bandit_not_applicable"
+
+  # GoSecScore is N/A
+  - type: "StandardTestVector"
+    values:
+      - type: "ScoreValue"
+        score:
+          type: "CodeqlScore"
+          name: "How a project uses CodeQL"
+        value: 7.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: [ ]
+        explanation: [ ]
+      - type: "ScoreValue"
+        score:
+          type: "LgtmScore"
+          name: "How a project addresses issues reported by LGTM"
+        value: 7.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "DependencyScanScore"
+          name: "How a project scans its dependencies for vulnerabilities"
+        value: 3.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "NoHttpToolScore"
+          name: "If a project uses nohttp tool"
+        value: 10.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "MemorySafetyTestingScore"
+          name: "How a project tests for memory-safety issues"
+        value: 5.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "FuzzingScore"
+          name: "How a project uses fuzzing"
+        value: 8.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "FindSecBugsScore"
+          name: "How a project uses FindSecBugs"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "BanditScore"
+          name: "How a project uses Bandit"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "GoSecScore"
+          name: "How a project uses GoSec"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: true
+      - type: "ScoreValue"
+        score:
+          type: "PylintScore"
+          name: "How a project uses Pylint"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "MyPyScore"
+          name: "How a project uses MyPy"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
+    expectedScore:
+      type: "DoubleInterval"
+      from: 5.1
+      openLeft: false
+      negativeInfinity: false
+      to: 6.3
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "gosec_not_applicable"
+
+  # PylintScore is N/A
+  - type: "StandardTestVector"
+    values:
+      - type: "ScoreValue"
+        score:
+          type: "CodeqlScore"
+          name: "How a project uses CodeQL"
+        value: 7.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: [ ]
+        explanation: [ ]
+      - type: "ScoreValue"
+        score:
+          type: "LgtmScore"
+          name: "How a project addresses issues reported by LGTM"
+        value: 7.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "DependencyScanScore"
+          name: "How a project scans its dependencies for vulnerabilities"
+        value: 3.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "NoHttpToolScore"
+          name: "If a project uses nohttp tool"
+        value: 10.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "MemorySafetyTestingScore"
+          name: "How a project tests for memory-safety issues"
+        value: 5.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "FuzzingScore"
+          name: "How a project uses fuzzing"
+        value: 8.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "FindSecBugsScore"
+          name: "How a project uses FindSecBugs"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "BanditScore"
+          name: "How a project uses Bandit"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "GoSecScore"
+          name: "How a project uses GoSec"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "PylintScore"
+          name: "How a project uses Pylint"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: true
+      - type: "ScoreValue"
+        score:
+          type: "MyPyScore"
+          name: "How a project uses MyPy"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
+    expectedScore:
+      type: "DoubleInterval"
+      from: 5.1
+      openLeft: false
+      negativeInfinity: false
+      to: 6.3
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "pylint_not_applicable"
+    
+  # MyPyScore is N/A
+  - type: "StandardTestVector"
+    values:
+      - type: "ScoreValue"
+        score:
+          type: "CodeqlScore"
+          name: "How a project uses CodeQL"
+        value: 7.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: [ ]
+        explanation: [ ]
+      - type: "ScoreValue"
+        score:
+          type: "LgtmScore"
+          name: "How a project addresses issues reported by LGTM"
+        value: 7.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "DependencyScanScore"
+          name: "How a project scans its dependencies for vulnerabilities"
+        value: 3.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "NoHttpToolScore"
+          name: "If a project uses nohttp tool"
+        value: 10.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "MemorySafetyTestingScore"
+          name: "How a project tests for memory-safety issues"
+        value: 5.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "FuzzingScore"
+          name: "How a project uses fuzzing"
+        value: 8.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "FindSecBugsScore"
+          name: "How a project uses FindSecBugs"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+      - type: "ScoreValue"
+        score:
+          type: "BanditScore"
+          name: "How a project uses Bandit"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "GoSecScore"
+          name: "How a project uses GoSec"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "PylintScore"
+          name: "How a project uses Pylint"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: false
+      - type: "ScoreValue"
+        score:
+          type: "MyPyScore"
+          name: "How a project uses MyPy"
+        value: 0.0
+        weight: 1.0
+        confidence: 10.0
+        usedValues: []
+        explanation: []
+        isNotApplicable: true
+    expectedScore:
+      type: "DoubleInterval"
+      from: 5.1
+      openLeft: false
+      negativeInfinity: false
+      to: 6.3
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "mypy_not_applicable"

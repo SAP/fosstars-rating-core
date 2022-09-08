@@ -1,0 +1,214 @@
+---
+defaults:
+  - type: "LanguagesValue"
+    feature:
+      type: "LanguagesFeature"
+      name: "A set of programming languages"
+    languages:
+      elements:
+        - "GO"
+elements:
+  - type: "StandardTestVector"
+    values:
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs GoSec scan checks for commits"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs GoSec scans with rules"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs GoSec scans"
+      - type: "UnknownValue"
+        feature:
+          type: "LanguagesFeature"
+          name: "A set of programming languages"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 1.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    expectedUnknownScore: true
+    alias: "all_unknown"
+  - type: "StandardTestVector"
+    values:
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs GoSec scan checks for commits"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs GoSec scans with rules"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs GoSec scans"
+        flag: false
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 1.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_1"
+  - type: "StandardTestVector"
+    values:
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs GoSec scan checks for commits"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs GoSec scans with rules"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs GoSec scans"
+        flag: true
+    expectedScore:
+      type: "DoubleInterval"
+      from: 6.0
+      openLeft: false
+      negativeInfinity: false
+      to: 8.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_2"
+  - type: "StandardTestVector"
+    values:
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs GoSec scan checks for commits"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs GoSec scans with rules"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs GoSec scans"
+        flag: true
+    expectedScore:
+      type: "DoubleInterval"
+      from: 5.0
+      openLeft: false
+      negativeInfinity: false
+      to: 7.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_3"
+  - type: "StandardTestVector"
+    values:
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs GoSec scan checks for commits"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs GoSec scans with rules"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs GoSec scans"
+        flag: true
+    expectedScore:
+      type: "DoubleInterval"
+      from: 7.0
+      openLeft: false
+      negativeInfinity: false
+      to: 9.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_4"
+  - type: "StandardTestVector"
+    values:
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs GoSec scan checks for commits"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs GoSec scans with rules"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs GoSec scans"
+        flag: false
+      - type: "LanguagesValue"
+        feature:
+          type: "LanguagesFeature"
+          name: "A set of programming languages"
+        languages:
+          elements:
+            - "OTHER"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 9.0
+      openLeft: false
+      negativeInfinity: false
+      to: 10.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    expectedNotApplicableScore: true
+    alias: "not_applicable_test_vector_1"
+  - type: "StandardTestVector"
+    values:
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs GoSec scan checks for commits"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs GoSec scans with rules"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project runs GoSec scans"
+        flag: true
+      - type: "UnknownValue"
+        feature:
+          type: "LanguagesFeature"
+          name: "A set of programming languages"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 1.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    expectedNotApplicableScore: true
+    alias: "not_applicable_test_vector_2"
