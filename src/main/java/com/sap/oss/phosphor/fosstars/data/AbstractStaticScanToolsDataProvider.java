@@ -28,6 +28,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -202,6 +203,50 @@ public abstract class AbstractStaticScanToolsDataProvider extends
         .orElse(false);
   }
 
+
+  /**
+   * Browse through the GitHub actions and find matches with the given predicates.
+   *
+   * @param githubAction GitHub Actions.
+   * @param matchers predicates to match through the given action.
+   * @param configMatchers predicates to match through the given action in relation with matchers.
+   * @return True if one of the predicate finds matches. False otherwise.
+   */
+  private static boolean scanGitHubAction(Map<?, ?> githubAction,
+      Map<String, Predicate<String>> matchers, Map<String, Predicate<String>> configMatchers) {
+    if (matchers.isEmpty() || configMatchers.isEmpty()) {
+      return false;
+    }
+
+    return Optional.ofNullable(githubAction.get("jobs"))
+        .filter(Map.class::isInstance)
+        .map(Map.class::cast)
+        .map(jobs -> jobs.values())
+        .filter(Iterable.class::isInstance)
+        .map(Iterable.class::cast)
+        .map(jobs -> scanJobs(jobs, matchers, configMatchers))
+        .orElse(false);
+  }
+
+  /**
+   * Checks if any job triggers a GoSec scan with rules.
+   *
+   * @param jobs The collection of jobs from GitHub action.
+   * @param matchers predicates to match through the given action.
+   * @param configMatchers predicates to match through the given action in relation with matchers.
+   * @return True if a step triggers a GoSec scan with rules, false otherwise.
+   */
+  private static boolean scanJobs(Iterable<?> jobs,
+      Map<String, Predicate<String>> matchers, Map<String, Predicate<String>> configMatchers) {
+    return IteratorUtils.toList(jobs.iterator()).stream()
+        .filter(Map.class::isInstance)
+        .map(Map.class::cast)
+        .map(job -> job.get("steps"))
+        .filter(Iterable.class::isInstance)
+        .map(Iterable.class::cast)
+        .anyMatch(steps -> scanSteps(steps, matchers, configMatchers));
+  }
+
   /**
    * Search for the given predicate matches in the given list of action jobs.
    *
@@ -220,9 +265,35 @@ public abstract class AbstractStaticScanToolsDataProvider extends
   }
 
   /**
+   * Checks if a collection of steps from a GitHub action contains a step that triggers a GoSec
+   * scan with rules.
+   *
+   * @param steps The steps to be checked.
+   * @param matchers predicates to match through the given action.
+   * @param configMatchers predicates to match through the given action in relation with matchers.
+   * @return True if the steps contain a step that triggers a GoSec scan with rules, false
+   *     otherwise.
+   */
+  private static boolean scanSteps(Iterable<?> steps,
+      Map<String, Predicate<String>> matchers, Map<String, Predicate<String>> configMatchers) {
+    AtomicBoolean usesWithRules = new AtomicBoolean(false);
+    IteratorUtils.toList(steps.iterator()).stream()
+        .filter(Map.class::isInstance)
+        .map(Map.class::cast)
+        .forEach(
+            step -> {
+              if (MATCH_MAP_PREDICATE.test(step, matchers)
+                  && MATCH_MAP_PREDICATE.test(step, configMatchers)) {
+                usesWithRules.set(true);
+              }
+            });
+    return usesWithRules.get();
+  }
+
+  /**
    * Search for the given predicate matches in the given list of job steps.
    *
-   * @param jobs Iterable list of GitHub job steps.
+   * @param steps Iterable list of GitHub job steps.
    * @param matchers predicates to match through the given action.
    * @return True if one of the predicate finds matches. False otherwise.
    */
@@ -354,7 +425,7 @@ public abstract class AbstractStaticScanToolsDataProvider extends
   /**
    * Search for the given predicate matches in the given list of repo hook.
    *
-   * @param repos Iterable list of GitHub hooks config.
+   * @param hooks Iterable list of GitHub hooks config.
    * @param matchers predicates to match through the given action.
    * @return True if one of the predicate finds matches. False otherwise.
    */
@@ -369,7 +440,7 @@ public abstract class AbstractStaticScanToolsDataProvider extends
   /**
    * Search for the given predicate matches in the given ini config file.
    *
-   * @param repos Iterable list lines from the ini config.
+   * @param lines Iterable list lines from the ini config.
    * @param matchers predicates to match through the given action.
    * @return True if one of the predicate finds matches. False otherwise.
    */
@@ -469,7 +540,7 @@ public abstract class AbstractStaticScanToolsDataProvider extends
             if (runsOnPullRequests(githubAction)) {
               usesCheck = true;
             }
-            if (scanGitHubAction(githubAction, configMatchers)) {
+            if (scanGitHubAction(githubAction, matchers, configMatchers)) {
               hasRules = true;
               break;
             }
