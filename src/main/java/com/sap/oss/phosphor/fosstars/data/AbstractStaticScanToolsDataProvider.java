@@ -203,7 +203,6 @@ public abstract class AbstractStaticScanToolsDataProvider extends
         .orElse(false);
   }
 
-
   /**
    * Browse through the GitHub actions and find matches with the given predicates.
    *
