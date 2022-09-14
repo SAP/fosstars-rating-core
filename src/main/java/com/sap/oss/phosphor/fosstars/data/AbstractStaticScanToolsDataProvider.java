@@ -28,7 +28,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -184,13 +183,14 @@ public abstract class AbstractStaticScanToolsDataProvider extends
    * Browse through the GitHub actions and find matches with the given predicates.
    *
    * @param githubAction GitHub Actions.
-   * @param matchers predicates to match through the given action.
-   * @return True if one of the predicate finds matches. False otherwise.
+   * @param matchers     predicates to match through the given action.
+   * @return Optional<{@link Map}> step if one of the predicate finds matches.
+   *         Optional.empty otherwise.
    */
-  private static boolean scanGitHubAction(Map<?, ?> githubAction,
+  private static Optional<Map> scanGitHubAction(Map<?, ?> githubAction,
       Map<String, Predicate<String>> matchers) {
     if (matchers.isEmpty()) {
-      return false;
+      return Optional.empty();
     }
 
     return Optional.ofNullable(githubAction.get("jobs"))
@@ -200,107 +200,32 @@ public abstract class AbstractStaticScanToolsDataProvider extends
         .filter(Iterable.class::isInstance)
         .map(Iterable.class::cast)
         .map(jobs -> scanJobs(jobs, matchers))
-        .orElse(false);
-  }
-
-  /**
-   * Browse through the GitHub actions and find matches with the given predicates.
-   *
-   * @param githubAction GitHub Actions.
-   * @param matchers predicates to match through the given action.
-   * @param configMatchers predicates to match through the given action in relation with matchers.
-   * @return True if one of the predicate finds matches. False otherwise.
-   */
-  private static boolean scanGitHubAction(Map<?, ?> githubAction,
-      Map<String, Predicate<String>> matchers, Map<String, Predicate<String>> configMatchers) {
-    if (matchers.isEmpty() || configMatchers.isEmpty()) {
-      return false;
-    }
-
-    return Optional.ofNullable(githubAction.get("jobs"))
-        .filter(Map.class::isInstance)
-        .map(Map.class::cast)
-        .map(jobs -> jobs.values())
-        .filter(Iterable.class::isInstance)
-        .map(Iterable.class::cast)
-        .map(jobs -> scanJobs(jobs, matchers, configMatchers))
-        .orElse(false);
-  }
-
-  /**
-   * Checks if any job triggers a GoSec scan with rules.
-   *
-   * @param jobs The collection of jobs from GitHub action.
-   * @param matchers predicates to match through the given action.
-   * @param configMatchers predicates to match through the given action in relation with matchers.
-   * @return True if a step triggers a GoSec scan with rules, false otherwise.
-   */
-  private static boolean scanJobs(Iterable<?> jobs,
-      Map<String, Predicate<String>> matchers, Map<String, Predicate<String>> configMatchers) {
-    return IteratorUtils.toList(jobs.iterator()).stream()
-        .filter(Map.class::isInstance)
-        .map(Map.class::cast)
-        .map(job -> job.get("steps"))
-        .filter(Iterable.class::isInstance)
-        .map(Iterable.class::cast)
-        .anyMatch(steps -> scanSteps(steps, matchers, configMatchers));
+        .orElse(Optional.empty());
   }
 
   /**
    * Search for the given predicate matches in the given list of action jobs.
    *
-   * @param jobs Iterable list of GitHub action jobs.
+   * @param jobs     Iterable list of GitHub action jobs.
    * @param matchers predicates to match through the given action.
-   * @return True if one of the predicate finds matches. False otherwise.
+   * @return Optional<{@link Map}> step if one of the predicate finds matches.
+   *         Optional.empty otherwise.
    */
-  private static boolean scanJobs(Iterable<?> jobs, Map<String, Predicate<String>> matchers) {
+  private static Optional<Map> scanJobs(Iterable<?> jobs, Map<String, Predicate<String>> matchers) {
     return IteratorUtils.toList(jobs.iterator()).stream()
         .filter(Map.class::isInstance)
         .map(Map.class::cast)
+        .filter(job -> job.containsKey("steps"))
+        .filter(Map.class::isInstance)
+        .map(Map.class::cast)
         .map(job -> job.get("steps"))
-        .filter(Iterable.class::isInstance)
-        .map(Iterable.class::cast)
-        .anyMatch(steps -> scanSteps(steps, matchers));
-  }
-
-  /**
-   * Checks if a collection of steps from a GitHub action contains a step that triggers a GoSec
-   * scan with rules.
-   *
-   * @param steps The steps to be checked.
-   * @param matchers predicates to match through the given action.
-   * @param configMatchers predicates to match through the given action in relation with matchers.
-   * @return True if the steps contain a step that triggers a GoSec scan with rules, false
-   *     otherwise.
-   */
-  private static boolean scanSteps(Iterable<?> steps,
-      Map<String, Predicate<String>> matchers, Map<String, Predicate<String>> configMatchers) {
-    AtomicBoolean usesWithRules = new AtomicBoolean(false);
-    IteratorUtils.toList(steps.iterator()).stream()
+        .filter(ArrayList.class::isInstance)
+        .map(ArrayList.class::cast)
+        .flatMap(step -> step.stream())
         .filter(Map.class::isInstance)
         .map(Map.class::cast)
-        .forEach(
-            step -> {
-              if (MATCH_MAP_PREDICATE.test(step, matchers)
-                  && MATCH_MAP_PREDICATE.test(step, configMatchers)) {
-                usesWithRules.set(true);
-              }
-            });
-    return usesWithRules.get();
-  }
-
-  /**
-   * Search for the given predicate matches in the given list of job steps.
-   *
-   * @param steps Iterable list of GitHub job steps.
-   * @param matchers predicates to match through the given action.
-   * @return True if one of the predicate finds matches. False otherwise.
-   */
-  private static boolean scanSteps(Iterable<?> steps, Map<String, Predicate<String>> matchers) {
-    return IteratorUtils.toList(steps.iterator()).stream()
-        .filter(Map.class::isInstance)
-        .map(Map.class::cast)
-        .anyMatch(step -> MATCH_MAP_PREDICATE.test(step, matchers));
+        .filter(step -> MATCH_MAP_PREDICATE.test((Map<?, ?>) step, matchers))
+        .findAny();
   }
 
   /**
@@ -534,12 +459,13 @@ public abstract class AbstractStaticScanToolsDataProvider extends
       for (Path configPath : findGitHubActionsIn(repository)) {
         try (InputStream content = Files.newInputStream(configPath)) {
           Map<String, Object> githubAction = Yaml.readMap(content);
-          if (scanGitHubAction(githubAction, matchers)) {
+          Optional<Map> step = scanGitHubAction(githubAction, matchers);
+          if (step.isPresent() && !step.get().keySet().isEmpty()) {
             runCheck = true;
             if (runsOnPullRequests(githubAction)) {
               usesCheck = true;
             }
-            if (scanGitHubAction(githubAction, matchers, configMatchers)) {
+            if (MATCH_MAP_PREDICATE.test(step.get(), configMatchers)) {
               hasRules = true;
               break;
             }
