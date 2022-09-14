@@ -206,7 +206,7 @@ public abstract class AbstractStaticScanToolsDataProvider extends
   /**
    * Search for the given predicate matches in the given list of action jobs.
    *
-   * @param jobs     Iterable list of GitHub action jobs.
+   * @param jobs Iterable list of GitHub action jobs.
    * @param matchers predicates to match through the given action.
    * @return Optional<{@link Map}> step if one of the predicate finds matches.
    *         Optional.empty otherwise.
