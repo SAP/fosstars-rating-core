@@ -183,7 +183,7 @@ public abstract class AbstractStaticScanToolsDataProvider extends
    * Browse through the GitHub actions and find matches with the given predicates.
    *
    * @param githubAction GitHub Actions.
-   * @param matchers     predicates to match through the given action.
+   * @param matchers predicates to match through the given action.
    * @return Optional<{@link Map}> step if one of the predicate finds matches.
    *         Optional.empty otherwise.
    */
