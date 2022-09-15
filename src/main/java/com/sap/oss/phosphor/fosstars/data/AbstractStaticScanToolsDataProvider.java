@@ -215,16 +215,13 @@ public abstract class AbstractStaticScanToolsDataProvider extends
     return IteratorUtils.toList(jobs.iterator()).stream()
         .filter(Map.class::isInstance)
         .map(Map.class::cast)
-        .filter(job -> job.containsKey("steps"))
-        .filter(Map.class::isInstance)
-        .map(Map.class::cast)
         .map(job -> job.get("steps"))
-        .filter(ArrayList.class::isInstance)
-        .map(ArrayList.class::cast)
-        .flatMap(step -> step.stream())
+        .filter(List.class::isInstance)
+        .map(List.class::cast)
+        .flatMap(List<?>::stream)
         .filter(Map.class::isInstance)
         .map(Map.class::cast)
-        .filter(step -> MATCH_MAP_PREDICATE.test((Map<?, ?>) step, matchers))
+        .filter(step -> MATCH_MAP_PREDICATE.test(step, matchers))
         .findAny();
   }
 
