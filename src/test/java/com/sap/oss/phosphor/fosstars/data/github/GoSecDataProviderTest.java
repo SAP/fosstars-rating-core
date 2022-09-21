@@ -98,7 +98,7 @@ public class GoSecDataProviderTest extends TestGitHubDataFetcherHolder {
     }
   }
 
-  //TODO This is a good test case but need to be fixed in later stages
+  @Test
   public void testWithGoSecRunsAndRulesInDifferentStep() throws IOException {
     try (InputStream content = getClass().getResourceAsStream(
         "gosec-analysis-with-rules-in-different-step.yml")) {
@@ -121,9 +121,20 @@ public class GoSecDataProviderTest extends TestGitHubDataFetcherHolder {
   }
 
   @Test
-  public void testWithGoSecRunAndChecksWithRules() throws IOException {
+  public void testWithGoSecRunWithExcludeRules() throws IOException {
     try (InputStream content = getClass().getResourceAsStream(
-        "gosec-analysis-run-with-rules.yml")) {
+        "gosec-analysis-run-with-exclude-rules.yml")) {
+      testGoSecRuns(GITHUB_WORKFLOW_FILENAME, content,
+          RUNS_GOSEC_SCANS.value(true),
+          USES_GOSEC_SCAN_CHECKS.value(true),
+          USES_GOSEC_WITH_RULES.value(true));
+    }
+  }
+
+  @Test
+  public void testWithGoSecRunWithInludeRules() throws IOException {
+    try (InputStream content = getClass().getResourceAsStream(
+        "gosec-analysis-run-with-include-rules.yml")) {
       testGoSecRuns(GITHUB_WORKFLOW_FILENAME, content,
           RUNS_GOSEC_SCANS.value(true),
           USES_GOSEC_SCAN_CHECKS.value(true),
