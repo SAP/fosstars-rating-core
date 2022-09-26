@@ -2,6 +2,7 @@ package com.sap.oss.phosphor.fosstars.data.artifact;
 
 import static com.sap.oss.phosphor.fosstars.model.Subject.cast;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES_IN_ARTIFACT;
+import static com.sap.oss.phosphor.fosstars.model.other.Utils.delete;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 
 import com.sap.oss.phosphor.fosstars.data.DataProvider;
@@ -79,6 +80,16 @@ public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider {
   private static final String REPORT_DIR = String.format("%s/reports", DEFAULT_DOWNLOAD_DIRECTORY);
 
   /**
+   * The directory to save OWASP Dependency-Check temporary files.
+   */
+  private static final String TEMP_DIR = String.format("%s/tmp", DEFAULT_DOWNLOAD_DIRECTORY);
+
+  /**
+   * The directory to save OWASP Dependency-Check DB file.
+   */
+  private static final String DB_DIR = String.format("%s/db", DEFAULT_DOWNLOAD_DIRECTORY);
+
+  /**
    * The Dependency-Check report file type.
    */
   private static final String REPORT_OUTPUT_FORMAT = "JSON";
@@ -100,6 +111,8 @@ public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider {
   public VulnerabilitiesFromOwaspDependencyCheck() {
     settings = new Settings();
     settings.setString(Settings.KEYS.DATA_DIRECTORY, DEFAULT_DOWNLOAD_DIRECTORY);
+    settings.setString(Settings.KEYS.TEMP_DIRECTORY, TEMP_DIR);
+    settings.setString(Settings.KEYS.H2_DATA_DIRECTORY, DB_DIR);
   }
 
   /**
@@ -245,6 +258,8 @@ public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider {
       try (Engine engine = new Engine(settings)) {
         analyze(engine, filePath.get().toFile(), exceptionCollection);
         return process(engine, filePath.get().toFile().getName(), exceptionCollection);
+      } finally {
+        delete(TEMP_DIR, JAR_DIR, REPORT_DIR);
       }
     }
     return Optional.empty();
