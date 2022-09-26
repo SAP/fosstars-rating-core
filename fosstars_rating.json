@@ -216,9 +216,9 @@
         }
       }
     },
-    "value" : 4.147272620996025,
+    "value" : 5.856584585627139,
     "weight" : 1.0,
-    "confidence" : 8.785601711133626,
+    "confidence" : 9.645390070921986,
     "usedValues" : [ {
       "type" : "ScoreValue",
       "score" : {
@@ -298,9 +298,9 @@
           }
         }
       },
-      "value" : 4.190476190476191,
+      "value" : 7.424242424242423,
       "weight" : 1.0,
-      "confidence" : 6.891534391534392,
+      "confidence" : 10.0,
       "usedValues" : [ {
         "type" : "ScoreValue",
         "score" : {
@@ -309,7 +309,7 @@
         },
         "value" : 10.0,
         "weight" : 1.0,
-        "confidence" : 8.333333333333334,
+        "confidence" : 10.0,
         "usedValues" : [ {
           "type" : "ScoreValue",
           "score" : {
@@ -318,7 +318,7 @@
           },
           "value" : 10.0,
           "weight" : 1.0,
-          "confidence" : 7.5,
+          "confidence" : 10.0,
           "usedValues" : [ {
             "type" : "BooleanValue",
             "feature" : {
@@ -346,10 +346,13 @@
             },
             "explanation" : [ ]
           }, {
-            "type" : "UnknownValue",
+            "type" : "LanguagesValue",
             "feature" : {
               "type" : "LanguagesFeature",
               "name" : "A set of programming languages"
+            },
+            "languages" : {
+              "elements" : [ "JAVA", "PYTHON", "OTHER" ]
             },
             "explanation" : [ ]
           } ],
@@ -366,9 +369,9 @@
             "type" : "SnykDependencyScanScore",
             "name" : "How a project uses Snyk"
           },
-          "value" : 0.0,
+          "value" : 5.0,
           "weight" : 1.0,
-          "confidence" : 7.5,
+          "confidence" : 10.0,
           "usedValues" : [ {
             "type" : "BooleanValue",
             "feature" : {
@@ -396,10 +399,13 @@
             },
             "explanation" : [ ]
           }, {
-            "type" : "UnknownValue",
+            "type" : "LanguagesValue",
             "feature" : {
               "type" : "LanguagesFeature",
               "name" : "A set of programming languages"
+            },
+            "languages" : {
+              "elements" : [ "JAVA", "PYTHON", "OTHER" ]
             },
             "explanation" : [ ]
           } ],
@@ -505,12 +511,15 @@
         },
         "value" : 0.0,
         "weight" : 1.0,
-        "confidence" : 5.0,
+        "confidence" : 10.0,
         "usedValues" : [ {
-          "type" : "UnknownValue",
+          "type" : "LanguagesValue",
           "feature" : {
             "type" : "LanguagesFeature",
             "name" : "A set of programming languages"
+          },
+          "languages" : {
+            "elements" : [ "JAVA", "PYTHON", "OTHER" ]
           },
           "explanation" : [ ]
         }, {
@@ -524,7 +533,7 @@
         } ],
         "explanation" : [ ],
         "isUnknown" : false,
-        "isNotApplicable" : false,
+        "isNotApplicable" : true,
         "feature" : {
           "type" : "FuzzingScore",
           "name" : "How a project uses fuzzing"
@@ -537,12 +546,15 @@
         },
         "value" : 0.0,
         "weight" : 1.0,
-        "confidence" : 7.5,
+        "confidence" : 10.0,
         "usedValues" : [ {
-          "type" : "UnknownValue",
+          "type" : "LanguagesValue",
           "feature" : {
             "type" : "LanguagesFeature",
             "name" : "A set of programming languages"
+          },
+          "languages" : {
+            "elements" : [ "JAVA", "PYTHON", "OTHER" ]
           },
           "explanation" : [ ]
         }, {
@@ -572,7 +584,7 @@
         } ],
         "explanation" : [ ],
         "isUnknown" : false,
-        "isNotApplicable" : false,
+        "isNotApplicable" : true,
         "feature" : {
           "type" : "MemorySafetyTestingScore",
           "name" : "How a project tests for memory-safety issues"
@@ -616,9 +628,9 @@
             }
           }
         },
-        "value" : 7.6,
+        "value" : 6.333333333333333,
         "weight" : 1.0,
-        "confidence" : 6.111111111111112,
+        "confidence" : 10.0,
         "usedValues" : [ {
           "type" : "ScoreValue",
           "score" : {
@@ -627,7 +639,7 @@
           },
           "value" : 9.0,
           "weight" : 1.0,
-          "confidence" : 5.0,
+          "confidence" : 10.0,
           "usedValues" : [ {
             "type" : "LgtmGradeValue",
             "feature" : {
@@ -637,10 +649,13 @@
             "value" : "A",
             "explanation" : [ ]
           }, {
-            "type" : "UnknownValue",
+            "type" : "LanguagesValue",
             "feature" : {
               "type" : "LanguagesFeature",
               "name" : "A set of programming languages"
+            },
+            "languages" : {
+              "elements" : [ "JAVA", "PYTHON", "OTHER" ]
             },
             "explanation" : [ ]
           } ],
@@ -659,7 +674,7 @@
           },
           "value" : 0.0,
           "weight" : 0.5,
-          "confidence" : 6.666666666666667,
+          "confidence" : 10.0,
           "usedValues" : [ {
             "type" : "BooleanValue",
             "feature" : {
@@ -677,16 +692,19 @@
             "flag" : false,
             "explanation" : [ ]
           }, {
-            "type" : "UnknownValue",
+            "type" : "LanguagesValue",
             "feature" : {
               "type" : "LanguagesFeature",
               "name" : "A set of programming languages"
             },
+            "languages" : {
+              "elements" : [ "JAVA", "PYTHON", "OTHER" ]
+            },
             "explanation" : [ ]
           } ],
-          "explanation" : [ "The score is N/A because the project does not confirm which languages are used." ],
+          "explanation" : [ ],
           "isUnknown" : false,
-          "isNotApplicable" : true,
+          "isNotApplicable" : false,
           "feature" : {
             "type" : "BanditScore",
             "name" : "How a project uses Bandit"
@@ -699,12 +717,15 @@
           },
           "value" : 0.0,
           "weight" : 0.5,
-          "confidence" : 5.0,
+          "confidence" : 10.0,
           "usedValues" : [ {
-            "type" : "UnknownValue",
+            "type" : "LanguagesValue",
             "feature" : {
               "type" : "LanguagesFeature",
               "name" : "A set of programming languages"
+            },
+            "languages" : {
+              "elements" : [ "JAVA", "PYTHON", "OTHER" ]
             },
             "explanation" : [ ]
           }, {
@@ -731,7 +752,7 @@
           },
           "value" : 10.0,
           "weight" : 1.0,
-          "confidence" : 7.5,
+          "confidence" : 10.0,
           "usedValues" : [ {
             "type" : "BooleanValue",
             "feature" : {
@@ -757,10 +778,13 @@
             "flag" : true,
             "explanation" : [ ]
           }, {
-            "type" : "UnknownValue",
+            "type" : "LanguagesValue",
             "feature" : {
               "type" : "LanguagesFeature",
               "name" : "A set of programming languages"
+            },
+            "languages" : {
+              "elements" : [ "JAVA", "PYTHON", "OTHER" ]
             },
             "explanation" : [ ]
           } ],
@@ -976,9 +1000,9 @@
         },
         "name" : "Assesses security testing and vulnerability discovery"
       },
-      "value" : 2.0,
+      "value" : 10.0,
       "weight" : 0.6,
-      "confidence" : 8.445767195767196,
+      "confidence" : 10.0,
       "usedValues" : [ {
         "type" : "VulnerabilitiesValue",
         "feature" : {
@@ -1068,9 +1092,9 @@
             }
           }
         },
-        "value" : 4.190476190476191,
+        "value" : 7.424242424242423,
         "weight" : 1.0,
-        "confidence" : 6.891534391534392,
+        "confidence" : 10.0,
         "usedValues" : [ {
           "type" : "ScoreValue",
           "score" : {
@@ -1079,7 +1103,7 @@
           },
           "value" : 10.0,
           "weight" : 1.0,
-          "confidence" : 8.333333333333334,
+          "confidence" : 10.0,
           "usedValues" : [ {
             "type" : "ScoreValue",
             "score" : {
@@ -1088,7 +1112,7 @@
             },
             "value" : 10.0,
             "weight" : 1.0,
-            "confidence" : 7.5,
+            "confidence" : 10.0,
             "usedValues" : [ {
               "type" : "BooleanValue",
               "feature" : {
@@ -1116,10 +1140,13 @@
               },
               "explanation" : [ ]
             }, {
-              "type" : "UnknownValue",
+              "type" : "LanguagesValue",
               "feature" : {
                 "type" : "LanguagesFeature",
                 "name" : "A set of programming languages"
+              },
+              "languages" : {
+                "elements" : [ "JAVA", "PYTHON", "OTHER" ]
               },
               "explanation" : [ ]
             } ],
@@ -1136,9 +1163,9 @@
               "type" : "SnykDependencyScanScore",
               "name" : "How a project uses Snyk"
             },
-            "value" : 0.0,
+            "value" : 5.0,
             "weight" : 1.0,
-            "confidence" : 7.5,
+            "confidence" : 10.0,
             "usedValues" : [ {
               "type" : "BooleanValue",
               "feature" : {
@@ -1166,10 +1193,13 @@
               },
               "explanation" : [ ]
             }, {
-              "type" : "UnknownValue",
+              "type" : "LanguagesValue",
               "feature" : {
                 "type" : "LanguagesFeature",
                 "name" : "A set of programming languages"
+              },
+              "languages" : {
+                "elements" : [ "JAVA", "PYTHON", "OTHER" ]
               },
               "explanation" : [ ]
             } ],
@@ -1275,12 +1305,15 @@
           },
           "value" : 0.0,
           "weight" : 1.0,
-          "confidence" : 5.0,
+          "confidence" : 10.0,
           "usedValues" : [ {
-            "type" : "UnknownValue",
+            "type" : "LanguagesValue",
             "feature" : {
               "type" : "LanguagesFeature",
               "name" : "A set of programming languages"
+            },
+            "languages" : {
+              "elements" : [ "JAVA", "PYTHON", "OTHER" ]
             },
             "explanation" : [ ]
           }, {
@@ -1294,7 +1327,7 @@
           } ],
           "explanation" : [ ],
           "isUnknown" : false,
-          "isNotApplicable" : false,
+          "isNotApplicable" : true,
           "feature" : {
             "type" : "FuzzingScore",
             "name" : "How a project uses fuzzing"
@@ -1307,12 +1340,15 @@
           },
           "value" : 0.0,
           "weight" : 1.0,
-          "confidence" : 7.5,
+          "confidence" : 10.0,
           "usedValues" : [ {
-            "type" : "UnknownValue",
+            "type" : "LanguagesValue",
             "feature" : {
               "type" : "LanguagesFeature",
               "name" : "A set of programming languages"
+            },
+            "languages" : {
+              "elements" : [ "JAVA", "PYTHON", "OTHER" ]
             },
             "explanation" : [ ]
           }, {
@@ -1342,7 +1378,7 @@
           } ],
           "explanation" : [ ],
           "isUnknown" : false,
-          "isNotApplicable" : false,
+          "isNotApplicable" : true,
           "feature" : {
             "type" : "MemorySafetyTestingScore",
             "name" : "How a project tests for memory-safety issues"
@@ -1386,9 +1422,9 @@
               }
             }
           },
-          "value" : 7.6,
+          "value" : 6.333333333333333,
           "weight" : 1.0,
-          "confidence" : 6.111111111111112,
+          "confidence" : 10.0,
           "usedValues" : [ {
             "type" : "ScoreValue",
             "score" : {
@@ -1397,7 +1433,7 @@
             },
             "value" : 9.0,
             "weight" : 1.0,
-            "confidence" : 5.0,
+            "confidence" : 10.0,
             "usedValues" : [ {
               "type" : "LgtmGradeValue",
               "feature" : {
@@ -1407,10 +1443,13 @@
               "value" : "A",
               "explanation" : [ ]
             }, {
-              "type" : "UnknownValue",
+              "type" : "LanguagesValue",
               "feature" : {
                 "type" : "LanguagesFeature",
                 "name" : "A set of programming languages"
+              },
+              "languages" : {
+                "elements" : [ "JAVA", "PYTHON", "OTHER" ]
               },
               "explanation" : [ ]
             } ],
@@ -1429,7 +1468,7 @@
             },
             "value" : 0.0,
             "weight" : 0.5,
-            "confidence" : 6.666666666666667,
+            "confidence" : 10.0,
             "usedValues" : [ {
               "type" : "BooleanValue",
               "feature" : {
@@ -1447,16 +1486,19 @@
               "flag" : false,
               "explanation" : [ ]
             }, {
-              "type" : "UnknownValue",
+              "type" : "LanguagesValue",
               "feature" : {
                 "type" : "LanguagesFeature",
                 "name" : "A set of programming languages"
               },
+              "languages" : {
+                "elements" : [ "JAVA", "PYTHON", "OTHER" ]
+              },
               "explanation" : [ ]
             } ],
-            "explanation" : [ "The score is N/A because the project does not confirm which languages are used." ],
+            "explanation" : [ ],
             "isUnknown" : false,
-            "isNotApplicable" : true,
+            "isNotApplicable" : false,
             "feature" : {
               "type" : "BanditScore",
               "name" : "How a project uses Bandit"
@@ -1469,12 +1511,15 @@
             },
             "value" : 0.0,
             "weight" : 0.5,
-            "confidence" : 5.0,
+            "confidence" : 10.0,
             "usedValues" : [ {
-              "type" : "UnknownValue",
+              "type" : "LanguagesValue",
               "feature" : {
                 "type" : "LanguagesFeature",
                 "name" : "A set of programming languages"
+              },
+              "languages" : {
+                "elements" : [ "JAVA", "PYTHON", "OTHER" ]
               },
               "explanation" : [ ]
             }, {
@@ -1501,7 +1546,7 @@
             },
             "value" : 10.0,
             "weight" : 1.0,
-            "confidence" : 7.5,
+            "confidence" : 10.0,
             "usedValues" : [ {
               "type" : "BooleanValue",
               "feature" : {
@@ -1527,10 +1572,13 @@
               "flag" : true,
               "explanation" : [ ]
             }, {
-              "type" : "UnknownValue",
+              "type" : "LanguagesValue",
               "feature" : {
                 "type" : "LanguagesFeature",
                 "name" : "A set of programming languages"
+              },
+              "languages" : {
+                "elements" : [ "JAVA", "PYTHON", "OTHER" ]
               },
               "explanation" : [ ]
             } ],
@@ -2303,5 +2351,5 @@
       }
     }
   },
-  "label" : [ "OssSecurityRating$SecurityLabel", "BAD" ]
+  "label" : [ "OssSecurityRating$SecurityLabel", "GOOD" ]
 }
