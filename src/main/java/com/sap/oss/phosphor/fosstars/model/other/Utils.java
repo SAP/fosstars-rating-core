@@ -3,6 +3,8 @@ package com.sap.oss.phosphor.fosstars.model.other;
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.value.UnknownValue;
+import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,6 +17,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import org.apache.commons.io.FileUtils;
 
 public class Utils {
 
@@ -185,4 +188,16 @@ public class Utils {
         "Couldn't parse date '%s'", string));
   }
 
+
+  /**
+   * Force delete list of folders.
+   *
+   * @param paths list of directory paths tp delete.
+   * @throws IOException If something goes wrong.
+   */
+  public static void delete(String... paths) throws IOException {
+    for (String path : paths) {
+      FileUtils.forceDeleteOnExit(new File(path));
+    }
+  }
 }

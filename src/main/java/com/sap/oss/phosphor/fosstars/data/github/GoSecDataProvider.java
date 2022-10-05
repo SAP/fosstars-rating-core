@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
  * <ul>
  *   <li>{@link OssFeatures#USES_GOSEC_SCAN_CHECKS}
  *   <li>{@link OssFeatures#RUNS_GOSEC_SCANS}
- *   <li>{@link OssFeatures#USES_GOSEC_SCAN_CHECKS}
+ *   <li>{@link OssFeatures#USES_GOSEC_WITH_RULES}
  * </ul>
  */
 public class GoSecDataProvider extends AbstractStaticScanToolsDataProvider {
@@ -53,11 +53,11 @@ public class GoSecDataProvider extends AbstractStaticScanToolsDataProvider {
   static {
     {
       MATCH_GOSEC_STEP_CONFIG_PREDICATE.put("with",
-          step -> Pattern.compile("^.*-include=.*$", Pattern.DOTALL).matcher(step).matches()
-              || Pattern.compile("^.*-exclude=.*$", Pattern.DOTALL).matcher(step).matches());
+          step -> Pattern.compile("(^.*-include=.*$)|(^.*-exclude=.*$)", Pattern.DOTALL)
+              .matcher(step).matches());
       MATCH_GOSEC_STEP_CONFIG_PREDICATE.put("run",
-          step -> Pattern.compile("^.*-include=.*$", Pattern.DOTALL).matcher(step).matches()
-              || Pattern.compile("^.*-exclude=.*$", Pattern.DOTALL).matcher(step).matches());
+          step -> Pattern.compile("(^.*-include=.*$)|(^.*-exclude=.*$)", Pattern.DOTALL)
+              .matcher(step).matches());
     }
   }
 
