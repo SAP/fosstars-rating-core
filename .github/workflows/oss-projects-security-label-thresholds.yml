@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     name: "Calculate label thresholds"
     steps:
-      - uses: actions/checkout@v3.0.2
+      - uses: actions/checkout@v3.1.0
       - uses: ./.github/actions/project-security-label-threshold-action
         with:
           input-file: github_projects.json
