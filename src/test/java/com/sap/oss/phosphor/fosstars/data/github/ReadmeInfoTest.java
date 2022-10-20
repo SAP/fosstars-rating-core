@@ -151,6 +151,12 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
   }  
 
   @Test
+  public void testReadmeCapital() throws IOException {
+    readMeTestGen("README.MD");
+    readMeTestGen("readme.MD");
+  } 
+
+  @Test
   public void testLoadingDefaultConfig() throws IOException {
     Path config = Paths.get(String.format("%s.config.yml", ReadmeInfo.class.getSimpleName()));
     String content = "---\n"
