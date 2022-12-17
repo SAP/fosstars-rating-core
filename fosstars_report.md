@@ -1,8 +1,8 @@
-**Rating**: **GOOD**
+**Rating**: **BAD**
 
-**Score**: **5.67**, max score value is 10.0
+**Score**: **4.41**, max score value is 10.0
 
-**Confidence**: High (9.65, max confidence value is 10.0)
+**Confidence**: High (9.57, max confidence value is 10.0)
 
 ## Details
 
@@ -14,7 +14,7 @@ The rating is based on **security score for open-source projects**.
 
 It used the following sub-scores:
 
-1.  **[Security testing](#security-testing)**: **7.4** (weight is 1.0)
+1.  **[Security testing](#security-testing)**: **6.29** (weight is 1.0)
     1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
         1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
             
@@ -22,8 +22,8 @@ It used the following sub-scores:
             
         1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
             
-    1.  **[Static analysis](#static-analysis)**: **6.27** (weight is 1.0)
-        1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
+    1.  **[Static analysis](#static-analysis)**: **3.84** (weight is 1.0)
+        1.  **[LGTM score](#lgtm-score)**: **0.0** (weight is 1.0)
             
         1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
             
@@ -45,8 +45,8 @@ It used the following sub-scores:
         
 1.  **[Security awareness](#security-awareness)**: **4.0** (weight is 0.9)
     
-1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: **10.0** (weight is 0.6)
-    1.  **[Security testing](#security-testing)**: **7.4** (weight is 1.0)
+1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: **2.0** (weight is 0.6)
+    1.  **[Security testing](#security-testing)**: **6.29** (weight is 1.0)
         1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
             1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
                 
@@ -54,8 +54,8 @@ It used the following sub-scores:
                 
             1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
                 
-        1.  **[Static analysis](#static-analysis)**: **6.27** (weight is 1.0)
-            1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
+        1.  **[Static analysis](#static-analysis)**: **3.84** (weight is 1.0)
+            1.  **[LGTM score](#lgtm-score)**: **0.0** (weight is 1.0)
                 
             1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
                 
@@ -92,11 +92,6 @@ It used the following sub-scores:
 You can ask the project maintainers to enable LGTM checks for pull requests in the project.
 More info:
 1.  [How to enable LGTM checks for pull requests](https://lgtm.com/help/lgtm/about-automated-code-review)
-
-
-You can fix the issues reported by LGTM for the project.
-More info:
-1.  [List of issues on LGTM](https://lgtm.com/projects/g/SAP/fosstars-rating-core)
 
 
 You can open a pull request to enable FindSecBugs for the project.
@@ -151,7 +146,7 @@ Below are the details about all the used sub-scores.
 
 ### Security testing
 
-Score: **7.4**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **6.29**, confidence is 9.72 (high), weight is 1.0 (high)
 
 
 
@@ -168,8 +163,8 @@ This sub-score is based on the following sub-scores:
         
     1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
         
-1.  **[Static analysis](#static-analysis)**: **6.27** (weight is 1.0)
-    1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
+1.  **[Static analysis](#static-analysis)**: **3.84** (weight is 1.0)
+    1.  **[LGTM score](#lgtm-score)**: **0.0** (weight is 1.0)
         
     1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
         
@@ -226,7 +221,7 @@ This sub-score is based on 19 features:
 
 ### Vulnerability discovery and security testing
 
-Score: **10.0**, confidence is 10.0 (max), weight is 0.6 (medium)
+Score: **2.0**, confidence is 9.86 (high), weight is 0.6 (medium)
 
 The scores checks how security testing is done and how many vulnerabilities were recently discovered. If testing is good, and there are no recent vulnerabilities, then the score value is max. If there are vulnerabilities, then the score value is high. If testing is bad, and there are no recent vulnerabilities, then the score value is low. If there are vulnerabilities, then the score is min.
 
@@ -236,7 +231,7 @@ This sub-score is based on the following sub-score:
 
 
 
-1.  **[Security testing](#security-testing)**: **7.4** (weight is 1.0)
+1.  **[Security testing](#security-testing)**: **6.29** (weight is 1.0)
     1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
         1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
             
@@ -244,8 +239,8 @@ This sub-score is based on the following sub-score:
             
         1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
             
-    1.  **[Static analysis](#static-analysis)**: **6.27** (weight is 1.0)
-        1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
+    1.  **[Static analysis](#static-analysis)**: **3.84** (weight is 1.0)
+        1.  **[LGTM score](#lgtm-score)**: **0.0** (weight is 1.0)
             
         1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
             
@@ -376,7 +371,7 @@ This sub-score is based on the following sub-scores:
 
 ### Static analysis
 
-Score: **6.27**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **3.84**, confidence is 8.81 (low), weight is 1.0 (high)
 
 
 
@@ -386,7 +381,7 @@ This sub-score is based on the following sub-scores:
 
 
 
-1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
+1.  **[LGTM score](#lgtm-score)**: **0.0** (weight is 1.0)
     
 1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
     
@@ -507,7 +502,7 @@ This sub-score is based on 3 features:
 
 ### LGTM score
 
-Score: **9.0**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **0.0**, confidence is 5.0 (low), weight is 1.0 (high)
 
 
 
@@ -518,7 +513,7 @@ This sub-score is based on 2 features:
 
 
 1.  **Programming languages:** JAVA, PYTHON, OTHER
-1.  **The worst LGTM grade of the project:** A
+1.  **The worst LGTM grade of the project:** unknown
 
 
 ### How a project uses CodeQL
