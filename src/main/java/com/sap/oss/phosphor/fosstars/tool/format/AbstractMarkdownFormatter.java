@@ -112,7 +112,7 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
    * @param scoreValue The score value.
    * @return A string that represents the score value.
    */
-  public static MarkdownString actualValueOf(ScoreValue scoreValue) {
+  public MarkdownString actualValueOf(ScoreValue scoreValue) {
     if (scoreValue.isNotApplicable()) {
       return Markdown.string("N/A");
     }

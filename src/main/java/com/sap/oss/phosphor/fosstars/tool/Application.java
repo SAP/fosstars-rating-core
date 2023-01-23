@@ -101,6 +101,7 @@ public class Application {
         new OssProjectSecurityRatingHandler(),
         new OssArtifactSecurityRatingHandler(),
         new OssRulesOfPlayRatingHandler(),
+        new InnerSourceRulesOfPlayRatingHandler(),
         new SecurityRiskIntroducedByOssHandler()
     };
     defaultHandler = handlers[0];

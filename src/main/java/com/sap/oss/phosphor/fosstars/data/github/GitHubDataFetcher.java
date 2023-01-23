@@ -256,6 +256,19 @@ public class GitHubDataFetcher {
   }
 
   /**
+   * Get the topics of a Github repository.
+   *
+   * @param project The project that's topics should be listed.
+   * @return A set of Github topics.
+   * @throws IOException If something went wrong.
+   */
+  public List<String> githubTopicsFor(GitHubProject project) throws IOException {
+    Objects.requireNonNull(project, "Oh no! The project is null!");
+
+    return this.repositoryFor(project).listTopics();
+  }
+
+  /**
    * Gets the GitHub project repository.
    * This repository will then be stored in a cache ({@link LRUMap}).
    *

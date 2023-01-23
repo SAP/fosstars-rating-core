@@ -25,6 +25,7 @@ import com.sap.oss.phosphor.fosstars.data.github.ContributingGuidelineInfo;
 import com.sap.oss.phosphor.fosstars.data.github.EstimateImpactUsingKnownVulnerabilities;
 import com.sap.oss.phosphor.fosstars.data.github.FuzzedInOssFuzz;
 import com.sap.oss.phosphor.fosstars.data.github.GitHubDataFetcher;
+import com.sap.oss.phosphor.fosstars.data.github.GithubInnerSourceTopicDataProvider;
 import com.sap.oss.phosphor.fosstars.data.github.GoSecDataProvider;
 import com.sap.oss.phosphor.fosstars.data.github.HasBugBountyProgram;
 import com.sap.oss.phosphor.fosstars.data.github.HasCompanySupport;
@@ -241,6 +242,7 @@ public class DataProviderSelector {
         new HasExecutableBinaries(fetcher),
         new PylintDataProvider(fetcher),
         new MyPyDataProvider(fetcher),
+        new GithubInnerSourceTopicDataProvider(fetcher),
         PROJECT_USAGE_PROVIDER,
         FUNCTIONALITY_PROVIDER,
         HANDLING_UNTRUSTED_DATA_LIKELIHOOD_PROVIDER,
