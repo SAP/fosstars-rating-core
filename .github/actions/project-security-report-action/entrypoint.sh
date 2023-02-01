@@ -26,6 +26,9 @@ if [ "$TOKEN" = "" ]; then
     exit 1
 fi
 
+# Mark /github/workspace as safe directory
+git config --global --add safe.directory /github/workspace
+
 # Switch to the branch where the report should be stored
 OLD_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 git fetch origin $REPORT_BRANCH || git branch $REPORT_BRANCH
