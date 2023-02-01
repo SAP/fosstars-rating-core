@@ -182,10 +182,10 @@
         "type" : "BooleanFeature",
         "name" : "If a project is compliant with REUSE rules"
       },
-      "flag" : false,
-      "explanation" : [ "The project violates REUSE rules" ]
+      "flag" : true,
+      "explanation" : [ ]
     } ],
-    "explanation" : [ "Found 3 violated rules" ],
+    "explanation" : [ "Found 2 violated rules" ],
     "isUnknown" : false,
     "isNotApplicable" : false,
     "feature" : {

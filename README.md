@@ -5,7 +5,6 @@
 ## Violated rules
 1.  [**[If vulnerability alerts are enabled for a project on GitHub]**](#if-vulnerability-alerts-are-enabled-for-a-project-on-github) Are vulnerability alerts enabled? **No**
 1.  [**[If a project has a license]**](#if-a-project-has-a-license) Does it have a license file? **No**
-1.  [**[If a project is compliant with REUSE rules]**](#if-a-project-is-compliant-with-reuse-rules) Is it compliant with REUSE rules? **No**
 
 
 
@@ -34,6 +33,7 @@
 1.  **[If a project runs CodeQL checks for commits]** Does it use CodeQL checks for pull requests? **Yes**
 1.  **[If project's README has info about REUSE]** Does README mention REUSE? **Yes**
 1.  **[If a project is registered in REUSE]** Is it registered in REUSE? **Yes**
+1.  **[If a project is compliant with REUSE rules]** Is it compliant with REUSE rules? **Yes**
 
 
 ## What is wrong, and how to fix it
@@ -45,10 +45,6 @@ Vulnerability alerts are not enabled in the project
 ### If a project has a license
 
 No license found in the project
-
-### If a project is compliant with REUSE rules
-
-The project violates REUSE rules
 
 ### If a project has unresolved vulnerability alerts
 
