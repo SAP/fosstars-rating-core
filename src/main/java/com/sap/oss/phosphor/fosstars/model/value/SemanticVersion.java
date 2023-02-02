@@ -1,5 +1,8 @@
 package com.sap.oss.phosphor.fosstars.model.value;
 
+import static org.apache.commons.lang3.StringUtils.EMPTY;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
+
 import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -11,14 +14,14 @@ import java.util.regex.Pattern;
 public class SemanticVersion {
 
   private static final Pattern SEMANTIC_VERSION_PATTERN =
-      Pattern.compile("(\\d*).(\\d*).(\\d*)(.*)");
+      Pattern.compile("(\\d*)\\.(\\d*)\\.*(\\d*)(.*)");
 
   private final int major;
   private final int minor;
   private final int micro;
 
   private SemanticVersion(int major, int minor, int micro) {
-    if (major < 0 || minor < 0 || micro < 0) {
+    if (major < 0 || minor < 0) {
       throw new IllegalArgumentException(
           "The version parts of a semantic version must be positive integers");
     }
@@ -55,8 +58,8 @@ public class SemanticVersion {
       try {
         int major = Integer.parseInt(matcher.group(1));
         int minor = Integer.parseInt(matcher.group(2));
-        int micro = Integer.parseInt(matcher.group(3));
-        return Optional.of(new SemanticVersion(major, minor, micro));
+        int micro = isEmpty(matcher.group(3)) ? -1 : Integer.parseInt(matcher.group(3));
+        return Optional.ofNullable(create(major, minor, micro));
       } catch (NumberFormatException ignored) {
         // no special handling required
       }
@@ -155,11 +158,11 @@ public class SemanticVersion {
 
   @Override
   public int hashCode() {
-    return Objects.hash(major, minor, micro);
+    return micro < 0 ? Objects.hash(major, minor) : Objects.hash(major, minor, micro);
   }
 
   @Override
   public String toString() {
-    return String.format("%s.%s.%s", major, minor, micro);
+    return String.format("%s.%s%s", major, minor, micro > 0 ? String.format(".s", micro) : EMPTY);
   }
 }

@@ -20,11 +20,12 @@ import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.Set;
 import org.apache.http.HttpHeaders;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.entity.ContentType;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -132,7 +133,12 @@ public abstract class AbstractReleaseInfoLoader implements DataProvider {
    * @return An HTTP client.
    */
   public CloseableHttpClient httpClient() {
-    return HttpClients.createDefault();
+    // Set the Connection timeout to 15 seconds
+    int timeout = 15;
+    RequestConfig config = RequestConfig.custom().setConnectTimeout(timeout * 1000)
+          .setConnectionRequestTimeout(timeout * 1000).setSocketTimeout(timeout * 1000).build();
+    return HttpClientBuilder.create()
+          .setDefaultRequestConfig(config).build();
   }
 
   /**

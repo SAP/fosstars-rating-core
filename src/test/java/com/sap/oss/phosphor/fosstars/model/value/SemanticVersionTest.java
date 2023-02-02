@@ -14,8 +14,13 @@ public class SemanticVersionTest {
   public void parse() {
     Optional<SemanticVersion> invalidVersion2 = SemanticVersion.parse("MIGHTY-1.2");
     assertFalse(invalidVersion2.isPresent());
-    Optional<SemanticVersion> toLessDigits = SemanticVersion.parse("1.2");
-    assertFalse(toLessDigits.isPresent());
+
+    Optional<SemanticVersion> validVersionWithOnlyMinor = SemanticVersion.parse("1.59");
+    assertTrue(validVersionWithOnlyMinor.isPresent());
+    SemanticVersion semVerValidWithOnlyMinor = validVersionWithOnlyMinor.get();
+    assertEquals(1, semVerValidWithOnlyMinor.getMajor());
+    assertEquals(59, semVerValidWithOnlyMinor.getMinor());
+    assertEquals(-1, semVerValidWithOnlyMinor.getMicro());
 
     Optional<SemanticVersion> validVersion = SemanticVersion.parse("2.0.2");
     assertTrue(validVersion.isPresent());
@@ -50,4 +55,5 @@ public class SemanticVersionTest {
     assertFalse(version.isInRange(create(1, 8, 0), create(2, 5, 0)));
     assertFalse(version.isInRange(create(0, 8, 0), create(1, 4, 99)));
   }
+
 }
