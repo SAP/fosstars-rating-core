@@ -36,7 +36,7 @@ public class MavenScmFinder {
    * A template of a request for downloading files from the Maven Central repository.
    */
   private static final String MAVEN_DOWNLOAD_REQUEST_TEMPLATE
-      = "https://search.maven.org/remotecontent?filepath={PATH}";
+        = "https://repo1.maven.org/maven2/{PATH}";
 
   /**
    * A template of a path to a POM file of an artifact in the Maven Central repository.
