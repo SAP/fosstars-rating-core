@@ -10,7 +10,6 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SIGNS_
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_ADDRESS_SANITIZER;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_DEPENDABOT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_FIND_SEC_BUGS;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM_CHECKS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_MEMORY_SANITIZER;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_NOHTTP;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_OWASP_ESAPI;
@@ -67,9 +66,6 @@ import org.apache.commons.lang3.ArrayUtils;
  *   </li>
  *   <li>
  *     {@link com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures#USES_NOHTTP}
- *   </li>
- *   <li>
- *     {@link com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures#USES_LGTM_CHECKS}
  *   </li>
  *   <li>
  *     {@link com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures#USES_FIND_SEC_BUGS}
@@ -162,7 +158,7 @@ public class ProjectSecurityAwarenessScore extends FeatureBasedScore {
   private static final Feature<?>[] SECURITY_TOOLS_FEATURES = new Feature[] {
       FUZZED_IN_OSS_FUZZ,
       USES_DEPENDABOT, USES_SNYK,
-      USES_NOHTTP, USES_LGTM_CHECKS, USES_FIND_SEC_BUGS,
+      USES_NOHTTP, USES_FIND_SEC_BUGS,
       USES_OWASP_ESAPI, USES_OWASP_JAVA_ENCODER, USES_OWASP_JAVA_HTML_SANITIZER,
       USES_ADDRESS_SANITIZER, USES_MEMORY_SANITIZER, USES_UNDEFINED_BEHAVIOR_SANITIZER,
       OWASP_DEPENDENCY_CHECK_USAGE

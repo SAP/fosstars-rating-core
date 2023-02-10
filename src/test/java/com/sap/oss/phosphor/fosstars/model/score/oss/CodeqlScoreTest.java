@@ -4,7 +4,6 @@ import static com.sap.oss.phosphor.fosstars.TestUtils.assertScore;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.LANGUAGES;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_CODEQL_SCANS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_CODEQL_CHECKS;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM_CHECKS;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.JAVA;
 import static org.junit.Assert.assertEquals;
@@ -24,8 +23,7 @@ public class CodeqlScoreTest {
   @Test
   public void testBasics() {
     assertFalse(SCORE.name().isEmpty());
-    assertEquals(4, SCORE.features().size());
-    assertTrue(SCORE.features().contains(USES_LGTM_CHECKS));
+    assertEquals(3, SCORE.features().size());
     assertTrue(SCORE.features().contains(USES_CODEQL_CHECKS));
     assertTrue(SCORE.features().contains(RUNS_CODEQL_SCANS));
     assertTrue(SCORE.features().contains(LANGUAGES));
@@ -45,23 +43,17 @@ public class CodeqlScoreTest {
         SCORE,
         setOf(
             USES_CODEQL_CHECKS.value(true),
-            USES_LGTM_CHECKS.value(true),
             RUNS_CODEQL_SCANS.value(true),
             LANGUAGES.value(Languages.of(JAVA))));
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void testCalculateWithoutUsesLgtmChecksValue() {
-    SCORE.calculate(USES_CODEQL_CHECKS.unknown(), RUNS_CODEQL_SCANS.unknown(), LANGUAGES.unknown());
-  }
-
-  @Test(expected = IllegalArgumentException.class)
   public void testCalculateWithoutUsesCodeqlChecksValue() {
-    SCORE.calculate(USES_LGTM_CHECKS.unknown(), RUNS_CODEQL_SCANS.unknown(), LANGUAGES.unknown());
+    SCORE.calculate(RUNS_CODEQL_SCANS.unknown(), LANGUAGES.unknown());
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testCalculateWithoutRunsCodeqlChecksValue() {
-    SCORE.calculate(USES_CODEQL_CHECKS.unknown(), USES_LGTM_CHECKS.unknown(), LANGUAGES.unknown());
+    SCORE.calculate(USES_CODEQL_CHECKS.unknown(), LANGUAGES.unknown());
   }
 }

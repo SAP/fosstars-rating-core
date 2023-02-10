@@ -13,13 +13,10 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_C
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_FIND_SEC_BUGS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GOSEC_SCAN_CHECKS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GOSEC_WITH_RULES;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM_CHECKS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_MYPY_SCAN_CHECKS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_PYLINT_SCAN_CHECKS;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.JAVA;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.PYTHON;
-import static com.sap.oss.phosphor.fosstars.model.value.LgtmGrade.D;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
@@ -40,8 +37,6 @@ public class StaticAnalysisScoreTest {
     StaticAnalysisScore score = new StaticAnalysisScore();
 
     ScoreValue scoreValue = score.calculate(
-        WORST_LGTM_GRADE.value(D),
-        USES_LGTM_CHECKS.value(true),
         USES_CODEQL_CHECKS.value(true),
         RUNS_CODEQL_SCANS.value(true),
         USES_BANDIT_SCAN_CHECKS.value(false),
@@ -61,7 +56,7 @@ public class StaticAnalysisScoreTest {
     assertTrue(Score.INTERVAL.contains(scoreValue.get()));
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     assertSame(score, scoreValue.score());
-    assertEquals(7, scoreValue.usedValues().size());
+    assertEquals(6, scoreValue.usedValues().size());
   }
 
   @Test
@@ -69,8 +64,6 @@ public class StaticAnalysisScoreTest {
     StaticAnalysisScore score = new StaticAnalysisScore();
 
     ScoreValue scoreValue = score.calculate(
-        WORST_LGTM_GRADE.value(D),
-        USES_LGTM_CHECKS.value(true),
         USES_CODEQL_CHECKS.value(false),
         RUNS_CODEQL_SCANS.value(false),
         USES_BANDIT_SCAN_CHECKS.value(true),
@@ -90,7 +83,7 @@ public class StaticAnalysisScoreTest {
     assertTrue(Score.INTERVAL.contains(scoreValue.get()));
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     assertSame(score, scoreValue.score());
-    assertEquals(7, scoreValue.usedValues().size());
+    assertEquals(6, scoreValue.usedValues().size());
   }
 
   @Test
@@ -98,8 +91,6 @@ public class StaticAnalysisScoreTest {
     StaticAnalysisScore score = new StaticAnalysisScore();
 
     ScoreValue scoreValue = score.calculate(
-        WORST_LGTM_GRADE.value(D),
-        USES_LGTM_CHECKS.value(false),
         USES_CODEQL_CHECKS.value(false),
         RUNS_CODEQL_SCANS.value(false),
         USES_BANDIT_SCAN_CHECKS.value(false),
@@ -119,7 +110,7 @@ public class StaticAnalysisScoreTest {
     assertTrue(Score.INTERVAL.contains(scoreValue.get()));
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     assertSame(score, scoreValue.score());
-    assertEquals(7, scoreValue.usedValues().size());
+    assertEquals(6, scoreValue.usedValues().size());
   }
 
   @Test
@@ -127,8 +118,6 @@ public class StaticAnalysisScoreTest {
     StaticAnalysisScore score = new StaticAnalysisScore();
 
     ScoreValue scoreValue = score.calculate(
-        WORST_LGTM_GRADE.value(D),
-        USES_LGTM_CHECKS.value(false),
         USES_CODEQL_CHECKS.value(false),
         RUNS_CODEQL_SCANS.value(false),
         USES_BANDIT_SCAN_CHECKS.value(false),
@@ -148,7 +137,7 @@ public class StaticAnalysisScoreTest {
     assertTrue(Score.INTERVAL.contains(scoreValue.get()));
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     assertSame(score, scoreValue.score());
-    assertEquals(7, scoreValue.usedValues().size());
+    assertEquals(6, scoreValue.usedValues().size());
   }
 
   @Test
@@ -156,8 +145,6 @@ public class StaticAnalysisScoreTest {
     StaticAnalysisScore score = new StaticAnalysisScore();
 
     ScoreValue scoreValue = score.calculate(
-        WORST_LGTM_GRADE.value(D),
-        USES_LGTM_CHECKS.value(false),
         USES_CODEQL_CHECKS.value(false),
         RUNS_CODEQL_SCANS.value(false),
         USES_BANDIT_SCAN_CHECKS.value(false),
@@ -177,7 +164,7 @@ public class StaticAnalysisScoreTest {
     assertTrue(Score.INTERVAL.contains(scoreValue.get()));
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     assertSame(score, scoreValue.score());
-    assertEquals(7, scoreValue.usedValues().size());
+    assertEquals(6, scoreValue.usedValues().size());
   }
 
   @Test
@@ -185,8 +172,6 @@ public class StaticAnalysisScoreTest {
     StaticAnalysisScore score = new StaticAnalysisScore();
 
     ScoreValue scoreValue = score.calculate(
-        WORST_LGTM_GRADE.unknown(),
-        USES_LGTM_CHECKS.unknown(),
         USES_CODEQL_CHECKS.unknown(),
         RUNS_CODEQL_SCANS.unknown(),
         USES_BANDIT_SCAN_CHECKS.unknown(),
@@ -205,7 +190,7 @@ public class StaticAnalysisScoreTest {
     assertFalse(scoreValue.isNotApplicable());
     assertEquals(Confidence.MIN, scoreValue.confidence(), DELTA);
     assertSame(score, scoreValue.score());
-    assertEquals(7, scoreValue.usedValues().size());
+    assertEquals(6, scoreValue.usedValues().size());
   }
 
   @Test
@@ -213,9 +198,6 @@ public class StaticAnalysisScoreTest {
     StaticAnalysisScore score = new StaticAnalysisScore();
 
     ScoreValue codeqlScoreValue = new ScoreValue(new CodeqlScore())
-        .makeNotApplicable()
-        .confidence(Confidence.MAX);
-    ScoreValue lgtmScoreValue = new ScoreValue(new LgtmScore())
         .makeNotApplicable()
         .confidence(Confidence.MAX);
     ScoreValue findSecBugsScoreValue = new ScoreValue(new FindSecBugsScore())
@@ -235,15 +217,14 @@ public class StaticAnalysisScoreTest {
         .confidence(Confidence.MAX);
 
     ScoreValue scoreValue = score.calculate(
-        codeqlScoreValue, lgtmScoreValue, findSecBugsScoreValue, banditScoreValue,
+        codeqlScoreValue, findSecBugsScoreValue, banditScoreValue,
         goSecScoreValue, pylintValue, mypyValue);
 
     assertFalse(scoreValue.isUnknown());
     assertTrue(scoreValue.isNotApplicable());
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     assertSame(score, scoreValue.score());
-    assertEquals(7, scoreValue.usedValues().size());
-    assertTrue(scoreValue.usedValues().contains(lgtmScoreValue));
+    assertEquals(6, scoreValue.usedValues().size());
     assertTrue(scoreValue.usedValues().contains(findSecBugsScoreValue));
     assertTrue(scoreValue.usedValues().contains(banditScoreValue));
     assertTrue(scoreValue.usedValues().contains(goSecScoreValue));
@@ -259,9 +240,6 @@ public class StaticAnalysisScoreTest {
     ScoreValue codeqlScoreValue = new ScoreValue(new CodeqlScore())
         .set(MIN)
         .confidence(Confidence.MAX);
-    ScoreValue lgtmScoreValue = new ScoreValue(new LgtmScore())
-        .set(MIN)
-        .confidence(Confidence.MAX);
     ScoreValue findSecBugsScoreValue = new ScoreValue(new FindSecBugsScore())
         .set(MIN)
         .confidence(Confidence.MAX);
@@ -279,7 +257,7 @@ public class StaticAnalysisScoreTest {
         .confidence(Confidence.MAX);
 
     ScoreValue scoreValue = score.calculate(
-        codeqlScoreValue, lgtmScoreValue, findSecBugsScoreValue, banditScoreValue,
+        codeqlScoreValue, findSecBugsScoreValue, banditScoreValue,
         goSecScoreValue, pylintValue, mypyValue);
 
     assertFalse(scoreValue.isUnknown());
@@ -287,8 +265,7 @@ public class StaticAnalysisScoreTest {
     assertEquals(MIN, scoreValue.get(), DELTA);
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     assertSame(score, scoreValue.score());
-    assertEquals(7, scoreValue.usedValues().size());
-    assertTrue(scoreValue.usedValues().contains(lgtmScoreValue));
+    assertEquals(6, scoreValue.usedValues().size());
     assertTrue(scoreValue.usedValues().contains(findSecBugsScoreValue));
     assertTrue(scoreValue.usedValues().contains(banditScoreValue));
     assertTrue(scoreValue.usedValues().contains(goSecScoreValue));
@@ -306,9 +283,6 @@ public class StaticAnalysisScoreTest {
     ScoreValue codeqlScoreValue = new ScoreValue(new CodeqlScore())
         .set(value)
         .confidence(Confidence.MAX);
-    ScoreValue lgtmScoreValue = new ScoreValue(new LgtmScore())
-        .set(value)
-        .confidence(Confidence.MAX);
     ScoreValue findSecBugsScoreValue = new ScoreValue(new FindSecBugsScore())
         .makeNotApplicable()
         .confidence(Confidence.MAX);
@@ -326,7 +300,7 @@ public class StaticAnalysisScoreTest {
         .confidence(Confidence.MAX);
 
     ScoreValue scoreValue = score.calculate(
-        codeqlScoreValue, lgtmScoreValue, findSecBugsScoreValue, banditScoreValue,
+        codeqlScoreValue, findSecBugsScoreValue, banditScoreValue,
         goSecScoreValue, pylintValue, mypyValue);
 
     assertFalse(scoreValue.isUnknown());
@@ -334,8 +308,7 @@ public class StaticAnalysisScoreTest {
     assertEquals(value, scoreValue.get(), DELTA);
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     assertSame(score, scoreValue.score());
-    assertEquals(7, scoreValue.usedValues().size());
-    assertTrue(scoreValue.usedValues().contains(lgtmScoreValue));
+    assertEquals(6, scoreValue.usedValues().size());
     assertTrue(scoreValue.usedValues().contains(findSecBugsScoreValue));
     assertTrue(scoreValue.usedValues().contains(banditScoreValue));
     assertTrue(scoreValue.usedValues().contains(goSecScoreValue));
@@ -353,9 +326,6 @@ public class StaticAnalysisScoreTest {
     ScoreValue codeqlScoreValue = new ScoreValue(new CodeqlScore())
         .set(value)
         .confidence(Confidence.MAX);
-    ScoreValue lgtmScoreValue = new ScoreValue(new LgtmScore())
-        .set(value)
-        .confidence(Confidence.MAX);
     ScoreValue findSecBugsScoreValue = new ScoreValue(new FindSecBugsScore())
         .set(value)
         .confidence(Confidence.MAX);
@@ -373,7 +343,7 @@ public class StaticAnalysisScoreTest {
         .confidence(Confidence.MAX);
 
     ScoreValue scoreValue = score.calculate(
-        codeqlScoreValue, lgtmScoreValue, findSecBugsScoreValue, banditScoreValue,
+        codeqlScoreValue, findSecBugsScoreValue, banditScoreValue,
         goSecScoreValue, pylintValue, mypyValue);
 
     assertFalse(scoreValue.isUnknown());
@@ -381,8 +351,7 @@ public class StaticAnalysisScoreTest {
     assertEquals(value, scoreValue.get(), DELTA);
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     assertSame(score, scoreValue.score());
-    assertEquals(7, scoreValue.usedValues().size());
-    assertTrue(scoreValue.usedValues().contains(lgtmScoreValue));
+    assertEquals(6, scoreValue.usedValues().size());
     assertTrue(scoreValue.usedValues().contains(findSecBugsScoreValue));
     assertTrue(scoreValue.usedValues().contains(banditScoreValue));
     assertTrue(scoreValue.usedValues().contains(goSecScoreValue));
@@ -400,9 +369,6 @@ public class StaticAnalysisScoreTest {
     ScoreValue codeqlScoreValue = new ScoreValue(new CodeqlScore())
         .set(value)
         .confidence(Confidence.MAX);
-    ScoreValue lgtmScoreValue = new ScoreValue(new LgtmScore())
-        .set(value)
-        .confidence(Confidence.MAX);
     ScoreValue findSecBugsScoreValue = new ScoreValue(new FindSecBugsScore())
         .set(value)
         .confidence(Confidence.MAX);
@@ -420,7 +386,7 @@ public class StaticAnalysisScoreTest {
         .confidence(Confidence.MAX);
 
     ScoreValue scoreValue = score.calculate(
-        codeqlScoreValue, lgtmScoreValue, findSecBugsScoreValue, banditScoreValue,
+        codeqlScoreValue, findSecBugsScoreValue, banditScoreValue,
         goSecScoreValue, pylintValue, mypyValue);
 
     assertFalse(scoreValue.isUnknown());
@@ -428,8 +394,7 @@ public class StaticAnalysisScoreTest {
     assertEquals(value, scoreValue.get(), DELTA);
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     assertSame(score, scoreValue.score());
-    assertEquals(7, scoreValue.usedValues().size());
-    assertTrue(scoreValue.usedValues().contains(lgtmScoreValue));
+    assertEquals(6, scoreValue.usedValues().size());
     assertTrue(scoreValue.usedValues().contains(findSecBugsScoreValue));
     assertTrue(scoreValue.usedValues().contains(banditScoreValue));
     assertTrue(scoreValue.usedValues().contains(goSecScoreValue));
@@ -447,9 +412,6 @@ public class StaticAnalysisScoreTest {
     ScoreValue codeqlScoreValue = new ScoreValue(new CodeqlScore())
         .set(value)
         .confidence(Confidence.MAX);
-    ScoreValue lgtmScoreValue = new ScoreValue(new LgtmScore())
-        .set(value)
-        .confidence(Confidence.MAX);
     ScoreValue findSecBugsScoreValue = new ScoreValue(new FindSecBugsScore())
         .set(value)
         .confidence(Confidence.MAX);
@@ -467,7 +429,7 @@ public class StaticAnalysisScoreTest {
         .confidence(Confidence.MAX);
 
     ScoreValue scoreValue = score.calculate(
-        codeqlScoreValue, lgtmScoreValue, findSecBugsScoreValue, banditScoreValue,
+        codeqlScoreValue, findSecBugsScoreValue, banditScoreValue,
         goSecScoreValue, pylintValue, mypyValue);
 
     assertFalse(scoreValue.isUnknown());
@@ -475,8 +437,7 @@ public class StaticAnalysisScoreTest {
     assertEquals(value, scoreValue.get(), DELTA);
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     assertSame(score, scoreValue.score());
-    assertEquals(7, scoreValue.usedValues().size());
-    assertTrue(scoreValue.usedValues().contains(lgtmScoreValue));
+    assertEquals(6, scoreValue.usedValues().size());
     assertTrue(scoreValue.usedValues().contains(findSecBugsScoreValue));
     assertTrue(scoreValue.usedValues().contains(banditScoreValue));
     assertTrue(scoreValue.usedValues().contains(goSecScoreValue));
@@ -494,9 +455,6 @@ public class StaticAnalysisScoreTest {
     ScoreValue codeqlScoreValue = new ScoreValue(new CodeqlScore())
         .set(value)
         .confidence(Confidence.MAX);
-    ScoreValue lgtmScoreValue = new ScoreValue(new LgtmScore())
-        .set(value)
-        .confidence(Confidence.MAX);
     ScoreValue findSecBugsScoreValue = new ScoreValue(new FindSecBugsScore())
         .set(value)
         .confidence(Confidence.MAX);
@@ -514,7 +472,7 @@ public class StaticAnalysisScoreTest {
         .confidence(Confidence.MAX);
 
     ScoreValue scoreValue = score.calculate(
-        codeqlScoreValue, lgtmScoreValue, findSecBugsScoreValue, banditScoreValue,
+        codeqlScoreValue, findSecBugsScoreValue, banditScoreValue,
         goSecScoreValue, pylintValue, mypyValue);
 
     assertFalse(scoreValue.isUnknown());
@@ -522,8 +480,7 @@ public class StaticAnalysisScoreTest {
     assertEquals(value, scoreValue.get(), DELTA);
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     assertSame(score, scoreValue.score());
-    assertEquals(7, scoreValue.usedValues().size());
-    assertTrue(scoreValue.usedValues().contains(lgtmScoreValue));
+    assertEquals(6, scoreValue.usedValues().size());
     assertTrue(scoreValue.usedValues().contains(findSecBugsScoreValue));
     assertTrue(scoreValue.usedValues().contains(banditScoreValue));
     assertTrue(scoreValue.usedValues().contains(goSecScoreValue));

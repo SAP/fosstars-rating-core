@@ -163,6 +163,6 @@ public class SemanticVersion {
 
   @Override
   public String toString() {
-    return String.format("%s.%s%s", major, minor, micro > 0 ? String.format(".s", micro) : EMPTY);
+    return String.format("%s.%s%s", major, minor, micro < 0 ? EMPTY : String.format(".%s", micro));
   }
 }
