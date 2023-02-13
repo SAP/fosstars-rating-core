@@ -12,11 +12,17 @@ import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.net.URI;
-import java.net.URL;
 import java.util.Iterator;
 import java.util.Optional;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpHeaders;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.entity.ContentType;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Scm;
 
@@ -152,7 +158,7 @@ public class MavenScmFinder {
    */
   private static boolean looksLikeValid(GitHubProject project) {
     try {
-      String content = IOUtils.toString(project.scm(), UTF_8);
+      String content = fetch(project.scm().toString());
       return StringUtils.isNotEmpty(content);
     } catch (IOException e) {
       return false;
@@ -213,9 +219,8 @@ public class MavenScmFinder {
     String urlString = MAVEN_SEARCH_REQUEST_TEMPLATE
         .replace("{GROUP_ID}", gav.group())
         .replace("{ARTIFACT_ID}", gav.artifact());
-    URL url = new URL(urlString);
 
-    JsonNode node = Json.mapper().readTree(url);
+    JsonNode node = fetchJsonNode(urlString);
 
     if (!node.has("response")) {
       throw new IOException("Oh no! The response doesn't have a response filed!");
@@ -257,9 +262,51 @@ public class MavenScmFinder {
         .replace("{ARTIFACT}", gav.artifact())
         .replace("{VERSION}", gav.version().orElse(latestVersionOf(gav)));
     String urlString = MAVEN_DOWNLOAD_REQUEST_TEMPLATE.replace("{PATH}", path);
-    String content = IOUtils.toString(new URL(urlString), UTF_8);
+    String content = fetch(urlString);
 
     return readModel(IOUtils.toInputStream(content, UTF_8));
+  }
+
+  /**
+   * Fetches info from the URL.
+   *
+   * @param url from which the information needs to be collected.
+   * @return The info from the URL.
+   * @throws IOException If something went wrong.
+   */
+  private static String fetch(String url) throws IOException {
+    try (CloseableHttpClient client = httpClient()) {
+      HttpGet httpGetRequest = new HttpGet(url);
+      httpGetRequest.addHeader(HttpHeaders.ACCEPT, ContentType.APPLICATION_JSON.getMimeType());
+      try (CloseableHttpResponse httpResponse = client.execute(httpGetRequest)) {
+        return IOUtils.toString(httpResponse.getEntity().getContent(), UTF_8);
+      }
+    }
+  }
+
+  /**
+   * Fetches info in {@link JsonNode} from the URL.
+   *
+   * @param url from which the information needs to be collected.
+   * @return The info in {@link JsonNode} from the URL.
+   * @throws IOException If something went wrong.
+   */
+  private static JsonNode fetchJsonNode(String url) throws IOException {
+    return Json.mapper().readTree(fetch(url));
+  }
+
+  /**
+   * Creates an HTTP client.
+   *
+   * @return An HTTP client.
+   */
+  private static CloseableHttpClient httpClient() {
+    // Set the Connection timeout to 120 seconds
+    int timeout = 120;
+    RequestConfig config = RequestConfig.custom().setConnectTimeout(timeout * 1000)
+        .setConnectionRequestTimeout(timeout * 1000).setSocketTimeout(timeout * 1000).build();
+    return HttpClientBuilder.create()
+        .setDefaultRequestConfig(config).build();
   }
 
   /**

@@ -133,8 +133,8 @@ public abstract class AbstractReleaseInfoLoader implements DataProvider {
    * @return An HTTP client.
    */
   public CloseableHttpClient httpClient() {
-    // Set the Connection timeout to 15 seconds
-    int timeout = 15;
+    // Set the Connection timeout to 120 seconds
+    int timeout = 120;
     RequestConfig config = RequestConfig.custom().setConnectTimeout(timeout * 1000)
           .setConnectionRequestTimeout(timeout * 1000).setSocketTimeout(timeout * 1000).build();
     return HttpClientBuilder.create()
