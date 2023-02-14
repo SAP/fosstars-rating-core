@@ -81,7 +81,7 @@
     <version.log4j-core>2.19.0</version.log4j-core>
     <version.httpclient>4.5.13</version.httpclient>
     <version.junit>4.13.2</version.junit>
-    <version.mockito-core>4.7.0</version.mockito-core>
+    <version.mockito>4.11.0</version.mockito>
     <version.packageurl-java>1.4.1</version.packageurl-java>
     <version.commons-collections4>4.4</version.commons-collections4>
     <version.org.eclipse.jgit>5.13.0.202109080827-r</version.org.eclipse.jgit>
@@ -318,8 +318,8 @@
     </dependency>
     <dependency>
       <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
-      <version>${version.mockito-core}</version>
+      <artifactId>mockito-inline</artifactId>
+      <version>${version.mockito}</version>
       <scope>test</scope>
     </dependency>
     <dependency>

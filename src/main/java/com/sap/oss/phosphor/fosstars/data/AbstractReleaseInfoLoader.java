@@ -9,16 +9,24 @@ import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Subject;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
+import com.sap.oss.phosphor.fosstars.model.subject.oss.MavenArtifact;
 import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
 import com.sap.oss.phosphor.fosstars.util.Json;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -34,6 +42,19 @@ import org.apache.logging.log4j.Logger;
  * different sources.
  */
 public abstract class AbstractReleaseInfoLoader implements DataProvider {
+
+  /**
+   * Standard character type encoding.
+   */
+  private static final String UTF_8 = StandardCharsets.UTF_8.name();
+
+  /**
+   * Pattern to match version and release date.
+   */
+  private static final Pattern VERSIONS_PATTERN =
+      Pattern.compile(
+          "<a href=\"[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*/\" title=\"[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*/\">([A-Za-z0-9]+(\\.[A-Za-z0-9]+)*)/</a>\\s+([1-9]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])[\\ ]([01]?[0-9]|2[0-3]):[0-5][0-9])+\\s+-\\s*",
+          Pattern.CASE_INSENSITIVE);
 
   /**
    * A logger.
@@ -95,7 +116,7 @@ public abstract class AbstractReleaseInfoLoader implements DataProvider {
    * @return The info from the URL.
    * @throws IOException If something went wrong.
    */
-  protected JsonNode fetch(String url) throws IOException {
+  protected JsonNode fetchJson(String url) throws IOException {
     try (CloseableHttpClient client = httpClient()) {
       HttpGet httpGetRequest = new HttpGet(url);
       httpGetRequest.addHeader(HttpHeaders.ACCEPT, ContentType.APPLICATION_JSON.getMimeType());
@@ -159,5 +180,54 @@ public abstract class AbstractReleaseInfoLoader implements DataProvider {
    */
   protected static LocalDateTime convertToLocalDate(String date) {
     return ZonedDateTime.parse(date).toLocalDateTime();
+  }
+
+  /**
+   * Gathers release versions about Maven artifact.
+   *
+   * @param mavenArtifact A {@link MavenArtifact}.
+   * @return A set  of {@link ArtifactVersion} containing the Maven artifact release versions.
+   * @throws IOException If something goes wrong.
+   */
+  protected Set<ArtifactVersion> versionsOf(MavenArtifact mavenArtifact)
+      throws IOException {
+    String url = String.format(
+        "https://repo1.maven.org/maven2/%s/%s/",
+        mavenArtifact.group().replaceAll("\\.", "/"), mavenArtifact.artifact());
+    Set<ArtifactVersion> artifactVersions = fetchVersionsOf(url, new HashSet<>());
+    return artifactVersions;
+  }
+
+  /**
+   * Fetches release versions from the URL.
+   *
+   * @param url from which the information needs to be collected.
+   * @return A set  of {@link ArtifactVersion} containing the Maven artifact release versions.
+   * @throws IOException If something went wrong.
+   */
+  private Set<ArtifactVersion> fetchVersionsOf(String url, Set<ArtifactVersion> artifactVersions)
+      throws IOException {
+    try (CloseableHttpClient client = httpClient()) {
+      HttpGet httpGetRequest = new HttpGet(url);
+      httpGetRequest.addHeader(HttpHeaders.ACCEPT, ContentType.TEXT_HTML.getMimeType());
+      try (CloseableHttpResponse httpResponse = client.execute(httpGetRequest);
+          BufferedReader reader = new BufferedReader(
+              new InputStreamReader(httpResponse.getEntity().getContent(), UTF_8))) {
+        String line = null;
+        while ((line = reader.readLine()) != null) {
+          Matcher matcher = VERSIONS_PATTERN.matcher(line);
+          if (matcher.matches()) {
+            try {
+              artifactVersions.add(new ArtifactVersion(matcher.group(3),
+                  LocalDateTime.parse(matcher.group(5),
+                      DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))));
+            } catch (NumberFormatException ignored) {
+              // no special handling required
+            }
+          }
+        }
+        return artifactVersions;
+      }
+    }
   }
 }

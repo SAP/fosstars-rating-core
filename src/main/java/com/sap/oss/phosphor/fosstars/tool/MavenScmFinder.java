@@ -6,14 +6,15 @@ import static java.lang.String.format;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.apache.commons.lang3.StringUtils.strip;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.sap.oss.phosphor.fosstars.maven.GAV;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
-import com.sap.oss.phosphor.fosstars.util.Json;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URI;
-import java.util.Iterator;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpHeaders;
@@ -32,13 +33,6 @@ import org.apache.maven.model.Scm;
 public class MavenScmFinder {
 
   /**
-   * A template of a request to the Maven Search API.
-   */
-  private static final String MAVEN_SEARCH_REQUEST_TEMPLATE
-      = "https://search.maven.org/solrsearch/select?q=g:%22{GROUP_ID}%22+AND+a:%22{ARTIFACT_ID}"
-      + "%22&core=gav&rows=20&wt=json";
-
-  /**
    * A template of a request for downloading files from the Maven Central repository.
    */
   private static final String MAVEN_DOWNLOAD_REQUEST_TEMPLATE
@@ -49,6 +43,13 @@ public class MavenScmFinder {
    */
   private static final String PATH_TEMPLATE
       = "{GROUP}/{ARTIFACT}/{VERSION}/{ARTIFACT}-{VERSION}.pom";
+
+  /**
+   * Pattern to match the latest version.
+   */
+  private static final Pattern LATEST_VERSION_PATTERN =
+      Pattern.compile("\\s*<latest>([A-Za-z0-9]+(\\.[A-Za-z0-9]+)*.*)</latest>",
+          Pattern.CASE_INSENSITIVE);
 
   /**
    * Takes GAV coordinates of an artifact and looks for a URL to its SCM.
@@ -216,37 +217,27 @@ public class MavenScmFinder {
    * @throws IOException If something went wrong.
    */
   private static String latestVersionOf(GAV gav) throws IOException {
-    String urlString = MAVEN_SEARCH_REQUEST_TEMPLATE
-        .replace("{GROUP_ID}", gav.group())
-        .replace("{ARTIFACT_ID}", gav.artifact());
-
-    JsonNode node = fetchJsonNode(urlString);
-
-    if (!node.has("response")) {
-      throw new IOException("Oh no! The response doesn't have a response filed!");
+    Optional<String> latest = latestVersionOf(gav.group(), gav.artifact());
+    if (!latest.isPresent()) {
+      throw new IOException("Oh no! The latest element did not have the version!");
     }
-    JsonNode response = node.get("response");
+    return latest.get();
+  }
 
-    if (!response.has("docs")) {
-      throw new IOException("Oh no! The response doesn't have a docs field!");
-    }
-    JsonNode docs = response.get("docs");
-
-    if (!docs.isArray()) {
-      throw new IOException("Oh no! Docs element is not an array!");
-    }
-    Iterator<JsonNode> iterator = docs.iterator();
-
-    if (!iterator.hasNext()) {
-      throw new IOException("Oh no! Docs element is empty!");
-    }
-
-    JsonNode latest = iterator.next();
-    if (!latest.has("v")) {
-      throw new IOException("Oh no! The latest element in docs doesn't have a version!");
-    }
-
-    return latest.get("v").asText();
+  /**
+   * Gathers latest release version from group:artifact coordinate.
+   *
+   * @param group    A maven artifact group Id.
+   * @param artifact A maven artifact Id.
+   * @return An optional {@link String} containing the latest release version.
+   * @throws IOException If something goes wrong.
+   */
+  private static Optional<String> latestVersionOf(String group, String artifact)
+      throws IOException {
+    String url = String.format(
+        "https://repo1.maven.org/maven2/%s/%s/maven-metadata.xml",
+        group.replaceAll("\\.", "/"), artifact);
+    return fetchLatestVersionOf(url);
   }
 
   /**
@@ -285,17 +276,6 @@ public class MavenScmFinder {
   }
 
   /**
-   * Fetches info in {@link JsonNode} from the URL.
-   *
-   * @param url from which the information needs to be collected.
-   * @return The info in {@link JsonNode} from the URL.
-   * @throws IOException If something went wrong.
-   */
-  private static JsonNode fetchJsonNode(String url) throws IOException {
-    return Json.mapper().readTree(fetch(url));
-  }
-
-  /**
    * Creates an HTTP client.
    *
    * @return An HTTP client.
@@ -307,6 +287,32 @@ public class MavenScmFinder {
         .setConnectionRequestTimeout(timeout * 1000).setSocketTimeout(timeout * 1000).build();
     return HttpClientBuilder.create()
         .setDefaultRequestConfig(config).build();
+  }
+
+  /**
+   * Fetches latest version info from the URL.
+   *
+   * @param url from which the information needs to be collected.
+   * @return An optional {@link String} containing the latest release version.
+   * @throws IOException If something went wrong.
+   */
+  private static Optional<String> fetchLatestVersionOf(String url) throws IOException {
+    try (CloseableHttpClient client = httpClient()) {
+      HttpGet httpGetRequest = new HttpGet(url);
+      httpGetRequest.addHeader(HttpHeaders.ACCEPT, ContentType.TEXT_HTML.getMimeType());
+      try (CloseableHttpResponse httpResponse = client.execute(httpGetRequest);
+          BufferedReader reader = new BufferedReader(
+              new InputStreamReader(httpResponse.getEntity().getContent(), UTF_8))) {
+        String line = null;
+        while ((line = reader.readLine()) != null) {
+          Matcher matcher = LATEST_VERSION_PATTERN.matcher(line);
+          if (matcher.matches()) {
+            return Optional.ofNullable(matcher.group(1));
+          }
+        }
+      }
+      return Optional.empty();
+    }
   }
 
   /**
