@@ -16,8 +16,13 @@ public class ArtifactVersionTest {
   public void testIsValidSemanticVersion() {
     ArtifactVersion invalidVersion2 = new ArtifactVersion("MIGHTY-1.2", LocalDateTime.now());
     assertFalse(invalidVersion2.hasValidSemanticVersion());
-    ArtifactVersion toLessDigits = new ArtifactVersion("2.0", LocalDateTime.now());
-    assertFalse(toLessDigits.hasValidSemanticVersion());
+
+    ArtifactVersion validVersionWithOnlyMinor = new ArtifactVersion("1.59", LocalDateTime.now());
+    assertTrue(validVersionWithOnlyMinor.hasValidSemanticVersion());
+    SemanticVersion semVerValidWithOnlyMinor = validVersionWithOnlyMinor.getSemanticVersion().get();
+    assertEquals(1, semVerValidWithOnlyMinor.getMajor());
+    assertEquals(59, semVerValidWithOnlyMinor.getMinor());
+    assertEquals(-1, semVerValidWithOnlyMinor.getMicro());
 
     ArtifactVersion validVersion = new ArtifactVersion("2.0.2", LocalDateTime.now());
     assertTrue(validVersion.hasValidSemanticVersion());

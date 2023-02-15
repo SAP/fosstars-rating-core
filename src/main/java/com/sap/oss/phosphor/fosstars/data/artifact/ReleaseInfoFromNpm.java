@@ -36,7 +36,7 @@ public class ReleaseInfoFromNpm extends AbstractReleaseInfoLoader {
    */
   private JsonNode npmArtifactReleaseInfo(NpmArtifact npmArtifact) throws IOException {
     String url = format("https://registry.npmjs.org/%s", npmArtifact.identifier());
-    return fetch(url);
+    return fetchJson(url);
   }
 
   @Override

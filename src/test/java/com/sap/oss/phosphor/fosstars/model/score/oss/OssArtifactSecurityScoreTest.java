@@ -75,7 +75,7 @@ public class OssArtifactSecurityScoreTest {
         ARTIFACT_VERSION.value(new ArtifactVersion("1.2.0", LocalDateTime.now())));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertTrue(DoubleInterval.closed(5, 6).contains(scoreValue.get()));
+    assertTrue(DoubleInterval.closed(3.5, 4.5).contains(scoreValue.get()));
     assertEquals(CONFIDENCE_NO_VULNERABILITY, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }
@@ -88,7 +88,7 @@ public class OssArtifactSecurityScoreTest {
         ARTIFACT_VERSION.value(new ArtifactVersion("1.0.0", LocalDateTime.now())));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertTrue(DoubleInterval.closed(4.5, 5.5).contains(scoreValue.get()));
+    assertTrue(DoubleInterval.closed(3.5, 4.5).contains(scoreValue.get()));
     assertEquals(CONFIDENCE_NO_VULNERABILITY, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }
@@ -101,7 +101,7 @@ public class OssArtifactSecurityScoreTest {
         ARTIFACT_VERSION.value(new ArtifactVersion("1.2.0", LocalDateTime.now())));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertTrue(DoubleInterval.closed(5, 6).contains(scoreValue.get()));
+    assertTrue(DoubleInterval.closed(4, 5).contains(scoreValue.get()));
     assertEquals(CONFIDENCE_NO_VULNERABILITY, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }
@@ -114,7 +114,7 @@ public class OssArtifactSecurityScoreTest {
         ARTIFACT_VERSION.value(new ArtifactVersion("2.0.0", LocalDateTime.now())));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertTrue(DoubleInterval.closed(5, 6).contains(scoreValue.get()));
+    assertTrue(DoubleInterval.closed(4, 5).contains(scoreValue.get()));
     assertEquals(CONFIDENCE_NO_VULNERABILITY, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }
@@ -130,7 +130,7 @@ public class OssArtifactSecurityScoreTest {
         ARTIFACT_VERSION.value(new ArtifactVersion("2.0.0", LocalDateTime.now())));
 
     ScoreValue scoreValue = score.calculate(values);
-    assertTrue(DoubleInterval.closed(6, 7).contains(scoreValue.get()));
+    assertTrue(DoubleInterval.closed(4, 5).contains(scoreValue.get()));
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     checkUsedValues(scoreValue);
   }

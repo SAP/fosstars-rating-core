@@ -9,8 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     name: "RoP report"
     steps:
-      - uses: actions/checkout@v3.0.2
-      - uses: SAP/fosstars-rating-core-action@v1.5.0
+      - uses: actions/checkout@v3.1.0
+      - uses: SAP/fosstars-rating-core-action@v1.9.1
         with:
           rating: oss-rules-of-play
           report-branch: fosstars-rop-report

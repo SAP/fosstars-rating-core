@@ -2,7 +2,6 @@ package com.sap.oss.phosphor.fosstars.advice.oss;
 
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_CODEQL_SCANS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_CODEQL_CHECKS;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM_CHECKS;
 import static java.util.Arrays.asList;
 
 import com.sap.oss.phosphor.fosstars.advice.Advice;
@@ -23,7 +22,7 @@ public class CodeqlAdvisor extends AbstractOssAdvisor {
    * A list of features that the advisor supports.
    */
   private static final List<Feature<Boolean>> FEATURES
-      = asList(USES_LGTM_CHECKS, USES_CODEQL_CHECKS, RUNS_CODEQL_SCANS);
+      = asList(USES_CODEQL_CHECKS, RUNS_CODEQL_SCANS);
 
   /**
    * Create a new advisor.

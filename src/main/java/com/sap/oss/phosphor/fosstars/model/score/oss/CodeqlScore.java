@@ -3,7 +3,6 @@ package com.sap.oss.phosphor.fosstars.model.score.oss;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.LANGUAGES;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_CODEQL_SCANS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_CODEQL_CHECKS;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM_CHECKS;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.findValue;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.C;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.CPP;
@@ -23,7 +22,6 @@ import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
  * <p>The score shows if and how a project uses static analysis with CodeQL.
  * The score is based on the following features.</p>
  * <ul>
- *  <li>{@link com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures#USES_LGTM_CHECKS}</li>
  *  <li>{@link com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures#USES_CODEQL_CHECKS}</li>
  *  <li>{@link com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures#RUNS_CODEQL_SCANS}</li>
  *  <li>{@link com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures#LANGUAGES}</li>
@@ -54,13 +52,11 @@ public class CodeqlScore extends FeatureBasedScore {
    */
   CodeqlScore() {
     super("How a project uses CodeQL",
-        USES_LGTM_CHECKS, USES_CODEQL_CHECKS, RUNS_CODEQL_SCANS, LANGUAGES);
+        USES_CODEQL_CHECKS, RUNS_CODEQL_SCANS, LANGUAGES);
   }
 
   @Override
   public ScoreValue calculate(Value<?>... values) {
-    Value<Boolean> usesLgtmChecks = findValue(values, USES_LGTM_CHECKS,
-        "Hey! You have to tell me if the project uses LGTM checks!");
     Value<Boolean> usesCodeqlChecks = findValue(values, USES_CODEQL_CHECKS,
         "Hey! You have to tell me if the project uses CodeQL checks!");
     Value<Boolean> runsCodeqlScans = findValue(values, RUNS_CODEQL_SCANS,
@@ -69,9 +65,9 @@ public class CodeqlScore extends FeatureBasedScore {
         "Hey! You have to tell me which languages the project uses!");
 
     ScoreValue scoreValue = scoreValue(MIN,
-        usesLgtmChecks, usesCodeqlChecks, runsCodeqlScans, languages);
+        usesCodeqlChecks, runsCodeqlScans, languages);
 
-    if (allUnknown(usesLgtmChecks, usesCodeqlChecks, runsCodeqlScans, languages)) {
+    if (allUnknown(usesCodeqlChecks, runsCodeqlScans, languages)) {
       return scoreValue.makeUnknown().explain(
           "The score value is unknown because all required features are unknown.");
     }
@@ -81,7 +77,7 @@ public class CodeqlScore extends FeatureBasedScore {
           "The score is N/A because the project uses languages that are not supported by CodeQL.");
     }
 
-    if (usesLgtmChecks.orElse(false) || usesCodeqlChecks.orElse(false)) {
+    if (usesCodeqlChecks.orElse(false)) {
       scoreValue.increase(CODEQL_CHECKS_POINTS);
     }
 

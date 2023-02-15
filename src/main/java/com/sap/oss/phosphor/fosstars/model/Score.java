@@ -137,4 +137,14 @@ public interface Score extends Feature<Double> {
     return value;
   }
 
+  /**
+   * Get an Interval with the provided range.
+   *
+   * @param min An interval start value.
+   * @param max An interval end value.
+   * @return Interval with the range provided from min and max param values.
+   */
+  static Interval makeInterval(double min, double max) {
+    return DoubleInterval.init().from(min).to(max).closed().make();
+  }
 }

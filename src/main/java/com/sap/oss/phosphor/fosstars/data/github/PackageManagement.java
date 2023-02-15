@@ -4,6 +4,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.LANGUA
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.PACKAGE_MANAGERS;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.C_SHARP;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.F_SHARP;
+import static com.sap.oss.phosphor.fosstars.model.value.Language.GO;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.JAVA;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.JAVASCRIPT;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.PHP;
@@ -13,6 +14,7 @@ import static com.sap.oss.phosphor.fosstars.model.value.Language.SCALA;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.VISUALBASIC;
 import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.COMPOSER;
 import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.DOTNET;
+import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.GOMODULES;
 import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.GRADLE;
 import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.MAVEN;
 import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.NPM;
@@ -63,6 +65,7 @@ public class PackageManagement extends CachedSingleFeatureGitHubDataProvider<Pac
     register(PYTHON, PIP);
     register(RUBY, RUBYGEMS);
     register(PHP, COMPOSER);
+    register(GO, GOMODULES);
   }
 
   /**
@@ -83,6 +86,7 @@ public class PackageManagement extends CachedSingleFeatureGitHubDataProvider<Pac
         ".vcxproj"::equals, ".fsproj"::equals, "packages.config"::equals);
     register(RUBYGEMS, "Gemfile.lock"::equals, "Gemfile"::equals, ".gemspec"::endsWith);
     register(COMPOSER, "composer.json"::equals, "composer.lock"::equals);
+    register(GOMODULES, "go.mod"::equals, "go.sum"::equals);
   }
 
   /**

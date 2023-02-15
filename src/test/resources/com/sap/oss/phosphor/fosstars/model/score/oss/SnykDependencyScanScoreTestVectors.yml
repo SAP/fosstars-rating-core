@@ -1,0 +1,152 @@
+---
+
+# default values for test vectors
+defaults: []
+
+# test vectors
+elements:
+
+# all unknown
+- type: "StandardTestVector"
+  values:
+  - type: "UnknownValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses Snyk"
+  - type: "UnknownValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses GitHub as the main development platform"
+  - type: "UnknownValue"
+    feature:
+      type: "PackageManagersFeature"
+      name: "A set of package managers"
+  - type: "UnknownValue"
+    feature:
+      type: "LanguagesFeature"
+      name: "A set of programming languages"
+  expectedScore:
+    type: "DoubleInterval"
+    from: 0.0
+    openLeft: false
+    negativeInfinity: false
+    to: 1.0
+    openRight: false
+    positiveInfinity: false
+  expectedUnknownScore: true
+  expectedLabel: null
+  alias: "all_unknown"
+
+# very bad project
+- type: "StandardTestVector"
+  values:
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses Snyk"
+    flag: false
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses GitHub as the main development platform"
+    flag: false
+  - type: "PackageManagersValue"
+    feature:
+      type: "PackageManagersFeature"
+      name: "A set of package managers"
+    packageManagers:
+      packageManagers:
+      - "OTHER"
+  - type: "LanguagesValue"
+    feature:
+      type: "LanguagesFeature"
+      name: "A set of programming languages"
+    languages:
+      elements:
+      - "OTHER"
+  expectedScore:
+    type: "DoubleInterval"
+    from: 0.0
+    openLeft: false
+    negativeInfinity: false
+    to: 1.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "very_bad"
+
+  # okay project
+- type: "StandardTestVector"
+  values:
+    - type: "BooleanValue"
+      feature:
+        type: "BooleanFeature"
+        name: "If a project uses Snyk"
+      flag: false
+    - type: "BooleanValue"
+      feature:
+        type: "BooleanFeature"
+        name: "If a project uses GitHub as the main development platform"
+      flag: true
+    - type: "PackageManagersValue"
+      feature:
+        type: "PackageManagersFeature"
+        name: "A set of package managers"
+      packageManagers:
+        packageManagers:
+        - "MAVEN"
+    - type: "LanguagesValue"
+      feature:
+        type: "LanguagesFeature"
+        name: "A set of programming languages"
+      languages:
+        elements:
+        - "JAVA"
+  expectedScore:
+    type: "DoubleInterval"
+    from: 5.0
+    openLeft: false
+    negativeInfinity: false
+    to: 8.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "okay"
+
+# very good project
+- type: "StandardTestVector"
+  values:
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses Snyk"
+    flag: true
+  - type: "BooleanValue"
+    feature:
+      type: "BooleanFeature"
+      name: "If a project uses GitHub as the main development platform"
+    flag: true
+  - type: "PackageManagersValue"
+    feature:
+      type: "PackageManagersFeature"
+      name: "A set of package managers"
+    packageManagers:
+      packageManagers:
+      - "MAVEN"
+  - type: "LanguagesValue"
+    feature:
+      type: "LanguagesFeature"
+      name: "A set of programming languages"
+    languages:
+      elements:
+      - "JAVA"
+  expectedScore:
+    type: "DoubleInterval"
+    from: 9.0
+    openLeft: false
+    negativeInfinity: false
+    to: 10.0
+    openRight: false
+    positiveInfinity: false
+  expectedLabel: null
+  alias: "very_good"

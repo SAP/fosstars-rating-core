@@ -16,9 +16,7 @@ import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersion;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -28,7 +26,7 @@ import org.junit.Test;
 public class ReleaseInfoFromMavenTest {
 
   private static final MavenArtifact MAVEN_ARTIFACT =
-      new MavenArtifact("group", "artifact", "1.10.10", new GitHubProject("org", "project"));
+      new MavenArtifact("group", "artifact", "2.7.0", new GitHubProject("org", "project"));
 
   @Test
   public void testIfMavenArtifactExist() throws IOException {
@@ -44,25 +42,30 @@ public class ReleaseInfoFromMavenTest {
     HttpEntity entity = mock(HttpEntity.class);
     when(response.getEntity()).thenReturn(entity);
 
-    try (InputStream content = getClass().getResourceAsStream("ReleaseInfoFromMaven.json")) {
+    try (InputStream content = getClass().getResourceAsStream("ReleaseInfoFromMaven.html")) {
       when(entity.getContent()).thenReturn(content);
+      processProvider(provider);
+    }
+  }
 
-      ValueHashSet values = new ValueHashSet();
-      assertEquals(0, values.size());
+  @Test
+  public void testIfMavenArtifactNotFoundInList() throws IOException {
+    ReleaseInfoFromMaven provider = new ReleaseInfoFromMaven();
+    provider = spy(provider);
 
-      provider.update(MAVEN_ARTIFACT, values);
+    CloseableHttpClient httpClient = mock(CloseableHttpClient.class);
+    when(provider.httpClient()).thenReturn(httpClient);
 
-      assertEquals(2, values.size());
-      assertTrue(values.has(RELEASED_ARTIFACT_VERSIONS));
-      assertTrue(values.of(RELEASED_ARTIFACT_VERSIONS).isPresent());
-      assertFalse(values.of(RELEASED_ARTIFACT_VERSIONS).get().isUnknown());
-      assertFalse(values.of(RELEASED_ARTIFACT_VERSIONS).get().get().empty());
-      assertEquals(20, values.of(RELEASED_ARTIFACT_VERSIONS).get().get().size());
-      assertTrue(values.of(RELEASED_ARTIFACT_VERSIONS).get().get().get("1.10.10").isPresent());
-      assertFalse(values.of(ARTIFACT_VERSION).get().isUnknown());
-      ArtifactVersion foundArtifactVersion = values.of(ARTIFACT_VERSION).get().get();
-      assertEquals("1.10.10", foundArtifactVersion.version());
-      assertEquals(asLocalDateTime(1618200022000L), foundArtifactVersion.releaseDate());
+    CloseableHttpResponse response = mock(CloseableHttpResponse.class);
+    when(httpClient.execute(any())).thenReturn(response);
+
+    HttpEntity entity = mock(HttpEntity.class);
+    when(response.getEntity()).thenReturn(entity);
+
+    try (InputStream content = getClass().getResourceAsStream(
+        "ReleaseInfoFromMavenNoArtifactInList.html")) {
+      when(entity.getContent()).thenReturn(content);
+      processProviderNotFoundInList(provider);
     }
   }
 
@@ -83,6 +86,10 @@ public class ReleaseInfoFromMavenTest {
     InputStream content = IOUtils.toInputStream("");
     when(entity.getContent()).thenReturn(content);
 
+    processProviderForUnknownResult(provider);
+  }
+
+  private void processProviderForUnknownResult(ReleaseInfoFromMaven provider) throws IOException {
     ValueHashSet values = new ValueHashSet();
     assertEquals(0, values.size());
 
@@ -97,7 +104,38 @@ public class ReleaseInfoFromMavenTest {
     assertTrue(values.of(ARTIFACT_VERSION).get().isUnknown());
   }
 
-  private static LocalDateTime asLocalDateTime(long epochMilli) {
-    return Instant.ofEpochMilli(epochMilli).atZone(ZoneId.systemDefault()).toLocalDateTime();
+  private void processProvider(ReleaseInfoFromMaven provider) throws IOException {
+    ValueHashSet values = new ValueHashSet();
+    assertEquals(0, values.size());
+
+    provider.update(MAVEN_ARTIFACT, values);
+
+    assertEquals(2, values.size());
+    assertTrue(values.has(RELEASED_ARTIFACT_VERSIONS));
+    assertTrue(values.of(RELEASED_ARTIFACT_VERSIONS).isPresent());
+    assertFalse(values.of(RELEASED_ARTIFACT_VERSIONS).get().isUnknown());
+    assertFalse(values.of(RELEASED_ARTIFACT_VERSIONS).get().get().empty());
+    assertEquals(155, values.of(RELEASED_ARTIFACT_VERSIONS).get().get().size());
+    assertTrue(values.of(RELEASED_ARTIFACT_VERSIONS).get().get().get("2.7.0").isPresent());
+    assertFalse(values.of(ARTIFACT_VERSION).get().isUnknown());
+    ArtifactVersion foundArtifactVersion = values.of(ARTIFACT_VERSION).get().get();
+    assertEquals("2.7.0", foundArtifactVersion.version());
+    assertEquals(LocalDateTime.parse("2016-01-10T06:10"), foundArtifactVersion.releaseDate());
+  }
+
+  private void processProviderNotFoundInList(ReleaseInfoFromMaven provider) throws IOException {
+    ValueHashSet values = new ValueHashSet();
+    assertEquals(0, values.size());
+
+    provider.update(MAVEN_ARTIFACT, values);
+
+    assertEquals(2, values.size());
+    assertTrue(values.has(RELEASED_ARTIFACT_VERSIONS));
+    assertTrue(values.of(RELEASED_ARTIFACT_VERSIONS).isPresent());
+    assertFalse(values.of(RELEASED_ARTIFACT_VERSIONS).get().isUnknown());
+    assertFalse(values.of(RELEASED_ARTIFACT_VERSIONS).get().get().empty());
+    assertEquals(154, values.of(RELEASED_ARTIFACT_VERSIONS).get().get().size());
+    assertFalse(values.of(RELEASED_ARTIFACT_VERSIONS).get().get().get("2.7.0").isPresent());
+    assertTrue(values.of(ARTIFACT_VERSION).get().isUnknown());
   }
 }

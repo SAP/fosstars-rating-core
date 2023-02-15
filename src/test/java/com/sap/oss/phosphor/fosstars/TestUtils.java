@@ -3,6 +3,7 @@ package com.sap.oss.phosphor.fosstars;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ARTIFACT_VERSION;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.FUZZED_IN_OSS_FUZZ;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_BUG_BOUNTY_PROGRAM;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_EXECUTABLE_BINARIES;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_TEAM;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.IS_APACHE;
@@ -20,6 +21,9 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.PROJEC
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RELEASED_ARTIFACT_VERSIONS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_BANDIT_SCANS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_CODEQL_SCANS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_GOSEC_SCANS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_MYPY_SCANS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_PYLINT_SCANS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SECURITY_REVIEWS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SIGNS_ARTIFACTS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.SUPPORTED_BY_COMPANY;
@@ -29,17 +33,20 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_C
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_DEPENDABOT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_FIND_SEC_BUGS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GITHUB_FOR_DEVELOPMENT;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM_CHECKS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GOSEC_SCAN_CHECKS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GOSEC_WITH_RULES;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_MEMORY_SANITIZER;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_MYPY_SCAN_CHECKS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_NOHTTP;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_OWASP_ESAPI;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_OWASP_JAVA_ENCODER;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_OWASP_JAVA_HTML_SANITIZER;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_PYLINT_SCAN_CHECKS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SIGNED_COMMITS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SNYK;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_UNDEFINED_BEHAVIOR_SANITIZER;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES_IN_ARTIFACT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES_IN_PROJECT;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.JAVA;
 import static com.sap.oss.phosphor.fosstars.model.value.OwaspDependencyCheckUsage.MANDATORY;
@@ -60,7 +67,6 @@ import com.sap.oss.phosphor.fosstars.model.value.ArtifactVersions;
 import com.sap.oss.phosphor.fosstars.model.value.CVSS;
 import com.sap.oss.phosphor.fosstars.model.value.CVSS.V3.Impact;
 import com.sap.oss.phosphor.fosstars.model.value.Languages;
-import com.sap.oss.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.oss.phosphor.fosstars.model.value.PackageManagers;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.oss.phosphor.fosstars.model.value.SecurityReview;
@@ -195,10 +201,16 @@ public class TestUtils {
         USES_CODEQL_CHECKS.value(false),
         RUNS_BANDIT_SCANS.value(false),
         USES_BANDIT_SCAN_CHECKS.value(false),
-        USES_LGTM_CHECKS.value(true),
-        WORST_LGTM_GRADE.value(LgtmGrade.B),
+        RUNS_GOSEC_SCANS.value(false),
+        USES_GOSEC_WITH_RULES.value(false),
+        USES_GOSEC_SCAN_CHECKS.value(false),
+        RUNS_PYLINT_SCANS.value(false),
+        USES_PYLINT_SCAN_CHECKS.value(false),
+        RUNS_MYPY_SCANS.value(false),
+        USES_MYPY_SCAN_CHECKS.value(false),
         USES_NOHTTP.value(true),
         USES_DEPENDABOT.value(true),
+        USES_SNYK.value(false),
         USES_GITHUB_FOR_DEVELOPMENT.value(true),
         LANGUAGES.value(Languages.of(JAVA)),
         USES_ADDRESS_SANITIZER.value(false),
@@ -212,7 +224,8 @@ public class TestUtils {
         OWASP_DEPENDENCY_CHECK_USAGE.value(MANDATORY),
         OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.value(7.0),
         PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)),
-        SECURITY_REVIEWS.value(noReviews()));
+        SECURITY_REVIEWS.value(noReviews()),
+        HAS_EXECUTABLE_BINARIES.value(false));
   }
 
   /**
@@ -269,10 +282,16 @@ public class TestUtils {
         USES_CODEQL_CHECKS.value(true),
         RUNS_BANDIT_SCANS.value(true),
         USES_BANDIT_SCAN_CHECKS.value(true),
-        USES_LGTM_CHECKS.value(true),
-        WORST_LGTM_GRADE.value(LgtmGrade.A_PLUS),
+        RUNS_GOSEC_SCANS.value(true),
+        USES_GOSEC_WITH_RULES.value(true),
+        USES_GOSEC_SCAN_CHECKS.value(true),
+        RUNS_PYLINT_SCANS.value(true),
+        USES_PYLINT_SCAN_CHECKS.value(true),
+        RUNS_MYPY_SCANS.value(true),
+        USES_MYPY_SCAN_CHECKS.value(true),
         USES_NOHTTP.value(true),
         USES_DEPENDABOT.value(true),
+        USES_SNYK.value(true),
         USES_GITHUB_FOR_DEVELOPMENT.value(true),
         LANGUAGES.value(Languages.of(JAVA)),
         USES_ADDRESS_SANITIZER.value(true),
@@ -286,7 +305,8 @@ public class TestUtils {
         OWASP_DEPENDENCY_CHECK_USAGE.value(MANDATORY),
         OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.value(4.0),
         PACKAGE_MANAGERS.value(PackageManagers.from(MAVEN)),
-        SECURITY_REVIEWS.value(new SecurityReviews(new SecurityReview(new Date(), 0.0))));
+        SECURITY_REVIEWS.value(new SecurityReviews(new SecurityReview(new Date(), 0.0))),
+        HAS_EXECUTABLE_BINARIES.value(true));
   }
 
   /**
