@@ -235,6 +235,16 @@ public class LocalRepository implements AutoCloseable {
   }
 
   /**
+   * Resolve the repository path for specified file.
+   *
+   * @param file A path to the file.
+   * @return Optional resolved path within the {@link LocalRepository}.
+   */
+  public Optional<Path> path(String file) {
+    return Optional.ofNullable(info.path().resolve(Paths.get(file)));
+  }
+
+  /**
    * Returns a stream of a file if it exists.
    *
    * @param file The file name.

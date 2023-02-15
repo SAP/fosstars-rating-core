@@ -13,10 +13,6 @@ elements:
   - type: "UnknownValue"
     feature:
       type: "BooleanFeature"
-      name: "If a project uses LGTM checks for commits"
-  - type: "UnknownValue"
-    feature:
-      type: "BooleanFeature"
       name: "If a project runs CodeQL checks for commits"
   - type: "UnknownValue"
     feature:
@@ -42,11 +38,6 @@ elements:
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
-      name: "If a project uses LGTM checks for commits"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
       name: "If a project runs CodeQL checks for commits"
     flag: false
   - type: "BooleanValue"
@@ -69,13 +60,8 @@ elements:
     - type: "BooleanValue"
       feature:
         type: "BooleanFeature"
-        name: "If a project uses LGTM checks for commits"
-      flag: true
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
         name: "If a project runs CodeQL checks for commits"
-      flag: false
+      flag: true
     - type: "BooleanValue"
       feature:
         type: "BooleanFeature"
@@ -96,38 +82,6 @@ elements:
     - type: "BooleanValue"
       feature:
         type: "BooleanFeature"
-        name: "If a project uses LGTM checks for commits"
-      flag: false
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If a project runs CodeQL checks for commits"
-      flag: true
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If a project runs CodeQL scans"
-      flag: false
-  expectedScore:
-    type: "DoubleInterval"
-    from: 6.0
-    openLeft: false
-    negativeInfinity: false
-    to: 8.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_3"
-- type: "StandardTestVector"
-  values:
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If a project uses LGTM checks for commits"
-      flag: false
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
         name: "If a project runs CodeQL checks for commits"
       flag: false
     - type: "BooleanValue"
@@ -144,14 +98,9 @@ elements:
     openRight: false
     positiveInfinity: false
   expectedLabel: null
-  alias: "test_vector_4"
+  alias: "test_vector_3"
 - type: "StandardTestVector"
   values:
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If a project uses LGTM checks for commits"
-      flag: true
     - type: "BooleanValue"
       feature:
         type: "BooleanFeature"
@@ -171,19 +120,14 @@ elements:
     openRight: false
     positiveInfinity: false
   expectedLabel: null
-  alias: "test_vector_5"
+  alias: "test_vector_4"
 - type: "StandardTestVector"
   values:
     - type: "BooleanValue"
       feature:
         type: "BooleanFeature"
-        name: "If a project uses LGTM checks for commits"
-      flag: false
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
         name: "If a project runs CodeQL checks for commits"
-      flag: false
+      flag: true
     - type: "BooleanValue"
       feature:
         type: "BooleanFeature"

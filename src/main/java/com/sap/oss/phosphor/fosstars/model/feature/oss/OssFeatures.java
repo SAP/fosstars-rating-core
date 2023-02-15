@@ -172,6 +172,29 @@ public class OssFeatures {
       = new BooleanFeature("If a project has open pull requests from Dependabot");
 
   /**
+   * <p>Shows if a project uses Snyk.</p>
+   * <p><a href="https://snyk.io/">Snyk introduction</a> offers</p>
+   * <ul>
+   *   <li>Static Application Security Testing (SAST)</li>
+   *   <li>Automatic dependency updates</li>
+   * </ul>
+   *<p> In particular for automatic dependency updates,
+   * when Snyk finds a vulnerability in dependencies,
+   * it opens a pull request to update the vulnerable dependency to the safe version.</p>
+   */
+  public static final Feature<Boolean> USES_SNYK
+      = new BooleanFeature("If a project uses Snyk");
+
+  /**
+   * Shows if an open source project has open pull requests from Snyk which means that
+   * there are dependencies with known vulnerabilities.
+   *
+   * @see <a href="https://snyk.io/">Snyk</a>
+   */
+  public static final BooleanFeature HAS_OPEN_PULL_REQUEST_FROM_SNYK
+      = new BooleanFeature("If a project has open pull requests from Snyk");
+
+  /**
    * Shows how many GitHub users starred an open-source project.
    */
   public static final Feature<Integer> NUMBER_OF_GITHUB_STARS
@@ -239,6 +262,67 @@ public class OssFeatures {
       = new BooleanFeature("If a project runs Bandit scan checks for commits");
 
   /**
+   * Shows if an open-source project runs GoSec scans.
+   *
+   * @see <a href="https://github.com/securego/gosec#gosec---golang-security-checker">Trigger GoSec code scanning for a repository</a>
+   */
+  public static final Feature<Boolean> RUNS_GOSEC_SCANS
+      = new BooleanFeature("If a project runs GoSec scans");
+
+  /**
+   * Shows if an open-source project runs GoSec checks for commits.
+   *
+   * @see <a href="https://github.com/securego/gosec#usage">Trigger GoSec code scanning job on every PR of a project</a>
+   */
+  public static final Feature<Boolean> USES_GOSEC_SCAN_CHECKS
+      = new BooleanFeature("If a project runs GoSec scan checks for commits");
+
+  /**
+   * Shows if an open-source project runs GoSec scans with the selected rules.
+   *
+   * @see <a href="https://github.com/securego/gosec#usage">Trigger GoSec code scanning for a repository with rules</a>
+   */
+  public static final Feature<Boolean> USES_GOSEC_WITH_RULES
+      = new BooleanFeature("If a project runs GoSec scans with rules");
+
+  /**
+   * Shows if an open-source project runs Pylint scans.
+   *
+   * @see <a href="https://pylint.pycqa.org/en/latest/user_guide/installation/index.html">Trigger
+   *      Pylint code scanning for a repository</a>
+   */
+  public static final Feature<Boolean> RUNS_PYLINT_SCANS =
+      new BooleanFeature("If a project runs Pylint scans");
+
+  /**
+   * Shows if an open-source project runs Pylint checks before commits.
+   *
+   * @see <a href=
+   *      "https://pylint.pycqa.org/en/latest/user_guide/installation/pre-commit-integration.html">Trigger
+   *      Pylint code scanning job before every commit to a repository</a>
+   */
+  public static final Feature<Boolean> USES_PYLINT_SCAN_CHECKS =
+      new BooleanFeature("If a project runs Pylint scan checks for commits");
+  
+  /**
+   * Shows if an open-source project runs Mypy scans.
+   *
+   * @see <a href="https://github.com/marketplace/actions/mypy-action">Trigger Mypy code scanning
+   *      for a repository</a>
+   */
+  public static final Feature<Boolean> RUNS_MYPY_SCANS =
+      new BooleanFeature("If a project runs Mypy scans");
+
+  /**
+   * Shows if an open-source project runs Mypy checks before commits.
+   *
+   * @see <a href="https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository">Enabling
+   *      code scanning for a repository</a>
+   */
+  public static final Feature<Boolean> USES_MYPY_SCAN_CHECKS =
+      new BooleanFeature("If a project runs Mypy scan checks for commits");
+
+  /**
    * Shows if an open-source project uses <a href="https://lgtm.com">LGTM</a> checks for commits.
    */
   public static final Feature<Boolean> USES_LGTM_CHECKS
@@ -281,6 +365,12 @@ public class OssFeatures {
    */
   public static final Feature<Boolean> SIGNS_ARTIFACTS
       = new BooleanFeature("If a project signs artifacts");
+
+  /**
+   * Shows if an open-source project has executable binaries (for example, .class, .pyc, .exe).
+   */
+  public static final Feature<Boolean> HAS_EXECUTABLE_BINARIES
+      = new BooleanFeature("If a project has executable binaries");
 
   /**
    * Shows if OWASP Dependency Check is used to scan a project. It is either used as a mandatory

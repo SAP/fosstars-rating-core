@@ -18,6 +18,7 @@ import java.util.Set;
  * <ul>
  *   <li>{@link DependabotScore}</li>
  *   <li>{@link OwaspDependencyScanScore}</li>
+ *   <li>{@link SnykDependencyScanScore}</li>
  * </ul>
  */
 public class DependencyScanScore extends AbstractScore {
@@ -33,10 +34,16 @@ public class DependencyScanScore extends AbstractScore {
   private final OwaspDependencyScanScore owaspDependencyCheckScore;
 
   /**
+   * A score that shows how a project uses Snyk.
+   */
+  private final SnykDependencyScanScore snykDependencyScanScore;
+
+  /**
    * Initializes a new score.
    */
   public DependencyScanScore() {
     super("How a project scans its dependencies for vulnerabilities");
+    this.snykDependencyScanScore = new SnykDependencyScanScore();
     this.dependabotScore = new DependabotScore();
     this.owaspDependencyCheckScore = new OwaspDependencyScanScore();
   }
@@ -48,30 +55,36 @@ public class DependencyScanScore extends AbstractScore {
 
   @Override
   public Set<Score> subScores() {
-    return setOf(dependabotScore, owaspDependencyCheckScore);
+    return setOf(dependabotScore, snykDependencyScanScore, owaspDependencyCheckScore);
   }
 
   @Override
   public ScoreValue calculate(Value<?>... values) {
     Objects.requireNonNull(values, "Oh no! Values is null!");
 
+    ScoreValue snykDependencyScanScoreValue = calculateIfNecessary(snykDependencyScanScore, values);
     ScoreValue dependabotScoreValue = calculateIfNecessary(dependabotScore, values);
     ScoreValue owaspDependencyCheckScoreValue
         = calculateIfNecessary(owaspDependencyCheckScore, values);
 
-    ScoreValue scoreValue = scoreValue(MIN, dependabotScoreValue, owaspDependencyCheckScoreValue);
+    ScoreValue scoreValue = scoreValue(MIN, dependabotScoreValue,
+        snykDependencyScanScoreValue, owaspDependencyCheckScoreValue);
 
-    if (allUnknown(dependabotScoreValue, owaspDependencyCheckScoreValue)) {
+    if (allUnknown(dependabotScoreValue, snykDependencyScanScoreValue,
+        owaspDependencyCheckScoreValue)) {
       return scoreValue.makeUnknown();
     }
 
-    if (allNotApplicable(dependabotScoreValue, owaspDependencyCheckScoreValue)) {
+    if (allNotApplicable(dependabotScoreValue, snykDependencyScanScoreValue,
+        owaspDependencyCheckScoreValue)) {
       return scoreValue.makeNotApplicable();
     }
 
+    scoreValue.increase(snykDependencyScanScoreValue.orElse(MIN));
     scoreValue.increase(dependabotScoreValue.orElse(MIN));
     scoreValue.increase(owaspDependencyCheckScoreValue.orElse(MIN));
-    scoreValue.confidence(Confidence.make(dependabotScoreValue, owaspDependencyCheckScoreValue));
+    scoreValue.confidence(Confidence.make(dependabotScoreValue, snykDependencyScanScoreValue,
+        owaspDependencyCheckScoreValue));
 
     return scoreValue;
   }
