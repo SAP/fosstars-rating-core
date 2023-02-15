@@ -34,7 +34,6 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_F
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GITHUB_FOR_DEVELOPMENT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GOSEC_SCAN_CHECKS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GOSEC_WITH_RULES;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM_CHECKS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_MEMORY_SANITIZER;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_MYPY_SCAN_CHECKS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_NOHTTP;
@@ -46,7 +45,6 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_S
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SNYK;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_UNDEFINED_BEHAVIOR_SANITIZER;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES_IN_PROJECT;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.JAVA;
 import static com.sap.oss.phosphor.fosstars.model.value.OwaspDependencyCheckUsage.MANDATORY;
@@ -62,7 +60,6 @@ import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.other.Utils;
 import com.sap.oss.phosphor.fosstars.model.value.Languages;
-import com.sap.oss.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.oss.phosphor.fosstars.model.value.PackageManagers;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
@@ -130,8 +127,6 @@ public class OssSecurityScoreTest {
         USES_PYLINT_SCAN_CHECKS.value(false),
         RUNS_MYPY_SCANS.value(false),
         USES_MYPY_SCAN_CHECKS.value(false),
-        USES_LGTM_CHECKS.value(true),
-        WORST_LGTM_GRADE.value(LgtmGrade.B),
         USES_NOHTTP.value(true),
         USES_DEPENDABOT.value(true),
         USES_SNYK.value(false),

@@ -4,23 +4,21 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.FUZZED
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_POLICY;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.LANGUAGES;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_BANDIT_SCANS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_CODEQL_SCANS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_ADDRESS_SANITIZER;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_BANDIT_SCAN_CHECKS;
+import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_CODEQL_CHECKS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_FIND_SEC_BUGS;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM_CHECKS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_MEMORY_SANITIZER;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_UNDEFINED_BEHAVIOR_SANITIZER;
-import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.allUnknown;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.C;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.PYTHON;
-import static com.sap.oss.phosphor.fosstars.model.value.LgtmGrade.B;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.advice.Advice;
-import com.sap.oss.phosphor.fosstars.advice.Link;
 import com.sap.oss.phosphor.fosstars.model.Rating;
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
@@ -50,37 +48,15 @@ public class OssSecurityGithubAdvisorTest {
     values.update(allUnknown(rating.score().allFeatures()));
     assertTrue(advisor.adviceFor(project).isEmpty());
 
-    // expect an advice if the LGTM checks are not enabled
-    values.update(USES_LGTM_CHECKS.value(false));
+    // expect an advice if the CODEQL checks are not enabled
+    values.update(USES_CODEQL_CHECKS.value(false));
     project.set(rating.calculate(values));
     assertEquals(1, advisor.adviceFor(project).size());
 
-    // expect an advice if the LGTM grade is not the best
-    values.update(WORST_LGTM_GRADE.value(B));
+    // expect an advice if the CODEQL scans are not run
+    values.update(RUNS_CODEQL_SCANS.value(false));
     project.set(rating.calculate(values));
     assertEquals(2, advisor.adviceFor(project).size());
-  }
-
-  @Test
-  public void testAdviceForLgtmGrade() throws IOException {
-    final OssSecurityGithubAdvisor advisor = new OssSecurityGithubAdvisor();
-    final GitHubProject project = new GitHubProject("org", "test");
-
-    Rating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
-    ValueSet values = new ValueHashSet();
-    values.update(allUnknown(rating.score().allFeatures()));
-    values.update(WORST_LGTM_GRADE.value(B));
-    project.set(rating.calculate(values));
-
-    // expect an advice if the LGTM grade is not the best
-    List<Advice> adviceList = advisor.adviceFor(project);
-    assertEquals(1, adviceList.size());
-    Advice advice = adviceList.get(0);
-    assertFalse(advice.content().text().isEmpty());
-    assertFalse(advice.content().links().isEmpty());
-    Link link = advice.content().links().get(0);
-    assertFalse(link.name.isEmpty());
-    assertEquals("https://lgtm.com/projects/g/org/test", link.url.toString());
   }
 
   @Test
