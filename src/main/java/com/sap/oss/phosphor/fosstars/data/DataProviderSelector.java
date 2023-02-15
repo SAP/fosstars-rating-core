@@ -34,7 +34,6 @@ import com.sap.oss.phosphor.fosstars.data.github.HasSecurityTeam;
 import com.sap.oss.phosphor.fosstars.data.github.InfoAboutVulnerabilities;
 import com.sap.oss.phosphor.fosstars.data.github.IsApache;
 import com.sap.oss.phosphor.fosstars.data.github.IsEclipse;
-import com.sap.oss.phosphor.fosstars.data.github.LgtmDataProvider;
 import com.sap.oss.phosphor.fosstars.data.github.LicenseInfo;
 import com.sap.oss.phosphor.fosstars.data.github.MyPyDataProvider;
 import com.sap.oss.phosphor.fosstars.data.github.NumberOfCommits;
@@ -212,7 +211,6 @@ public class DataProviderSelector {
         new CodeqlDataProvider(fetcher),
         new BanditDataProvider(fetcher),
         new GoSecDataProvider(fetcher),
-        new LgtmDataProvider(fetcher),
         new UsesSignedCommits(fetcher),
         new UsesDependabot(fetcher),
         new UsesSnyk(fetcher),

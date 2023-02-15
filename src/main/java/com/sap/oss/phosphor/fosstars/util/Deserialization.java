@@ -57,7 +57,6 @@ import com.sap.oss.phosphor.fosstars.model.score.oss.DependencyScanScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.FindSecBugsScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.FuzzingScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.GoSecScore;
-import com.sap.oss.phosphor.fosstars.model.score.oss.LgtmScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.MemorySafetyTestingScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.MyPyScore;
 import com.sap.oss.phosphor.fosstars.model.score.oss.NoHttpToolScore;
@@ -285,7 +284,6 @@ public abstract class Deserialization {
         VulnerabilityLifetimeScore.class,
         OssSecurityScore.class,
         DependencyScanScore.class,
-        LgtmScore.class,
         CodeqlScore.class,
         NoHttpToolScore.class,
         MemorySafetyTestingScore.class,

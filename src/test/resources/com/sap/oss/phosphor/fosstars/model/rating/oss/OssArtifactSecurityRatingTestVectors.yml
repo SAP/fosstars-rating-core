@@ -613,9 +613,9 @@ elements:
                 value: 9.0
               references: []
               resolution: "PATCHED"
-              introduced: "2019-01-01"
-              fixed: "2019-01-03"
-              published: "2019-01-03"
+              introduced: "2020-01-01"
+              fixed: "2020-01-03"
+              published: "2020-01-03"
               vulnerableVersions:
                 - versionStart: 1.0.0
                   versionEnd: 1.1.0
@@ -631,13 +631,13 @@ elements:
               organization:
                 type: "GitHubOrganization"
                 name: "org"
-            date: "2020-01-02"
+            date: "2021-01-02"
     expectedScore:
       type: "DoubleInterval"
-      from: 5.0
+      from: 4.9
       openLeft: false
       negativeInfinity: false
-      to: 6.0
+      to: 5.9
       openRight: false
       positiveInfinity: false
     expectedLabel:
