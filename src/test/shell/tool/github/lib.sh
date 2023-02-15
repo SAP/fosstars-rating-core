@@ -21,7 +21,6 @@ clean_cache() {
 declare -a project_security_default_expected_strings=(
   'Figuring out if the project belongs to the Eclipse Software Foundation'
   'Figuring out how the project uses CodeQL'
-  'Figuring out how the project uses LGTM'
   'Figuring out if the project uses OWASP security libraries'
   'Checking how the project uses Dependabot'
   'Checking how the project uses Snyk'
@@ -63,7 +62,6 @@ declare -a project_security_default_expected_strings=(
   'Confidence'
   'Sub-score:....Security testing'
   'Sub-score:....Static analysis'
-  'Sub-score:....LGTM score'
   'Sub-score:....How a project uses CodeQL'
   'Sub-score:....FindSecBugs score'
   'Sub-score:....Dependency testing'

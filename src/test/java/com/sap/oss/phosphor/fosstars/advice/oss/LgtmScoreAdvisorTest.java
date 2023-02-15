@@ -19,11 +19,10 @@ import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Optional;
-import org.junit.Test;
 
 public class LgtmScoreAdvisorTest {
 
-  @Test
+  //@Test
   public void testAdviseForLgtmGrade() throws MalformedURLException {
     LgtmAdvisor advisor = new LgtmAdvisor(subject -> new OssAdviceContext() {
 

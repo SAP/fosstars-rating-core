@@ -23,8 +23,6 @@ import java.util.function.Predicate;
  *  <li>{@link OssFeatures#RUNS_CODEQL_SCANS}</li>
  *  <li>{@link OssFeatures#USES_CODEQL_CHECKS}</li>
  * </ul>
- *
- * @see LgtmDataProvider
  */
 public class CodeqlDataProvider extends AbstractStaticScanToolsDataProvider {
 

@@ -106,15 +106,6 @@ elements:
         explanation: []
       - type: "ScoreValue"
         score:
-          type: "LgtmScore"
-          name: "How a project addresses issues reported by LGTM"
-        value: 7.0
-        weight: 1.0
-        confidence: 10.0
-        usedValues: []
-        explanation: []
-      - type: "ScoreValue"
-        score:
           type: "CodeqlScore"
           name: "How a project uses CodeQL"
         value: 7.0
@@ -214,15 +205,6 @@ elements:
           type: "DependencyScanScore"
           name: "How a project scans its dependencies for vulnerabilities"
         value: 3.0
-        weight: 1.0
-        confidence: 10.0
-        usedValues: []
-        explanation: []
-      - type: "ScoreValue"
-        score:
-          type: "LgtmScore"
-          name: "How a project addresses issues reported by LGTM"
-        value: 7.0
         weight: 1.0
         confidence: 10.0
         usedValues: []
@@ -335,15 +317,6 @@ elements:
         explanation: [ ]
       - type: "ScoreValue"
         score:
-          type: "LgtmScore"
-          name: "How a project addresses issues reported by LGTM"
-        value: 7.0
-        weight: 1.0
-        confidence: 10.0
-        usedValues: []
-        explanation: []
-      - type: "ScoreValue"
-        score:
           type: "DependencyScanScore"
           name: "How a project scans its dependencies for vulnerabilities"
         value: 3.0
@@ -426,10 +399,10 @@ elements:
         explanation: []
     expectedScore:
       type: "DoubleInterval"
-      from: 5.1
+      from: 5.0
       openLeft: false
       negativeInfinity: false
-      to: 6.3
+      to: 6.0
       openRight: false
       positiveInfinity: false
     expectedLabel: null
@@ -449,15 +422,6 @@ elements:
         explanation: [ ]
       - type: "ScoreValue"
         score:
-          type: "LgtmScore"
-          name: "How a project addresses issues reported by LGTM"
-        value: 7.0
-        weight: 1.0
-        confidence: 10.0
-        usedValues: []
-        explanation: []
-      - type: "ScoreValue"
-        score:
           type: "DependencyScanScore"
           name: "How a project scans its dependencies for vulnerabilities"
         value: 3.0
@@ -543,10 +507,10 @@ elements:
         isNotApplicable: false
     expectedScore:
       type: "DoubleInterval"
-      from: 5.1
+      from: 5.0
       openLeft: false
       negativeInfinity: false
-      to: 6.3
+      to: 6.0
       openRight: false
       positiveInfinity: false
     expectedLabel: null
@@ -566,15 +530,6 @@ elements:
         explanation: [ ]
       - type: "ScoreValue"
         score:
-          type: "LgtmScore"
-          name: "How a project addresses issues reported by LGTM"
-        value: 7.0
-        weight: 1.0
-        confidence: 10.0
-        usedValues: []
-        explanation: []
-      - type: "ScoreValue"
-        score:
           type: "DependencyScanScore"
           name: "How a project scans its dependencies for vulnerabilities"
         value: 3.0
@@ -660,10 +615,10 @@ elements:
         isNotApplicable: false
     expectedScore:
       type: "DoubleInterval"
-      from: 5.1
+      from: 5.0
       openLeft: false
       negativeInfinity: false
-      to: 6.3
+      to: 6.0
       openRight: false
       positiveInfinity: false
     expectedLabel: null
@@ -683,15 +638,6 @@ elements:
         explanation: [ ]
       - type: "ScoreValue"
         score:
-          type: "LgtmScore"
-          name: "How a project addresses issues reported by LGTM"
-        value: 7.0
-        weight: 1.0
-        confidence: 10.0
-        usedValues: []
-        explanation: []
-      - type: "ScoreValue"
-        score:
           type: "DependencyScanScore"
           name: "How a project scans its dependencies for vulnerabilities"
         value: 3.0
@@ -777,10 +723,10 @@ elements:
         isNotApplicable: false
     expectedScore:
       type: "DoubleInterval"
-      from: 5.1
+      from: 5.0
       openLeft: false
       negativeInfinity: false
-      to: 6.3
+      to: 6.0
       openRight: false
       positiveInfinity: false
     expectedLabel: null
@@ -800,15 +746,6 @@ elements:
         explanation: [ ]
       - type: "ScoreValue"
         score:
-          type: "LgtmScore"
-          name: "How a project addresses issues reported by LGTM"
-        value: 7.0
-        weight: 1.0
-        confidence: 10.0
-        usedValues: []
-        explanation: []
-      - type: "ScoreValue"
-        score:
           type: "DependencyScanScore"
           name: "How a project scans its dependencies for vulnerabilities"
         value: 3.0
@@ -894,10 +831,10 @@ elements:
         isNotApplicable: true
     expectedScore:
       type: "DoubleInterval"
-      from: 5.1
+      from: 4.9
       openLeft: false
       negativeInfinity: false
-      to: 6.3
+      to: 5.9
       openRight: false
       positiveInfinity: false
     expectedLabel: null

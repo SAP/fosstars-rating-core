@@ -35,7 +35,6 @@ cat tmp.log
 declare -a expected_strings=(
   'Figuring out if the project belongs to the Eclipse Software Foundation'
   'Figuring out how the project uses CodeQL'
-  'Figuring out how the project uses LGTM'
   'Figuring out if the project uses OWASP security libraries'
   'Checking how the project uses Dependabot'
   'Figuring out if the project uses GitHub for development'
