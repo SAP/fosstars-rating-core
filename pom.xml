@@ -85,7 +85,7 @@
     <version.packageurl-java>1.4.1</version.packageurl-java>
     <version.commons-collections4>4.4</version.commons-collections4>
     <version.org.eclipse.jgit>5.13.0.202109080827-r</version.org.eclipse.jgit>
-    <version.commons-text>1.9</version.commons-text>
+    <version.commons-text>1.10.0</version.commons-text>
     <version.maven-artifact>3.8.6</version.maven-artifact>
     <version.dependency-check-core>8.1.0</version.dependency-check-core>
     <version.slf4j-simple>1.7.36</version.slf4j-simple>
