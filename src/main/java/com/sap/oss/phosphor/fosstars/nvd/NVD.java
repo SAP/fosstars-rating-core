@@ -37,7 +37,7 @@ public class NVD {
   /**
    * The default location where the date from the NVD is stored.
    */
-  private static final String DEFAULT_DOWNLOAD_DIRECTORY = ".fosstars";
+  private static final String DEFAULT_DOWNLOAD_DIRECTORY = ".fosstars/nvdcache";
 
   /**
    * A file where the class stores a timestamp when the data was downloaded.
