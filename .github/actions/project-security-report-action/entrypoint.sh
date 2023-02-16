@@ -53,7 +53,7 @@ do
 
   # Generate a report
   echo "" > report.log
-  java -jar -Xms2048M -Xmx2048M \
+  java -jar -Xms6000M -Xmx6000M \
             fosstars-rating-core/target/fosstars-github-rating-calc.jar \
             --config $CONFIG \
             --token $TOKEN \
