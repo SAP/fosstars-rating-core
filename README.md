@@ -1,7 +1,7 @@
 ![Java CI](https://github.com/SAP/fosstars-rating-core/workflows/Java%20CI/badge.svg)
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP/fosstars-rating-core)](https://api.reuse.software/info/github.com/SAP/fosstars-rating-core)
 [![Fosstars security rating](https://raw.githubusercontent.com/SAP/fosstars-rating-core/fosstars-report/fosstars_badge.svg)](https://github.com/SAP/fosstars-rating-core/blob/fosstars-report/fosstars_report.md)
-[![Fosstars RoP status](https://raw.githubusercontent.com/SAP/fosstars-rating-core/fosstars-rop-report/fosstars_rop_rating.svg)](https://github.com/SAP/fosstars-rating-core/blob/fosstars-rop-report/README.md)
+[![Fosstars RoP status](https://raw.githubusercontent.com/SAP/fosstars-rating-core/fosstars-rop-report/fosstars_rop_rating.svg)](https://github.com/SAP/fosstars-oss-rules-of-play-report/blob/main/SAP/fosstars-rating-core.md)
 
 # Ratings for open source projects
 
