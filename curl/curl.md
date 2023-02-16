@@ -2,11 +2,11 @@
 
 https://github.com/curl/curl
 
-Last updated on Aug 5, 2022
+Last updated on Feb 16, 2023
 
-**Rating**: **MODERATE**
+**Rating**: **GOOD**
 
-**Score**: **5.44**, max score value is 10.0
+**Score**: **5.55**, max score value is 10.0
 
 **Confidence**: High (9.65, max confidence value is 10.0)
 
@@ -20,20 +20,26 @@ The rating is based on **security score for open-source projects**.
 
 It used the following sub-scores:
 
-1.  **[Security testing](#security-testing)**: **4.25** (weight is 1.0)
-    1.  **[Static analysis](#static-analysis)**: **3.6** (weight is 1.0)
-        1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
-            
-        1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
-            
-        1.  **[How a project uses Bandit](#how-a-project-uses-bandit)**: **0.0** (weight is 0.5)
-            
-        1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
-            
+1.  **[Security testing](#security-testing)**: **4.77** (weight is 1.0)
     1.  **[Dependency testing](#dependency-testing)**: **N/A** (weight is 1.0)
         1.  **[Dependabot score](#dependabot-score)**: **N/A** (weight is 1.0)
             
+        1.  **[Snyk score](#snyk-score)**: **N/A** (weight is 1.0)
+            
         1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
+            
+    1.  **[Static analysis](#static-analysis)**: **5.26** (weight is 1.0)
+        1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
+            
+        1.  **[Bandit score](#bandit-score)**: **0.0** (weight is 0.35)
+            
+        1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.35)
+            
+        1.  **[How a project uses Pylint](#how-a-project-uses-pylint)**: **0.0** (weight is 0.35)
+            
+        1.  **[GoSec score](#gosec-score)**: **N/A** (weight is 0.3)
+            
+        1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **0.0** (weight is 0.2)
             
     1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
         
@@ -44,20 +50,26 @@ It used the following sub-scores:
 1.  **[Security awareness](#security-awareness)**: **7.0** (weight is 0.9)
     
 1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: **0.0** (weight is 0.6)
-    1.  **[Security testing](#security-testing)**: **4.25** (weight is 1.0)
-        1.  **[Static analysis](#static-analysis)**: **3.6** (weight is 1.0)
-            1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
-                
-            1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
-                
-            1.  **[How a project uses Bandit](#how-a-project-uses-bandit)**: **0.0** (weight is 0.5)
-                
-            1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
-                
+    1.  **[Security testing](#security-testing)**: **4.77** (weight is 1.0)
         1.  **[Dependency testing](#dependency-testing)**: **N/A** (weight is 1.0)
             1.  **[Dependabot score](#dependabot-score)**: **N/A** (weight is 1.0)
                 
+            1.  **[Snyk score](#snyk-score)**: **N/A** (weight is 1.0)
+                
             1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
+                
+        1.  **[Static analysis](#static-analysis)**: **5.26** (weight is 1.0)
+            1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
+                
+            1.  **[Bandit score](#bandit-score)**: **0.0** (weight is 0.35)
+                
+            1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.35)
+                
+            1.  **[How a project uses Pylint](#how-a-project-uses-pylint)**: **0.0** (weight is 0.35)
+                
+            1.  **[GoSec score](#gosec-score)**: **N/A** (weight is 0.3)
+                
+            1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **0.0** (weight is 0.2)
                 
         1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
             
@@ -78,26 +90,6 @@ It used the following sub-scores:
 
 
 # ## How to improve the rating
-
-You can ask the project maintainers to enable LGTM checks for pull requests in the project.
-More info:
-1.  [How to enable LGTM checks for pull requests](https://lgtm.com/help/lgtm/about-automated-code-review)
-
-
-You can open a pull request to enable CodeQL scans in the project. Make sure that the scans are run on pull requests.
-More info:
-1.  [How to enable CodeQL checks for pull requests](https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#enabling-code-scanning-using-actions)
-
-
-You can open a pull request to enable CodeQL scans in the project.
-More info:
-1.  [How to enable CodeQL checks](https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#enabling-code-scanning-using-actions)
-
-
-You can fix the issues reported by LGTM for the project.
-More info:
-1.  [List of issues on LGTM](https://lgtm.com/projects/g/curl/curl)
-
 
 You can open a pull request to enable FindSecBugs for the project.
 More info:
@@ -135,10 +127,15 @@ More info:
 1.  [An example to run Bandit scan check as part of GitHub action workflow.](https://github.com/TNLinc/CV/blob/main/.github/workflows/bandit.yml#L28)
 
 
-You can open a pull request to trigger Bandit scans job in the project using GitHub action workflow for every pull-request.
+It would be good to have SecGo as analysis step for all commits, yes initiating it with PR would be great.
 More info:
 1.  [GitHub workflow action config to run Bandit code scanning job on every PR of a project.](https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#example-using-a-list-of-events)
 1.  [An eample to trigger Bandit scan check on every pull-request.](https://github.com/TNLinc/CV/blob/main/.github/workflows/bandit.yml#L3)
+
+
+You can open a pull request to trigger GoSec scans job in the project using GitHub action workflow for every pull-request.
+More info:
+1.  [GitHub workflow action config to run GoSec code scanning job on every PR of a project.](https://github.com/securego/gosec#github-action)
 
 
 
@@ -148,7 +145,7 @@ Below are the details about all the used sub-scores.
 
 ### Security testing
 
-Score: **4.25**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **4.77**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -158,19 +155,25 @@ This sub-score is based on the following sub-scores:
 
 
 
-1.  **[Static analysis](#static-analysis)**: **3.6** (weight is 1.0)
-    1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
-        
-    1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
-        
-    1.  **[How a project uses Bandit](#how-a-project-uses-bandit)**: **0.0** (weight is 0.5)
-        
-    1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
-        
 1.  **[Dependency testing](#dependency-testing)**: **N/A** (weight is 1.0)
     1.  **[Dependabot score](#dependabot-score)**: **N/A** (weight is 1.0)
         
+    1.  **[Snyk score](#snyk-score)**: **N/A** (weight is 1.0)
+        
     1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
+        
+1.  **[Static analysis](#static-analysis)**: **5.26** (weight is 1.0)
+    1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
+        
+    1.  **[Bandit score](#bandit-score)**: **0.0** (weight is 0.35)
+        
+    1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.35)
+        
+    1.  **[How a project uses Pylint](#how-a-project-uses-pylint)**: **0.0** (weight is 0.35)
+        
+    1.  **[GoSec score](#gosec-score)**: **N/A** (weight is 0.3)
+        
+    1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **0.0** (weight is 0.2)
         
 1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
     
@@ -200,11 +203,11 @@ This sub-score is based on 18 features:
 1.  **Does it use AddressSanitizer?** No
 1.  **Does it use Dependabot?** No
 1.  **Does it use FindSecBugs?** No
-1.  **Does it use LGTM checks?** No
 1.  **Does it use MemorySanitizer?** No
 1.  **Does it use OWASP ESAPI?** No
 1.  **Does it use OWASP Java Encoder?** No
 1.  **Does it use OWASP Java HTML Sanitizer?** No
+1.  **Does it use Snyk?** No
 1.  **Does it use UndefinedBehaviorSanitizer?** No
 1.  **Does it use nohttp?** No
 1.  **Does it use verified signed commits?** No
@@ -224,20 +227,26 @@ This sub-score is based on the following sub-score:
 
 
 
-1.  **[Security testing](#security-testing)**: **4.25** (weight is 1.0)
-    1.  **[Static analysis](#static-analysis)**: **3.6** (weight is 1.0)
-        1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
-            
-        1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
-            
-        1.  **[How a project uses Bandit](#how-a-project-uses-bandit)**: **0.0** (weight is 0.5)
-            
-        1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
-            
+1.  **[Security testing](#security-testing)**: **4.77** (weight is 1.0)
     1.  **[Dependency testing](#dependency-testing)**: **N/A** (weight is 1.0)
         1.  **[Dependabot score](#dependabot-score)**: **N/A** (weight is 1.0)
             
+        1.  **[Snyk score](#snyk-score)**: **N/A** (weight is 1.0)
+            
         1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
+            
+    1.  **[Static analysis](#static-analysis)**: **5.26** (weight is 1.0)
+        1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
+            
+        1.  **[Bandit score](#bandit-score)**: **0.0** (weight is 0.35)
+            
+        1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.35)
+            
+        1.  **[How a project uses Pylint](#how-a-project-uses-pylint)**: **0.0** (weight is 0.35)
+            
+        1.  **[GoSec score](#gosec-score)**: **N/A** (weight is 0.3)
+            
+        1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **0.0** (weight is 0.2)
             
     1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
         
@@ -251,7 +260,7 @@ This sub-score is based on 1 feature:
 
 
 
-1.  **Info about vulnerabilities in the project:** 94 vulnerabilities, [details below](#known-vulnerabilities)
+1.  **Info about vulnerabilities in the project:** 101 vulnerabilities, [details below](#known-vulnerabilities)
 
 
 ### Unpatched vulnerabilities
@@ -266,7 +275,7 @@ This sub-score is based on 1 feature:
 
 
 
-1.  **Info about vulnerabilities in the project:** 94 vulnerabilities, [details below](#known-vulnerabilities)
+1.  **Info about vulnerabilities in the project:** 101 vulnerabilities, [details below](#known-vulnerabilities)
 
 
 ### Community commitment
@@ -292,15 +301,15 @@ Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-355 commits in the last 3 months results to 10.00 points
-6 contributors increase the score value from 10.00 to 12.00
+397 commits in the last 3 months results to 10.00 points
+7 contributors increase the score value from 10.00 to 12.00
 
 This sub-score is based on 2 features:
 
 
 
-1.  **Number of commits in the last three months:** 355
-1.  **Number of contributors in the last three months:** 6
+1.  **Number of commits in the last three months:** 397
+1.  **Number of contributors in the last three months:** 7
 
 
 ### Project popularity
@@ -316,8 +325,8 @@ This sub-score is based on 3 features:
 
 
 1.  **Number of projects on GitHub that use an open source project:** unknown
-1.  **Number of stars for a GitHub repository:** 25924
-1.  **Number of watchers for a GitHub repository:** 729
+1.  **Number of stars for a GitHub repository:** 28467
+1.  **Number of watchers for a GitHub repository:** 752
 
 
 ### Security reviews
@@ -335,28 +344,6 @@ This sub-score is based on 1 feature:
 1.  **Info about security reviews:** 0 security reviews
 
 
-### Static analysis
-
-Score: **3.6**, confidence is 10.0 (max), weight is 1.0 (high)
-
-
-
-
-
-This sub-score is based on the following sub-scores:
-
-
-
-1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
-    
-1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
-    
-1.  **[How a project uses Bandit](#how-a-project-uses-bandit)**: **0.0** (weight is 0.5)
-    
-1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
-    
-
-
 ### Dependency testing
 
 Score: **N/A**, confidence is 10.0 (max), weight is 1.0 (high)
@@ -371,7 +358,35 @@ This sub-score is based on the following sub-scores:
 
 1.  **[Dependabot score](#dependabot-score)**: **N/A** (weight is 1.0)
     
+1.  **[Snyk score](#snyk-score)**: **N/A** (weight is 1.0)
+    
 1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
+    
+
+
+### Static analysis
+
+Score: **5.26**, confidence is 10.0 (max), weight is 1.0 (high)
+
+
+
+
+
+This sub-score is based on the following sub-scores:
+
+
+
+1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
+    
+1.  **[Bandit score](#bandit-score)**: **0.0** (weight is 0.35)
+    
+1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.35)
+    
+1.  **[How a project uses Pylint](#how-a-project-uses-pylint)**: **0.0** (weight is 0.35)
+    
+1.  **[GoSec score](#gosec-score)**: **N/A** (weight is 0.3)
+    
+1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **0.0** (weight is 0.2)
     
 
 
@@ -425,73 +440,6 @@ This sub-score is based on 2 features:
 1.  **Package managers:** None
 
 
-### LGTM score
-
-Score: **9.0**, confidence is 10.0 (max), weight is 1.0 (high)
-
-
-
-
-
-This sub-score is based on 2 features:
-
-
-
-1.  **Programming languages:** C, PYTHON, OTHER
-1.  **The worst LGTM grade of the project:** A
-
-
-### How a project uses CodeQL
-
-Score: **0.0**, confidence is 10.0 (max), weight is 1.0 (high)
-
-
-
-
-
-This sub-score is based on 4 features:
-
-
-
-1.  **Does it run CodeQL scans?** No
-1.  **Does it use CodeQL checks for pull requests?** No
-1.  **Does it use LGTM checks?** No
-1.  **Programming languages:** C, PYTHON, OTHER
-
-
-### How a project uses Bandit
-
-Score: **0.0**, confidence is 10.0 (max), weight is 0.5 (medium)
-
-
-
-
-
-This sub-score is based on 3 features:
-
-
-
-1.  **If a project runs Bandit scan checks for commits:** No
-1.  **If a project runs Bandit scans:** No
-1.  **Programming languages:** C, PYTHON, OTHER
-
-
-### FindSecBugs score
-
-Score: **N/A**, confidence is 10.0 (max), weight is 0.5 (medium)
-
-
-
-
-
-This sub-score is based on 2 features:
-
-
-
-1.  **Does it use FindSecBugs?** No
-1.  **Programming languages:** C, PYTHON, OTHER
-
-
 ### Dependabot score
 
 Score: **N/A**, confidence is 10.0 (max), weight is 1.0 (high)
@@ -506,6 +454,24 @@ This sub-score is based on 4 features:
 
 1.  **Does it use Dependabot?** No
 1.  **Does it use GitHub as the main development platform?** Yes
+1.  **Package managers:** None
+1.  **Programming languages:** C, PYTHON, OTHER
+
+
+### Snyk score
+
+Score: **N/A**, confidence is 10.0 (max), weight is 1.0 (high)
+
+
+
+
+
+This sub-score is based on 4 features:
+
+
+
+1.  **Does it use GitHub as the main development platform?** Yes
+1.  **Does it use Snyk?** No
 1.  **Package managers:** None
 1.  **Programming languages:** C, PYTHON, OTHER
 
@@ -527,6 +493,108 @@ This sub-score is based on 3 features:
 1.  **What is the threshold for OWASP Dependency Check?** Not specified
 
 
+### How a project uses CodeQL
+
+Score: **10.0**, confidence is 10.0 (max), weight is 1.0 (high)
+
+
+
+
+
+This sub-score is based on 3 features:
+
+
+
+1.  **Does it run CodeQL scans?** Yes
+1.  **Does it use CodeQL checks for pull requests?** Yes
+1.  **Programming languages:** C, PYTHON, OTHER
+
+
+### Bandit score
+
+Score: **0.0**, confidence is 10.0 (max), weight is 0.35 (medium)
+
+
+
+
+
+This sub-score is based on 3 features:
+
+
+
+1.  **If a project runs Bandit scan checks for commits:** No
+1.  **If a project runs Bandit scans:** No
+1.  **Programming languages:** C, PYTHON, OTHER
+
+
+### FindSecBugs score
+
+Score: **N/A**, confidence is 10.0 (max), weight is 0.35 (medium)
+
+
+
+
+
+This sub-score is based on 2 features:
+
+
+
+1.  **Does it use FindSecBugs?** No
+1.  **Programming languages:** C, PYTHON, OTHER
+
+
+### How a project uses Pylint
+
+Score: **0.0**, confidence is 10.0 (max), weight is 0.35 (medium)
+
+
+
+
+
+This sub-score is based on 3 features:
+
+
+
+1.  **Does it run Pylint scans on all commits?** No
+1.  **Does it run Pylint scans?** No
+1.  **Programming languages:** C, PYTHON, OTHER
+
+
+### GoSec score
+
+Score: **N/A**, confidence is 10.0 (max), weight is 0.3 (medium)
+
+
+
+The score is N/A because the project uses languages that are not supported by GoSec.
+
+This sub-score is based on 4 features:
+
+
+
+1.  **Does it run GoSec scans on all pull requests?** No
+1.  **Does it run GoSec scans with rules?** No
+1.  **Does it run GoSec scans?** No
+1.  **Programming languages:** C, PYTHON, OTHER
+
+
+### How a project uses MyPy
+
+Score: **0.0**, confidence is 10.0 (max), weight is 0.2 (low)
+
+
+
+
+
+This sub-score is based on 3 features:
+
+
+
+1.  **Does it run MyPy scans on all commits?** No
+1.  **Does it run MyPy scans?** No
+1.  **Programming languages:** C, PYTHON, OTHER
+
+
 ## Known vulnerabilities
 
 1.  [CVE-2000-0973](https://nvd.nist.gov/vuln/detail/CVE-2000-0973): Buffer overflow in curl earlier than 6.0-1.1, and curl-ssl earlier than 6.0-1.2, allows remote attackers to execute arbitrary commands by forcing a long error message to be generated.
@@ -536,6 +604,7 @@ This sub-score is based on 3 features:
 1.  [CVE-2006-1061](https://nvd.nist.gov/vuln/detail/CVE-2006-1061): Heap-based buffer overflow in cURL and libcURL 7.15.0 through 7.15.2 allows remote attackers to execute arbitrary commands via a TFTP URL (tftp://) with a valid hostname and a long path.
 1.  [CVE-2009-0037](https://nvd.nist.gov/vuln/detail/CVE-2009-0037): The redirect implementation in curl and libcurl 5.11 through 7.19.3, when CURLOPT_FOLLOWLOCATION is enabled, accepts arbitrary Location values, which might allow remote HTTP servers to (1) trigger arbitrary requests to intranet servers, (2) read or overwrite arbitrary files via a redirect to a file: URL, or (3) execute arbitrary commands via a redirect to an scp: URL.
 1.  [CVE-2010-3842](https://nvd.nist.gov/vuln/detail/CVE-2010-3842): Absolute path traversal vulnerability in curl 7.20.0 through 7.21.1, when the --remote-header-name or -J option is used, allows remote servers to create or overwrite arbitrary files by using \ (backslash) as a separator of path components within the Content-disposition HTTP header.
+1.  [CVE-2011-3389](https://nvd.nist.gov/vuln/detail/CVE-2011-3389): The SSL protocol, as used in certain configurations in Microsoft Windows and Microsoft Internet Explorer, Mozilla Firefox, Google Chrome, Opera, and other products, encrypts data by using CBC mode with chained initialization vectors, which allows man-in-the-middle attackers to obtain plaintext HTTP headers via a blockwise chosen-boundary attack (BCBA) on an HTTPS session, in conjunction with JavaScript code that uses (1) the HTML5 WebSocket API, (2) the Java URLConnection API, or (3) the Silverlight WebClient API, aka a "BEAST" attack.
 1.  [CVE-2012-0036](https://nvd.nist.gov/vuln/detail/CVE-2012-0036): curl and libcurl 7.2x before 7.24.0 do not properly consider special characters during extraction of a pathname from a URL, which allows remote attackers to conduct data-injection attacks via a crafted URL, as demonstrated by a CRLF injection attack on the (1) IMAP, (2) POP3, or (3) SMTP protocol.
 1.  [CVE-2013-0249](https://nvd.nist.gov/vuln/detail/CVE-2013-0249): Stack-based buffer overflow in the Curl_sasl_create_digest_md5_message function in lib/curl_sasl.c in curl and libcurl 7.26.0 through 7.28.1, when negotiating SASL DIGEST-MD5 authentication, allows remote attackers to cause a denial of service (crash) and possibly execute arbitrary code via a long string in the realm parameter in a (1) POP3, (2) SMTP or (3) IMAP message.
 1.  [CVE-2013-2617](https://nvd.nist.gov/vuln/detail/CVE-2013-2617): lib/curl.rb in the Curl Gem for Ruby allows remote attackers to execute arbitrary commands via shell metacharacters in a URL.
@@ -563,20 +632,24 @@ This sub-score is based on 3 features:
 1.  [CVE-2018-1000300](https://nvd.nist.gov/vuln/detail/CVE-2018-1000300): curl version curl 7.54.1 to and including curl 7.59.0 contains a CWE-122: Heap-based Buffer Overflow vulnerability in denial of service and more that can result in curl might overflow a heap based memory buffer when closing down an FTP connection with very long server command replies.. This vulnerability appears to have been fixed in curl < 7.54.1 and curl >= 7.60.0.
 1.  [CVE-2018-0500](https://nvd.nist.gov/vuln/detail/CVE-2018-0500): Curl_smtp_escape_eob in lib/smtp.c in curl 7.54.1 to and including curl 7.60.0 has a heap-based buffer overflow that might be exploitable by an attacker who can control the data that curl transmits over SMTP with certain settings (i.e., use of a nonstandard --limit-rate argument or CURLOPT_BUFFERSIZE value).
 1.  [CVE-2017-2629](https://nvd.nist.gov/vuln/detail/CVE-2017-2629): curl before 7.53.0 has an incorrect TLS Certificate Status Request extension feature that asks for a fresh proof of the server's certificate's validity in the code that checks for a test success or failure. It ends up always thinking there's valid proof, even when there is none or if the server doesn't support the TLS extension in question. This could lead to users not detecting when a server's certificate goes invalid or otherwise be mislead that the server is in a better shape than it is in reality. This flaw also exists in the command line tool (--cert-status).
-1.  [CVE-2016-8618](https://nvd.nist.gov/vuln/detail/CVE-2016-8618): The libcurl API function called `curl_maprintf()` before version 7.51.0 can be tricked into doing a double-free due to an unsafe `size_t` multiplication, on systems using 32 bit `size_t` variables.
-1.  [CVE-2016-8619](https://nvd.nist.gov/vuln/detail/CVE-2016-8619): The function `read_data()` in security.c in curl before version 7.51.0 is vulnerable to memory double free.
+1.  [CVE-2016-8624](https://nvd.nist.gov/vuln/detail/CVE-2016-8624): curl before version 7.51.0 doesn't parse the authority component of the URL correctly when the host name part ends with a '#' character, and could instead be tricked into connecting to a different host. This may have security implications if you for example use an URL parser that follows the RFC to check for allowed domains before using curl to request them.
+1.  [CVE-2016-8623](https://nvd.nist.gov/vuln/detail/CVE-2016-8623): A flaw was found in curl before version 7.51.0. The way curl handles cookies permits other threads to trigger a use-after-free leading to information disclosure.
 1.  [CVE-2003-1605](https://nvd.nist.gov/vuln/detail/CVE-2003-1605): curl 7.x before 7.10.7 sends CONNECT proxy credentials to the remote server.
-1.  [CVE-2018-16839](https://nvd.nist.gov/vuln/detail/CVE-2018-16839): Curl versions 7.33.0 through 7.61.1 are vulnerable to a buffer overrun in the SASL authentication code that may lead to denial of service.
+1.  [CVE-2018-16842](https://nvd.nist.gov/vuln/detail/CVE-2018-16842): Curl versions 7.14.1 through 7.61.1 are vulnerable to a heap-based buffer over-read in the tool_msgs.c:voutf() function that may result in information exposure and denial of service.
 1.  [CVE-2019-5435](https://nvd.nist.gov/vuln/detail/CVE-2019-5435): An integer overflow in curl's URL API results in a buffer overflow in libcurl 7.62.0 to and including 7.64.1.
 1.  [CVE-2019-5443](https://nvd.nist.gov/vuln/detail/CVE-2019-5443): A non-privileged user or program can put code and a config file in a known non-privileged path (under C:/usr/local/) that will make curl <= 7.65.1 automatically run the code (as an openssl "engine") on invocation. If that curl is invoked by a privileged user it can do anything it wants.
 1.  [CVE-2019-5481](https://nvd.nist.gov/vuln/detail/CVE-2019-5481): Double-free vulnerability in the FTP-kerberos code in cURL 7.52.0 to 7.65.3.
 1.  [CVE-2016-4606](https://nvd.nist.gov/vuln/detail/CVE-2016-4606): Curl before 7.49.1 in Apple OS X before macOS Sierra prior to 10.12 allows remote or local attackers to execute arbitrary code, gain sensitive information, cause denial-of-service conditions, bypass security restrictions, and perform unauthorized actions. This may aid in other attacks.
 1.  [CVE-2020-8284](https://nvd.nist.gov/vuln/detail/CVE-2020-8284): A malicious server can use the FTP PASV response to trick curl 7.73.0 and earlier into connecting back to a given IP address and port, and this way potentially make curl extract information about services that are otherwise private and not disclosed, for example doing port scanning and service banner extractions.
-1.  [CVE-2021-22897](https://nvd.nist.gov/vuln/detail/CVE-2021-22897): curl 7.61.0 through 7.76.1 suffers from exposure of data element to wrong session due to a mistake in the code for CURLOPT_SSL_CIPHER_LIST when libcurl is built to use the Schannel TLS library. The selected cipher set was stored in a single "static" variable in the library, which has the surprising side-effect that if an application sets up multiple concurrent transfers, the last one that sets the ciphers will accidentally control the set used by all transfers. In a worst-case scenario, this weakens transport security significantly.
+1.  [CVE-2021-22901](https://nvd.nist.gov/vuln/detail/CVE-2021-22901): curl 7.75.0 through 7.76.1 suffers from a use-after-free vulnerability resulting in already freed memory being used when a TLS 1.3 session ticket arrives over a connection. A malicious server can use this in rare unfortunate circumstances to potentially reach remote code execution in the client. When libcurl at run-time sets up support for TLS 1.3 session tickets on a connection using OpenSSL, it stores pointers to the transfer in-memory object for later retrieval when a session ticket arrives. If the connection is used by multiple transfers (like with a reused HTTP/1.1 connection or multiplexed HTTP/2 connection) that first transfer object might be freed before the new session is established on that connection and then the function will access a memory buffer that might be freed. When using that memory, libcurl might even call a function pointer in the object, making it possible for a remote code execution if the server could somehow manage to get crafted memory content into the correct place in memory.
 1.  [CVE-2021-22922](https://nvd.nist.gov/vuln/detail/CVE-2021-22922): When curl is instructed to download content using the metalink feature, thecontents is verified against a hash provided in the metalink XML file.The metalink XML file points out to the client how to get the same contentfrom a set of different URLs, potentially hosted by different servers and theclient can then download the file from one or several of them. In a serial orparallel manner.If one of the servers hosting the contents has been breached and the contentsof the specific file on that server is replaced with a modified payload, curlshould detect this when the hash of the file mismatches after a completeddownload. It should remove the contents and instead try getting the contentsfrom another URL. This is not done, and instead such a hash mismatch is onlymentioned in text and the potentially malicious content is kept in the file ondisk.
 1.  [CVE-2021-22946](https://nvd.nist.gov/vuln/detail/CVE-2021-22946): A user can tell curl >= 7.20.0 and <= 7.78.0 to require a successful upgrade to TLS when speaking to an IMAP, POP3 or FTP server (`--ssl-reqd` on the command line or`CURLOPT_USE_SSL` set to `CURLUSESSL_CONTROL` or `CURLUSESSL_ALL` withlibcurl). This requirement could be bypassed if the server would return a properly crafted but perfectly legitimate response.This flaw would then make curl silently continue its operations **withoutTLS** contrary to the instructions and expectations, exposing possibly sensitive data in clear text over the network.
 1.  [CVE-2022-22576](https://nvd.nist.gov/vuln/detail/CVE-2022-22576): An improper authentication vulnerability exists in curl 7.33.0 to and including 7.82.0 which might allow reuse OAUTH2-authenticated connections without properly making sure that the connection was authenticated with the same credentials as set for this transfer. This affects SASL-enabled protocols: SMPTP(S), IMAP(S), POP3(S) and LDAP(S) (openldap only).
 1.  [CVE-2022-27779](https://nvd.nist.gov/vuln/detail/CVE-2022-27779): libcurl wrongly allows cookies to be set for Top Level Domains (TLDs) if thehost name is provided with a trailing dot.curl can be told to receive and send cookies. curl's "cookie engine" can bebuilt with or without [Public Suffix List](https://publicsuffix.org/)awareness. If PSL support not provided, a more rudimentary check exists to atleast prevent cookies from being set on TLDs. This check was broken if thehost name in the URL uses a trailing dot.This can allow arbitrary sites to set cookies that then would get sent to adifferent and unrelated site or domain.
 1.  [CVE-2022-32205](https://nvd.nist.gov/vuln/detail/CVE-2022-32205): A malicious server can serve excessive amounts of `Set-Cookie:` headers in a HTTP response to curl and curl < 7.84.0 stores all of them. A sufficiently large amount of (big) cookies make subsequent HTTP requests to this, or other servers to which the cookies match, create requests that become larger than the threshold that curl uses internally to avoid sending crazy large requests (1048576 bytes) and instead returns an error.This denial state might remain for as long as the same cookies are kept, match and haven't expired. Due to cookie matching rules, a server on `foo.example.com` can set cookies that also would match for `bar.example.com`, making it it possible for a "sister server" to effectively cause a denial of service for a sibling site on the same second level domain using this method.
+1.  [CVE-2022-35252](https://nvd.nist.gov/vuln/detail/CVE-2022-35252): When curl is used to retrieve and parse cookies from a HTTP(S) server, itaccepts cookies using control codes that when later are sent back to a HTTPserver might make the server return 400 responses. Effectively allowing a"sister site" to deny service to all siblings.
+1.  [CVE-2022-42915](https://nvd.nist.gov/vuln/detail/CVE-2022-42915): curl before 7.86.0 has a double free. If curl is told to use an HTTP proxy for a transfer with a non-HTTP(S) URL, it sets up the connection to the remote server by issuing a CONNECT request to the proxy, and then tunnels the rest of the protocol through. An HTTP proxy might refuse this request (HTTP proxies often only allow outgoing connections to specific port numbers, like 443 for HTTPS) and instead return a non-200 status code to the client. Due to flaws in the error/cleanup handling, this could trigger a double free in curl if one of the following schemes were used in the URL for the transfer: dict, gopher, gophers, ldap, ldaps, rtmp, rtmps, or telnet. The earliest affected version is 7.77.0.
+1.  [CVE-2022-35260](https://nvd.nist.gov/vuln/detail/CVE-2022-35260): curl can be told to parse a `.netrc` file for credentials. If that file endsin a line with 4095 consecutive non-white space letters and no newline, curlwould first read past the end of the stack-based buffer, and if the readworks, write a zero byte beyond its boundary.This will in most cases cause a segfault or similar, but circumstances might also cause different outcomes.If a malicious user can provide a custom netrc file to an application or otherwise affect its contents, this flaw could be used as denial-of-service.
+1.  [CVE-2022-43551](https://nvd.nist.gov/vuln/detail/CVE-2022-43551): A vulnerability exists in curl <7.87.0 HSTS check that could be bypassed to trick it to keep using HTTP. Using its HSTS support, curl can be instructed to use HTTPS instead of using an insecure clear-text HTTP step even when HTTP is provided in the URL. However, the HSTS mechanism could be bypassed if the host name in the given URL first uses IDN characters that get replaced to ASCII counterparts as part of the IDN conversion. Like using the character UTF-8 U+3002 (IDEOGRAPHIC FULL STOP) instead of the common ASCII full stop (U+002E) `.`. Then in a subsequent request, it does not detect the HSTS state and makes a clear text transfer. Because it would store the info IDN encoded but look for it IDN decoded.
 
 

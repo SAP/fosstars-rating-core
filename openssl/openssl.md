@@ -2,11 +2,11 @@
 
 https://github.com/openssl/openssl
 
-Last updated on Aug 5, 2022
+Last updated on Feb 16, 2023
 
 **Rating**: **GOOD**
 
-**Score**: **5.72**, max score value is 10.0
+**Score**: **6.02**, max score value is 10.0
 
 **Confidence**: High (9.65, max confidence value is 10.0)
 
@@ -20,20 +20,26 @@ The rating is based on **security score for open-source projects**.
 
 It used the following sub-scores:
 
-1.  **[Security testing](#security-testing)**: **4.25** (weight is 1.0)
-    1.  **[Static analysis](#static-analysis)**: **3.6** (weight is 1.0)
-        1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
+1.  **[Security testing](#security-testing)**: **4.76** (weight is 1.0)
+    1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
+        1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
             
-        1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
-            
-        1.  **[How a project uses Bandit](#how-a-project-uses-bandit)**: **0.0** (weight is 0.5)
-            
-        1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
-            
-    1.  **[Dependency testing](#dependency-testing)**: **N/A** (weight is 1.0)
-        1.  **[Dependabot score](#dependabot-score)**: **N/A** (weight is 1.0)
+        1.  **[Snyk score](#snyk-score)**: **N/A** (weight is 1.0)
             
         1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
+            
+    1.  **[Static analysis](#static-analysis)**: **0.0** (weight is 1.0)
+        1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
+            
+        1.  **[Bandit score](#bandit-score)**: **0.0** (weight is 0.35)
+            
+        1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.35)
+            
+        1.  **[How a project uses Pylint](#how-a-project-uses-pylint)**: **0.0** (weight is 0.35)
+            
+        1.  **[GoSec score](#gosec-score)**: **N/A** (weight is 0.3)
+            
+        1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **0.0** (weight is 0.2)
             
     1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
         
@@ -41,23 +47,29 @@ It used the following sub-scores:
         
     1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
         
-1.  **[Security awareness](#security-awareness)**: **7.0** (weight is 0.9)
+1.  **[Security awareness](#security-awareness)**: **8.0** (weight is 0.9)
     
 1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: **0.0** (weight is 0.6)
-    1.  **[Security testing](#security-testing)**: **4.25** (weight is 1.0)
-        1.  **[Static analysis](#static-analysis)**: **3.6** (weight is 1.0)
-            1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
+    1.  **[Security testing](#security-testing)**: **4.76** (weight is 1.0)
+        1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
+            1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
                 
-            1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
-                
-            1.  **[How a project uses Bandit](#how-a-project-uses-bandit)**: **0.0** (weight is 0.5)
-                
-            1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
-                
-        1.  **[Dependency testing](#dependency-testing)**: **N/A** (weight is 1.0)
-            1.  **[Dependabot score](#dependabot-score)**: **N/A** (weight is 1.0)
+            1.  **[Snyk score](#snyk-score)**: **N/A** (weight is 1.0)
                 
             1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
+                
+        1.  **[Static analysis](#static-analysis)**: **0.0** (weight is 1.0)
+            1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
+                
+            1.  **[Bandit score](#bandit-score)**: **0.0** (weight is 0.35)
+                
+            1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.35)
+                
+            1.  **[How a project uses Pylint](#how-a-project-uses-pylint)**: **0.0** (weight is 0.35)
+                
+            1.  **[GoSec score](#gosec-score)**: **N/A** (weight is 0.3)
+                
+            1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **0.0** (weight is 0.2)
                 
         1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
             
@@ -73,16 +85,11 @@ It used the following sub-scores:
     
 1.  **[Project popularity](#project-popularity)**: **10.0** (weight is 0.5)
     
-1.  **[Security reviews](#security-reviews)**: **6.72** (weight is 0.2)
+1.  **[Security reviews](#security-reviews)**: **6.67** (weight is 0.2)
     
 
 
 # ## How to improve the rating
-
-You can ask the project maintainers to enable LGTM checks for pull requests in the project.
-More info:
-1.  [How to enable LGTM checks for pull requests](https://lgtm.com/help/lgtm/about-automated-code-review)
-
 
 You can open a pull request to enable CodeQL scans in the project. Make sure that the scans are run on pull requests.
 More info:
@@ -92,11 +99,6 @@ More info:
 You can open a pull request to enable CodeQL scans in the project.
 More info:
 1.  [How to enable CodeQL checks](https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#enabling-code-scanning-using-actions)
-
-
-You can fix the issues reported by LGTM for the project.
-More info:
-1.  [List of issues on LGTM](https://lgtm.com/projects/g/openssl/openssl)
 
 
 You can open a pull request to enable FindSecBugs for the project.
@@ -135,10 +137,15 @@ More info:
 1.  [An example to run Bandit scan check as part of GitHub action workflow.](https://github.com/TNLinc/CV/blob/main/.github/workflows/bandit.yml#L28)
 
 
-You can open a pull request to trigger Bandit scans job in the project using GitHub action workflow for every pull-request.
+It would be good to have SecGo as analysis step for all commits, yes initiating it with PR would be great.
 More info:
 1.  [GitHub workflow action config to run Bandit code scanning job on every PR of a project.](https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#example-using-a-list-of-events)
 1.  [An eample to trigger Bandit scan check on every pull-request.](https://github.com/TNLinc/CV/blob/main/.github/workflows/bandit.yml#L3)
+
+
+You can open a pull request to trigger GoSec scans job in the project using GitHub action workflow for every pull-request.
+More info:
+1.  [GitHub workflow action config to run GoSec code scanning job on every PR of a project.](https://github.com/securego/gosec#github-action)
 
 
 
@@ -148,7 +155,7 @@ Below are the details about all the used sub-scores.
 
 ### Security testing
 
-Score: **4.25**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **4.76**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -158,19 +165,25 @@ This sub-score is based on the following sub-scores:
 
 
 
-1.  **[Static analysis](#static-analysis)**: **3.6** (weight is 1.0)
-    1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
+1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
+    1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
         
-    1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
-        
-    1.  **[How a project uses Bandit](#how-a-project-uses-bandit)**: **0.0** (weight is 0.5)
-        
-    1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
-        
-1.  **[Dependency testing](#dependency-testing)**: **N/A** (weight is 1.0)
-    1.  **[Dependabot score](#dependabot-score)**: **N/A** (weight is 1.0)
+    1.  **[Snyk score](#snyk-score)**: **N/A** (weight is 1.0)
         
     1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
+        
+1.  **[Static analysis](#static-analysis)**: **0.0** (weight is 1.0)
+    1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
+        
+    1.  **[Bandit score](#bandit-score)**: **0.0** (weight is 0.35)
+        
+    1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.35)
+        
+    1.  **[How a project uses Pylint](#how-a-project-uses-pylint)**: **0.0** (weight is 0.35)
+        
+    1.  **[GoSec score](#gosec-score)**: **N/A** (weight is 0.3)
+        
+    1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **0.0** (weight is 0.2)
         
 1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
     
@@ -182,7 +195,7 @@ This sub-score is based on the following sub-scores:
 
 ### Security awareness
 
-Score: **7.0**, confidence is 10.0 (max), weight is 0.9 (high)
+Score: **8.0**, confidence is 10.0 (max), weight is 0.9 (high)
 
 The score shows how a project is aware of security. If the project has a security policy, then the score adds 2.00. If the project has a security team, then the score adds 3.00. If the project uses verified signed commits, then the score adds 0.50. If the project has a bug bounty program, then the score adds 4.00. If the project signs its artifacts, then the score adds 0.50. If the project uses a security tool or library, then the score adds 1.00. If the project has executable binaries, then the score subtracts 2.00.
 
@@ -198,13 +211,13 @@ This sub-score is based on 18 features:
 1.  **Does it have executable binaries?** No
 1.  **Does it sign artifacts?** No
 1.  **Does it use AddressSanitizer?** No
-1.  **Does it use Dependabot?** No
+1.  **Does it use Dependabot?** Yes
 1.  **Does it use FindSecBugs?** No
-1.  **Does it use LGTM checks?** No
 1.  **Does it use MemorySanitizer?** No
 1.  **Does it use OWASP ESAPI?** No
 1.  **Does it use OWASP Java Encoder?** No
 1.  **Does it use OWASP Java HTML Sanitizer?** No
+1.  **Does it use Snyk?** No
 1.  **Does it use UndefinedBehaviorSanitizer?** No
 1.  **Does it use nohttp?** No
 1.  **Does it use verified signed commits?** No
@@ -224,20 +237,26 @@ This sub-score is based on the following sub-score:
 
 
 
-1.  **[Security testing](#security-testing)**: **4.25** (weight is 1.0)
-    1.  **[Static analysis](#static-analysis)**: **3.6** (weight is 1.0)
-        1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
+1.  **[Security testing](#security-testing)**: **4.76** (weight is 1.0)
+    1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
+        1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
             
-        1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
-            
-        1.  **[How a project uses Bandit](#how-a-project-uses-bandit)**: **0.0** (weight is 0.5)
-            
-        1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
-            
-    1.  **[Dependency testing](#dependency-testing)**: **N/A** (weight is 1.0)
-        1.  **[Dependabot score](#dependabot-score)**: **N/A** (weight is 1.0)
+        1.  **[Snyk score](#snyk-score)**: **N/A** (weight is 1.0)
             
         1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
+            
+    1.  **[Static analysis](#static-analysis)**: **0.0** (weight is 1.0)
+        1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
+            
+        1.  **[Bandit score](#bandit-score)**: **0.0** (weight is 0.35)
+            
+        1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.35)
+            
+        1.  **[How a project uses Pylint](#how-a-project-uses-pylint)**: **0.0** (weight is 0.35)
+            
+        1.  **[GoSec score](#gosec-score)**: **N/A** (weight is 0.3)
+            
+        1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **0.0** (weight is 0.2)
             
     1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
         
@@ -251,7 +270,7 @@ This sub-score is based on 1 feature:
 
 
 
-1.  **Info about vulnerabilities in the project:** 234 vulnerabilities, [details below](#known-vulnerabilities)
+1.  **Info about vulnerabilities in the project:** 238 vulnerabilities, [details below](#known-vulnerabilities)
 
 
 ### Unpatched vulnerabilities
@@ -266,7 +285,7 @@ This sub-score is based on 1 feature:
 
 
 
-1.  **Info about vulnerabilities in the project:** 234 vulnerabilities, [details below](#known-vulnerabilities)
+1.  **Info about vulnerabilities in the project:** 238 vulnerabilities, [details below](#known-vulnerabilities)
 
 
 ### Community commitment
@@ -292,15 +311,15 @@ Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-394 commits in the last 3 months results to 10.00 points
-13 contributors increase the score value from 10.00 to 12.00
+419 commits in the last 3 months results to 10.00 points
+10 contributors increase the score value from 10.00 to 12.00
 
 This sub-score is based on 2 features:
 
 
 
-1.  **Number of commits in the last three months:** 394
-1.  **Number of contributors in the last three months:** 13
+1.  **Number of commits in the last three months:** 419
+1.  **Number of contributors in the last three months:** 10
 
 
 ### Project popularity
@@ -316,13 +335,13 @@ This sub-score is based on 3 features:
 
 
 1.  **Number of projects on GitHub that use an open source project:** unknown
-1.  **Number of stars for a GitHub repository:** 19027
-1.  **Number of watchers for a GitHub repository:** 947
+1.  **Number of stars for a GitHub repository:** 20923
+1.  **Number of watchers for a GitHub repository:** 980
 
 
 ### Security reviews
 
-Score: **6.72**, confidence is 10.0 (max), weight is 0.2 (low)
+Score: **6.67**, confidence is 10.0 (max), weight is 0.2 (low)
 
 
 
@@ -335,31 +354,9 @@ This sub-score is based on 1 feature:
 1.  **Info about security reviews:** 1 security review
 
 
-### Static analysis
-
-Score: **3.6**, confidence is 10.0 (max), weight is 1.0 (high)
-
-
-
-
-
-This sub-score is based on the following sub-scores:
-
-
-
-1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
-    
-1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
-    
-1.  **[How a project uses Bandit](#how-a-project-uses-bandit)**: **0.0** (weight is 0.5)
-    
-1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
-    
-
-
 ### Dependency testing
 
-Score: **N/A**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **10.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -369,9 +366,37 @@ This sub-score is based on the following sub-scores:
 
 
 
-1.  **[Dependabot score](#dependabot-score)**: **N/A** (weight is 1.0)
+1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
+    
+1.  **[Snyk score](#snyk-score)**: **N/A** (weight is 1.0)
     
 1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
+    
+
+
+### Static analysis
+
+Score: **0.0**, confidence is 10.0 (max), weight is 1.0 (high)
+
+
+
+
+
+This sub-score is based on the following sub-scores:
+
+
+
+1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
+    
+1.  **[Bandit score](#bandit-score)**: **0.0** (weight is 0.35)
+    
+1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.35)
+    
+1.  **[How a project uses Pylint](#how-a-project-uses-pylint)**: **0.0** (weight is 0.35)
+    
+1.  **[GoSec score](#gosec-score)**: **N/A** (weight is 0.3)
+    
+1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **0.0** (weight is 0.2)
     
 
 
@@ -425,25 +450,9 @@ This sub-score is based on 2 features:
 1.  **Package managers:** None
 
 
-### LGTM score
+### Dependabot score
 
-Score: **9.0**, confidence is 10.0 (max), weight is 1.0 (high)
-
-
-
-
-
-This sub-score is based on 2 features:
-
-
-
-1.  **Programming languages:** C, CPP, RUBY, PYTHON, OTHER
-1.  **The worst LGTM grade of the project:** A
-
-
-### How a project uses CodeQL
-
-Score: **0.0**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **10.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -453,46 +462,13 @@ This sub-score is based on 4 features:
 
 
 
-1.  **Does it run CodeQL scans?** No
-1.  **Does it use CodeQL checks for pull requests?** No
-1.  **Does it use LGTM checks?** No
+1.  **Does it use Dependabot?** Yes
+1.  **Does it use GitHub as the main development platform?** Yes
+1.  **Package managers:** None
 1.  **Programming languages:** C, CPP, RUBY, PYTHON, OTHER
 
 
-### How a project uses Bandit
-
-Score: **0.0**, confidence is 10.0 (max), weight is 0.5 (medium)
-
-
-
-
-
-This sub-score is based on 3 features:
-
-
-
-1.  **If a project runs Bandit scan checks for commits:** No
-1.  **If a project runs Bandit scans:** No
-1.  **Programming languages:** C, CPP, RUBY, PYTHON, OTHER
-
-
-### FindSecBugs score
-
-Score: **N/A**, confidence is 10.0 (max), weight is 0.5 (medium)
-
-
-
-
-
-This sub-score is based on 2 features:
-
-
-
-1.  **Does it use FindSecBugs?** No
-1.  **Programming languages:** C, CPP, RUBY, PYTHON, OTHER
-
-
-### Dependabot score
+### Snyk score
 
 Score: **N/A**, confidence is 10.0 (max), weight is 1.0 (high)
 
@@ -504,8 +480,8 @@ This sub-score is based on 4 features:
 
 
 
-1.  **Does it use Dependabot?** No
 1.  **Does it use GitHub as the main development platform?** Yes
+1.  **Does it use Snyk?** No
 1.  **Package managers:** None
 1.  **Programming languages:** C, CPP, RUBY, PYTHON, OTHER
 
@@ -525,6 +501,108 @@ This sub-score is based on 3 features:
 1.  **How is OWASP Dependency Check used?** Not used
 1.  **Package managers:** None
 1.  **What is the threshold for OWASP Dependency Check?** Not specified
+
+
+### How a project uses CodeQL
+
+Score: **0.0**, confidence is 10.0 (max), weight is 1.0 (high)
+
+
+
+
+
+This sub-score is based on 3 features:
+
+
+
+1.  **Does it run CodeQL scans?** No
+1.  **Does it use CodeQL checks for pull requests?** No
+1.  **Programming languages:** C, CPP, RUBY, PYTHON, OTHER
+
+
+### Bandit score
+
+Score: **0.0**, confidence is 10.0 (max), weight is 0.35 (medium)
+
+
+
+
+
+This sub-score is based on 3 features:
+
+
+
+1.  **If a project runs Bandit scan checks for commits:** No
+1.  **If a project runs Bandit scans:** No
+1.  **Programming languages:** C, CPP, RUBY, PYTHON, OTHER
+
+
+### FindSecBugs score
+
+Score: **N/A**, confidence is 10.0 (max), weight is 0.35 (medium)
+
+
+
+
+
+This sub-score is based on 2 features:
+
+
+
+1.  **Does it use FindSecBugs?** No
+1.  **Programming languages:** C, CPP, RUBY, PYTHON, OTHER
+
+
+### How a project uses Pylint
+
+Score: **0.0**, confidence is 10.0 (max), weight is 0.35 (medium)
+
+
+
+
+
+This sub-score is based on 3 features:
+
+
+
+1.  **Does it run Pylint scans on all commits?** No
+1.  **Does it run Pylint scans?** No
+1.  **Programming languages:** C, CPP, RUBY, PYTHON, OTHER
+
+
+### GoSec score
+
+Score: **N/A**, confidence is 10.0 (max), weight is 0.3 (medium)
+
+
+
+The score is N/A because the project uses languages that are not supported by GoSec.
+
+This sub-score is based on 4 features:
+
+
+
+1.  **Does it run GoSec scans on all pull requests?** No
+1.  **Does it run GoSec scans with rules?** No
+1.  **Does it run GoSec scans?** No
+1.  **Programming languages:** C, CPP, RUBY, PYTHON, OTHER
+
+
+### How a project uses MyPy
+
+Score: **0.0**, confidence is 10.0 (max), weight is 0.2 (low)
+
+
+
+
+
+This sub-score is based on 3 features:
+
+
+
+1.  **Does it run MyPy scans on all commits?** No
+1.  **Does it run MyPy scans?** No
+1.  **Programming languages:** C, CPP, RUBY, PYTHON, OTHER
 
 
 ## Known vulnerabilities
@@ -550,7 +628,7 @@ This sub-score is based on 3 features:
 1.  [CVE-2007-4995](https://nvd.nist.gov/vuln/detail/CVE-2007-4995): Off-by-one error in the DTLS implementation in OpenSSL 0.9.8 before 0.9.8f allows remote attackers to execute arbitrary code via unspecified vectors.
 1.  [CVE-2007-5536](https://nvd.nist.gov/vuln/detail/CVE-2007-5536): Unspecified vulnerability in OpenSSL before A.00.09.07l on HP-UX B.11.11, B.11.23, and B.11.31 allows local users to cause a denial of service via unspecified vectors.
 1.  [CVE-2008-0166](https://nvd.nist.gov/vuln/detail/CVE-2008-0166): OpenSSL 0.9.8c-1 up to versions before 0.9.8g-9 on Debian-based operating systems uses a random number generator that generates predictable numbers, which makes it easier for remote attackers to conduct brute force guessing attacks against cryptographic keys.
-1.  [CVE-2008-0891](https://nvd.nist.gov/vuln/detail/CVE-2008-0891): Double free vulnerability in OpenSSL 0.9.8f and 0.9.8g, when the TLS server name extensions are enabled, allows remote attackers to cause a denial of service (crash) via a malformed Client Hello packet.  NOTE: some of these details are obtained from third party information.
+1.  [CVE-2008-0891](https://nvd.nist.gov/vuln/detail/CVE-2008-0891): Double free vulnerability in OpenSSL 0.9.8f and 0.9.8g, when the TLS server name extensions are enabled, allows remote attackers to cause a denial of service (crash) via a malformed Client Hello packet. NOTE: some of these details are obtained from third party information.
 1.  [CVE-2008-1678](https://nvd.nist.gov/vuln/detail/CVE-2008-1678): Memory leak in the zlib_stateful_init function in crypto/comp/c_zlib.c in libssl in OpenSSL 0.9.8f through 0.9.8h allows remote attackers to cause a denial of service (memory consumption) via multiple calls, as demonstrated by initial SSL client handshakes to the Apache HTTP Server mod_ssl that specify a compression algorithm.
 1.  [CVE-2008-5077](https://nvd.nist.gov/vuln/detail/CVE-2008-5077): OpenSSL 0.9.8i and earlier does not properly check the return value from the EVP_VerifyFinal function, which allows remote attackers to bypass validation of the certificate chain via a malformed SSL/TLS signature for DSA and ECDSA keys.
 1.  [CVE-2009-0653](https://nvd.nist.gov/vuln/detail/CVE-2009-0653): OpenSSL, probably 0.9.6, does not verify the Basic Constraints for an intermediate CA-signed certificate, which allows remote attackers to spoof the certificates of trusted sites via a man-in-the-middle attack, a related issue to CVE-2002-0970.
@@ -558,21 +636,21 @@ This sub-score is based on 3 features:
 1.  [CVE-2009-1379](https://nvd.nist.gov/vuln/detail/CVE-2009-1379): Use-after-free vulnerability in the dtls1_retrieve_buffered_fragment function in ssl/d1_both.c in OpenSSL 1.0.0 Beta 2 allows remote attackers to cause a denial of service (openssl s_client crash) and possibly have unspecified other impact via a DTLS packet, as demonstrated by a packet from a server that uses a crafted server certificate.
 1.  [CVE-2009-1386](https://nvd.nist.gov/vuln/detail/CVE-2009-1386): ssl/s3_pkt.c in OpenSSL before 0.9.8i allows remote attackers to cause a denial of service (NULL pointer dereference and daemon crash) via a DTLS ChangeCipherSpec packet that occurs before ClientHello.
 1.  [CVE-2009-1390](https://nvd.nist.gov/vuln/detail/CVE-2009-1390): Mutt 1.5.19, when linked against (1) OpenSSL (mutt_ssl.c) or (2) GnuTLS (mutt_ssl_gnutls.c), allows connections when only one TLS certificate in the chain is accepted instead of verifying the entire chain, which allows remote attackers to spoof trusted servers via a man-in-the-middle attack.
-1.  [CVE-2009-2409](https://nvd.nist.gov/vuln/detail/CVE-2009-2409): The Network Security Services (NSS) library before 3.12.3, as used in Firefox; GnuTLS before 2.6.4 and 2.7.4; OpenSSL 0.9.8 through 0.9.8k; and other products support MD2 with X.509 certificates, which might allow remote attackers to spoof certificates by using MD2 design flaws to generate a hash collision in less than brute-force time.  NOTE: the scope of this issue is currently limited because the amount of computation required is still large.
+1.  [CVE-2009-2409](https://nvd.nist.gov/vuln/detail/CVE-2009-2409): The Network Security Services (NSS) library before 3.12.3, as used in Firefox; GnuTLS before 2.6.4 and 2.7.4; OpenSSL 0.9.8 through 0.9.8k; and other products support MD2 with X.509 certificates, which might allow remote attackers to spoof certificates by using MD2 design flaws to generate a hash collision in less than brute-force time. NOTE: the scope of this issue is currently limited because the amount of computation required is still large.
 1.  [CVE-2009-3767](https://nvd.nist.gov/vuln/detail/CVE-2009-3767): libraries/libldap/tls_o.c in OpenLDAP 2.2 and 2.4, and possibly other versions, when OpenSSL is used, does not properly handle a '\0' character in a domain name in the subject's Common Name (CN) field of an X.509 certificate, which allows man-in-the-middle attackers to spoof arbitrary SSL servers via a crafted certificate issued by a legitimate Certification Authority, a related issue to CVE-2009-2408.
 1.  [CVE-2009-3555](https://nvd.nist.gov/vuln/detail/CVE-2009-3555): The TLS protocol, and the SSL protocol 3.0 and possibly earlier, as used in Microsoft Internet Information Services (IIS) 7.0, mod_ssl in the Apache HTTP Server 2.2.14 and earlier, OpenSSL before 0.9.8l, GnuTLS 2.8.5 and earlier, Mozilla Network Security Services (NSS) 3.12.4 and earlier, multiple Cisco products, and other products, does not properly associate renegotiation handshakes with an existing connection, which allows man-in-the-middle attackers to insert data into HTTPS sessions, and possibly other types of sessions protected by TLS or SSL, by sending an unauthenticated request that is processed retroactively by a server in a post-renegotiation context, related to a "plaintext injection" attack, aka the "Project Mogul" issue.
 1.  [CVE-2009-4355](https://nvd.nist.gov/vuln/detail/CVE-2009-4355): Memory leak in the zlib_stateful_finish function in crypto/comp/c_zlib.c in OpenSSL 0.9.8l and earlier and 1.0.0 Beta through Beta 4 allows remote attackers to cause a denial of service (memory consumption) via vectors that trigger incorrect calls to the CRYPTO_cleanup_all_ex_data function, as demonstrated by use of SSLv3 and PHP with the Apache HTTP Server, a related issue to CVE-2008-1678.
 1.  [CVE-2010-0433](https://nvd.nist.gov/vuln/detail/CVE-2010-0433): The kssl_keytab_is_available function in ssl/kssl.c in OpenSSL before 0.9.8n, when Kerberos is enabled but Kerberos configuration files cannot be opened, does not check a certain return value, which allows remote attackers to cause a denial of service (NULL pointer dereference and daemon crash) via SSL cipher negotiation, as demonstrated by a chroot installation of Dovecot or stunnel without Kerberos configuration files inside the chroot.
-1.  [CVE-2010-0740](https://nvd.nist.gov/vuln/detail/CVE-2010-0740): The ssl3_get_record function in ssl/s3_pkt.c in OpenSSL 0.9.8f through 0.9.8m allows remote attackers to cause a denial of service (crash) via a malformed record in a TLS connection that triggers a NULL pointer dereference, related to the minor version number.  NOTE: some of these details are obtained from third party information.
-1.  [CVE-2010-1633](https://nvd.nist.gov/vuln/detail/CVE-2010-1633): RSA verification recovery in the EVP_PKEY_verify_recover function in OpenSSL 1.x before 1.0.0a, as used by pkeyutl and possibly other applications, returns uninitialized memory upon failure, which might allow context-dependent attackers to bypass intended key requirements or obtain sensitive information via unspecified vectors.  NOTE: some of these details are obtained from third party information.
-1.  [CVE-2010-2939](https://nvd.nist.gov/vuln/detail/CVE-2010-2939): Double free vulnerability in the ssl3_get_key_exchange function in the OpenSSL client (ssl/s3_clnt.c) in OpenSSL 1.0.0a, 0.9.8, 0.9.7, and possibly other versions, when using ECDH, allows context-dependent attackers to cause a denial of service (crash) and possibly execute arbitrary code via a crafted private key with an invalid prime.  NOTE: some sources refer to this as a use-after-free issue.
+1.  [CVE-2010-0740](https://nvd.nist.gov/vuln/detail/CVE-2010-0740): The ssl3_get_record function in ssl/s3_pkt.c in OpenSSL 0.9.8f through 0.9.8m allows remote attackers to cause a denial of service (crash) via a malformed record in a TLS connection that triggers a NULL pointer dereference, related to the minor version number. NOTE: some of these details are obtained from third party information.
+1.  [CVE-2010-1633](https://nvd.nist.gov/vuln/detail/CVE-2010-1633): RSA verification recovery in the EVP_PKEY_verify_recover function in OpenSSL 1.x before 1.0.0a, as used by pkeyutl and possibly other applications, returns uninitialized memory upon failure, which might allow context-dependent attackers to bypass intended key requirements or obtain sensitive information via unspecified vectors. NOTE: some of these details are obtained from third party information.
+1.  [CVE-2010-2939](https://nvd.nist.gov/vuln/detail/CVE-2010-2939): Double free vulnerability in the ssl3_get_key_exchange function in the OpenSSL client (ssl/s3_clnt.c) in OpenSSL 1.0.0a, 0.9.8, 0.9.7, and possibly other versions, when using ECDH, allows context-dependent attackers to cause a denial of service (crash) and possibly execute arbitrary code via a crafted private key with an invalid prime. NOTE: some sources refer to this as a use-after-free issue.
 1.  [CVE-2010-3864](https://nvd.nist.gov/vuln/detail/CVE-2010-3864): Multiple race conditions in ssl/t1_lib.c in OpenSSL 0.9.8f through 0.9.8o, 1.0.0, and 1.0.0a, when multi-threading and internal caching are enabled on a TLS server, might allow remote attackers to execute arbitrary code via client data that triggers a heap-based buffer overflow, related to (1) the TLS server name extension and (2) elliptic curve cryptography.
 1.  [CVE-2010-4252](https://nvd.nist.gov/vuln/detail/CVE-2010-4252): OpenSSL before 1.0.0c, when J-PAKE is enabled, does not properly validate the public parameters in the J-PAKE protocol, which allows remote attackers to bypass the need for knowledge of the shared secret, and successfully authenticate, by sending crafted values in each round of the protocol.
 1.  [CVE-2011-0014](https://nvd.nist.gov/vuln/detail/CVE-2011-0014): ssl/t1_lib.c in OpenSSL 0.9.8h through 0.9.8q and 1.0.0 through 1.0.0c allows remote attackers to cause a denial of service (crash), and possibly obtain sensitive information in applications that use OpenSSL, via a malformed ClientHello handshake message that triggers an out-of-bounds memory access, aka "OCSP stapling vulnerability."
 1.  [CVE-2011-1945](https://nvd.nist.gov/vuln/detail/CVE-2011-1945): The elliptic curve cryptography (ECC) subsystem in OpenSSL 1.0.0d and earlier, when the Elliptic Curve Digital Signature Algorithm (ECDSA) is used for the ECDHE_ECDSA cipher suite, does not properly implement curves over binary fields, which makes it easier for context-dependent attackers to determine private keys via a timing attack and a lattice calculation.
 1.  [CVE-2011-3207](https://nvd.nist.gov/vuln/detail/CVE-2011-3207): crypto/x509/x509_vfy.c in OpenSSL 1.0.x before 1.0.0e does not initialize certain structure members, which makes it easier for remote attackers to bypass CRL validation by using a nextUpdate value corresponding to a time in the past.
 1.  [CVE-2011-4576](https://nvd.nist.gov/vuln/detail/CVE-2011-4576): The SSL 3.0 implementation in OpenSSL before 0.9.8s and 1.x before 1.0.0f does not properly initialize data structures for block cipher padding, which might allow remote attackers to obtain sensitive information by decrypting the padding data sent by an SSL peer.
-1.  [CVE-2012-0050](https://nvd.nist.gov/vuln/detail/CVE-2012-0050): OpenSSL 0.9.8s and 1.0.0f does not properly support DTLS applications, which allows remote attackers to cause a denial of service (crash) via unspecified vectors related to an out-of-bounds read.  NOTE: this vulnerability exists because of an incorrect fix for CVE-2011-4108.
+1.  [CVE-2012-0050](https://nvd.nist.gov/vuln/detail/CVE-2012-0050): OpenSSL 0.9.8s and 1.0.0f does not properly support DTLS applications, which allows remote attackers to cause a denial of service (crash) via unspecified vectors related to an out-of-bounds read. NOTE: this vulnerability exists because of an incorrect fix for CVE-2011-4108.
 1.  [CVE-2011-4354](https://nvd.nist.gov/vuln/detail/CVE-2011-4354): crypto/bn/bn_nist.c in OpenSSL before 0.9.8h on 32-bit platforms, as used in stunnel and other products, in certain circumstances involving ECDH or ECDHE cipher suites, uses an incorrect modular reduction algorithm in its implementation of the P-256 and P-384 NIST elliptic curves, which allows remote attackers to obtain the private key of a TLS server via multiple handshake attempts.
 1.  [CVE-2006-7250](https://nvd.nist.gov/vuln/detail/CVE-2006-7250): The mime_hdr_cmp function in crypto/asn1/asn_mime.c in OpenSSL 0.9.8t and earlier allows remote attackers to cause a denial of service (NULL pointer dereference and application crash) via a crafted S/MIME message.
 1.  [CVE-2012-0884](https://nvd.nist.gov/vuln/detail/CVE-2012-0884): The implementation of Cryptographic Message Syntax (CMS) and PKCS #7 in OpenSSL before 0.9.8u and 1.x before 1.0.0h does not properly restrict certain oracle behavior, which makes it easier for context-dependent attackers to decrypt data via a Million Message Attack (MMA) adaptive chosen ciphertext attack.
@@ -647,5 +725,8 @@ This sub-score is based on 3 features:
 1.  [CVE-2022-2068](https://nvd.nist.gov/vuln/detail/CVE-2022-2068): In addition to the c_rehash shell command injection identified in CVE-2022-1292, further circumstances where the c_rehash script does not properly sanitise shell metacharacters to prevent command injection were found by code review. When the CVE-2022-1292 was fixed it was not discovered that there are other places in the script where the file names of certificates being hashed were possibly passed to a command executed through the shell. This script is distributed by some operating systems in a manner where it is automatically executed. On such operating systems, an attacker could execute arbitrary commands with the privileges of the script. Use of the c_rehash script is considered obsolete and should be replaced by the OpenSSL rehash command line tool. Fixed in OpenSSL 3.0.4 (Affected 3.0.0,3.0.1,3.0.2,3.0.3). Fixed in OpenSSL 1.1.1p (Affected 1.1.1-1.1.1o). Fixed in OpenSSL 1.0.2zf (Affected 1.0.2-1.0.2ze).
 1.  [CVE-2022-2274](https://nvd.nist.gov/vuln/detail/CVE-2022-2274): The OpenSSL 3.0.4 release introduced a serious bug in the RSA implementation for X86_64 CPUs supporting the AVX512IFMA instructions. This issue makes the RSA implementation with 2048 bit private keys incorrect on such machines and memory corruption will happen during the computation. As a consequence of the memory corruption an attacker may be able to trigger a remote code execution on the machine performing the computation. SSL/TLS servers or other servers using 2048 bit RSA private keys running on machines supporting AVX512IFMA instructions of the X86_64 architecture are affected by this issue.
 1.  [CVE-2022-2097](https://nvd.nist.gov/vuln/detail/CVE-2022-2097): AES OCB mode for 32-bit x86 platforms using the AES-NI assembly optimised implementation will not encrypt the entirety of the data under some circumstances. This could reveal sixteen bytes of data that was preexisting in the memory that wasn't written. In the special case of "in place" encryption, sixteen bytes of the plaintext would be revealed. Since OpenSSL does not support OCB based cipher suites for TLS and DTLS, they are both unaffected. Fixed in OpenSSL 3.0.5 (Affected 3.0.0-3.0.4). Fixed in OpenSSL 1.1.1q (Affected 1.1.1-1.1.1p).
+1.  [CVE-2022-3358](https://nvd.nist.gov/vuln/detail/CVE-2022-3358): OpenSSL supports creating a custom cipher via the legacy EVP_CIPHER_meth_new() function and associated function calls. This function was deprecated in OpenSSL 3.0 and application authors are instead encouraged to use the new provider mechanism in order to implement custom ciphers. OpenSSL versions 3.0.0 to 3.0.5 incorrectly handle legacy custom ciphers passed to the EVP_EncryptInit_ex2(), EVP_DecryptInit_ex2() and EVP_CipherInit_ex2() functions (as well as other similarly named encryption and decryption initialisation functions). Instead of using the custom cipher directly it incorrectly tries to fetch an equivalent cipher from the available providers. An equivalent cipher is found based on the NID passed to EVP_CIPHER_meth_new(). This NID is supposed to represent the unique NID for a given cipher. However it is possible for an application to incorrectly pass NID_undef as this value in the call to EVP_CIPHER_meth_new(). When NID_undef is used in this way the OpenSSL encryption/decryption initialisation function will match the NULL cipher as being equivalent and will fetch this from the available providers. This will succeed if the default provider has been loaded (or if a third party provider has been loaded that offers this cipher). Using the NULL cipher means that the plaintext is emitted as the ciphertext. Applications are only affected by this issue if they call EVP_CIPHER_meth_new() using NID_undef and subsequently use it in a call to an encryption/decryption initialisation function. Applications that only use SSL/TLS are not impacted by this issue. Fixed in OpenSSL 3.0.6 (Affected 3.0.0-3.0.5).
+1.  [CVE-2022-3786](https://nvd.nist.gov/vuln/detail/CVE-2022-3786): A buffer overrun can be triggered in X.509 certificate verification, specifically in name constraint checking. Note that this occurs after certificate chain signature verification and requires either a CA to have signed a malicious certificate or for an application to continue certificate verification despite failure to construct a path to a trusted issuer. An attacker can craft a malicious email address in a certificate to overflow an arbitrary number of bytes containing the `.' character (decimal 46) on the stack. This buffer overflow could result in a crash (causing a denial of service). In a TLS client, this can be triggered by connecting to a malicious server. In a TLS server, this can be triggered if the server requests client authentication and a malicious client connects.
+1.  [CVE-2022-3996](https://nvd.nist.gov/vuln/detail/CVE-2022-3996): If an X.509 certificate contains a malformed policy constraint and policy processing is enabled, then a write lock will be taken twice recursively. On some operating systems (most widely: Windows) this results in a denial of service when the affected process hangs. Policy processing being enabled on a publicly facing server is not considered to be a common setup. Policy processing is enabled by passing the `-policy' argument to the command line utilities or by calling either `X509_VERIFY_PARAM_add0_policy()' or `X509_VERIFY_PARAM_set1_policies()' functions.
 
 

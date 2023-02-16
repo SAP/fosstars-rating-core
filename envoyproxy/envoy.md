@@ -2,11 +2,11 @@
 
 https://github.com/envoyproxy/envoy
 
-Last updated on Aug 5, 2022
+Last updated on Feb 16, 2023
 
 **Rating**: **MODERATE**
 
-**Score**: **5.25**, max score value is 10.0
+**Score**: **5.17**, max score value is 10.0
 
 **Confidence**: Max (10.0, max confidence value is 10.0)
 
@@ -20,20 +20,26 @@ The rating is based on **security score for open-source projects**.
 
 It used the following sub-scores:
 
-1.  **[Security testing](#security-testing)**: **5.62** (weight is 1.0)
-    1.  **[Static analysis](#static-analysis)**: **3.6** (weight is 1.0)
-        1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
-            
-        1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
-            
-        1.  **[How a project uses Bandit](#how-a-project-uses-bandit)**: **0.0** (weight is 0.5)
-            
-        1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
-            
+1.  **[Security testing](#security-testing)**: **5.7** (weight is 1.0)
     1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
         1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
             
+        1.  **[Snyk score](#snyk-score)**: **5.0** (weight is 1.0)
+            
         1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
+            
+    1.  **[Static analysis](#static-analysis)**: **3.92** (weight is 1.0)
+        1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
+            
+        1.  **[Bandit score](#bandit-score)**: **0.0** (weight is 0.35)
+            
+        1.  **[FindSecBugs score](#findsecbugs-score)**: **0.0** (weight is 0.35)
+            
+        1.  **[How a project uses Pylint](#how-a-project-uses-pylint)**: **0.0** (weight is 0.35)
+            
+        1.  **[GoSec score](#gosec-score)**: **0.0** (weight is 0.3)
+            
+        1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **0.0** (weight is 0.2)
             
     1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
         
@@ -41,23 +47,29 @@ It used the following sub-scores:
         
     1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
         
-1.  **[Security awareness](#security-awareness)**: **4.5** (weight is 0.9)
+1.  **[Security awareness](#security-awareness)**: **4.0** (weight is 0.9)
     
 1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: **0.0** (weight is 0.6)
-    1.  **[Security testing](#security-testing)**: **5.62** (weight is 1.0)
-        1.  **[Static analysis](#static-analysis)**: **3.6** (weight is 1.0)
-            1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
-                
-            1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
-                
-            1.  **[How a project uses Bandit](#how-a-project-uses-bandit)**: **0.0** (weight is 0.5)
-                
-            1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
-                
+    1.  **[Security testing](#security-testing)**: **5.7** (weight is 1.0)
         1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
             1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
                 
+            1.  **[Snyk score](#snyk-score)**: **5.0** (weight is 1.0)
+                
             1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
+                
+        1.  **[Static analysis](#static-analysis)**: **3.92** (weight is 1.0)
+            1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
+                
+            1.  **[Bandit score](#bandit-score)**: **0.0** (weight is 0.35)
+                
+            1.  **[FindSecBugs score](#findsecbugs-score)**: **0.0** (weight is 0.35)
+                
+            1.  **[How a project uses Pylint](#how-a-project-uses-pylint)**: **0.0** (weight is 0.35)
+                
+            1.  **[GoSec score](#gosec-score)**: **0.0** (weight is 0.3)
+                
+            1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **0.0** (weight is 0.2)
                 
         1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
             
@@ -73,31 +85,11 @@ It used the following sub-scores:
     
 1.  **[Project popularity](#project-popularity)**: **10.0** (weight is 0.5)
     
-1.  **[Security reviews](#security-reviews)**: **0.02** (weight is 0.2)
+1.  **[Security reviews](#security-reviews)**: **0.01** (weight is 0.2)
     
 
 
 # ## How to improve the rating
-
-You can ask the project maintainers to enable LGTM checks for pull requests in the project.
-More info:
-1.  [How to enable LGTM checks for pull requests](https://lgtm.com/help/lgtm/about-automated-code-review)
-
-
-You can open a pull request to enable CodeQL scans in the project. Make sure that the scans are run on pull requests.
-More info:
-1.  [How to enable CodeQL checks for pull requests](https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#enabling-code-scanning-using-actions)
-
-
-You can open a pull request to enable CodeQL scans in the project.
-More info:
-1.  [How to enable CodeQL checks](https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#enabling-code-scanning-using-actions)
-
-
-You can fix the issues reported by LGTM for the project.
-More info:
-1.  [List of issues on LGTM](https://lgtm.com/projects/g/envoyproxy/envoy)
-
 
 You can open a pull request to enable FindSecBugs for the project.
 More info:
@@ -135,10 +127,20 @@ More info:
 1.  [An example to run Bandit scan check as part of GitHub action workflow.](https://github.com/TNLinc/CV/blob/main/.github/workflows/bandit.yml#L28)
 
 
-You can open a pull request to trigger Bandit scans job in the project using GitHub action workflow for every pull-request.
+It would be good to have SecGo as analysis step for all commits, yes initiating it with PR would be great.
 More info:
 1.  [GitHub workflow action config to run Bandit code scanning job on every PR of a project.](https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#example-using-a-list-of-events)
 1.  [An eample to trigger Bandit scan check on every pull-request.](https://github.com/TNLinc/CV/blob/main/.github/workflows/bandit.yml#L3)
+
+
+You can create Snyk account and configure your project.
+More info:
+1.  [Getting started with snyk for open source](https://docs.snyk.io/products/snyk-open-source/getting-started-snyk-open-source)
+
+
+You can open a pull request to trigger GoSec scans job in the project using GitHub action workflow for every pull-request.
+More info:
+1.  [GitHub workflow action config to run GoSec code scanning job on every PR of a project.](https://github.com/securego/gosec#github-action)
 
 
 
@@ -148,7 +150,7 @@ Below are the details about all the used sub-scores.
 
 ### Security testing
 
-Score: **5.62**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **5.7**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -158,19 +160,25 @@ This sub-score is based on the following sub-scores:
 
 
 
-1.  **[Static analysis](#static-analysis)**: **3.6** (weight is 1.0)
-    1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
-        
-    1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
-        
-    1.  **[How a project uses Bandit](#how-a-project-uses-bandit)**: **0.0** (weight is 0.5)
-        
-    1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
-        
 1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
     1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
         
+    1.  **[Snyk score](#snyk-score)**: **5.0** (weight is 1.0)
+        
     1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
+        
+1.  **[Static analysis](#static-analysis)**: **3.92** (weight is 1.0)
+    1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
+        
+    1.  **[Bandit score](#bandit-score)**: **0.0** (weight is 0.35)
+        
+    1.  **[FindSecBugs score](#findsecbugs-score)**: **0.0** (weight is 0.35)
+        
+    1.  **[How a project uses Pylint](#how-a-project-uses-pylint)**: **0.0** (weight is 0.35)
+        
+    1.  **[GoSec score](#gosec-score)**: **0.0** (weight is 0.3)
+        
+    1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **0.0** (weight is 0.2)
         
 1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
     
@@ -182,7 +190,7 @@ This sub-score is based on the following sub-scores:
 
 ### Security awareness
 
-Score: **4.5**, confidence is 10.0 (max), weight is 0.9 (high)
+Score: **4.0**, confidence is 10.0 (max), weight is 0.9 (high)
 
 The score shows how a project is aware of security. If the project has a security policy, then the score adds 2.00. If the project has a security team, then the score adds 3.00. If the project uses verified signed commits, then the score adds 0.50. If the project has a bug bounty program, then the score adds 4.00. If the project signs its artifacts, then the score adds 0.50. If the project uses a security tool or library, then the score adds 1.00. If the project has executable binaries, then the score subtracts 2.00.
 
@@ -200,14 +208,14 @@ This sub-score is based on 18 features:
 1.  **Does it use AddressSanitizer?** No
 1.  **Does it use Dependabot?** Yes
 1.  **Does it use FindSecBugs?** No
-1.  **Does it use LGTM checks?** No
 1.  **Does it use MemorySanitizer?** No
 1.  **Does it use OWASP ESAPI?** No
 1.  **Does it use OWASP Java Encoder?** No
 1.  **Does it use OWASP Java HTML Sanitizer?** No
+1.  **Does it use Snyk?** No
 1.  **Does it use UndefinedBehaviorSanitizer?** No
 1.  **Does it use nohttp?** No
-1.  **Does it use verified signed commits?** Yes
+1.  **Does it use verified signed commits?** No
 1.  **How is OWASP Dependency Check used?** Not used
 1.  **Is it included to OSS-Fuzz?** Yes
 
@@ -224,20 +232,26 @@ This sub-score is based on the following sub-score:
 
 
 
-1.  **[Security testing](#security-testing)**: **5.62** (weight is 1.0)
-    1.  **[Static analysis](#static-analysis)**: **3.6** (weight is 1.0)
-        1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
-            
-        1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
-            
-        1.  **[How a project uses Bandit](#how-a-project-uses-bandit)**: **0.0** (weight is 0.5)
-            
-        1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
-            
+1.  **[Security testing](#security-testing)**: **5.7** (weight is 1.0)
     1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
         1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
             
+        1.  **[Snyk score](#snyk-score)**: **5.0** (weight is 1.0)
+            
         1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
+            
+    1.  **[Static analysis](#static-analysis)**: **3.92** (weight is 1.0)
+        1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
+            
+        1.  **[Bandit score](#bandit-score)**: **0.0** (weight is 0.35)
+            
+        1.  **[FindSecBugs score](#findsecbugs-score)**: **0.0** (weight is 0.35)
+            
+        1.  **[How a project uses Pylint](#how-a-project-uses-pylint)**: **0.0** (weight is 0.35)
+            
+        1.  **[GoSec score](#gosec-score)**: **0.0** (weight is 0.3)
+            
+        1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **0.0** (weight is 0.2)
             
     1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
         
@@ -292,15 +306,15 @@ Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-728 commits in the last 3 months results to 10.00 points
-3 contributors increase the score value from 10.00 to 11.00
+4406 commits in the last 3 months results to 10.00 points
+4 contributors increase the score value from 10.00 to 11.00
 
 This sub-score is based on 2 features:
 
 
 
-1.  **Number of commits in the last three months:** 728
-1.  **Number of contributors in the last three months:** 3
+1.  **Number of commits in the last three months:** 4406
+1.  **Number of contributors in the last three months:** 4
 
 
 ### Project popularity
@@ -315,14 +329,14 @@ This sub-score is based on 3 features:
 
 
 
-1.  **Number of projects on GitHub that use an open source project:** 4
-1.  **Number of stars for a GitHub repository:** 20137
-1.  **Number of watchers for a GitHub repository:** 605
+1.  **Number of projects on GitHub that use an open source project:** 6
+1.  **Number of stars for a GitHub repository:** 21439
+1.  **Number of watchers for a GitHub repository:** 608
 
 
 ### Security reviews
 
-Score: **0.02**, confidence is 10.0 (max), weight is 0.2 (low)
+Score: **0.01**, confidence is 10.0 (max), weight is 0.2 (low)
 
 
 
@@ -333,28 +347,6 @@ This sub-score is based on 1 feature:
 
 
 1.  **Info about security reviews:** 1 security review
-
-
-### Static analysis
-
-Score: **3.6**, confidence is 10.0 (max), weight is 1.0 (high)
-
-
-
-
-
-This sub-score is based on the following sub-scores:
-
-
-
-1.  **[LGTM score](#lgtm-score)**: **9.0** (weight is 1.0)
-    
-1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
-    
-1.  **[How a project uses Bandit](#how-a-project-uses-bandit)**: **0.0** (weight is 0.5)
-    
-1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.5)
-    
 
 
 ### Dependency testing
@@ -371,7 +363,35 @@ This sub-score is based on the following sub-scores:
 
 1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
     
+1.  **[Snyk score](#snyk-score)**: **5.0** (weight is 1.0)
+    
 1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
+    
+
+
+### Static analysis
+
+Score: **3.92**, confidence is 10.0 (max), weight is 1.0 (high)
+
+
+
+
+
+This sub-score is based on the following sub-scores:
+
+
+
+1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
+    
+1.  **[Bandit score](#bandit-score)**: **0.0** (weight is 0.35)
+    
+1.  **[FindSecBugs score](#findsecbugs-score)**: **0.0** (weight is 0.35)
+    
+1.  **[How a project uses Pylint](#how-a-project-uses-pylint)**: **0.0** (weight is 0.35)
+    
+1.  **[GoSec score](#gosec-score)**: **0.0** (weight is 0.3)
+    
+1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **0.0** (weight is 0.2)
     
 
 
@@ -388,7 +408,7 @@ This sub-score is based on 2 features:
 
 
 1.  **Is it included to OSS-Fuzz?** Yes
-1.  **Programming languages:** C, CPP, PYTHON, JAVASCRIPT, GO, OTHER
+1.  **Programming languages:** C, CPP, JAVA, RUBY, PYTHON, JAVASCRIPT, GO, OTHER
 
 
 ### Memory-safety testing
@@ -406,7 +426,7 @@ This sub-score is based on 4 features:
 1.  **Does it use AddressSanitizer?** No
 1.  **Does it use MemorySanitizer?** No
 1.  **Does it use UndefinedBehaviorSanitizer?** No
-1.  **Programming languages:** C, CPP, PYTHON, JAVASCRIPT, GO, OTHER
+1.  **Programming languages:** C, CPP, JAVA, RUBY, PYTHON, JAVASCRIPT, GO, OTHER
 
 
 ### nohttp tool
@@ -422,74 +442,7 @@ This sub-score is based on 2 features:
 
 
 1.  **Does it use nohttp?** No
-1.  **Package managers:** None
-
-
-### LGTM score
-
-Score: **9.0**, confidence is 10.0 (max), weight is 1.0 (high)
-
-
-
-
-
-This sub-score is based on 2 features:
-
-
-
-1.  **Programming languages:** C, CPP, PYTHON, JAVASCRIPT, GO, OTHER
-1.  **The worst LGTM grade of the project:** A
-
-
-### How a project uses CodeQL
-
-Score: **0.0**, confidence is 10.0 (max), weight is 1.0 (high)
-
-
-
-
-
-This sub-score is based on 4 features:
-
-
-
-1.  **Does it run CodeQL scans?** No
-1.  **Does it use CodeQL checks for pull requests?** No
-1.  **Does it use LGTM checks?** No
-1.  **Programming languages:** C, CPP, PYTHON, JAVASCRIPT, GO, OTHER
-
-
-### How a project uses Bandit
-
-Score: **0.0**, confidence is 10.0 (max), weight is 0.5 (medium)
-
-
-
-
-
-This sub-score is based on 3 features:
-
-
-
-1.  **If a project runs Bandit scan checks for commits:** No
-1.  **If a project runs Bandit scans:** No
-1.  **Programming languages:** C, CPP, PYTHON, JAVASCRIPT, GO, OTHER
-
-
-### FindSecBugs score
-
-Score: **N/A**, confidence is 10.0 (max), weight is 0.5 (medium)
-
-
-
-
-
-This sub-score is based on 2 features:
-
-
-
-1.  **Does it use FindSecBugs?** No
-1.  **Programming languages:** C, CPP, PYTHON, JAVASCRIPT, GO, OTHER
+1.  **Package managers:** RUBYGEMS, GOMODULES
 
 
 ### Dependabot score
@@ -506,8 +459,26 @@ This sub-score is based on 4 features:
 
 1.  **Does it use Dependabot?** Yes
 1.  **Does it use GitHub as the main development platform?** Yes
-1.  **Package managers:** None
-1.  **Programming languages:** C, CPP, PYTHON, JAVASCRIPT, GO, OTHER
+1.  **Package managers:** RUBYGEMS, GOMODULES
+1.  **Programming languages:** C, CPP, JAVA, RUBY, PYTHON, JAVASCRIPT, GO, OTHER
+
+
+### Snyk score
+
+Score: **5.0**, confidence is 10.0 (max), weight is 1.0 (high)
+
+
+
+
+
+This sub-score is based on 4 features:
+
+
+
+1.  **Does it use GitHub as the main development platform?** Yes
+1.  **Does it use Snyk?** No
+1.  **Package managers:** RUBYGEMS, GOMODULES
+1.  **Programming languages:** C, CPP, JAVA, RUBY, PYTHON, JAVASCRIPT, GO, OTHER
 
 
 ### OWASP Dependency Check score
@@ -523,8 +494,110 @@ This sub-score is based on 3 features:
 
 
 1.  **How is OWASP Dependency Check used?** Not used
-1.  **Package managers:** None
+1.  **Package managers:** RUBYGEMS, GOMODULES
 1.  **What is the threshold for OWASP Dependency Check?** Not specified
+
+
+### How a project uses CodeQL
+
+Score: **10.0**, confidence is 10.0 (max), weight is 1.0 (high)
+
+
+
+
+
+This sub-score is based on 3 features:
+
+
+
+1.  **Does it run CodeQL scans?** Yes
+1.  **Does it use CodeQL checks for pull requests?** Yes
+1.  **Programming languages:** C, CPP, JAVA, RUBY, PYTHON, JAVASCRIPT, GO, OTHER
+
+
+### Bandit score
+
+Score: **0.0**, confidence is 10.0 (max), weight is 0.35 (medium)
+
+
+
+
+
+This sub-score is based on 3 features:
+
+
+
+1.  **If a project runs Bandit scan checks for commits:** No
+1.  **If a project runs Bandit scans:** No
+1.  **Programming languages:** C, CPP, JAVA, RUBY, PYTHON, JAVASCRIPT, GO, OTHER
+
+
+### FindSecBugs score
+
+Score: **0.0**, confidence is 10.0 (max), weight is 0.35 (medium)
+
+
+
+
+
+This sub-score is based on 2 features:
+
+
+
+1.  **Does it use FindSecBugs?** No
+1.  **Programming languages:** C, CPP, JAVA, RUBY, PYTHON, JAVASCRIPT, GO, OTHER
+
+
+### How a project uses Pylint
+
+Score: **0.0**, confidence is 10.0 (max), weight is 0.35 (medium)
+
+
+
+
+
+This sub-score is based on 3 features:
+
+
+
+1.  **Does it run Pylint scans on all commits?** No
+1.  **Does it run Pylint scans?** No
+1.  **Programming languages:** C, CPP, JAVA, RUBY, PYTHON, JAVASCRIPT, GO, OTHER
+
+
+### GoSec score
+
+Score: **0.0**, confidence is 10.0 (max), weight is 0.3 (medium)
+
+
+
+
+
+This sub-score is based on 4 features:
+
+
+
+1.  **Does it run GoSec scans on all pull requests?** No
+1.  **Does it run GoSec scans with rules?** No
+1.  **Does it run GoSec scans?** No
+1.  **Programming languages:** C, CPP, JAVA, RUBY, PYTHON, JAVASCRIPT, GO, OTHER
+
+
+### How a project uses MyPy
+
+Score: **0.0**, confidence is 10.0 (max), weight is 0.2 (low)
+
+
+
+
+
+This sub-score is based on 3 features:
+
+
+
+1.  **Does it run MyPy scans on all commits?** No
+1.  **Does it run MyPy scans?** No
+1.  **Programming languages:** C, CPP, JAVA, RUBY, PYTHON, JAVASCRIPT, GO, OTHER
 
 
 ## Known vulnerabilities
