@@ -1,0 +1,623 @@
+# apache/httpd
+
+https://github.com/apache/httpd
+
+Last updated on Feb 16, 2023
+
+**Rating**: **GOOD**
+
+**Score**: **5.87**, max score value is 10.0
+
+**Confidence**: High (9.65, max confidence value is 10.0)
+
+## Details
+
+The rating is based on **security score for open-source projects**.
+
+
+
+
+
+It used the following sub-scores:
+
+1.  **[Security testing](#security-testing)**: **3.12** (weight is 1.0)
+    1.  **[Dependency testing](#dependency-testing)**: **N/A** (weight is 1.0)
+        1.  **[Dependabot score](#dependabot-score)**: **N/A** (weight is 1.0)
+            
+        1.  **[Snyk score](#snyk-score)**: **N/A** (weight is 1.0)
+            
+        1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
+            
+    1.  **[Static analysis](#static-analysis)**: **0.0** (weight is 1.0)
+        1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
+            
+        1.  **[Bandit score](#bandit-score)**: **0.0** (weight is 0.35)
+            
+        1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.35)
+            
+        1.  **[How a project uses Pylint](#how-a-project-uses-pylint)**: **0.0** (weight is 0.35)
+            
+        1.  **[GoSec score](#gosec-score)**: **N/A** (weight is 0.3)
+            
+        1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **0.0** (weight is 0.2)
+            
+    1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
+        
+    1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
+        
+    1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
+        
+1.  **[Security awareness](#security-awareness)**: **10.0** (weight is 0.9)
+    
+1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: **0.0** (weight is 0.6)
+    1.  **[Security testing](#security-testing)**: **3.12** (weight is 1.0)
+        1.  **[Dependency testing](#dependency-testing)**: **N/A** (weight is 1.0)
+            1.  **[Dependabot score](#dependabot-score)**: **N/A** (weight is 1.0)
+                
+            1.  **[Snyk score](#snyk-score)**: **N/A** (weight is 1.0)
+                
+            1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
+                
+        1.  **[Static analysis](#static-analysis)**: **0.0** (weight is 1.0)
+            1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
+                
+            1.  **[Bandit score](#bandit-score)**: **0.0** (weight is 0.35)
+                
+            1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.35)
+                
+            1.  **[How a project uses Pylint](#how-a-project-uses-pylint)**: **0.0** (weight is 0.35)
+                
+            1.  **[GoSec score](#gosec-score)**: **N/A** (weight is 0.3)
+                
+            1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **0.0** (weight is 0.2)
+                
+        1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
+            
+        1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
+            
+        1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
+            
+1.  **[Unpatched vulnerabilities](#unpatched-vulnerabilities)**: **10.0** (weight is 0.5)
+    
+1.  **[Community commitment](#community-commitment)**: **7.0** (weight is 0.5)
+    
+1.  **[Project activity](#project-activity)**: **10.0** (weight is 0.5)
+    
+1.  **[Project popularity](#project-popularity)**: **3.96** (weight is 0.5)
+    
+1.  **[Security reviews](#security-reviews)**: **0.0** (weight is 0.2)
+    
+
+
+# ## How to improve the rating
+
+You can open a pull request to enable CodeQL scans in the project. Make sure that the scans are run on pull requests.
+More info:
+1.  [How to enable CodeQL checks for pull requests](https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#enabling-code-scanning-using-actions)
+
+
+You can open a pull request to enable CodeQL scans in the project.
+More info:
+1.  [How to enable CodeQL checks](https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/enabling-code-scanning-for-a-repository#enabling-code-scanning-using-actions)
+
+
+You can open a pull request to enable FindSecBugs for the project.
+More info:
+1.  [FindSecBugs home page](https://find-sec-bugs.github.io/)
+
+
+You can open a pull request to enable AddressSanitizer for the project.
+More info:
+1.  [About AddressSanitizer](https://github.com/google/sanitizers/wiki/AddressSanitizer)
+
+
+You can open a pull request to enable MemorySanitizer for the project.
+More info:
+1.  [About MemorySanitizer](https://github.com/google/sanitizers/wiki/MemorySanitizer)
+
+
+You can open a pull request to enable UndefinedBehaviorSanitizer for the project.
+More info:
+1.  [About UndefinedBehaviorSanitizer](https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html)
+
+
+You can enable artifact signing in the project's build pipeline.
+More info:
+1.  [Apache Maven Jarsigner Plugin](https://maven.apache.org/plugins/maven-jarsigner-plugin/)
+
+
+You can enable NoHttp tool in the project's build pipeline.
+More info:
+1.  [NoHttp tool home page](https://github.com/spring-io/nohttp)
+
+
+You can open a pull request to run Bandit scans in the project using GitHub action workflow.
+More info:
+1.  [GitHub workflow action job config to run Bandit code scanning for a repository.](https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#jobsjob_idstepsrun)
+1.  [An example to run Bandit scan check as part of GitHub action workflow.](https://github.com/TNLinc/CV/blob/main/.github/workflows/bandit.yml#L28)
+
+
+It would be good to have SecGo as analysis step for all commits, yes initiating it with PR would be great.
+More info:
+1.  [GitHub workflow action config to run Bandit code scanning job on every PR of a project.](https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#example-using-a-list-of-events)
+1.  [An eample to trigger Bandit scan check on every pull-request.](https://github.com/TNLinc/CV/blob/main/.github/workflows/bandit.yml#L3)
+
+
+You can open a pull request to trigger GoSec scans job in the project using GitHub action workflow for every pull-request.
+More info:
+1.  [GitHub workflow action config to run GoSec code scanning job on every PR of a project.](https://github.com/securego/gosec#github-action)
+
+
+
+## Sub-scores
+
+Below are the details about all the used sub-scores.
+
+### Security testing
+
+Score: **3.12**, confidence is 10.0 (max), weight is 1.0 (high)
+
+
+
+
+
+This sub-score is based on the following sub-scores:
+
+
+
+1.  **[Dependency testing](#dependency-testing)**: **N/A** (weight is 1.0)
+    1.  **[Dependabot score](#dependabot-score)**: **N/A** (weight is 1.0)
+        
+    1.  **[Snyk score](#snyk-score)**: **N/A** (weight is 1.0)
+        
+    1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
+        
+1.  **[Static analysis](#static-analysis)**: **0.0** (weight is 1.0)
+    1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
+        
+    1.  **[Bandit score](#bandit-score)**: **0.0** (weight is 0.35)
+        
+    1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.35)
+        
+    1.  **[How a project uses Pylint](#how-a-project-uses-pylint)**: **0.0** (weight is 0.35)
+        
+    1.  **[GoSec score](#gosec-score)**: **N/A** (weight is 0.3)
+        
+    1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **0.0** (weight is 0.2)
+        
+1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
+    
+1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
+    
+1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
+    
+
+
+### Security awareness
+
+Score: **10.0**, confidence is 10.0 (max), weight is 0.9 (high)
+
+The score shows how a project is aware of security. If the project has a security policy, then the score adds 2.00. If the project has a security team, then the score adds 3.00. If the project uses verified signed commits, then the score adds 0.50. If the project has a bug bounty program, then the score adds 4.00. If the project signs its artifacts, then the score adds 0.50. If the project uses a security tool or library, then the score adds 1.00. If the project has executable binaries, then the score subtracts 2.00.
+
+
+
+This sub-score is based on 18 features:
+
+
+
+1.  **Does it have a bug bounty program?** Yes
+1.  **Does it have a security policy?** Yes
+1.  **Does it have a security team?** Yes
+1.  **Does it have executable binaries?** No
+1.  **Does it sign artifacts?** No
+1.  **Does it use AddressSanitizer?** No
+1.  **Does it use Dependabot?** No
+1.  **Does it use FindSecBugs?** No
+1.  **Does it use MemorySanitizer?** No
+1.  **Does it use OWASP ESAPI?** No
+1.  **Does it use OWASP Java Encoder?** No
+1.  **Does it use OWASP Java HTML Sanitizer?** No
+1.  **Does it use Snyk?** No
+1.  **Does it use UndefinedBehaviorSanitizer?** No
+1.  **Does it use nohttp?** No
+1.  **Does it use verified signed commits?** No
+1.  **How is OWASP Dependency Check used?** Not used
+1.  **Is it included to OSS-Fuzz?** Yes
+
+
+### Vulnerability discovery and security testing
+
+Score: **0.0**, confidence is 10.0 (max), weight is 0.6 (medium)
+
+The scores checks how security testing is done and how many vulnerabilities were recently discovered. If testing is good, and there are no recent vulnerabilities, then the score value is max. If there are vulnerabilities, then the score value is high. If testing is bad, and there are no recent vulnerabilities, then the score value is low. If there are vulnerabilities, then the score is min.
+
+
+
+This sub-score is based on the following sub-score:
+
+
+
+1.  **[Security testing](#security-testing)**: **3.12** (weight is 1.0)
+    1.  **[Dependency testing](#dependency-testing)**: **N/A** (weight is 1.0)
+        1.  **[Dependabot score](#dependabot-score)**: **N/A** (weight is 1.0)
+            
+        1.  **[Snyk score](#snyk-score)**: **N/A** (weight is 1.0)
+            
+        1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
+            
+    1.  **[Static analysis](#static-analysis)**: **0.0** (weight is 1.0)
+        1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
+            
+        1.  **[Bandit score](#bandit-score)**: **0.0** (weight is 0.35)
+            
+        1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.35)
+            
+        1.  **[How a project uses Pylint](#how-a-project-uses-pylint)**: **0.0** (weight is 0.35)
+            
+        1.  **[GoSec score](#gosec-score)**: **N/A** (weight is 0.3)
+            
+        1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **0.0** (weight is 0.2)
+            
+    1.  **[Fuzzing](#fuzzing)**: **10.0** (weight is 1.0)
+        
+    1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
+        
+    1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
+        
+
+
+This sub-score is based on 1 feature:
+
+
+
+1.  **Info about vulnerabilities in the project:** 14 vulnerabilities, [details below](#known-vulnerabilities)
+
+
+### Unpatched vulnerabilities
+
+Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
+
+
+
+No unpatched vulnerabilities found which is good
+
+This sub-score is based on 1 feature:
+
+
+
+1.  **Info about vulnerabilities in the project:** 14 vulnerabilities, [details below](#known-vulnerabilities)
+
+
+### Community commitment
+
+Score: **7.0**, confidence is 10.0 (max), weight is 0.5 (medium)
+
+
+
+
+
+This sub-score is based on 3 features:
+
+
+
+1.  **Does it belong to Apache?** Yes
+1.  **Does it belong to Eclipse?** No
+1.  **Is it supported by a company?** No
+
+
+### Project activity
+
+Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
+
+The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
+
+92 commits in the last 3 months results to 10.00 points
+11 contributors increase the score value from 10.00 to 12.00
+
+This sub-score is based on 2 features:
+
+
+
+1.  **Number of commits in the last three months:** 92
+1.  **Number of contributors in the last three months:** 11
+
+
+### Project popularity
+
+Score: **3.96**, confidence is 6.67 (low), weight is 0.5 (medium)
+
+This scoring function is based on number of stars, watchers and dependent projects.
+
+
+
+This sub-score is based on 3 features:
+
+
+
+1.  **Number of projects on GitHub that use an open source project:** unknown
+1.  **Number of stars for a GitHub repository:** 3149
+1.  **Number of watchers for a GitHub repository:** 243
+
+
+### Security reviews
+
+Score: **0.0**, confidence is 10.0 (max), weight is 0.2 (low)
+
+
+
+No security reviews have been done
+
+This sub-score is based on 1 feature:
+
+
+
+1.  **Info about security reviews:** 0 security reviews
+
+
+### Dependency testing
+
+Score: **N/A**, confidence is 10.0 (max), weight is 1.0 (high)
+
+
+
+
+
+This sub-score is based on the following sub-scores:
+
+
+
+1.  **[Dependabot score](#dependabot-score)**: **N/A** (weight is 1.0)
+    
+1.  **[Snyk score](#snyk-score)**: **N/A** (weight is 1.0)
+    
+1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **N/A** (weight is 1.0)
+    
+
+
+### Static analysis
+
+Score: **0.0**, confidence is 10.0 (max), weight is 1.0 (high)
+
+
+
+
+
+This sub-score is based on the following sub-scores:
+
+
+
+1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **0.0** (weight is 1.0)
+    
+1.  **[Bandit score](#bandit-score)**: **0.0** (weight is 0.35)
+    
+1.  **[FindSecBugs score](#findsecbugs-score)**: **N/A** (weight is 0.35)
+    
+1.  **[How a project uses Pylint](#how-a-project-uses-pylint)**: **0.0** (weight is 0.35)
+    
+1.  **[GoSec score](#gosec-score)**: **N/A** (weight is 0.3)
+    
+1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **0.0** (weight is 0.2)
+    
+
+
+### Fuzzing
+
+Score: **10.0**, confidence is 10.0 (max), weight is 1.0 (high)
+
+
+
+
+
+This sub-score is based on 2 features:
+
+
+
+1.  **Is it included to OSS-Fuzz?** Yes
+1.  **Programming languages:** C, PYTHON, JAVASCRIPT, OTHER
+
+
+### Memory-safety testing
+
+Score: **0.0**, confidence is 10.0 (max), weight is 1.0 (high)
+
+
+
+
+
+This sub-score is based on 4 features:
+
+
+
+1.  **Does it use AddressSanitizer?** No
+1.  **Does it use MemorySanitizer?** No
+1.  **Does it use UndefinedBehaviorSanitizer?** No
+1.  **Programming languages:** C, PYTHON, JAVASCRIPT, OTHER
+
+
+### nohttp tool
+
+Score: **0.0**, confidence is 10.0 (max), weight is 0.2 (low)
+
+
+
+
+
+This sub-score is based on 2 features:
+
+
+
+1.  **Does it use nohttp?** No
+1.  **Package managers:** None
+
+
+### Dependabot score
+
+Score: **N/A**, confidence is 10.0 (max), weight is 1.0 (high)
+
+
+
+
+
+This sub-score is based on 4 features:
+
+
+
+1.  **Does it use Dependabot?** No
+1.  **Does it use GitHub as the main development platform?** Yes
+1.  **Package managers:** None
+1.  **Programming languages:** C, PYTHON, JAVASCRIPT, OTHER
+
+
+### Snyk score
+
+Score: **N/A**, confidence is 10.0 (max), weight is 1.0 (high)
+
+
+
+
+
+This sub-score is based on 4 features:
+
+
+
+1.  **Does it use GitHub as the main development platform?** Yes
+1.  **Does it use Snyk?** No
+1.  **Package managers:** None
+1.  **Programming languages:** C, PYTHON, JAVASCRIPT, OTHER
+
+
+### OWASP Dependency Check score
+
+Score: **N/A**, confidence is 10.0 (max), weight is 1.0 (high)
+
+
+
+
+
+This sub-score is based on 3 features:
+
+
+
+1.  **How is OWASP Dependency Check used?** Not used
+1.  **Package managers:** None
+1.  **What is the threshold for OWASP Dependency Check?** Not specified
+
+
+### How a project uses CodeQL
+
+Score: **0.0**, confidence is 10.0 (max), weight is 1.0 (high)
+
+
+
+
+
+This sub-score is based on 3 features:
+
+
+
+1.  **Does it run CodeQL scans?** No
+1.  **Does it use CodeQL checks for pull requests?** No
+1.  **Programming languages:** C, PYTHON, JAVASCRIPT, OTHER
+
+
+### Bandit score
+
+Score: **0.0**, confidence is 10.0 (max), weight is 0.35 (medium)
+
+
+
+
+
+This sub-score is based on 3 features:
+
+
+
+1.  **If a project runs Bandit scan checks for commits:** No
+1.  **If a project runs Bandit scans:** No
+1.  **Programming languages:** C, PYTHON, JAVASCRIPT, OTHER
+
+
+### FindSecBugs score
+
+Score: **N/A**, confidence is 10.0 (max), weight is 0.35 (medium)
+
+
+
+
+
+This sub-score is based on 2 features:
+
+
+
+1.  **Does it use FindSecBugs?** No
+1.  **Programming languages:** C, PYTHON, JAVASCRIPT, OTHER
+
+
+### How a project uses Pylint
+
+Score: **0.0**, confidence is 10.0 (max), weight is 0.35 (medium)
+
+
+
+
+
+This sub-score is based on 3 features:
+
+
+
+1.  **Does it run Pylint scans on all commits?** No
+1.  **Does it run Pylint scans?** No
+1.  **Programming languages:** C, PYTHON, JAVASCRIPT, OTHER
+
+
+### GoSec score
+
+Score: **N/A**, confidence is 10.0 (max), weight is 0.3 (medium)
+
+
+
+The score is N/A because the project uses languages that are not supported by GoSec.
+
+This sub-score is based on 4 features:
+
+
+
+1.  **Does it run GoSec scans on all pull requests?** No
+1.  **Does it run GoSec scans with rules?** No
+1.  **Does it run GoSec scans?** No
+1.  **Programming languages:** C, PYTHON, JAVASCRIPT, OTHER
+
+
+### How a project uses MyPy
+
+Score: **0.0**, confidence is 10.0 (max), weight is 0.2 (low)
+
+
+
+
+
+This sub-score is based on 3 features:
+
+
+
+1.  **Does it run MyPy scans on all commits?** No
+1.  **Does it run MyPy scans?** No
+1.  **Programming languages:** C, PYTHON, JAVASCRIPT, OTHER
+
+
+## Known vulnerabilities
+
+1.  [CVE-2014-8109](https://nvd.nist.gov/vuln/detail/CVE-2014-8109): mod_lua.c in the mod_lua module in the Apache HTTP Server 2.3.x and 2.4.x through 2.4.10 does not support an httpd configuration in which the same Lua authorization provider is used with different arguments within different contexts, which allows remote attackers to bypass intended access restrictions in opportunistic circumstances by leveraging multiple Require directives, as demonstrated by a configuration that specifies authorization for one group to access a certain directory, and authorization for a second group to access a second directory.
+1.  [CVE-2015-0228](https://nvd.nist.gov/vuln/detail/CVE-2015-0228): The lua_websocket_read function in lua_request.c in the mod_lua module in the Apache HTTP Server through 2.4.12 allows remote attackers to cause a denial of service (child-process crash) by sending a crafted WebSocket Ping frame after a Lua script has called the wsupgrade function.
+1.  [CVE-2015-3185](https://nvd.nist.gov/vuln/detail/CVE-2015-3185): The ap_some_auth_required function in server/request.c in the Apache HTTP Server 2.4.x before 2.4.14 does not consider that a Require directive may be associated with an authorization setting rather than an authentication setting, which allows remote attackers to bypass intended access restrictions in opportunistic circumstances by leveraging the presence of a module that relies on the 2.2 API behavior.
+1.  [CVE-2016-4979](https://nvd.nist.gov/vuln/detail/CVE-2016-4979): The Apache HTTP Server 2.4.18 through 2.4.20, when mod_http2 and mod_ssl are enabled, does not properly recognize the "SSLVerifyClient require" directive for HTTP/2 request authorization, which allows remote attackers to bypass intended access restrictions by leveraging the ability to send multiple requests over a single connection and aborting a renegotiation.
+1.  [CVE-2016-8740](https://nvd.nist.gov/vuln/detail/CVE-2016-8740): The mod_http2 module in the Apache HTTP Server 2.4.17 through 2.4.23, when the Protocols configuration includes h2 or h2c, does not restrict request-header length, which allows remote attackers to cause a denial of service (memory consumption) via crafted CONTINUATION frames in an HTTP/2 request.
+1.  [CVE-2017-9798](https://nvd.nist.gov/vuln/detail/CVE-2017-9798): Apache httpd allows remote attackers to read secret data from process memory if the Limit directive can be set in a user's .htaccess file, or if httpd.conf has certain misconfigurations, aka Optionsbleed. This affects the Apache HTTP Server through 2.2.34 and 2.4.x through 2.4.27. The attacker sends an unauthenticated OPTIONS HTTP request when attempting to read secret data. This is a use-after-free issue and thus secret data is not always sent, and the specific data depends on many factors including configuration. Exploitation with .htaccess can be blocked with a patch to the ap_limit_section function in server/core.c.
+1.  [CVE-2020-25574](https://nvd.nist.gov/vuln/detail/CVE-2020-25574): An issue was discovered in the http crate before 0.1.20 for Rust. An integer overflow in HeaderMap::reserve() could result in denial of service (e.g., an infinite loop).
+1.  [CVE-2020-35669](https://nvd.nist.gov/vuln/detail/CVE-2020-35669): An issue was discovered in the http package through 0.12.2 for Dart. If the attacker controls the HTTP method and the app is using Request directly, it's possible to achieve CRLF injection in an HTTP request.
+1.  [CVE-2019-25009](https://nvd.nist.gov/vuln/detail/CVE-2019-25009): An issue was discovered in the http crate before 0.1.20 for Rust. The HeaderMap::Drain API can use a raw pointer, defeating soundness.
+1.  [CVE-2021-33193](https://nvd.nist.gov/vuln/detail/CVE-2021-33193): A crafted method sent through HTTP/2 will bypass validation and be forwarded by mod_proxy, which can lead to request splitting or cache poisoning. This issue affects Apache HTTP Server 2.4.17 to 2.4.48.
+1.  [CVE-2022-29631](https://nvd.nist.gov/vuln/detail/CVE-2022-29631): Jodd HTTP v6.0.9 was discovered to contain multiple CLRF injection vulnerabilities via the components jodd.http.HttpRequest#set and `jodd.http.HttpRequest#send. These vulnerabilities allow attackers to execute Server-Side Request Forgery (SSRF) via a crafted TCP payload.
+1.  [CVE-2022-36032](https://nvd.nist.gov/vuln/detail/CVE-2022-36032): ReactPHP HTTP is a streaming HTTP client and server implementation for ReactPHP. In ReactPHP's HTTP server component versions starting with 0.7.0 and prior to 1.7.0, when ReactPHP is processing incoming HTTP cookie values, the cookie names are url-decoded. This may lead to cookies with prefixes like `__Host-` and `__Secure-` confused with cookies that decode to such prefix, thus leading to an attacker being able to forge cookie which is supposed to be secure. This issue is fixed in ReactPHP HTTP version 1.7.0. As a workaround, Infrastructure or DevOps can place a reverse proxy in front of the ReactPHP HTTP server to filter out any unexpected `Cookie` request headers.
+
+
