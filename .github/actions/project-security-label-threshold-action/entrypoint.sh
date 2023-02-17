@@ -20,6 +20,7 @@ if [ "$FOSSTARS_VERSION" = "" ]; then
 fi
 
 # Switch to the branch where the output should be stored
+git config --global --add safe.directory /github/workspace
 OLD_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 git fetch origin $REPORT_BRANCH || git branch $REPORT_BRANCH
 git checkout $REPORT_BRANCH
