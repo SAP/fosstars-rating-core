@@ -592,9 +592,9 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2019-17633](https://nvd.nist.gov/vuln/detail/CVE-2019-17633): For Eclipse Che versions 6.16 to 7.3.0, with both authentication and TLS disabled, visiting a malicious web site could trigger the start of an arbitrary Che workspace. Che with no authentication and no TLS is not usually deployed on a public network but is often used for local installations (e.g. on personal laptops). In that case, even if the Che API is not exposed externally, some javascript running in the local browser is able to send requests to it.
-1.  [CVE-2020-10689](https://nvd.nist.gov/vuln/detail/CVE-2020-10689): A flaw was found in the Eclipse Che up to version 7.8.x, where it did not properly restrict access to workspace pods. An authenticated user can exploit this flaw to bypass JWT proxy and gain access to the workspace pods of another user. Successful exploitation requires knowledge of the service name and namespace of the target pod.
-1.  [CVE-2020-14368](https://nvd.nist.gov/vuln/detail/CVE-2020-14368): A flaw was found in Eclipse Che in versions prior to 7.14.0 that impacts CodeReady Workspaces. When configured with cookies authentication, Theia IDE doesn't properly set the SameSite value, allowing a Cross-Site Request Forgery (CSRF) and consequently allowing a cross-site WebSocket hijack on Theia IDE. This flaw allows an attacker to gain full access to the victim's workspace through the /services endpoint. To perform a successful attack, the attacker conducts a Man-in-the-middle attack (MITM) and tricks the victim into executing a request via an untrusted link, which performs the CSRF and the Socket hijack. The highest threat from this vulnerability is to confidentiality, integrity, as well as system availability.
-1.  [CVE-2021-41034](https://nvd.nist.gov/vuln/detail/CVE-2021-41034): The build of some language stacks of Eclipse Che version 6 includes pulling some binaries from an unsecured HTTP endpoint. As a consequence the builds of such stacks are vulnerable to MITM attacks that allow the replacement of the original binaries with arbitrary ones. The stacks involved are Java 8 (alpine and centos), Android and PHP. The vulnerability is not exploitable at runtime but only when building Che.
+1.  [CVE-2019-17633](https://nvd.nist.gov/vuln/detail/CVE-2019-17633)
+1.  [CVE-2020-10689](https://nvd.nist.gov/vuln/detail/CVE-2020-10689)
+1.  [CVE-2020-14368](https://nvd.nist.gov/vuln/detail/CVE-2020-14368)
+1.  [CVE-2021-41034](https://nvd.nist.gov/vuln/detail/CVE-2021-41034)
 
 
