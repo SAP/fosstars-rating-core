@@ -2,10 +2,10 @@
 
 |                  |                                                         | # or projects             |  % or projects              |
 | :--------------- | :------------------------------------------------------ | ------------------------: | --------------------------: |
-| Total            |                                                         | 187      |                        100% |
-| BAD ratings      | score below 4.43                        | 53      |      28.3% |
-| MODERATE ratings | score between 4.43 and 5.54 | 79 | 42.2% |
-| GOOD ratings     | score above 5.54                            | 55     |     29.4% |
+| Total            |                                                         | 215      |                        100% |
+| BAD ratings      | score below 4.43                        | 62      |      28.8% |
+| MODERATE ratings | score between 4.43 and 5.54 | 91 | 42.3% |
+| GOOD ratings     | score above 5.54                            | 62     |     28.8% |
 | UNCLEAR ratings  | confidence below 8.00                    | 0  |  0.0% |
 | UNKNOWN ratings  |                                                         | 0  |  0.0% |
 
@@ -17,30 +17,58 @@
 | [apache/echarts](apache/echarts.md) | [54196](https://github.com/apache/echarts) | 6.19 | [GOOD](apache/echarts.md) | 10.00 | Feb 17, 2023 |
 | [spring-projects/spring-framework](spring-projects/spring-framework.md) | [50782](https://github.com/spring-projects/spring-framework) | 4.81 | [MODERATE](spring-projects/spring-framework.md) | 9.65 | Feb 17, 2023 |
 | [apache/superset](apache/superset.md) | [50546](https://github.com/apache/superset) | 6.43 | [GOOD](apache/superset.md) | 10.00 | Feb 17, 2023 |
+| [google/guava](google/guava.md) | [46788](https://github.com/google/guava) | 5.68 | [GOOD](google/guava.md) | 10.00 | Feb 17, 2023 |
 | [apache/dubbo](apache/dubbo.md) | [38415](https://github.com/apache/dubbo) | 6.15 | [GOOD](apache/dubbo.md) | 9.65 | Feb 17, 2023 |
+| [google/zx](google/zx.md) | [36159](https://github.com/google/zx) | 4.58 | [MODERATE](google/zx.md) | 10.00 | Feb 17, 2023 |
 | [apache/spark](apache/spark.md) | [35010](https://github.com/apache/spark) | 5.04 | [MODERATE](apache/spark.md) | 9.65 | Feb 17, 2023 |
+| [google/leveldb](google/leveldb.md) | [31874](https://github.com/google/leveldb) | 4.49 | [MODERATE](google/leveldb.md) | 10.00 | Feb 17, 2023 |
 | [netty/netty](netty/netty.md) | [30687](https://github.com/netty/netty) | 7.13 | [GOOD](netty/netty.md) | 9.65 | Feb 17, 2023 |
 | [apache/airflow](apache/airflow.md) | [29169](https://github.com/apache/airflow) | 6.70 | [GOOD](apache/airflow.md) | 10.00 | Feb 17, 2023 |
 | [curl/curl](curl/curl.md) | [28479](https://github.com/curl/curl) | 5.55 | [GOOD](curl/curl.md) | 9.65 | Feb 17, 2023 |
 | [GoogleChrome/lighthouse](GoogleChrome/lighthouse.md) | [26049](https://github.com/GoogleChrome/lighthouse) | 5.94 | [GOOD](GoogleChrome/lighthouse.md) | 10.00 | Feb 17, 2023 |
 | [apache/kafka](apache/kafka.md) | [24177](https://github.com/apache/kafka) | 4.99 | [MODERATE](apache/kafka.md) | 9.65 | Feb 17, 2023 |
+| [google/python-fire](google/python-fire.md) | [23881](https://github.com/google/python-fire) | 4.07 | [BAD](google/python-fire.md) | 10.00 | Feb 17, 2023 |
+| [google/jax](google/jax.md) | [21906](https://github.com/google/jax) | 5.43 | [MODERATE](google/jax.md) | 10.00 | Feb 17, 2023 |
+| [google/gson](google/gson.md) | [21839](https://github.com/google/gson) | 7.41 | [GOOD](google/gson.md) | 10.00 | Feb 17, 2023 |
+| [google/iosched](google/iosched.md) | [21727](https://github.com/google/iosched) | 3.25 | [BAD](google/iosched.md) | 9.65 | Feb 17, 2023 |
 | [envoyproxy/envoy](envoyproxy/envoy.md) | [21448](https://github.com/envoyproxy/envoy) | 5.17 | [MODERATE](envoyproxy/envoy.md) | 10.00 | Feb 17, 2023 |
 | [apache/skywalking](apache/skywalking.md) | [21260](https://github.com/apache/skywalking) | 6.34 | [GOOD](apache/skywalking.md) | 9.65 | Feb 17, 2023 |
 | [openssl/openssl](openssl/openssl.md) | [20925](https://github.com/openssl/openssl) | 6.02 | [GOOD](openssl/openssl.md) | 9.65 | Feb 17, 2023 |
 | [apache/flink](apache/flink.md) | [20653](https://github.com/apache/flink) | 6.16 | [GOOD](apache/flink.md) | 9.65 | Feb 17, 2023 |
+| [google/mediapipe](google/mediapipe.md) | [20529](https://github.com/google/mediapipe) | 4.80 | [MODERATE](google/mediapipe.md) | 10.00 | Feb 17, 2023 |
+| [google/ExoPlayer](google/ExoPlayer.md) | [20389](https://github.com/google/ExoPlayer) | 5.00 | [MODERATE](google/ExoPlayer.md) | 9.65 | Feb 17, 2023 |
 | [apache/mxnet](apache/mxnet.md) | [20252](https://github.com/apache/mxnet) | 4.67 | [MODERATE](apache/mxnet.md) | 10.00 | Feb 17, 2023 |
+| [google/flatbuffers](google/flatbuffers.md) | [19920](https://github.com/google/flatbuffers) | 5.99 | [GOOD](google/flatbuffers.md) | 10.00 | Feb 17, 2023 |
 | [apache/rocketmq](apache/rocketmq.md) | [18731](https://github.com/apache/rocketmq) | 6.83 | [GOOD](apache/rocketmq.md) | 9.65 | Feb 17, 2023 |
+| [google/web-starter-kit](google/web-starter-kit.md) | [18463](https://github.com/google/web-starter-kit) | 4.58 | [MODERATE](google/web-starter-kit.md) | 9.65 | Feb 17, 2023 |
 | [apache/shardingsphere](apache/shardingsphere.md) | [17994](https://github.com/apache/shardingsphere) | 6.15 | [GOOD](apache/shardingsphere.md) | 9.65 | Feb 17, 2023 |
+| [google/flexbox-layout](google/flexbox-layout.md) | [17761](https://github.com/google/flexbox-layout) | 3.23 | [BAD](google/flexbox-layout.md) | 9.65 | Feb 17, 2023 |
+| [google/dagger](google/dagger.md) | [16947](https://github.com/google/dagger) | 5.26 | [MODERATE](google/dagger.md) | 10.00 | Feb 17, 2023 |
+| [google/filament](google/filament.md) | [15309](https://github.com/google/filament) | 5.00 | [MODERATE](google/filament.md) | 10.00 | Feb 17, 2023 |
+| [google/libphonenumber](google/libphonenumber.md) | [14649](https://github.com/google/libphonenumber) | 5.25 | [MODERATE](google/libphonenumber.md) | 10.00 | Feb 17, 2023 |
+| [google/cadvisor](google/cadvisor.md) | [14617](https://github.com/google/cadvisor) | 4.34 | [BAD](google/cadvisor.md) | 10.00 | Feb 17, 2023 |
 | [apache/brpc](apache/brpc.md) | [14562](https://github.com/apache/brpc) | 5.15 | [MODERATE](apache/brpc.md) | 9.65 | Feb 17, 2023 |
+| [google/gvisor](google/gvisor.md) | [13492](https://github.com/google/gvisor) | 5.89 | [GOOD](google/gvisor.md) | 9.65 | Feb 17, 2023 |
 | [aws/aws-cli](aws/aws-cli.md) | [13443](https://github.com/aws/aws-cli) | 5.84 | [GOOD](aws/aws-cli.md) | 10.00 | Feb 17, 2023 |
 | [apache/hadoop](apache/hadoop.md) | [13266](https://github.com/apache/hadoop) | 5.69 | [GOOD](apache/hadoop.md) | 10.00 | Feb 17, 2023 |
+| [google/deepdream](google/deepdream.md) | [13142](https://github.com/google/deepdream) | 3.62 | [BAD](google/deepdream.md) | 9.65 | Feb 17, 2023 |
+| [google/yapf](google/yapf.md) | [13104](https://github.com/google/yapf) | 3.78 | [BAD](google/yapf.md) | 10.00 | Feb 17, 2023 |
+| [google/tink](google/tink.md) | [13007](https://github.com/google/tink) | 5.89 | [GOOD](google/tink.md) | 10.00 | Feb 17, 2023 |
+| [google/guetzli](google/guetzli.md) | [12788](https://github.com/google/guetzli) | 4.47 | [MODERATE](google/guetzli.md) | 9.65 | Feb 17, 2023 |
 | [apache/predictionio](apache/predictionio.md) | [12547](https://github.com/apache/predictionio) | 4.09 | [BAD](apache/predictionio.md) | 9.65 | Feb 17, 2023 |
 | [apache/druid](apache/druid.md) | [12394](https://github.com/apache/druid) | 6.77 | [GOOD](apache/druid.md) | 10.00 | Feb 17, 2023 |
 | [apache/pulsar](apache/pulsar.md) | [12313](https://github.com/apache/pulsar) | 5.96 | [GOOD](apache/pulsar.md) | 9.65 | Feb 17, 2023 |
+| [google/brotli](google/brotli.md) | [11883](https://github.com/google/brotli) | 5.22 | [MODERATE](google/brotli.md) | 10.00 | Feb 17, 2023 |
+| [google/guice](google/guice.md) | [11775](https://github.com/google/guice) | 4.92 | [MODERATE](google/guice.md) | 10.00 | Feb 17, 2023 |
 | [apache/apisix](apache/apisix.md) | [11249](https://github.com/apache/apisix) | 5.69 | [GOOD](apache/apisix.md) | 9.65 | Feb 17, 2023 |
 | [apache/arrow](apache/arrow.md) | [11108](https://github.com/apache/arrow) | 6.55 | [GOOD](apache/arrow.md) | 10.00 | Feb 17, 2023 |
 | [apache/zookeeper](apache/zookeeper.md) | [11066](https://github.com/apache/zookeeper) | 5.18 | [MODERATE](apache/zookeeper.md) | 9.65 | Feb 17, 2023 |
+| [google/blockly](google/blockly.md) | [11004](https://github.com/google/blockly) | 5.55 | [GOOD](google/blockly.md) | 10.00 | Feb 17, 2023 |
+| [google/grumpy](google/grumpy.md) | [10567](https://github.com/google/grumpy) | 3.62 | [BAD](google/grumpy.md) | 9.65 | Feb 17, 2023 |
 | [coredns/coredns](coredns/coredns.md) | [10286](https://github.com/coredns/coredns) | 7.05 | [GOOD](coredns/coredns.md) | 10.00 | Feb 17, 2023 |
+| [google/wire](google/wire.md) | [10021](https://github.com/google/wire) | 4.20 | [BAD](google/wire.md) | 10.00 | Feb 17, 2023 |
+| [google/auto](google/auto.md) | [10017](https://github.com/google/auto) | 5.64 | [GOOD](google/auto.md) | 9.65 | Feb 17, 2023 |
+| [google/dopamine](google/dopamine.md) | [10015](https://github.com/google/dopamine) | 3.65 | [BAD](google/dopamine.md) | 9.65 | Feb 17, 2023 |
 | [aws/aws-cdk](aws/aws-cdk.md) | [9840](https://github.com/aws/aws-cdk) | 5.46 | [MODERATE](aws/aws-cdk.md) | 10.00 | Feb 17, 2023 |
 | [apache/dolphinscheduler](apache/dolphinscheduler.md) | [9818](https://github.com/apache/dolphinscheduler) | 6.19 | [GOOD](apache/dolphinscheduler.md) | 10.00 | Feb 17, 2023 |
 | [apache/thrift](apache/thrift.md) | [9559](https://github.com/apache/thrift) | 6.02 | [GOOD](apache/thrift.md) | 10.00 | Feb 17, 2023 |
@@ -179,8 +207,8 @@
 | [aws/aws-lambda-dotnet](aws/aws-lambda-dotnet.md) | [1329](https://github.com/aws/aws-lambda-dotnet) | 3.41 | [BAD](aws/aws-lambda-dotnet.md) | 10.00 | Feb 17, 2023 |
 | [aws/aws-fpga](aws/aws-fpga.md) | [1328](https://github.com/aws/aws-fpga) | 2.41 | [BAD](aws/aws-fpga.md) | 9.65 | Feb 17, 2023 |
 | [spring-projects/spring-graphql](spring-projects/spring-graphql.md) | [1323](https://github.com/spring-projects/spring-graphql) | 3.97 | [BAD](spring-projects/spring-graphql.md) | 9.65 | Feb 17, 2023 |
-| [aws/aws-eks-best-practices](aws/aws-eks-best-practices.md) | [1318](https://github.com/aws/aws-eks-best-practices) | 4.94 | [MODERATE](aws/aws-eks-best-practices.md) | 9.65 | Feb 17, 2023 |
 | [apache/servicecomb-service-center](apache/servicecomb-service-center.md) | [1318](https://github.com/apache/servicecomb-service-center) | 4.92 | [MODERATE](apache/servicecomb-service-center.md) | 9.65 | Feb 17, 2023 |
+| [aws/aws-eks-best-practices](aws/aws-eks-best-practices.md) | [1318](https://github.com/aws/aws-eks-best-practices) | 4.94 | [MODERATE](aws/aws-eks-best-practices.md) | 9.65 | Feb 17, 2023 |
 | [eclipse/mraa](eclipse/mraa.md) | [1301](https://github.com/eclipse/mraa) | 3.71 | [BAD](eclipse/mraa.md) | 9.65 | Feb 17, 2023 |
 | [apache/parquet-format](apache/parquet-format.md) | [1284](https://github.com/apache/parquet-format) | 4.39 | [BAD](apache/parquet-format.md) | 9.65 | Feb 17, 2023 |
 | [apache/httpcomponents-client](apache/httpcomponents-client.md) | [1281](https://github.com/apache/httpcomponents-client) | 6.71 | [GOOD](apache/httpcomponents-client.md) | 10.00 | Feb 17, 2023 |
