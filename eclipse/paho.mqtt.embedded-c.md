@@ -611,6 +611,6 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2021-41036](https://nvd.nist.gov/vuln/detail/CVE-2021-41036): In versions prior to 1.1 of the Eclipse Paho MQTT C Client, the client does not check rem_len size in readpacket.
+1.  [CVE-2021-41036](https://nvd.nist.gov/vuln/detail/CVE-2021-41036)
 
 
