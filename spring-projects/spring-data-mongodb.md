@@ -615,6 +615,6 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2022-22980](https://nvd.nist.gov/vuln/detail/CVE-2022-22980): A Spring Data MongoDB application is vulnerable to SpEL Injection when using @Query or @Aggregation-annotated query methods with SpEL expressions that contain query parameter placeholders for value binding if the input is not sanitized.
+1.  [CVE-2022-22980](https://nvd.nist.gov/vuln/detail/CVE-2022-22980)
 
 

@@ -2,10 +2,10 @@
 
 |                  |                                                         | # or projects             |  % or projects              |
 | :--------------- | :------------------------------------------------------ | ------------------------: | --------------------------: |
-| Total            |                                                         | 148      |                        100% |
-| BAD ratings      | score below 4.43                        | 42      |      28.4% |
-| MODERATE ratings | score between 4.43 and 5.54 | 60 | 40.5% |
-| GOOD ratings     | score above 5.54                            | 46     |     31.1% |
+| Total            |                                                         | 150      |                        100% |
+| BAD ratings      | score below 4.43                        | 44      |      29.3% |
+| MODERATE ratings | score between 4.43 and 5.54 | 60 | 40.0% |
+| GOOD ratings     | score above 5.54                            | 46     |     30.7% |
 | UNCLEAR ratings  | confidence below 8.00                    | 0  |  0.0% |
 | UNKNOWN ratings  |                                                         | 0  |  0.0% |
 
@@ -113,14 +113,15 @@
 | [apache/libcloud](apache/libcloud.md) | [1911](https://github.com/apache/libcloud) | 7.28 | [GOOD](apache/libcloud.md) | 9.65 | Feb 16, 2023 |
 | [apache/pdfbox](apache/pdfbox.md) | [1889](https://github.com/apache/pdfbox) | 6.90 | [GOOD](apache/pdfbox.md) | 9.65 | Feb 16, 2023 |
 | [apache/parquet-mr](apache/parquet-mr.md) | [1872](https://github.com/apache/parquet-mr) | 4.29 | [BAD](apache/parquet-mr.md) | 9.65 | Feb 16, 2023 |
+| [bcgit/bc-java](bcgit/bc-java.md) | [1872](https://github.com/bcgit/bc-java) | 3.24 | [BAD](bcgit/bc-java.md) | 10.00 | Feb 17, 2023 |
 | [spring-projects/spring-retry](spring-projects/spring-retry.md) | [1868](https://github.com/spring-projects/spring-retry) | 5.04 | [MODERATE](spring-projects/spring-retry.md) | 10.00 | Feb 17, 2023 |
 | [apache/ambari](apache/ambari.md) | [1844](https://github.com/apache/ambari) | 4.67 | [MODERATE](apache/ambari.md) | 9.65 | Feb 16, 2023 |
 | [spring-projects/spring-kafka](spring-projects/spring-kafka.md) | [1836](https://github.com/spring-projects/spring-kafka) | 4.81 | [MODERATE](spring-projects/spring-kafka.md) | 9.65 | Feb 17, 2023 |
 | [apache/servicecomb-java-chassis](apache/servicecomb-java-chassis.md) | [1834](https://github.com/apache/servicecomb-java-chassis) | 5.87 | [GOOD](apache/servicecomb-java-chassis.md) | 9.65 | Feb 16, 2023 |
 | [eclipse/paho.mqtt.java](eclipse/paho.mqtt.java.md) | [1823](https://github.com/eclipse/paho.mqtt.java) | 4.32 | [BAD](eclipse/paho.mqtt.java.md) | 9.65 | Feb 17, 2023 |
 | [eclipse/paho.mqtt.python](eclipse/paho.mqtt.python.md) | [1796](https://github.com/eclipse/paho.mqtt.python) | 3.77 | [BAD](eclipse/paho.mqtt.python.md) | 9.65 | Feb 17, 2023 |
-| [apache/rocketmq-spring](apache/rocketmq-spring.md) | [1787](https://github.com/apache/rocketmq-spring) | 4.54 | [MODERATE](apache/rocketmq-spring.md) | 9.65 | Feb 16, 2023 |
 | [eclipse/sumo](eclipse/sumo.md) | [1787](https://github.com/eclipse/sumo) | 4.30 | [BAD](eclipse/sumo.md) | 9.65 | Feb 17, 2023 |
+| [apache/rocketmq-spring](apache/rocketmq-spring.md) | [1787](https://github.com/apache/rocketmq-spring) | 4.54 | [MODERATE](apache/rocketmq-spring.md) | 9.65 | Feb 16, 2023 |
 | [spring-projects/spring-session](spring-projects/spring-session.md) | [1766](https://github.com/spring-projects/spring-session) | 3.24 | [BAD](spring-projects/spring-session.md) | 9.65 | Feb 17, 2023 |
 | [apache/drill](apache/drill.md) | [1765](https://github.com/apache/drill) | 5.02 | [MODERATE](apache/drill.md) | 9.65 | Feb 16, 2023 |
 | [apache/tinkerpop](apache/tinkerpop.md) | [1702](https://github.com/apache/tinkerpop) | 5.84 | [GOOD](apache/tinkerpop.md) | 9.65 | Feb 16, 2023 |
@@ -150,6 +151,7 @@
 | [apache/parquet-format](apache/parquet-format.md) | [1284](https://github.com/apache/parquet-format) | 4.39 | [BAD](apache/parquet-format.md) | 9.65 | Feb 16, 2023 |
 | [apache/httpcomponents-client](apache/httpcomponents-client.md) | [1280](https://github.com/apache/httpcomponents-client) | 6.69 | [GOOD](apache/httpcomponents-client.md) | 10.00 | Feb 16, 2023 |
 | [apache/nuttx](apache/nuttx.md) | [1254](https://github.com/apache/nuttx) | 4.94 | [MODERATE](apache/nuttx.md) | 9.65 | Feb 16, 2023 |
+| [bcgit/bc-csharp](bcgit/bc-csharp.md) | [1208](https://github.com/bcgit/bc-csharp) | 2.93 | [BAD](bcgit/bc-csharp.md) | 9.65 | Feb 17, 2023 |
 | [apache/struts](apache/struts.md) | [1190](https://github.com/apache/struts) | 6.38 | [GOOD](apache/struts.md) | 9.65 | Feb 16, 2023 |
 | [apache/opennlp](apache/opennlp.md) | [1179](https://github.com/apache/opennlp) | 5.40 | [MODERATE](apache/opennlp.md) | 10.00 | Feb 16, 2023 |
 | [eclipse/paho.mqtt.embedded-c](eclipse/paho.mqtt.embedded-c.md) | [1125](https://github.com/eclipse/paho.mqtt.embedded-c) | 3.18 | [BAD](eclipse/paho.mqtt.embedded-c.md) | 9.65 | Feb 17, 2023 |
