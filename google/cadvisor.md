@@ -597,7 +597,7 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2017-5682](https://nvd.nist.gov/vuln/detail/CVE-2017-5682): Intel PSET Application Install wrapper of Intel Parallel Studio XE, Intel System Studio, Intel VTune Amplifier, Intel Inspector, Intel Advisor, Intel MPI Library, Intel Trace Analyzer and Collector, Intel Integrated Performance Primitives, Cryptography for Intel Integrated Performance Primitives, Intel Math Kernel Library, Intel Data Analytics Acceleration Library, and Intel Threading Building Blocks before 2017 Update 2 allows an attacker to launch a process with escalated privileges.
-1.  [CVE-2021-23152](https://nvd.nist.gov/vuln/detail/CVE-2021-23152): Improper access control in the Intel(R) Advisor software before version 2021.2 may allow an authenticated user to potentially enable escalation of privilege via local access.
+1.  [CVE-2017-5682](https://nvd.nist.gov/vuln/detail/CVE-2017-5682)
+1.  [CVE-2021-23152](https://nvd.nist.gov/vuln/detail/CVE-2021-23152)
 
 
