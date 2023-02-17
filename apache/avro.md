@@ -615,7 +615,7 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2021-43045](https://nvd.nist.gov/vuln/detail/CVE-2021-43045): A vulnerability in the .NET SDK of Apache Avro allows an attacker to allocate excessive resources, potentially causing a denial-of-service attack. This issue affects .NET applications using Apache Avro version 1.10.2 and prior versions. Users should update to version 1.11.0 which addresses this issue.
-1.  [CVE-2022-35724](https://nvd.nist.gov/vuln/detail/CVE-2022-35724): It is possible to provide data to be read that leads the reader to loop in cycles endlessly, consuming CPU. This issue affects Rust applications using Apache Avro Rust SDK prior to 0.14.0 (previously known as avro-rs). Users should update to apache-avro version 0.14.0 which addresses this issue.
+1.  [CVE-2021-43045](https://nvd.nist.gov/vuln/detail/CVE-2021-43045)
+1.  [CVE-2022-35724](https://nvd.nist.gov/vuln/detail/CVE-2022-35724)
 
 

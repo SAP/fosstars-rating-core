@@ -635,12 +635,12 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2016-6805](https://nvd.nist.gov/vuln/detail/CVE-2016-6805): Apache Ignite before 1.9 allows man-in-the-middle attackers to read arbitrary files via XXE in modified update-notifier documents.
-1.  [CVE-2017-7686](https://nvd.nist.gov/vuln/detail/CVE-2017-7686): Apache Ignite 1.0.0-RC3 to 2.0 uses an update notifier component to update the users about new project releases that include additional functionality, bug fixes and performance improvements. To do that the component communicates to an external PHP server (http://ignite.run) where it needs to send some system properties like Apache Ignite or Java version. Some of the properties might contain user sensitive information.
-1.  [CVE-2018-1295](https://nvd.nist.gov/vuln/detail/CVE-2018-1295): In Apache Ignite 2.3 or earlier, the serialization mechanism does not have a list of classes allowed for serialization/deserialization, which makes it possible to run arbitrary code when 3-rd party vulnerable classes are present in Ignite classpath. The vulnerability can be exploited if the one sends a specially prepared form of a serialized object to one of the deserialization endpoints of some Ignite components - discovery SPI, Ignite persistence, Memcached endpoint, socket steamer.
-1.  [CVE-2018-1273](https://nvd.nist.gov/vuln/detail/CVE-2018-1273): Spring Data Commons, versions prior to 1.13 to 1.13.10, 2.0 to 2.0.5, and older unsupported versions, contain a property binder vulnerability caused by improper neutralization of special elements. An unauthenticated remote malicious user (or attacker) can supply specially crafted request parameters against Spring Data REST backed HTTP resources or using Spring Data's projection-based request payload binding hat can lead to a remote code execution attack.
-1.  [CVE-2018-8018](https://nvd.nist.gov/vuln/detail/CVE-2018-8018): In Apache Ignite before 2.4.8 and 2.5.x before 2.5.3, the serialization mechanism does not have a list of classes allowed for serialization/deserialization, which makes it possible to run arbitrary code when 3-rd party vulnerable classes are present in Ignite classpath. The vulnerability can be exploited if the one sends a specially prepared form of a serialized object to GridClientJdkMarshaller deserialization endpoint.
-1.  [CVE-2020-1963](https://nvd.nist.gov/vuln/detail/CVE-2020-1963): Apache Ignite uses H2 database to build SQL distributed execution engine. H2 provides SQL functions which could be used by attacker to access to a filesystem.
-1.  [CVE-2021-28163](https://nvd.nist.gov/vuln/detail/CVE-2021-28163): In Eclipse Jetty 9.4.32 to 9.4.38, 10.0.0.beta2 to 10.0.1, and 11.0.0.beta2 to 11.0.1, if a user uses a webapps directory that is a symlink, the contents of the webapps directory is deployed as a static webapp, inadvertently serving the webapps themselves and anything else that might be in that directory.
+1.  [CVE-2016-6805](https://nvd.nist.gov/vuln/detail/CVE-2016-6805)
+1.  [CVE-2017-7686](https://nvd.nist.gov/vuln/detail/CVE-2017-7686)
+1.  [CVE-2018-1295](https://nvd.nist.gov/vuln/detail/CVE-2018-1295)
+1.  [CVE-2018-1273](https://nvd.nist.gov/vuln/detail/CVE-2018-1273)
+1.  [CVE-2018-8018](https://nvd.nist.gov/vuln/detail/CVE-2018-8018)
+1.  [CVE-2020-1963](https://nvd.nist.gov/vuln/detail/CVE-2020-1963)
+1.  [CVE-2021-28163](https://nvd.nist.gov/vuln/detail/CVE-2021-28163)
 
 

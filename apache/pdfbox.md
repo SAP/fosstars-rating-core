@@ -605,11 +605,11 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2016-2175](https://nvd.nist.gov/vuln/detail/CVE-2016-2175): Apache PDFBox before 1.8.12 and 2.x before 2.0.1 does not properly initialize the XML parsers, which allows context-dependent attackers to conduct XML External Entity (XXE) attacks via a crafted PDF.
-1.  [CVE-2018-8036](https://nvd.nist.gov/vuln/detail/CVE-2018-8036): In Apache PDFBox 1.8.0 to 1.8.14 and 2.0.0RC1 to 2.0.10, a carefully crafted (or fuzzed) file can trigger an infinite loop which leads to an out of memory exception in Apache PDFBox's AFMParser.
-1.  [CVE-2018-11797](https://nvd.nist.gov/vuln/detail/CVE-2018-11797): In Apache PDFBox 1.8.0 to 1.8.15 and 2.0.0RC1 to 2.0.11, a carefully crafted PDF file can trigger an extremely long running computation when parsing the page tree.
-1.  [CVE-2019-0228](https://nvd.nist.gov/vuln/detail/CVE-2019-0228): Apache PDFBox 2.0.14 does not properly initialize the XML parser, which allows context-dependent attackers to conduct XML External Entity (XXE) attacks via a crafted XFDF.
-1.  [CVE-2021-27807](https://nvd.nist.gov/vuln/detail/CVE-2021-27807): A carefully crafted PDF file can trigger an infinite loop while loading the file. This issue affects Apache PDFBox version 2.0.22 and prior 2.0.x versions.
-1.  [CVE-2021-31811](https://nvd.nist.gov/vuln/detail/CVE-2021-31811): In Apache PDFBox, a carefully crafted PDF file can trigger an OutOfMemory-Exception while loading the file. This issue affects Apache PDFBox version 2.0.23 and prior 2.0.x versions.
+1.  [CVE-2016-2175](https://nvd.nist.gov/vuln/detail/CVE-2016-2175)
+1.  [CVE-2018-8036](https://nvd.nist.gov/vuln/detail/CVE-2018-8036)
+1.  [CVE-2018-11797](https://nvd.nist.gov/vuln/detail/CVE-2018-11797)
+1.  [CVE-2019-0228](https://nvd.nist.gov/vuln/detail/CVE-2019-0228)
+1.  [CVE-2021-27807](https://nvd.nist.gov/vuln/detail/CVE-2021-27807)
+1.  [CVE-2021-31811](https://nvd.nist.gov/vuln/detail/CVE-2021-31811)
 
 

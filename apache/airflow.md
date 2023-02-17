@@ -591,33 +591,33 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2017-12614](https://nvd.nist.gov/vuln/detail/CVE-2017-12614): It was noticed an XSS in certain 404 pages that could be exploited to perform an XSS attack. Chrome will detect this as a reflected XSS attempt and prevent the page from loading. Firefox and other browsers don't, and are vulnerable to this attack. Mitigation: The fix for this is to upgrade to Apache Airflow 1.9.0 or above.
-1.  [CVE-2017-15720](https://nvd.nist.gov/vuln/detail/CVE-2017-15720): In Apache Airflow 1.8.2 and earlier, an authenticated user can execute code remotely on the Airflow webserver by creating a special object.
-1.  [CVE-2018-20244](https://nvd.nist.gov/vuln/detail/CVE-2018-20244): In Apache Airflow before 1.10.2, a malicious admin user could edit the state of objects in the Airflow metadata database to execute arbitrary javascript on certain page views.
-1.  [CVE-2019-0216](https://nvd.nist.gov/vuln/detail/CVE-2019-0216): A malicious admin user could edit the state of objects in the Airflow metadata database to execute arbitrary javascript on certain page views.
-1.  [CVE-2019-12417](https://nvd.nist.gov/vuln/detail/CVE-2019-12417): A malicious admin user could edit the state of objects in the Airflow metadata database to execute arbitrary javascript on certain page views. This also presented a Local File Disclosure vulnerability to any file readable by the webserver process.
-1.  [CVE-2019-12398](https://nvd.nist.gov/vuln/detail/CVE-2019-12398): In Apache Airflow before 1.10.5 when running with the "classic" UI, a malicious admin user could edit the state of objects in the Airflow metadata database to execute arbitrary javascript on certain page views. The new "RBAC" UI is unaffected.
-1.  [CVE-2020-11978](https://nvd.nist.gov/vuln/detail/CVE-2020-11978): An issue was found in Apache Airflow versions 1.10.10 and below. A remote code/command injection vulnerability was discovered in one of the example DAGs shipped with Airflow which would allow any authenticated user to run arbitrary commands as the user running airflow worker/scheduler (depending on the executor in use). If you already have examples disabled by setting load_examples=False in the config then you are not vulnerable.
-1.  [CVE-2020-13944](https://nvd.nist.gov/vuln/detail/CVE-2020-13944): In Apache Airflow < 1.10.12, the "origin" parameter passed to some of the endpoints like '/trigger' was vulnerable to XSS exploit.
-1.  [CVE-2020-13927](https://nvd.nist.gov/vuln/detail/CVE-2020-13927): The previous default setting for Airflow's Experimental API was to allow all API requests without authentication, but this poses security risks to users who miss this fact. From Airflow 1.10.11 the default has been changed to deny all requests by default and is documented at https://airflow.apache.org/docs/1.10.11/security.html#api-authentication. Note this change fixes it for new installs but existing users need to change their config to default `[api]auth_backend = airflow.api.auth.backend.deny_all` as mentioned in the Updating Guide: https://github.com/apache/airflow/blob/1.10.11/UPDATING.md#experimental-api-will-deny-all-request-by-default
-1.  [CVE-2020-17515](https://nvd.nist.gov/vuln/detail/CVE-2020-17515): The "origin" parameter passed to some of the endpoints like '/trigger' was vulnerable to XSS exploit. This issue affects Apache Airflow versions prior to 1.10.13. This is same as CVE-2020-13944 but the implemented fix in Airflow 1.10.13 did not fix the issue completely.
-1.  [CVE-2020-17513](https://nvd.nist.gov/vuln/detail/CVE-2020-17513): In Apache Airflow versions prior to 1.10.13, the Charts and Query View of the old (Flask-admin based) UI were vulnerable for SSRF attack.
-1.  [CVE-2020-17526](https://nvd.nist.gov/vuln/detail/CVE-2020-17526): Incorrect Session Validation in Apache Airflow Webserver versions prior to 1.10.14 with default config allows a malicious airflow user on site A where they log in normally, to access unauthorized Airflow Webserver on Site B through the session from Site A. This does not affect users who have changed the default value for `[webserver] secret_key` config.
-1.  [CVE-2021-26559](https://nvd.nist.gov/vuln/detail/CVE-2021-26559): Improper Access Control on Configurations Endpoint for the Stable API of Apache Airflow allows users with Viewer or User role to get Airflow Configurations including sensitive information even when `[webserver] expose_config` is set to `False` in `airflow.cfg`. This allowed a privilege escalation attack. This issue affects Apache Airflow 2.0.0.
-1.  [CVE-2021-28359](https://nvd.nist.gov/vuln/detail/CVE-2021-28359): The "origin" parameter passed to some of the endpoints like '/trigger' was vulnerable to XSS exploit. This issue affects Apache Airflow versions <1.10.15 in 1.x series and affects 2.0.0 and 2.0.1 and 2.x series. This is the same as CVE-2020-13944 & CVE-2020-17515 but the implemented fix did not fix the issue completely. Update to Airflow 1.10.15 or 2.0.2. Please also update your Python version to the latest available PATCH releases of the installed MINOR versions, example update to Python 3.6.13 if you are on Python 3.6. (Those contain the fix for CVE-2021-23336 https://nvd.nist.gov/vuln/detail/CVE-2021-23336).
-1.  [CVE-2021-29621](https://nvd.nist.gov/vuln/detail/CVE-2021-29621): Flask-AppBuilder is a development framework, built on top of Flask. User enumeration in database authentication in Flask-AppBuilder <= 3.2.3. Allows for a non authenticated user to enumerate existing accounts by timing the response time from the server when you are logging in. Upgrade to version 3.3.0 or higher to resolve.
-1.  [CVE-2021-35936](https://nvd.nist.gov/vuln/detail/CVE-2021-35936): If remote logging is not used, the worker (in the case of CeleryExecutor) or the scheduler (in the case of LocalExecutor) runs a Flask logging server and is listening on a specific port and also binds on 0.0.0.0 by default. This logging server had no authentication and allows reading log files of DAG jobs. This issue affects Apache Airflow < 2.1.2.
-1.  [CVE-2021-38540](https://nvd.nist.gov/vuln/detail/CVE-2021-38540): The variable import endpoint was not protected by authentication in Airflow >=2.0.0, <2.1.3. This allowed unauthenticated users to hit that endpoint to add/modify Airflow variables used in DAGs, potentially resulting in a denial of service, information disclosure or remote code execution. This issue affects Apache Airflow >=2.0.0, <2.1.3.
-1.  [CVE-2021-45230](https://nvd.nist.gov/vuln/detail/CVE-2021-45230): In Apache Airflow prior to 2.2.0. This CVE applies to a specific case where a User who has "can_create" permissions on DAG Runs can create Dag Runs for dags that they don't have "edit" permissions for.
-1.  [CVE-2021-45229](https://nvd.nist.gov/vuln/detail/CVE-2021-45229): It was discovered that the "Trigger DAG with config" screen was susceptible to XSS attacks via the `origin` query argument. This issue affects Apache Airflow versions 2.2.3 and below.
-1.  [CVE-2022-38054](https://nvd.nist.gov/vuln/detail/CVE-2022-38054): In Apache Airflow versions 2.2.4 through 2.3.3, the `database` webserver session backend was susceptible to session fixation.
-1.  [CVE-2022-40754](https://nvd.nist.gov/vuln/detail/CVE-2022-40754): In Apache Airflow 2.3.0 through 2.3.4, there was an open redirect in the webserver's `/confirm` endpoint.
-1.  [CVE-2022-41672](https://nvd.nist.gov/vuln/detail/CVE-2022-41672): In Apache Airflow, prior to version 2.4.1, deactivating a user wouldn't prevent an already authenticated user from being able to continue using the UI or API.
-1.  [CVE-2022-43985](https://nvd.nist.gov/vuln/detail/CVE-2022-43985): In Apache Airflow versions prior to 2.4.2, there was an open redirect in the webserver's `/confirm` endpoint.
-1.  [CVE-2022-40127](https://nvd.nist.gov/vuln/detail/CVE-2022-40127): A vulnerability in Example Dags of Apache Airflow allows an attacker with UI access who can trigger DAGs, to execute arbitrary commands via manually provided run_id parameter. This issue affects Apache Airflow Apache Airflow versions prior to 2.4.0.
-1.  [CVE-2022-45402](https://nvd.nist.gov/vuln/detail/CVE-2022-45402): In Apache Airflow versions prior to 2.4.3, there was an open redirect in the webserver's `/login` endpoint.
-1.  [CVE-2022-40954](https://nvd.nist.gov/vuln/detail/CVE-2022-40954): Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') vulnerability in Apache Airflow Spark Provider, Apache Airflow allows an attacker to read arbtrary files in the task execution context, without write access to DAG files. This issue affects Spark Provider versions prior to 4.0.0. It also impacts any Apache Airflow versions prior to 2.3.0 in case Spark Provider is installed (Spark Provider 4.0.0 can only be installed for Airflow 2.3.0+). Note that you need to manually install the Spark Provider version 4.0.0 in order to get rid of the vulnerability on top of Airflow 2.3.0+ version that has lower version of the Spark Provider installed).
-1.  [CVE-2022-46421](https://nvd.nist.gov/vuln/detail/CVE-2022-46421): Improper Neutralization of Special Elements used in a Command ('Command Injection') vulnerability in Apache Software Foundation Apache Airflow Hive Provider.This issue affects Apache Airflow Hive Provider: before 5.0.0.
-1.  [CVE-2023-22884](https://nvd.nist.gov/vuln/detail/CVE-2023-22884): Improper Neutralization of Special Elements used in a Command ('Command Injection') vulnerability in Apache Software Foundation Apache Airflow, Apache Software Foundation Apache Airflow MySQL Provider.This issue affects Apache Airflow: before 2.5.1; Apache Airflow MySQL Provider: before 4.0.0.
+1.  [CVE-2017-12614](https://nvd.nist.gov/vuln/detail/CVE-2017-12614)
+1.  [CVE-2017-15720](https://nvd.nist.gov/vuln/detail/CVE-2017-15720)
+1.  [CVE-2018-20244](https://nvd.nist.gov/vuln/detail/CVE-2018-20244)
+1.  [CVE-2019-0216](https://nvd.nist.gov/vuln/detail/CVE-2019-0216)
+1.  [CVE-2019-12417](https://nvd.nist.gov/vuln/detail/CVE-2019-12417)
+1.  [CVE-2019-12398](https://nvd.nist.gov/vuln/detail/CVE-2019-12398)
+1.  [CVE-2020-11978](https://nvd.nist.gov/vuln/detail/CVE-2020-11978)
+1.  [CVE-2020-13944](https://nvd.nist.gov/vuln/detail/CVE-2020-13944)
+1.  [CVE-2020-13927](https://nvd.nist.gov/vuln/detail/CVE-2020-13927)
+1.  [CVE-2020-17515](https://nvd.nist.gov/vuln/detail/CVE-2020-17515)
+1.  [CVE-2020-17513](https://nvd.nist.gov/vuln/detail/CVE-2020-17513)
+1.  [CVE-2020-17526](https://nvd.nist.gov/vuln/detail/CVE-2020-17526)
+1.  [CVE-2021-26559](https://nvd.nist.gov/vuln/detail/CVE-2021-26559)
+1.  [CVE-2021-28359](https://nvd.nist.gov/vuln/detail/CVE-2021-28359)
+1.  [CVE-2021-29621](https://nvd.nist.gov/vuln/detail/CVE-2021-29621)
+1.  [CVE-2021-35936](https://nvd.nist.gov/vuln/detail/CVE-2021-35936)
+1.  [CVE-2021-38540](https://nvd.nist.gov/vuln/detail/CVE-2021-38540)
+1.  [CVE-2021-45230](https://nvd.nist.gov/vuln/detail/CVE-2021-45230)
+1.  [CVE-2021-45229](https://nvd.nist.gov/vuln/detail/CVE-2021-45229)
+1.  [CVE-2022-38054](https://nvd.nist.gov/vuln/detail/CVE-2022-38054)
+1.  [CVE-2022-40754](https://nvd.nist.gov/vuln/detail/CVE-2022-40754)
+1.  [CVE-2022-41672](https://nvd.nist.gov/vuln/detail/CVE-2022-41672)
+1.  [CVE-2022-43985](https://nvd.nist.gov/vuln/detail/CVE-2022-43985)
+1.  [CVE-2022-40127](https://nvd.nist.gov/vuln/detail/CVE-2022-40127)
+1.  [CVE-2022-45402](https://nvd.nist.gov/vuln/detail/CVE-2022-45402)
+1.  [CVE-2022-40954](https://nvd.nist.gov/vuln/detail/CVE-2022-40954)
+1.  [CVE-2022-46421](https://nvd.nist.gov/vuln/detail/CVE-2022-46421)
+1.  [CVE-2023-22884](https://nvd.nist.gov/vuln/detail/CVE-2023-22884)
 
 

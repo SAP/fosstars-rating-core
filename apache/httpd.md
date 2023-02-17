@@ -607,17 +607,17 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2014-8109](https://nvd.nist.gov/vuln/detail/CVE-2014-8109): mod_lua.c in the mod_lua module in the Apache HTTP Server 2.3.x and 2.4.x through 2.4.10 does not support an httpd configuration in which the same Lua authorization provider is used with different arguments within different contexts, which allows remote attackers to bypass intended access restrictions in opportunistic circumstances by leveraging multiple Require directives, as demonstrated by a configuration that specifies authorization for one group to access a certain directory, and authorization for a second group to access a second directory.
-1.  [CVE-2015-0228](https://nvd.nist.gov/vuln/detail/CVE-2015-0228): The lua_websocket_read function in lua_request.c in the mod_lua module in the Apache HTTP Server through 2.4.12 allows remote attackers to cause a denial of service (child-process crash) by sending a crafted WebSocket Ping frame after a Lua script has called the wsupgrade function.
-1.  [CVE-2015-3185](https://nvd.nist.gov/vuln/detail/CVE-2015-3185): The ap_some_auth_required function in server/request.c in the Apache HTTP Server 2.4.x before 2.4.14 does not consider that a Require directive may be associated with an authorization setting rather than an authentication setting, which allows remote attackers to bypass intended access restrictions in opportunistic circumstances by leveraging the presence of a module that relies on the 2.2 API behavior.
-1.  [CVE-2016-4979](https://nvd.nist.gov/vuln/detail/CVE-2016-4979): The Apache HTTP Server 2.4.18 through 2.4.20, when mod_http2 and mod_ssl are enabled, does not properly recognize the "SSLVerifyClient require" directive for HTTP/2 request authorization, which allows remote attackers to bypass intended access restrictions by leveraging the ability to send multiple requests over a single connection and aborting a renegotiation.
-1.  [CVE-2016-8740](https://nvd.nist.gov/vuln/detail/CVE-2016-8740): The mod_http2 module in the Apache HTTP Server 2.4.17 through 2.4.23, when the Protocols configuration includes h2 or h2c, does not restrict request-header length, which allows remote attackers to cause a denial of service (memory consumption) via crafted CONTINUATION frames in an HTTP/2 request.
-1.  [CVE-2017-9798](https://nvd.nist.gov/vuln/detail/CVE-2017-9798): Apache httpd allows remote attackers to read secret data from process memory if the Limit directive can be set in a user's .htaccess file, or if httpd.conf has certain misconfigurations, aka Optionsbleed. This affects the Apache HTTP Server through 2.2.34 and 2.4.x through 2.4.27. The attacker sends an unauthenticated OPTIONS HTTP request when attempting to read secret data. This is a use-after-free issue and thus secret data is not always sent, and the specific data depends on many factors including configuration. Exploitation with .htaccess can be blocked with a patch to the ap_limit_section function in server/core.c.
-1.  [CVE-2020-25574](https://nvd.nist.gov/vuln/detail/CVE-2020-25574): An issue was discovered in the http crate before 0.1.20 for Rust. An integer overflow in HeaderMap::reserve() could result in denial of service (e.g., an infinite loop).
-1.  [CVE-2020-35669](https://nvd.nist.gov/vuln/detail/CVE-2020-35669): An issue was discovered in the http package through 0.12.2 for Dart. If the attacker controls the HTTP method and the app is using Request directly, it's possible to achieve CRLF injection in an HTTP request.
-1.  [CVE-2019-25009](https://nvd.nist.gov/vuln/detail/CVE-2019-25009): An issue was discovered in the http crate before 0.1.20 for Rust. The HeaderMap::Drain API can use a raw pointer, defeating soundness.
-1.  [CVE-2021-33193](https://nvd.nist.gov/vuln/detail/CVE-2021-33193): A crafted method sent through HTTP/2 will bypass validation and be forwarded by mod_proxy, which can lead to request splitting or cache poisoning. This issue affects Apache HTTP Server 2.4.17 to 2.4.48.
-1.  [CVE-2022-29631](https://nvd.nist.gov/vuln/detail/CVE-2022-29631): Jodd HTTP v6.0.9 was discovered to contain multiple CLRF injection vulnerabilities via the components jodd.http.HttpRequest#set and `jodd.http.HttpRequest#send. These vulnerabilities allow attackers to execute Server-Side Request Forgery (SSRF) via a crafted TCP payload.
-1.  [CVE-2022-36032](https://nvd.nist.gov/vuln/detail/CVE-2022-36032): ReactPHP HTTP is a streaming HTTP client and server implementation for ReactPHP. In ReactPHP's HTTP server component versions starting with 0.7.0 and prior to 1.7.0, when ReactPHP is processing incoming HTTP cookie values, the cookie names are url-decoded. This may lead to cookies with prefixes like `__Host-` and `__Secure-` confused with cookies that decode to such prefix, thus leading to an attacker being able to forge cookie which is supposed to be secure. This issue is fixed in ReactPHP HTTP version 1.7.0. As a workaround, Infrastructure or DevOps can place a reverse proxy in front of the ReactPHP HTTP server to filter out any unexpected `Cookie` request headers.
+1.  [CVE-2014-8109](https://nvd.nist.gov/vuln/detail/CVE-2014-8109)
+1.  [CVE-2015-0228](https://nvd.nist.gov/vuln/detail/CVE-2015-0228)
+1.  [CVE-2015-3185](https://nvd.nist.gov/vuln/detail/CVE-2015-3185)
+1.  [CVE-2016-4979](https://nvd.nist.gov/vuln/detail/CVE-2016-4979)
+1.  [CVE-2016-8740](https://nvd.nist.gov/vuln/detail/CVE-2016-8740)
+1.  [CVE-2017-9798](https://nvd.nist.gov/vuln/detail/CVE-2017-9798)
+1.  [CVE-2020-25574](https://nvd.nist.gov/vuln/detail/CVE-2020-25574)
+1.  [CVE-2020-35669](https://nvd.nist.gov/vuln/detail/CVE-2020-35669)
+1.  [CVE-2019-25009](https://nvd.nist.gov/vuln/detail/CVE-2019-25009)
+1.  [CVE-2021-33193](https://nvd.nist.gov/vuln/detail/CVE-2021-33193)
+1.  [CVE-2022-29631](https://nvd.nist.gov/vuln/detail/CVE-2022-29631)
+1.  [CVE-2022-36032](https://nvd.nist.gov/vuln/detail/CVE-2022-36032)
 
 

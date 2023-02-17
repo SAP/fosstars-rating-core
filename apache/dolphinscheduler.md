@@ -597,13 +597,13 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2020-11974](https://nvd.nist.gov/vuln/detail/CVE-2020-11974): In DolphinScheduler 1.2.0 and 1.2.1, with mysql connectorj a remote code execution vulnerability exists when choosing mysql as database.
-1.  [CVE-2020-13922](https://nvd.nist.gov/vuln/detail/CVE-2020-13922): Versions of Apache DolphinScheduler prior to 1.3.2 allowed an ordinary user under any tenant to override another users password through the API interface.
-1.  [CVE-2021-27644](https://nvd.nist.gov/vuln/detail/CVE-2021-27644): In Apache DolphinScheduler before 1.3.6 versions, authorized users can use SQL injection in the data source center. (Only applicable to MySQL data source with internal login account password)
-1.  [CVE-2022-25598](https://nvd.nist.gov/vuln/detail/CVE-2022-25598): Apache DolphinScheduler user registration is vulnerable to Regular express Denial of Service (ReDoS) attacks, Apache DolphinScheduler users should upgrade to version 2.0.5 or higher.
-1.  [CVE-2022-26884](https://nvd.nist.gov/vuln/detail/CVE-2022-26884): Users can read any files by log server, Apache DolphinScheduler users should upgrade to version 2.0.6 or higher.
-1.  [CVE-2022-34662](https://nvd.nist.gov/vuln/detail/CVE-2022-34662): When users add resources to the resource center with a relation path will cause path traversal issues and only for logged-in users. You could upgrade to version 3.0.0 or higher
-1.  [CVE-2022-26885](https://nvd.nist.gov/vuln/detail/CVE-2022-26885): When using tasks to read config files, there is a risk of database password disclosure. We recommend you upgrade to version 2.0.6 or higher.
-1.  [CVE-2022-45875](https://nvd.nist.gov/vuln/detail/CVE-2022-45875): Improper validation of script alert plugin parameters in Apache DolphinScheduler to avoid remote command execution vulnerability. This issue affects Apache DolphinScheduler version 3.0.1 and prior versions; version 3.1.0 and prior versions.
+1.  [CVE-2020-11974](https://nvd.nist.gov/vuln/detail/CVE-2020-11974)
+1.  [CVE-2020-13922](https://nvd.nist.gov/vuln/detail/CVE-2020-13922)
+1.  [CVE-2021-27644](https://nvd.nist.gov/vuln/detail/CVE-2021-27644)
+1.  [CVE-2022-25598](https://nvd.nist.gov/vuln/detail/CVE-2022-25598)
+1.  [CVE-2022-26884](https://nvd.nist.gov/vuln/detail/CVE-2022-26884)
+1.  [CVE-2022-34662](https://nvd.nist.gov/vuln/detail/CVE-2022-34662)
+1.  [CVE-2022-26885](https://nvd.nist.gov/vuln/detail/CVE-2022-26885)
+1.  [CVE-2022-45875](https://nvd.nist.gov/vuln/detail/CVE-2022-45875)
 
 
