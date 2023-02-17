@@ -1,14 +1,14 @@
-# aws/aws-sdk-java-v2
+# google/filament
 
-https://github.com/aws/aws-sdk-java-v2
+https://github.com/google/filament
 
 Last updated on Feb 17, 2023
 
 **Rating**: **MODERATE**
 
-**Score**: **4.44**, max score value is 10.0
+**Score**: **5.0**, max score value is 10.0
 
-**Confidence**: High (9.65, max confidence value is 10.0)
+**Confidence**: Max (10.0, max confidence value is 10.0)
 
 ## Details
 
@@ -20,7 +20,7 @@ The rating is based on **security score for open-source projects**.
 
 It used the following sub-scores:
 
-1.  **[Security testing](#security-testing)**: **4.55** (weight is 1.0)
+1.  **[Security testing](#security-testing)**: **2.38** (weight is 1.0)
     1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
         1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
             
@@ -37,20 +37,20 @@ It used the following sub-scores:
             
         1.  **[How a project uses Pylint](#how-a-project-uses-pylint)**: **0.0** (weight is 0.35)
             
-        1.  **[GoSec score](#gosec-score)**: **N/A** (weight is 0.3)
+        1.  **[GoSec score](#gosec-score)**: **0.0** (weight is 0.3)
             
         1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **0.0** (weight is 0.2)
             
-    1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
+    1.  **[Fuzzing](#fuzzing)**: **0.0** (weight is 1.0)
         
-    1.  **[Memory-safety testing](#memory-safety-testing)**: **N/A** (weight is 1.0)
+    1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
         
     1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
         
-1.  **[Security awareness](#security-awareness)**: **1.5** (weight is 0.9)
+1.  **[Security awareness](#security-awareness)**: **1.0** (weight is 0.9)
     
-1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: **0.0** (weight is 0.6)
-    1.  **[Security testing](#security-testing)**: **4.55** (weight is 1.0)
+1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: **2.0** (weight is 0.6)
+    1.  **[Security testing](#security-testing)**: **2.38** (weight is 1.0)
         1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
             1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
                 
@@ -67,13 +67,13 @@ It used the following sub-scores:
                 
             1.  **[How a project uses Pylint](#how-a-project-uses-pylint)**: **0.0** (weight is 0.35)
                 
-            1.  **[GoSec score](#gosec-score)**: **N/A** (weight is 0.3)
+            1.  **[GoSec score](#gosec-score)**: **0.0** (weight is 0.3)
                 
             1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **0.0** (weight is 0.2)
                 
-        1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
+        1.  **[Fuzzing](#fuzzing)**: **0.0** (weight is 1.0)
             
-        1.  **[Memory-safety testing](#memory-safety-testing)**: **N/A** (weight is 1.0)
+        1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
             
         1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
             
@@ -83,7 +83,7 @@ It used the following sub-scores:
     
 1.  **[Project activity](#project-activity)**: **10.0** (weight is 0.5)
     
-1.  **[Project popularity](#project-popularity)**: **1.97** (weight is 0.5)
+1.  **[Project popularity](#project-popularity)**: **10.0** (weight is 0.5)
     
 1.  **[Security reviews](#security-reviews)**: **0.0** (weight is 0.2)
     
@@ -106,6 +106,26 @@ More info:
 1.  [FindSecBugs home page](https://find-sec-bugs.github.io/)
 
 
+You can open a pull request to enable AddressSanitizer for the project.
+More info:
+1.  [About AddressSanitizer](https://github.com/google/sanitizers/wiki/AddressSanitizer)
+
+
+You can open a pull request to enable MemorySanitizer for the project.
+More info:
+1.  [About MemorySanitizer](https://github.com/google/sanitizers/wiki/MemorySanitizer)
+
+
+You can open a pull request to enable UndefinedBehaviorSanitizer for the project.
+More info:
+1.  [About UndefinedBehaviorSanitizer](https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html)
+
+
+You can include the project to OSS-Fuzz. Then, the project is going to be regularly fuzzed.
+More info:
+1.  [The OSS-Fuzz project](https://github.com/google/oss-fuzz)
+
+
 You can add OWASP Dependency Check to the project's build pipeline.
 More info:
 1.  [OWASP Dependnecy Check](https://jeremylong.github.io/DependencyCheck/)
@@ -117,6 +137,11 @@ You can set a CVSS threshold for vulnerabilities reported by OWASP Dependency Ch
 More info:
 1.  [OWASP Dependnecy Check](https://jeremylong.github.io/DependencyCheck/)
 1.  [Configuring OWASP Dependency Check](https://jeremylong.github.io/DependencyCheck/dependency-check-maven/configuration.html)
+
+
+You can enable artifact signing in the project's build pipeline.
+More info:
+1.  [Apache Maven Jarsigner Plugin](https://maven.apache.org/plugins/maven-jarsigner-plugin/)
 
 
 You can enable NoHttp tool in the project's build pipeline.
@@ -153,7 +178,7 @@ Below are the details about all the used sub-scores.
 
 ### Security testing
 
-Score: **4.55**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **2.38**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -179,13 +204,13 @@ This sub-score is based on the following sub-scores:
         
     1.  **[How a project uses Pylint](#how-a-project-uses-pylint)**: **0.0** (weight is 0.35)
         
-    1.  **[GoSec score](#gosec-score)**: **N/A** (weight is 0.3)
+    1.  **[GoSec score](#gosec-score)**: **0.0** (weight is 0.3)
         
     1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **0.0** (weight is 0.2)
         
-1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
+1.  **[Fuzzing](#fuzzing)**: **0.0** (weight is 1.0)
     
-1.  **[Memory-safety testing](#memory-safety-testing)**: **N/A** (weight is 1.0)
+1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
     
 1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
     
@@ -193,7 +218,7 @@ This sub-score is based on the following sub-scores:
 
 ### Security awareness
 
-Score: **1.5**, confidence is 10.0 (max), weight is 0.9 (high)
+Score: **1.0**, confidence is 10.0 (max), weight is 0.9 (high)
 
 The score shows how a project is aware of security. If the project has a security policy, then the score adds 2.00. If the project has a security team, then the score adds 3.00. If the project uses verified signed commits, then the score adds 0.50. If the project has a bug bounty program, then the score adds 4.00. If the project signs its artifacts, then the score adds 0.50. If the project uses a security tool or library, then the score adds 1.00. If the project has executable binaries, then the score subtracts 2.00.
 
@@ -207,7 +232,7 @@ This sub-score is based on 18 features:
 1.  **Does it have a security policy?** Yes
 1.  **Does it have a security team?** No
 1.  **Does it have executable binaries?** Yes
-1.  **Does it sign artifacts?** Yes
+1.  **Does it sign artifacts?** No
 1.  **Does it use AddressSanitizer?** No
 1.  **Does it use Dependabot?** Yes
 1.  **Does it use FindSecBugs?** No
@@ -225,7 +250,7 @@ This sub-score is based on 18 features:
 
 ### Vulnerability discovery and security testing
 
-Score: **0.0**, confidence is 10.0 (max), weight is 0.6 (medium)
+Score: **2.0**, confidence is 10.0 (max), weight is 0.6 (medium)
 
 The scores checks how security testing is done and how many vulnerabilities were recently discovered. If testing is good, and there are no recent vulnerabilities, then the score value is max. If there are vulnerabilities, then the score value is high. If testing is bad, and there are no recent vulnerabilities, then the score value is low. If there are vulnerabilities, then the score is min.
 
@@ -235,7 +260,7 @@ This sub-score is based on the following sub-score:
 
 
 
-1.  **[Security testing](#security-testing)**: **4.55** (weight is 1.0)
+1.  **[Security testing](#security-testing)**: **2.38** (weight is 1.0)
     1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
         1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
             
@@ -252,13 +277,13 @@ This sub-score is based on the following sub-score:
             
         1.  **[How a project uses Pylint](#how-a-project-uses-pylint)**: **0.0** (weight is 0.35)
             
-        1.  **[GoSec score](#gosec-score)**: **N/A** (weight is 0.3)
+        1.  **[GoSec score](#gosec-score)**: **0.0** (weight is 0.3)
             
         1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **0.0** (weight is 0.2)
             
-    1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
+    1.  **[Fuzzing](#fuzzing)**: **0.0** (weight is 1.0)
         
-    1.  **[Memory-safety testing](#memory-safety-testing)**: **N/A** (weight is 1.0)
+    1.  **[Memory-safety testing](#memory-safety-testing)**: **0.0** (weight is 1.0)
         
     1.  **[nohttp tool](#nohttp-tool)**: **0.0** (weight is 0.2)
         
@@ -268,7 +293,7 @@ This sub-score is based on 1 feature:
 
 
 
-1.  **Info about vulnerabilities in the project:** 1 vulnerability, [details below](#known-vulnerabilities)
+1.  **Info about vulnerabilities in the project:** Not found
 
 
 ### Unpatched vulnerabilities
@@ -283,7 +308,7 @@ This sub-score is based on 1 feature:
 
 
 
-1.  **Info about vulnerabilities in the project:** 1 vulnerability, [details below](#known-vulnerabilities)
+1.  **Info about vulnerabilities in the project:** Not found
 
 
 ### Community commitment
@@ -309,20 +334,20 @@ Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-667 commits in the last 3 months results to 10.00 points
-5 contributors increase the score value from 10.00 to 12.00
+132 commits in the last 3 months results to 10.00 points
+4 contributors increase the score value from 10.00 to 11.00
 
 This sub-score is based on 2 features:
 
 
 
-1.  **Number of commits in the last three months:** 667
-1.  **Number of contributors in the last three months:** 5
+1.  **Number of commits in the last three months:** 132
+1.  **Number of contributors in the last three months:** 4
 
 
 ### Project popularity
 
-Score: **1.97**, confidence is 6.67 (low), weight is 0.5 (medium)
+Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 This scoring function is based on number of stars, watchers and dependent projects.
 
@@ -332,9 +357,9 @@ This sub-score is based on 3 features:
 
 
 
-1.  **Number of projects on GitHub that use an open source project:** unknown
-1.  **Number of stars for a GitHub repository:** 1669
-1.  **Number of watchers for a GitHub repository:** 91
+1.  **Number of projects on GitHub that use an open source project:** 58
+1.  **Number of stars for a GitHub repository:** 15309
+1.  **Number of watchers for a GitHub repository:** 375
 
 
 ### Security reviews
@@ -392,7 +417,7 @@ This sub-score is based on the following sub-scores:
     
 1.  **[How a project uses Pylint](#how-a-project-uses-pylint)**: **0.0** (weight is 0.35)
     
-1.  **[GoSec score](#gosec-score)**: **N/A** (weight is 0.3)
+1.  **[GoSec score](#gosec-score)**: **0.0** (weight is 0.3)
     
 1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **0.0** (weight is 0.2)
     
@@ -400,7 +425,7 @@ This sub-score is based on the following sub-scores:
 
 ### Fuzzing
 
-Score: **N/A**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **0.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -411,12 +436,12 @@ This sub-score is based on 2 features:
 
 
 1.  **Is it included to OSS-Fuzz?** No
-1.  **Programming languages:** JAVA, PYTHON, JAVASCRIPT, OTHER
+1.  **Programming languages:** C, CPP, JAVA, C_SHARP, F_SHARP, RUBY, PYTHON, JAVASCRIPT, TYPESCRIPT, GO, OTHER
 
 
 ### Memory-safety testing
 
-Score: **N/A**, confidence is 10.0 (max), weight is 1.0 (high)
+Score: **0.0**, confidence is 10.0 (max), weight is 1.0 (high)
 
 
 
@@ -429,7 +454,7 @@ This sub-score is based on 4 features:
 1.  **Does it use AddressSanitizer?** No
 1.  **Does it use MemorySanitizer?** No
 1.  **Does it use UndefinedBehaviorSanitizer?** No
-1.  **Programming languages:** JAVA, PYTHON, JAVASCRIPT, OTHER
+1.  **Programming languages:** C, CPP, JAVA, C_SHARP, F_SHARP, RUBY, PYTHON, JAVASCRIPT, TYPESCRIPT, GO, OTHER
 
 
 ### nohttp tool
@@ -445,7 +470,7 @@ This sub-score is based on 2 features:
 
 
 1.  **Does it use nohttp?** No
-1.  **Package managers:** MAVEN
+1.  **Package managers:** GRADLE, NPM, YARN, RUBYGEMS, GOMODULES
 
 
 ### Dependabot score
@@ -462,8 +487,8 @@ This sub-score is based on 4 features:
 
 1.  **Does it use Dependabot?** Yes
 1.  **Does it use GitHub as the main development platform?** Yes
-1.  **Package managers:** MAVEN
-1.  **Programming languages:** JAVA, PYTHON, JAVASCRIPT, OTHER
+1.  **Package managers:** GRADLE, NPM, YARN, RUBYGEMS, GOMODULES
+1.  **Programming languages:** C, CPP, JAVA, C_SHARP, F_SHARP, RUBY, PYTHON, JAVASCRIPT, TYPESCRIPT, GO, OTHER
 
 
 ### Snyk score
@@ -480,8 +505,8 @@ This sub-score is based on 4 features:
 
 1.  **Does it use GitHub as the main development platform?** Yes
 1.  **Does it use Snyk?** No
-1.  **Package managers:** MAVEN
-1.  **Programming languages:** JAVA, PYTHON, JAVASCRIPT, OTHER
+1.  **Package managers:** GRADLE, NPM, YARN, RUBYGEMS, GOMODULES
+1.  **Programming languages:** C, CPP, JAVA, C_SHARP, F_SHARP, RUBY, PYTHON, JAVASCRIPT, TYPESCRIPT, GO, OTHER
 
 
 ### OWASP Dependency Check score
@@ -497,7 +522,7 @@ This sub-score is based on 3 features:
 
 
 1.  **How is OWASP Dependency Check used?** Not used
-1.  **Package managers:** MAVEN
+1.  **Package managers:** GRADLE, NPM, YARN, RUBYGEMS, GOMODULES
 1.  **What is the threshold for OWASP Dependency Check?** Not specified
 
 
@@ -515,7 +540,7 @@ This sub-score is based on 3 features:
 
 1.  **Does it run CodeQL scans?** No
 1.  **Does it use CodeQL checks for pull requests?** No
-1.  **Programming languages:** JAVA, PYTHON, JAVASCRIPT, OTHER
+1.  **Programming languages:** C, CPP, JAVA, C_SHARP, F_SHARP, RUBY, PYTHON, JAVASCRIPT, TYPESCRIPT, GO, OTHER
 
 
 ### Bandit score
@@ -532,7 +557,7 @@ This sub-score is based on 3 features:
 
 1.  **If a project runs Bandit scan checks for commits:** No
 1.  **If a project runs Bandit scans:** No
-1.  **Programming languages:** JAVA, PYTHON, JAVASCRIPT, OTHER
+1.  **Programming languages:** C, CPP, JAVA, C_SHARP, F_SHARP, RUBY, PYTHON, JAVASCRIPT, TYPESCRIPT, GO, OTHER
 
 
 ### FindSecBugs score
@@ -548,7 +573,7 @@ This sub-score is based on 2 features:
 
 
 1.  **Does it use FindSecBugs?** No
-1.  **Programming languages:** JAVA, PYTHON, JAVASCRIPT, OTHER
+1.  **Programming languages:** C, CPP, JAVA, C_SHARP, F_SHARP, RUBY, PYTHON, JAVASCRIPT, TYPESCRIPT, GO, OTHER
 
 
 ### How a project uses Pylint
@@ -565,16 +590,16 @@ This sub-score is based on 3 features:
 
 1.  **Does it run Pylint scans on all commits?** No
 1.  **Does it run Pylint scans?** No
-1.  **Programming languages:** JAVA, PYTHON, JAVASCRIPT, OTHER
+1.  **Programming languages:** C, CPP, JAVA, C_SHARP, F_SHARP, RUBY, PYTHON, JAVASCRIPT, TYPESCRIPT, GO, OTHER
 
 
 ### GoSec score
 
-Score: **N/A**, confidence is 10.0 (max), weight is 0.3 (medium)
+Score: **0.0**, confidence is 10.0 (max), weight is 0.3 (medium)
 
 
 
-The score is N/A because the project uses languages that are not supported by GoSec.
+
 
 This sub-score is based on 4 features:
 
@@ -583,7 +608,7 @@ This sub-score is based on 4 features:
 1.  **Does it run GoSec scans on all pull requests?** No
 1.  **Does it run GoSec scans with rules?** No
 1.  **Does it run GoSec scans?** No
-1.  **Programming languages:** JAVA, PYTHON, JAVASCRIPT, OTHER
+1.  **Programming languages:** C, CPP, JAVA, C_SHARP, F_SHARP, RUBY, PYTHON, JAVASCRIPT, TYPESCRIPT, GO, OTHER
 
 
 ### How a project uses MyPy
@@ -600,11 +625,10 @@ This sub-score is based on 3 features:
 
 1.  **Does it run MyPy scans on all commits?** No
 1.  **Does it run MyPy scans?** No
-1.  **Programming languages:** JAVA, PYTHON, JAVASCRIPT, OTHER
+1.  **Programming languages:** C, CPP, JAVA, C_SHARP, F_SHARP, RUBY, PYTHON, JAVASCRIPT, TYPESCRIPT, GO, OTHER
 
 
 ## Known vulnerabilities
 
-1.  [CVE-2022-31159](https://nvd.nist.gov/vuln/detail/CVE-2022-31159)
-
+No vulnerabilities found
 
