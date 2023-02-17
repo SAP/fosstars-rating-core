@@ -634,7 +634,7 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2007-0174](https://nvd.nist.gov/vuln/detail/CVE-2007-0174): Multiple stack-based multiple buffer overflows in the BRWOSSRE2UC.dll ActiveX Control in Sina UC2006 and earlier allow remote attackers to execute arbitrary code via a long string in the (1) astrVerion parameter to the SendChatRoomOpt function or (2) the astrDownDir parameter to the SendDownLoadFile function.
-1.  [CVE-2007-6211](https://nvd.nist.gov/vuln/detail/CVE-2007-6211): Send ICMP Nasty Garbage (sing) on Debian GNU/Linux allows local users to append to arbitrary files and gain privileges via the -L (output log file) option.  NOTE: this issue is only a vulnerability in limited environments, since sing is not installed setuid, and the administrator would need to override a non-setuid default during installation.
+1.  [CVE-2007-0174](https://nvd.nist.gov/vuln/detail/CVE-2007-0174)
+1.  [CVE-2007-6211](https://nvd.nist.gov/vuln/detail/CVE-2007-6211)
 
 

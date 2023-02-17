@@ -601,6 +601,6 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2010-1161](https://nvd.nist.gov/vuln/detail/CVE-2010-1161): Race condition in GNU nano before 2.2.4, when run by root to edit a file that is not owned by root, allows local user-assisted attackers to change the ownership of arbitrary files via vectors related to the creation of backup files.
+1.  [CVE-2010-1161](https://nvd.nist.gov/vuln/detail/CVE-2010-1161)
 
 

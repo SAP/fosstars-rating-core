@@ -629,12 +629,12 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2020-1937](https://nvd.nist.gov/vuln/detail/CVE-2020-1937): Kylin has some restful apis which will concatenate SQLs with the user input string, a user is likely to be able to run malicious database queries.
-1.  [CVE-2020-1956](https://nvd.nist.gov/vuln/detail/CVE-2020-1956): Apache Kylin 2.3.0, and releases up to 2.6.5 and 3.0.1 has some restful apis which will concatenate os command with the user input string, a user is likely to be able to execute any os command without any protection or validation.
-1.  [CVE-2020-13925](https://nvd.nist.gov/vuln/detail/CVE-2020-13925): Similar to CVE-2020-1956, Kylin has one more restful API which concatenates the API inputs into OS commands and then executes them on the server; while the reported API misses necessary input validation, which causes the hackers to have the possibility to execute OS command remotely. Users of all previous versions after 2.3 should upgrade to 3.1.0.
-1.  [CVE-2020-13937](https://nvd.nist.gov/vuln/detail/CVE-2020-13937): Apache Kylin 2.0.0, 2.1.0, 2.2.0, 2.3.0, 2.3.1, 2.3.2, 2.4.0, 2.4.1, 2.5.0, 2.5.1, 2.5.2, 2.6.0, 2.6.1, 2.6.2, 2.6.3, 2.6.4, 2.6.5, 2.6.6, 3.0.0-alpha, 3.0.0-alpha2, 3.0.0-beta, 3.0.0, 3.0.1, 3.0.2, 3.1.0, 4.0.0-alpha has one restful api which exposed Kylin's configuration information without any authentication, so it is dangerous because some confidential information entries will be disclosed to everyone.
-1.  [CVE-2021-27738](https://nvd.nist.gov/vuln/detail/CVE-2021-27738): All request mappings in `StreamingCoordinatorController.java` handling `/kylin/api/streaming_coordinator/*` REST API endpoints did not include any security checks, which allowed an unauthenticated user to issue arbitrary requests, such as assigning/unassigning of streaming cubes, creation/modification and deletion of replica sets, to the Kylin Coordinator. For endpoints accepting node details in HTTP message body, unauthenticated (but limited) server-side request forgery (SSRF) can be achieved. This issue affects Apache Kylin Apache Kylin 3 versions prior to 3.1.2.
-1.  [CVE-2022-24697](https://nvd.nist.gov/vuln/detail/CVE-2022-24697): Kylin's cube designer function has a command injection vulnerability when overwriting system parameters in the configuration overwrites menu. RCE can be implemented by closing the single quotation marks around the parameter value of “-- conf=” to inject any operating system command into the command line parameters. This vulnerability affects Kylin 2 version 2.6.5 and earlier, Kylin 3 version 3.1.2 and earlier, and Kylin 4 version 4.0.1 and earlier.
-1.  [CVE-2022-44621](https://nvd.nist.gov/vuln/detail/CVE-2022-44621): Diagnosis Controller miss parameter validation, so user may attacked by command injection via HTTP Request.
+1.  [CVE-2020-1937](https://nvd.nist.gov/vuln/detail/CVE-2020-1937)
+1.  [CVE-2020-1956](https://nvd.nist.gov/vuln/detail/CVE-2020-1956)
+1.  [CVE-2020-13925](https://nvd.nist.gov/vuln/detail/CVE-2020-13925)
+1.  [CVE-2020-13937](https://nvd.nist.gov/vuln/detail/CVE-2020-13937)
+1.  [CVE-2021-27738](https://nvd.nist.gov/vuln/detail/CVE-2021-27738)
+1.  [CVE-2022-24697](https://nvd.nist.gov/vuln/detail/CVE-2022-24697)
+1.  [CVE-2022-44621](https://nvd.nist.gov/vuln/detail/CVE-2022-44621)
 
 

@@ -594,8 +594,8 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2022-25167](https://nvd.nist.gov/vuln/detail/CVE-2022-25167): Apache Flume versions 1.4.0 through 1.9.0 are vulnerable to a remote code execution (RCE) attack when a configuration uses a JMS Source with a JNDI LDAP data source URI when an attacker has control of the target LDAP server. This issue is fixed by limiting JNDI to allow only the use of the java protocol or no protocol.
-1.  [CVE-2022-34916](https://nvd.nist.gov/vuln/detail/CVE-2022-34916): Apache Flume versions 1.4.0 through 1.10.0 are vulnerable to a remote code execution (RCE) attack when a configuration uses a JMS Source with a JNDI LDAP data source URI when an attacker has control of the target LDAP server. This issue is fixed by limiting JNDI to allow only the use of the java protocol or no protocol.
-1.  [CVE-2022-42468](https://nvd.nist.gov/vuln/detail/CVE-2022-42468): Apache Flume versions 1.4.0 through 1.10.1 are vulnerable to a remote code execution (RCE) attack when a configuration uses a JMS Source with an unsafe providerURL. This issue is fixed by limiting JNDI to allow only the use of the java protocol or no protocol.
+1.  [CVE-2022-25167](https://nvd.nist.gov/vuln/detail/CVE-2022-25167)
+1.  [CVE-2022-34916](https://nvd.nist.gov/vuln/detail/CVE-2022-34916)
+1.  [CVE-2022-42468](https://nvd.nist.gov/vuln/detail/CVE-2022-42468)
 
 

@@ -602,8 +602,8 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2018-1297](https://nvd.nist.gov/vuln/detail/CVE-2018-1297): When using Distributed Test only (RMI based), Apache JMeter 2.x and 3.x uses an unsecured RMI connection. This could allow an attacker to get Access to JMeterEngine and send unauthorized code.
-1.  [CVE-2018-1287](https://nvd.nist.gov/vuln/detail/CVE-2018-1287): In Apache JMeter 2.X and 3.X, when using Distributed Test only (RMI based), jmeter server binds RMI Registry to wildcard host. This could allow an attacker to get Access to JMeterEngine and send unauthorized code.
-1.  [CVE-2019-0187](https://nvd.nist.gov/vuln/detail/CVE-2019-0187): Unauthenticated RCE is possible when JMeter is used in distributed mode (-r or -R command line options). Attacker can establish a RMI connection to a jmeter-server using RemoteJMeterEngine and proceed with an attack using untrusted data deserialization. This only affect tests running in Distributed mode. Note that versions before 4.0 are not able to encrypt traffic between the nodes, nor authenticate the participating nodes so upgrade to JMeter 5.1 is also advised.
+1.  [CVE-2018-1297](https://nvd.nist.gov/vuln/detail/CVE-2018-1297)
+1.  [CVE-2018-1287](https://nvd.nist.gov/vuln/detail/CVE-2018-1287)
+1.  [CVE-2019-0187](https://nvd.nist.gov/vuln/detail/CVE-2019-0187)
 
 

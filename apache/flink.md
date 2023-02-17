@@ -625,9 +625,9 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2009-3915](https://nvd.nist.gov/vuln/detail/CVE-2009-3915): Cross-site scripting (XSS) vulnerability in the "Separate title and URL" formatter in the Link module 5.x before 5.x-2.6 and 6.x before 6.x-2.7, a module for Drupal, allows remote attackers to inject arbitrary web script or HTML via the link title field.
-1.  [CVE-2018-19592](https://nvd.nist.gov/vuln/detail/CVE-2018-19592): The "CLink4Service" service is installed with Corsair Link 4.9.7.35 with insecure permissions by default. This allows unprivileged users to take control of the service and execute commands in the context of NT AUTHORITY\SYSTEM, leading to total system takeover, a similar issue to CVE-2018-12441.
-1.  [CVE-2020-1960](https://nvd.nist.gov/vuln/detail/CVE-2020-1960): A vulnerability in Apache Flink (1.1.0 to 1.1.5, 1.2.0 to 1.2.1, 1.3.0 to 1.3.3, 1.4.0 to 1.4.2, 1.5.0 to 1.5.6, 1.6.0 to 1.6.4, 1.7.0 to 1.7.2, 1.8.0 to 1.8.3, 1.9.0 to 1.9.2, 1.10.0) where, when running a process with an enabled JMXReporter, with a port configured via metrics.reporter.reporter_name>.port, an attacker with local access to the machine and JMX port can execute a man-in-the-middle attack using a specially crafted request to rebind the JMXRMI registry to one under the attacker's control. This compromises any connection established to the process via JMX, allowing extraction of credentials and any other transferred data.
-1.  [CVE-2020-17518](https://nvd.nist.gov/vuln/detail/CVE-2020-17518): Apache Flink 1.5.1 introduced a REST handler that allows you to write an uploaded file to an arbitrary location on the local file system, through a maliciously modified HTTP HEADER. The files can be written to any location accessible by Flink 1.5.1. All users should upgrade to Flink 1.11.3 or 1.12.0 if their Flink instance(s) are exposed. The issue was fixed in commit a5264a6f41524afe8ceadf1d8ddc8c80f323ebc4 from apache/flink:master.
+1.  [CVE-2009-3915](https://nvd.nist.gov/vuln/detail/CVE-2009-3915)
+1.  [CVE-2018-19592](https://nvd.nist.gov/vuln/detail/CVE-2018-19592)
+1.  [CVE-2020-1960](https://nvd.nist.gov/vuln/detail/CVE-2020-1960)
+1.  [CVE-2020-17518](https://nvd.nist.gov/vuln/detail/CVE-2020-17518)
 
 

@@ -604,8 +604,8 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2020-9483](https://nvd.nist.gov/vuln/detail/CVE-2020-9483): **Resolved** When use H2/MySQL/TiDB as Apache SkyWalking storage, the metadata query through GraphQL protocol, there is a SQL injection vulnerability, which allows to access unpexcted data. Apache SkyWalking 6.0.0 to 6.6.0, 7.0.0 H2/MySQL/TiDB storage implementations don't use the appropriate way to set SQL parameters.
-1.  [CVE-2020-13921](https://nvd.nist.gov/vuln/detail/CVE-2020-13921): **Resolved** Only when using H2/MySQL/TiDB as Apache SkyWalking storage, there is a SQL injection vulnerability in the wildcard query cases.
-1.  [CVE-2022-36127](https://nvd.nist.gov/vuln/detail/CVE-2022-36127): A vulnerability in Apache SkyWalking NodeJS Agent prior to 0.5.1. The vulnerability will cause NodeJS services that has this agent installed to be unavailable if the OAP is unhealthy and NodeJS agent can't establish the connection.
+1.  [CVE-2020-9483](https://nvd.nist.gov/vuln/detail/CVE-2020-9483)
+1.  [CVE-2020-13921](https://nvd.nist.gov/vuln/detail/CVE-2020-13921)
+1.  [CVE-2022-36127](https://nvd.nist.gov/vuln/detail/CVE-2022-36127)
 
 

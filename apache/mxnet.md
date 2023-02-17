@@ -611,7 +611,7 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2018-1281](https://nvd.nist.gov/vuln/detail/CVE-2018-1281): The clustered setup of Apache MXNet allows users to specify which IP address and port the scheduler will listen on via the DMLC_PS_ROOT_URI and DMLC_PS_ROOT_PORT env variables. In versions older than 1.0.0, however, the MXNet framework will listen on 0.0.0.0 rather than user specified DMLC_PS_ROOT_URI once a scheduler node is initialized. This exposes the instance running MXNet to any attackers reachable via the interface they didn't expect to be listening on. For example: If a user wants to run a clustered setup locally, they may specify to run on 127.0.0.1. But since MXNet will listen on 0.0.0.0, it makes the port accessible on all network interfaces.
-1.  [CVE-2022-24294](https://nvd.nist.gov/vuln/detail/CVE-2022-24294): A regular expression used in Apache MXNet (incubating) is vulnerable to a potential denial-of-service by excessive resource consumption. The bug could be exploited when loading a model in Apache MXNet that has a specially crafted operator name that would cause the regular expression evaluation to use excessive resources to attempt a match. This issue affects Apache MXNet versions prior to 1.9.1.
+1.  [CVE-2018-1281](https://nvd.nist.gov/vuln/detail/CVE-2018-1281)
+1.  [CVE-2022-24294](https://nvd.nist.gov/vuln/detail/CVE-2022-24294)
 
 

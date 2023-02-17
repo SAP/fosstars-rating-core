@@ -615,10 +615,10 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2017-3152](https://nvd.nist.gov/vuln/detail/CVE-2017-3152): Apache Atlas versions 0.6.0-incubating and 0.7.0-incubating were found vulnerable to DOM XSS in the edit-tag functionality.
-1.  [CVE-2019-10070](https://nvd.nist.gov/vuln/detail/CVE-2019-10070): Apache Atlas versions 0.8.3 and 1.1.0 were found vulnerable to Stored Cross-Site Scripting in the search functionality
-1.  [CVE-2020-13928](https://nvd.nist.gov/vuln/detail/CVE-2020-13928): Apache Atlas before 2.1.0 contain a XSS vulnerability. While saving search or rendering elements values are not sanitized correctly and because of that it triggers the XSS vulnerability.
-1.  [CVE-2020-17521](https://nvd.nist.gov/vuln/detail/CVE-2020-17521): Apache Groovy provides extension methods to aid with creating temporary directories. Prior to this fix, Groovy's implementation of those extension methods was using a now superseded Java JDK method call that is potentially not secure on some operating systems in some contexts. Users not using the extension methods mentioned in the advisory are not affected, but may wish to read the advisory for further details. Versions Affected: 2.0 to 2.4.20, 2.5.0 to 2.5.13, 3.0.0 to 3.0.6, and 4.0.0-alpha-1. Fixed in versions 2.4.21, 2.5.14, 3.0.7, 4.0.0-alpha-2.
-1.  [CVE-2022-34271](https://nvd.nist.gov/vuln/detail/CVE-2022-34271): A vulnerability in import module of Apache Atlas allows an authenticated user to write to web server filesystem. This issue affects Apache Atlas versions from 0.8.4 to 2.2.0.
+1.  [CVE-2017-3152](https://nvd.nist.gov/vuln/detail/CVE-2017-3152)
+1.  [CVE-2019-10070](https://nvd.nist.gov/vuln/detail/CVE-2019-10070)
+1.  [CVE-2020-13928](https://nvd.nist.gov/vuln/detail/CVE-2020-13928)
+1.  [CVE-2020-17521](https://nvd.nist.gov/vuln/detail/CVE-2020-17521)
+1.  [CVE-2022-34271](https://nvd.nist.gov/vuln/detail/CVE-2022-34271)
 
 

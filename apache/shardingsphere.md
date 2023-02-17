@@ -609,7 +609,7 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2020-1947](https://nvd.nist.gov/vuln/detail/CVE-2020-1947): In Apache ShardingSphere(incubator) 4.0.0-RC3 and 4.0.0, the ShardingSphere's web console uses the SnakeYAML library for parsing YAML inputs to load datasource configuration. SnakeYAML allows to unmarshal data to a Java type By using the YAML tag. Unmarshalling untrusted data can lead to security flaws of RCE.
-1.  [CVE-2022-45347](https://nvd.nist.gov/vuln/detail/CVE-2022-45347): Apache ShardingSphere-Proxy prior to 5.3.0 when using MySQL as database backend didn't cleanup the database session completely after client authentication failed, which allowed an attacker to execute normal commands by constructing a special MySQL client. This vulnerability has been fixed in Apache ShardingSphere 5.3.0.
+1.  [CVE-2020-1947](https://nvd.nist.gov/vuln/detail/CVE-2020-1947)
+1.  [CVE-2022-45347](https://nvd.nist.gov/vuln/detail/CVE-2022-45347)
 
 

@@ -612,9 +612,9 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2018-20578](https://nvd.nist.gov/vuln/detail/CVE-2018-20578): An issue was discovered in NuttX before 7.27. The function netlib_parsehttpurl() in apps/netutils/netlib/netlib_parsehttpurl.c mishandles URLs longer than hostlen bytes (in the webclient, this is set by default to 40), leading to an Infinite Loop. The attack vector is the Location header of an HTTP 3xx response.
-1.  [CVE-2020-1939](https://nvd.nist.gov/vuln/detail/CVE-2020-1939): The Apache NuttX (Incubating) project provides an optional separate "apps" repository which contains various optional components and example programs. One of these, ftpd, had a NULL pointer dereference bug. The NuttX RTOS itself is not affected. Users of the optional apps repository are affected only if they have enabled ftpd. Versions 6.15 to 8.2 are affected.
-1.  [CVE-2020-17528](https://nvd.nist.gov/vuln/detail/CVE-2020-17528): Out-of-bounds Write vulnerability in TCP stack of Apache NuttX (incubating) versions up to and including 9.1.0 and 10.0.0 allows attacker to corrupt memory by supplying arbitrary urgent data pointer offsets within TCP packets including beyond the length of the packet.
-1.  [CVE-2021-26461](https://nvd.nist.gov/vuln/detail/CVE-2021-26461): Apache Nuttx Versions prior to 10.1.0 are vulnerable to integer wrap-around in functions malloc, realloc and memalign. This improper memory assignment can lead to arbitrary memory allocation, resulting in unexpected behavior such as a crash or a remote code injection/execution.
+1.  [CVE-2018-20578](https://nvd.nist.gov/vuln/detail/CVE-2018-20578)
+1.  [CVE-2020-1939](https://nvd.nist.gov/vuln/detail/CVE-2020-1939)
+1.  [CVE-2020-17528](https://nvd.nist.gov/vuln/detail/CVE-2020-17528)
+1.  [CVE-2021-26461](https://nvd.nist.gov/vuln/detail/CVE-2021-26461)
 
 

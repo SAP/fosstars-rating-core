@@ -602,7 +602,7 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2020-13955](https://nvd.nist.gov/vuln/detail/CVE-2020-13955): HttpUtils#getURLConnection method disables explicitly hostname verification for HTTPS connections making clients vulnerable to man-in-the-middle attacks. Calcite uses internally this method to connect with Druid and Splunk so information leakage may happen when using the respective Calcite adapters. The method itself is in a utility class so people may use it to create vulnerable HTTPS connections for other applications. From Apache Calcite 1.26 onwards, the hostname verification will be performed using the default JVM truststore.
-1.  [CVE-2022-39135](https://nvd.nist.gov/vuln/detail/CVE-2022-39135): In Apache Calcite prior to version 1.32.0 the SQL operators EXISTS_NODE, EXTRACT_XML, XML_TRANSFORM and EXTRACT_VALUE do not restrict XML External Entity references in their configuration, which makes them vulnerable to a potential XML External Entity (XXE) attack. Therefore any client exposing these operators, typically by using Oracle dialect (the first three) or MySQL dialect (the last one), is affected by this vulnerability (the extent of it will depend on the user under which the application is running). From Apache Calcite 1.32.0 onwards, Document Type Declarations and XML External Entity resolution are disabled on the impacted operators.
+1.  [CVE-2020-13955](https://nvd.nist.gov/vuln/detail/CVE-2020-13955)
+1.  [CVE-2022-39135](https://nvd.nist.gov/vuln/detail/CVE-2022-39135)
 
 

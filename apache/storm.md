@@ -625,21 +625,21 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2007-4816](https://nvd.nist.gov/vuln/detail/CVE-2007-4816): Multiple buffer overflows in the BaoFeng2 storm ActiveX control in Mps.dll allow remote attackers to have an unknown impact via a long (1) URL, (2) backImage, or (3) titleImage property value; (4) a long first argument to the advancedOpen method; a long argument to the (5) isDVDPath or (6) rawParse method; or (7) a .smpl file with a long path attribute in an item element in a PlayList.
-1.  [CVE-2007-4943](https://nvd.nist.gov/vuln/detail/CVE-2007-4943): Multiple buffer overflows in a certain ActiveX control in sparser.dll in Baofeng Storm 2.8 and earlier allow remote attackers to execute arbitrary code via malformed input in an unknown set of arguments or property values, a different DLL than CVE-2007-4816.  NOTE: the provenance of this information is unknown; the details are obtained solely from third party information.
-1.  [CVE-2008-6383](https://nvd.nist.gov/vuln/detail/CVE-2008-6383): SQL injection vulnerability in SpeedTech Organization and Resource Manager (Storm) 5.x before 5.x-1.14 and 6.x before 6.x-1.18, a module for Drupal, allows remote authenticated users with storm project access to execute arbitrary SQL commands via unspecified vectors.
-1.  [CVE-2009-1612](https://nvd.nist.gov/vuln/detail/CVE-2009-1612): Stack-based buffer overflow in the MPS.StormPlayer.1 ActiveX control in mps.dll 3.9.4.27 in Baofeng Storm allows remote attackers to execute arbitrary code via a long argument to the OnBeforeVideoDownload method, as exploited in the wild in April and May 2009. NOTE: some of these details are obtained from third party information. NOTE: it was later reported that 3.09.04.17 and earlier are also affected.
-1.  [CVE-2009-1807](https://nvd.nist.gov/vuln/detail/CVE-2009-1807): Unspecified vulnerability in Config.dll in Baofeng products 3.09.04.17 and earlier allows remote attackers to execute arbitrary code by calling the SetAttributeValue method, as exploited in the wild in April and May 2009.
-1.  [CVE-2009-2617](https://nvd.nist.gov/vuln/detail/CVE-2009-2617): Stack-based buffer overflow in medialib.dll in BaoFeng Storm 3.9.62 allows remote attackers to execute arbitrary code via a long pathname in the source attribute of an item element in a .smpl playlist file.
-1.  [CVE-2009-4515](https://nvd.nist.gov/vuln/detail/CVE-2009-4515): The Storm module 6.x before 6.x-1.25 for Drupal does not enforce privilege requirements for storminvoiceitem nodes, which allows remote attackers to read node titles via unspecified vectors.
-1.  [CVE-2010-2123](https://nvd.nist.gov/vuln/detail/CVE-2010-2123): Multiple cross-site scripting (XSS) vulnerabilities in the Storm module 5.x and 6.x before 6.x-1.33 for Drupal allow remote authenticated users, with certain module privileges, to inject arbitrary web script or HTML via the (1) fullname, (2) address, (3) city, (4) provstate (aka state), (5) phone, or (6) taxid parameter in a stormorganization action to index.php; the (7) name parameter in a stormperson action to index.php; the (8) stepno (aka Step no.) or (9) title parameter in a stormtask action to index.php; the (10) title (aka Project) parameter in a stormticket action to index.php; or (11) unspecified parameters in a stormproject action to index.php.  NOTE: some of these details are obtained from third party information.
-1.  [CVE-2010-2158](https://nvd.nist.gov/vuln/detail/CVE-2010-2158): Multiple cross-site scripting (XSS) vulnerabilities in the Storm module 5.x and 6.x before 6.x-1.33 for Drupal allow remote authenticated users, with certain module privileges, to inject arbitrary web script or HTML via the (1) fullname, (2) phone, or (3) im parameter in a stormperson action to index.php.  NOTE: the provenance of this information is unknown; the details are obtained solely from third party information.
-1.  [CVE-2015-3188](https://nvd.nist.gov/vuln/detail/CVE-2015-3188): The UI daemon in Apache Storm 0.10.0 before 0.10.0-beta1 allows remote attackers to execute arbitrary code via unspecified vectors.
-1.  [CVE-2017-9799](https://nvd.nist.gov/vuln/detail/CVE-2017-9799): It was found that under some situations and configurations of Apache Storm 1.x before 1.0.4 and 1.1.x before 1.1.1, it is theoretically possible for the owner of a topology to trick the supervisor to launch a worker as a different, non-root, user. In the worst case this could lead to secure credentials of the other user being compromised.
-1.  [CVE-2014-0115](https://nvd.nist.gov/vuln/detail/CVE-2014-0115): Directory traversal vulnerability in the log viewer in Apache Storm 0.9.0.1 allows remote attackers to read arbitrary files via a .. (dot dot) in the file parameter to log.
-1.  [CVE-2018-1332](https://nvd.nist.gov/vuln/detail/CVE-2018-1332): Apache Storm version 1.0.6 and earlier, 1.2.1 and earlier, and version 1.1.2 and earlier expose a vulnerability that could allow a user to impersonate another user when communicating with some Storm Daemons.
-1.  [CVE-2018-1331](https://nvd.nist.gov/vuln/detail/CVE-2018-1331): In Apache Storm 0.10.0 through 0.10.2, 1.0.0 through 1.0.6, 1.1.0 through 1.1.2, and 1.2.0 through 1.2.1, an attacker with access to a secure storm cluster in some cases could execute arbitrary code as a different user.
-1.  [CVE-2018-11779](https://nvd.nist.gov/vuln/detail/CVE-2018-11779): In Apache Storm versions 1.1.0 to 1.2.2, when the user is using the storm-kafka-client or storm-kafka modules, it is possible to cause the Storm UI daemon to deserialize user provided bytes into a Java class.
-1.  [CVE-2021-38294](https://nvd.nist.gov/vuln/detail/CVE-2021-38294): A Command Injection vulnerability exists in the getTopologyHistory service of the Apache Storm 2.x prior to 2.2.1 and Apache Storm 1.x prior to 1.2.4. A specially crafted thrift request to the Nimbus server allows Remote Code Execution (RCE) prior to authentication.
+1.  [CVE-2007-4816](https://nvd.nist.gov/vuln/detail/CVE-2007-4816)
+1.  [CVE-2007-4943](https://nvd.nist.gov/vuln/detail/CVE-2007-4943)
+1.  [CVE-2008-6383](https://nvd.nist.gov/vuln/detail/CVE-2008-6383)
+1.  [CVE-2009-1612](https://nvd.nist.gov/vuln/detail/CVE-2009-1612)
+1.  [CVE-2009-1807](https://nvd.nist.gov/vuln/detail/CVE-2009-1807)
+1.  [CVE-2009-2617](https://nvd.nist.gov/vuln/detail/CVE-2009-2617)
+1.  [CVE-2009-4515](https://nvd.nist.gov/vuln/detail/CVE-2009-4515)
+1.  [CVE-2010-2123](https://nvd.nist.gov/vuln/detail/CVE-2010-2123)
+1.  [CVE-2010-2158](https://nvd.nist.gov/vuln/detail/CVE-2010-2158)
+1.  [CVE-2015-3188](https://nvd.nist.gov/vuln/detail/CVE-2015-3188)
+1.  [CVE-2017-9799](https://nvd.nist.gov/vuln/detail/CVE-2017-9799)
+1.  [CVE-2014-0115](https://nvd.nist.gov/vuln/detail/CVE-2014-0115)
+1.  [CVE-2018-1332](https://nvd.nist.gov/vuln/detail/CVE-2018-1332)
+1.  [CVE-2018-1331](https://nvd.nist.gov/vuln/detail/CVE-2018-1331)
+1.  [CVE-2018-11779](https://nvd.nist.gov/vuln/detail/CVE-2018-11779)
+1.  [CVE-2021-38294](https://nvd.nist.gov/vuln/detail/CVE-2021-38294)
 
 

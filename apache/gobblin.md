@@ -604,6 +604,6 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2021-36151](https://nvd.nist.gov/vuln/detail/CVE-2021-36151): In Apache Gobblin, the Hadoop token is written to a temp file that is visible to all local users on Unix-like systems. This affects versions <= 0.15.0. Users should update to version 0.16.0 which addresses this issue.
+1.  [CVE-2021-36151](https://nvd.nist.gov/vuln/detail/CVE-2021-36151)
 
 

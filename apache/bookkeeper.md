@@ -629,12 +629,12 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2017-6891](https://nvd.nist.gov/vuln/detail/CVE-2017-6891): Two errors in the "asn1_find_node()" function (lib/parser_aux.c) within GnuTLS libtasn1 version 4.10 can be exploited to cause a stacked-based buffer overflow by tricking a user into processing a specially crafted assignments file via the e.g. asn1Coding utility.
-1.  [CVE-2019-19906](https://nvd.nist.gov/vuln/detail/CVE-2019-19906): cyrus-sasl (aka Cyrus SASL) 2.1.27 has an out-of-bounds write leading to unauthenticated remote denial-of-service in OpenLDAP via a malformed LDAP packet. The OpenLDAP crash is ultimately caused by an off-by-one error in _sasl_add_string in common.c in cyrus-sasl.
-1.  [CVE-2019-17571](https://nvd.nist.gov/vuln/detail/CVE-2019-17571): Included in Log4j 1.2 is a SocketServer class that is vulnerable to deserialization of untrusted data which can be exploited to remotely execute arbitrary code when combined with a deserialization gadget when listening to untrusted network traffic for log data. This affects Log4j versions up to 1.2 up to 1.2.17.
-1.  [CVE-2019-19924](https://nvd.nist.gov/vuln/detail/CVE-2019-19924): SQLite 3.30.1 mishandles certain parser-tree rewriting, related to expr.c, vdbeaux.c, and window.c. This is caused by incorrect sqlite3WindowRewrite() error handling.
-1.  [CVE-2020-36230](https://nvd.nist.gov/vuln/detail/CVE-2020-36230): A flaw was discovered in OpenLDAP before 2.4.57 leading in an assertion failure in slapd in the X.509 DN parsing in decode.c ber_next_element, resulting in denial of service.
-1.  [CVE-2020-23922](https://nvd.nist.gov/vuln/detail/CVE-2020-23922): An issue was discovered in giflib through 5.1.4. DumpScreen2RGB in gif2rgb.c has a heap-based buffer over-read.
-1.  [CVE-2022-32531](https://nvd.nist.gov/vuln/detail/CVE-2022-32531): The Apache Bookkeeper Java Client (before 4.14.6 and also 4.15.0) does not close the connection to the bookkeeper server when TLS hostname verification fails. This leaves the bookkeeper client vulnerable to a man in the middle attack. The problem affects BookKeeper client prior to versions 4.14.6 and 4.15.1.
+1.  [CVE-2017-6891](https://nvd.nist.gov/vuln/detail/CVE-2017-6891)
+1.  [CVE-2019-19906](https://nvd.nist.gov/vuln/detail/CVE-2019-19906)
+1.  [CVE-2019-17571](https://nvd.nist.gov/vuln/detail/CVE-2019-17571)
+1.  [CVE-2019-19924](https://nvd.nist.gov/vuln/detail/CVE-2019-19924)
+1.  [CVE-2020-36230](https://nvd.nist.gov/vuln/detail/CVE-2020-36230)
+1.  [CVE-2020-23922](https://nvd.nist.gov/vuln/detail/CVE-2020-23922)
+1.  [CVE-2022-32531](https://nvd.nist.gov/vuln/detail/CVE-2022-32531)
 
 

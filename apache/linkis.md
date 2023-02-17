@@ -595,21 +595,21 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2002-2060](https://nvd.nist.gov/vuln/detail/CVE-2002-2060): Buffer overflow in Links 2.0 pre4 allows remote attackers to crash client browsers and possibly execute arbitrary code via gamma tables in large 16-bit PNG images.
-1.  [CVE-2002-1405](https://nvd.nist.gov/vuln/detail/CVE-2002-1405): CRLF injection vulnerability in Lynx 2.8.4 and earlier allows remote attackers to inject false HTTP headers into an HTTP request that is provided on the command line, via a URL containing encoded carriage return, line feed, and other whitespace characters.
-1.  [CVE-2004-1616](https://nvd.nist.gov/vuln/detail/CVE-2004-1616): Links allows remote attackers to cause a denial of service (memory consumption) via a web page or HTML email that contains a table with a td element and a large rowspan value,as demonstrated by mangleme.
-1.  [CVE-2006-5925](https://nvd.nist.gov/vuln/detail/CVE-2006-5925): Links web browser 1.00pre12 and Elinks 0.9.2 with smbclient installed allows remote attackers to execute arbitrary code via shell metacharacters in an smb:// URI, as demonstrated by using PUT and GET statements.
-1.  [CVE-2008-3319](https://nvd.nist.gov/vuln/detail/CVE-2008-3319): admin/index.php in Maian Links 3.1 and earlier allows remote attackers to bypass authentication and gain administrative access by sending an arbitrary links_cookie cookie.
-1.  [CVE-2008-3329](https://nvd.nist.gov/vuln/detail/CVE-2008-3329): Unspecified vulnerability in Links before 2.1, when "only proxies" is enabled, has unknown impact and attack vectors related to providing "URLs to external programs."
-1.  [CVE-2008-3555](https://nvd.nist.gov/vuln/detail/CVE-2008-3555): Directory traversal vulnerability in index.php in (1) WSN Forum 4.1.43 and earlier, (2) Gallery 4.1.30 and earlier, (3) Knowledge Base (WSNKB) 4.1.36 and earlier, (4) Links 4.1.44 and earlier, and possibly (5) Classifieds before 4.1.30 allows remote attackers to include and execute arbitrary local files via a .. (dot dot) in the TID parameter, as demonstrated by uploading a .jpg file containing PHP sequences.
-1.  [CVE-2008-6032](https://nvd.nist.gov/vuln/detail/CVE-2008-6032): SQL injection vulnerability in comments.php in WSN Links Free 4.0.34P allows remote attackers to execute arbitrary SQL commands via the id parameter.
-1.  [CVE-2009-3915](https://nvd.nist.gov/vuln/detail/CVE-2009-3915): Cross-site scripting (XSS) vulnerability in the "Separate title and URL" formatter in the Link module 5.x before 5.x-2.6 and 6.x before 6.x-2.7, a module for Drupal, allows remote attackers to inject arbitrary web script or HTML via the link title field.
-1.  [CVE-2010-4006](https://nvd.nist.gov/vuln/detail/CVE-2010-4006): Multiple SQL injection vulnerabilities in search.php in WSN Links 5.0.x before 5.0.81, 5.1.x before 5.1.51, and 6.0.x before 6.0.1 allow remote attackers to execute arbitrary SQL commands via the (1) namecondition or (2) namesearch parameter.
-1.  [CVE-2013-6050](https://nvd.nist.gov/vuln/detail/CVE-2013-6050): Integer overflow in Links before 2.8 allows remote attackers to cause a denial of service (crash) via crafted HTML tables.
-1.  [CVE-2017-11114](https://nvd.nist.gov/vuln/detail/CVE-2017-11114): The put_chars function in html_r.c in Twibright Links 2.14 allows remote attackers to cause a denial of service (buffer over-read) via a crafted HTML file.
-1.  [CVE-2012-6709](https://nvd.nist.gov/vuln/detail/CVE-2012-6709): ELinks 0.12 and Twibright Links 2.3 have Missing SSL Certificate Validation.
-1.  [CVE-2018-19592](https://nvd.nist.gov/vuln/detail/CVE-2018-19592): The "CLink4Service" service is installed with Corsair Link 4.9.7.35 with insecure permissions by default. This allows unprivileged users to take control of the service and execute commands in the context of NT AUTHORITY\SYSTEM, leading to total system takeover, a similar issue to CVE-2018-12441.
-1.  [CVE-2022-39944](https://nvd.nist.gov/vuln/detail/CVE-2022-39944): In Apache Linkis <=1.2.0 when used with the MySQL Connector/J, a deserialization vulnerability with possible remote code execution impact exists when an attacker has write access to a database and configures a JDBC EC with a MySQL data source and malicious parameters. Therefore, the parameters in the jdbc url should be blacklisted. Versions of Apache Linkis <= 1.2.0 will be affected, We recommend users to update to 1.3.0.
-1.  [CVE-2022-44645](https://nvd.nist.gov/vuln/detail/CVE-2022-44645): In Apache Linkis <=1.3.0 when used with the MySQL Connector/J, a deserialization vulnerability with possible remote code execution impact exists when an attacker has write access to a database and configures new datasource with a MySQL data source and malicious parameters. Therefore, the parameters in the jdbc url should be blacklisted. Versions of Apache Linkis <= 1.3.0 will be affected. We recommend users to upgrade the version of Linkis to version 1.3.1.
+1.  [CVE-2002-2060](https://nvd.nist.gov/vuln/detail/CVE-2002-2060)
+1.  [CVE-2002-1405](https://nvd.nist.gov/vuln/detail/CVE-2002-1405)
+1.  [CVE-2004-1616](https://nvd.nist.gov/vuln/detail/CVE-2004-1616)
+1.  [CVE-2006-5925](https://nvd.nist.gov/vuln/detail/CVE-2006-5925)
+1.  [CVE-2008-3319](https://nvd.nist.gov/vuln/detail/CVE-2008-3319)
+1.  [CVE-2008-3329](https://nvd.nist.gov/vuln/detail/CVE-2008-3329)
+1.  [CVE-2008-3555](https://nvd.nist.gov/vuln/detail/CVE-2008-3555)
+1.  [CVE-2008-6032](https://nvd.nist.gov/vuln/detail/CVE-2008-6032)
+1.  [CVE-2009-3915](https://nvd.nist.gov/vuln/detail/CVE-2009-3915)
+1.  [CVE-2010-4006](https://nvd.nist.gov/vuln/detail/CVE-2010-4006)
+1.  [CVE-2013-6050](https://nvd.nist.gov/vuln/detail/CVE-2013-6050)
+1.  [CVE-2017-11114](https://nvd.nist.gov/vuln/detail/CVE-2017-11114)
+1.  [CVE-2012-6709](https://nvd.nist.gov/vuln/detail/CVE-2012-6709)
+1.  [CVE-2018-19592](https://nvd.nist.gov/vuln/detail/CVE-2018-19592)
+1.  [CVE-2022-39944](https://nvd.nist.gov/vuln/detail/CVE-2022-39944)
+1.  [CVE-2022-44645](https://nvd.nist.gov/vuln/detail/CVE-2022-44645)
 
 

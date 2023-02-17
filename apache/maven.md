@@ -615,13 +615,13 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2013-0253](https://nvd.nist.gov/vuln/detail/CVE-2013-0253): The default configuration of Apache Maven 3.0.4, when using Maven Wagon 2.1, disables SSL certificate checks, which allows remote attackers to spoof servers via a man-in-the-middle (MITM) attack.
-1.  [CVE-2017-1000397](https://nvd.nist.gov/vuln/detail/CVE-2017-1000397): Jenkins Maven Plugin 2.17 and earlier bundled a version of the commons-httpclient library with the vulnerability CVE-2012-6153 that incorrectly verified SSL certificates, making it susceptible to man-in-the-middle attacks. Maven Plugin 3.0 no longer has a dependency on commons-httpclient.
-1.  [CVE-2019-9843](https://nvd.nist.gov/vuln/detail/CVE-2019-9843): In DiffPlug Spotless before 1.20.0 (library and Maven plugin) and before 3.20.0 (Gradle plugin), the XML parser would resolve external entities over both HTTP and HTTPS and didn't respect the resolveExternalEntities setting. For example, this allows disclosure of file contents to a MITM attacker if a victim performs a spotlessApply operation on an untrusted XML file.
-1.  [CVE-2019-10358](https://nvd.nist.gov/vuln/detail/CVE-2019-10358): Jenkins Maven Integration Plugin 3.3 and earlier did not apply build log decorators to module builds, potentially revealing sensitive build variables in the build log.
-1.  [CVE-2019-16550](https://nvd.nist.gov/vuln/detail/CVE-2019-16550): A cross-site request forgery vulnerability in a connection test form method in Jenkins Maven Release Plugin 0.16.1 and earlier allows attackers to have Jenkins connect to an attacker specified web server and parse XML documents.
-1.  [CVE-2020-15777](https://nvd.nist.gov/vuln/detail/CVE-2020-15777): An issue was discovered in the Maven Extension plugin before 1.6 for Gradle Enterprise. The extension uses a socket connection to send serialized Java objects. Deserialization is not restricted to an allow-list, thus allowing an attacker to achieve code execution via a malicious deserialization gadget chain. The socket is not bound exclusively to localhost. The port this socket is assigned to is randomly selected and is not intentionally exposed to the public (either by design or documentation). This could potentially be used to achieve remote code execution and local privilege escalation.
-1.  [CVE-2021-26719](https://nvd.nist.gov/vuln/detail/CVE-2021-26719): A directory traversal issue was discovered in Gradle gradle-enterprise-test-distribution-agent before 1.3.2, test-distribution-gradle-plugin before 1.3.2, and gradle-enterprise-maven-extension before 1.8.2. A malicious actor (with certain credentials) can perform a registration step such that crafted TAR archives lead to extraction of files into arbitrary filesystem locations.
-1.  [CVE-2021-26291](https://nvd.nist.gov/vuln/detail/CVE-2021-26291): Apache Maven will follow repositories that are defined in a dependency’s Project Object Model (pom) which may be surprising to some users, resulting in potential risk if a malicious actor takes over that repository or is able to insert themselves into a position to pretend to be that repository. Maven is changing the default behavior in 3.8.1+ to no longer follow http (non-SSL) repository references by default. More details available in the referenced urls. If you are currently using a repository manager to govern the repositories used by your builds, you are unaffected by the risks present in the legacy behavior, and are unaffected by this vulnerability and change to default behavior. See this link for more information about repository management: https://maven.apache.org/repository-management.html
+1.  [CVE-2013-0253](https://nvd.nist.gov/vuln/detail/CVE-2013-0253)
+1.  [CVE-2017-1000397](https://nvd.nist.gov/vuln/detail/CVE-2017-1000397)
+1.  [CVE-2019-9843](https://nvd.nist.gov/vuln/detail/CVE-2019-9843)
+1.  [CVE-2019-10358](https://nvd.nist.gov/vuln/detail/CVE-2019-10358)
+1.  [CVE-2019-16550](https://nvd.nist.gov/vuln/detail/CVE-2019-16550)
+1.  [CVE-2020-15777](https://nvd.nist.gov/vuln/detail/CVE-2020-15777)
+1.  [CVE-2021-26719](https://nvd.nist.gov/vuln/detail/CVE-2021-26719)
+1.  [CVE-2021-26291](https://nvd.nist.gov/vuln/detail/CVE-2021-26291)
 
 

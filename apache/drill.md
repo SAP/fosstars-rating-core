@@ -613,9 +613,9 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2010-5312](https://nvd.nist.gov/vuln/detail/CVE-2010-5312): Cross-site scripting (XSS) vulnerability in jquery.ui.dialog.js in the Dialog widget in jQuery UI before 1.10.0 allows remote attackers to inject arbitrary web script or HTML via the title option.
-1.  [CVE-2017-12630](https://nvd.nist.gov/vuln/detail/CVE-2017-12630): In Apache Drill 1.11.0 and earlier when submitting form from Query page users are able to pass arbitrary script or HTML which will take effect on Profile page afterwards. Example: after submitting special script that returns cookie information from Query page, malicious user may obtain this information from Profile page afterwards.
-1.  [CVE-2019-10241](https://nvd.nist.gov/vuln/detail/CVE-2019-10241): In Eclipse Jetty version 9.2.26 and older, 9.3.25 and older, and 9.4.15 and older, the server is vulnerable to XSS conditions if a remote client USES a specially formatted URL against the DefaultServlet or ResourceHandler that is configured for showing a Listing of directory contents.
-1.  [CVE-2019-0201](https://nvd.nist.gov/vuln/detail/CVE-2019-0201): An issue is present in Apache ZooKeeper 1.0.0 to 3.4.13 and 3.5.0-alpha to 3.5.4-beta. ZooKeeper’s getACL() command doesn’t check any permission when retrieves the ACLs of the requested node and returns all information contained in the ACL Id field as plaintext string. DigestAuthenticationProvider overloads the Id field with the hash value that is used for user authentication. As a consequence, if Digest Authentication is in use, the unsalted hash value will be disclosed by getACL() request for unauthenticated or unprivileged users.
+1.  [CVE-2010-5312](https://nvd.nist.gov/vuln/detail/CVE-2010-5312)
+1.  [CVE-2017-12630](https://nvd.nist.gov/vuln/detail/CVE-2017-12630)
+1.  [CVE-2019-10241](https://nvd.nist.gov/vuln/detail/CVE-2019-10241)
+1.  [CVE-2019-0201](https://nvd.nist.gov/vuln/detail/CVE-2019-0201)
 
 

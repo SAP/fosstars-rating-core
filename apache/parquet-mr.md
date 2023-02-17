@@ -609,6 +609,6 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2021-41561](https://nvd.nist.gov/vuln/detail/CVE-2021-41561): Improper Input Validation vulnerability in Parquet-MR of Apache Parquet allows an attacker to DoS by malicious Parquet files. This issue affects Apache Parquet-MR version 1.9.0 and later versions.
+1.  [CVE-2021-41561](https://nvd.nist.gov/vuln/detail/CVE-2021-41561)
 
 
