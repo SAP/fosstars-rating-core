@@ -614,6 +614,6 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2008-6636](https://nvd.nist.gov/vuln/detail/CVE-2008-6636): PHP remote file inclusion vulnerability in skins/default.php in Geody Labs Dagger - The Cutting Edge r12feb2008, when register_globals is enabled, allows remote attackers to execute arbitrary PHP code via a URL in the dir_edge_skins parameter.  NOTE: the provenance of this information is unknown; the details are obtained solely from third party information.
+1.  [CVE-2008-6636](https://nvd.nist.gov/vuln/detail/CVE-2008-6636)
 
 

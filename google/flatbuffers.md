@@ -615,6 +615,6 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2019-25004](https://nvd.nist.gov/vuln/detail/CVE-2019-25004): An issue was discovered in the flatbuffers crate before 0.6.1 for Rust. Arbitrary bytes can be reinterpreted as a bool, defeating soundness.
+1.  [CVE-2019-25004](https://nvd.nist.gov/vuln/detail/CVE-2019-25004)
 
 

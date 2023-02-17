@@ -595,7 +595,7 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2020-25739](https://nvd.nist.gov/vuln/detail/CVE-2020-25739): An issue was discovered in the gon gem before gon-6.4.0 for Ruby. MultiJson does not honor the escape_mode parameter to escape fields as an XSS protection mechanism. To mitigate, json_dumper.rb in gon now does escaping for XSS by default without relying on MultiJson.
-1.  [CVE-2022-25647](https://nvd.nist.gov/vuln/detail/CVE-2022-25647): The package com.google.code.gson:gson before 2.8.9 are vulnerable to Deserialization of Untrusted Data via the writeReplace() method in internal classes, which may lead to DoS attacks.
+1.  [CVE-2020-25739](https://nvd.nist.gov/vuln/detail/CVE-2020-25739)
+1.  [CVE-2022-25647](https://nvd.nist.gov/vuln/detail/CVE-2022-25647)
 
 
