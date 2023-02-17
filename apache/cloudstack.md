@@ -615,18 +615,18 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2012-4501](https://nvd.nist.gov/vuln/detail/CVE-2012-4501): Citrix Cloud.com CloudStack, and Apache CloudStack pre-release, allows remote attackers to make arbitrary API calls by leveraging the system user account, as demonstrated by API calls to delete VMs.
-1.  [CVE-2012-5616](https://nvd.nist.gov/vuln/detail/CVE-2012-5616): Apache CloudStack 4.0.0-incubating and Citrix CloudPlatform (formerly Citrix CloudStack) before 3.0.6 stores sensitive information in the log4j.conf log file, which allows local users to obtain (1) the SSH private key as recorded by the createSSHKeyPair API, (2) the password of an added host as recorded by the AddHost API, or the password of an added VM as recorded by the (3) DeployVM or (4) ResetPasswordForVM API.
-1.  [CVE-2013-2136](https://nvd.nist.gov/vuln/detail/CVE-2013-2136): Multiple cross-site scripting (XSS) vulnerabilities in Apache CloudStack before 4.1.1 allow remote attackers to inject arbitrary web script or HTML via the (1) Physical network name to the Zone wizard; (2) New network name, (3) instance name, or (4) group to the Instance wizard; (5) unspecified "multi-edit fields;" and (6) unspecified "list view" edit fields related to global settings.
-1.  [CVE-2013-6398](https://nvd.nist.gov/vuln/detail/CVE-2013-6398): The virtual router in Apache CloudStack before 4.2.1 does not preserve the source restrictions in firewall rules after being restarted, which allows remote attackers to bypass intended restrictions via a request.
-1.  [CVE-2013-2756](https://nvd.nist.gov/vuln/detail/CVE-2013-2756): Apache CloudStack 4.0.0 before 4.0.2 and Citrix CloudPlatform (formerly Citrix CloudStack) 3.0.x before 3.0.6 Patch C allows remote attackers to bypass the console proxy authentication by leveraging knowledge of the source code.
-1.  [CVE-2014-7807](https://nvd.nist.gov/vuln/detail/CVE-2014-7807): Apache CloudStack 4.3.x before 4.3.2 and 4.4.x before 4.4.2 allows remote attackers to bypass authentication via a login request without a password, which triggers an unauthenticated bind.
-1.  [CVE-2014-9593](https://nvd.nist.gov/vuln/detail/CVE-2014-9593): Apache CloudStack before 4.3.2 and 4.4.x before 4.4.2 allows remote attackers to obtain private keys via a listSslCerts API call.
-1.  [CVE-2015-3252](https://nvd.nist.gov/vuln/detail/CVE-2015-3252): Apache CloudStack before 4.5.2 does not properly preserve VNC passwords when migrating KVM virtual machines, which allows remote attackers to gain access by connecting to the VNC server.
-1.  [CVE-2016-3085](https://nvd.nist.gov/vuln/detail/CVE-2016-3085): Apache CloudStack 4.5.x before 4.5.2.1, 4.6.x before 4.6.2.1, 4.7.x before 4.7.1.1, and 4.8.x before 4.8.0.1, when SAML-based authentication is enabled and used, allow remote attackers to bypass authentication and access the user interface via vectors related to the SAML plugin.
-1.  [CVE-2013-4317](https://nvd.nist.gov/vuln/detail/CVE-2013-4317): In Apache CloudStack 4.1.0 and 4.1.1, when calling the CloudStack API call listProjectAccounts as a regular, non-administrative user, the user is able to see information for accounts other than their own.
-1.  [CVE-2019-17562](https://nvd.nist.gov/vuln/detail/CVE-2019-17562): A buffer overflow vulnerability has been found in the baremetal component of Apache CloudStack. This applies to all versions prior to 4.13.1. The vulnerability is due to the lack of validation of the mac parameter in baremetal virtual router. If you insert an arbitrary shell command into the mac parameter, v-router will process the command. For example: Normal: http://{GW}:10086/baremetal/provisiondone/{mac}, Abnormal: http://{GW}:10086/baremetal/provisiondone/#';whoami;#. Mitigation of this issue is an upgrade to Apache CloudStack 4.13.1.0 or beyond.
-1.  [CVE-2022-26779](https://nvd.nist.gov/vuln/detail/CVE-2022-26779): Apache CloudStack prior to 4.16.1.0 used insecure random number generation for project invitation tokens. If a project invite is created based only on an email address, a random token is generated. An attacker with knowledge of the project ID and the fact that the invite is sent, could generate time deterministic tokens and brute force attempt to use them prior to the legitimate receiver accepting the invite. This feature is not enabled by default, the attacker is required to know or guess the project ID for the invite in addition to the invitation token, and the attacker would need to be an existing authorized user of CloudStack.
-1.  [CVE-2022-35741](https://nvd.nist.gov/vuln/detail/CVE-2022-35741): Apache CloudStack version 4.5.0 and later has a SAML 2.0 authentication Service Provider plugin which is found to be vulnerable to XML external entity (XXE) injection. This plugin is not enabled by default and the attacker would require that this plugin be enabled to exploit the vulnerability. When the SAML 2.0 plugin is enabled in affected versions of Apache CloudStack could potentially allow the exploitation of XXE vulnerabilities. The SAML 2.0 messages constructed during the authentication flow in Apache CloudStack are XML-based and the XML data is parsed by various standard libraries that are now understood to be vulnerable to XXE injection attacks such as arbitrary file reading, possible denial of service, server-side request forgery (SSRF) on the CloudStack management server.
+1.  [CVE-2012-4501](https://nvd.nist.gov/vuln/detail/CVE-2012-4501)
+1.  [CVE-2012-5616](https://nvd.nist.gov/vuln/detail/CVE-2012-5616)
+1.  [CVE-2013-2136](https://nvd.nist.gov/vuln/detail/CVE-2013-2136)
+1.  [CVE-2013-6398](https://nvd.nist.gov/vuln/detail/CVE-2013-6398)
+1.  [CVE-2013-2756](https://nvd.nist.gov/vuln/detail/CVE-2013-2756)
+1.  [CVE-2014-7807](https://nvd.nist.gov/vuln/detail/CVE-2014-7807)
+1.  [CVE-2014-9593](https://nvd.nist.gov/vuln/detail/CVE-2014-9593)
+1.  [CVE-2015-3252](https://nvd.nist.gov/vuln/detail/CVE-2015-3252)
+1.  [CVE-2016-3085](https://nvd.nist.gov/vuln/detail/CVE-2016-3085)
+1.  [CVE-2013-4317](https://nvd.nist.gov/vuln/detail/CVE-2013-4317)
+1.  [CVE-2019-17562](https://nvd.nist.gov/vuln/detail/CVE-2019-17562)
+1.  [CVE-2022-26779](https://nvd.nist.gov/vuln/detail/CVE-2022-26779)
+1.  [CVE-2022-35741](https://nvd.nist.gov/vuln/detail/CVE-2022-35741)
 
 

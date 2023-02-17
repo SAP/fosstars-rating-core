@@ -602,29 +602,29 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2002-1013](https://nvd.nist.gov/vuln/detail/CVE-2002-1013): Buffer overflow in traffic_manager for Inktomi Traffic Server 4.0.18 through 5.2.2, Traffic Edge 1.1.2 and 1.5.0, and Media-IXT 3.0.4 allows local users to gain root privileges via a long -path argument.
-1.  [CVE-2010-2952](https://nvd.nist.gov/vuln/detail/CVE-2010-2952): Apache Traffic Server before 2.0.1, and 2.1.x before 2.1.2-unstable, does not properly choose DNS source ports and transaction IDs, and does not properly use DNS query fields to validate responses, which makes it easier for man-in-the-middle attackers to poison the internal DNS cache via a crafted response.
-1.  [CVE-2012-0256](https://nvd.nist.gov/vuln/detail/CVE-2012-0256): Apache Traffic Server 2.0.x and 3.0.x before 3.0.4 and 3.1.x before 3.1.3 does not properly allocate heap memory, which allows remote attackers to cause a denial of service (daemon crash) via a long HTTP Host header.
-1.  [CVE-2014-3525](https://nvd.nist.gov/vuln/detail/CVE-2014-3525): Unspecified vulnerability in Apache Traffic Server 3.x through 3.2.5, 4.x before 4.2.1.1, and 5.x before 5.0.1 has unknown impact and attack vectors, possibly related to health checks.
-1.  [CVE-2014-10022](https://nvd.nist.gov/vuln/detail/CVE-2014-10022): Apache Traffic Server before 5.1.2 allows remote attackers to cause a denial of service via unspecified vectors, related to internal buffer sizing.
-1.  [CVE-2017-5659](https://nvd.nist.gov/vuln/detail/CVE-2017-5659): Apache Traffic Server before 6.2.1 generates a coredump when there is a mismatch between content length and chunked encoding.
-1.  [CVE-2015-5206](https://nvd.nist.gov/vuln/detail/CVE-2015-5206): Unspecified vulnerability in the HTTP/2 experimental feature in Apache Traffic Server before 5.3.x before 5.3.2 has unknown impact and attack vectors, a different vulnerability than CVE-2015-5168.
-1.  [CVE-2014-3624](https://nvd.nist.gov/vuln/detail/CVE-2014-3624): Apache Traffic Server 5.1.x before 5.1.1 allows remote attackers to bypass access restrictions by leveraging failure to properly tunnel remap requests using CONNECT.
-1.  [CVE-2017-5660](https://nvd.nist.gov/vuln/detail/CVE-2017-5660): There is a vulnerability in Apache Traffic Server (ATS) 6.2.0 and prior and 7.0.0 and prior with the Host header and line folding. This can have issues when interacting with upstream proxies and the wrong host being used.
-1.  [CVE-2018-8022](https://nvd.nist.gov/vuln/detail/CVE-2018-8022): A carefully crafted invalid TLS handshake can cause Apache Traffic Server (ATS) to segfault. This affects version 6.2.2. To resolve this issue users running 6.2.2 should upgrade to 6.2.3 or later versions.
-1.  [CVE-2018-11783](https://nvd.nist.gov/vuln/detail/CVE-2018-11783): sslheaders plugin extracts information from the client certificate and sets headers in the request based on the configuration of the plugin. The plugin doesn't strip the headers from the request in some scenarios. This problem was discovered in versions 6.0.0 to 6.0.3, 7.0.0 to 7.1.5, and 8.0.0 to 8.0.1.
-1.  [CVE-2019-9516](https://nvd.nist.gov/vuln/detail/CVE-2019-9516): Some HTTP/2 implementations are vulnerable to a header leak, potentially leading to a denial of service. The attacker sends a stream of headers with a 0-length header name and 0-length header value, optionally Huffman encoded into 1-byte or greater headers. Some implementations allocate memory for these headers and keep the allocation alive until the session dies. This can consume excess memory.
-1.  [CVE-2019-10079](https://nvd.nist.gov/vuln/detail/CVE-2019-10079): Apache Traffic Server is vulnerable to HTTP/2 setting flood attacks. Earlier versions of Apache Traffic Server didn't limit the number of setting frames sent from the client using the HTTP/2 protocol. Users should upgrade to Apache Traffic Server 7.1.7, 8.0.4, or later versions.
-1.  [CVE-2019-17559](https://nvd.nist.gov/vuln/detail/CVE-2019-17559): There is a vulnerability in Apache Traffic Server 6.0.0 to 6.2.3, 7.0.0 to 7.1.8, and 8.0.0 to 8.0.5 with a smuggling attack and scheme parsing. Upgrade to versions 7.1.9 and 8.0.6 or later versions.
-1.  [CVE-2020-9481](https://nvd.nist.gov/vuln/detail/CVE-2020-9481): Apache ATS 6.0.0 to 6.2.3, 7.0.0 to 7.1.9, and 8.0.0 to 8.0.6 is vulnerable to a HTTP/2 slow read attack.
-1.  [CVE-2020-9494](https://nvd.nist.gov/vuln/detail/CVE-2020-9494): Apache Traffic Server 6.0.0 to 6.2.3, 7.0.0 to 7.1.10, and 8.0.0 to 8.0.7 is vulnerable to certain types of HTTP/2 HEADERS frames that can cause the server to allocate a large amount of memory and spin the thread.
-1.  [CVE-2020-17509](https://nvd.nist.gov/vuln/detail/CVE-2020-17509): ATS negative cache option is vulnerable to a cache poisoning attack. If you have this option enabled, please upgrade or disable this feature. Apache Traffic Server versions 7.0.0 to 7.1.11 and 8.0.0 to 8.1.0 are affected.
-1.  [CVE-2021-27737](https://nvd.nist.gov/vuln/detail/CVE-2021-27737): Apache Traffic Server 9.0.0 is vulnerable to a remote DOS attack on the experimental Slicer plugin.
-1.  [CVE-2021-27577](https://nvd.nist.gov/vuln/detail/CVE-2021-27577): Incorrect handling of url fragment vulnerability of Apache Traffic Server allows an attacker to poison the cache. This issue affects Apache Traffic Server 7.0.0 to 7.1.12, 8.0.0 to 8.1.1, 9.0.0 to 9.0.1.
-1.  [CVE-2021-35474](https://nvd.nist.gov/vuln/detail/CVE-2021-35474): Stack-based Buffer Overflow vulnerability in cachekey plugin of Apache Traffic Server. This issue affects Apache Traffic Server 7.0.0 to 7.1.12, 8.0.0 to 8.1.1, 9.0.0 to 9.0.1.
-1.  [CVE-2021-41585](https://nvd.nist.gov/vuln/detail/CVE-2021-41585): Improper Input Validation vulnerability in accepting socket connections in Apache Traffic Server allows an attacker to make the server stop accepting new connections. This issue affects Apache Traffic Server 5.0.0 to 9.1.0.
-1.  [CVE-2021-44040](https://nvd.nist.gov/vuln/detail/CVE-2021-44040): Improper Input Validation vulnerability in request line parsing of Apache Traffic Server allows an attacker to send invalid requests. This issue affects Apache Traffic Server 8.0.0 to 8.1.3 and 9.0.0 to 9.1.1.
-1.  [CVE-2022-25763](https://nvd.nist.gov/vuln/detail/CVE-2022-25763): Improper Input Validation vulnerability in HTTP/2 request validation of Apache Traffic Server allows an attacker to create smuggle or cache poison attacks. This issue affects Apache Traffic Server 8.0.0 to 9.1.2.
-1.  [CVE-2022-32749](https://nvd.nist.gov/vuln/detail/CVE-2022-32749): Improper Check for Unusual or Exceptional Conditions vulnerability handling requests in Apache Traffic Server allows an attacker to crash the server under certain conditions. This issue affects Apache Traffic Server: from 8.0.0 through 9.1.3.
+1.  [CVE-2002-1013](https://nvd.nist.gov/vuln/detail/CVE-2002-1013)
+1.  [CVE-2010-2952](https://nvd.nist.gov/vuln/detail/CVE-2010-2952)
+1.  [CVE-2012-0256](https://nvd.nist.gov/vuln/detail/CVE-2012-0256)
+1.  [CVE-2014-3525](https://nvd.nist.gov/vuln/detail/CVE-2014-3525)
+1.  [CVE-2014-10022](https://nvd.nist.gov/vuln/detail/CVE-2014-10022)
+1.  [CVE-2017-5659](https://nvd.nist.gov/vuln/detail/CVE-2017-5659)
+1.  [CVE-2015-5206](https://nvd.nist.gov/vuln/detail/CVE-2015-5206)
+1.  [CVE-2014-3624](https://nvd.nist.gov/vuln/detail/CVE-2014-3624)
+1.  [CVE-2017-5660](https://nvd.nist.gov/vuln/detail/CVE-2017-5660)
+1.  [CVE-2018-8022](https://nvd.nist.gov/vuln/detail/CVE-2018-8022)
+1.  [CVE-2018-11783](https://nvd.nist.gov/vuln/detail/CVE-2018-11783)
+1.  [CVE-2019-9516](https://nvd.nist.gov/vuln/detail/CVE-2019-9516)
+1.  [CVE-2019-10079](https://nvd.nist.gov/vuln/detail/CVE-2019-10079)
+1.  [CVE-2019-17559](https://nvd.nist.gov/vuln/detail/CVE-2019-17559)
+1.  [CVE-2020-9481](https://nvd.nist.gov/vuln/detail/CVE-2020-9481)
+1.  [CVE-2020-9494](https://nvd.nist.gov/vuln/detail/CVE-2020-9494)
+1.  [CVE-2020-17509](https://nvd.nist.gov/vuln/detail/CVE-2020-17509)
+1.  [CVE-2021-27737](https://nvd.nist.gov/vuln/detail/CVE-2021-27737)
+1.  [CVE-2021-27577](https://nvd.nist.gov/vuln/detail/CVE-2021-27577)
+1.  [CVE-2021-35474](https://nvd.nist.gov/vuln/detail/CVE-2021-35474)
+1.  [CVE-2021-41585](https://nvd.nist.gov/vuln/detail/CVE-2021-41585)
+1.  [CVE-2021-44040](https://nvd.nist.gov/vuln/detail/CVE-2021-44040)
+1.  [CVE-2022-25763](https://nvd.nist.gov/vuln/detail/CVE-2022-25763)
+1.  [CVE-2022-32749](https://nvd.nist.gov/vuln/detail/CVE-2022-32749)
 
 

@@ -608,9 +608,9 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2016-5537](https://nvd.nist.gov/vuln/detail/CVE-2016-5537): Unspecified vulnerability in the NetBeans component in Oracle Fusion Middleware 8.1 allows local users to affect confidentiality, integrity, and availability via unknown vectors. NOTE: the previous information is from the October 2016 CPU. Oracle has not commented on third-party claims that this issue is a directory traversal vulnerability which allows local users with certain permissions to write to arbitrary files and consequently gain privileges via a .. (dot dot) in a archive entry in a ZIP file imported as a project.
-1.  [CVE-2018-17191](https://nvd.nist.gov/vuln/detail/CVE-2018-17191): Apache NetBeans (incubating) 9.0 NetBeans Proxy Auto-Configuration (PAC) interpretation is vulnerable for remote command execution (RCE). Using the nashorn script engine the environment of the javascript execution for the Proxy Auto-Configuration leaks privileged objects, that can be used to circumvent the execution limits. If a different script engine was used, no execution limits were in place. Both vectors allow remote code execution.
-1.  [CVE-2019-17560](https://nvd.nist.gov/vuln/detail/CVE-2019-17560): The "Apache NetBeans" autoupdate system does not validate SSL certificates and hostnames for https based downloads. This allows an attacker to intercept downloads of autoupdates and modify the download, potentially injecting malicious code. “Apache NetBeans" versions up to and including 11.2 are affected by this vulnerability.
-1.  [CVE-2020-11986](https://nvd.nist.gov/vuln/detail/CVE-2020-11986): To be able to analyze gradle projects, the build scripts need to be executed. Apache NetBeans follows this pattern. This causes the code of the build script to be invoked at load time of the project. Apache NetBeans up to and including 12.0 did not request consent from the user for the analysis of the project at load time. This in turn will run potentially malicious code, from an external source, without the consent of the user.
+1.  [CVE-2016-5537](https://nvd.nist.gov/vuln/detail/CVE-2016-5537)
+1.  [CVE-2018-17191](https://nvd.nist.gov/vuln/detail/CVE-2018-17191)
+1.  [CVE-2019-17560](https://nvd.nist.gov/vuln/detail/CVE-2019-17560)
+1.  [CVE-2020-11986](https://nvd.nist.gov/vuln/detail/CVE-2020-11986)
 
 

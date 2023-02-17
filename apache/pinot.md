@@ -609,7 +609,7 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2022-23974](https://nvd.nist.gov/vuln/detail/CVE-2022-23974): In 0.9.3 or older versions of Apache Pinot segment upload path allowed segment directories to be imported into pinot tables. In pinot installations that allow open access to the controller a specially crafted request can potentially be exploited to cause disruption in pinot service. Pinot release 0.10.0 fixes this. See https://docs.pinot.apache.org/basics/releases/0.10.0
-1.  [CVE-2022-26112](https://nvd.nist.gov/vuln/detail/CVE-2022-26112): In 0.10.0 or older versions of Apache Pinot, Pinot query endpoint and realtime ingestion layer has a vulnerability in unprotected environments due to a groovy function support. In order to avoid this, we disabled the groovy function support by default from Pinot release 0.11.0. See https://docs.pinot.apache.org/basics/releases/0.11.0
+1.  [CVE-2022-23974](https://nvd.nist.gov/vuln/detail/CVE-2022-23974)
+1.  [CVE-2022-26112](https://nvd.nist.gov/vuln/detail/CVE-2022-26112)
 
 

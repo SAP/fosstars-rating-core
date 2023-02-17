@@ -630,11 +630,11 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2020-1952](https://nvd.nist.gov/vuln/detail/CVE-2020-1952): An issue was found in Apache IoTDB .9.0 to 0.9.1 and 0.8.0 to 0.8.2. When starting IoTDB, the JMX port 31999 is exposed with no certification.Then, clients could execute code remotely.
-1.  [CVE-2020-25649](https://nvd.nist.gov/vuln/detail/CVE-2020-25649): A flaw was found in FasterXML Jackson Databind, where it did not have entity expansion secured properly. This flaw allows vulnerability to XML external entity (XXE) attacks. The highest threat from this vulnerability is data integrity.
-1.  [CVE-2022-38370](https://nvd.nist.gov/vuln/detail/CVE-2022-38370): Apache IoTDB grafana-connector version 0.13.0 contains an interface without authorization, which may expose the internal structure of database. Users should upgrade to version 0.13.1 which addresses this issue.
-1.  [CVE-2022-43766](https://nvd.nist.gov/vuln/detail/CVE-2022-43766): Apache IoTDB version 0.12.2 to 0.12.6, 0.13.0 to 0.13.2 are vulnerable to a Denial of Service attack when accepting untrusted patterns for REGEXP queries with Java 8. Users should upgrade to 0.13.3 which addresses this issue or use a later version of Java to avoid it.
-1.  [CVE-2023-24830](https://nvd.nist.gov/vuln/detail/CVE-2023-24830): Improper Authentication vulnerability in Apache Software Foundation Apache IoTDB.This issue affects Apache IoTDB: from 0.13.0 before 0.13.3.
-1.  [CVE-2023-24829](https://nvd.nist.gov/vuln/detail/CVE-2023-24829): Incorrect Authorization vulnerability in Apache Software Foundation Apache IoTDB.This issue affects the iotdb-web-workbench component from 0.13.0 before 0.13.3. iotdb-web-workbench is an optional component of IoTDB, providing a web console of the database. This problem is fixed from version 0.13.3 of iotdb-web-workbench onwards.
+1.  [CVE-2020-1952](https://nvd.nist.gov/vuln/detail/CVE-2020-1952)
+1.  [CVE-2020-25649](https://nvd.nist.gov/vuln/detail/CVE-2020-25649)
+1.  [CVE-2022-38370](https://nvd.nist.gov/vuln/detail/CVE-2022-38370)
+1.  [CVE-2022-43766](https://nvd.nist.gov/vuln/detail/CVE-2022-43766)
+1.  [CVE-2023-24830](https://nvd.nist.gov/vuln/detail/CVE-2023-24830)
+1.  [CVE-2023-24829](https://nvd.nist.gov/vuln/detail/CVE-2023-24829)
 
 

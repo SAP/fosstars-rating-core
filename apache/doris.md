@@ -634,6 +634,6 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2022-23942](https://nvd.nist.gov/vuln/detail/CVE-2022-23942): Apache Doris, prior to 1.0.0, used a hardcoded key and IV to initialize the cipher used for ldap password, which may lead to information disclosure.
+1.  [CVE-2022-23942](https://nvd.nist.gov/vuln/detail/CVE-2022-23942)
 
 

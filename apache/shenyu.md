@@ -599,9 +599,9 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2021-37580](https://nvd.nist.gov/vuln/detail/CVE-2021-37580): A flaw was found in Apache ShenYu Admin. The incorrect use of JWT in ShenyuAdminBootstrap allows an attacker to bypass authentication. This issue affected Apache ShenYu 2.3.0 and 2.4.0
-1.  [CVE-2022-23944](https://nvd.nist.gov/vuln/detail/CVE-2022-23944): User can access /plugin api without authentication. This issue affected Apache ShenYu 2.4.0 and 2.4.1.
-1.  [CVE-2022-26650](https://nvd.nist.gov/vuln/detail/CVE-2022-26650): In Apache ShenYui, ShenYu-Bootstrap, RegexPredicateJudge.java uses Pattern.matches(conditionData.getParamValue(), realData) to make judgments, where both parameters are controllable by the user. This can cause an attacker pass in malicious regular expressions and characters causing a resource exhaustion. This issue affects Apache ShenYu (incubating) 2.4.0, 2.4.1 and 2.4.2 and is fixed in 2.4.3.
-1.  [CVE-2022-37435](https://nvd.nist.gov/vuln/detail/CVE-2022-37435): Apache ShenYu Admin has insecure permissions, which may allow low-privilege administrators to modify high-privilege administrator's passwords. This issue affects Apache ShenYu 2.4.2 and 2.4.3.
+1.  [CVE-2021-37580](https://nvd.nist.gov/vuln/detail/CVE-2021-37580)
+1.  [CVE-2022-23944](https://nvd.nist.gov/vuln/detail/CVE-2022-23944)
+1.  [CVE-2022-26650](https://nvd.nist.gov/vuln/detail/CVE-2022-26650)
+1.  [CVE-2022-37435](https://nvd.nist.gov/vuln/detail/CVE-2022-37435)
 
 

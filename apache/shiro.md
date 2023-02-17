@@ -600,19 +600,19 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2010-3863](https://nvd.nist.gov/vuln/detail/CVE-2010-3863): Apache Shiro before 1.1.0, and JSecurity 0.9.x, does not canonicalize URI paths before comparing them to entries in the shiro.ini file, which allows remote attackers to bypass intended access restrictions via a crafted request, as demonstrated by the /./account/index.jsp URI.
-1.  [CVE-2014-0074](https://nvd.nist.gov/vuln/detail/CVE-2014-0074): Apache Shiro 1.x before 1.2.3, when using an LDAP server with unauthenticated bind enabled, allows remote attackers to bypass authentication via an empty (1) username or (2) password.
-1.  [CVE-2016-4437](https://nvd.nist.gov/vuln/detail/CVE-2016-4437): Apache Shiro before 1.2.5, when a cipher key has not been configured for the "remember me" feature, allows remote attackers to execute arbitrary code or bypass intended access restrictions via an unspecified request parameter.
-1.  [CVE-2016-6802](https://nvd.nist.gov/vuln/detail/CVE-2016-6802): Apache Shiro before 1.3.2 allows attackers to bypass intended servlet filters and gain access by leveraging use of a non-root servlet context path.
-1.  [CVE-2019-12422](https://nvd.nist.gov/vuln/detail/CVE-2019-12422): Apache Shiro before 1.4.2, when using the default "remember me" configuration, cookies could be susceptible to a padding attack.
-1.  [CVE-2020-1957](https://nvd.nist.gov/vuln/detail/CVE-2020-1957): Apache Shiro before 1.5.2, when using Apache Shiro with Spring dynamic controllers, a specially crafted request may cause an authentication bypass.
-1.  [CVE-2020-11989](https://nvd.nist.gov/vuln/detail/CVE-2020-11989): Apache Shiro before 1.5.3, when using Apache Shiro with Spring dynamic controllers, a specially crafted request may cause an authentication bypass.
-1.  [CVE-2020-13933](https://nvd.nist.gov/vuln/detail/CVE-2020-13933): Apache Shiro before 1.6.0, when using Apache Shiro, a specially crafted HTTP request may cause an authentication bypass.
-1.  [CVE-2020-17510](https://nvd.nist.gov/vuln/detail/CVE-2020-17510): Apache Shiro before 1.7.0, when using Apache Shiro with Spring, a specially crafted HTTP request may cause an authentication bypass.
-1.  [CVE-2020-17523](https://nvd.nist.gov/vuln/detail/CVE-2020-17523): Apache Shiro before 1.7.1, when using Apache Shiro with Spring, a specially crafted HTTP request may cause an authentication bypass.
-1.  [CVE-2021-41303](https://nvd.nist.gov/vuln/detail/CVE-2021-41303): Apache Shiro before 1.8.0, when using Apache Shiro with Spring Boot, a specially crafted HTTP request may cause an authentication bypass. Users should update to Apache Shiro 1.8.0.
-1.  [CVE-2022-32532](https://nvd.nist.gov/vuln/detail/CVE-2022-32532): Apache Shiro before 1.9.1, A RegexRequestMatcher can be misconfigured to be bypassed on some servlet containers. Applications using RegExPatternMatcher with `.` in the regular expression are possibly vulnerable to an authorization bypass.
-1.  [CVE-2022-40664](https://nvd.nist.gov/vuln/detail/CVE-2022-40664): Apache Shiro before 1.10.0, Authentication Bypass Vulnerability in Shiro when forwarding or including via RequestDispatcher.
-1.  [CVE-2023-22602](https://nvd.nist.gov/vuln/detail/CVE-2023-22602): When using Apache Shiro before 1.11.0 together with Spring Boot 2.6+, a specially crafted HTTP request may cause an authentication bypass. The authentication bypass occurs when Shiro and Spring Boot are using different pattern-matching techniques. Both Shiro and Spring Boot < 2.6 default to Ant style pattern matching. Mitigation: Update to Apache Shiro 1.11.0, or set the following Spring Boot configuration value: `spring.mvc.pathmatch.matching-strategy = ant_path_matcher`
+1.  [CVE-2010-3863](https://nvd.nist.gov/vuln/detail/CVE-2010-3863)
+1.  [CVE-2014-0074](https://nvd.nist.gov/vuln/detail/CVE-2014-0074)
+1.  [CVE-2016-4437](https://nvd.nist.gov/vuln/detail/CVE-2016-4437)
+1.  [CVE-2016-6802](https://nvd.nist.gov/vuln/detail/CVE-2016-6802)
+1.  [CVE-2019-12422](https://nvd.nist.gov/vuln/detail/CVE-2019-12422)
+1.  [CVE-2020-1957](https://nvd.nist.gov/vuln/detail/CVE-2020-1957)
+1.  [CVE-2020-11989](https://nvd.nist.gov/vuln/detail/CVE-2020-11989)
+1.  [CVE-2020-13933](https://nvd.nist.gov/vuln/detail/CVE-2020-13933)
+1.  [CVE-2020-17510](https://nvd.nist.gov/vuln/detail/CVE-2020-17510)
+1.  [CVE-2020-17523](https://nvd.nist.gov/vuln/detail/CVE-2020-17523)
+1.  [CVE-2021-41303](https://nvd.nist.gov/vuln/detail/CVE-2021-41303)
+1.  [CVE-2022-32532](https://nvd.nist.gov/vuln/detail/CVE-2022-32532)
+1.  [CVE-2022-40664](https://nvd.nist.gov/vuln/detail/CVE-2022-40664)
+1.  [CVE-2023-22602](https://nvd.nist.gov/vuln/detail/CVE-2023-22602)
 
 

@@ -616,15 +616,15 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2012-6637](https://nvd.nist.gov/vuln/detail/CVE-2012-6637): Apache Cordova 3.3.0 and earlier and Adobe PhoneGap 2.9.0 and earlier do not anchor the end of domain-name regular expressions, which allows remote attackers to bypass a whitelist protection mechanism via a domain name that contains an acceptable name as an initial substring.
-1.  [CVE-2014-3500](https://nvd.nist.gov/vuln/detail/CVE-2014-3500): Apache Cordova Android before 3.5.1 allows remote attackers to change the start page via a crafted intent URL.
-1.  [CVE-2015-8320](https://nvd.nist.gov/vuln/detail/CVE-2015-8320): Apache Cordova-Android before 3.7.0 improperly generates random values for BridgeSecret data, which makes it easier for attackers to conduct bridge hijacking attacks by predicting a value.
-1.  [CVE-2015-5207](https://nvd.nist.gov/vuln/detail/CVE-2015-5207): Apache Cordova iOS before 4.0.0 might allow attackers to bypass a URL whitelist protection mechanism in an app and load arbitrary resources by leveraging unspecified methods.
-1.  [CVE-2016-6799](https://nvd.nist.gov/vuln/detail/CVE-2016-6799): Product: Apache Cordova Android 5.2.2 and earlier. The application calls methods of the Log class. Messages passed to these methods (Log.v(), Log.d(), Log.i(), Log.w(), and Log.e()) are stored in a series of circular buffers on the device. By default, a maximum of four 16 KB rotated logs are kept in addition to the current log. The logged data can be read using Logcat on the device. When using platforms prior to Android 4.1 (Jelly Bean), the log data is not sandboxed per application; any application installed on the device has the capability to read data logged by other applications.
-1.  [CVE-2015-1835](https://nvd.nist.gov/vuln/detail/CVE-2015-1835): Apache Cordova Android before 3.7.2 and 4.x before 4.0.2, when an application does not set explicit values in config.xml, allows remote attackers to modify undefined secondary configuration variables (preferences) via a crafted intent: URL.
-1.  [CVE-2014-0073](https://nvd.nist.gov/vuln/detail/CVE-2014-0073): The CDVInAppBrowser class in the Apache Cordova In-App-Browser standalone plugin (org.apache.cordova.inappbrowser) before 0.3.2 for iOS and the In-App-Browser plugin for iOS from Cordova 2.6.0 through 2.9.0 does not properly validate callback identifiers, which allows remote attackers to execute arbitrary JavaScript in the host page and consequently gain privileges via a crafted gap-iab: URI.
-1.  [CVE-2017-3160](https://nvd.nist.gov/vuln/detail/CVE-2017-3160): After the Android platform is added to Cordova the first time, or after a project is created using the build scripts, the scripts will fetch Gradle on the first build. However, since the default URI is not using https, it is vulnerable to a MiTM and the Gradle executable is not safe. The severity of this issue is high due to the fact that the build scripts immediately start a build after Gradle has been fetched. Developers who are concerned about this issue should install version 6.1.2 or higher of Cordova-Android. If developers are unable to install the latest version, this vulnerability can easily be mitigated by setting the CORDOVA_ANDROID_GRADLE_DISTRIBUTION_URL environment variable to https://services.gradle.org/distributions/gradle-2.14.1-all.zip
-1.  [CVE-2020-11990](https://nvd.nist.gov/vuln/detail/CVE-2020-11990): We have resolved a security issue in the camera plugin that could have affected certain Cordova (Android) applications. An attacker who could install (or lead the victim to install) a specially crafted (or malicious) Android application would be able to access pictures taken with the app externally.
-1.  [CVE-2021-21315](https://nvd.nist.gov/vuln/detail/CVE-2021-21315): The System Information Library for Node.JS (npm package "systeminformation") is an open source collection of functions to retrieve detailed hardware, system and OS information. In systeminformation before version 5.3.1 there is a command injection vulnerability. Problem was fixed in version 5.3.1. As a workaround instead of upgrading, be sure to check or sanitize service parameters that are passed to si.inetLatency(), si.inetChecksite(), si.services(), si.processLoad() ... do only allow strings, reject any arrays. String sanitation works as expected.
+1.  [CVE-2012-6637](https://nvd.nist.gov/vuln/detail/CVE-2012-6637)
+1.  [CVE-2014-3500](https://nvd.nist.gov/vuln/detail/CVE-2014-3500)
+1.  [CVE-2015-8320](https://nvd.nist.gov/vuln/detail/CVE-2015-8320)
+1.  [CVE-2015-5207](https://nvd.nist.gov/vuln/detail/CVE-2015-5207)
+1.  [CVE-2016-6799](https://nvd.nist.gov/vuln/detail/CVE-2016-6799)
+1.  [CVE-2015-1835](https://nvd.nist.gov/vuln/detail/CVE-2015-1835)
+1.  [CVE-2014-0073](https://nvd.nist.gov/vuln/detail/CVE-2014-0073)
+1.  [CVE-2017-3160](https://nvd.nist.gov/vuln/detail/CVE-2017-3160)
+1.  [CVE-2020-11990](https://nvd.nist.gov/vuln/detail/CVE-2020-11990)
+1.  [CVE-2021-21315](https://nvd.nist.gov/vuln/detail/CVE-2021-21315)
 
 

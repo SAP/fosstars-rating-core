@@ -603,7 +603,7 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2022-40955](https://nvd.nist.gov/vuln/detail/CVE-2022-40955): In versions of Apache InLong prior to 1.3.0, an attacker with sufficient privileges to specify MySQL JDBC connection URL parameters and to write arbitrary data to the MySQL database, could cause this data to be deserialized by Apache InLong, potentially leading to Remote Code Execution on the Apache InLong server. Users are advised to upgrade to Apache InLong 1.3.0 or newer.
-1.  [CVE-2023-24977](https://nvd.nist.gov/vuln/detail/CVE-2023-24977): Out-of-bounds Read vulnerability in Apache Software Foundation Apache InLong.This issue affects Apache InLong: from 1.1.0 through 1.5.0. Users are advised to upgrade to Apache InLong's latest version or cherry-pick https://github.com/apache/inlong/pull/7214 https://github.com/apache/inlong/pull/7214 to solve it.
+1.  [CVE-2022-40955](https://nvd.nist.gov/vuln/detail/CVE-2022-40955)
+1.  [CVE-2023-24977](https://nvd.nist.gov/vuln/detail/CVE-2023-24977)
 
 

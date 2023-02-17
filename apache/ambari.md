@@ -630,17 +630,17 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2015-3186](https://nvd.nist.gov/vuln/detail/CVE-2015-3186): Cross-site scripting (XSS) vulnerability in Apache Ambari before 2.1.0 allows remote authenticated cluster operator users to inject arbitrary web script or HTML via the note field in a configuration change.
-1.  [CVE-2015-4940](https://nvd.nist.gov/vuln/detail/CVE-2015-4940): Apache Ambari before 2.1, as used in IBM Infosphere BigInsights 4.x before 4.1, stores a cleartext BigSheets password in a configuration file, which allows local users to obtain sensitive information by reading this file.
-1.  [CVE-2016-0731](https://nvd.nist.gov/vuln/detail/CVE-2016-0731): The File Browser View in Apache Ambari before 2.2.1 allows remote authenticated administrators to read arbitrary files via a file: URL in the WebHDFS URL configuration.
-1.  [CVE-2016-6807](https://nvd.nist.gov/vuln/detail/CVE-2016-6807): Custom commands may be executed on Ambari Agent (2.4.x, before 2.4.2) hosts without authorization, leading to unauthorized access to operations that may affect the underlying system. Such operations are invoked by the Ambari Agent process on Ambari Agent hosts, as the user executing the Ambari Agent process.
-1.  [CVE-2016-4976](https://nvd.nist.gov/vuln/detail/CVE-2016-4976): Apache Ambari 2.x before 2.4.0 includes KDC administrator passwords on the kadmin command line, which allows local users to obtain sensitive information via a process listing.
-1.  [CVE-2017-5642](https://nvd.nist.gov/vuln/detail/CVE-2017-5642): During installation of Ambari 2.4.0 through 2.4.2, Ambari Server artifacts are not created with proper ACLs.
-1.  [CVE-2017-5654](https://nvd.nist.gov/vuln/detail/CVE-2017-5654): In Ambari 2.4.x (before 2.4.3) and Ambari 2.5.0, an authorized user of the Ambari Hive View may be able to gain unauthorized read access to files on the host where the Ambari server executes.
-1.  [CVE-2017-5655](https://nvd.nist.gov/vuln/detail/CVE-2017-5655): In Ambari 2.2.2 through 2.4.2 and Ambari 2.5.0, sensitive data may be stored on disk in temporary files on the Ambari Server host. The temporary files are readable by any user authenticated on the host.
-1.  [CVE-2018-8003](https://nvd.nist.gov/vuln/detail/CVE-2018-8003): Apache Ambari, versions 1.4.0 to 2.6.1, is susceptible to a directory traversal attack allowing an unauthenticated user to craft an HTTP request which provides read-only access to any file on the filesystem of the host the Ambari Server runs on that is accessible by the user the Ambari Server is running as. Direct network access to the Ambari Server is required to issue this request, and those Ambari Servers that are protected behind a firewall, or in a restricted network zone are at less risk of being affected by this issue.
-1.  [CVE-2018-8042](https://nvd.nist.gov/vuln/detail/CVE-2018-8042): Apache Ambari, version 2.5.0 to 2.6.2, passwords for Hadoop credential stores are exposed in Ambari Agent informational log messages when the credential store feature is enabled for eligible services. For example, Hive and Oozie.
-1.  [CVE-2020-1936](https://nvd.nist.gov/vuln/detail/CVE-2020-1936): A cross-site scripting issue was found in Apache Ambari Views. This was addressed in Apache Ambari 2.7.4.
-1.  [CVE-2020-13924](https://nvd.nist.gov/vuln/detail/CVE-2020-13924): In Apache Ambari versions 2.6.2.2 and earlier, malicious users can construct file names for directory traversal and traverse to other directories to download files.
+1.  [CVE-2015-3186](https://nvd.nist.gov/vuln/detail/CVE-2015-3186)
+1.  [CVE-2015-4940](https://nvd.nist.gov/vuln/detail/CVE-2015-4940)
+1.  [CVE-2016-0731](https://nvd.nist.gov/vuln/detail/CVE-2016-0731)
+1.  [CVE-2016-6807](https://nvd.nist.gov/vuln/detail/CVE-2016-6807)
+1.  [CVE-2016-4976](https://nvd.nist.gov/vuln/detail/CVE-2016-4976)
+1.  [CVE-2017-5642](https://nvd.nist.gov/vuln/detail/CVE-2017-5642)
+1.  [CVE-2017-5654](https://nvd.nist.gov/vuln/detail/CVE-2017-5654)
+1.  [CVE-2017-5655](https://nvd.nist.gov/vuln/detail/CVE-2017-5655)
+1.  [CVE-2018-8003](https://nvd.nist.gov/vuln/detail/CVE-2018-8003)
+1.  [CVE-2018-8042](https://nvd.nist.gov/vuln/detail/CVE-2018-8042)
+1.  [CVE-2020-1936](https://nvd.nist.gov/vuln/detail/CVE-2020-1936)
+1.  [CVE-2020-13924](https://nvd.nist.gov/vuln/detail/CVE-2020-13924)
 
 

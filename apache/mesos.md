@@ -617,13 +617,13 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2017-7687](https://nvd.nist.gov/vuln/detail/CVE-2017-7687): When handling a decoding failure for a malformed URL path of an HTTP request, libprocess in Apache Mesos before 1.1.3, 1.2.x before 1.2.2, 1.3.x before 1.3.1, and 1.4.0-dev might crash because the code accidentally calls inappropriate function. A malicious actor can therefore cause a denial of service of Mesos masters rendering the Mesos-controlled cluster inoperable.
-1.  [CVE-2018-1330](https://nvd.nist.gov/vuln/detail/CVE-2018-1330): When parsing a malformed JSON payload, libprocess in Apache Mesos versions 1.4.0 to 1.5.0 might crash due to an uncaught exception. Parsing chunked HTTP requests with trailers can lead to a libprocess crash too because of the mistakenly planted assertion. A malicious actor can therefore cause a denial of service of Mesos masters rendering the Mesos-controlled cluster inoperable.
-1.  [CVE-2018-8023](https://nvd.nist.gov/vuln/detail/CVE-2018-8023): Apache Mesos can be configured to require authentication to call the Executor HTTP API using JSON Web Token (JWT). In Apache Mesos versions pre-1.4.2, 1.5.0, 1.5.1, 1.6.0 the comparison of the generated HMAC value against the provided signature in the JWT implementation used is vulnerable to a timing attack because instead of a constant-time string comparison routine a standard `==` operator has been used. A malicious actor can therefore abuse the timing difference of when the JWT validation function returns to reveal the correct HMAC value.
-1.  [CVE-2018-1000420](https://nvd.nist.gov/vuln/detail/CVE-2018-1000420): An improper authorization vulnerability exists in Jenkins Mesos Plugin 0.17.1 and earlier in MesosCloud.java that allows attackers with Overall/Read access to obtain credentials IDs for credentials stored in Jenkins.
-1.  [CVE-2019-5736](https://nvd.nist.gov/vuln/detail/CVE-2019-5736): runc through 1.0-rc6, as used in Docker before 18.09.2 and other products, allows attackers to overwrite the host runc binary (and consequently obtain host root access) by leveraging the ability to execute a command as root within one of these types of containers: (1) a new container with an attacker-controlled image, or (2) an existing container, to which the attacker previously had write access, that can be attached with docker exec. This occurs because of file-descriptor mishandling, related to /proc/self/exe.
-1.  [CVE-2018-11793](https://nvd.nist.gov/vuln/detail/CVE-2018-11793): When parsing a JSON payload with deeply nested JSON structures, the parser in Apache Mesos versions pre-1.4.x, 1.4.0 to 1.4.2, 1.5.0 to 1.5.1, 1.6.0 to 1.6.1, and 1.7.0 might overflow the stack due to unbounded recursion. A malicious actor can therefore cause a denial of service of Mesos masters rendering the Mesos-controlled cluster inoperable.
-1.  [CVE-2019-0204](https://nvd.nist.gov/vuln/detail/CVE-2019-0204): A specifically crafted Docker image running under the root user can overwrite the init helper binary of the container runtime and/or the command executor in Apache Mesos versions pre-1.4.x, 1.4.0 to 1.4.2, 1.5.0 to 1.5.2, 1.6.0 to 1.6.1, and 1.7.0 to 1.7.1. A malicious actor can therefore gain root-level code execution on the host.
-1.  [CVE-2019-19750](https://nvd.nist.gov/vuln/detail/CVE-2019-19750): minerstat msOS before 2019-10-23 does not have a unique SSH key for each instance of the product.
+1.  [CVE-2017-7687](https://nvd.nist.gov/vuln/detail/CVE-2017-7687)
+1.  [CVE-2018-1330](https://nvd.nist.gov/vuln/detail/CVE-2018-1330)
+1.  [CVE-2018-8023](https://nvd.nist.gov/vuln/detail/CVE-2018-8023)
+1.  [CVE-2018-1000420](https://nvd.nist.gov/vuln/detail/CVE-2018-1000420)
+1.  [CVE-2019-5736](https://nvd.nist.gov/vuln/detail/CVE-2019-5736)
+1.  [CVE-2018-11793](https://nvd.nist.gov/vuln/detail/CVE-2018-11793)
+1.  [CVE-2019-0204](https://nvd.nist.gov/vuln/detail/CVE-2019-0204)
+1.  [CVE-2019-19750](https://nvd.nist.gov/vuln/detail/CVE-2019-19750)
 
 

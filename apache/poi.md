@@ -625,13 +625,13 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2012-0213](https://nvd.nist.gov/vuln/detail/CVE-2012-0213): The UnhandledDataStructure function in hwpf/model/UnhandledDataStructure.java in Apache POI 3.8 and earlier allows remote attackers to cause a denial of service (OutOfMemoryError exception and possibly JVM destabilization) via a crafted length value in a Channel Definition Format (CDF) or Compound File Binary Format (CFBF) document.
-1.  [CVE-2014-3529](https://nvd.nist.gov/vuln/detail/CVE-2014-3529): The OPC SAX setup in Apache POI before 3.10.1 allows remote attackers to read arbitrary files via an OpenXML file containing an XML external entity declaration in conjunction with an entity reference, related to an XML External Entity (XXE) issue.
-1.  [CVE-2014-9527](https://nvd.nist.gov/vuln/detail/CVE-2014-9527): HSLFSlideShow in Apache POI before 3.11 allows remote attackers to cause a denial of service (infinite loop and deadlock) via a crafted PPT file.
-1.  [CVE-2016-5000](https://nvd.nist.gov/vuln/detail/CVE-2016-5000): The XLSX2CSV example in Apache POI before 3.14 allows remote attackers to read arbitrary files via a crafted OpenXML document containing an external entity declaration in conjunction with an entity reference, related to an XML External Entity (XXE) issue.
-1.  [CVE-2017-5644](https://nvd.nist.gov/vuln/detail/CVE-2017-5644): Apache POI in versions prior to release 3.15 allows remote attackers to cause a denial of service (CPU consumption) via a specially crafted OOXML file, aka an XML Entity Expansion (XEE) attack.
-1.  [CVE-2017-12626](https://nvd.nist.gov/vuln/detail/CVE-2017-12626): Apache POI in versions prior to release 3.17 are vulnerable to Denial of Service Attacks: 1) Infinite Loops while parsing crafted WMF, EMF, MSG and macros (POI bugs 61338 and 61294), and 2) Out of Memory Exceptions while parsing crafted DOC, PPT and XLS (POI bugs 52372 and 61295).
-1.  [CVE-2019-12415](https://nvd.nist.gov/vuln/detail/CVE-2019-12415): In Apache POI up to 4.1.0, when using the tool XSSFExportToXml to convert user-provided Microsoft Excel documents, a specially crafted document can allow an attacker to read files from the local filesystem or from internal network resources via XML External Entity (XXE) Processing.
-1.  [CVE-2022-26336](https://nvd.nist.gov/vuln/detail/CVE-2022-26336): A shortcoming in the HMEF package of poi-scratchpad (Apache POI) allows an attacker to cause an Out of Memory exception. This package is used to read TNEF files (Microsoft Outlook and Microsoft Exchange Server). If an application uses poi-scratchpad to parse TNEF files and the application allows untrusted users to supply them, then a carefully crafted file can cause an Out of Memory exception. This issue affects poi-scratchpad version 5.2.0 and prior versions. Users are recommended to upgrade to poi-scratchpad 5.2.1.
+1.  [CVE-2012-0213](https://nvd.nist.gov/vuln/detail/CVE-2012-0213)
+1.  [CVE-2014-3529](https://nvd.nist.gov/vuln/detail/CVE-2014-3529)
+1.  [CVE-2014-9527](https://nvd.nist.gov/vuln/detail/CVE-2014-9527)
+1.  [CVE-2016-5000](https://nvd.nist.gov/vuln/detail/CVE-2016-5000)
+1.  [CVE-2017-5644](https://nvd.nist.gov/vuln/detail/CVE-2017-5644)
+1.  [CVE-2017-12626](https://nvd.nist.gov/vuln/detail/CVE-2017-12626)
+1.  [CVE-2019-12415](https://nvd.nist.gov/vuln/detail/CVE-2019-12415)
+1.  [CVE-2022-26336](https://nvd.nist.gov/vuln/detail/CVE-2022-26336)
 
 

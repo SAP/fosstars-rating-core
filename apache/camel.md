@@ -605,22 +605,22 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2013-4330](https://nvd.nist.gov/vuln/detail/CVE-2013-4330): Apache Camel before 2.9.7, 2.10.0 before 2.10.7, 2.11.0 before 2.11.2, and 2.12.0 allows remote attackers to execute arbitrary simple language expressions by including "$simple{}" in a CamelFileName message header to a (1) FILE or (2) FTP producer.
-1.  [CVE-2014-0002](https://nvd.nist.gov/vuln/detail/CVE-2014-0002): The XSLT component in Apache Camel before 2.11.4 and 2.12.x before 2.12.3 allows remote attackers to read arbitrary files and possibly have other unspecified impact via an XML document containing an external entity declaration in conjunction with an entity reference, related to an XML External Entity (XXE) issue.
-1.  [CVE-2015-0263](https://nvd.nist.gov/vuln/detail/CVE-2015-0263): XML external entity (XXE) vulnerability in the XML converter setup in converter/jaxp/XmlConverter.java in Apache Camel before 2.13.4 and 2.14.x before 2.14.2 allows remote attackers to read arbitrary files via an external entity in an SAXSource.
-1.  [CVE-2015-5344](https://nvd.nist.gov/vuln/detail/CVE-2015-5344): The camel-xstream component in Apache Camel before 2.15.5 and 2.16.x before 2.16.1 allow remote attackers to execute arbitrary commands via a crafted serialized Java object in an HTTP request.
-1.  [CVE-2015-5348](https://nvd.nist.gov/vuln/detail/CVE-2015-5348): Apache Camel 2.6.x through 2.14.x, 2.15.x before 2.15.5, and 2.16.x before 2.16.1, when using (1) camel-jetty or (2) camel-servlet as a consumer in Camel routes, allow remote attackers to execute arbitrary commands via a crafted serialized Java object in an HTTP request.
-1.  [CVE-2017-3159](https://nvd.nist.gov/vuln/detail/CVE-2017-3159): Apache Camel's camel-snakeyaml component is vulnerable to Java object de-serialization vulnerability. De-serializing untrusted data can lead to security flaws.
-1.  [CVE-2017-5643](https://nvd.nist.gov/vuln/detail/CVE-2017-5643): Apache Camel's Validation Component is vulnerable against SSRF via remote DTDs and XXE.
-1.  [CVE-2016-8749](https://nvd.nist.gov/vuln/detail/CVE-2016-8749): Apache Camel's Jackson and JacksonXML unmarshalling operation are vulnerable to Remote Code Execution attacks.
-1.  [CVE-2017-12633](https://nvd.nist.gov/vuln/detail/CVE-2017-12633): The camel-hessian component in Apache Camel 2.x before 2.19.4 and 2.20.x before 2.20.1 is vulnerable to Java object de-serialisation vulnerability. De-serializing untrusted data can lead to security flaws.
-1.  [CVE-2018-8027](https://nvd.nist.gov/vuln/detail/CVE-2018-8027): Apache Camel 2.20.0 to 2.20.3 and 2.21.0 Core is vulnerable to XXE in XSD validation processor.
-1.  [CVE-2018-8041](https://nvd.nist.gov/vuln/detail/CVE-2018-8041): Apache Camel's Mail 2.20.0 through 2.20.3, 2.21.0 through 2.21.1 and 2.22.0 is vulnerable to path traversal.
-1.  [CVE-2019-0194](https://nvd.nist.gov/vuln/detail/CVE-2019-0194): Apache Camel's File is vulnerable to directory traversal. Camel 2.21.0 to 2.21.3, 2.22.0 to 2.22.2, 2.23.0 and the unsupported Camel 2.x (2.19 and earlier) versions may be also affected.
-1.  [CVE-2019-0188](https://nvd.nist.gov/vuln/detail/CVE-2019-0188): Apache Camel prior to 2.24.0 contains an XML external entity injection (XXE) vulnerability (CWE-611) due to using an outdated vulnerable JSON-lib library. This affects only the camel-xmljson component, which was removed.
-1.  [CVE-2020-5529](https://nvd.nist.gov/vuln/detail/CVE-2020-5529): HtmlUnit prior to 2.37.0 contains code execution vulnerabilities. HtmlUnit initializes Rhino engine improperly, hence a malicious JavScript code can execute arbitrary Java code on the application. Moreover, when embedded in Android application, Android-specific initialization of Rhino engine is done in an improper way, hence a malicious JavaScript code can execute arbitrary Java code on the application.
-1.  [CVE-2020-11973](https://nvd.nist.gov/vuln/detail/CVE-2020-11973): Apache Camel Netty enables Java deserialization by default. Apache Camel 2.22.x, 2.23.x, 2.24.x, 2.25.0, 3.0.0 up to 3.1.0 are affected. 2.x users should upgrade to 2.25.1, 3.x users should upgrade to 3.2.0.
-1.  [CVE-2020-11994](https://nvd.nist.gov/vuln/detail/CVE-2020-11994): Server-Side Template Injection and arbitrary file disclosure on Camel templating components
-1.  [CVE-2022-45046](https://nvd.nist.gov/vuln/detail/CVE-2022-45046): DO NOT USE THIS CANDIDATE NUMBER. ConsultIDs: none. Reason: This candidate was withdrawn by its CNA. Further investigation showed that it was not a security issue. Notes: none.
+1.  [CVE-2013-4330](https://nvd.nist.gov/vuln/detail/CVE-2013-4330)
+1.  [CVE-2014-0002](https://nvd.nist.gov/vuln/detail/CVE-2014-0002)
+1.  [CVE-2015-0263](https://nvd.nist.gov/vuln/detail/CVE-2015-0263)
+1.  [CVE-2015-5344](https://nvd.nist.gov/vuln/detail/CVE-2015-5344)
+1.  [CVE-2015-5348](https://nvd.nist.gov/vuln/detail/CVE-2015-5348)
+1.  [CVE-2017-3159](https://nvd.nist.gov/vuln/detail/CVE-2017-3159)
+1.  [CVE-2017-5643](https://nvd.nist.gov/vuln/detail/CVE-2017-5643)
+1.  [CVE-2016-8749](https://nvd.nist.gov/vuln/detail/CVE-2016-8749)
+1.  [CVE-2017-12633](https://nvd.nist.gov/vuln/detail/CVE-2017-12633)
+1.  [CVE-2018-8027](https://nvd.nist.gov/vuln/detail/CVE-2018-8027)
+1.  [CVE-2018-8041](https://nvd.nist.gov/vuln/detail/CVE-2018-8041)
+1.  [CVE-2019-0194](https://nvd.nist.gov/vuln/detail/CVE-2019-0194)
+1.  [CVE-2019-0188](https://nvd.nist.gov/vuln/detail/CVE-2019-0188)
+1.  [CVE-2020-5529](https://nvd.nist.gov/vuln/detail/CVE-2020-5529)
+1.  [CVE-2020-11973](https://nvd.nist.gov/vuln/detail/CVE-2020-11973)
+1.  [CVE-2020-11994](https://nvd.nist.gov/vuln/detail/CVE-2020-11994)
+1.  [CVE-2022-45046](https://nvd.nist.gov/vuln/detail/CVE-2022-45046)
 
 

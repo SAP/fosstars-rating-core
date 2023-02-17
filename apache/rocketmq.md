@@ -595,8 +595,8 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2019-17572](https://nvd.nist.gov/vuln/detail/CVE-2019-17572): In Apache RocketMQ 4.2.0 to 4.6.0, when the automatic topic creation in the broker is turned on by default, an evil topic like “../../../../topic2020” is sent from rocketmq-client to the broker, a topic folder will be created in the parent directory in brokers, which leads to a directory traversal vulnerability. Users of the affected versions should apply one of the following: Upgrade to Apache RocketMQ 4.6.1 or later.
-1.  [CVE-2020-35882](https://nvd.nist.gov/vuln/detail/CVE-2020-35882): An issue was discovered in the rocket crate before 0.4.5 for Rust. LocalRequest::clone creates more than one mutable references to the same object, possibly causing a data race.
-1.  [CVE-2021-29935](https://nvd.nist.gov/vuln/detail/CVE-2021-29935): An issue was discovered in the rocket crate before 0.4.7 for Rust. uri::Formatter can have a use-after-free if a user-provided function panics.
+1.  [CVE-2019-17572](https://nvd.nist.gov/vuln/detail/CVE-2019-17572)
+1.  [CVE-2020-35882](https://nvd.nist.gov/vuln/detail/CVE-2020-35882)
+1.  [CVE-2021-29935](https://nvd.nist.gov/vuln/detail/CVE-2021-29935)
 
 
