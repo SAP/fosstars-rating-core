@@ -2,10 +2,10 @@
 
 |                  |                                                         | # or projects             |  % or projects              |
 | :--------------- | :------------------------------------------------------ | ------------------------: | --------------------------: |
-| Total            |                                                         | 215      |                        100% |
-| BAD ratings      | score below 4.43                        | 62      |      28.8% |
-| MODERATE ratings | score between 4.43 and 5.54 | 89 | 41.4% |
-| GOOD ratings     | score above 5.54                            | 61     |     28.4% |
+| Total            |                                                         | 219      |                        100% |
+| BAD ratings      | score below 4.43                        | 64      |      29.2% |
+| MODERATE ratings | score between 4.43 and 5.54 | 91 | 41.6% |
+| GOOD ratings     | score above 5.54                            | 61     |     27.9% |
 | UNCLEAR ratings  | confidence below 8.00                    | 0  |  0.0% |
 | UNKNOWN ratings  |                                                         | 3  |  1.4% |
 
@@ -76,6 +76,7 @@
 | [apache/tvm](apache/tvm.md) | [9054](https://github.com/apache/tvm) | 5.98 | [GOOD](apache/tvm.md) | 9.65 | Feb 17, 2023 |
 | [aws/serverless-application-model](aws/serverless-application-model.md) | [8918](https://github.com/aws/serverless-application-model) | 5.81 | [GOOD](aws/serverless-application-model.md) | 9.65 | Feb 17, 2023 |
 | [aws/aws-sdk-go](aws/aws-sdk-go.md) | [8180](https://github.com/aws/aws-sdk-go) | 5.26 | [MODERATE](aws/aws-sdk-go.md) | 10.00 | Feb 17, 2023 |
+| [FasterXML/jackson](FasterXML/jackson.md) | [7992](https://github.com/FasterXML/jackson) | 2.88 | [BAD](FasterXML/jackson.md) | 9.65 | Feb 17, 2023 |
 | [apache/cassandra](apache/cassandra.md) | [7818](https://github.com/apache/cassandra) | 5.08 | [MODERATE](apache/cassandra.md) | 9.65 | Feb 17, 2023 |
 | [apache/shardingsphere-elasticjob](apache/shardingsphere-elasticjob.md) | [7814](https://github.com/apache/shardingsphere-elasticjob) | 5.51 | [MODERATE](apache/shardingsphere-elasticjob.md) | 9.65 | Feb 17, 2023 |
 | [apache/shenyu](apache/shenyu.md) | [7625](https://github.com/apache/shenyu) | 6.43 | [GOOD](apache/shenyu.md) | 9.65 | Feb 17, 2023 |
@@ -123,6 +124,7 @@
 | [apache/kylin](apache/kylin.md) | [3433](https://github.com/apache/kylin) | 3.84 | [BAD](apache/kylin.md) | 10.00 | Feb 17, 2023 |
 | [aws/aws-sdk-ruby](aws/aws-sdk-ruby.md) | [3430](https://github.com/aws/aws-sdk-ruby) | 5.19 | [MODERATE](aws/aws-sdk-ruby.md) | 10.00 | Feb 17, 2023 |
 | [aws/aws-sdk-pandas](aws/aws-sdk-pandas.md) | [3330](https://github.com/aws/aws-sdk-pandas) | 5.86 | [GOOD](aws/aws-sdk-pandas.md) | 10.00 | Feb 17, 2023 |
+| [FasterXML/jackson-databind](FasterXML/jackson-databind.md) | [3224](https://github.com/FasterXML/jackson-databind) | 4.90 | [MODERATE](FasterXML/jackson-databind.md) | 10.00 | Feb 17, 2023 |
 | [aws/aws-lambda-go](aws/aws-lambda-go.md) | [3216](https://github.com/aws/aws-lambda-go) | 4.24 | [BAD](aws/aws-lambda-go.md) | 9.65 | Feb 17, 2023 |
 | [apache/arrow-datafusion](apache/arrow-datafusion.md) | [3191](https://github.com/apache/arrow-datafusion) | 5.85 | [GOOD](apache/arrow-datafusion.md) | 10.00 | Feb 17, 2023 |
 | [apache/httpd](apache/httpd.md) | [3148](https://github.com/apache/httpd) | 5.87 | [GOOD](apache/httpd.md) | 9.65 | Feb 17, 2023 |
@@ -149,6 +151,7 @@
 | [apache/geode](apache/geode.md) | [2180](https://github.com/apache/geode) | 4.16 | [BAD](apache/geode.md) | 9.65 | Feb 17, 2023 |
 | [apache/netbeans](apache/netbeans.md) | [2176](https://github.com/apache/netbeans) | 4.50 | [MODERATE](apache/netbeans.md) | 9.26 | Feb 17, 2023 |
 | [aws/aws-sdk-js-v3](aws/aws-sdk-js-v3.md) | [2152](https://github.com/aws/aws-sdk-js-v3) | 5.46 | [MODERATE](aws/aws-sdk-js-v3.md) | 10.00 | Feb 17, 2023 |
+| [FasterXML/jackson-core](FasterXML/jackson-core.md) | [2139](https://github.com/FasterXML/jackson-core) | 5.18 | [MODERATE](FasterXML/jackson-core.md) | 10.00 | Feb 17, 2023 |
 | [eclipse/eclipse-collections](eclipse/eclipse-collections.md) | [2133](https://github.com/eclipse/eclipse-collections) | 4.97 | [MODERATE](eclipse/eclipse-collections.md) | 9.65 | Feb 17, 2023 |
 | [apache/activemq](apache/activemq.md) | [2126](https://github.com/apache/activemq) | 4.34 | [BAD](apache/activemq.md) | 9.65 | Feb 17, 2023 |
 | [apache/gobblin](apache/gobblin.md) | [2112](https://github.com/apache/gobblin) | 3.69 | [BAD](apache/gobblin.md) | 9.65 | Feb 17, 2023 |
@@ -226,6 +229,7 @@
 | [eclipse/paho.mqtt.javascript](eclipse/paho.mqtt.javascript.md) | [1057](https://github.com/eclipse/paho.mqtt.javascript) | 4.12 | [BAD](eclipse/paho.mqtt.javascript.md) | 9.65 | Feb 17, 2023 |
 | [apache/rocketmq-client-go](apache/rocketmq-client-go.md) | [1045](https://github.com/apache/rocketmq-client-go) | 4.53 | [MODERATE](apache/rocketmq-client-go.md) | 10.00 | Feb 17, 2023 |
 | [aws/aws-toolkit-vscode](aws/aws-toolkit-vscode.md) | [1026](https://github.com/aws/aws-toolkit-vscode) | 4.90 | [MODERATE](aws/aws-toolkit-vscode.md) | 9.65 | Feb 17, 2023 |
+| [FasterXML/jackson-module-kotlin](FasterXML/jackson-module-kotlin.md) | [1002](https://github.com/FasterXML/jackson-module-kotlin) | 3.73 | [BAD](FasterXML/jackson-module-kotlin.md) | 10.00 | Feb 17, 2023 |
 | [spring-projects/spring-hateoas](spring-projects/spring-hateoas.md) | [1000](https://github.com/spring-projects/spring-hateoas) | 4.82 | [MODERATE](spring-projects/spring-hateoas.md) | 10.00 | Feb 17, 2023 |
 | [netty/netty-tcnative](netty/netty-tcnative.md) | [220](https://github.com/netty/netty-tcnative) | 3.63 | [BAD](netty/netty-tcnative.md) | 9.65 | Feb 17, 2023 |
 
