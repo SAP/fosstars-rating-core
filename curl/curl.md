@@ -2,7 +2,7 @@
 
 https://github.com/curl/curl
 
-Last updated on Feb 16, 2023
+Last updated on Feb 17, 2023
 
 **Rating**: **GOOD**
 
@@ -301,14 +301,14 @@ Score: **10.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-397 commits in the last 3 months results to 10.00 points
+396 commits in the last 3 months results to 10.00 points
 7 contributors increase the score value from 10.00 to 12.00
 
 This sub-score is based on 2 features:
 
 
 
-1.  **Number of commits in the last three months:** 397
+1.  **Number of commits in the last three months:** 396
 1.  **Number of contributors in the last three months:** 7
 
 
@@ -325,7 +325,7 @@ This sub-score is based on 3 features:
 
 
 1.  **Number of projects on GitHub that use an open source project:** unknown
-1.  **Number of stars for a GitHub repository:** 28468
+1.  **Number of stars for a GitHub repository:** 28479
 1.  **Number of watchers for a GitHub repository:** 753
 
 
@@ -597,59 +597,59 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2000-0973](https://nvd.nist.gov/vuln/detail/CVE-2000-0973)
-1.  [CVE-2005-0490](https://nvd.nist.gov/vuln/detail/CVE-2005-0490)
-1.  [CVE-2005-3185](https://nvd.nist.gov/vuln/detail/CVE-2005-3185)
-1.  [CVE-2005-4077](https://nvd.nist.gov/vuln/detail/CVE-2005-4077)
-1.  [CVE-2006-1061](https://nvd.nist.gov/vuln/detail/CVE-2006-1061)
-1.  [CVE-2009-0037](https://nvd.nist.gov/vuln/detail/CVE-2009-0037)
-1.  [CVE-2010-3842](https://nvd.nist.gov/vuln/detail/CVE-2010-3842)
-1.  [CVE-2011-3389](https://nvd.nist.gov/vuln/detail/CVE-2011-3389)
-1.  [CVE-2012-0036](https://nvd.nist.gov/vuln/detail/CVE-2012-0036)
-1.  [CVE-2013-0249](https://nvd.nist.gov/vuln/detail/CVE-2013-0249)
-1.  [CVE-2013-2617](https://nvd.nist.gov/vuln/detail/CVE-2013-2617)
-1.  [CVE-2013-1944](https://nvd.nist.gov/vuln/detail/CVE-2013-1944)
-1.  [CVE-2013-2174](https://nvd.nist.gov/vuln/detail/CVE-2013-2174)
-1.  [CVE-2013-4545](https://nvd.nist.gov/vuln/detail/CVE-2013-4545)
-1.  [CVE-2014-0015](https://nvd.nist.gov/vuln/detail/CVE-2014-0015)
-1.  [CVE-2014-0139](https://nvd.nist.gov/vuln/detail/CVE-2014-0139)
-1.  [CVE-2014-2522](https://nvd.nist.gov/vuln/detail/CVE-2014-2522)
-1.  [CVE-2014-3620](https://nvd.nist.gov/vuln/detail/CVE-2014-3620)
-1.  [CVE-2015-3145](https://nvd.nist.gov/vuln/detail/CVE-2015-3145)
-1.  [CVE-2015-3153](https://nvd.nist.gov/vuln/detail/CVE-2015-3153)
-1.  [CVE-2015-3237](https://nvd.nist.gov/vuln/detail/CVE-2015-3237)
-1.  [CVE-2016-0755](https://nvd.nist.gov/vuln/detail/CVE-2016-0755)
-1.  [CVE-2016-3739](https://nvd.nist.gov/vuln/detail/CVE-2016-3739)
-1.  [CVE-2016-4802](https://nvd.nist.gov/vuln/detail/CVE-2016-4802)
-1.  [CVE-2017-7407](https://nvd.nist.gov/vuln/detail/CVE-2017-7407)
-1.  [CVE-2017-9502](https://nvd.nist.gov/vuln/detail/CVE-2017-9502)
-1.  [CVE-2017-1000101](https://nvd.nist.gov/vuln/detail/CVE-2017-1000101)
-1.  [CVE-2017-8816](https://nvd.nist.gov/vuln/detail/CVE-2017-8816)
-1.  [CVE-2018-1000007](https://nvd.nist.gov/vuln/detail/CVE-2018-1000007)
-1.  [CVE-2017-2628](https://nvd.nist.gov/vuln/detail/CVE-2017-2628)
-1.  [CVE-2018-1000121](https://nvd.nist.gov/vuln/detail/CVE-2018-1000121)
-1.  [CVE-2016-9586](https://nvd.nist.gov/vuln/detail/CVE-2016-9586)
-1.  [CVE-2018-1000300](https://nvd.nist.gov/vuln/detail/CVE-2018-1000300)
-1.  [CVE-2018-0500](https://nvd.nist.gov/vuln/detail/CVE-2018-0500)
-1.  [CVE-2017-2629](https://nvd.nist.gov/vuln/detail/CVE-2017-2629)
-1.  [CVE-2016-8624](https://nvd.nist.gov/vuln/detail/CVE-2016-8624)
-1.  [CVE-2016-8623](https://nvd.nist.gov/vuln/detail/CVE-2016-8623)
-1.  [CVE-2003-1605](https://nvd.nist.gov/vuln/detail/CVE-2003-1605)
-1.  [CVE-2018-16842](https://nvd.nist.gov/vuln/detail/CVE-2018-16842)
-1.  [CVE-2019-5435](https://nvd.nist.gov/vuln/detail/CVE-2019-5435)
-1.  [CVE-2019-5443](https://nvd.nist.gov/vuln/detail/CVE-2019-5443)
-1.  [CVE-2019-5481](https://nvd.nist.gov/vuln/detail/CVE-2019-5481)
-1.  [CVE-2016-4606](https://nvd.nist.gov/vuln/detail/CVE-2016-4606)
-1.  [CVE-2020-8284](https://nvd.nist.gov/vuln/detail/CVE-2020-8284)
-1.  [CVE-2021-22901](https://nvd.nist.gov/vuln/detail/CVE-2021-22901)
-1.  [CVE-2021-22922](https://nvd.nist.gov/vuln/detail/CVE-2021-22922)
-1.  [CVE-2021-22946](https://nvd.nist.gov/vuln/detail/CVE-2021-22946)
-1.  [CVE-2022-22576](https://nvd.nist.gov/vuln/detail/CVE-2022-22576)
-1.  [CVE-2022-27779](https://nvd.nist.gov/vuln/detail/CVE-2022-27779)
-1.  [CVE-2022-32205](https://nvd.nist.gov/vuln/detail/CVE-2022-32205)
-1.  [CVE-2022-35252](https://nvd.nist.gov/vuln/detail/CVE-2022-35252)
-1.  [CVE-2022-42915](https://nvd.nist.gov/vuln/detail/CVE-2022-42915)
-1.  [CVE-2022-35260](https://nvd.nist.gov/vuln/detail/CVE-2022-35260)
-1.  [CVE-2022-43551](https://nvd.nist.gov/vuln/detail/CVE-2022-43551)
+1.  [CVE-2000-0973](https://nvd.nist.gov/vuln/detail/CVE-2000-0973): Buffer overflow in curl earlier than 6.0-1.1, and curl-ssl earlier than 6.0-1.2, allows remote attackers to execute arbitrary commands by forcing a long error message to be generated.
+1.  [CVE-2005-0490](https://nvd.nist.gov/vuln/detail/CVE-2005-0490): Multiple stack-based buffer overflows in libcURL and cURL 7.12.1, and possibly other versions, allow remote malicious web servers to execute arbitrary code via base64 encoded replies that exceed the intended buffer lengths when decoded, which is not properly handled by (1) the Curl_input_ntlm function in http_ntlm.c during NTLM authentication or (2) the Curl_krb_kauth and krb4_auth functions in krb4.c during Kerberos authentication.
+1.  [CVE-2005-3185](https://nvd.nist.gov/vuln/detail/CVE-2005-3185): Stack-based buffer overflow in the ntlm_output function in http-ntlm.c for (1) wget 1.10, (2) curl 7.13.2, and (3) libcurl 7.13.2, and other products that use libcurl, when NTLM authentication is enabled, allows remote servers to execute arbitrary code via a long NTLM username.
+1.  [CVE-2005-4077](https://nvd.nist.gov/vuln/detail/CVE-2005-4077): Multiple off-by-one errors in the cURL library (libcurl) 7.11.2 through 7.15.0 allow local users to trigger a buffer overflow and cause a denial of service or bypass PHP security restrictions via certain URLs that (1) are malformed in a way that prevents a terminating null byte from being added to either a hostname or path buffer, or (2) contain a "?"  separator in the hostname portion, which causes a "/" to be prepended to the resulting string.
+1.  [CVE-2006-1061](https://nvd.nist.gov/vuln/detail/CVE-2006-1061): Heap-based buffer overflow in cURL and libcURL 7.15.0 through 7.15.2 allows remote attackers to execute arbitrary commands via a TFTP URL (tftp://) with a valid hostname and a long path.
+1.  [CVE-2009-0037](https://nvd.nist.gov/vuln/detail/CVE-2009-0037): The redirect implementation in curl and libcurl 5.11 through 7.19.3, when CURLOPT_FOLLOWLOCATION is enabled, accepts arbitrary Location values, which might allow remote HTTP servers to (1) trigger arbitrary requests to intranet servers, (2) read or overwrite arbitrary files via a redirect to a file: URL, or (3) execute arbitrary commands via a redirect to an scp: URL.
+1.  [CVE-2010-3842](https://nvd.nist.gov/vuln/detail/CVE-2010-3842): Absolute path traversal vulnerability in curl 7.20.0 through 7.21.1, when the --remote-header-name or -J option is used, allows remote servers to create or overwrite arbitrary files by using \ (backslash) as a separator of path components within the Content-disposition HTTP header.
+1.  [CVE-2011-3389](https://nvd.nist.gov/vuln/detail/CVE-2011-3389): The SSL protocol, as used in certain configurations in Microsoft Windows and Microsoft Internet Explorer, Mozilla Firefox, Google Chrome, Opera, and other products, encrypts data by using CBC mode with chained initialization vectors, which allows man-in-the-middle attackers to obtain plaintext HTTP headers via a blockwise chosen-boundary attack (BCBA) on an HTTPS session, in conjunction with JavaScript code that uses (1) the HTML5 WebSocket API, (2) the Java URLConnection API, or (3) the Silverlight WebClient API, aka a "BEAST" attack.
+1.  [CVE-2012-0036](https://nvd.nist.gov/vuln/detail/CVE-2012-0036): curl and libcurl 7.2x before 7.24.0 do not properly consider special characters during extraction of a pathname from a URL, which allows remote attackers to conduct data-injection attacks via a crafted URL, as demonstrated by a CRLF injection attack on the (1) IMAP, (2) POP3, or (3) SMTP protocol.
+1.  [CVE-2013-0249](https://nvd.nist.gov/vuln/detail/CVE-2013-0249): Stack-based buffer overflow in the Curl_sasl_create_digest_md5_message function in lib/curl_sasl.c in curl and libcurl 7.26.0 through 7.28.1, when negotiating SASL DIGEST-MD5 authentication, allows remote attackers to cause a denial of service (crash) and possibly execute arbitrary code via a long string in the realm parameter in a (1) POP3, (2) SMTP or (3) IMAP message.
+1.  [CVE-2013-2617](https://nvd.nist.gov/vuln/detail/CVE-2013-2617): lib/curl.rb in the Curl Gem for Ruby allows remote attackers to execute arbitrary commands via shell metacharacters in a URL.
+1.  [CVE-2013-1944](https://nvd.nist.gov/vuln/detail/CVE-2013-1944): The tailMatch function in cookie.c in cURL and libcurl before 7.30.0 does not properly match the path domain when sending cookies, which allows remote attackers to steal cookies via a matching suffix in the domain of a URL.
+1.  [CVE-2013-2174](https://nvd.nist.gov/vuln/detail/CVE-2013-2174): Heap-based buffer overflow in the curl_easy_unescape function in lib/escape.c in cURL and libcurl 7.7 through 7.30.0 allows remote attackers to cause a denial of service (application crash) or possibly execute arbitrary code via a crafted string ending in a "%" (percent) character.
+1.  [CVE-2013-4545](https://nvd.nist.gov/vuln/detail/CVE-2013-4545): cURL and libcurl 7.18.0 through 7.32.0, when built with OpenSSL, disables the certificate CN and SAN name field verification (CURLOPT_SSL_VERIFYHOST) when the digital signature verification (CURLOPT_SSL_VERIFYPEER) is disabled, which allows man-in-the-middle attackers to spoof SSL servers via an arbitrary valid certificate.
+1.  [CVE-2014-0015](https://nvd.nist.gov/vuln/detail/CVE-2014-0015): cURL and libcurl 7.10.6 through 7.34.0, when more than one authentication method is enabled, re-uses NTLM connections, which might allow context-dependent attackers to authenticate as other users via a request.
+1.  [CVE-2014-0139](https://nvd.nist.gov/vuln/detail/CVE-2014-0139): cURL and libcurl 7.1 before 7.36.0, when using the OpenSSL, axtls, qsossl or gskit libraries for TLS, recognize a wildcard IP address in the subject's Common Name (CN) field of an X.509 certificate, which might allow man-in-the-middle attackers to spoof arbitrary SSL servers via a crafted certificate issued by a legitimate Certification Authority.
+1.  [CVE-2014-2522](https://nvd.nist.gov/vuln/detail/CVE-2014-2522): curl and libcurl 7.27.0 through 7.35.0, when running on Windows and using the SChannel/Winssl TLS backend, does not verify that the server hostname matches a domain name in the subject's Common Name (CN) or subjectAltName field of the X.509 certificate when accessing a URL that uses a numerical IP address, which allows man-in-the-middle attackers to spoof servers via an arbitrary valid certificate.
+1.  [CVE-2014-3620](https://nvd.nist.gov/vuln/detail/CVE-2014-3620): cURL and libcurl before 7.38.0 allow remote attackers to bypass the Same Origin Policy and set cookies for arbitrary sites by setting a cookie for a top-level domain.
+1.  [CVE-2015-3145](https://nvd.nist.gov/vuln/detail/CVE-2015-3145): The sanitize_cookie_path function in cURL and libcurl 7.31.0 through 7.41.0 does not properly calculate an index, which allows remote attackers to cause a denial of service (out-of-bounds write and crash) or possibly have other unspecified impact via a cookie path containing only a double-quote character.
+1.  [CVE-2015-3153](https://nvd.nist.gov/vuln/detail/CVE-2015-3153): The default configuration for cURL and libcurl before 7.42.1 sends custom HTTP headers to both the proxy and destination server, which might allow remote proxy servers to obtain sensitive information by reading the header contents.
+1.  [CVE-2015-3237](https://nvd.nist.gov/vuln/detail/CVE-2015-3237): The smb_request_state function in cURL and libcurl 7.40.0 through 7.42.1 allows remote SMB servers to obtain sensitive information from memory or cause a denial of service (out-of-bounds read and crash) via crafted length and offset values.
+1.  [CVE-2016-0755](https://nvd.nist.gov/vuln/detail/CVE-2016-0755): The ConnectionExists function in lib/url.c in libcurl before 7.47.0 does not properly re-use NTLM-authenticated proxy connections, which might allow remote attackers to authenticate as other users via a request, a similar issue to CVE-2014-0015.
+1.  [CVE-2016-3739](https://nvd.nist.gov/vuln/detail/CVE-2016-3739): The (1) mbed_connect_step1 function in lib/vtls/mbedtls.c and (2) polarssl_connect_step1 function in lib/vtls/polarssl.c in cURL and libcurl before 7.49.0, when using SSLv3 or making a TLS connection to a URL that uses a numerical IP address, allow remote attackers to spoof servers via an arbitrary valid certificate.
+1.  [CVE-2016-4802](https://nvd.nist.gov/vuln/detail/CVE-2016-4802): Multiple untrusted search path vulnerabilities in cURL and libcurl before 7.49.1, when built with SSPI or telnet is enabled, allow local users to execute arbitrary code and conduct DLL hijacking attacks via a Trojan horse (1) security.dll, (2) secur32.dll, or (3) ws2_32.dll in the application or current working directory.
+1.  [CVE-2017-7407](https://nvd.nist.gov/vuln/detail/CVE-2017-7407): The ourWriteOut function in tool_writeout.c in curl 7.53.1 might allow physically proximate attackers to obtain sensitive information from process memory in opportunistic circumstances by reading a workstation screen during use of a --write-out argument ending in a '%' character, which leads to a heap-based buffer over-read.
+1.  [CVE-2017-9502](https://nvd.nist.gov/vuln/detail/CVE-2017-9502): In curl before 7.54.1 on Windows and DOS, libcurl's default protocol function, which is the logic that allows an application to set which protocol libcurl should attempt to use when given a URL without a scheme part, had a flaw that could lead to it overwriting a heap based memory buffer with seven bytes. If the default protocol is specified to be FILE or a file: URL lacks two slashes, the given "URL" starts with a drive letter, and libcurl is built for Windows or DOS, then libcurl would copy the path 7 bytes off, so that the end of the given path would write beyond the malloc buffer (7 bytes being the length in bytes of the ascii string "file://").
+1.  [CVE-2017-1000101](https://nvd.nist.gov/vuln/detail/CVE-2017-1000101): curl supports "globbing" of URLs, in which a user can pass a numerical range to have the tool iterate over those numbers to do a sequence of transfers. In the globbing function that parses the numerical range, there was an omission that made curl read a byte beyond the end of the URL if given a carefully crafted, or just wrongly written, URL. The URL is stored in a heap based buffer, so it could then be made to wrongly read something else instead of crashing. An example of a URL that triggers the flaw would be `http://ur%20[0-60000000000000000000`.
+1.  [CVE-2017-8816](https://nvd.nist.gov/vuln/detail/CVE-2017-8816): The NTLM authentication feature in curl and libcurl before 7.57.0 on 32-bit platforms allows attackers to cause a denial of service (integer overflow and resultant buffer overflow, and application crash) or possibly have unspecified other impact via vectors involving long user and password fields.
+1.  [CVE-2018-1000007](https://nvd.nist.gov/vuln/detail/CVE-2018-1000007): libcurl 7.1 through 7.57.0 might accidentally leak authentication data to third parties. When asked to send custom headers in its HTTP requests, libcurl will send that set of headers first to the host in the initial URL but also, if asked to follow redirects and a 30X HTTP response code is returned, to the host mentioned in URL in the `Location:` response header value. Sending the same set of headers to subsequent hosts is in particular a problem for applications that pass on custom `Authorization:` headers, as this header often contains privacy sensitive information or data that could allow others to impersonate the libcurl-using client's request.
+1.  [CVE-2017-2628](https://nvd.nist.gov/vuln/detail/CVE-2017-2628): curl, as shipped in Red Hat Enterprise Linux 6 before version 7.19.7-53, did not correctly backport the fix for CVE-2015-3148 because it did not reflect the fact that the HAVE_GSSAPI define was meanwhile substituted by USE_HTTP_NEGOTIATE. This issue was introduced in RHEL 6.7 and affects RHEL 6 curl only.
+1.  [CVE-2018-1000121](https://nvd.nist.gov/vuln/detail/CVE-2018-1000121): A NULL pointer dereference exists in curl 7.21.0 to and including curl 7.58.0 in the LDAP code that allows an attacker to cause a denial of service
+1.  [CVE-2016-9586](https://nvd.nist.gov/vuln/detail/CVE-2016-9586): curl before version 7.52.0 is vulnerable to a buffer overflow when doing a large floating point output in libcurl's implementation of the printf() functions. If there are any application that accepts a format string from the outside without necessary input filtering, it could allow remote attacks.
+1.  [CVE-2018-1000300](https://nvd.nist.gov/vuln/detail/CVE-2018-1000300): curl version curl 7.54.1 to and including curl 7.59.0 contains a CWE-122: Heap-based Buffer Overflow vulnerability in denial of service and more that can result in curl might overflow a heap based memory buffer when closing down an FTP connection with very long server command replies.. This vulnerability appears to have been fixed in curl < 7.54.1 and curl >= 7.60.0.
+1.  [CVE-2018-0500](https://nvd.nist.gov/vuln/detail/CVE-2018-0500): Curl_smtp_escape_eob in lib/smtp.c in curl 7.54.1 to and including curl 7.60.0 has a heap-based buffer overflow that might be exploitable by an attacker who can control the data that curl transmits over SMTP with certain settings (i.e., use of a nonstandard --limit-rate argument or CURLOPT_BUFFERSIZE value).
+1.  [CVE-2017-2629](https://nvd.nist.gov/vuln/detail/CVE-2017-2629): curl before 7.53.0 has an incorrect TLS Certificate Status Request extension feature that asks for a fresh proof of the server's certificate's validity in the code that checks for a test success or failure. It ends up always thinking there's valid proof, even when there is none or if the server doesn't support the TLS extension in question. This could lead to users not detecting when a server's certificate goes invalid or otherwise be mislead that the server is in a better shape than it is in reality. This flaw also exists in the command line tool (--cert-status).
+1.  [CVE-2016-8624](https://nvd.nist.gov/vuln/detail/CVE-2016-8624): curl before version 7.51.0 doesn't parse the authority component of the URL correctly when the host name part ends with a '#' character, and could instead be tricked into connecting to a different host. This may have security implications if you for example use an URL parser that follows the RFC to check for allowed domains before using curl to request them.
+1.  [CVE-2016-8623](https://nvd.nist.gov/vuln/detail/CVE-2016-8623): A flaw was found in curl before version 7.51.0. The way curl handles cookies permits other threads to trigger a use-after-free leading to information disclosure.
+1.  [CVE-2003-1605](https://nvd.nist.gov/vuln/detail/CVE-2003-1605): curl 7.x before 7.10.7 sends CONNECT proxy credentials to the remote server.
+1.  [CVE-2018-16842](https://nvd.nist.gov/vuln/detail/CVE-2018-16842): Curl versions 7.14.1 through 7.61.1 are vulnerable to a heap-based buffer over-read in the tool_msgs.c:voutf() function that may result in information exposure and denial of service.
+1.  [CVE-2019-5435](https://nvd.nist.gov/vuln/detail/CVE-2019-5435): An integer overflow in curl's URL API results in a buffer overflow in libcurl 7.62.0 to and including 7.64.1.
+1.  [CVE-2019-5443](https://nvd.nist.gov/vuln/detail/CVE-2019-5443): A non-privileged user or program can put code and a config file in a known non-privileged path (under C:/usr/local/) that will make curl <= 7.65.1 automatically run the code (as an openssl "engine") on invocation. If that curl is invoked by a privileged user it can do anything it wants.
+1.  [CVE-2019-5481](https://nvd.nist.gov/vuln/detail/CVE-2019-5481): Double-free vulnerability in the FTP-kerberos code in cURL 7.52.0 to 7.65.3.
+1.  [CVE-2016-4606](https://nvd.nist.gov/vuln/detail/CVE-2016-4606): Curl before 7.49.1 in Apple OS X before macOS Sierra prior to 10.12 allows remote or local attackers to execute arbitrary code, gain sensitive information, cause denial-of-service conditions, bypass security restrictions, and perform unauthorized actions. This may aid in other attacks.
+1.  [CVE-2020-8284](https://nvd.nist.gov/vuln/detail/CVE-2020-8284): A malicious server can use the FTP PASV response to trick curl 7.73.0 and earlier into connecting back to a given IP address and port, and this way potentially make curl extract information about services that are otherwise private and not disclosed, for example doing port scanning and service banner extractions.
+1.  [CVE-2021-22901](https://nvd.nist.gov/vuln/detail/CVE-2021-22901): curl 7.75.0 through 7.76.1 suffers from a use-after-free vulnerability resulting in already freed memory being used when a TLS 1.3 session ticket arrives over a connection. A malicious server can use this in rare unfortunate circumstances to potentially reach remote code execution in the client. When libcurl at run-time sets up support for TLS 1.3 session tickets on a connection using OpenSSL, it stores pointers to the transfer in-memory object for later retrieval when a session ticket arrives. If the connection is used by multiple transfers (like with a reused HTTP/1.1 connection or multiplexed HTTP/2 connection) that first transfer object might be freed before the new session is established on that connection and then the function will access a memory buffer that might be freed. When using that memory, libcurl might even call a function pointer in the object, making it possible for a remote code execution if the server could somehow manage to get crafted memory content into the correct place in memory.
+1.  [CVE-2021-22922](https://nvd.nist.gov/vuln/detail/CVE-2021-22922): When curl is instructed to download content using the metalink feature, thecontents is verified against a hash provided in the metalink XML file.The metalink XML file points out to the client how to get the same contentfrom a set of different URLs, potentially hosted by different servers and theclient can then download the file from one or several of them. In a serial orparallel manner.If one of the servers hosting the contents has been breached and the contentsof the specific file on that server is replaced with a modified payload, curlshould detect this when the hash of the file mismatches after a completeddownload. It should remove the contents and instead try getting the contentsfrom another URL. This is not done, and instead such a hash mismatch is onlymentioned in text and the potentially malicious content is kept in the file ondisk.
+1.  [CVE-2021-22946](https://nvd.nist.gov/vuln/detail/CVE-2021-22946): A user can tell curl >= 7.20.0 and <= 7.78.0 to require a successful upgrade to TLS when speaking to an IMAP, POP3 or FTP server (`--ssl-reqd` on the command line or`CURLOPT_USE_SSL` set to `CURLUSESSL_CONTROL` or `CURLUSESSL_ALL` withlibcurl). This requirement could be bypassed if the server would return a properly crafted but perfectly legitimate response.This flaw would then make curl silently continue its operations **withoutTLS** contrary to the instructions and expectations, exposing possibly sensitive data in clear text over the network.
+1.  [CVE-2022-22576](https://nvd.nist.gov/vuln/detail/CVE-2022-22576): An improper authentication vulnerability exists in curl 7.33.0 to and including 7.82.0 which might allow reuse OAUTH2-authenticated connections without properly making sure that the connection was authenticated with the same credentials as set for this transfer. This affects SASL-enabled protocols: SMPTP(S), IMAP(S), POP3(S) and LDAP(S) (openldap only).
+1.  [CVE-2022-27779](https://nvd.nist.gov/vuln/detail/CVE-2022-27779): libcurl wrongly allows cookies to be set for Top Level Domains (TLDs) if thehost name is provided with a trailing dot.curl can be told to receive and send cookies. curl's "cookie engine" can bebuilt with or without [Public Suffix List](https://publicsuffix.org/)awareness. If PSL support not provided, a more rudimentary check exists to atleast prevent cookies from being set on TLDs. This check was broken if thehost name in the URL uses a trailing dot.This can allow arbitrary sites to set cookies that then would get sent to adifferent and unrelated site or domain.
+1.  [CVE-2022-32205](https://nvd.nist.gov/vuln/detail/CVE-2022-32205): A malicious server can serve excessive amounts of `Set-Cookie:` headers in a HTTP response to curl and curl < 7.84.0 stores all of them. A sufficiently large amount of (big) cookies make subsequent HTTP requests to this, or other servers to which the cookies match, create requests that become larger than the threshold that curl uses internally to avoid sending crazy large requests (1048576 bytes) and instead returns an error.This denial state might remain for as long as the same cookies are kept, match and haven't expired. Due to cookie matching rules, a server on `foo.example.com` can set cookies that also would match for `bar.example.com`, making it it possible for a "sister server" to effectively cause a denial of service for a sibling site on the same second level domain using this method.
+1.  [CVE-2022-35252](https://nvd.nist.gov/vuln/detail/CVE-2022-35252): When curl is used to retrieve and parse cookies from a HTTP(S) server, itaccepts cookies using control codes that when later are sent back to a HTTPserver might make the server return 400 responses. Effectively allowing a"sister site" to deny service to all siblings.
+1.  [CVE-2022-42915](https://nvd.nist.gov/vuln/detail/CVE-2022-42915): curl before 7.86.0 has a double free. If curl is told to use an HTTP proxy for a transfer with a non-HTTP(S) URL, it sets up the connection to the remote server by issuing a CONNECT request to the proxy, and then tunnels the rest of the protocol through. An HTTP proxy might refuse this request (HTTP proxies often only allow outgoing connections to specific port numbers, like 443 for HTTPS) and instead return a non-200 status code to the client. Due to flaws in the error/cleanup handling, this could trigger a double free in curl if one of the following schemes were used in the URL for the transfer: dict, gopher, gophers, ldap, ldaps, rtmp, rtmps, or telnet. The earliest affected version is 7.77.0.
+1.  [CVE-2022-35260](https://nvd.nist.gov/vuln/detail/CVE-2022-35260): curl can be told to parse a `.netrc` file for credentials. If that file endsin a line with 4095 consecutive non-white space letters and no newline, curlwould first read past the end of the stack-based buffer, and if the readworks, write a zero byte beyond its boundary.This will in most cases cause a segfault or similar, but circumstances might also cause different outcomes.If a malicious user can provide a custom netrc file to an application or otherwise affect its contents, this flaw could be used as denial-of-service.
+1.  [CVE-2022-43551](https://nvd.nist.gov/vuln/detail/CVE-2022-43551): A vulnerability exists in curl <7.87.0 HSTS check that could be bypassed to trick it to keep using HTTP. Using its HSTS support, curl can be instructed to use HTTPS instead of using an insecure clear-text HTTP step even when HTTP is provided in the URL. However, the HSTS mechanism could be bypassed if the host name in the given URL first uses IDN characters that get replaced to ASCII counterparts as part of the IDN conversion. Like using the character UTF-8 U+3002 (IDEOGRAPHIC FULL STOP) instead of the common ASCII full stop (U+002E) `.`. Then in a subsequent request, it does not detect the HSTS state and makes a clear text transfer. Because it would store the info IDN encoded but look for it IDN decoded.
 
 
