@@ -592,6 +592,6 @@ This sub-score is based on 3 features:
 
 ## Known vulnerabilities
 
-1.  [CVE-2020-15522](https://nvd.nist.gov/vuln/detail/CVE-2020-15522): Bouncy Castle BC Java before 1.66, BC C# .NET before 1.8.7, BC-FJA before 1.0.1.2, 1.0.2.1, and BC-FNA before 1.0.1.1 have a timing issue within the EC math library that can expose information about the private key when an attacker is able to observe timing information for the generation of multiple deterministic ECDSA signatures.
+1.  [CVE-2020-15522](https://nvd.nist.gov/vuln/detail/CVE-2020-15522)
 
 
