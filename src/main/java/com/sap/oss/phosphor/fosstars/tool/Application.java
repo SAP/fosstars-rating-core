@@ -21,6 +21,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import okhttp3.OkHttpClient;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
@@ -34,8 +36,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
 import org.kohsuke.github.GitHub;
 import org.kohsuke.github.GitHubBuilder;
-import org.kohsuke.github.HttpConnector;
-import org.kohsuke.github.extras.ImpatientHttpConnector;
+import org.kohsuke.github.extras.okhttp3.OkHttpGitHubConnector;
 
 /**
  * This is a command-line tool for calculating ratings.
@@ -390,14 +391,12 @@ public class Application {
       }
     }
 
-    ImpatientHttpConnector connector = new ImpatientHttpConnector(HttpConnector.DEFAULT);
-
     List<Exception> suppressed = new ArrayList<>();
     if (token != null) {
       LOGGER.info("Okay, we have a GitHub token, let's try to use it");
       try {
         return new GitHubBuilder()
-            .withConnector(connector)
+            .withConnector(okHttpGitHubConnector())
             .withOAuthToken(token)
             .build();
       } catch (IOException e) {
@@ -411,7 +410,7 @@ public class Application {
     try {
       LOGGER.info("Now, let's try to use GitHub settings from environment variables");
       return GitHubBuilder.fromEnvironment()
-          .withConnector(connector)
+          .withConnector(okHttpGitHubConnector())
           .build();
     } catch (IOException e) {
       LOGGER.warn("Could not connect to GitHub", e);
@@ -421,7 +420,7 @@ public class Application {
 
     try {
       LOGGER.info("Then, let's try to establish an anonymous connection");
-      GitHub github = new GitHubBuilder().withConnector(connector).build();
+      GitHub github = new GitHubBuilder().withConnector(okHttpGitHubConnector()).build();
       LOGGER.warn("We have established only an anonymous connection to GitHub ...");
       return github;
     } catch (IOException e) {
@@ -436,4 +435,15 @@ public class Application {
     throw error;
   }
 
+  /**
+   * Create a {@link OkHttpGitHubConnector}.
+   * @return {@link OkHttpGitHubConnector}.
+   */
+  private static OkHttpGitHubConnector okHttpGitHubConnector() {
+    OkHttpClient client = new OkHttpClient.Builder()
+        .connectTimeout(60, TimeUnit.SECONDS)
+        .readTimeout(60, TimeUnit.SECONDS)
+        .build();
+    return new OkHttpGitHubConnector(client);
+  }
 }
