@@ -1,6 +1,6 @@
 **Rating**: **GOOD**
 
-**Score**: **5.86**, max score value is 10.0
+**Score**: **5.87**, max score value is 10.0
 
 **Confidence**: High (9.65, max confidence value is 10.0)
 
@@ -317,7 +317,7 @@ This sub-score is based on 3 features:
 
 1.  **Number of projects on GitHub that use an open source project:** unknown
 1.  **Number of stars for a GitHub repository:** 48
-1.  **Number of watchers for a GitHub repository:** 10
+1.  **Number of watchers for a GitHub repository:** 11
 
 
 ### Security reviews
