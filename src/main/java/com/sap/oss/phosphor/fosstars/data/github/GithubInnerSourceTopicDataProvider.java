@@ -4,10 +4,7 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_IN
 
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Value;
-import com.sap.oss.phosphor.fosstars.model.ValueSet;
-import com.sap.oss.phosphor.fosstars.model.other.Utils;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
-import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
@@ -15,7 +12,7 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 
-public class GithubInnerSourceTopicDataProvider extends GitHubCachingDataProvider {
+public class GithubInnerSourceTopicDataProvider extends CachedSingleFeatureGitHubDataProvider<Boolean> {
 
   private static final Set<String> ACCEPTED_TOPICS;
 
@@ -31,24 +28,20 @@ public class GithubInnerSourceTopicDataProvider extends GitHubCachingDataProvide
   }
 
   @Override
-  public Set<Feature<?>> supportedFeatures() {
-    return Utils.setOf(HAS_INNERSOURCE_TOPIC);
+  public Feature<Boolean> supportedFeature() {
+    return HAS_INNERSOURCE_TOPIC;
   }
 
   @Override
-  protected ValueSet fetchValuesFor(GitHubProject project) throws IOException {
+  protected Value<Boolean> fetchValueFor(GitHubProject project) throws IOException {
     Optional<String> topicOptional = fetcher.githubTopicsFor(project).stream().filter(topic -> {
       return ACCEPTED_TOPICS.contains(topic.toLowerCase(Locale.US));
     }).findFirst();
 
-    Value<Boolean> value;
     if (topicOptional.isPresent()) {
-      value = HAS_INNERSOURCE_TOPIC.value(true);
-    } else {
-      value = HAS_INNERSOURCE_TOPIC.value(false)
-        .explain("The repository does not have an InnerSource topic.");
+      return HAS_INNERSOURCE_TOPIC.value(true);
     }
-
-    return ValueHashSet.from(value);
+    return HAS_INNERSOURCE_TOPIC.value(false)
+        .explain("The repository does not have an InnerSource topic.");
   }
 }

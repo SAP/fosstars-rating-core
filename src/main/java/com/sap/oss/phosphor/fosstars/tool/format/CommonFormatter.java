@@ -261,17 +261,20 @@ public abstract class CommonFormatter implements Formatter {
     FEATURE_TO_NAME.put(feature, caption);
   }
 
+  /**
+   * A formatter for doubles.
+   */
+  private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.#");
+
   static {
+    DECIMAL_FORMAT.setMinimumFractionDigits(1);
+    DECIMAL_FORMAT.setMaximumFractionDigits(2);
   }
 
   /**
    * An advisor for calculated ratings.
    */
   protected final Advisor advisor;
-  /**
-   * A formatter for doubles.
-   */
-  private final DecimalFormat decimalFormat = new DecimalFormat("#.#");
 
   /**
    * Create a new formatter.
@@ -280,8 +283,6 @@ public abstract class CommonFormatter implements Formatter {
    */
   protected CommonFormatter(Advisor advisor) {
     this.advisor = Objects.requireNonNull(advisor, "Oh no! Advisor is null!");
-    this.decimalFormat.setMinimumFractionDigits(1);
-    this.decimalFormat.setMaximumFractionDigits(2);
   }
 
   /**
@@ -370,16 +371,6 @@ public abstract class CommonFormatter implements Formatter {
   }
 
   /**
-   * Formats a double.
-   *
-   * @param n The double to be formatted.
-   * @return A formatted string.
-   */
-  String formatted(double n) {
-    return this.decimalFormat.format(n);
-  }
-
-  /**
    * Loads a resource.
    *
    * @param resource A name of the resource.
@@ -392,5 +383,15 @@ public abstract class CommonFormatter implements Formatter {
     } catch (IOException e) {
       throw new UncheckedIOException("Holy moly! Could not load template!", e);
     }
+  }
+
+  /**
+   * Formats a double.
+   *
+   * @param n The double to be formatted.
+   * @return A formatted string.
+   */
+  static String formatted(double n) {
+    return DECIMAL_FORMAT.format(n);
   }
 }

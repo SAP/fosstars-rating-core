@@ -1,5 +1,0 @@
-{
-    "java.compile.nullAnalysis.mode": "automatic",
-    "editor.tabSize": 2,
-    "java.configuration.updateBuildConfiguration": "interactive"
-}

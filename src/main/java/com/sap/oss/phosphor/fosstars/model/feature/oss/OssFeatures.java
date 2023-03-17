@@ -557,7 +557,7 @@ public class OssFeatures {
       = new PositiveIntegerFeature("Number of projects on GitHub that use an open source project");
 
   /**
-   * Shows wether a Github repository has a Tag "inner-source".
+   * Shows whether a Github repository has the Tag "inner-source".
    */
   public static BooleanFeature HAS_INNERSOURCE_TOPIC
       = new BooleanFeature("If a repository in Github has the tag inner-source.");
