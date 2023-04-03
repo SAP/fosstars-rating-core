@@ -9,8 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     name: "Security rating"
     steps:
-      - uses: actions/checkout@v3.3.0
-      - uses: SAP/fosstars-rating-core-action@v1.10.0
+      - uses: actions/checkout@v3.5.0
+      - uses: SAP/fosstars-rating-core-action@v1.11.0
         with:
           report-branch: fosstars-report
           token: "${{ secrets.GITHUB_TOKEN }}"
