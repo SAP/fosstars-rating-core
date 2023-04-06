@@ -1,7 +1,9 @@
-**Status**: **Passed with warnings**
+**Status**: **Failed**
 
 **Confidence**: Max (10.0, max confidence value is 10.0)
 
+## Violated rules
+1.  [**[If a project uses an allowed license]**](#if-a-project-uses-an-allowed-license) Does it use an allowed license? **No**
 
 
 ## Warnings
@@ -29,13 +31,16 @@
 1.  **[If a license has disallowed text]** Does the license have disallowed content? **No**
 1.  **[If a project's code of conduct guideline has required text]** Does the code of conduct guideline have required text? **Yes**
 1.  **[If a project runs CodeQL checks for commits]** Does it use CodeQL checks for pull requests? **Yes**
-1.  **[If a project uses an allowed license]** Does it use an allowed license? **Yes**
 1.  **[If project's README has info about REUSE]** Does README mention REUSE? **Yes**
 1.  **[If a project is registered in REUSE]** Is it registered in REUSE? **Yes**
 1.  **[If a project is compliant with REUSE rules]** Is it compliant with REUSE rules? **Yes**
 
 
 ## What is wrong, and how to fix it
+
+### If a project uses an allowed license
+
+Apache-2.0 is not allowed
 
 ### If a project has unresolved vulnerability alerts
 
