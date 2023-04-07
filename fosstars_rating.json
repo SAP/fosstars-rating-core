@@ -5,7 +5,7 @@
       "type" : "OssRulesOfPlayScore",
       "name" : "Open source rules or play score"
     },
-    "value" : 0.0,
+    "value" : 9.0,
     "weight" : 1.0,
     "confidence" : 10.0,
     "usedValues" : [ {
@@ -166,8 +166,8 @@
         "type" : "BooleanFeature",
         "name" : "If a project uses an allowed license"
       },
-      "flag" : false,
-      "explanation" : [ "Apache-2.0 is not allowed" ]
+      "flag" : true,
+      "explanation" : [ ]
     }, {
       "type" : "BooleanValue",
       "feature" : {
@@ -193,7 +193,7 @@
       "flag" : true,
       "explanation" : [ ]
     } ],
-    "explanation" : [ "Found 1 violated rule" ],
+    "explanation" : [ "Found 1 recommendations" ],
     "isUnknown" : false,
     "isNotApplicable" : false,
     "feature" : {
@@ -201,5 +201,5 @@
       "name" : "Open source rules or play score"
     }
   },
-  "label" : [ "OssRulesOfPlayRating$OssRulesOfPlayLabel", "FAILED" ]
+  "label" : [ "OssRulesOfPlayRating$OssRulesOfPlayLabel", "PASSED_WITH_WARNING" ]
 }
