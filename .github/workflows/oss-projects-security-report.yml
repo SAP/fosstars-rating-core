@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     name: "Other projects"
     steps:
-      - uses: actions/checkout@v3.5.0
+      - uses: actions/checkout@v3.5.2
       - uses: ./.github/actions/project-security-report-action
         with:
           config-file: other.yml
@@ -17,7 +17,7 @@ jobs:
     name: "Apache projects"
     needs: other
     steps:
-      - uses: actions/checkout@v3.5.0
+      - uses: actions/checkout@v3.5.2
       - uses: ./.github/actions/project-security-report-action
         with:
           config-file: apache.yml
@@ -27,7 +27,7 @@ jobs:
     name: "Eclipse projects"
     needs: apache
     steps:
-      - uses: actions/checkout@v3.5.0
+      - uses: actions/checkout@v3.5.2
       - uses: ./.github/actions/project-security-report-action
         with:
           config-file: eclipse.yml
@@ -37,7 +37,7 @@ jobs:
     name: "Spring projects"
     needs: eclipse
     steps:
-      - uses: actions/checkout@v3.5.0
+      - uses: actions/checkout@v3.5.2
       - uses: ./.github/actions/project-security-report-action
         with:
           config-file: spring.yml
@@ -47,7 +47,7 @@ jobs:
     name: "Bouncy Castle projects"
     needs: spring
     steps:
-      - uses: actions/checkout@v3.5.0
+      - uses: actions/checkout@v3.5.2
       - uses: ./.github/actions/project-security-report-action
         with:
           config-file: bouncycastle.yml
@@ -57,7 +57,7 @@ jobs:
     name: "AWS projects"
     needs: bouncy_castle
     steps:
-      - uses: actions/checkout@v3.5.0
+      - uses: actions/checkout@v3.5.2
       - uses: ./.github/actions/project-security-report-action
         with:
           config-file: aws.yml
@@ -67,7 +67,7 @@ jobs:
     name: "Google projects"
     needs: aws
     steps:
-      - uses: actions/checkout@v3.5.0
+      - uses: actions/checkout@v3.5.2
       - uses: ./.github/actions/project-security-report-action
         with:
           config-file: google.yml
@@ -77,7 +77,7 @@ jobs:
     name: "Jackson projects"
     needs: google
     steps:
-      - uses: actions/checkout@v3.5.0
+      - uses: actions/checkout@v3.5.2
       - uses: ./.github/actions/project-security-report-action
         with:
           config-file: jackson.yml
@@ -87,7 +87,7 @@ jobs:
     name: "Calculate label thresholds"
     needs: jackson
     steps:
-      - uses: actions/checkout@v3.5.0
+      - uses: actions/checkout@v3.5.2
       - uses: ./.github/actions/project-security-label-threshold-action
         with:
           input-file: github_projects.json
