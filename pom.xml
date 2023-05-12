@@ -89,7 +89,7 @@
     <version.slf4j-simple>2.0.7</version.slf4j-simple>
     <version.javax.annotation-api>1.3.2</version.javax.annotation-api>
     <version.jsoup>1.16.1</version.jsoup>
-    <version.okhttp>4.10.0</version.okhttp>
+    <version.okhttp>4.11.0</version.okhttp>
   </properties>
 
   <build>
