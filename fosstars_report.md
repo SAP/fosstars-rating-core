@@ -1,6 +1,6 @@
 **Rating**: **GOOD**
 
-**Score**: **5.77**, max score value is 10.0
+**Score**: **5.72**, max score value is 10.0
 
 **Confidence**: High (9.65, max confidence value is 10.0)
 
@@ -15,13 +15,6 @@ The rating is based on **security score for open-source projects**.
 It used the following sub-scores:
 
 1.  **[Security testing](#security-testing)**: **7.23** (weight is 1.0)
-    1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
-        1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
-            
-        1.  **[Snyk score](#snyk-score)**: **5.0** (weight is 1.0)
-            
-        1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
-            
     1.  **[Static analysis](#static-analysis)**: **5.91** (weight is 1.0)
         1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
             
@@ -35,6 +28,13 @@ It used the following sub-scores:
             
         1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **6.0** (weight is 0.2)
             
+    1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
+        1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
+            
+        1.  **[Snyk score](#snyk-score)**: **5.0** (weight is 1.0)
+            
+        1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
+            
     1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
         
     1.  **[Memory-safety testing](#memory-safety-testing)**: **N/A** (weight is 1.0)
@@ -45,13 +45,6 @@ It used the following sub-scores:
     
 1.  **[Vulnerability discovery and security testing](#vulnerability-discovery-and-security-testing)**: **10.0** (weight is 0.6)
     1.  **[Security testing](#security-testing)**: **7.23** (weight is 1.0)
-        1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
-            1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
-                
-            1.  **[Snyk score](#snyk-score)**: **5.0** (weight is 1.0)
-                
-            1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
-                
         1.  **[Static analysis](#static-analysis)**: **5.91** (weight is 1.0)
             1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
                 
@@ -65,6 +58,13 @@ It used the following sub-scores:
                 
             1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **6.0** (weight is 0.2)
                 
+        1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
+            1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
+                
+            1.  **[Snyk score](#snyk-score)**: **5.0** (weight is 1.0)
+                
+            1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
+                
         1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
             
         1.  **[Memory-safety testing](#memory-safety-testing)**: **N/A** (weight is 1.0)
@@ -75,7 +75,7 @@ It used the following sub-scores:
     
 1.  **[Community commitment](#community-commitment)**: **8.0** (weight is 0.5)
     
-1.  **[Project activity](#project-activity)**: **2.46** (weight is 0.5)
+1.  **[Project activity](#project-activity)**: **2.0** (weight is 0.5)
     
 1.  **[Project popularity](#project-popularity)**: **0.09** (weight is 0.5)
     
@@ -147,13 +147,6 @@ This sub-score is based on the following sub-scores:
 
 
 
-1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
-    1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
-        
-    1.  **[Snyk score](#snyk-score)**: **5.0** (weight is 1.0)
-        
-    1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
-        
 1.  **[Static analysis](#static-analysis)**: **5.91** (weight is 1.0)
     1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
         
@@ -166,6 +159,13 @@ This sub-score is based on the following sub-scores:
     1.  **[GoSec score](#gosec-score)**: **N/A** (weight is 0.3)
         
     1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **6.0** (weight is 0.2)
+        
+1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
+    1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
+        
+    1.  **[Snyk score](#snyk-score)**: **5.0** (weight is 1.0)
+        
+    1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
         
 1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
     
@@ -220,13 +220,6 @@ This sub-score is based on the following sub-score:
 
 
 1.  **[Security testing](#security-testing)**: **7.23** (weight is 1.0)
-    1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
-        1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
-            
-        1.  **[Snyk score](#snyk-score)**: **5.0** (weight is 1.0)
-            
-        1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
-            
     1.  **[Static analysis](#static-analysis)**: **5.91** (weight is 1.0)
         1.  **[How a project uses CodeQL](#how-a-project-uses-codeql)**: **10.0** (weight is 1.0)
             
@@ -239,6 +232,13 @@ This sub-score is based on the following sub-score:
         1.  **[GoSec score](#gosec-score)**: **N/A** (weight is 0.3)
             
         1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **6.0** (weight is 0.2)
+            
+    1.  **[Dependency testing](#dependency-testing)**: **10.0** (weight is 1.0)
+        1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
+            
+        1.  **[Snyk score](#snyk-score)**: **5.0** (weight is 1.0)
+            
+        1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
             
     1.  **[Fuzzing](#fuzzing)**: **N/A** (weight is 1.0)
         
@@ -289,17 +289,17 @@ This sub-score is based on 3 features:
 
 ### Project activity
 
-Score: **2.46**, confidence is 10.0 (max), weight is 0.5 (medium)
+Score: **2.0**, confidence is 10.0 (max), weight is 0.5 (medium)
 
 The score evaluates how active a project is. It's based on number of commits and contributors in the last 3 months.
 
-16 commits in the last 3 months results to 2.46 points
+13 commits in the last 3 months results to 2.00 points
 
 This sub-score is based on 2 features:
 
 
 
-1.  **Number of commits in the last three months:** 16
+1.  **Number of commits in the last three months:** 13
 1.  **Number of contributors in the last three months:** 1
 
 
@@ -316,7 +316,7 @@ This sub-score is based on 3 features:
 
 
 1.  **Number of projects on GitHub that use an open source project:** unknown
-1.  **Number of stars for a GitHub repository:** 49
+1.  **Number of stars for a GitHub repository:** 50
 1.  **Number of watchers for a GitHub repository:** 11
 
 
@@ -333,26 +333,6 @@ This sub-score is based on 1 feature:
 
 
 1.  **Info about security reviews:** 0 security reviews
-
-
-### Dependency testing
-
-Score: **10.0**, confidence is 10.0 (max), weight is 1.0 (high)
-
-
-
-
-
-This sub-score is based on the following sub-scores:
-
-
-
-1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
-    
-1.  **[Snyk score](#snyk-score)**: **5.0** (weight is 1.0)
-    
-1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
-    
 
 
 ### Static analysis
@@ -378,6 +358,26 @@ This sub-score is based on the following sub-scores:
 1.  **[GoSec score](#gosec-score)**: **N/A** (weight is 0.3)
     
 1.  **[How a project uses MyPy](#how-a-project-uses-mypy)**: **6.0** (weight is 0.2)
+    
+
+
+### Dependency testing
+
+Score: **10.0**, confidence is 10.0 (max), weight is 1.0 (high)
+
+
+
+
+
+This sub-score is based on the following sub-scores:
+
+
+
+1.  **[Dependabot score](#dependabot-score)**: **10.0** (weight is 1.0)
+    
+1.  **[Snyk score](#snyk-score)**: **5.0** (weight is 1.0)
+    
+1.  **[OWASP Dependency Check score](#owasp-dependency-check-score)**: **0.0** (weight is 1.0)
     
 
 
@@ -429,59 +429,6 @@ This sub-score is based on 2 features:
 
 1.  **Does it use nohttp?** No
 1.  **Package managers:** MAVEN
-
-
-### Dependabot score
-
-Score: **10.0**, confidence is 10.0 (max), weight is 1.0 (high)
-
-
-
-
-
-This sub-score is based on 4 features:
-
-
-
-1.  **Does it use Dependabot?** Yes
-1.  **Does it use GitHub as the main development platform?** Yes
-1.  **Package managers:** MAVEN
-1.  **Programming languages:** JAVA, PYTHON, OTHER
-
-
-### Snyk score
-
-Score: **5.0**, confidence is 10.0 (max), weight is 1.0 (high)
-
-
-
-
-
-This sub-score is based on 4 features:
-
-
-
-1.  **Does it use GitHub as the main development platform?** Yes
-1.  **Does it use Snyk?** No
-1.  **Package managers:** MAVEN
-1.  **Programming languages:** JAVA, PYTHON, OTHER
-
-
-### OWASP Dependency Check score
-
-Score: **0.0**, confidence is 10.0 (max), weight is 1.0 (high)
-
-
-
-
-
-This sub-score is based on 3 features:
-
-
-
-1.  **How is OWASP Dependency Check used?** Not used
-1.  **Package managers:** MAVEN
-1.  **What is the threshold for OWASP Dependency Check?** Not specified
 
 
 ### How a project uses CodeQL
@@ -584,6 +531,59 @@ This sub-score is based on 3 features:
 1.  **Does it run MyPy scans on all commits?** No
 1.  **Does it run MyPy scans?** Yes
 1.  **Programming languages:** JAVA, PYTHON, OTHER
+
+
+### Dependabot score
+
+Score: **10.0**, confidence is 10.0 (max), weight is 1.0 (high)
+
+
+
+
+
+This sub-score is based on 4 features:
+
+
+
+1.  **Does it use Dependabot?** Yes
+1.  **Does it use GitHub as the main development platform?** Yes
+1.  **Package managers:** MAVEN
+1.  **Programming languages:** JAVA, PYTHON, OTHER
+
+
+### Snyk score
+
+Score: **5.0**, confidence is 10.0 (max), weight is 1.0 (high)
+
+
+
+
+
+This sub-score is based on 4 features:
+
+
+
+1.  **Does it use GitHub as the main development platform?** Yes
+1.  **Does it use Snyk?** No
+1.  **Package managers:** MAVEN
+1.  **Programming languages:** JAVA, PYTHON, OTHER
+
+
+### OWASP Dependency Check score
+
+Score: **0.0**, confidence is 10.0 (max), weight is 1.0 (high)
+
+
+
+
+
+This sub-score is based on 3 features:
+
+
+
+1.  **How is OWASP Dependency Check used?** Not used
+1.  **Package managers:** MAVEN
+1.  **What is the threshold for OWASP Dependency Check?** Not specified
 
 
 ## Known vulnerabilities
