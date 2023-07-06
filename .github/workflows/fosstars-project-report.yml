@@ -10,7 +10,7 @@ jobs:
     name: "Security rating"
     steps:
       - uses: actions/checkout@v3.5.2
-      - uses: Johannes-Schneider/fosstars-rating-core-action@v0.0.2-alpha
+      - uses: SAP/fosstars-rating-core-action@v1.12.1
         with:
           report-branch: fosstars-report
           token: "${{ secrets.GITHUB_TOKEN }}"
