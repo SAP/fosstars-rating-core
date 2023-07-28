@@ -19,7 +19,7 @@ clean_cache
 rm -rf .fosstars/report > /dev/null 2>&1
 mkdir -p .fosstars/report
 
-$JAVA -jar $JAR \
+$JAVA -jar -Xms6000M -Xmx6000M $JAR \
   --rating security \
   --config test_security_config.yml \
   $TOKEN_OPTION > tmp.log 2>&1

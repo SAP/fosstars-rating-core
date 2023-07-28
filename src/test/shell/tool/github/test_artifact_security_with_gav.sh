@@ -16,7 +16,7 @@ source lib.sh
 
 clean_cache
 
-$JAVA -jar $JAR \
+$JAVA -jar -Xms6000M -Xmx6000M $JAR \
   --rating oss-artifact-security \
   --gav org.apache.poi:poi:5.0.0 \
   --verbose \
