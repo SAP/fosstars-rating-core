@@ -16,7 +16,7 @@ source lib.sh
 
 clean_cache
 
-$JAVA -jar $JAR \
+$JAVA -jar -Xms6000M -Xmx6000M $JAR \
   --rating oss-artifact-security \
   --npm jquery@3.6.0 \
   --verbose \
