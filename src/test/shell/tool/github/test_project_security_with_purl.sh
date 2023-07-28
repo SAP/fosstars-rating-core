@@ -16,7 +16,7 @@ source lib.sh
 
 clean_cache
 
-$JAVA -jar $JAR \
+$JAVA -jar -Xms6000M -Xmx6000M $JAR \
   --purl pkg:maven/org.apache.poi/poi --verbose \
   $TOKEN_OPTION > tmp.log 2>&1
 
