@@ -19,7 +19,7 @@ clean_cache
 rm -rf .fosstars/report > /dev/null 2>&1
 mkdir -p .fosstars/report
 
-$JAVA -jar $JAR \
+$JAVA -jar -Xms6000M -Xmx6000M $JAR \
   --rating security \
   --pom test_project_security_with_pom.xml \
   --report-file .fosstars/report \
