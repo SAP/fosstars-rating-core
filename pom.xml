@@ -122,8 +122,10 @@
         <version>3.5.0</version>
         <configuration>
           <source>8</source>
+          <target>8</target>
           <failOnError>true</failOnError>
           <failOnWarnings>true</failOnWarnings>
+          <additionalOptions>-Xdoclint:none</additionalOptions>
         </configuration>
         <executions>
           <execution>
@@ -159,6 +161,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.6.0</version>
         <configuration>
           <finalName>fosstars-github-rating</finalName>
           <archive>
@@ -166,7 +169,9 @@
               <mainClass>com.sap.oss.phosphor.fosstars.tool.Application</mainClass>
             </manifest>
           </archive>
-          <descriptor>assembly.xml</descriptor>
+          <descriptors>
+            <descriptor>assembly.xml</descriptor>
+          </descriptors>
         </configuration>
         <executions>
           <execution>

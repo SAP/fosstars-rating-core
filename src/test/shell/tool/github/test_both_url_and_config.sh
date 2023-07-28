@@ -13,7 +13,7 @@ fi
 JAR=${JAR:-"target/fosstars-github-rating-calc.jar"}
 
 # check if --url and --config can't be used together
-$JAVA -jar $JAR \
+$JAVA -jar -Xms6000M -Xmx6000M $JAR \
   --url https://github.com/apache/poi \
   --config test_config.yml \
   $TOKEN_OPTION
