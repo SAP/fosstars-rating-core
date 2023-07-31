@@ -70,7 +70,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <version.jackson>2.15.1</version.jackson>
+    <version.jackson>2.15.2</version.jackson>
     <version.commons-math3>3.6.1</version.commons-math3>
     <version.commons-cli>1.5.0</version.commons-cli>
     <version.github-api>1.315</version.github-api>
@@ -82,7 +82,7 @@
     <version.mockito>4.11.0</version.mockito>
     <version.packageurl-java>1.4.1</version.packageurl-java>
     <version.commons-collections4>4.4</version.commons-collections4>
-    <version.org.eclipse.jgit>5.13.1.202206130422-r</version.org.eclipse.jgit>
+    <version.org.eclipse.jgit>5.13.2.202306221912-r</version.org.eclipse.jgit>
     <version.commons-text>1.10.0</version.commons-text>
     <version.maven-artifact>3.9.2</version.maven-artifact>
     <version.dependency-check-core>8.3.1</version.dependency-check-core>
@@ -139,7 +139,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.1.0</version>
+        <version>3.1.2</version>
         <configuration>
           <trimStackTrace>false</trimStackTrace>
         </configuration>
