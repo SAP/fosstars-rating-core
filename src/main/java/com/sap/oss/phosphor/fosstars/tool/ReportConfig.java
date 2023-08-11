@@ -11,7 +11,7 @@ public class ReportConfig {
    * Types of reports.
    */
   public enum ReportType {
-    MARKDOWN, JSON, ISSUES
+    MARKDOWN, JSON, ISSUES, JSON_REPORT
   }
 
   /**

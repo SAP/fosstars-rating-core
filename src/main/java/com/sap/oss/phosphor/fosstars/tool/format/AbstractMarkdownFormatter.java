@@ -3,6 +3,7 @@ package com.sap.oss.phosphor.fosstars.tool.format;
 import static com.sap.oss.phosphor.fosstars.tool.format.Markdown.DOUBLE_NEW_LINE;
 import static com.sap.oss.phosphor.fosstars.tool.format.Markdown.NEW_LINE;
 import static java.lang.String.format;
+import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 
 import com.sap.oss.phosphor.fosstars.advice.Advice;
@@ -29,11 +30,19 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * A base class for Markdown formatters.
  */
 public abstract class AbstractMarkdownFormatter extends CommonFormatter {
+
+  /**
+   * A logger.
+   */
+  private static final Logger LOGGER
+      = LogManager.getLogger(AbstractMarkdownFormatter.class);
 
   /**
    * Create a new formatter.
@@ -67,7 +76,7 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
       throw new UncheckedIOException("Oops! Could not print advice!", e);
     }
 
-    if (adviceList.isEmpty()) {
+    if (adviceList == null || adviceList.isEmpty()) {
       return MarkdownString.EMPTY;
     }
 
@@ -83,6 +92,21 @@ public abstract class AbstractMarkdownFormatter extends CommonFormatter {
     JoinedMarkdownElements advice = Markdown.join(elements).delimitedBy(DOUBLE_NEW_LINE);
 
     return Markdown.section().with(markdownAdviceHeader()).thatContains(advice);
+  }
+
+  /**
+   * Extract advices for a subject.
+   *
+   * @param subject The subject.
+   * @return Advices collected form a subject.
+   */
+  protected List<Advice> adviceFor(Subject subject) {
+    try {
+      return advisor.adviceFor(subject);
+    } catch (IOException e) {
+      LOGGER.warn("Oops! Could not collect advices!", e);
+      return emptyList();
+    }
   }
 
   /**
