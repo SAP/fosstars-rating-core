@@ -1,8 +1,8 @@
-**Rating**: **UNCLEAR**
+**Rating**: **GOOD**
 
-**Score**: **6.07**, max score value is 10.0
+**Score**: **5.82**, max score value is 10.0
 
-**Confidence**: Low (7.88, max confidence value is 10.0)
+**Confidence**: High (9.65, max confidence value is 10.0)
 
 ## Details
 
@@ -79,7 +79,7 @@ It used the following sub-scores:
     
 1.  **[Project popularity](#project-popularity)**: **0.09** (weight is 0.5)
     
-1.  **[Security reviews](#security-reviews)**: **unknown** (weight is 0.2)
+1.  **[Security reviews](#security-reviews)**: **0.0** (weight is 0.2)
     
 
 
@@ -322,17 +322,17 @@ This sub-score is based on 3 features:
 
 ### Security reviews
 
-Score: **unknown**, confidence is 0.0 (min), weight is 0.2 (low)
+Score: **0.0**, confidence is 10.0 (max), weight is 0.2 (low)
 
 
 
-No info about security reviews
+No security reviews have been done
 
 This sub-score is based on 1 feature:
 
 
 
-1.  **Info about security reviews:** unknown
+1.  **Info about security reviews:** 0 security reviews
 
 
 ### Static analysis

@@ -244,9 +244,9 @@
         }
       }
     },
-    "value" : 6.074932228265562,
+    "value" : 5.816424473871282,
     "weight" : 1.0,
-    "confidence" : 7.878787878787879,
+    "confidence" : 9.645390070921986,
     "usedValues" : [ {
       "type" : "ScoreValue",
       "score" : {
@@ -1574,17 +1574,18 @@
       },
       "value" : 0.0,
       "weight" : 0.2,
-      "confidence" : 0.0,
+      "confidence" : 10.0,
       "usedValues" : [ {
-        "type" : "UnknownValue",
+        "type" : "SecurityReviewsValue",
         "feature" : {
           "type" : "SecurityReviewsFeature",
           "name" : "Security reviews for a project"
         },
+        "reviews" : [ ],
         "explanation" : [ ]
       } ],
-      "explanation" : [ "No info about security reviews" ],
-      "isUnknown" : true,
+      "explanation" : [ "No security reviews have been done" ],
+      "isUnknown" : false,
       "isNotApplicable" : false,
       "feature" : {
         "type" : "SecurityReviewScore",
@@ -2726,5 +2727,5 @@
       }
     }
   },
-  "label" : [ "OssSecurityRating$SecurityLabel", "UNCLEAR" ]
+  "label" : [ "OssSecurityRating$SecurityLabel", "GOOD" ]
 }
