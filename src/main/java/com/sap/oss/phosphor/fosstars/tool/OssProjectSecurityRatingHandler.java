@@ -16,9 +16,11 @@ import com.sap.oss.phosphor.fosstars.model.RatingRepository;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.tool.format.Formatter;
+import com.sap.oss.phosphor.fosstars.tool.format.JsonPrettyPrinter;
 import com.sap.oss.phosphor.fosstars.tool.format.OssSecurityRatingMarkdownFormatter;
 import com.sap.oss.phosphor.fosstars.tool.format.PrettyPrinter;
 import com.sap.oss.phosphor.fosstars.tool.report.MergedJsonReporter;
+import com.sap.oss.phosphor.fosstars.tool.report.OssSecurityRatingJsonReporter;
 import com.sap.oss.phosphor.fosstars.tool.report.OssSecurityRatingMarkdownReporter;
 import com.sap.oss.phosphor.fosstars.tool.report.Reporter;
 import java.io.File;
@@ -177,6 +179,8 @@ public class OssProjectSecurityRatingHandler extends AbstractHandler {
         return PrettyPrinter.withVerboseOutput(OSS_SECURITY_GITHUB_ADVISOR);
       case "markdown":
         return new OssSecurityRatingMarkdownFormatter(OSS_SECURITY_GITHUB_ADVISOR);
+      case "json":
+        return new JsonPrettyPrinter(OSS_SECURITY_GITHUB_ADVISOR);
       default:
         throw new IllegalArgumentException(format("Unsupported report type: %s", type));
     }
@@ -191,6 +195,10 @@ public class OssProjectSecurityRatingHandler extends AbstractHandler {
       case MARKDOWN:
         return Optional.of(
             new OssSecurityRatingMarkdownReporter(reportConfig.where, reportConfig.source,
+                rating(), OSS_SECURITY_GITHUB_ADVISOR));
+      case JSON_REPORT:
+        return Optional.of(
+            new OssSecurityRatingJsonReporter(reportConfig.where, reportConfig.source,
                 rating(), OSS_SECURITY_GITHUB_ADVISOR));
       default:
         logger.warn("Oops! That's an unknown type of report: {}", reportConfig.type);

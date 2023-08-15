@@ -344,7 +344,8 @@ public class Application {
     }
 
     if (commandLine.hasOption("report-type")
-        && !asList("text", "markdown").contains(commandLine.getOptionValue("report-type"))) {
+        && !asList("text", "markdown", "json").contains(
+        commandLine.getOptionValue("report-type"))) {
 
       throw new IllegalArgumentException(
           format("Unknown report type: %s", commandLine.getOptionValue("report-type")));

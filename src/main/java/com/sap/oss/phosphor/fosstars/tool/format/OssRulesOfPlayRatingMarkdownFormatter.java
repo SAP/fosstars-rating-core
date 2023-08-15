@@ -7,7 +7,6 @@ import static com.sap.oss.phosphor.fosstars.tool.format.Markdown.NEW_LINE;
 import static com.sap.oss.phosphor.fosstars.tool.format.Markdown.SPACE;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
-import static java.util.Collections.emptyList;
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.unmodifiableMap;
 import static java.util.Objects.requireNonNull;
@@ -46,8 +45,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.BooleanSupplier;
 import javax.annotation.Nullable;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
  * The class prints a rating value
@@ -66,12 +63,6 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownForma
    */
   private static final String DEFAULT_RATING_VALUE_TEMPLATE
       = loadFrom(RATING_VALUE_TEMPLATE_RESOURCE, OssRulesOfPlayRatingMarkdownFormatter.class);
-
-  /**
-   * A logger.
-   */
-  private static final Logger LOGGER
-      = LogManager.getLogger(OssRulesOfPlayRatingMarkdownFormatter.class);
 
   /**
    * Maps a rule to its identifier.
@@ -190,21 +181,6 @@ public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownForma
         .replace("%PASSED_RULES%", makeListFrom(passedRules, "Passed rules"))
         .replace("%UNCLEAR_RULES%", makeListFrom(unclearRules, "Unclear"))
         .replace("%ADVICE%", makeAdviceFrom(violations, warnings, passedRules, unclearRules));
-  }
-
-  /**
-   * Looks for advice for a subject.
-   *
-   * @param subject The subject.
-   * @return A list of advice.
-   */
-  private List<Advice> adviceFor(Subject subject) {
-    try {
-      return advisor.adviceFor(subject);
-    } catch (IOException e) {
-      LOGGER.warn("Oops! Could not print advice!", e);
-      return emptyList();
-    }
   }
 
   /**
