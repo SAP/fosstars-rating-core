@@ -1,36 +1,36 @@
 # Compare Fosstars rating core and OSSF Score card
 
-This page contains a comparison between the features provided by Fosstars and OSSF ScoreCard. The comparison is based on the releases available in December 2021 ([Fosstars `1.5.0`](https://github.com/SAP/fosstars-rating-core/releases/tag/v1.5.0) and [OSSF ScoreCard `3.2.1`](https://github.com/ossf/scorecard/releases/tag/v3.2.1)).
+This page contains a comparison between the features provided by Fosstars and OSSF ScoreCard. The comparison is based on the releases available in December 2021 ([Fosstars `1.13.0`](https://github.com/SAP/fosstars-rating-core/releases/tag/v1.5.0) and [OSSF ScoreCard `4.12.0`](https://github.com/ossf/scorecard/releases/tag/v3.2.1)).
 Fosstars scores and OSSF Scorecard checks are a bit different and hence can not be mapped one to one. Hence, what is in this comparison mentioned as Features can be (more or less) mapped to a Fosstars Score and Scorecard check.
 
 ## Feature matrix
 
 | Feature  |  OSSF ScoreCard (Weight)  | Fosstars (Weight) | Comments |
-|----------|:-------------:|:------:|:------:|
-| Binary-Artifacts |  ✅ (high) | ⛔️ | - |
-| Branch protection |  ✅ (high) | ⛔️ | - |
-| Code Review |  ✅ (high) | ⛔️ | - |
-| Dangerous-Workflow |  ✅ (high) | ⛔️ | - |
-| Signed-Releases |  ✅ (high) | ⛔️ | - |
-| Token-Permissions |  ✅ (high) | ⛔️ | - |
-| LGTM score |  ⛔️ | ✅ (high) | - |
-| CodeQL use |  ⛔️ | ✅ (high) | - |
-| OWASP Dependency Check |  ⛔️ | ✅ (high) | - |
-| Dependency-Update-Tool |  ✅ (high) | ✅ (high) | - |
-| Maintained |  ✅ (high) | ✅ (high) | - |
-| Vulnerabilities |  ✅ (high) | ✅ (high) | - |
-| Project activity |  ⛔️ | ✅ (medium) | - |
-| Project popularity |  ⛔️ | ✅ (medium) | - |
-| Community commitment |  ⛔️ | ✅ (medium) | - |
-| Packaging |  ✅ (medium) | ⛔️ | - |
-| Pinned-Dependencies |  ✅ (medium) | ⛔️ | - |
-| Fuzzing |  ✅ (medium) | ✅ (medium) | - |
-| SAST |  ✅ (medium) | ✅ (medium) | - |
-| Security-Policy |  ✅ (medium) | ✅ (medium) | - |
-| License |  ✅ (low) | ✅ (low) | - |
-| Run CI-Tests |  ✅ (low) | ⛔️ | - |
-| CII-Best-Practices |  ✅ (low) | ⛔️ | - |
-| Contributors |  ✅ (low) | ⛔️ | - |
+|----------|:-------------:|:-----------------:|:------:|
+| Binary-Artifacts |  ✅ (high) |         ✅ (high)          | - |
+| Branch protection |  ✅ (high) |        ⛔️         | - |
+| Code Review |  ✅ (high) |        ⛔️         | - |
+| Dangerous-Workflow |  ✅ (high) |        ⛔️         | - |
+| Signed-Releases |  ✅ (high) |        ⛔️         | - |
+| Token-Permissions |  ✅ (high) |        ⛔️         | - |
+| LGTM score |  ⛔️ |     ✅ (high)      | - |
+| CodeQL use |  ⛔️ |     ✅ (high)      | - |
+| OWASP Dependency Check |  ⛔️ |     ✅ (high)      | - |
+| Dependency-Update-Tool |  ✅ (high) |     ✅ (high)      | - |
+| Maintained |  ✅ (high) |     ✅ (high)      | - |
+| Vulnerabilities |  ✅ (high) |     ✅ (high)      | - |
+| Project activity |  ⛔️ |    ✅ (medium)     | - |
+| Project popularity |  ⛔️ |    ✅ (medium)     | - |
+| Community commitment |  ⛔️ |    ✅ (medium)     | - |
+| Packaging |  ✅ (medium) |        ⛔️         | - |
+| Pinned-Dependencies |  ✅ (medium) |        ⛔️         | - |
+| Fuzzing |  ✅ (medium) |    ✅ (medium)     | - |
+| SAST |  ✅ (medium) |    ✅ (medium)     | - |
+| Security-Policy |  ✅ (medium) |    ✅ (medium)     | - |
+| License |  ✅ (low) |      ✅ (low)      | - |
+| Run CI-Tests |  ✅ (low) |        ⛔️         | - |
+| CII-Best-Practices |  ✅ (low) |        ⛔️         | - |
+| Contributors |  ✅ (low) |        ⛔️         | - |
 
 ## Scorecard features not available in Fosstars
 
