@@ -148,7 +148,7 @@ public class Application {
             .longOpt("report-type")
             .hasArg()
             .argName("format")
-            .desc("Format of the report (text or markdown).")
+            .desc("Format of the report (text, json or markdown).")
             .build());
     options.addOption(
         Option.builder()

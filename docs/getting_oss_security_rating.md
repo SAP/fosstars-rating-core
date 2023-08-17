@@ -440,6 +440,13 @@ reports:
   - type: markdown
     source: fosstars/github_projects.json
     where: fosstars/report
+
+  # generate a report in JSON format
+  # first, it will read gathered data and calculated ratings from the specified JSON file
+  # then, it will build the report and store it in the specified directory
+  - type: json_report
+    source: fosstars/github_projects.json
+    where: fosstars/report
 ```
 
 The config gives the following instructions to the tool:
@@ -447,7 +454,7 @@ The config gives the following instructions to the tool:
 *  Calculate security ratings for Netty, OpenSSL, Guava, Gson, curl 
    and projects from FasterXML organisation which have at least 5K stars.
 *  Store gathered data and calculated ratings in a JSON file.
-*  Create a report in Markdown format.
+*  Create a report in Markdown/JSON format.
 *  Store the results in the specified directories.
 
 Here is how the tool may be run with the config above:
@@ -456,7 +463,7 @@ Here is how the tool may be run with the config above:
 java -jar target/fosstars-github-rating-calc.jar --token ${TOKEN} --config conf.yml --verbose
 ```
 
-The Markdown report is going to be available in `fosstars/report` directory.
+The Markdown/JSON report is going to be available in `fosstars/report` directory.
 
 ## Further ideas
 
