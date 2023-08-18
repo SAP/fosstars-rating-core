@@ -10,7 +10,7 @@ jobs:
     name: "RoP report"
     steps:
       - uses: actions/checkout@v3.5.3
-      - uses: SAP/fosstars-rating-core-action@v1.13.0
+      - uses: SAP/fosstars-rating-core-action@v1.14.0
         with:
           rating: oss-rules-of-play
           report-branch: fosstars-rop-report
