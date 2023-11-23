@@ -10,7 +10,7 @@ Thus, in order to get proper OSS rules of play ratings, you need to provide some
 These details are usually passed to Fosstars via YAML configuration files for the respective data providers. 
 Below you find the configurable data providers, information how to name the configuration files and the possible options in the respective configuration file.
 The section about the command-line tool further below explains how to pass these configuration files to Fosstars.
-The configuration that SAP uses for their OSS rules of play check run can be found in the [fosstars-oss-rules-of-play-sap-report](https://github.com/SAP/fosstars-rating-core/tree/fosstars-oss-rules-of-play-sap-report) branch.
+The configuration that SAP uses for their OSS rules of play check run can be found in the [SAP/fosstars-oss-rules-of-play-report](https://github.com/SAP/fosstars-oss-rules-of-play-report) repository.
 
 ### Contributing Guidelines
 The data provider `ContributingGuidelineInfo` allows you to specify 2 types of regular expression patterns 
