@@ -1,6 +1,6 @@
-**Status**: **Not clear**
+**Status**: **Passed with warnings**
 
-**Confidence**: High (9.13, max confidence value is 10.0)
+**Confidence**: Max (10.0, max confidence value is 10.0)
 
 
 
@@ -8,9 +8,6 @@
 1.  [**[If a project has unresolved vulnerability alerts]**](#if-a-project-has-unresolved-vulnerability-alerts) Does it have unresolved vulnerability alerts? **Yes**
 
 
-## Unclear
-1.  [**[If a project is registered in REUSE]**](#if-a-project-is-registered-in-reuse) Is it registered in REUSE? **unknown**
-1.  [**[If a project is compliant with REUSE rules]**](#if-a-project-is-compliant-with-reuse-rules) Is it compliant with REUSE rules? **unknown**
 
 
 ## Passed rules
@@ -34,6 +31,8 @@
 1.  **[If a project runs CodeQL checks for commits]** Does it use CodeQL checks for pull requests? **Yes**
 1.  **[If a project uses an allowed license]** Does it use an allowed license? **Yes**
 1.  **[If project's README has info about REUSE]** Does README mention REUSE? **Yes**
+1.  **[If a project is registered in REUSE]** Is it registered in REUSE? **Yes**
+1.  **[If a project is compliant with REUSE rules]** Is it compliant with REUSE rules? **Yes**
 
 
 ## What is wrong, and how to fix it
@@ -41,13 +40,5 @@
 ### If a project has unresolved vulnerability alerts
 
 The project has unresolved vulnerability alerts
-
-### If a project is registered in REUSE
-
-Could not retrieve the project's REUSE status
-
-### If a project is compliant with REUSE rules
-
-Could not retrieve the project's REUSE status
 
 
