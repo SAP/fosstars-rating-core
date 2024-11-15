@@ -244,7 +244,7 @@
         }
       }
     },
-    "value" : 3.5426166426166423,
+    "value" : 3.542219817219817,
     "weight" : 1.0,
     "confidence" : 7.179487179487181,
     "usedValues" : [ {
@@ -1385,7 +1385,7 @@
         "type" : "ProjectPopularityScore",
         "name" : "Open-source project popularity score"
       },
-      "value" : 0.09333333333333332,
+      "value" : 0.09,
       "weight" : 0.5,
       "confidence" : 6.666666666666667,
       "usedValues" : [ {
@@ -1402,7 +1402,7 @@
           "type" : "PositiveIntegerFeature",
           "name" : "Number of watchers for a GitHub repository"
         },
-        "number" : 10,
+        "number" : 9,
         "explanation" : [ ]
       }, {
         "type" : "UnknownValue",
