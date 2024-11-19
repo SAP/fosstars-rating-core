@@ -1,260 +1,260 @@
 ---
-defaults: []
+defaults: [ ]
 elements:
-- type: "StandardTestVector"
-  values:
-  - type: "UnknownValue"
-    feature:
-      type: "VulnerabilitiesFeature"
-      name: "Info about vulnerabilities in open-source project"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 0.0
-    openLeft: false
-    negativeInfinity: false
-    to: 1.0
-    openRight: false
-    positiveInfinity: false
-  expectedUnknownScore: true
-  expectedLabel: null
-  alias: "all_unknown"
-- type: "StandardTestVector"
-  values:
-  - type: "VulnerabilitiesValue"
-    vulnerabilities:
-      entries: []
-    feature:
-      type: "VulnerabilitiesFeature"
-      name: "Info about vulnerabilities in open-source project"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 8.0
-    openLeft: false
-    negativeInfinity: false
-    to: 10.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_1"
-- type: "StandardTestVector"
-  values:
-  - type: "VulnerabilitiesValue"
-    vulnerabilities:
-      entries:
-      - id: "VULN-123-1"
-        cvss:
-          type: "CVSS$V3"
-          value: 9.0
-        references: []
-        resolution: "PATCHED"
-        introduced: "2019-01-01"
-        fixed: "2019-02-03"
-      - id: "VULN-124-2"
-        cvss:
-          type: "CVSS$V3"
-          value: 7.0
-        references: []
-        resolution: "PATCHED"
-        introduced: "2018-11-01"
-        fixed: "2018-12-02"
-      - id: "VULN-125-3"
-        cvss:
-          type: "CVSS$V3"
-          value: 3.0
-        references: []
-        resolution: "PATCHED"
-        introduced: "2017-07-04"
-        fixed: "2017-08-08"
-    feature:
-      type: "VulnerabilitiesFeature"
-      name: "Info about vulnerabilities in open-source project"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 9.0
-    openLeft: false
-    negativeInfinity: false
-    to: 10.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_2"
-- type: "StandardTestVector"
-  values:
-  - type: "VulnerabilitiesValue"
-    vulnerabilities:
-      entries:
-      - id: "VULN-126-4"
-        cvss:
-          type: "CVSS$V3"
-          value: 1.0
-        references: []
-        resolution: "UNPATCHED"
-        introduced: null
-        fixed: null
-    feature:
-      type: "VulnerabilitiesFeature"
-      name: "Info about vulnerabilities in open-source project"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 7.0
-    openLeft: false
-    negativeInfinity: false
-    to: 9.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_3"
-- type: "StandardTestVector"
-  values:
-  - type: "VulnerabilitiesValue"
-    vulnerabilities:
-      entries:
-      - id: "VULN-127-5"
-        cvss:
-          type: "CVSS$V3"
-          value: 5.0
-        references: []
-        resolution: "UNPATCHED"
-        introduced: null
-        fixed: null
-    feature:
-      type: "VulnerabilitiesFeature"
-      name: "Info about vulnerabilities in open-source project"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 6.0
-    openLeft: false
-    negativeInfinity: false
-    to: 8.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_4"
-- type: "StandardTestVector"
-  values:
-  - type: "VulnerabilitiesValue"
-    vulnerabilities:
-      entries:
-      - id: "VULN-128-6"
-        cvss:
-          type: "CVSS$V3"
-          value: 9.5
-        references: []
-        resolution: "UNPATCHED"
-        introduced: null
-        fixed: null
-    feature:
-      type: "VulnerabilitiesFeature"
-      name: "Info about vulnerabilities in open-source project"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 1.0
-    openLeft: false
-    negativeInfinity: false
-    to: 3.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_5"
-- type: "StandardTestVector"
-  values:
-  - type: "VulnerabilitiesValue"
-    vulnerabilities:
-      entries:
-      - id: "VULN-130-8"
-        cvss:
-          type: "CVSS$V3"
-          value: 2.0
-        references: []
-        resolution: "UNPATCHED"
-        introduced: null
-        fixed: null
-      - id: "VULN-129-7"
-        cvss:
-          type: "CVSS$V3"
-          value: 1.0
-        references: []
-        resolution: "UNPATCHED"
-        introduced: null
-        fixed: null
-    feature:
-      type: "VulnerabilitiesFeature"
-      name: "Info about vulnerabilities in open-source project"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 5.0
-    openLeft: false
-    negativeInfinity: false
-    to: 8.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_6"
-- type: "StandardTestVector"
-  values:
-  - type: "VulnerabilitiesValue"
-    vulnerabilities:
-      entries:
-      - id: "VULN-131-9"
-        cvss:
-          type: "CVSS$V3"
-          value: 5.0
-        references: []
-        resolution: "UNPATCHED"
-        introduced: null
-        fixed: null
-      - id: "VULN-132-10"
-        cvss:
-          type: "CVSS$V3"
-          value: 6.0
-        references: []
-        resolution: "UNPATCHED"
-        introduced: null
-        fixed: null
-    feature:
-      type: "VulnerabilitiesFeature"
-      name: "Info about vulnerabilities in open-source project"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 1.0
-    openLeft: false
-    negativeInfinity: false
-    to: 3.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_7"
-- type: "StandardTestVector"
-  values:
-  - type: "VulnerabilitiesValue"
-    vulnerabilities:
-      entries:
-      - id: "VULN-133-11"
-        cvss:
-          type: "CVSS$V3"
-          value: 9.0
-        references: []
-        resolution: "UNPATCHED"
-        introduced: null
-        fixed: null
-      - id: "VULN-134-12"
-        cvss:
-          type: "CVSS$V3"
-          value: 10.0
-        references: []
-        resolution: "UNPATCHED"
-        introduced: null
-        fixed: null
-    feature:
-      type: "VulnerabilitiesFeature"
-      name: "Info about vulnerabilities in open-source project"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 0.0
-    openLeft: false
-    negativeInfinity: false
-    to: 1.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_8"
+  - type: "StandardTestVector"
+    values:
+      - type: "UnknownValue"
+        feature:
+          type: "VulnerabilitiesFeature"
+          name: "Info about vulnerabilities in open-source project"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 1.0
+      openRight: false
+      positiveInfinity: false
+    expectedUnknownScore: true
+    expectedLabel: null
+    alias: "all_unknown"
+  - type: "StandardTestVector"
+    values:
+      - type: "VulnerabilitiesValue"
+        vulnerabilities:
+          entries: [ ]
+        feature:
+          type: "VulnerabilitiesFeature"
+          name: "Info about vulnerabilities in open-source project"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 8.0
+      openLeft: false
+      negativeInfinity: false
+      to: 10.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_1"
+  - type: "StandardTestVector"
+    values:
+      - type: "VulnerabilitiesValue"
+        vulnerabilities:
+          entries:
+            - id: "VULN-123-1"
+              cvss:
+                type: "CVSS$V3"
+                value: 9.0
+              references: [ ]
+              resolution: "PATCHED"
+              introduced: "2019-01-01"
+              fixed: "2019-02-03"
+            - id: "VULN-124-2"
+              cvss:
+                type: "CVSS$V3"
+                value: 7.0
+              references: [ ]
+              resolution: "PATCHED"
+              introduced: "2018-11-01"
+              fixed: "2018-12-02"
+            - id: "VULN-125-3"
+              cvss:
+                type: "CVSS$V3"
+                value: 3.0
+              references: [ ]
+              resolution: "PATCHED"
+              introduced: "2017-07-04"
+              fixed: "2017-08-08"
+        feature:
+          type: "VulnerabilitiesFeature"
+          name: "Info about vulnerabilities in open-source project"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 9.0
+      openLeft: false
+      negativeInfinity: false
+      to: 10.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_2"
+  - type: "StandardTestVector"
+    values:
+      - type: "VulnerabilitiesValue"
+        vulnerabilities:
+          entries:
+            - id: "VULN-126-4"
+              cvss:
+                type: "CVSS$V3"
+                value: 1.0
+              references: [ ]
+              resolution: "UNPATCHED"
+              introduced: null
+              fixed: null
+        feature:
+          type: "VulnerabilitiesFeature"
+          name: "Info about vulnerabilities in open-source project"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 7.0
+      openLeft: false
+      negativeInfinity: false
+      to: 9.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_3"
+  - type: "StandardTestVector"
+    values:
+      - type: "VulnerabilitiesValue"
+        vulnerabilities:
+          entries:
+            - id: "VULN-127-5"
+              cvss:
+                type: "CVSS$V3"
+                value: 5.0
+              references: [ ]
+              resolution: "UNPATCHED"
+              introduced: null
+              fixed: null
+        feature:
+          type: "VulnerabilitiesFeature"
+          name: "Info about vulnerabilities in open-source project"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 6.0
+      openLeft: false
+      negativeInfinity: false
+      to: 8.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_4"
+  - type: "StandardTestVector"
+    values:
+      - type: "VulnerabilitiesValue"
+        vulnerabilities:
+          entries:
+            - id: "VULN-128-6"
+              cvss:
+                type: "CVSS$V3"
+                value: 9.5
+              references: [ ]
+              resolution: "UNPATCHED"
+              introduced: null
+              fixed: null
+        feature:
+          type: "VulnerabilitiesFeature"
+          name: "Info about vulnerabilities in open-source project"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 1.0
+      openLeft: false
+      negativeInfinity: false
+      to: 3.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_5"
+  - type: "StandardTestVector"
+    values:
+      - type: "VulnerabilitiesValue"
+        vulnerabilities:
+          entries:
+            - id: "VULN-130-8"
+              cvss:
+                type: "CVSS$V3"
+                value: 2.0
+              references: [ ]
+              resolution: "UNPATCHED"
+              introduced: null
+              fixed: null
+            - id: "VULN-129-7"
+              cvss:
+                type: "CVSS$V3"
+                value: 1.0
+              references: [ ]
+              resolution: "UNPATCHED"
+              introduced: null
+              fixed: null
+        feature:
+          type: "VulnerabilitiesFeature"
+          name: "Info about vulnerabilities in open-source project"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 5.0
+      openLeft: false
+      negativeInfinity: false
+      to: 8.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_6"
+  - type: "StandardTestVector"
+    values:
+      - type: "VulnerabilitiesValue"
+        vulnerabilities:
+          entries:
+            - id: "VULN-131-9"
+              cvss:
+                type: "CVSS$V3"
+                value: 5.0
+              references: [ ]
+              resolution: "UNPATCHED"
+              introduced: null
+              fixed: null
+            - id: "VULN-132-10"
+              cvss:
+                type: "CVSS$V3"
+                value: 6.0
+              references: [ ]
+              resolution: "UNPATCHED"
+              introduced: null
+              fixed: null
+        feature:
+          type: "VulnerabilitiesFeature"
+          name: "Info about vulnerabilities in open-source project"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 1.0
+      openLeft: false
+      negativeInfinity: false
+      to: 3.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_7"
+  - type: "StandardTestVector"
+    values:
+      - type: "VulnerabilitiesValue"
+        vulnerabilities:
+          entries:
+            - id: "VULN-133-11"
+              cvss:
+                type: "CVSS$V3"
+                value: 9.0
+              references: [ ]
+              resolution: "UNPATCHED"
+              introduced: null
+              fixed: null
+            - id: "VULN-134-12"
+              cvss:
+                type: "CVSS$V3"
+                value: 10.0
+              references: [ ]
+              resolution: "UNPATCHED"
+              introduced: null
+              fixed: null
+        feature:
+          type: "VulnerabilitiesFeature"
+          name: "Info about vulnerabilities in open-source project"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 1.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_8"

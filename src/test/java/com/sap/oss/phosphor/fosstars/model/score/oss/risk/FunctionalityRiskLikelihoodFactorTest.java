@@ -4,9 +4,9 @@ import static com.sap.oss.phosphor.fosstars.TestUtils.DELTA;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.Functionality.SDK;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.Functionality.SECURITY;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.FUNCTIONALITY;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Score;
@@ -15,32 +15,31 @@ import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class FunctionalityRiskLikelihoodFactorTest {
 
-  private static final FunctionalityRiskLikelihoodFactor SCORE
-      = new FunctionalityRiskLikelihoodFactor();
+  private static final FunctionalityRiskLikelihoodFactor SCORE =
+      new FunctionalityRiskLikelihoodFactor();
 
   @Test
   public void testJsonSerialization() throws IOException {
-    FunctionalityRiskLikelihoodFactor clone
-        = Json.read(Json.toBytes(SCORE), FunctionalityRiskLikelihoodFactor.class);
+    FunctionalityRiskLikelihoodFactor clone =
+        Json.read(Json.toBytes(SCORE), FunctionalityRiskLikelihoodFactor.class);
     assertTrue(SCORE.equals(clone) && clone.equals(SCORE));
     assertEquals(SCORE.hashCode(), clone.hashCode());
   }
 
   @Test
   public void testYamlSerialization() throws IOException {
-    FunctionalityRiskLikelihoodFactor clone
-        = Yaml.read(Yaml.toBytes(SCORE), FunctionalityRiskLikelihoodFactor.class);
+    FunctionalityRiskLikelihoodFactor clone =
+        Yaml.read(Yaml.toBytes(SCORE), FunctionalityRiskLikelihoodFactor.class);
     assertEquals(clone, SCORE);
   }
 
   @Test
   public void testCalculate() {
-    ScoreValue scoreValue = SCORE.calculate(
-        new EnumValue<>(FUNCTIONALITY, SDK));
+    ScoreValue scoreValue = SCORE.calculate(new EnumValue<>(FUNCTIONALITY, SDK));
     assertFalse(scoreValue.isUnknown());
     assertFalse(scoreValue.isNotApplicable());
     assertTrue(Score.INTERVAL.contains(scoreValue.get()));
@@ -51,8 +50,7 @@ public class FunctionalityRiskLikelihoodFactorTest {
 
   @Test
   public void testScoreValueSerialization() throws IOException {
-    ScoreValue scoreValue = SCORE.calculate(
-        new EnumValue<>(FUNCTIONALITY, SECURITY));
+    ScoreValue scoreValue = SCORE.calculate(new EnumValue<>(FUNCTIONALITY, SECURITY));
     ScoreValue clone = Json.read(Json.toBytes(scoreValue), ScoreValue.class);
     assertTrue(scoreValue.equals(clone) && clone.equals(scoreValue));
     assertEquals(scoreValue.hashCode(), clone.hashCode());

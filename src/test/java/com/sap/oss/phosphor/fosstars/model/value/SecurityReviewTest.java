@@ -1,14 +1,14 @@
 package com.sap.oss.phosphor.fosstars.model.value;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.sap.oss.phosphor.fosstars.util.Json;
 import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
 import java.util.Date;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class SecurityReviewTest {
 
@@ -16,7 +16,7 @@ public class SecurityReviewTest {
 
   @Test
   public void testWrongChanges() {
-    for (Double value : new double[] { -1.0, 2.0 }) {
+    for (Double value : new double[] {-1.0, 2.0}) {
       try {
         new SecurityReview(TEST_REVIEW_DATE, value);
         fail("No exception thrown!");

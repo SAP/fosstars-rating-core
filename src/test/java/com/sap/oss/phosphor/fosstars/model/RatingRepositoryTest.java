@@ -2,9 +2,10 @@ package com.sap.oss.phosphor.fosstars.model;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.other.ImmutabilityChecker;
 import com.sap.oss.phosphor.fosstars.model.rating.AbstractRating;
@@ -12,7 +13,7 @@ import com.sap.oss.phosphor.fosstars.model.rating.example.SecurityRatingExample;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class RatingRepositoryTest {
 
@@ -31,17 +32,18 @@ public class RatingRepositoryTest {
     assertThat(rating.name(), is("Security rating (example)"));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testGetByVersionAndClassWrongClass() {
-    RatingRepository.INSTANCE.rating(TestRating.class);
+    assertThrows(
+        IllegalArgumentException.class, () -> RatingRepository.INSTANCE.rating(TestRating.class));
   }
 
   @Test
   public void testNoDuplicateScores() {
     OssSecurityRating ossSecurityRating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
     assertNotNull(ossSecurityRating);
-    OssArtifactSecurityRating ossArtifactSecurityRating
-        = RatingRepository.INSTANCE.rating(OssArtifactSecurityRating.class);
+    OssArtifactSecurityRating ossArtifactSecurityRating =
+        RatingRepository.INSTANCE.rating(OssArtifactSecurityRating.class);
     assertNotNull(ossArtifactSecurityRating);
     assertSame(ossSecurityRating.score(), ossArtifactSecurityRating.score().ossSecurityScore());
   }

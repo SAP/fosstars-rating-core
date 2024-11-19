@@ -4,9 +4,9 @@ import static com.sap.oss.phosphor.fosstars.data.github.TestGitHubDataFetcherHol
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_ADDRESS_SANITIZER;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_MEMORY_SANITIZER;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_UNDEFINED_BEHAVIOR_SANITIZER;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -22,20 +22,24 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class UsesSanitizersTest extends TestGitHubDataFetcherHolder {
 
   @Test
   public void testFetchValuesForWithAllSanitizers() throws IOException {
-    String content = String.join("\n", new String[] {
-        "first line",
-        "--debug -fsanitize=memory --another-option",
-        "--option -fsanitize=undefined,address --another-option --debug",
-        "another line",
-    });
+    String content =
+        String.join(
+            "\n",
+            new String[] {
+                "first line",
+                "--debug -fsanitize=memory --another-option",
+                "--option -fsanitize=undefined,address --another-option --debug",
+                "another line",
+            });
 
-    testProvider(content,
+    testProvider(
+        content,
         USES_ADDRESS_SANITIZER.value(true),
         USES_MEMORY_SANITIZER.value(true),
         USES_UNDEFINED_BEHAVIOR_SANITIZER.value(true));
@@ -43,53 +47,66 @@ public class UsesSanitizersTest extends TestGitHubDataFetcherHolder {
 
   @Test
   public void testFetchValuesForWithSomeSanitizers() throws IOException {
-    testProvider("\"-fsanitize=address\";",
+    testProvider(
+        "\"-fsanitize=address\";",
         USES_ADDRESS_SANITIZER.value(true),
         USES_MEMORY_SANITIZER.value(false),
         USES_UNDEFINED_BEHAVIOR_SANITIZER.value(false));
-    testProvider("-fsanitize= memory",
+    testProvider(
+        "-fsanitize= memory",
         USES_ADDRESS_SANITIZER.value(false),
         USES_MEMORY_SANITIZER.value(true),
         USES_UNDEFINED_BEHAVIOR_SANITIZER.value(false));
-    testProvider("-fsanitize=undefined ",
+    testProvider(
+        "-fsanitize=undefined ",
         USES_ADDRESS_SANITIZER.value(false),
         USES_MEMORY_SANITIZER.value(false),
         USES_UNDEFINED_BEHAVIOR_SANITIZER.value(true));
-    testProvider("--test  -fsanitize=address,    memory  --other=a,b --test",
+    testProvider(
+        "--test  -fsanitize=address,    memory  --other=a,b --test",
         USES_ADDRESS_SANITIZER.value(true),
         USES_MEMORY_SANITIZER.value(true),
         USES_UNDEFINED_BEHAVIOR_SANITIZER.value(false));
-    testProvider("--test  -fsanitize=  address, undefined ,   memory  --other=a,b --test",
+    testProvider(
+        "--test  -fsanitize=  address, undefined ,   memory  --other=a,b --test",
         USES_ADDRESS_SANITIZER.value(true),
         USES_MEMORY_SANITIZER.value(true),
         USES_UNDEFINED_BEHAVIOR_SANITIZER.value(true));
-    testProvider("--test  -fsanitize=address --memory",
+    testProvider(
+        "--test  -fsanitize=address --memory",
         USES_ADDRESS_SANITIZER.value(true),
         USES_MEMORY_SANITIZER.value(false),
         USES_UNDEFINED_BEHAVIOR_SANITIZER.value(false));
-    testProvider(" -fsanitize=aaa --test",
+    testProvider(
+        " -fsanitize=aaa --test",
         USES_ADDRESS_SANITIZER.value(false),
         USES_MEMORY_SANITIZER.value(false),
         USES_UNDEFINED_BEHAVIOR_SANITIZER.value(false));
 
-    String content = String.join("\n", new String[] {
-        "first line",
-        "-fsanitize=undefined,address",
-        "another line",
-    });
+    String content =
+        String.join(
+            "\n",
+            new String[] {
+                "first line", "-fsanitize=undefined,address", "another line",
+            });
 
-    testProvider(content,
+    testProvider(
+        content,
         USES_ADDRESS_SANITIZER.value(true),
         USES_MEMORY_SANITIZER.value(false),
         USES_UNDEFINED_BEHAVIOR_SANITIZER.value(true));
 
-    content = String.join("\n", new String[] {
-        "unless ($disabled{asan} || defined $detected_sanitizers{asan}) {",
-        "    push @{$config{cflags}}, \"-fsanitize=address\";",
-        "}"
-    });
+    content =
+        String.join(
+            "\n",
+            new String[] {
+                "unless ($disabled{asan} || defined $detected_sanitizers{asan}) {",
+                "    push @{$config{cflags}}, \"-fsanitize=address\";",
+                "}"
+            });
 
-    testProvider(content,
+    testProvider(
+        content,
         USES_ADDRESS_SANITIZER.value(true),
         USES_MEMORY_SANITIZER.value(false),
         USES_UNDEFINED_BEHAVIOR_SANITIZER.value(false));
@@ -97,12 +114,15 @@ public class UsesSanitizersTest extends TestGitHubDataFetcherHolder {
 
   @Test
   public void testFetchValuesForWithoutSanitizers() throws IOException {
-    String content = String.join("\n", new String[] {
-        "first line",
-        "another line",
-    });
+    String content =
+        String.join(
+            "\n",
+            new String[] {
+                "first line", "another line",
+            });
 
-    testProvider(content,
+    testProvider(
+        content,
         USES_ADDRESS_SANITIZER.value(false),
         USES_MEMORY_SANITIZER.value(false),
         USES_UNDEFINED_BEHAVIOR_SANITIZER.value(false));
@@ -141,19 +161,25 @@ public class UsesSanitizersTest extends TestGitHubDataFetcherHolder {
 
   @Test
   public void testLookForSanitizers() throws IOException {
-    String content = String.join("\n", new String[] {
-        "first line",
-        "-fsanitize=address",
-        "another line",
-        "--debug -fsanitize=memory --another-option",
-        "--option -fsanitize=undefined,address --another-option --debug"
-    });
+    String content =
+        String.join(
+            "\n",
+            new String[] {
+                "first line",
+                "-fsanitize=address",
+                "another line",
+                "--debug -fsanitize=memory --another-option",
+                "--option -fsanitize=undefined,address --another-option --debug"
+            });
     List<String> options = UsesSanitizers.lookForSanitizers(content);
     assertEquals(Arrays.asList("address", "memory", "undefined", "address"), options);
 
-    content = String.join("\n", new String[] {
-        "--test -fsanitize=  address , memory --undefined",
-    });
+    content =
+        String.join(
+            "\n",
+            new String[] {
+                "--test -fsanitize=  address , memory --undefined",
+            });
     options = UsesSanitizers.lookForSanitizers(content);
     assertEquals(Arrays.asList("address", "memory"), options);
   }
@@ -161,23 +187,15 @@ public class UsesSanitizersTest extends TestGitHubDataFetcherHolder {
   @Test
   public void testParseOptions() {
     assertTrue(UsesSanitizers.parseOptions("something else").isEmpty());
-    assertEquals(
-        Arrays.asList("address"),
-        UsesSanitizers.parseOptions("-fsanitize=address"));
-    assertEquals(
-        Arrays.asList("memory"),
-        UsesSanitizers.parseOptions("-fsanitize=memory"));
+    assertEquals(List.of("address"), UsesSanitizers.parseOptions("-fsanitize=address"));
+    assertEquals(List.of("memory"), UsesSanitizers.parseOptions("-fsanitize=memory"));
     assertEquals(
         Arrays.asList("address", "memory", "test"),
         UsesSanitizers.parseOptions("-fsanitize=address,memory,test"));
     assertEquals(
         Arrays.asList("address", "memory", "test"),
         UsesSanitizers.parseOptions("-fsanitize=  address  ,  memory  ,    test "));
-    assertEquals(
-        Collections.emptyList(),
-        UsesSanitizers.parseOptions("-fsanitize="));
-    assertEquals(
-        Collections.emptyList(),
-        UsesSanitizers.parseOptions("-fsomething"));
+    assertEquals(Collections.emptyList(), UsesSanitizers.parseOptions("-fsanitize="));
+    assertEquals(Collections.emptyList(), UsesSanitizers.parseOptions("-fsomething"));
   }
 }

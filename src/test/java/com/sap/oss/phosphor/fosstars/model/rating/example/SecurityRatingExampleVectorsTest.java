@@ -1,10 +1,10 @@
 package com.sap.oss.phosphor.fosstars.model.rating.example;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
 import com.sap.oss.phosphor.fosstars.model.qa.VerificationFailedException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class SecurityRatingExampleVectorsTest {
 
@@ -14,5 +14,4 @@ public class SecurityRatingExampleVectorsTest {
     assertNotNull(rating);
     new SecurityRatingExampleVerification(rating).run();
   }
-
 }

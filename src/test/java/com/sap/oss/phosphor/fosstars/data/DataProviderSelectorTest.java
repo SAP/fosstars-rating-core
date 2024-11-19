@@ -1,6 +1,6 @@
 package com.sap.oss.phosphor.fosstars.data;
 
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import com.sap.oss.phosphor.fosstars.data.github.TestGitHubDataFetcherHolder;
 import com.sap.oss.phosphor.fosstars.model.Feature;
@@ -9,7 +9,7 @@ import com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating;
 import com.sap.oss.phosphor.fosstars.nvd.TestNVD;
 import java.io.IOException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class DataProviderSelectorTest extends TestGitHubDataFetcherHolder {
 

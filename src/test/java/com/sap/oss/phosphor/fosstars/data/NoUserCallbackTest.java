@@ -1,8 +1,9 @@
 package com.sap.oss.phosphor.fosstars.data;
 
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class NoUserCallbackTest {
 
@@ -11,19 +12,18 @@ public class NoUserCallbackTest {
     assertFalse(NoUserCallback.INSTANCE.canTalk());
   }
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test
   public void testCanNotAsk() {
-    NoUserCallback.INSTANCE.ask();
+    assertThrows(UnsupportedOperationException.class, () -> NoUserCallback.INSTANCE.ask());
   }
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test
   public void testCanNotAskQuestion() {
-    NoUserCallback.INSTANCE.ask("hmm?");
+    assertThrows(UnsupportedOperationException.class, () -> NoUserCallback.INSTANCE.ask("hmm?"));
   }
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test
   public void testCanNotSay() {
-    NoUserCallback.INSTANCE.say("oops");
+    assertThrows(UnsupportedOperationException.class, () -> NoUserCallback.INSTANCE.say("oops"));
   }
-
 }

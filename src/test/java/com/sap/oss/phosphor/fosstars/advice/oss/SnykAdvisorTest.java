@@ -10,8 +10,8 @@ import static com.sap.oss.phosphor.fosstars.model.value.Language.C;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.GO;
 import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.GOMODULES;
 import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.OTHER;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.Rating;
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
@@ -22,7 +22,7 @@ import com.sap.oss.phosphor.fosstars.model.value.Languages;
 import com.sap.oss.phosphor.fosstars.model.value.PackageManagers;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import java.net.MalformedURLException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class SnykAdvisorTest {
 
@@ -51,7 +51,8 @@ public class SnykAdvisorTest {
     values.update(USES_SNYK.value(false));
     project.set(rating.calculate(values));
     assertEquals(1, advisor.adviceFor(project).size());
-    assertEquals("You can create Snyk account and configure your project.",
+    assertEquals(
+        "You can create Snyk account and configure your project.",
         advisor.adviceFor(project).get(0).content().text());
   }
 

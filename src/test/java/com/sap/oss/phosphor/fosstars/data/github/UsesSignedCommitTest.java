@@ -2,9 +2,9 @@ package com.sap.oss.phosphor.fosstars.data.github;
 
 import static com.sap.oss.phosphor.fosstars.data.github.TestGitHubDataFetcherHolder.TestGitHubDataFetcher.addForTesting;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_SIGNED_COMMITS;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class UsesSignedCommitTest extends TestGitHubDataFetcherHolder {
 
@@ -56,8 +56,7 @@ public class UsesSignedCommitTest extends TestGitHubDataFetcherHolder {
     assertTrue(values.has(USES_SIGNED_COMMITS));
     assertTrue(values.of(USES_SIGNED_COMMITS).isPresent());
     assertFalse(values.of(USES_SIGNED_COMMITS).get().isUnknown());
-    assertEquals(USES_SIGNED_COMMITS.value(value),
-        values.of(USES_SIGNED_COMMITS).get());
+    assertEquals(USES_SIGNED_COMMITS.value(value), values.of(USES_SIGNED_COMMITS).get());
   }
 
   @Test

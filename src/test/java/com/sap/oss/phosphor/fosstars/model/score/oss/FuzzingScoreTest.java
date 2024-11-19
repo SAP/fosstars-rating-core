@@ -5,7 +5,8 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.LANGUA
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.allUnknown;
 import static com.sap.oss.phosphor.fosstars.model.qa.TestVectorBuilder.newTestVector;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.CPP;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.qa.ScoreVerification;
 import com.sap.oss.phosphor.fosstars.model.qa.TestVectors;
@@ -14,20 +15,22 @@ import com.sap.oss.phosphor.fosstars.model.value.Languages;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class FuzzingScoreTest {
 
   private static final FuzzingScore SCORE = new FuzzingScore();
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testWithoutLanguage() {
-    SCORE.calculate(LANGUAGES.value(Languages.of(CPP)));
+    assertThrows(
+        IllegalArgumentException.class, () -> SCORE.calculate(LANGUAGES.value(Languages.of(CPP))));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testWithoutOssFuzz() {
-    SCORE.calculate(FUZZED_IN_OSS_FUZZ.unknown());
+    assertThrows(
+        IllegalArgumentException.class, () -> SCORE.calculate(FUZZED_IN_OSS_FUZZ.unknown()));
   }
 
   @Test
@@ -37,22 +40,20 @@ public class FuzzingScoreTest {
 
   @Test
   public void testVerification() throws VerificationFailedException, IOException {
-    TestVectors vectors = new TestVectors(
-        newTestVector()
-            .alias("test")
-            .expectUnknownScore()
-            .set(LANGUAGES.unknown())
-            .set(FUZZED_IN_OSS_FUZZ.unknown())
-            .make()
-    );
+    TestVectors vectors =
+        new TestVectors(
+            newTestVector()
+                .alias("test")
+                .expectUnknownScore()
+                .set(LANGUAGES.unknown())
+                .set(FUZZED_IN_OSS_FUZZ.unknown())
+                .make());
 
     Path file = Files.createTempFile(getClass().getName(), "test");
     try {
       vectors.storeToYaml(file);
 
-      ScoreVerification verification = new ScoreVerification(
-          SCORE,
-          TestVectors.loadFromYaml(file));
+      ScoreVerification verification = new ScoreVerification(SCORE, TestVectors.loadFromYaml(file));
 
       verification.run();
     } finally {

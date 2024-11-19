@@ -52,9 +52,9 @@ import static com.sap.oss.phosphor.fosstars.model.value.Language.JAVA;
 import static com.sap.oss.phosphor.fosstars.model.value.OwaspDependencyCheckUsage.MANDATORY;
 import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.MAVEN;
 import static com.sap.oss.phosphor.fosstars.model.value.SecurityReviews.noReviews;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Interval;
@@ -109,21 +109,21 @@ public class TestUtils {
    */
   public static final GitHubProject PROJECT = new GitHubProject("org", "test");
 
-  public static final Consumer<Value<Boolean>> NO_EXPLANATION
-      = value -> assertTrue(value.explanation().isEmpty());
+  public static final Consumer<Value<Boolean>> NO_EXPLANATION =
+      value -> assertTrue(value.explanation().isEmpty());
 
-  public static final Consumer<Value<Boolean>> HAS_EXPLANATION
-      = value -> assertFalse(value.explanation().isEmpty());
+  public static final Consumer<Value<Boolean>> HAS_EXPLANATION =
+      value -> assertFalse(value.explanation().isEmpty());
 
   /**
    * The method checks if a score calculates an expected score value for a specified set of values.
-   * First, the method asks the score to calculate a score value for the passed values.
-   * Next, it checks if the score value equals to the expected one.
-   * Then, it checks if the score value contains all the passed values.
+   * First, the method asks the score to calculate a score value for the passed values. Next, it
+   * checks if the score value equals to the expected one. Then, it checks if the score value
+   * contains all the passed values.
    *
    * @param expectedScoreValue The expected score value.
-   * @param score The score.
-   * @param values The values.
+   * @param score              The score.
+   * @param values             The values.
    */
   public static void assertScore(double expectedScoreValue, Score score, Set<Value<?>> values) {
     ScoreValue scoreValue = score.calculate(values);
@@ -134,13 +134,13 @@ public class TestUtils {
 
   /**
    * The method checks if a score calculates an expected score value for a specified set of values.
-   * First, the method asks the score to calculate a score value for the passed values.
-   * Next, it checks if the score value belong to the expected range.
-   * Then, it checks if the score value contains all the passed values.
+   * First, the method asks the score to calculate a score value for the passed values. Next, it
+   * checks if the score value belong to the expected range. Then, it checks if the score value
+   * contains all the passed values.
    *
    * @param expectedInterval The expected range for the score value.
-   * @param score The score.
-   * @param values The values.
+   * @param score            The score.
+   * @param values           The values.
    */
   public static void assertScore(Interval expectedInterval, Score score, Set<Value<?>> values) {
     ScoreValue scoreValue = score.calculate(values);
@@ -149,7 +149,6 @@ public class TestUtils {
     assertEquals(values.size(), scoreValue.usedValues().size());
     assertTrue(values.containsAll(scoreValue.usedValues()));
   }
-
 
   /**
    * Create the default values and overwrite defaults with given values.
@@ -164,9 +163,10 @@ public class TestUtils {
       name2Value.put(v.feature().name(), v);
     }
 
-    Set<Value<?>> resultValues = defaultValues.stream()
-        .filter(v -> !name2Value.containsKey(v.feature().name()))
-        .collect(Collectors.toSet());
+    Set<Value<?>> resultValues =
+        defaultValues.stream()
+            .filter(v -> !name2Value.containsKey(v.feature().name()))
+            .collect(Collectors.toSet());
     resultValues.addAll(name2Value.values());
 
     return resultValues;
@@ -239,8 +239,7 @@ public class TestUtils {
             ArtifactVersions.of(
                 new ArtifactVersion("1.0.0", LocalDateTime.now().minusDays(30)),
                 new ArtifactVersion("1.5.0", LocalDateTime.now().minusDays(15)),
-                new ArtifactVersion("2.0.0", LocalDateTime.now())
-            )),
+                new ArtifactVersion("2.0.0", LocalDateTime.now()))),
         ARTIFACT_VERSION.value(new ArtifactVersion("2.0.0", LocalDateTime.now())),
         SUPPORTED_BY_COMPANY.value(true),
         IS_APACHE.value(true),
@@ -254,28 +253,26 @@ public class TestUtils {
         HAS_SECURITY_POLICY.value(true),
         HAS_BUG_BOUNTY_PROGRAM.value(true),
         SIGNS_ARTIFACTS.value(true),
-        VULNERABILITIES_IN_PROJECT.value(new Vulnerabilities(
-            Vulnerability.Builder.newVulnerability("ID-01")
-                .set(new CVSS.V3(3.0, Impact.HIGH, Impact.LOW, Impact.NONE))
-                .set(Resolution.PATCHED)
-                .fixed(new Date())
-                .introduced(new Date())
-                .published(new Date())
-                .versionRanges(Collections.singletonList(
-                    new VersionRange("1.0.0", "1.1.0")))
-                .make()
-        )),
-        VULNERABILITIES_IN_ARTIFACT.value(new Vulnerabilities(
-            Vulnerability.Builder.newVulnerability("ID-02")
-                .set(new CVSS.V3(3.0, Impact.HIGH, Impact.LOW, Impact.NONE))
-                .set(Resolution.PATCHED)
-                .fixed(new Date())
-                .introduced(new Date())
-                .published(new Date())
-                .versionRanges(Collections.singletonList(
-                    new VersionRange("1.1.0", "1.2.0")))
-                .make()
-        )),
+        VULNERABILITIES_IN_PROJECT.value(
+            new Vulnerabilities(
+                Vulnerability.Builder.newVulnerability("ID-01")
+                    .set(new CVSS.V3(3.0, Impact.HIGH, Impact.LOW, Impact.NONE))
+                    .set(Resolution.PATCHED)
+                    .fixed(new Date())
+                    .introduced(new Date())
+                    .published(new Date())
+                    .versionRanges(Collections.singletonList(new VersionRange("1.0.0", "1.1.0")))
+                    .make())),
+        VULNERABILITIES_IN_ARTIFACT.value(
+            new Vulnerabilities(
+                Vulnerability.Builder.newVulnerability("ID-02")
+                    .set(new CVSS.V3(3.0, Impact.HIGH, Impact.LOW, Impact.NONE))
+                    .set(Resolution.PATCHED)
+                    .fixed(new Date())
+                    .introduced(new Date())
+                    .published(new Date())
+                    .versionRanges(Collections.singletonList(new VersionRange("1.1.0", "1.2.0")))
+                    .make())),
         PROJECT_START_DATE.value(new Date()),
         USES_SIGNED_COMMITS.value(true),
         RUNS_CODEQL_SCANS.value(true),
@@ -310,12 +307,12 @@ public class TestUtils {
   }
 
   /**
-   * Create a vulnerability with given parameters.
-   * All other parameters have some default test values (as they are not required for all tests)
+   * Create a vulnerability with given parameters. All other parameters have some default test
+   * values (as they are not required for all tests)
    *
-   * @param cvssValue the cvss value
+   * @param cvssValue    the cvss value
    * @param startVersion the start version of the vulnerability
-   * @param endVersion the end version of the vulnerability
+   * @param endVersion   the end version of the vulnerability
    * @return the created vulnerability
    */
   public static Vulnerability createBasicVulnerability(
@@ -330,13 +327,18 @@ public class TestUtils {
     versions.add(new VersionRange(startVersion, endVersion));
 
     return Vulnerability.Builder.newVulnerability(id)
-        .set(cvss).published(published).introduced(introduced).fixed(fixed)
-        .set(Resolution.PATCHED).versionRanges(versions)
+        .set(cvss)
+        .published(published)
+        .introduced(introduced)
+        .fixed(fixed)
+        .set(Resolution.PATCHED)
+        .versionRanges(versions)
         .make();
   }
 
   /**
    * Parse date in format 'yyyy-MM-dd'.
+   *
    * @param date date in format 'yyyy-MM-dd'.
    * @return according date
    */
@@ -353,8 +355,8 @@ public class TestUtils {
    *
    * @param content The stuff to be committed. It is a map from file name to its content.
    * @param message A commit message.
-   * @param git An interface to the Git repository.
-   * @throws IOException If something went wrong.
+   * @param git     An interface to the Git repository.
+   * @throws IOException     If something went wrong.
    * @throws GitAPIException If git failed.
    */
   public static void commit(Map<String, String> content, String message, Git git)
@@ -374,18 +376,15 @@ public class TestUtils {
     CommitCommand commit = git.commit();
     commit.setCredentialsProvider(
         new UsernamePasswordCredentialsProvider("mr.pink", "don't tell anyone"));
-    commit.setMessage(message)
-        .setSign(false)
-        .setAuthor("Mr. Pink", "mr.pink@test.com")
-        .call();
+    commit.setMessage(message).setSign(false).setAuthor("Mr. Pink", "mr.pink@test.com").call();
   }
 
   /**
    * Looks for a score in a rating.
    *
    * @param scoreClazz The score's class.
-   * @param rating The rating.
-   * @param <T> A type of the score.
+   * @param rating     The rating.
+   * @param <T>        A type of the score.
    * @return The score if found.
    */
   public static <T extends Score> Optional<T> find(Class<T> scoreClazz, Rating rating) {

@@ -1,10 +1,10 @@
 package com.sap.oss.phosphor.fosstars.data.json;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class SecurityTeamStorageTest {
 
@@ -25,5 +25,4 @@ public class SecurityTeamStorageTest {
     SecurityTeamStorage storage = SecurityTeamStorage.load();
     assertFalse(storage.existsFor("https://github.com/unknown/project"));
   }
-
 }

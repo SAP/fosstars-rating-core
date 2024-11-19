@@ -344,7 +344,7 @@ public class NvdEntryMatcher implements Matcher {
    * @return True if the host name matches with the project, false otherwise.
    */
   private static boolean checkUrlHost(String host, GitHubProject project) {
-    return host.equals(project.scm().getHost());
+    return Objects.isNull(host) ? false : host.equals(project.scm().getHost());
   }
 
   /**

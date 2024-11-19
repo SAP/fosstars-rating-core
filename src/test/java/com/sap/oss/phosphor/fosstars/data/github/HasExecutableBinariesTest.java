@@ -1,8 +1,8 @@
 package com.sap.oss.phosphor.fosstars.data.github;
 
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_EXECUTABLE_BINARIES;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
@@ -19,19 +19,17 @@ import java.util.Optional;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jgit.lib.Repository;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 public class HasExecutableBinariesTest extends TestGitHubDataFetcherHolder {
 
-  private static Path BASE_DIR;
-
   private static final GitHubProject PROJECT = new GitHubProject("org", "test");
-
+  private static Path BASE_DIR;
   private static LocalRepository LOCAL_REPOSITORY;
 
-  @BeforeClass
+  @BeforeAll
   public static void setup() {
     try {
       BASE_DIR = Files.createTempDirectory(HasExecutableBinariesTest.class.getName());
@@ -52,6 +50,15 @@ public class HasExecutableBinariesTest extends TestGitHubDataFetcherHolder {
       when(LOCAL_REPOSITORY.info()).thenReturn(localRepositoryInfo);
 
       TestGitHubDataFetcher.addForTesting(PROJECT, LOCAL_REPOSITORY);
+    } catch (IOException e) {
+      throw new UncheckedIOException(e);
+    }
+  }
+
+  @AfterAll
+  public static void shutdown() {
+    try {
+      FileUtils.forceDeleteOnExit(BASE_DIR.toFile());
     } catch (IOException e) {
       throw new UncheckedIOException(e);
     }
@@ -104,16 +111,6 @@ public class HasExecutableBinariesTest extends TestGitHubDataFetcherHolder {
       assertFalse(value.get());
     } finally {
       FileUtils.forceDeleteOnExit(javaFile.toFile());
-    }
-
-  }
-
-  @AfterClass
-  public static void shutdown() {
-    try {
-      FileUtils.forceDeleteOnExit(BASE_DIR.toFile());
-    } catch (IOException e) {
-      throw new UncheckedIOException(e);
     }
   }
 }

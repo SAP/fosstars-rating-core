@@ -5,10 +5,10 @@ import static com.sap.oss.phosphor.fosstars.TestUtils.assertScore;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_COMMITS_LAST_THREE_MONTHS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Score;
@@ -16,22 +16,30 @@ import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.oss.phosphor.fosstars.model.value.UnknownValue;
 import java.util.Set;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ProjectActivityScoreTest {
 
   private static final ProjectActivityScore PROJECT_ACTIVITY = new ProjectActivityScore();
 
+  private static Set<Value<?>> values(int commits, int contributors) {
+    return setOf(
+        NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(commits),
+        NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(contributors));
+  }
+
   @Test
   public void testCalculate() {
-    ScoreValue scoreValue = PROJECT_ACTIVITY.calculate(
-        UnknownValue.of(NUMBER_OF_COMMITS_LAST_THREE_MONTHS),
-        UnknownValue.of(NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS));
+    ScoreValue scoreValue =
+        PROJECT_ACTIVITY.calculate(
+            UnknownValue.of(NUMBER_OF_COMMITS_LAST_THREE_MONTHS),
+            UnknownValue.of(NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS));
     assertTrue(scoreValue.isUnknown());
     assertEquals(Confidence.MIN, scoreValue.confidence(), DELTA);
     assertFalse(scoreValue.explanation().isEmpty());
 
-    scoreValue = PROJECT_ACTIVITY.calculate(
+    scoreValue =
+        PROJECT_ACTIVITY.calculate(
             NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(0),
             UnknownValue.of(NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS));
     assertFalse(scoreValue.isUnknown());
@@ -40,20 +48,21 @@ public class ProjectActivityScoreTest {
     assertTrue(scoreValue.confidence() < Confidence.MAX);
     assertFalse(scoreValue.explanation().isEmpty());
 
-    scoreValue = PROJECT_ACTIVITY.calculate(
+    scoreValue =
+        PROJECT_ACTIVITY.calculate(
             UnknownValue.of(NUMBER_OF_COMMITS_LAST_THREE_MONTHS),
             NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(0));
     assertTrue(scoreValue.isUnknown());
     assertEquals(Confidence.MIN, scoreValue.confidence(), DELTA);
     assertFalse(scoreValue.explanation().isEmpty());
 
-    scoreValue = PROJECT_ACTIVITY.calculate(values(0,0));
+    scoreValue = PROJECT_ACTIVITY.calculate(values(0, 0));
     assertFalse(scoreValue.isUnknown());
     assertEquals(Score.MIN, scoreValue.get(), DELTA);
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     assertFalse(scoreValue.explanation().isEmpty());
 
-    scoreValue = PROJECT_ACTIVITY.calculate(values(1,1));
+    scoreValue = PROJECT_ACTIVITY.calculate(values(1, 1));
     assertFalse(scoreValue.isUnknown());
     assertTrue(Score.INTERVAL.contains(scoreValue.get()));
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
@@ -94,7 +103,7 @@ public class ProjectActivityScoreTest {
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     assertFalse(scoreValue.explanation().isEmpty());
   }
-  
+
   @Test
   public void testWithMoreCommitsThanContributors() {
     ScoreValue scoreValue = PROJECT_ACTIVITY.calculate(values(2, 1));
@@ -108,11 +117,5 @@ public class ProjectActivityScoreTest {
   public void testDescription() {
     assertNotNull(PROJECT_ACTIVITY.description());
     assertFalse(PROJECT_ACTIVITY.description().isEmpty());
-  }
-
-  private static Set<Value<?>> values(int commits, int contributors) {
-    return setOf(
-        NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(commits),
-        NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(contributors));
   }
 }

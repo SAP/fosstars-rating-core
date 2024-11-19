@@ -1,6 +1,6 @@
 package com.sap.oss.phosphor.fosstars.model.rating.oss;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
@@ -10,7 +10,7 @@ import com.sap.oss.phosphor.fosstars.model.qa.VerificationFailedException;
 import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
 import java.io.InputStream;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class OssArtifactSecurityRatingVerificationTest {
 
@@ -23,19 +23,19 @@ public class OssArtifactSecurityRatingVerificationTest {
   }
 
   /**
-   * This class implements a verification procedure for {@link OssArtifactSecurityRating}.
-   * The class loads test vectors, and provides methods to verify a
-   * {@link OssArtifactSecurityRating} against those test vectors.
+   * This class implements a verification procedure for {@link OssArtifactSecurityRating}. The class
+   * loads test vectors, and provides methods to verify a {@link OssArtifactSecurityRating} against
+   * those test vectors.
    */
   private static class OssArtifactSecurityRatingVerification extends RatingVerification {
 
     private static final String TEST_VECTORS_YAML = "OssArtifactSecurityRatingTestVectors.yml";
 
     /**
-     * Initializes a {@link OssArtifactSecurityRatingVerification} for an
-     * {@link OssArtifactSecurityRating}.
+     * Initializes a {@link OssArtifactSecurityRatingVerification} for an {@link
+     * OssArtifactSecurityRating}.
      *
-     * @param rating A rating to be verified.
+     * @param rating  A rating to be verified.
      * @param vectors A list of test vectors.
      */
     OssArtifactSecurityRatingVerification(OssArtifactSecurityRating rating, TestVectors vectors) {
@@ -51,8 +51,8 @@ public class OssArtifactSecurityRatingVerificationTest {
      */
     static OssArtifactSecurityRatingVerification createFor(OssArtifactSecurityRating rating)
         throws IOException {
-      try (InputStream is = OssArtifactSecurityRatingVerification.class
-          .getResourceAsStream(TEST_VECTORS_YAML)) {
+      try (InputStream is =
+               OssArtifactSecurityRatingVerification.class.getResourceAsStream(TEST_VECTORS_YAML)) {
 
         ObjectMapper mapper = Yaml.mapper();
         mapper.registerSubtypes(TestArtifactVersion.class);

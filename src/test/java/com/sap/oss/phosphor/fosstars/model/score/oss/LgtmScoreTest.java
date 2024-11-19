@@ -5,15 +5,16 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.LANGUA
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.JAVA;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.value.Languages;
 import com.sap.oss.phosphor.fosstars.model.value.LgtmGrade;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class LgtmScoreTest {
 
@@ -30,12 +31,14 @@ public class LgtmScoreTest {
     assertTrue(SCORE.features().contains(LANGUAGES));
     assertTrue(SCORE.subScores().isEmpty());
 
-    assertScore(Score.INTERVAL, SCORE,
+    assertScore(
+        Score.INTERVAL,
+        SCORE,
         setOf(WORST_LGTM_GRADE.value(LgtmGrade.A_PLUS), LANGUAGES.value(Languages.of(JAVA))));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testCalculateWithoutUsesWorseLgtmGradeValue() {
-    SCORE.calculate(LANGUAGES.unknown());
+    assertThrows(IllegalArgumentException.class, () -> SCORE.calculate(LANGUAGES.unknown()));
   }
 }

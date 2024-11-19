@@ -1,7 +1,7 @@
 repos:
--   repo: https://github.com/PyCQA/prospector
+  - repo: https://github.com/PyCQA/prospector
     rev: 1.7.5
     hooks:
-    -   id: prospector
+      - id: prospector
         additional_dependencies:
-        - ".[with_pylint,with_mypy]"
+          - ".[with_pylint,with_mypy]"

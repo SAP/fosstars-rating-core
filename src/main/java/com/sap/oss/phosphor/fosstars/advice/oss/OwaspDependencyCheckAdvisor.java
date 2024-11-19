@@ -59,7 +59,7 @@ public class OwaspDependencyCheckAdvisor extends AbstractOssAdvisor {
 
   /**
    * Checks if a value is
-   * {@link com.sap.oss.phosphor.fosstars.model.value.OwaspDependencyCheckUsageValue}
+   * {@link OwaspDependencyCheckUsageValue}
    * and it is equal to
    * {@link com.sap.oss.phosphor.fosstars.model.value.OwaspDependencyCheckUsage#MANDATORY}.
    *

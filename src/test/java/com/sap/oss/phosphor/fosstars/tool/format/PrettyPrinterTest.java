@@ -51,10 +51,10 @@ import static com.sap.oss.phosphor.fosstars.model.value.Language.C;
 import static com.sap.oss.phosphor.fosstars.model.value.OwaspDependencyCheckUsage.NOT_USED;
 import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.MAVEN;
 import static com.sap.oss.phosphor.fosstars.model.value.SecurityReviews.noReviews;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.advice.oss.github.OssSecurityGithubAdvisor;
 import com.sap.oss.phosphor.fosstars.model.Feature;
@@ -69,68 +69,74 @@ import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Set;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 public class PrettyPrinterTest {
 
-  private static final OssSecurityRating RATING
-      = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
+  private static final OssSecurityRating RATING =
+      RatingRepository.INSTANCE.rating(OssSecurityRating.class);
 
-  private static final Set<Value<?>> TEST_VALUES = setOf(
-      SUPPORTED_BY_COMPANY.value(false),
-      IS_APACHE.value(true),
-      IS_ECLIPSE.value(false),
-      NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(50),
-      NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(3),
-      NUMBER_OF_DEPENDENT_PROJECTS_ON_GITHUB.value(42),
-      NUMBER_OF_GITHUB_STARS.value(10),
-      NUMBER_OF_WATCHERS_ON_GITHUB.value(5),
-      HAS_SECURITY_TEAM.value(false),
-      HAS_SECURITY_POLICY.value(false),
-      HAS_BUG_BOUNTY_PROGRAM.value(false),
-      SIGNS_ARTIFACTS.value(false),
-      VULNERABILITIES_IN_PROJECT.value(new Vulnerabilities()),
-      PROJECT_START_DATE.value(new Date()),
-      FIRST_COMMIT_DATE.value(new Date()),
-      USES_SIGNED_COMMITS.value(false),
-      USES_CODEQL_CHECKS.value(false),
-      RUNS_CODEQL_SCANS.value(false),
-      USES_BANDIT_SCAN_CHECKS.value(false),
-      RUNS_BANDIT_SCANS.value(false),
-      RUNS_GOSEC_SCANS.value(false),
-      USES_GOSEC_WITH_RULES.value(false),
-      USES_GOSEC_SCAN_CHECKS.value(false),
-      RUNS_PYLINT_SCANS.value(false),
-      USES_PYLINT_SCAN_CHECKS.value(false),
-      RUNS_MYPY_SCANS.value(false),
-      USES_MYPY_SCAN_CHECKS.value(false),
-      USES_GITHUB_FOR_DEVELOPMENT.value(false),
-      USES_NOHTTP.value(false),
-      USES_DEPENDABOT.value(false),
-      USES_SNYK.value(false),
-      USES_ADDRESS_SANITIZER.value(false),
-      USES_MEMORY_SANITIZER.value(false),
-      USES_UNDEFINED_BEHAVIOR_SANITIZER.value(false),
-      FUZZED_IN_OSS_FUZZ.value(false),
-      LANGUAGES.value(Languages.of(C)),
-      USES_FIND_SEC_BUGS.value(false),
-      USES_OWASP_ESAPI.value(false),
-      USES_OWASP_JAVA_ENCODER.value(false),
-      USES_OWASP_JAVA_HTML_SANITIZER.value(false),
-      OWASP_DEPENDENCY_CHECK_USAGE.value(NOT_USED),
-      OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.notSpecifiedValue(),
-      PACKAGE_MANAGERS.value(new PackageManagers(MAVEN)),
-      SECURITY_REVIEWS.value(noReviews()),
-      HAS_EXECUTABLE_BINARIES.value(false));
+  private static final Set<Value<?>> TEST_VALUES =
+      setOf(
+          SUPPORTED_BY_COMPANY.value(false),
+          IS_APACHE.value(true),
+          IS_ECLIPSE.value(false),
+          NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(50),
+          NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(3),
+          NUMBER_OF_DEPENDENT_PROJECTS_ON_GITHUB.value(42),
+          NUMBER_OF_GITHUB_STARS.value(10),
+          NUMBER_OF_WATCHERS_ON_GITHUB.value(5),
+          HAS_SECURITY_TEAM.value(false),
+          HAS_SECURITY_POLICY.value(false),
+          HAS_BUG_BOUNTY_PROGRAM.value(false),
+          SIGNS_ARTIFACTS.value(false),
+          VULNERABILITIES_IN_PROJECT.value(new Vulnerabilities()),
+          PROJECT_START_DATE.value(new Date()),
+          FIRST_COMMIT_DATE.value(new Date()),
+          USES_SIGNED_COMMITS.value(false),
+          USES_CODEQL_CHECKS.value(false),
+          RUNS_CODEQL_SCANS.value(false),
+          USES_BANDIT_SCAN_CHECKS.value(false),
+          RUNS_BANDIT_SCANS.value(false),
+          RUNS_GOSEC_SCANS.value(false),
+          USES_GOSEC_WITH_RULES.value(false),
+          USES_GOSEC_SCAN_CHECKS.value(false),
+          RUNS_PYLINT_SCANS.value(false),
+          USES_PYLINT_SCAN_CHECKS.value(false),
+          RUNS_MYPY_SCANS.value(false),
+          USES_MYPY_SCAN_CHECKS.value(false),
+          USES_GITHUB_FOR_DEVELOPMENT.value(false),
+          USES_NOHTTP.value(false),
+          USES_DEPENDABOT.value(false),
+          USES_SNYK.value(false),
+          USES_ADDRESS_SANITIZER.value(false),
+          USES_MEMORY_SANITIZER.value(false),
+          USES_UNDEFINED_BEHAVIOR_SANITIZER.value(false),
+          FUZZED_IN_OSS_FUZZ.value(false),
+          LANGUAGES.value(Languages.of(C)),
+          USES_FIND_SEC_BUGS.value(false),
+          USES_OWASP_ESAPI.value(false),
+          USES_OWASP_JAVA_ENCODER.value(false),
+          USES_OWASP_JAVA_HTML_SANITIZER.value(false),
+          OWASP_DEPENDENCY_CHECK_USAGE.value(NOT_USED),
+          OWASP_DEPENDENCY_CHECK_FAIL_CVSS_THRESHOLD.notSpecifiedValue(),
+          PACKAGE_MANAGERS.value(new PackageManagers(MAVEN)),
+          SECURITY_REVIEWS.value(noReviews()),
+          HAS_EXECUTABLE_BINARIES.value(false));
 
   private static Locale savedLocale;
 
-  @BeforeClass
+  @BeforeAll
   public static void setup() {
     savedLocale = Locale.getDefault();
     Locale.setDefault(Locale.US);
+  }
+
+  @AfterAll
+  public static void cleanup() {
+    Locale.setDefault(savedLocale);
   }
 
   @Test
@@ -147,8 +153,9 @@ public class PrettyPrinterTest {
       assertTrue(text.contains(printer.nameOf(value.feature())));
     }
     for (Feature<?> feature : RATING.allFeatures()) {
-      assertTrue(String.format("'%s' feature should be there!", feature.name()),
-          text.contains(printer.nameOf(feature)));
+      assertTrue(
+          text.contains(printer.nameOf(feature)),
+          String.format("'%s' feature should be there!", feature.name()));
     }
     assertTrue(text.contains("Value"));
     assertTrue(text.contains("Confidence"));
@@ -181,21 +188,10 @@ public class PrettyPrinterTest {
 
   @Test
   public void testFormatValueAndMax() {
-    assertEquals("0.0  out of 10.0",
-        PrettyPrinter.printValueAndMax(0.0, 10.0));
-    assertEquals("1.23 out of 10.0",
-        PrettyPrinter.printValueAndMax(1.23, 10.0));
-    assertEquals("1.23 out of 10.0",
-        PrettyPrinter.printValueAndMax(1.23345, 10.0));
-    assertEquals("10.0 out of 10.0",
-        PrettyPrinter.printValueAndMax(10.0, 10.0));
-    assertEquals("9.0  out of 10.0",
-        PrettyPrinter.printValueAndMax(9.0, 10.0));
+    assertEquals("0.0  out of 10.0", PrettyPrinter.printValueAndMax(0.0, 10.0));
+    assertEquals("1.23 out of 10.0", PrettyPrinter.printValueAndMax(1.23, 10.0));
+    assertEquals("1.23 out of 10.0", PrettyPrinter.printValueAndMax(1.23345, 10.0));
+    assertEquals("10.0 out of 10.0", PrettyPrinter.printValueAndMax(10.0, 10.0));
+    assertEquals("9.0  out of 10.0", PrettyPrinter.printValueAndMax(9.0, 10.0));
   }
-
-  @AfterClass
-  public static void cleanup() {
-    Locale.setDefault(savedLocale);
-  }
-
 }

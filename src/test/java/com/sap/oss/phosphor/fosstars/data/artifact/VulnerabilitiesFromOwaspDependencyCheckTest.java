@@ -1,9 +1,10 @@
 package com.sap.oss.phosphor.fosstars.data.artifact;
 
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES_IN_ARTIFACT;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 
@@ -15,7 +16,7 @@ import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class VulnerabilitiesFromOwaspDependencyCheckTest {
 
@@ -48,8 +49,9 @@ public class VulnerabilitiesFromOwaspDependencyCheckTest {
     Vulnerabilities vulnerabilities = values.of(VULNERABILITIES_IN_ARTIFACT).get().get();
     assertEquals(3, vulnerabilities.size());
 
-    assertTrue(vulnerabilities.entries().stream()
-        .anyMatch(vulnerability -> "CVE-2018-11307".equals(vulnerability.id())));
+    assertTrue(
+        vulnerabilities.entries().stream()
+            .anyMatch(vulnerability -> "CVE-2018-11307".equals(vulnerability.id())));
   }
 
   @Test
@@ -99,15 +101,19 @@ public class VulnerabilitiesFromOwaspDependencyCheckTest {
     assertTrue(values.of(VULNERABILITIES_IN_ARTIFACT).get().isUnknown());
   }
 
-  @Test(expected = IOException.class)
-  public void tesArtifactHasNoVersion() throws IOException {
-    VulnerabilitiesFromOwaspDependencyCheck provider =
-        new VulnerabilitiesFromOwaspDependencyCheck();
+  @Test
+  public void tesArtifactHasNoVersion() {
+    assertThrows(
+        IOException.class,
+        () -> {
+          VulnerabilitiesFromOwaspDependencyCheck provider =
+              new VulnerabilitiesFromOwaspDependencyCheck();
 
-    ValueHashSet values = new ValueHashSet();
-    assertEquals(0, values.size());
+          ValueHashSet values = new ValueHashSet();
+          assertEquals(0, values.size());
 
-    provider.update(new MavenArtifact("group", "artifact", null, null), values);
+          provider.update(new MavenArtifact("group", "artifact", null, null), values);
+        });
   }
 
   @Test

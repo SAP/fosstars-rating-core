@@ -2,9 +2,9 @@ package com.sap.oss.phosphor.fosstars.data.github;
 
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_README;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.INCOMPLETE_README;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -21,13 +21,23 @@ import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.Set;
 import org.apache.commons.io.FileUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
 
+  private static Value<Boolean> checkValue(
+      ValueSet values, Feature<Boolean> feature, boolean expected) {
+
+    Optional<Value<Boolean>> something = values.of(feature);
+    assertTrue(something.isPresent());
+    Value<Boolean> value = something.get();
+    assertEquals(expected, value.get());
+    return value;
+  }
+
   @Test
   public void testSupportedFeatures() throws IOException {
-    Set<Feature<?>> features =  new ReadmeInfo(fetcher).supportedFeatures();
+    Set<Feature<?>> features = new ReadmeInfo(fetcher).supportedFeatures();
     assertEquals(2, features.size());
     assertTrue(features.contains(HAS_README));
     assertTrue(features.contains(INCOMPLETE_README));
@@ -44,13 +54,16 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
     provider.set(NoValueCache.create());
 
     when(localRepository.readTextFrom(fileName))
-        .thenReturn(Optional.of(String.join("\n",
-            "This is ", fileName,
-            "",
-            "# Mandatory header",
-            "",
-            "Don't trouble trouble till trouble troubles you."
-        )));
+        .thenReturn(
+            Optional.of(
+                String.join(
+                    "\n",
+                    "This is ",
+                    fileName,
+                    "",
+                    "# Mandatory header",
+                    "",
+                    "Don't trouble trouble till trouble troubles you.")));
     ValueSet values = provider.fetchValuesFor(project);
     Value<Boolean> value = checkValue(values, HAS_README, true);
     assertTrue(value.explanation().isEmpty());
@@ -58,11 +71,7 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
     assertTrue(value.explanation().isEmpty());
 
     when(localRepository.readTextFrom(fileName))
-        .thenReturn(Optional.of(String.join("\n",
-            "This is ", fileName,
-            "",
-            "# Another header"
-        )));
+        .thenReturn(Optional.of(String.join("\n", "This is ", fileName, "", "# Another header")));
     values = provider.fetchValuesFor(project);
     value = checkValue(values, HAS_README, true);
     assertTrue(value.explanation().isEmpty());
@@ -71,14 +80,17 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
     assertTrue(value.explanation().get(0).contains("Mandatory header"));
 
     when(localRepository.readTextFrom(fileName))
-        .thenReturn(Optional.of(String.join("\n",
-            "This is ", fileName,
-            "",
-            "# Mandatory header",
-            "",
-            "Prohibited phrase",
-            ""
-        )));
+        .thenReturn(
+            Optional.of(
+                String.join(
+                    "\n",
+                    "This is ",
+                    fileName,
+                    "",
+                    "# Mandatory header",
+                    "",
+                    "Prohibited phrase",
+                    "")));
     values = provider.fetchValuesFor(project);
     value = checkValue(values, HAS_README, true);
     assertTrue(value.explanation().isEmpty());
@@ -113,7 +125,7 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
     readMeTestGen("readme.rst");
     readMeTestGen("README.rst");
   }
-  
+
   @Test
   public void testLowercaseReadme() throws IOException {
     readMeTestGen("readme.md");
@@ -131,9 +143,7 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
     provider.set(NoValueCache.create());
 
     when(localRepository.readTextFrom(fileName))
-        .thenReturn(Optional.of(String.join("\n",
-            "This is ", fileName
-        )));
+        .thenReturn(Optional.of(String.join("\n", "This is ", fileName)));
     ValueSet values = provider.fetchValuesFor(project);
     assertTrue(checkValue(values, HAS_README, true).get());
   }
@@ -148,22 +158,23 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
   public void testReadmeTxt() throws IOException {
     readMeTestGen("README.txt");
     readMeTestGen("readme.txt");
-  }  
+  }
 
   @Test
   public void testReadmeCapital() throws IOException {
     readMeTestGen("README.MD");
     readMeTestGen("readme.MD");
-  } 
+  }
 
   @Test
   public void testLoadingDefaultConfig() throws IOException {
     Path config = Paths.get(String.format("%s.config.yml", ReadmeInfo.class.getSimpleName()));
-    String content = "---\n"
-        + "requiredContentPatterns:\n"
-        + "  - \"one two\"\n"
-        + "  - \"three\"\n"
-        + "  - \"[Tt]est\"\n";
+    String content =
+        "---\n"
+            + "requiredContentPatterns:\n"
+            + "  - \"one two\"\n"
+            + "  - \"three\"\n"
+            + "  - \"[Tt]est\"\n";
     Files.write(config, content.getBytes());
     try {
       ReadmeInfo provider = new ReadmeInfo(fetcher);
@@ -174,15 +185,5 @@ public class ReadmeInfoTest extends TestGitHubDataFetcherHolder {
     } finally {
       FileUtils.forceDeleteOnExit(config.toFile());
     }
-  }
-
-  private static Value<Boolean> checkValue(
-      ValueSet values, Feature<Boolean> feature, boolean expected) {
-
-    Optional<Value<Boolean>> something = values.of(feature);
-    assertTrue(something.isPresent());
-    Value<Boolean> value = something.get();
-    assertEquals(expected, value.get());
-    return value;
   }
 }

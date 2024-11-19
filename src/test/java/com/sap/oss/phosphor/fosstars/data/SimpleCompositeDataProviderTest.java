@@ -2,8 +2,8 @@ package com.sap.oss.phosphor.fosstars.data;
 
 import static com.sap.oss.phosphor.fosstars.TestUtils.PROJECT;
 import static java.util.Collections.singleton;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.data.interactive.AbstractInteractiveDataProvider;
 import com.sap.oss.phosphor.fosstars.model.Feature;
@@ -15,11 +15,53 @@ import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.Set;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class SimpleCompositeDataProviderTest {
 
   private static final Feature<Integer> SOMETHING = new PositiveIntegerFeature("test feature");
+
+  private static void assertValueIn(ValueSet values, int expectedValue) {
+    assertEquals(1, values.size());
+    Optional<Value<Integer>> something = values.of(SOMETHING);
+    assertTrue(something.isPresent());
+    assertEquals(expectedValue, (int) something.get().get());
+  }
+
+  @Test
+  public void testSupportedFeatures() {
+    SimpleCompositeDataProvider provider =
+        SimpleCompositeDataProvider.forFeature(SOMETHING).withDefaultValue(SOMETHING.value(42));
+    assertEquals(1, provider.supportedFeatures().size());
+    assertTrue(provider.supportedFeatures().contains(SOMETHING));
+  }
+
+  @Test
+  public void testUpdate() throws IOException {
+    ValueSet values = new ValueHashSet();
+
+    SimpleCompositeDataProvider provider =
+        SimpleCompositeDataProvider.forFeature(SOMETHING).withDefaultValue(SOMETHING.value(42));
+    provider.update(PROJECT, values);
+    assertValueIn(values, 42);
+
+    provider =
+        SimpleCompositeDataProvider.forFeature(SOMETHING)
+            .withInteractiveProvider(new TestInteractiveProvider())
+            .withDefaultValue(SOMETHING.value(42));
+    provider.set(new TestCallback());
+    provider.update(PROJECT, values);
+    assertValueIn(values, 2);
+
+    provider =
+        SimpleCompositeDataProvider.forFeature(SOMETHING)
+            .withInteractiveProvider(new TestInteractiveProvider())
+            .withNonInteractiveProvider(new TestNonInteractiveProvider())
+            .withDefaultValue(SOMETHING.value(42));
+    provider.set(new TestCallback());
+    provider.update(PROJECT, values);
+    assertValueIn(values, 1);
+  }
 
   private static class TestNonInteractiveProvider extends AbstractDataProvider {
 
@@ -85,45 +127,5 @@ public class SimpleCompositeDataProviderTest {
     public void say(String phrase) {
       // do nothing
     }
-  }
-
-  @Test
-  public void testSupportedFeatures() {
-    SimpleCompositeDataProvider provider = SimpleCompositeDataProvider.forFeature(SOMETHING)
-        .withDefaultValue(SOMETHING.value(42));
-    assertEquals(1, provider.supportedFeatures().size());
-    assertTrue(provider.supportedFeatures().contains(SOMETHING));
-  }
-
-  @Test
-  public void testUpdate() throws IOException {
-    ValueSet values = new ValueHashSet();
-
-    SimpleCompositeDataProvider provider = SimpleCompositeDataProvider.forFeature(SOMETHING)
-        .withDefaultValue(SOMETHING.value(42));
-    provider.update(PROJECT, values);
-    assertValueIn(values, 42);
-
-    provider = SimpleCompositeDataProvider.forFeature(SOMETHING)
-        .withInteractiveProvider(new TestInteractiveProvider())
-        .withDefaultValue(SOMETHING.value(42));
-    provider.set(new TestCallback());
-    provider.update(PROJECT, values);
-    assertValueIn(values, 2);
-
-    provider = SimpleCompositeDataProvider.forFeature(SOMETHING)
-        .withInteractiveProvider(new TestInteractiveProvider())
-        .withNonInteractiveProvider(new TestNonInteractiveProvider())
-        .withDefaultValue(SOMETHING.value(42));
-    provider.set(new TestCallback());
-    provider.update(PROJECT, values);
-    assertValueIn(values, 1);
-  }
-
-  private static void assertValueIn(ValueSet values, int expectedValue) {
-    assertEquals(1, values.size());
-    Optional<Value<Integer>> something = values.of(SOMETHING);
-    assertTrue(something.isPresent());
-    assertEquals(expectedValue, (int) something.get().get());
   }
 }

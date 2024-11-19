@@ -1,672 +1,672 @@
 ---
 defaults:
-- type: "BooleanValue"
-  feature:
-    type: "BooleanFeature"
-    name: "If a project uses Dependabot"
-  flag: false
-- type: "BooleanValue"
-  feature:
-    type: "BooleanFeature"
-    name: "If a project uses Snyk"
-  flag: false
-- type: "BooleanValue"
-  feature:
-    type: "BooleanFeature"
-    name: "If an open-source project uses FindSecBugs"
-  flag: false
-- type: "BooleanValue"
-  feature:
-    type: "BooleanFeature"
-    name: "If an open-source project uses MemorySanitizer"
-  flag: false
-- type: "BooleanValue"
-  feature:
-    type: "BooleanFeature"
-    name: "If an open-source project uses UndefinedBehaviorSanitizer"
-  flag: false
-- type: "BooleanValue"
-  feature:
-    type: "BooleanFeature"
-    name: "If an open-source project uses AddressSanitizer"
-  flag: false
-- type: "BooleanValue"
-  feature:
-    type: "BooleanFeature"
-    name: "If an open-source project is included to OSS-Fuzz project"
-  flag: false
-- type: "BooleanValue"
-  feature:
-    type: "BooleanFeature"
-    name: "If a project uses LGTM checks for commits"
-  flag: false
-- type: "BooleanValue"
-  feature:
-    type: "BooleanFeature"
-    name: "If a project uses nohttp tool"
-  flag: false
-- type: "BooleanValue"
-  feature:
-    type: "BooleanFeature"
-    name: "If a project uses OWASP Enterprise Security API (ESAPI)"
-  flag: false
-- type: "BooleanValue"
-  feature:
-    type: "BooleanFeature"
-    name: "If a project uses OWASP Java HTML Sanitizer"
-  flag: false
-- type: "BooleanValue"
-  feature:
-    type: "BooleanFeature"
-    name: "If a project uses OWASP Java Encoder"
-  flag: false
-- type: "BooleanValue"
-  feature:
-    type: "BooleanFeature"
-    name: "If a project has executable binaries"
-  flag: false
-- type: "OwaspDependencyCheckUsageValue"
-  feature:
-    type: "OwaspDependencyCheckUsageFeature"
-    name: "How OWASP Dependency Check is used"
-  value: "NOT_USED"
-
-elements:
-- type: "StandardTestVector"
-  values:
-  - type: "UnknownValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security policy"
-  - type: "UnknownValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses signed commits"
-  - type: "UnknownValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security team"
-  - type: "UnknownValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project has a bug bounty program"
-  - type: "UnknownValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project signs artifacts"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 0.0
-    openLeft: false
-    negativeInfinity: false
-    to: 0.1
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "all_unknown"
-- type: "StandardTestVector"
-  values:
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
-      name: "If a project uses signed commits"
+      name: "If a project uses Dependabot"
     flag: false
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
-      name: "If an open-source project has a security team"
+      name: "If a project uses Snyk"
     flag: false
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
-      name: "If an open-source project has a security policy"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project has a bug bounty program"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project signs artifacts"
-    flag: false
-  expectedScore:
-    type: "DoubleInterval"
-    from: 0.0
-    openLeft: false
-    negativeInfinity: false
-    to: 1.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "all_false"
-- type: "StandardTestVector"
-  values:
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security policy"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses signed commits"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security team"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project has a bug bounty program"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project signs artifacts"
+      name: "If an open-source project uses FindSecBugs"
     flag: false
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
       name: "If an open-source project uses MemorySanitizer"
-    flag: true
+    flag: false
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
       name: "If an open-source project uses UndefinedBehaviorSanitizer"
-    flag: true
+    flag: false
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
       name: "If an open-source project uses AddressSanitizer"
-    flag: true
-  expectedScore:
-    type: "DoubleInterval"
-    from: 6.0
-    openLeft: false
-    negativeInfinity: false
-    to: 8.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_2"
-- type: "StandardTestVector"
-  values:
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security team"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security policy"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses signed commits"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project has a bug bounty program"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project signs artifacts"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses Dependabot"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project uses FindSecBugs"
-    flag: true
-  expectedScore:
-    type: "DoubleInterval"
-    from: 5.0
-    openLeft: false
-    negativeInfinity: false
-    to: 7.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_3"
-- type: "StandardTestVector"
-  values:
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses signed commits"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security team"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security policy"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project has a bug bounty program"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project signs artifacts"
     flag: false
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
       name: "If an open-source project is included to OSS-Fuzz project"
-    flag: true
+    flag: false
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
       name: "If a project uses LGTM checks for commits"
-    flag: true
-  expectedScore:
-    type: "DoubleInterval"
-    from: 4.0
-    openLeft: false
-    negativeInfinity: false
-    to: 6.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_4"
-- type: "StandardTestVector"
-  values:
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security policy"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses signed commits"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security team"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project has a bug bounty program"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project signs artifacts"
-    flag: false
-  expectedScore:
-    type: "DoubleInterval"
-    from: 1.0
-    openLeft: false
-    negativeInfinity: false
-    to: 3.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_5"
-- type: "StandardTestVector"
-  values:
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security team"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security policy"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses signed commits"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project has a bug bounty program"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project signs artifacts"
     flag: false
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
       name: "If a project uses nohttp tool"
-    flag: true
-  expectedScore:
-    type: "DoubleInterval"
-    from: 1.0
-    openLeft: false
-    negativeInfinity: false
-    to: 3.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_6"
-- type: "StandardTestVector"
-  values:
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security policy"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security team"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses signed commits"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project has a bug bounty program"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project signs artifacts"
     flag: false
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
       name: "If a project uses OWASP Enterprise Security API (ESAPI)"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses OWASP Java HTML Sanitizer"
-    flag: true
-  expectedScore:
-    type: "DoubleInterval"
-    from: 4.0
-    openLeft: false
-    negativeInfinity: false
-    to: 6.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_7"
-- type: "StandardTestVector"
-  values:
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security policy"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security team"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses signed commits"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project has a bug bounty program"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project signs artifacts"
     flag: false
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
       name: "If a project uses OWASP Java HTML Sanitizer"
-    flag: true
+    flag: false
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
       name: "If a project uses OWASP Java Encoder"
-    flag: true
-  expectedScore:
-    type: "DoubleInterval"
-    from: 7.0
-    openLeft: false
-    negativeInfinity: false
-    to: 10.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_8"
-- type: "StandardTestVector"
-  values:
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project has a security policy"
-      flag: true
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project has a security team"
-      flag: true
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If a project uses signed commits"
-      flag: false
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If a project has a bug bounty program"
-      flag: true
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If a project signs artifacts"
-      flag: false
-  expectedScore:
-    type: "DoubleInterval"
-    from: 9.0
-    openLeft: false
-    negativeInfinity: false
-    to: 10.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_9"
-- type: "StandardTestVector"
-  values:
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security team"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security policy"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses signed commits"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project has a bug bounty program"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project signs artifacts"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses Dependabot"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project uses FindSecBugs"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project has executable binaries"
-    flag: true
-  expectedScore:
-    type: "DoubleInterval"
-    from: 3.0
-    openLeft: false
-    negativeInfinity: false
-    to: 5.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_10"
-- type: "StandardTestVector"
-  values:
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security policy"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses signed commits"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project has a security team"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project has a bug bounty program"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project signs artifacts"
     flag: false
   - type: "BooleanValue"
     feature:
       type: "BooleanFeature"
       name: "If a project has executable binaries"
-    flag: true
-  expectedScore:
-    type: "DoubleInterval"
-    from: 0.0
-    openLeft: false
-    negativeInfinity: false
-    to: 1.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_11"
-- type: "StandardTestVector"
-  values:
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project has a security policy"
-      flag: true
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project has a security team"
-      flag: true
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If a project uses signed commits"
-      flag: false
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If a project has a bug bounty program"
-      flag: true
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If a project signs artifacts"
-      flag: false
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If a project has executable binaries"
-      flag: true
-  expectedScore:
-    type: "DoubleInterval"
-    from: 6.0
-    openLeft: false
-    negativeInfinity: false
-    to: 8.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_12"
-- type: "StandardTestVector"
-  values:
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project has a security policy"
-      flag: true
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project has a security team"
-      flag: true
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If a project uses signed commits"
-      flag: true
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If a project has a bug bounty program"
-      flag: true
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If a project signs artifacts"
-      flag: true
-  expectedScore:
-    type: "DoubleInterval"
-    from: 9.0
-    openLeft: false
-    negativeInfinity: false
-    to: 10.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "all_true"
+    flag: false
+  - type: "OwaspDependencyCheckUsageValue"
+    feature:
+      type: "OwaspDependencyCheckUsageFeature"
+      name: "How OWASP Dependency Check is used"
+    value: "NOT_USED"
+
+elements:
+  - type: "StandardTestVector"
+    values:
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project has a security policy"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses signed commits"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project has a security team"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project has a bug bounty program"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project signs artifacts"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 0.1
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "all_unknown"
+  - type: "StandardTestVector"
+    values:
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses signed commits"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project has a security team"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project has a security policy"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project has a bug bounty program"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project signs artifacts"
+        flag: false
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 1.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "all_false"
+  - type: "StandardTestVector"
+    values:
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project has a security policy"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses signed commits"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project has a security team"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project has a bug bounty program"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project signs artifacts"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project uses MemorySanitizer"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project uses UndefinedBehaviorSanitizer"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project uses AddressSanitizer"
+        flag: true
+    expectedScore:
+      type: "DoubleInterval"
+      from: 6.0
+      openLeft: false
+      negativeInfinity: false
+      to: 8.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_2"
+  - type: "StandardTestVector"
+    values:
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project has a security team"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project has a security policy"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses signed commits"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project has a bug bounty program"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project signs artifacts"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses Dependabot"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project uses FindSecBugs"
+        flag: true
+    expectedScore:
+      type: "DoubleInterval"
+      from: 5.0
+      openLeft: false
+      negativeInfinity: false
+      to: 7.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_3"
+  - type: "StandardTestVector"
+    values:
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses signed commits"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project has a security team"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project has a security policy"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project has a bug bounty program"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project signs artifacts"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project is included to OSS-Fuzz project"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses LGTM checks for commits"
+        flag: true
+    expectedScore:
+      type: "DoubleInterval"
+      from: 4.0
+      openLeft: false
+      negativeInfinity: false
+      to: 6.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_4"
+  - type: "StandardTestVector"
+    values:
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project has a security policy"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses signed commits"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project has a security team"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project has a bug bounty program"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project signs artifacts"
+        flag: false
+    expectedScore:
+      type: "DoubleInterval"
+      from: 1.0
+      openLeft: false
+      negativeInfinity: false
+      to: 3.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_5"
+  - type: "StandardTestVector"
+    values:
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project has a security team"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project has a security policy"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses signed commits"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project has a bug bounty program"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project signs artifacts"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses nohttp tool"
+        flag: true
+    expectedScore:
+      type: "DoubleInterval"
+      from: 1.0
+      openLeft: false
+      negativeInfinity: false
+      to: 3.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_6"
+  - type: "StandardTestVector"
+    values:
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project has a security policy"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project has a security team"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses signed commits"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project has a bug bounty program"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project signs artifacts"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses OWASP Enterprise Security API (ESAPI)"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses OWASP Java HTML Sanitizer"
+        flag: true
+    expectedScore:
+      type: "DoubleInterval"
+      from: 4.0
+      openLeft: false
+      negativeInfinity: false
+      to: 6.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_7"
+  - type: "StandardTestVector"
+    values:
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project has a security policy"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project has a security team"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses signed commits"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project has a bug bounty program"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project signs artifacts"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses OWASP Java HTML Sanitizer"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses OWASP Java Encoder"
+        flag: true
+    expectedScore:
+      type: "DoubleInterval"
+      from: 7.0
+      openLeft: false
+      negativeInfinity: false
+      to: 10.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_8"
+  - type: "StandardTestVector"
+    values:
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project has a security policy"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project has a security team"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses signed commits"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project has a bug bounty program"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project signs artifacts"
+        flag: false
+    expectedScore:
+      type: "DoubleInterval"
+      from: 9.0
+      openLeft: false
+      negativeInfinity: false
+      to: 10.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_9"
+  - type: "StandardTestVector"
+    values:
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project has a security team"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project has a security policy"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses signed commits"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project has a bug bounty program"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project signs artifacts"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses Dependabot"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project uses FindSecBugs"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project has executable binaries"
+        flag: true
+    expectedScore:
+      type: "DoubleInterval"
+      from: 3.0
+      openLeft: false
+      negativeInfinity: false
+      to: 5.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_10"
+  - type: "StandardTestVector"
+    values:
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project has a security policy"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses signed commits"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project has a security team"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project has a bug bounty program"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project signs artifacts"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project has executable binaries"
+        flag: true
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 1.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_11"
+  - type: "StandardTestVector"
+    values:
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project has a security policy"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project has a security team"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses signed commits"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project has a bug bounty program"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project signs artifacts"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project has executable binaries"
+        flag: true
+    expectedScore:
+      type: "DoubleInterval"
+      from: 6.0
+      openLeft: false
+      negativeInfinity: false
+      to: 8.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_12"
+  - type: "StandardTestVector"
+    values:
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project has a security policy"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project has a security team"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses signed commits"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project has a bug bounty program"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project signs artifacts"
+        flag: true
+    expectedScore:
+      type: "DoubleInterval"
+      from: 9.0
+      openLeft: false
+      negativeInfinity: false
+      to: 10.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "all_true"

@@ -24,8 +24,8 @@ can be found in the [docs](https://sap.github.io/fosstars-rating-core/oss_securi
 
 ## Requirements
 
-*  Java 8+
-*  Maven 3.6.0+
+*  Java 17+
+*  Maven 3.6.3+
 *  Python 3.6.8+
 *  Jupyter Notebook 4.4.0+
 
@@ -87,13 +87,18 @@ If `--interactive` option is specified, the tool becomes a bit interactive,
 and may ask the user a couple of questions.
 You can also find more details in the [docs](https://sap.github.io/fosstars-rating-core/getting_oss_security_rating.html).
 
+## NVD API Key Highly Recommended
+The reuse of the open source library org.owasp:dependency-check-core now needs an api key to not have artificial slow-downs.
+This is documented [here](https://github.com/jeremylong/DependencyCheck?tab=readme-ov-file#nvd-api-key-highly-recommended). 
+Once you have a key you can set the environment variable `NVD_API_KEY` and potentially also `NVD_API_DELAY` (in milliseconds), if necessary.
+
 ## Running CLI in Docker
 
 You can also run the CLI in a Docker container:
 
 ```
 docker build --tag fosstars --file src/main/docker/cli/Dockerfile .
-docker run -v $(pwd):/work fosstars --rating security --token $TOKEN --url https://github.com/apache/poi
+docker run -v $(pwd):/work fosstars --rating security --token $TOKEN -e NVD_API_KEY=<some-api-key> --url https://github.com/apache/poi
 ```
 
 ## Known issues

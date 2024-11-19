@@ -1,13 +1,13 @@
 package com.sap.oss.phosphor.fosstars.model.subject.oss;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class MavenArtifactTest {
 
@@ -24,8 +24,8 @@ public class MavenArtifactTest {
     assertTrue(jar.project().isPresent());
     assertEquals(project, jar.project().get());
 
-    MavenArtifact jarWithoutProject
-        = new MavenArtifact("com.sap.oss.phosphor", "artifact", "1.2.3", null);
+    MavenArtifact jarWithoutProject =
+        new MavenArtifact("com.sap.oss.phosphor", "artifact", "1.2.3", null);
     assertEquals("com.sap.oss.phosphor", jarWithoutProject.group());
     assertEquals("artifact", jarWithoutProject.artifact());
     assertTrue(jarWithoutProject.version().isPresent());
@@ -33,8 +33,8 @@ public class MavenArtifactTest {
     assertEquals("pkg:maven/com.sap.oss.phosphor/artifact@1.2.3", jarWithoutProject.purl());
     assertFalse(jarWithoutProject.project().isPresent());
 
-    MavenArtifact jarWithoutVersion
-        = new MavenArtifact("com.sap.oss.phosphor", "artifact", null, null);
+    MavenArtifact jarWithoutVersion =
+        new MavenArtifact("com.sap.oss.phosphor", "artifact", null, null);
     assertEquals("com.sap.oss.phosphor", jarWithoutVersion.group());
     assertEquals("artifact", jarWithoutVersion.artifact());
     assertFalse(jarWithoutVersion.version().isPresent());

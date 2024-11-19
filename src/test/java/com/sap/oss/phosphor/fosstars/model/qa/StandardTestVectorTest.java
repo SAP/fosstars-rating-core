@@ -2,12 +2,13 @@ package com.sap.oss.phosphor.fosstars.model.qa;
 
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.allUnknown;
 import static com.sap.oss.phosphor.fosstars.model.qa.TestVectorBuilder.newTestVector;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.Interval;
 import com.sap.oss.phosphor.fosstars.model.Value;
@@ -21,7 +22,7 @@ import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class StandardTestVectorTest {
 
@@ -36,40 +37,59 @@ public class StandardTestVectorTest {
     Set<Value<?>> values = new HashSet<>();
     values.add(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1));
     Interval expectedScore = DoubleInterval.init().from(4.0).to(6.4).closed().make();
-    StandardTestVector vector = new StandardTestVector(
-        values, expectedScore, SecurityLabelExample.OKAY, "test");
+    StandardTestVector vector =
+        new StandardTestVector(values, expectedScore, SecurityLabelExample.OKAY, "test");
 
     assertFalse(vector.expectsNotApplicableScore());
     assertFalse(vector.values().isEmpty());
-    assertTrue(vector.values().contains(
-        new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1)));
-    assertFalse(vector.values().contains(
-        new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 2)));
-    assertFalse(vector.values().contains(
-        new IntegerValue(ExampleFeatures.NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, 1)));
+    assertTrue(
+        vector
+            .values()
+            .contains(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1)));
+    assertFalse(
+        vector
+            .values()
+            .contains(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 2)));
+    assertFalse(
+        vector
+            .values()
+            .contains(
+                new IntegerValue(ExampleFeatures.NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, 1)));
     assertEquals(DoubleInterval.init().from(4.0).to(6.4).closed().make(), vector.expectedScore());
     assertNotEquals(DoubleInterval.init().from(4.0).to(6.4).open().make(), vector.expectedScore());
     assertEquals(SecurityLabelExample.OKAY, vector.expectedLabel());
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void noValues() {
-    Interval expectedScore = DoubleInterval.init().from(4.0).to(6.4).closed().make();
-    new StandardTestVector(null, expectedScore, SecurityLabelExample.OKAY, "test");
+    assertThrows(
+        NullPointerException.class,
+        () -> {
+          Interval expectedScore = DoubleInterval.init().from(4.0).to(6.4).closed().make();
+          new StandardTestVector(null, expectedScore, SecurityLabelExample.OKAY, "test");
+        });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void emptyValues() {
-    Set<Value<?>> values = new HashSet<>();
-    Interval expectedScore = DoubleInterval.init().from(4.0).to(6.4).closed().make();
-    new StandardTestVector(values, expectedScore, SecurityLabelExample.OKAY, "test");
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> {
+          Set<Value<?>> values = new HashSet<>();
+          Interval expectedScore = DoubleInterval.init().from(4.0).to(6.4).closed().make();
+          new StandardTestVector(values, expectedScore, SecurityLabelExample.OKAY, "test");
+        });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void noExpectedScore() {
-    Set<Value<?>> values = new HashSet<>();
-    values.add(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1));
-    new StandardTestVector(values, NO_EXPECTED_SCORE, SecurityLabelExample.OKAY, "test");
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> {
+          Set<Value<?>> values = new HashSet<>();
+          values.add(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1));
+          new StandardTestVector(values, NO_EXPECTED_SCORE, SecurityLabelExample.OKAY, "test");
+        });
   }
 
   @Test
@@ -85,8 +105,7 @@ public class StandardTestVectorTest {
     Set<Value<?>> values = new HashSet<>();
     values.add(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1));
     Interval expectedScore = DoubleInterval.init().from(4.0).to(6.4).closed().make();
-    StandardTestVector vector = new StandardTestVector(
-        values, expectedScore, null, "test");
+    StandardTestVector vector = new StandardTestVector(values, expectedScore, null, "test");
     assertNull(vector.expectedLabel());
   }
 
@@ -168,8 +187,8 @@ public class StandardTestVectorTest {
     Set<Value<?>> values = new HashSet<>();
     values.add(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1));
     Interval expectedScore = DoubleInterval.init().from(4.0).to(6.4).closed().make();
-    StandardTestVector vector = new StandardTestVector(
-        values, expectedScore, SecurityLabelExample.OKAY, "test");
+    StandardTestVector vector =
+        new StandardTestVector(values, expectedScore, SecurityLabelExample.OKAY, "test");
 
     byte[] bytes = Yaml.toBytes(vector);
     assertNotNull(bytes);
@@ -184,8 +203,8 @@ public class StandardTestVectorTest {
     Set<Value<?>> values = new HashSet<>();
     values.add(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1));
     Interval expectedScore = DoubleInterval.init().from(4.0).to(6.4).closed().make();
-    StandardTestVector vector = new StandardTestVector(
-        values, expectedScore, SecurityLabelExample.OKAY, "test");
+    StandardTestVector vector =
+        new StandardTestVector(values, expectedScore, SecurityLabelExample.OKAY, "test");
 
     byte[] bytes = Json.toBytes(vector);
     assertNotNull(bytes);
@@ -199,8 +218,8 @@ public class StandardTestVectorTest {
   public void jsonSerializeAndDeserializeWithNotApplicableScoreValue() throws IOException {
     Set<Value<?>> values = new HashSet<>();
     values.add(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1));
-    StandardTestVector vector = new StandardTestVector(
-        values, null, SecurityLabelExample.OKAY, "test", false, true);
+    StandardTestVector vector =
+        new StandardTestVector(values, null, SecurityLabelExample.OKAY, "test", false, true);
 
     byte[] bytes = Json.toBytes(vector);
     assertNotNull(bytes);
@@ -209,5 +228,4 @@ public class StandardTestVectorTest {
     assertEquals(vector, clone);
     assertEquals(vector.hashCode(), clone.hashCode());
   }
-
 }

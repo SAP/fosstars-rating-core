@@ -1,298 +1,298 @@
 ---
-defaults: []
+defaults: [ ]
 elements:
-- type: "StandardTestVector"
-  values:
-  - type: "UnknownValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of stars for a GitHub repository"
-  - type: "UnknownValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of watchers for a GitHub repository"
-  - type: "UnknownValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of projects on GitHub that use an open source project"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 0.0
-    openLeft: false
-    negativeInfinity: false
-    to: 0.1
-    openRight: false
-    positiveInfinity: false
-  expectedUnknownScore: true
-  expectedLabel: null
-  alias: "all_unknown"
-- type: "StandardTestVector"
-  values:
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of stars for a GitHub repository"
-    number: 0
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of watchers for a GitHub repository"
-    number: 0
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of projects on GitHub that use an open source project"
-    number: 0
-  expectedScore:
-    type: "DoubleInterval"
-    from: 0.0
-    openLeft: false
-    negativeInfinity: false
-    to: 0.5
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_1"
-- type: "StandardTestVector"
-  values:
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of stars for a GitHub repository"
-    number: 10
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of watchers for a GitHub repository"
-    number: 0
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of projects on GitHub that use an open source project"
-    number: 100
-  expectedScore:
-    type: "DoubleInterval"
-    from: 0.0
-    openLeft: false
-    negativeInfinity: false
-    to: 1.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_2"
-- type: "StandardTestVector"
-  values:
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of stars for a GitHub repository"
-    number: 100
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of watchers for a GitHub repository"
-    number: 0
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of projects on GitHub that use an open source project"
-    number: 1000
-  expectedScore:
-    type: "DoubleInterval"
-    from: 0.0
-    openLeft: false
-    negativeInfinity: false
-    to: 2.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_3"
-- type: "StandardTestVector"
-  values:
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of stars for a GitHub repository"
-    number: 1000
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of watchers for a GitHub repository"
-    number: 0
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of projects on GitHub that use an open source project"
-    number: 50
-  expectedScore:
-    type: "DoubleInterval"
-    from: 1.0
-    openLeft: false
-    negativeInfinity: false
-    to: 2.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_4"
-- type: "StandardTestVector"
-  values:
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of watchers for a GitHub repository"
-    number: 2
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of stars for a GitHub repository"
-    number: 10
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of projects on GitHub that use an open source project"
-    number: 15
-  expectedScore:
-    type: "DoubleInterval"
-    from: 0.0
-    openLeft: false
-    negativeInfinity: false
-    to: 1.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_5"
-- type: "StandardTestVector"
-  values:
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of stars for a GitHub repository"
-    number: 100
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of watchers for a GitHub repository"
-    number: 10
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of projects on GitHub that use an open source project"
-    number: 800
-  expectedScore:
-    type: "DoubleInterval"
-    from: 0.5
-    openLeft: false
-    negativeInfinity: false
-    to: 1.5
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_6"
-- type: "StandardTestVector"
-  values:
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of watchers for a GitHub repository"
-    number: 20
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of stars for a GitHub repository"
-    number: 1000
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of projects on GitHub that use an open source project"
-    number: 5400
-  expectedScore:
-    type: "DoubleInterval"
-    from: 4.5
-    openLeft: false
-    negativeInfinity: false
-    to: 5.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_7"
-- type: "StandardTestVector"
-  values:
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of watchers for a GitHub repository"
-    number: 20
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of stars for a GitHub repository"
-    number: 5000
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of projects on GitHub that use an open source project"
-    number: 100
-  expectedScore:
-    type: "DoubleInterval"
-    from: 5.0
-    openLeft: false
-    negativeInfinity: false
-    to: 6.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_8"
-- type: "StandardTestVector"
-  values:
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of watchers for a GitHub repository"
-    number: 100
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of stars for a GitHub repository"
-    number: 5000
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of projects on GitHub that use an open source project"
-    number: 4000
-  expectedScore:
-    type: "DoubleInterval"
-    from: 8.0
-    openLeft: false
-    negativeInfinity: false
-    to: 9.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_9"
-- type: "StandardTestVector"
-  values:
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of watchers for a GitHub repository"
-    number: 300
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of stars for a GitHub repository"
-    number: 20000
-  - type: "IntegerValue"
-    feature:
-      type: "PositiveIntegerFeature"
-      name: "Number of projects on GitHub that use an open source project"
-    number: 5000
-  expectedScore:
-    type: "DoubleInterval"
-    from: 9.0
-    openLeft: false
-    negativeInfinity: false
-    to: 10.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_10"
+  - type: "StandardTestVector"
+    values:
+      - type: "UnknownValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of stars for a GitHub repository"
+      - type: "UnknownValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of watchers for a GitHub repository"
+      - type: "UnknownValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of projects on GitHub that use an open source project"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 0.1
+      openRight: false
+      positiveInfinity: false
+    expectedUnknownScore: true
+    expectedLabel: null
+    alias: "all_unknown"
+  - type: "StandardTestVector"
+    values:
+      - type: "IntegerValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of stars for a GitHub repository"
+        number: 0
+      - type: "IntegerValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of watchers for a GitHub repository"
+        number: 0
+      - type: "IntegerValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of projects on GitHub that use an open source project"
+        number: 0
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 0.5
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_1"
+  - type: "StandardTestVector"
+    values:
+      - type: "IntegerValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of stars for a GitHub repository"
+        number: 10
+      - type: "IntegerValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of watchers for a GitHub repository"
+        number: 0
+      - type: "IntegerValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of projects on GitHub that use an open source project"
+        number: 100
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 1.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_2"
+  - type: "StandardTestVector"
+    values:
+      - type: "IntegerValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of stars for a GitHub repository"
+        number: 100
+      - type: "IntegerValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of watchers for a GitHub repository"
+        number: 0
+      - type: "IntegerValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of projects on GitHub that use an open source project"
+        number: 1000
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 2.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_3"
+  - type: "StandardTestVector"
+    values:
+      - type: "IntegerValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of stars for a GitHub repository"
+        number: 1000
+      - type: "IntegerValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of watchers for a GitHub repository"
+        number: 0
+      - type: "IntegerValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of projects on GitHub that use an open source project"
+        number: 50
+    expectedScore:
+      type: "DoubleInterval"
+      from: 1.0
+      openLeft: false
+      negativeInfinity: false
+      to: 2.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_4"
+  - type: "StandardTestVector"
+    values:
+      - type: "IntegerValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of watchers for a GitHub repository"
+        number: 2
+      - type: "IntegerValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of stars for a GitHub repository"
+        number: 10
+      - type: "IntegerValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of projects on GitHub that use an open source project"
+        number: 15
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 1.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_5"
+  - type: "StandardTestVector"
+    values:
+      - type: "IntegerValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of stars for a GitHub repository"
+        number: 100
+      - type: "IntegerValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of watchers for a GitHub repository"
+        number: 10
+      - type: "IntegerValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of projects on GitHub that use an open source project"
+        number: 800
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.5
+      openLeft: false
+      negativeInfinity: false
+      to: 1.5
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_6"
+  - type: "StandardTestVector"
+    values:
+      - type: "IntegerValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of watchers for a GitHub repository"
+        number: 20
+      - type: "IntegerValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of stars for a GitHub repository"
+        number: 1000
+      - type: "IntegerValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of projects on GitHub that use an open source project"
+        number: 5400
+    expectedScore:
+      type: "DoubleInterval"
+      from: 4.5
+      openLeft: false
+      negativeInfinity: false
+      to: 5.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_7"
+  - type: "StandardTestVector"
+    values:
+      - type: "IntegerValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of watchers for a GitHub repository"
+        number: 20
+      - type: "IntegerValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of stars for a GitHub repository"
+        number: 5000
+      - type: "IntegerValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of projects on GitHub that use an open source project"
+        number: 100
+    expectedScore:
+      type: "DoubleInterval"
+      from: 5.0
+      openLeft: false
+      negativeInfinity: false
+      to: 6.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_8"
+  - type: "StandardTestVector"
+    values:
+      - type: "IntegerValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of watchers for a GitHub repository"
+        number: 100
+      - type: "IntegerValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of stars for a GitHub repository"
+        number: 5000
+      - type: "IntegerValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of projects on GitHub that use an open source project"
+        number: 4000
+    expectedScore:
+      type: "DoubleInterval"
+      from: 8.0
+      openLeft: false
+      negativeInfinity: false
+      to: 9.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_9"
+  - type: "StandardTestVector"
+    values:
+      - type: "IntegerValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of watchers for a GitHub repository"
+        number: 300
+      - type: "IntegerValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of stars for a GitHub repository"
+        number: 20000
+      - type: "IntegerValue"
+        feature:
+          type: "PositiveIntegerFeature"
+          name: "Number of projects on GitHub that use an open source project"
+        number: 5000
+    expectedScore:
+      type: "DoubleInterval"
+      from: 9.0
+      openLeft: false
+      negativeInfinity: false
+      to: 10.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_10"

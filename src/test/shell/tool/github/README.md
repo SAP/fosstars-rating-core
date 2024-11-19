@@ -5,9 +5,9 @@ to make sure that the command-line tool works fine.
 
 Setup:
 
-1.  Build the project with `mvn clean package` command.
-1.  Get a token for GitHub.
-    You can create your personal token [here](https://github.com/settings/tokens).
+1. Build the project with `mvn clean package` command.
+1. Get a token for GitHub.
+   You can create your personal token [here](https://github.com/settings/tokens).
 
 Then, you can run the tests:
 

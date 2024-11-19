@@ -6,17 +6,17 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_GITHUB_STARS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_WATCHERS_ON_GITHUB;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.util.Set;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ValueHashSetTest {
 
@@ -27,9 +27,10 @@ public class ValueHashSetTest {
 
   @Test
   public void testCreateNotEmptyValueHashSet() {
-    ValueSet values = new ValueHashSet(
-        NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(10),
-        NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(5));
+    ValueSet values =
+        new ValueHashSet(
+            NUMBER_OF_COMMITS_LAST_THREE_MONTHS.value(10),
+            NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS.value(5));
     assertEquals(2, values.size());
     assertTrue(values.has(NUMBER_OF_COMMITS_LAST_THREE_MONTHS));
     assertTrue(values.has(NUMBER_OF_CONTRIBUTORS_LAST_THREE_MONTHS));
@@ -66,8 +67,9 @@ public class ValueHashSetTest {
 
   @Test
   public void testUnknown() {
-    ValueSet values = ValueHashSet.unknown(NUMBER_OF_WATCHERS_ON_GITHUB, NUMBER_OF_GITHUB_STARS,
-        NUMBER_OF_COLLABORATORS);
+    ValueSet values =
+        ValueHashSet.unknown(
+            NUMBER_OF_WATCHERS_ON_GITHUB, NUMBER_OF_GITHUB_STARS, NUMBER_OF_COLLABORATORS);
     assertEquals(3, values.size());
     assertTrue(values.has(NUMBER_OF_WATCHERS_ON_GITHUB));
     assertTrue(values.has(NUMBER_OF_GITHUB_STARS));
@@ -77,12 +79,12 @@ public class ValueHashSetTest {
     assertTrue(values.of(NUMBER_OF_GITHUB_STARS).isPresent());
     assertTrue(values.of(NUMBER_OF_COLLABORATORS).isPresent());
     assertFalse(values.of(HAS_SECURITY_TEAM).isPresent());
-    assertEquals(UnknownValue.of(NUMBER_OF_WATCHERS_ON_GITHUB), values.of(
-        NUMBER_OF_WATCHERS_ON_GITHUB).get());
+    assertEquals(
+        UnknownValue.of(NUMBER_OF_WATCHERS_ON_GITHUB),
+        values.of(NUMBER_OF_WATCHERS_ON_GITHUB).get());
     assertEquals(UnknownValue.of(NUMBER_OF_GITHUB_STARS), values.of(NUMBER_OF_GITHUB_STARS).get());
     assertEquals(
-        UnknownValue.of(NUMBER_OF_COLLABORATORS),
-        values.of(NUMBER_OF_COLLABORATORS).get());
+        UnknownValue.of(NUMBER_OF_COLLABORATORS), values.of(NUMBER_OF_COLLABORATORS).get());
   }
 
   @Test

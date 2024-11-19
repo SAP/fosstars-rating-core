@@ -4,7 +4,8 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.PACKAG
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_NOHTTP;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.allUnknown;
 import static com.sap.oss.phosphor.fosstars.model.qa.TestVectorBuilder.newTestVector;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.qa.ScoreVerification;
 import com.sap.oss.phosphor.fosstars.model.qa.TestVectors;
@@ -12,20 +13,20 @@ import com.sap.oss.phosphor.fosstars.model.qa.VerificationFailedException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class NoHttpToolScoreTest {
 
   private static final NoHttpToolScore SCORE = new NoHttpToolScore();
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testWithoutUsesNoHttpValue() {
-    SCORE.calculate(PACKAGE_MANAGERS.unknown());
+    assertThrows(IllegalArgumentException.class, () -> SCORE.calculate(PACKAGE_MANAGERS.unknown()));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testWithoutPackageManagersValue() {
-    SCORE.calculate(USES_NOHTTP.unknown());
+    assertThrows(IllegalArgumentException.class, () -> SCORE.calculate(USES_NOHTTP.unknown()));
   }
 
   @Test
@@ -35,22 +36,20 @@ public class NoHttpToolScoreTest {
 
   @Test
   public void testVerification() throws VerificationFailedException, IOException {
-    TestVectors vectors = new TestVectors(
-        newTestVector()
-            .alias("test")
-            .expectUnknownScore()
-            .set(USES_NOHTTP.unknown())
-            .set(PACKAGE_MANAGERS.unknown())
-            .make()
-    );
+    TestVectors vectors =
+        new TestVectors(
+            newTestVector()
+                .alias("test")
+                .expectUnknownScore()
+                .set(USES_NOHTTP.unknown())
+                .set(PACKAGE_MANAGERS.unknown())
+                .make());
 
     Path file = Files.createTempFile("NoHttpToolScoreTestVectors", "test");
     try {
       vectors.storeToYaml(file);
 
-      ScoreVerification verification = new ScoreVerification(
-          SCORE,
-          TestVectors.loadFromYaml(file));
+      ScoreVerification verification = new ScoreVerification(SCORE, TestVectors.loadFromYaml(file));
 
       verification.run();
     } finally {

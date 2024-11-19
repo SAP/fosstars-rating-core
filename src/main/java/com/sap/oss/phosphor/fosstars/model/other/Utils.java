@@ -166,7 +166,7 @@ public class Utils {
    * Parses a string to produce a date.
    *
    * @param string The string to be parsed.
-   * @return An instance of {@link java.util.Date}
+   * @return An instance of {@link Date}
    */
   public static Date date(String string) {
     int[] formats = { DateFormat.SHORT, DateFormat.MEDIUM, DateFormat.LONG, DateFormat.FULL };

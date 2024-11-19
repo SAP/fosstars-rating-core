@@ -4,9 +4,9 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_C
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_CODEQL_CHECKS;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -25,9 +25,9 @@ import java.util.Optional;
 import java.util.Set;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 public class CodeqlDataProviderTest extends TestGitHubDataFetcherHolder {
 
@@ -37,12 +37,21 @@ public class CodeqlDataProviderTest extends TestGitHubDataFetcherHolder {
 
   private static LocalRepository localRepository;
 
-  @BeforeClass
+  @BeforeAll
   public static void setup() {
     try {
       repositoryDirectory = Files.createTempDirectory(PackageManagementTest.class.getName());
       localRepository = mock(LocalRepository.class);
       TestGitHubDataFetcher.addForTesting(PROJECT, localRepository);
+    } catch (IOException e) {
+      throw new UncheckedIOException(e);
+    }
+  }
+
+  @AfterAll
+  public static void shutdown() {
+    try {
+      FileUtils.forceDeleteOnExit(repositoryDirectory.toFile());
     } catch (IOException e) {
       throw new UncheckedIOException(e);
     }
@@ -64,24 +73,33 @@ public class CodeqlDataProviderTest extends TestGitHubDataFetcherHolder {
   @Test
   public void testWithoutCodeqlRuns() throws IOException {
     try (InputStream content = getClass().getResourceAsStream("no-codeql-analysis.yml")) {
-      testCodeqlRuns(".github/workflows/action.yml", content,
-          USES_CODEQL_CHECKS.value(false), RUNS_CODEQL_SCANS.value(false));
+      testCodeqlRuns(
+          ".github/workflows/action.yml",
+          content,
+          USES_CODEQL_CHECKS.value(false),
+          RUNS_CODEQL_SCANS.value(false));
     }
   }
 
   @Test
   public void testWithCodeqlRunsAndChecks() throws IOException {
     try (InputStream content = getClass().getResourceAsStream("codeql-analysis-with-pr.yml")) {
-      testCodeqlRuns(".github/workflows/codeql.yml", content,
-          USES_CODEQL_CHECKS.value(true), RUNS_CODEQL_SCANS.value(true));
+      testCodeqlRuns(
+          ".github/workflows/codeql.yml",
+          content,
+          USES_CODEQL_CHECKS.value(true),
+          RUNS_CODEQL_SCANS.value(true));
     }
   }
 
   @Test
   public void testWithCodeqlRunsButWithoutChecks() throws IOException {
     try (InputStream content = getClass().getResourceAsStream("codeql-analysis-without-pr.yml")) {
-      testCodeqlRuns(".github/workflows/codeql.yml", content,
-          USES_CODEQL_CHECKS.value(false), RUNS_CODEQL_SCANS.value(true));
+      testCodeqlRuns(
+          ".github/workflows/codeql.yml",
+          content,
+          USES_CODEQL_CHECKS.value(false),
+          RUNS_CODEQL_SCANS.value(true));
     }
   }
 
@@ -104,14 +122,4 @@ public class CodeqlDataProviderTest extends TestGitHubDataFetcherHolder {
       assertEquals(expectedValue, something.get());
     }
   }
-
-  @AfterClass
-  public static void shutdown() {
-    try {
-      FileUtils.forceDeleteOnExit(repositoryDirectory.toFile());
-    } catch (IOException e) {
-      throw new UncheckedIOException(e);
-    }
-  }
-
 }

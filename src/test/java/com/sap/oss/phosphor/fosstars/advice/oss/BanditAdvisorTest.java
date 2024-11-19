@@ -5,8 +5,8 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_B
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_BANDIT_SCAN_CHECKS;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.allUnknown;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.PYTHON;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.advice.oss.AbstractOssAdvisor.OssAdviceContextFactory;
 import com.sap.oss.phosphor.fosstars.model.Rating;
@@ -17,7 +17,7 @@ import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.Languages;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import java.net.MalformedURLException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class BanditAdvisorTest {
 

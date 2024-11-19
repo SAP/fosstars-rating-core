@@ -2,7 +2,7 @@ package com.sap.oss.phosphor.fosstars.data.github;
 
 import static com.sap.oss.phosphor.fosstars.data.github.GitHubDataFetcher.REPOSITORIES_BASE_PATH;
 import static com.sap.oss.phosphor.fosstars.data.github.GitHubDataFetcher.REPOSITORIES_BASE_PATH_PROPERTY;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.apache.commons.io.FileUtils;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
 
@@ -39,7 +39,7 @@ public class TestGitHubDataFetcherHolder {
    *
    * @throws IOException If the initialization failed.
    */
-  @Before
+  @BeforeEach
   public void init() throws IOException {
     fetcher = spy(new TestGitHubDataFetcher(mock(GitHub.class)));
   }
@@ -49,13 +49,14 @@ public class TestGitHubDataFetcherHolder {
    *
    * @throws IOException If the cleanup failed.
    */
-  @After
+  @AfterEach
   public void cleanup() throws IOException {
     List<Path> deletedPaths = new ArrayList<>();
-    fetcher.cleanup((url, repository, total) -> {
-      deletedPaths.add(repository.path());
-      return true;
-    });
+    fetcher.cleanup(
+        (url, repository, total) -> {
+          deletedPaths.add(repository.path());
+          return true;
+        });
 
     for (Path deletedPath : deletedPaths) {
       assertFalse(Files.exists(deletedPath));
@@ -76,7 +77,7 @@ public class TestGitHubDataFetcherHolder {
     /**
      * Adds {@link GitHubProject} and its {@link GHRepository repository on Github} to the cache.
      *
-     * @param project The {@link GitHubProject}.
+     * @param project    The {@link GitHubProject}.
      * @param repository The {@link GHRepository repository on GitHub}.
      */
     void addForTesting(GitHubProject project, GHRepository repository) {
@@ -86,30 +87,31 @@ public class TestGitHubDataFetcherHolder {
     /**
      * Adds {@link GitHubProject} and its associated {@link LocalRepository} details to cache.
      *
-     * @param project The {@link GitHubProject}.
+     * @param project    The {@link GitHubProject}.
      * @param repository The {@link LocalRepository}.
      */
     public static void addForTesting(GitHubProject project, LocalRepository repository) {
       LOCAL_REPOSITORIES.put(project.scm(), repository);
     }
-    
+
     /**
      * Add a new project to be considered while loading repository.
-     *  
-     * @param project The {@link GitHubProject}.
+     *
+     * @param project    The {@link GitHubProject}.
      * @param projectDir The local {@link Path} for the {@link GitHubProject}.
      */
     static void addRepositoryInfoForTesting(GitHubProject project, Path projectDir) {
       LOCAL_REPOSITORIES.remove(project.scm());
-      LOCAL_REPOSITORIES_INFO.put(project.scm(),
+      LOCAL_REPOSITORIES_INFO.put(
+          project.scm(),
           new LocalRepositoryInfo(projectDir, Date.from(Instant.now()), project.scm()));
     }
 
     /**
      * Returns a resolved valid directory path of the project.
-     *  
+     *
      * @param project of type {@link GitHubProject}.
-     * @return path of type {@link Path}. 
+     * @return path of type {@link Path}.
      */
     static Path directoryFor(GitHubProject project) {
       return REPOSITORIES_BASE_PATH.resolve(project.name());

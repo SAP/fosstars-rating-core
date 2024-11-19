@@ -1,157 +1,157 @@
 ---
 defaults:
-- type: "LanguagesValue"
-  feature:
-    type: "LanguagesFeature"
-    name: "A set of programming languages"
-  languages:
-    elements:
-      - "JAVA"
-elements:
-- type: "StandardTestVector"
-  values:
-  - type: "UnknownValue"
-    feature:
-      type: "LgtmGradeFeature"
-      name: "The worst LGTM grade of a project"
-  - type: "UnknownValue"
+  - type: "LanguagesValue"
     feature:
       type: "LanguagesFeature"
       name: "A set of programming languages"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 0.0
-    openLeft: false
-    negativeInfinity: false
-    to: 1.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  expectedUnknownScore: true
-  alias: "all_unknown"
-- type: "StandardTestVector"
-  values:
-  - type: "LgtmGradeValue"
-    feature:
-      type: "LgtmGradeFeature"
-      name: "The worst LGTM grade of a project"
-    value: "E"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 0.0
-    openLeft: false
-    negativeInfinity: false
-    to: 2.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_1"
-- type: "StandardTestVector"
-  values:
-  - type: "LgtmGradeValue"
-    feature:
-      type: "LgtmGradeFeature"
-      name: "The worst LGTM grade of a project"
-    value: "D"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 1.0
-    openLeft: false
-    negativeInfinity: false
-    to: 3.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_2"
-- type: "StandardTestVector"
-  values:
-  - type: "LgtmGradeValue"
-    feature:
-      type: "LgtmGradeFeature"
-      name: "The worst LGTM grade of a project"
-    value: "C"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 5.0
-    openLeft: false
-    negativeInfinity: false
-    to: 7.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_3"
-- type: "StandardTestVector"
-  values:
-  - type: "LgtmGradeValue"
-    feature:
-      type: "LgtmGradeFeature"
-      name: "The worst LGTM grade of a project"
-    value: "B"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 7.0
-    openLeft: false
-    negativeInfinity: false
-    to: 9.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_4"
-- type: "StandardTestVector"
-  values:
-  - type: "LgtmGradeValue"
-    feature:
-      type: "LgtmGradeFeature"
-      name: "The worst LGTM grade of a project"
-    value: "A"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 9.0
-    openLeft: false
-    negativeInfinity: false
-    to: 10.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_5"
-- type: "StandardTestVector"
-  values:
-  - type: "LgtmGradeValue"
-    feature:
-      type: "LgtmGradeFeature"
-      name: "The worst LGTM grade of a project"
-    value: "A+"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 9.0
-    openLeft: false
-    negativeInfinity: false
-    to: 10.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_6"
-- type: "StandardTestVector"
-  values:
-    - type: "UnknownValue"
-      feature:
-        type: "LgtmGradeFeature"
-        name: "The worst LGTM grade of a project"
-    - type: "LanguagesValue"
-      feature:
-        type: "LanguagesFeature"
-        name: "A set of programming languages"
-      languages:
-        elements:
-          - "OTHER"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 0.0
-    openLeft: false
-    negativeInfinity: false
-    to: 10.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  expectedNotApplicableScore: true
-  alias: "test_vector_7"
+    languages:
+      elements:
+        - "JAVA"
+elements:
+  - type: "StandardTestVector"
+    values:
+      - type: "UnknownValue"
+        feature:
+          type: "LgtmGradeFeature"
+          name: "The worst LGTM grade of a project"
+      - type: "UnknownValue"
+        feature:
+          type: "LanguagesFeature"
+          name: "A set of programming languages"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 1.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    expectedUnknownScore: true
+    alias: "all_unknown"
+  - type: "StandardTestVector"
+    values:
+      - type: "LgtmGradeValue"
+        feature:
+          type: "LgtmGradeFeature"
+          name: "The worst LGTM grade of a project"
+        value: "E"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 2.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_1"
+  - type: "StandardTestVector"
+    values:
+      - type: "LgtmGradeValue"
+        feature:
+          type: "LgtmGradeFeature"
+          name: "The worst LGTM grade of a project"
+        value: "D"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 1.0
+      openLeft: false
+      negativeInfinity: false
+      to: 3.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_2"
+  - type: "StandardTestVector"
+    values:
+      - type: "LgtmGradeValue"
+        feature:
+          type: "LgtmGradeFeature"
+          name: "The worst LGTM grade of a project"
+        value: "C"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 5.0
+      openLeft: false
+      negativeInfinity: false
+      to: 7.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_3"
+  - type: "StandardTestVector"
+    values:
+      - type: "LgtmGradeValue"
+        feature:
+          type: "LgtmGradeFeature"
+          name: "The worst LGTM grade of a project"
+        value: "B"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 7.0
+      openLeft: false
+      negativeInfinity: false
+      to: 9.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_4"
+  - type: "StandardTestVector"
+    values:
+      - type: "LgtmGradeValue"
+        feature:
+          type: "LgtmGradeFeature"
+          name: "The worst LGTM grade of a project"
+        value: "A"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 9.0
+      openLeft: false
+      negativeInfinity: false
+      to: 10.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_5"
+  - type: "StandardTestVector"
+    values:
+      - type: "LgtmGradeValue"
+        feature:
+          type: "LgtmGradeFeature"
+          name: "The worst LGTM grade of a project"
+        value: "A+"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 9.0
+      openLeft: false
+      negativeInfinity: false
+      to: 10.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_6"
+  - type: "StandardTestVector"
+    values:
+      - type: "UnknownValue"
+        feature:
+          type: "LgtmGradeFeature"
+          name: "The worst LGTM grade of a project"
+      - type: "LanguagesValue"
+        feature:
+          type: "LanguagesFeature"
+          name: "A set of programming languages"
+        languages:
+          elements:
+            - "OTHER"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 10.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    expectedNotApplicableScore: true
+    alias: "test_vector_7"

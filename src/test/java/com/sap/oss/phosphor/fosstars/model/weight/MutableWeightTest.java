@@ -1,13 +1,14 @@
 package com.sap.oss.phosphor.fosstars.model.weight;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class MutableWeightTest {
 
@@ -17,19 +18,31 @@ public class MutableWeightTest {
     assertEquals(1, new MutableWeight(1).value(), 0.0);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testZero() {
-    new MutableWeight(0);
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> {
+          new MutableWeight(0);
+        });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testNegative() {
-    new MutableWeight(-1);
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> {
+          new MutableWeight(-1);
+        });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testTooBig() {
-    new MutableWeight(2);
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> {
+          new MutableWeight(2);
+        });
   }
 
   @Test

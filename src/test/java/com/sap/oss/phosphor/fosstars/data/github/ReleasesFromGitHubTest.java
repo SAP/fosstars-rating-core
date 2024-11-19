@@ -1,9 +1,9 @@
 package com.sap.oss.phosphor.fosstars.data.github;
 
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RELEASED_ARTIFACT_VERSIONS;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHRelease;
 import org.kohsuke.github.GHRepository;
@@ -39,7 +39,7 @@ public class ReleasesFromGitHubTest extends TestGitHubDataFetcherHolder {
     when(release.getName()).thenReturn("2.0.0");
     when(release.getPublished_at()).thenReturn(new Date());
 
-    List<GHRelease> releaselist = Arrays.asList(release);
+    List<GHRelease> releaselist = List.of(release);
     when(pagedIterable.toList()).thenReturn(releaselist);
     when(repository.listReleases()).thenReturn(pagedIterable);
 
@@ -76,7 +76,7 @@ public class ReleasesFromGitHubTest extends TestGitHubDataFetcherHolder {
     when(commit.getCommitDate()).thenReturn(new Date());
     when(tag.getCommit()).thenReturn(commit);
 
-    List<GHTag> tagList = Arrays.asList(tag);
+    List<GHTag> tagList = List.of(tag);
     when(pagedTagIterable.toList()).thenReturn(tagList);
     when(repository.listTags()).thenReturn(pagedTagIterable);
 
@@ -127,7 +127,7 @@ public class ReleasesFromGitHubTest extends TestGitHubDataFetcherHolder {
 
     evaluateRepository(repository);
   }
-  
+
   private void evaluateRepository(final GHRepository repository) throws IOException {
     when(fetcher.github().getRepository(any())).thenReturn(repository);
     releasesFromGitHub = new ReleasesFromGitHub(fetcher);

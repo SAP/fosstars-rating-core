@@ -2,12 +2,12 @@ package com.sap.oss.phosphor.fosstars.model.weight;
 
 import static com.sap.oss.phosphor.fosstars.model.score.example.ExampleScores.PROJECT_ACTIVITY_SCORE_EXAMPLE;
 import static com.sap.oss.phosphor.fosstars.model.score.example.ExampleScores.SECURITY_TESTING_SCORE_EXAMPLE;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ScoreWeightsTest {
 
@@ -15,8 +15,8 @@ public class ScoreWeightsTest {
 
   @Test
   public void testGetAndSet() {
-    ScoreWeights weights = ScoreWeights.createFor(
-        PROJECT_ACTIVITY_SCORE_EXAMPLE, SECURITY_TESTING_SCORE_EXAMPLE);
+    ScoreWeights weights =
+        ScoreWeights.createFor(PROJECT_ACTIVITY_SCORE_EXAMPLE, SECURITY_TESTING_SCORE_EXAMPLE);
     assertEquals(2, weights.size());
     assertTrue(weights.of(PROJECT_ACTIVITY_SCORE_EXAMPLE).isPresent());
     assertTrue(weights.of(SECURITY_TESTING_SCORE_EXAMPLE).isPresent());
@@ -30,20 +30,14 @@ public class ScoreWeightsTest {
         PRECISION);
     weights.set(PROJECT_ACTIVITY_SCORE_EXAMPLE, new MutableWeight(0.2));
     weights.set(SECURITY_TESTING_SCORE_EXAMPLE, new MutableWeight(0.7));
-    assertEquals(
-        0.2,
-        weights.of(PROJECT_ACTIVITY_SCORE_EXAMPLE).get().value(),
-        PRECISION);
-    assertEquals(
-        0.7,
-        weights.of(SECURITY_TESTING_SCORE_EXAMPLE).get().value(),
-        PRECISION);
+    assertEquals(0.2, weights.of(PROJECT_ACTIVITY_SCORE_EXAMPLE).get().value(), PRECISION);
+    assertEquals(0.7, weights.of(SECURITY_TESTING_SCORE_EXAMPLE).get().value(), PRECISION);
   }
 
   @Test
   public void testDeserializationYaml() throws IOException {
-    ScoreWeights weights = ScoreWeights.createFor(
-        PROJECT_ACTIVITY_SCORE_EXAMPLE, SECURITY_TESTING_SCORE_EXAMPLE);
+    ScoreWeights weights =
+        ScoreWeights.createFor(PROJECT_ACTIVITY_SCORE_EXAMPLE, SECURITY_TESTING_SCORE_EXAMPLE);
     weights.set(PROJECT_ACTIVITY_SCORE_EXAMPLE, new MutableWeight(0.2));
     weights.set(SECURITY_TESTING_SCORE_EXAMPLE, new MutableWeight(0.7));
 
@@ -54,10 +48,9 @@ public class ScoreWeightsTest {
 
   @Test
   public void testMakeImmutable() {
-    ScoreWeights weights = ScoreWeights.createFor(
-        PROJECT_ACTIVITY_SCORE_EXAMPLE, SECURITY_TESTING_SCORE_EXAMPLE);
+    ScoreWeights weights =
+        ScoreWeights.createFor(PROJECT_ACTIVITY_SCORE_EXAMPLE, SECURITY_TESTING_SCORE_EXAMPLE);
     weights.makeImmutable();
     assertTrue(weights.isImmutable());
   }
-
 }

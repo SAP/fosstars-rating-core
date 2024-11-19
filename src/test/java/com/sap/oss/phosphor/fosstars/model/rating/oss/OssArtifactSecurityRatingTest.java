@@ -5,7 +5,7 @@ import static com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurity
 import static com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurityRating.ArtifactSecurityLabel.MODERATE;
 import static com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurityRating.ArtifactSecurityLabel.UNCLEAR;
 import static com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurityRating.ArtifactSecurityLabel.UNKNOWN;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
 import com.sap.oss.phosphor.fosstars.model.Rating;
@@ -17,7 +17,7 @@ import com.sap.oss.phosphor.fosstars.model.score.oss.OssArtifactSecurityScore;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import java.util.Set;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class OssArtifactSecurityRatingTest {
 
@@ -31,10 +31,10 @@ public class OssArtifactSecurityRatingTest {
 
   @Test
   public void testEqualsAndHashCode() {
-    OssArtifactSecurityRating one = new OssArtifactSecurityRating(new OssArtifactSecurityScore(),
-        Thresholds.DEFAULT);
-    OssArtifactSecurityRating two = new OssArtifactSecurityRating(new OssArtifactSecurityScore(),
-        Thresholds.DEFAULT);
+    OssArtifactSecurityRating one =
+        new OssArtifactSecurityRating(new OssArtifactSecurityScore(), Thresholds.DEFAULT);
+    OssArtifactSecurityRating two =
+        new OssArtifactSecurityRating(new OssArtifactSecurityScore(), Thresholds.DEFAULT);
 
     assertEquals(one, two);
     assertEquals(one.hashCode(), two.hashCode());
@@ -43,8 +43,8 @@ public class OssArtifactSecurityRatingTest {
   @Test
   public void testLabels() {
     OssArtifactSecurityScore score = mock(OssArtifactSecurityScore.class);
-    OssArtifactSecurityRating rating = new OssArtifactSecurityRating(score,
-        new Thresholds(1.0, 9.0, 7.0));
+    OssArtifactSecurityRating rating =
+        new OssArtifactSecurityRating(score, new Thresholds(1.0, 9.0, 7.0));
     assertEquals(BAD, rating.label(new ScoreValue(score).set(0.5).confidence(8.0)));
     assertEquals(MODERATE, rating.label(new ScoreValue(score).set(1.5).confidence(7.1)));
     assertEquals(GOOD, rating.label(new ScoreValue(score).set(9.5).confidence(9.0)));

@@ -4,10 +4,10 @@ import static com.sap.oss.phosphor.fosstars.model.feature.example.ExampleFeature
 import static com.sap.oss.phosphor.fosstars.model.feature.example.ExampleFeatures.NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE;
 import static com.sap.oss.phosphor.fosstars.model.feature.example.ExampleFeatures.SECURITY_REVIEW_DONE_EXAMPLE;
 import static com.sap.oss.phosphor.fosstars.model.feature.example.ExampleFeatures.STATIC_CODE_ANALYSIS_DONE_EXAMPLE;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Parameter;
@@ -25,12 +25,12 @@ import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class SecurityRatingExampleTest {
 
   @Test
-  public void testSerializeAndDeserialize() throws IOException  {
+  public void testSerializeAndDeserialize() throws IOException {
     SecurityRatingExample rating = new SecurityRatingExample();
     SecurityRatingExample clone = Json.read(Json.toBytes(rating), SecurityRatingExample.class);
     assertEquals(rating, clone);
@@ -140,5 +140,4 @@ public class SecurityRatingExampleTest {
       weights++;
     }
   }
-
 }

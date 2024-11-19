@@ -7,15 +7,16 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_G
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GOSEC_WITH_RULES;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.GO;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.other.Utils;
 import com.sap.oss.phosphor.fosstars.model.value.Languages;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class GoSecScoreTest {
 
@@ -50,22 +51,29 @@ public class GoSecScoreTest {
             LANGUAGES.value(Languages.of(GO))));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testCalculateWithoutUsesGoSecChecksValue() {
-    SCORE.calculate(RUNS_GOSEC_SCANS.unknown(), LANGUAGES.unknown());
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> SCORE.calculate(RUNS_GOSEC_SCANS.unknown(), LANGUAGES.unknown()));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testCalculateWithoutRunsGoSecScanChecksValue() {
-    SCORE.calculate(USES_GOSEC_SCAN_CHECKS.unknown(), LANGUAGES.unknown());
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> SCORE.calculate(USES_GOSEC_SCAN_CHECKS.unknown(), LANGUAGES.unknown()));
   }
 
   @Test
   public void testCalculateWithAllUnknownValues() {
-    assertTrue(SCORE.calculate(
-        USES_GOSEC_SCAN_CHECKS.unknown(),
-        USES_GOSEC_WITH_RULES.unknown(),
-        RUNS_GOSEC_SCANS.unknown(),
-        LANGUAGES.unknown()).isUnknown());
+    assertTrue(
+        SCORE
+            .calculate(
+                USES_GOSEC_SCAN_CHECKS.unknown(),
+                USES_GOSEC_WITH_RULES.unknown(),
+                RUNS_GOSEC_SCANS.unknown(),
+                LANGUAGES.unknown())
+            .isUnknown());
   }
 }

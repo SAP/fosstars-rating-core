@@ -4,9 +4,9 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_B
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_BANDIT_SCAN_CHECKS;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -25,9 +25,9 @@ import java.util.Optional;
 import java.util.Set;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 public class BanditDataProviderTest extends TestGitHubDataFetcherHolder {
 
@@ -39,12 +39,21 @@ public class BanditDataProviderTest extends TestGitHubDataFetcherHolder {
 
   private static LocalRepository localRepository;
 
-  @BeforeClass
+  @BeforeAll
   public static void setup() {
     try {
       repositoryDirectory = Files.createTempDirectory(PackageManagementTest.class.getName());
       localRepository = mock(LocalRepository.class);
       TestGitHubDataFetcher.addForTesting(PROJECT, localRepository);
+    } catch (IOException e) {
+      throw new UncheckedIOException(e);
+    }
+  }
+
+  @AfterAll
+  public static void shutdown() {
+    try {
+      FileUtils.forceDeleteOnExit(repositoryDirectory.toFile());
     } catch (IOException e) {
       throw new UncheckedIOException(e);
     }
@@ -66,7 +75,9 @@ public class BanditDataProviderTest extends TestGitHubDataFetcherHolder {
   @Test
   public void testWithBanditRunsAndChecks() throws IOException {
     try (InputStream content = getClass().getResourceAsStream("bandit-analysis-with-run.yml")) {
-      testBanditRuns(GITHUB_WORKFLOW_FILENAME, content,
+      testBanditRuns(
+          GITHUB_WORKFLOW_FILENAME,
+          content,
           RUNS_BANDIT_SCANS.value(true),
           USES_BANDIT_SCAN_CHECKS.value(true));
     }
@@ -74,9 +85,11 @@ public class BanditDataProviderTest extends TestGitHubDataFetcherHolder {
 
   @Test
   public void testWithBanditRunsAndMultipleJobs() throws IOException {
-    try (InputStream content = getClass().getResourceAsStream(
-        "bandit-analysis-with-multiple-jobs.yml")) {
-      testBanditRuns(GITHUB_WORKFLOW_FILENAME, content,
+    try (InputStream content =
+             getClass().getResourceAsStream("bandit-analysis-with-multiple-jobs.yml")) {
+      testBanditRuns(
+          GITHUB_WORKFLOW_FILENAME,
+          content,
           RUNS_BANDIT_SCANS.value(true),
           USES_BANDIT_SCAN_CHECKS.value(false));
     }
@@ -84,9 +97,11 @@ public class BanditDataProviderTest extends TestGitHubDataFetcherHolder {
 
   @Test
   public void testWithNoBanditRunsButInstallBandit() throws IOException {
-    try (InputStream content = getClass().getResourceAsStream(
-        "bandit-analysis-with-no-bandit-run.yml")) {
-      testBanditRuns(GITHUB_WORKFLOW_FILENAME, content,
+    try (InputStream content =
+             getClass().getResourceAsStream("bandit-analysis-with-no-bandit-run.yml")) {
+      testBanditRuns(
+          GITHUB_WORKFLOW_FILENAME,
+          content,
           RUNS_BANDIT_SCANS.value(false),
           USES_BANDIT_SCAN_CHECKS.value(false));
     }
@@ -94,9 +109,12 @@ public class BanditDataProviderTest extends TestGitHubDataFetcherHolder {
 
   @Test
   public void testWithNoBanditRunsButInstallsBanditAndUsesBandit() throws IOException {
-    try (InputStream content = getClass().getResourceAsStream(
-        "bandit-analysis-with-no-bandit-run-but-uses-bandit.yml")) {
-      testBanditRuns(GITHUB_WORKFLOW_FILENAME, content,
+    try (InputStream content =
+             getClass().getResourceAsStream(
+                 "bandit-analysis-with-no-bandit-run-but-uses-bandit.yml")) {
+      testBanditRuns(
+          GITHUB_WORKFLOW_FILENAME,
+          content,
           RUNS_BANDIT_SCANS.value(false),
           USES_BANDIT_SCAN_CHECKS.value(false));
     }
@@ -119,15 +137,6 @@ public class BanditDataProviderTest extends TestGitHubDataFetcherHolder {
       Optional<? extends Value<?>> something = values.of(expectedValue.feature());
       assertTrue(something.isPresent());
       assertEquals(expectedValue, something.get());
-    }
-  }
-
-  @AfterClass
-  public static void shutdown() {
-    try {
-      FileUtils.forceDeleteOnExit(repositoryDirectory.toFile());
-    } catch (IOException e) {
-      throw new UncheckedIOException(e);
     }
   }
 }

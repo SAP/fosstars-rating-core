@@ -6,15 +6,16 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RUNS_M
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_MYPY_SCAN_CHECKS;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.JAVA;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.other.Utils;
 import com.sap.oss.phosphor.fosstars.model.value.Languages;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class MyPyScoreTest {
 
@@ -47,21 +48,26 @@ public class MyPyScoreTest {
             LANGUAGES.value(Languages.of(JAVA))));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testCalculateWithoutUsesMyPyChecksValue() {
-    SCORE.calculate(RUNS_MYPY_SCANS.unknown(), LANGUAGES.unknown());
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> SCORE.calculate(RUNS_MYPY_SCANS.unknown(), LANGUAGES.unknown()));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testCalculateWithoutRunsMyPyScanChecksValue() {
-    SCORE.calculate(USES_MYPY_SCAN_CHECKS.unknown(), LANGUAGES.unknown());
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> SCORE.calculate(USES_MYPY_SCAN_CHECKS.unknown(), LANGUAGES.unknown()));
   }
 
   @Test
   public void testCalculateWithAllUnknownValues() {
-    assertTrue(SCORE.calculate(
-        USES_MYPY_SCAN_CHECKS.unknown(),
-        RUNS_MYPY_SCANS.unknown(),
-        LANGUAGES.unknown()).isUnknown());
+    assertTrue(
+        SCORE
+            .calculate(
+                USES_MYPY_SCAN_CHECKS.unknown(), RUNS_MYPY_SCANS.unknown(), LANGUAGES.unknown())
+            .isUnknown());
   }
 }

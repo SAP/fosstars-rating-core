@@ -4,11 +4,11 @@ import static com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating.S
 import static com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel.GOOD;
 import static com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel.MODERATE;
 import static com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating.SecurityLabel.UNCLEAR;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 import com.sap.oss.phosphor.fosstars.model.Parameter;
@@ -25,7 +25,7 @@ import com.sap.oss.phosphor.fosstars.model.score.oss.OssSecurityScoreTest;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import java.util.Set;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class OssSecurityRatingTest {
 

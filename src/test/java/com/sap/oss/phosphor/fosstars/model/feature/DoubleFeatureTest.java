@@ -1,14 +1,15 @@
 package com.sap.oss.phosphor.fosstars.model.feature;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class DoubleFeatureTest {
 
@@ -52,8 +53,8 @@ public class DoubleFeatureTest {
     assertEquals(10.2, value.get(), 0.001);
   }
 
-  @Test(expected = NumberFormatException.class)
+  @Test
   public void parseInvalidDouble() {
-    new DoubleFeature("test").parse("a");
+    assertThrows(NumberFormatException.class, () -> new DoubleFeature("test").parse("a"));
   }
 }

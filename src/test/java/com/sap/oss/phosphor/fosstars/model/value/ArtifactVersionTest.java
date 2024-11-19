@@ -1,14 +1,14 @@
 package com.sap.oss.phosphor.fosstars.model.value;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.util.Json;
 import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ArtifactVersionTest {
 
@@ -50,7 +50,7 @@ public class ArtifactVersionTest {
   }
 
   @Test
-  public void testJsonSerialization() throws IOException  {
+  public void testJsonSerialization() throws IOException {
     ArtifactVersion version = new ArtifactVersion("2.0.2", LocalDateTime.now());
     ArtifactVersion clone = Json.read(Json.toBytes(version), ArtifactVersion.class);
     assertTrue(version.equals(clone) && clone.equals(version));
@@ -58,7 +58,7 @@ public class ArtifactVersionTest {
   }
 
   @Test
-  public void testYamlSerialization() throws IOException  {
+  public void testYamlSerialization() throws IOException {
     ArtifactVersion version = new ArtifactVersion("MIGHTY-1.2", LocalDateTime.now());
     ArtifactVersion clone = Yaml.read(Yaml.toBytes(version), ArtifactVersion.class);
     assertTrue(version.equals(clone) && clone.equals(version));

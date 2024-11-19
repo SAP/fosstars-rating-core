@@ -1,10 +1,11 @@
 package com.sap.oss.phosphor.fosstars.maven;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class GAVTest {
 
@@ -31,18 +32,18 @@ public class GAVTest {
         GAV.parse("com.test.group:something:1.0.0"));
 
     assertEquals(
-        new GAV("com.test.group", "something", null),
-        GAV.parse("com.test.group:something"));
+        new GAV("com.test.group", "something", null), GAV.parse("com.test.group:something"));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testParseTooBig() {
-    GAV.parse("com.test.group:artifact:10.0.0:something");
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> GAV.parse("com.test.group:artifact:10.0.0:something"));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testParseTooSmall() {
-    GAV.parse("com.test.group");
+    assertThrows(IllegalArgumentException.class, () -> GAV.parse("com.test.group"));
   }
-
 }

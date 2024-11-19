@@ -1,21 +1,21 @@
 package com.sap.oss.phosphor.fosstars.data.github;
 
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubOrganization;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.util.Date;
 import java.util.Optional;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class GitHubDataCacheTest {
 
   @Test
   public void testPut() {
     GitHubDataCache<String> cache = new GitHubDataCache<>();
-    
+
     String data = "data to be cached";
     GitHubProject project = new GitHubProject("org", "test");
     cache.put(project, data);

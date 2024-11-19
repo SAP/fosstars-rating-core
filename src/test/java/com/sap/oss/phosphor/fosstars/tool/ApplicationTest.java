@@ -3,9 +3,10 @@ package com.sap.oss.phosphor.fosstars.tool;
 import static com.sap.oss.phosphor.fosstars.tool.GitHubProjectFinder.EMPTY_EXCLUDE_LIST;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.sap.oss.phosphor.fosstars.tool.GitHubProjectFinder.OrganizationConfig;
 import com.sap.oss.phosphor.fosstars.tool.GitHubProjectFinder.ProjectConfig;
@@ -13,13 +14,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Collections;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ApplicationTest {
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testNoParameters() throws Exception {
-    new Application().run();
+  @Test
+  public void testNoParameters() {
+    assertThrows(IllegalArgumentException.class, () -> new Application().run());
   }
 
   @Test
@@ -59,27 +60,21 @@ public class ApplicationTest {
       assertEquals(3, mainConfig.finderConfig.organizationConfigs.size());
       assertThat(
           mainConfig.finderConfig.organizationConfigs,
-          hasItem(
-              new OrganizationConfig("apache", Arrays.asList("incubator", "incubating"), 0)));
+          hasItem(new OrganizationConfig("apache", Arrays.asList("incubator", "incubating"), 0)));
       assertThat(
           mainConfig.finderConfig.organizationConfigs,
-          hasItem(
-              new OrganizationConfig("eclipse", Collections.singletonList("incubator"), 0)));
+          hasItem(new OrganizationConfig("eclipse", Collections.singletonList("incubator"), 0)));
       assertThat(
           mainConfig.finderConfig.organizationConfigs,
-          hasItem(
-              new OrganizationConfig("spring-projects", EMPTY_EXCLUDE_LIST, 0)));
+          hasItem(new OrganizationConfig("spring-projects", EMPTY_EXCLUDE_LIST, 0)));
       assertNotNull(mainConfig.finderConfig.projectConfigs);
       assertEquals(2, mainConfig.finderConfig.projectConfigs.size());
       assertThat(
           mainConfig.finderConfig.projectConfigs,
-          hasItem(
-              new ProjectConfig("FasterXML", "jackson-databind")));
+          hasItem(new ProjectConfig("FasterXML", "jackson-databind")));
       assertThat(
           mainConfig.finderConfig.projectConfigs,
-          hasItem(
-              new ProjectConfig("FasterXML", "jackson-dataformat-xml")));
+          hasItem(new ProjectConfig("FasterXML", "jackson-dataformat-xml")));
     }
   }
-
 }

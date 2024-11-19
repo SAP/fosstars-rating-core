@@ -4,9 +4,9 @@ import static com.sap.oss.phosphor.fosstars.TestUtils.DELTA;
 import static com.sap.oss.phosphor.fosstars.TestUtils.PROJECT;
 import static com.sap.oss.phosphor.fosstars.data.github.SecurityReviewsFromOpenSSF.DATE_FORMAT;
 import static com.sap.oss.phosphor.fosstars.data.github.SecurityReviewsFromOpenSSF.SECURITY_REVIEWS_PROJECT;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -36,7 +36,7 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class SecurityReviewsFromOpenSSFTest extends TestGitHubDataFetcherHolder {
 
@@ -58,27 +58,29 @@ public class SecurityReviewsFromOpenSSFTest extends TestGitHubDataFetcherHolder 
   public void testIsReviewFor() throws JsonProcessingException {
     SecurityReviewsFromOpenSSF provider = new SecurityReviewsFromOpenSSF(fetcher);
 
-    JsonNode metadata = Yaml.mapper().readTree(
-        "---\n"
-        + "Publication-State: Active\n"
-        + "Access: Public\n"
-        + "Reviewers:\n"
-        + "- Organization: Trail of Bits\n"
-        + "  Associated-With-Project: false\n"
-        + "  Compensation-Source: non-project\n"
-        + "- Organization: TrustInSoft\n"
-        + "  Associated-With-Project: false\n"
-        + "  Compensation-Source: non-project  \n"
-        + "Domain: Security\n"
-        + "Methodology:\n"
-        + "- External-Review\n"
-        + "Issues-Identified: Non-Severe\n"
-        + "Package-URLs:\n"
-        + "- pkg:github/madler/zlib@1.2.8\n"
-        + "Review-Date: 2016-09-30\n"
-        + "Scope: Implementation/Partial\n"
-        + "Schema-Version: 1.0\n"
-        + "SPDX-License-Identifier: CC-BY-4.0");
+    JsonNode metadata =
+        Yaml.mapper()
+            .readTree(
+                "---\n"
+                    + "Publication-State: Active\n"
+                    + "Access: Public\n"
+                    + "Reviewers:\n"
+                    + "- Organization: Trail of Bits\n"
+                    + "  Associated-With-Project: false\n"
+                    + "  Compensation-Source: non-project\n"
+                    + "- Organization: TrustInSoft\n"
+                    + "  Associated-With-Project: false\n"
+                    + "  Compensation-Source: non-project  \n"
+                    + "Domain: Security\n"
+                    + "Methodology:\n"
+                    + "- External-Review\n"
+                    + "Issues-Identified: Non-Severe\n"
+                    + "Package-URLs:\n"
+                    + "- pkg:github/madler/zlib@1.2.8\n"
+                    + "Review-Date: 2016-09-30\n"
+                    + "Scope: Implementation/Partial\n"
+                    + "Schema-Version: 1.0\n"
+                    + "SPDX-License-Identifier: CC-BY-4.0");
 
     GitHubProject zlib = new GitHubProject("madler", "zlib");
     assertTrue(provider.isReviewFor(zlib, metadata));
@@ -89,31 +91,32 @@ public class SecurityReviewsFromOpenSSFTest extends TestGitHubDataFetcherHolder 
 
   @Test
   public void testReadMetadataFrom() throws IOException {
-    String content = "---\n"
-        + "Publication-State: Active\n"
-        + "Access: Public\n"
-        + "Reviewers:\n"
-        + "- Organization: Trail of Bits\n"
-        + "  Associated-With-Project: false\n"
-        + "  Compensation-Source: non-project\n"
-        + "- Organization: TrustInSoft\n"
-        + "  Associated-With-Project: false\n"
-        + "  Compensation-Source: non-project  \n"
-        + "Domain: Security\n"
-        + "Methodology:\n"
-        + "- External-Review\n"
-        + "Issues-Identified: Non-Severe\n"
-        + "Package-URLs:\n"
-        + "- pkg:github/madler/zlib@1.2.8\n"
-        + "Review-Date: 2016-09-30\n"
-        + "Scope: Implementation/Partial\n"
-        + "Schema-Version: 1.0\n"
-        + "SPDX-License-Identifier: CC-BY-4.0\n"
-        + "---\n"
-        + "\n"
-        + "### Summary\n"
-        + "\n"
-        + "Here is some text.\n";
+    String content =
+        "---\n"
+            + "Publication-State: Active\n"
+            + "Access: Public\n"
+            + "Reviewers:\n"
+            + "- Organization: Trail of Bits\n"
+            + "  Associated-With-Project: false\n"
+            + "  Compensation-Source: non-project\n"
+            + "- Organization: TrustInSoft\n"
+            + "  Associated-With-Project: false\n"
+            + "  Compensation-Source: non-project  \n"
+            + "Domain: Security\n"
+            + "Methodology:\n"
+            + "- External-Review\n"
+            + "Issues-Identified: Non-Severe\n"
+            + "Package-URLs:\n"
+            + "- pkg:github/madler/zlib@1.2.8\n"
+            + "Review-Date: 2016-09-30\n"
+            + "Scope: Implementation/Partial\n"
+            + "Schema-Version: 1.0\n"
+            + "SPDX-License-Identifier: CC-BY-4.0\n"
+            + "---\n"
+            + "\n"
+            + "### Summary\n"
+            + "\n"
+            + "Here is some text.\n";
 
     try (BufferedReader reader = new BufferedReader(new StringReader(content))) {
       Optional<JsonNode> metadata = SecurityReviewsFromOpenSSF.readMetadataFrom(reader);
@@ -138,26 +141,23 @@ public class SecurityReviewsFromOpenSSFTest extends TestGitHubDataFetcherHolder 
   public void testReadReviewDateFrom() throws JsonProcessingException {
     SecurityReviewsFromOpenSSF provider = new SecurityReviewsFromOpenSSF(fetcher);
 
-    String content = "---\n"
-        + "Package-URLs:\n"
-        + "- pkg:github/madler/zlib@1.2.8\n"
-        + "Review-Date: 2016-09-30\n";
+    String content =
+        "---\n"
+            + "Package-URLs:\n"
+            + "- pkg:github/madler/zlib@1.2.8\n"
+            + "Review-Date: 2016-09-30\n";
 
     Optional<Date> date = provider.readReviewDateFrom(Yaml.mapper().readTree(content));
     assertTrue(date.isPresent());
     assertEquals("2016-09-30", DATE_FORMAT.format(date.get()));
 
-    String wrongContent = "---\n"
-        + "Package-URLs:\n"
-        + "- pkg:github/madler/zlib@1.2.8\n"
-        + "Review-Date: wrong\n";
+    String wrongContent =
+        "---\n" + "Package-URLs:\n" + "- pkg:github/madler/zlib@1.2.8\n" + "Review-Date: wrong\n";
 
     date = provider.readReviewDateFrom(Yaml.mapper().readTree(wrongContent));
     assertFalse(date.isPresent());
 
-    wrongContent = "---\n"
-        + "Package-URLs:\n"
-        + "- pkg:github/madler/zlib@1.2.8\n";
+    wrongContent = "---\n" + "Package-URLs:\n" + "- pkg:github/madler/zlib@1.2.8\n";
 
     date = provider.readReviewDateFrom(Yaml.mapper().readTree(wrongContent));
     assertFalse(date.isPresent());
@@ -165,8 +165,8 @@ public class SecurityReviewsFromOpenSSFTest extends TestGitHubDataFetcherHolder 
 
   @Test
   public void testFetchValueFor() throws IOException, GitAPIException, ParseException {
-    Path securityReviewDirectory
-        = Files.createTempDirectory(SecurityReviewsFromOpenSSFTest.class.getName());
+    Path securityReviewDirectory =
+        Files.createTempDirectory(SecurityReviewsFromOpenSSFTest.class.getName());
     Path directory = Files.createTempDirectory(getClass().getName());
     try (Repository repository = FileRepositoryBuilder.create(directory.resolve(".git").toFile());
          Git git = new Git(repository)) {
@@ -180,14 +180,18 @@ public class SecurityReviewsFromOpenSSFTest extends TestGitHubDataFetcherHolder 
               put("One.java", "public class One {}");
               put("Two.java", "public class Two {}");
             }
-            }, "First commit: init", git);
+          },
+          "First commit: init",
+          git);
 
       TestUtils.commit(
           new HashMap<String, String>() {
             {
               put("App.java", "public class App { /* something new */ }");
             }
-            }, "Second commit: updated App", git);
+          },
+          "Second commit: updated App",
+          git);
 
       TestUtils.commit(
           new HashMap<String, String>() {
@@ -195,45 +199,48 @@ public class SecurityReviewsFromOpenSSFTest extends TestGitHubDataFetcherHolder 
               put("Other.java", "public class Other {}");
               put("One.java", "public class One { /* something new */ }");
             }
-            }, "Third commit: added Other, updated One", git);
+          },
+          "Third commit: added Other, updated One",
+          git);
 
-      LocalRepository localRepository = new LocalRepository(
-          new LocalRepositoryInfo(directory, new Date(), PROJECT.scm()),
-          repository);
+      LocalRepository localRepository =
+          new LocalRepository(
+              new LocalRepositoryInfo(directory, new Date(), PROJECT.scm()), repository);
       localRepository = spy(localRepository);
       TestGitHubDataFetcher.addForTesting(PROJECT, localRepository);
 
       LocalRepository securityReviewLocalRepository = mock(LocalRepository.class);
       TestGitHubDataFetcher.addForTesting(SECURITY_REVIEWS_PROJECT, securityReviewLocalRepository);
 
-      Path reviewFile
-          = securityReviewDirectory.resolve("reviews").resolve("github").resolve("test.md");
+      Path reviewFile =
+          securityReviewDirectory.resolve("reviews").resolve("github").resolve("test.md");
       Files.createDirectories(reviewFile.getParent());
 
       final SecurityReviewsFromOpenSSF provider = new SecurityReviewsFromOpenSSF(fetcher);
 
-      String content = "---\n"
-          + "Publication-State: Active\n"
-          + "Access: Public\n"
-          + "Reviewers:\n"
-          + "- Organization: Mordor\n"
-          + "  Associated-With-Project: false\n"
-          + "  Compensation-Source: non-project\n"
-          + "Domain: Security\n"
-          + "Methodology:\n"
-          + "- External-Review\n"
-          + "Issues-Identified: Non-Severe\n"
-          + "Package-URLs:\n"
-          + "- pkg:github/org/test@1.2.3\n"
-          + "Review-Date: 2020-12-25\n"
-          + "Scope: Implementation/Partial\n"
-          + "Schema-Version: 1.0\n"
-          + "SPDX-License-Identifier: CC-BY-4.0\n"
-          + "---\n"
-          + "\n"
-          + "### Summary\n"
-          + "\n"
-          + "Some text here.\n";
+      String content =
+          "---\n"
+              + "Publication-State: Active\n"
+              + "Access: Public\n"
+              + "Reviewers:\n"
+              + "- Organization: Mordor\n"
+              + "  Associated-With-Project: false\n"
+              + "  Compensation-Source: non-project\n"
+              + "Domain: Security\n"
+              + "Methodology:\n"
+              + "- External-Review\n"
+              + "Issues-Identified: Non-Severe\n"
+              + "Package-URLs:\n"
+              + "- pkg:github/org/test@1.2.3\n"
+              + "Review-Date: 2020-12-25\n"
+              + "Scope: Implementation/Partial\n"
+              + "Schema-Version: 1.0\n"
+              + "SPDX-License-Identifier: CC-BY-4.0\n"
+              + "---\n"
+              + "\n"
+              + "### Summary\n"
+              + "\n"
+              + "Some text here.\n";
       Files.write(reviewFile, content.getBytes());
       when(securityReviewLocalRepository.files(any(), any()))
           .thenReturn(Collections.singletonList(reviewFile));
@@ -241,8 +248,7 @@ public class SecurityReviewsFromOpenSSFTest extends TestGitHubDataFetcherHolder 
       Date reviewDate = DATE_FORMAT.parse("2020-12-25");
       List<GitCommit> commits = localRepository.commits();
 
-      when(localRepository.firstCommitAfter(reviewDate))
-          .thenReturn(Optional.of(commits.get(1)));
+      when(localRepository.firstCommitAfter(reviewDate)).thenReturn(Optional.of(commits.get(1)));
       Value<SecurityReviews> value = provider.fetchValueFor(PROJECT);
       assertFalse(value.isUnknown());
       assertFalse(value.isNotApplicable());
@@ -250,8 +256,10 @@ public class SecurityReviewsFromOpenSSFTest extends TestGitHubDataFetcherHolder 
       assertEquals(1, reviews.size());
       SecurityReview review = reviews.iterator().next();
       assertEquals("2020-12-25", DATE_FORMAT.format(review.date()));
-      assertEquals(0.5,
-          review.projectChanged()
+      assertEquals(
+          0.5,
+          review
+              .projectChanged()
               .orElseThrow(() -> new Error("Could not figure out how much of code has changes!")),
           DELTA);
 

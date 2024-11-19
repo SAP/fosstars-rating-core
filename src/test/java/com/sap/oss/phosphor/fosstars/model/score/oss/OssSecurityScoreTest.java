@@ -50,10 +50,10 @@ import static com.sap.oss.phosphor.fosstars.model.value.Language.JAVA;
 import static com.sap.oss.phosphor.fosstars.model.value.OwaspDependencyCheckUsage.MANDATORY;
 import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.MAVEN;
 import static com.sap.oss.phosphor.fosstars.model.value.SecurityReviews.noReviews;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Score;
@@ -67,37 +67,9 @@ import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Set;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class OssSecurityScoreTest {
-
-  @Test
-  public void testSerializeAndDeserialize() throws IOException {
-    OssSecurityScore score = new OssSecurityScore();
-    byte[] bytes = Json.toBytes(score);
-    assertNotNull(bytes);
-    assertTrue(bytes.length > 0);
-    OssSecurityScore clone = Json.read(bytes, OssSecurityScore.class);
-    assertEquals(score, clone);
-  }
-
-  @Test
-  public void testCalculateForAllUnknown() {
-    Score score = new OssSecurityScore();
-    ScoreValue scoreValue = score.calculate(Utils.allUnknown(score.allFeatures()));
-    assertTrue(scoreValue.isUnknown());
-    assertEquals(Confidence.MIN, scoreValue.confidence(), DELTA);
-    checkUsedValues(scoreValue);
-  }
-
-  @Test
-  public void testCalculate() {
-    Score score = new OssSecurityScore();
-    ScoreValue scoreValue = score.calculate(defaultValues());
-    assertTrue(Score.INTERVAL.contains(scoreValue.get()));
-    assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
-    checkUsedValues(scoreValue);
-  }
 
   public static Set<Value<?>> defaultValues() {
     return setOf(
@@ -163,4 +135,31 @@ public class OssSecurityScoreTest {
     }
   }
 
+  @Test
+  public void testSerializeAndDeserialize() throws IOException {
+    OssSecurityScore score = new OssSecurityScore();
+    byte[] bytes = Json.toBytes(score);
+    assertNotNull(bytes);
+    assertTrue(bytes.length > 0);
+    OssSecurityScore clone = Json.read(bytes, OssSecurityScore.class);
+    assertEquals(score, clone);
+  }
+
+  @Test
+  public void testCalculateForAllUnknown() {
+    Score score = new OssSecurityScore();
+    ScoreValue scoreValue = score.calculate(Utils.allUnknown(score.allFeatures()));
+    assertTrue(scoreValue.isUnknown());
+    assertEquals(Confidence.MIN, scoreValue.confidence(), DELTA);
+    checkUsedValues(scoreValue);
+  }
+
+  @Test
+  public void testCalculate() {
+    Score score = new OssSecurityScore();
+    ScoreValue scoreValue = score.calculate(defaultValues());
+    assertTrue(Score.INTERVAL.contains(scoreValue.get()));
+    assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
+    checkUsedValues(scoreValue);
+  }
 }

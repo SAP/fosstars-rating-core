@@ -1,12 +1,13 @@
 package com.sap.oss.phosphor.fosstars.model.math;
 
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.Interval;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class DoubleIntervalTest {
 
@@ -71,14 +72,17 @@ public class DoubleIntervalTest {
     assertEquals(6.5, two.mean(), DoubleInterval.PRECISION);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void meanForPositiveInfinity() {
-    DoubleInterval.init().from(1).positiveInfinity().make().mean();
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> DoubleInterval.init().from(1).positiveInfinity().make().mean());
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void meanForNegativeInfinity() {
-    DoubleInterval.init().to(10).negativeInfinity().make().mean();
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> DoubleInterval.init().to(10).negativeInfinity().make().mean());
   }
-
 }

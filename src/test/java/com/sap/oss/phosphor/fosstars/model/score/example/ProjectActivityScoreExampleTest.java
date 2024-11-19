@@ -3,18 +3,28 @@ package com.sap.oss.phosphor.fosstars.model.score.example;
 import static com.sap.oss.phosphor.fosstars.model.feature.example.ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE;
 import static com.sap.oss.phosphor.fosstars.model.feature.example.ExampleFeatures.NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE;
 import static com.sap.oss.phosphor.fosstars.model.score.example.ExampleScores.PROJECT_ACTIVITY_SCORE_EXAMPLE;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.Score;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.value.IntegerValue;
 import java.util.HashSet;
 import java.util.Set;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ProjectActivityScoreExampleTest {
+
+  private static Set<Value<?>> makeValues(
+      int numberOfCommitsLastMonth, int numberOfContributorsLastMonth) {
+
+    Set<Value<?>> values = new HashSet<>();
+    values.add(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE.value(numberOfCommitsLastMonth));
+    values.add(NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE.value(numberOfContributorsLastMonth));
+    return values;
+  }
 
   @Test
   public void name() {
@@ -39,44 +49,50 @@ public class ProjectActivityScoreExampleTest {
     assertTrue(Score.INTERVAL.contains(PROJECT_ACTIVITY_SCORE_EXAMPLE.calculate(values).get()));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void negativeCommitsNumber() {
-    ProjectActivityScoreExample score = PROJECT_ACTIVITY_SCORE_EXAMPLE;
-    Set<Value<?>> values = new HashSet<>();
-    values.add(new IntegerValue(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, -1));
-    values.add(new IntegerValue(NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, 11));
-    Score.INTERVAL.contains(score.calculate(values).get());
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> {
+          ProjectActivityScoreExample score = PROJECT_ACTIVITY_SCORE_EXAMPLE;
+          Set<Value<?>> values = new HashSet<>();
+          values.add(new IntegerValue(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, -1));
+          values.add(new IntegerValue(NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, 11));
+          Score.INTERVAL.contains(score.calculate(values).get());
+        });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void negativeContributorsNumber() {
-    Set<Value<?>> values = new HashSet<>();
-    values.add(new IntegerValue(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 11));
-    values.add(new IntegerValue(NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, -1));
-    Score.INTERVAL.contains(PROJECT_ACTIVITY_SCORE_EXAMPLE.calculate(values).get());
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> {
+          Set<Value<?>> values = new HashSet<>();
+          values.add(new IntegerValue(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 11));
+          values.add(new IntegerValue(NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, -1));
+          Score.INTERVAL.contains(PROJECT_ACTIVITY_SCORE_EXAMPLE.calculate(values).get());
+        });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void noCommitsNumber() {
-    Set<Value<?>> values = new HashSet<>();
-    values.add(new IntegerValue(NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, 11));
-    Score.INTERVAL.contains(PROJECT_ACTIVITY_SCORE_EXAMPLE.calculate(values).get());
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> {
+          Set<Value<?>> values = new HashSet<>();
+          values.add(new IntegerValue(NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, 11));
+          Score.INTERVAL.contains(PROJECT_ACTIVITY_SCORE_EXAMPLE.calculate(values).get());
+        });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void noContributorsNumber() {
-    Set<Value<?>> values = new HashSet<>();
-    values.add(new IntegerValue(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 11));
-    Score.INTERVAL.contains(PROJECT_ACTIVITY_SCORE_EXAMPLE.calculate(values).get());
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> {
+          Set<Value<?>> values = new HashSet<>();
+          values.add(new IntegerValue(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 11));
+          Score.INTERVAL.contains(PROJECT_ACTIVITY_SCORE_EXAMPLE.calculate(values).get());
+        });
   }
-
-  private static Set<Value<?>> makeValues(
-      int numberOfCommitsLastMonth, int numberOfContributorsLastMonth) {
-
-    Set<Value<?>> values = new HashSet<>();
-    values.add(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE.value(numberOfCommitsLastMonth));
-    values.add(NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE.value(numberOfContributorsLastMonth));
-    return values;
-  }
-
 }

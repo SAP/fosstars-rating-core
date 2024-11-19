@@ -1,5 +1,5 @@
 <project>
-  <build>
-    <plugins></plugins>
-  </build>
+    <build>
+        <plugins></plugins>
+    </build>
 </project>

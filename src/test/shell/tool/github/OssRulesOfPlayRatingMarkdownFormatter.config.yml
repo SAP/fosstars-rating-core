@@ -17,7 +17,7 @@ ruleIds:
   rl-reuse_tool-2: If a project has a LICENSES folder with licenses
   rl-reuse_tool-3: If a project is registered in REUSE
   rl-reuse_tool-4: If a project is compliant with REUSE rules
-  rl-code_scan_alerts-2: If a project runs CodeQL checks for commits 
+  rl-code_scan_alerts-2: If a project runs CodeQL checks for commits
   rl-code_scan_alerts-1: If a project runs CodeQL scans
   rl-security_policy-1: If an open-source project has a security policy
   rl-code_of_conduct_file-1: If a project has a code of conduct file

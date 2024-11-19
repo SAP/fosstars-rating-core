@@ -1,8 +1,8 @@
 package com.sap.oss.phosphor.fosstars.model.score;
 
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.setOf;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Score;
@@ -11,7 +11,7 @@ import com.sap.oss.phosphor.fosstars.model.feature.example.ExampleFeatures;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import java.util.Collections;
 import java.util.Set;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class AbstractScoreTest {
 

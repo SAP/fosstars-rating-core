@@ -1,11 +1,13 @@
 package com.sap.oss.phosphor.fosstars.model.rating.oss;
 
 import static com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScoreTest.allRulesPassed;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Feature;
@@ -26,12 +28,12 @@ import com.sap.oss.phosphor.fosstars.util.Json;
 import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
 import java.util.Set;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class OssRulesOfPlayRatingTest {
 
-  private static final OssRulesOfPlayRating RATING
-      = RatingRepository.INSTANCE.rating(OssRulesOfPlayRating.class);
+  private static final OssRulesOfPlayRating RATING =
+      RatingRepository.INSTANCE.rating(OssRulesOfPlayRating.class);
 
   private static final double DELTA = 0.01;
 
@@ -73,17 +75,19 @@ public class OssRulesOfPlayRatingTest {
     assertEquals(RATING.allFeatures().size(), RATING.score().allFeatures().size());
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testLabelsWithWrongScoreValue() {
-    RATING.label(new ScoreValue(ExampleScores.SECURITY_SCORE_EXAMPLE));
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> RATING.label(new ScoreValue(ExampleScores.SECURITY_SCORE_EXAMPLE)));
   }
 
   // the test cases below implement verification procedure for the rating
   // if necessary, they may be re-written using test vectors
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testCalculateWithNoValues() {
-    RATING.calculate();
+    assertThrows(IllegalArgumentException.class, () -> RATING.calculate());
   }
 
   @Test
@@ -110,7 +114,7 @@ public class OssRulesOfPlayRatingTest {
   @Test
   public void testCalculateWithOneFailedRule() {
     for (Feature<?> feature : RATING.allFeatures()) {
-      assertTrue(feature instanceof BooleanFeature);
+      assertInstanceOf(BooleanFeature.class, feature);
       ValueSet values = allRulesPassed();
       double expectedScore = Score.MIN;
       OssRulesOfPlayLabel expectedLabel = OssRulesOfPlayLabel.FAILED;
@@ -142,7 +146,7 @@ public class OssRulesOfPlayRatingTest {
   @Test
   public void testCalculateWithOneUnknownValue() {
     for (Feature<?> feature : RATING.allFeatures()) {
-      assertTrue(feature instanceof BooleanFeature);
+      assertInstanceOf(BooleanFeature.class, feature);
       ValueSet values = allRulesPassed().update(UnknownValue.of(feature));
       RatingValue ratingValue = RATING.calculate(values);
       ScoreValue scoreValue = ratingValue.scoreValue();

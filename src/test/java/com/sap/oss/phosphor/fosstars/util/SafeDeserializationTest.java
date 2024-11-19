@@ -1,12 +1,12 @@
 package com.sap.oss.phosphor.fosstars.util;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.fasterxml.jackson.databind.exc.InvalidTypeIdException;
 import com.sap.oss.phosphor.test.AnotherData;
 import com.sap.oss.phosphor.test.Entity;
 import java.io.IOException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class SafeDeserializationTest {
 
@@ -32,5 +32,4 @@ public class SafeDeserializationTest {
     Json.mapper().readValue(Json.toBytes(entity), Entity.class);
     Yaml.mapper().readValue(Json.toBytes(entity), Entity.class);
   }
-
 }

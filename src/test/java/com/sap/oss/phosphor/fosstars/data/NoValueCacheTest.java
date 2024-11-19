@@ -1,11 +1,11 @@
 package com.sap.oss.phosphor.fosstars.data;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import java.util.Date;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class NoValueCacheTest {
 

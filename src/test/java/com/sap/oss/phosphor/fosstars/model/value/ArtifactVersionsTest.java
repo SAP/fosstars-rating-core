@@ -1,7 +1,7 @@
 package com.sap.oss.phosphor.fosstars.model.value;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.util.Json;
 import com.sap.oss.phosphor.fosstars.util.Yaml;
@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ArtifactVersionsTest {
 
@@ -31,9 +31,10 @@ public class ArtifactVersionsTest {
 
   @Test
   public void testJsonSerialization() throws IOException {
-    ArtifactVersions versions = new ArtifactVersions(
-        new ArtifactVersion("1.0.0", LocalDateTime.now().minusDays(30)),
-        new ArtifactVersion("1.1.0", LocalDateTime.now().minusDays(20)));
+    ArtifactVersions versions =
+        new ArtifactVersions(
+            new ArtifactVersion("1.0.0", LocalDateTime.now().minusDays(30)),
+            new ArtifactVersion("1.1.0", LocalDateTime.now().minusDays(20)));
     ArtifactVersions clone = Json.read(Json.toBytes(versions), ArtifactVersions.class);
     assertTrue(versions.equals(clone) && clone.equals(versions));
     assertEquals(versions.hashCode(), clone.hashCode());
@@ -41,9 +42,10 @@ public class ArtifactVersionsTest {
 
   @Test
   public void testYamlSerialization() throws IOException {
-    ArtifactVersions versions = new ArtifactVersions(
-        new ArtifactVersion("something", LocalDateTime.now().minusDays(30)),
-        new ArtifactVersion("something else", LocalDateTime.now().minusDays(20)));
+    ArtifactVersions versions =
+        new ArtifactVersions(
+            new ArtifactVersion("something", LocalDateTime.now().minusDays(30)),
+            new ArtifactVersion("something else", LocalDateTime.now().minusDays(20)));
     ArtifactVersions clone = Yaml.read(Yaml.toBytes(versions), ArtifactVersions.class);
     assertTrue(versions.equals(clone) && clone.equals(versions));
     assertEquals(versions.hashCode(), clone.hashCode());

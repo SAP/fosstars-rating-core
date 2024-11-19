@@ -1,9 +1,9 @@
 package com.sap.oss.phosphor.fosstars.data.artifact;
 
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.VULNERABILITIES_IN_ARTIFACT;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -22,7 +22,7 @@ import java.io.InputStream;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class VulnerabilitiesFromNpmAuditTest {
 
@@ -39,8 +39,7 @@ public class VulnerabilitiesFromNpmAuditTest {
 
   @Test
   public void testVulnerabilitiesAvailable() throws IOException {
-    VulnerabilitiesFromNpmAudit provider =
-        new VulnerabilitiesFromNpmAudit(testNvd());
+    VulnerabilitiesFromNpmAudit provider = new VulnerabilitiesFromNpmAudit(testNvd());
     provider = spy(provider);
 
     CloseableHttpClient httpClient = mock(CloseableHttpClient.class);
@@ -52,8 +51,7 @@ public class VulnerabilitiesFromNpmAuditTest {
     HttpEntity entity = mock(HttpEntity.class);
     when(response.getEntity()).thenReturn(entity);
 
-    try (InputStream content = getClass().getResourceAsStream(
-        "VulnerabilitiesFromNpmAudit.json")) {
+    try (InputStream content = getClass().getResourceAsStream("VulnerabilitiesFromNpmAudit.json")) {
       when(entity.getContent()).thenReturn(content);
 
       ValueHashSet values = new ValueHashSet();
@@ -77,8 +75,7 @@ public class VulnerabilitiesFromNpmAuditTest {
 
   @Test
   public void testVulnerabilitiesNotAllCvesAvailable() throws IOException {
-    VulnerabilitiesFromNpmAudit provider =
-        new VulnerabilitiesFromNpmAudit(testNvd());
+    VulnerabilitiesFromNpmAudit provider = new VulnerabilitiesFromNpmAudit(testNvd());
     provider = spy(provider);
 
     CloseableHttpClient httpClient = mock(CloseableHttpClient.class);
@@ -90,8 +87,7 @@ public class VulnerabilitiesFromNpmAuditTest {
     HttpEntity entity = mock(HttpEntity.class);
     when(response.getEntity()).thenReturn(entity);
 
-    try (InputStream content = getClass().getResourceAsStream(
-        "NotAllCvesFromNpmAudit.json")) {
+    try (InputStream content = getClass().getResourceAsStream("NotAllCvesFromNpmAudit.json")) {
       when(entity.getContent()).thenReturn(content);
 
       ValueHashSet values = new ValueHashSet();
@@ -115,8 +111,7 @@ public class VulnerabilitiesFromNpmAuditTest {
 
   @Test
   public void testVulnerabilitiesNoCvesAvailable() throws IOException {
-    VulnerabilitiesFromNpmAudit provider =
-        new VulnerabilitiesFromNpmAudit(testNvd());
+    VulnerabilitiesFromNpmAudit provider = new VulnerabilitiesFromNpmAudit(testNvd());
     provider = spy(provider);
 
     CloseableHttpClient httpClient = mock(CloseableHttpClient.class);
@@ -128,8 +123,7 @@ public class VulnerabilitiesFromNpmAuditTest {
     HttpEntity entity = mock(HttpEntity.class);
     when(response.getEntity()).thenReturn(entity);
 
-    try (InputStream content = getClass().getResourceAsStream(
-        "NoCvesFromNpmAudit.json")) {
+    try (InputStream content = getClass().getResourceAsStream("NoCvesFromNpmAudit.json")) {
       when(entity.getContent()).thenReturn(content);
 
       ValueHashSet values = new ValueHashSet();
@@ -149,8 +143,7 @@ public class VulnerabilitiesFromNpmAuditTest {
 
   @Test
   public void testNoPatchForAdvisory() throws IOException {
-    VulnerabilitiesFromNpmAudit provider =
-        new VulnerabilitiesFromNpmAudit(testNvd());
+    VulnerabilitiesFromNpmAudit provider = new VulnerabilitiesFromNpmAudit(testNvd());
     provider = spy(provider);
 
     CloseableHttpClient httpClient = mock(CloseableHttpClient.class);
@@ -162,15 +155,14 @@ public class VulnerabilitiesFromNpmAuditTest {
     HttpEntity entity = mock(HttpEntity.class);
     when(response.getEntity()).thenReturn(entity);
 
-    try (InputStream content = getClass().getResourceAsStream(
-        "NoPatchForAdvisory.json")) {
+    try (InputStream content = getClass().getResourceAsStream("NoPatchForAdvisory.json")) {
       when(entity.getContent()).thenReturn(content);
 
       ValueHashSet values = new ValueHashSet();
       assertEquals(0, values.size());
 
-      NpmArtifact npmArtifact
-          = new NpmArtifact("bootstrap-table", "1.19.0", new GitHubProject("org", "project"));
+      NpmArtifact npmArtifact =
+          new NpmArtifact("bootstrap-table", "1.19.0", new GitHubProject("org", "project"));
       provider.update(npmArtifact, values);
 
       assertEquals(1, values.size());

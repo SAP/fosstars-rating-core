@@ -7,10 +7,10 @@ import static com.sap.oss.phosphor.fosstars.model.value.Language.OTHER;
 import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.MAVEN;
 import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.NPM;
 import static com.sap.oss.phosphor.fosstars.model.value.PackageManager.YARN;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -33,7 +33,7 @@ import java.util.Map;
 import java.util.Optional;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.kohsuke.github.GHRepository;
 
 public class PackageManagementTest extends TestGitHubDataFetcherHolder {
@@ -155,5 +155,4 @@ public class PackageManagementTest extends TestGitHubDataFetcherHolder {
     assertTrue(languages.get().contains(JAVA));
     assertTrue(languages.get().contains(OTHER));
   }
-
 }

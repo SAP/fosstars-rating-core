@@ -1,10 +1,11 @@
 package com.sap.oss.phosphor.fosstars.model.qa;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -21,19 +22,20 @@ import com.sap.oss.phosphor.fosstars.model.value.IntegerValue;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import java.util.List;
 import java.util.Set;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ScoreVerifierTest {
 
   // an extra test vector which is supposed to fail
-  private static final TestVector FAILING_TEST_VECTOR = TestVectorBuilder.newTestVector()
-      .set(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1))
-      .set(new IntegerValue(ExampleFeatures.NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, 1))
-      .set(new BooleanValue(ExampleFeatures.SECURITY_REVIEW_DONE_EXAMPLE, false))
-      .set(new BooleanValue(ExampleFeatures.STATIC_CODE_ANALYSIS_DONE_EXAMPLE, false))
-      .expectedScore(DoubleInterval.init().from(9).to(10).make())
-      .alias("test")
-      .make();
+  private static final TestVector FAILING_TEST_VECTOR =
+      TestVectorBuilder.newTestVector()
+          .set(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1))
+          .set(new IntegerValue(ExampleFeatures.NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, 1))
+          .set(new BooleanValue(ExampleFeatures.SECURITY_REVIEW_DONE_EXAMPLE, false))
+          .set(new BooleanValue(ExampleFeatures.STATIC_CODE_ANALYSIS_DONE_EXAMPLE, false))
+          .expectedScore(DoubleInterval.init().from(9).to(10).make())
+          .alias("test")
+          .make();
 
   private static final TestVectors TEST_VECTORS = new TestVectors();
 
@@ -44,9 +46,9 @@ public class ScoreVerifierTest {
 
   @Test
   public void testWithFailedTestVectors() {
-    ScoreVerifier verifier = new ScoreVerifier(
-        RatingRepository.INSTANCE.rating(SecurityRatingExample.class).score(),
-        TEST_VECTORS);
+    ScoreVerifier verifier =
+        new ScoreVerifier(
+            RatingRepository.INSTANCE.rating(SecurityRatingExample.class).score(), TEST_VECTORS);
 
     List<TestVectorResult> results = verifier.run();
 
@@ -69,40 +71,40 @@ public class ScoreVerifierTest {
 
   @Test
   public void testWithNotApplicableScoreValue() {
-    TestVectors vectors = new TestVectors(
-        TestVectorBuilder.newTestVector()
-            .alias("1")
-            .set(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1))
-            .set(new IntegerValue(ExampleFeatures.NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, 1))
-            .set(new BooleanValue(ExampleFeatures.SECURITY_REVIEW_DONE_EXAMPLE, false))
-            .set(new BooleanValue(ExampleFeatures.STATIC_CODE_ANALYSIS_DONE_EXAMPLE, false))
-            .expectNotApplicableScore()
-            .make(),
-        TestVectorBuilder.newTestVector()
-            .alias("2")
-            .set(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1))
-            .set(new IntegerValue(ExampleFeatures.NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, 1))
-            .set(new BooleanValue(ExampleFeatures.SECURITY_REVIEW_DONE_EXAMPLE, false))
-            .set(new BooleanValue(ExampleFeatures.STATIC_CODE_ANALYSIS_DONE_EXAMPLE, false))
-            .expectedScore(DoubleInterval.init().from(0.0).to(2.0).make())
-            .make(),
-        TestVectorBuilder.newTestVector()
-            .alias("3")
-            .set(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1))
-            .set(new IntegerValue(ExampleFeatures.NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, 1))
-            .set(new BooleanValue(ExampleFeatures.SECURITY_REVIEW_DONE_EXAMPLE, false))
-            .set(new BooleanValue(ExampleFeatures.STATIC_CODE_ANALYSIS_DONE_EXAMPLE, false))
-            .expectNotApplicableScore()
-            .make(),
-        TestVectorBuilder.newTestVector()
-            .alias("3")
-            .set(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1))
-            .set(new IntegerValue(ExampleFeatures.NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, 1))
-            .set(new BooleanValue(ExampleFeatures.SECURITY_REVIEW_DONE_EXAMPLE, false))
-            .set(new BooleanValue(ExampleFeatures.STATIC_CODE_ANALYSIS_DONE_EXAMPLE, false))
-            .expectedScore(DoubleInterval.init().from(0.0).to(2.0).make())
-            .make()
-    );
+    TestVectors vectors =
+        new TestVectors(
+            TestVectorBuilder.newTestVector()
+                .alias("1")
+                .set(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1))
+                .set(new IntegerValue(ExampleFeatures.NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, 1))
+                .set(new BooleanValue(ExampleFeatures.SECURITY_REVIEW_DONE_EXAMPLE, false))
+                .set(new BooleanValue(ExampleFeatures.STATIC_CODE_ANALYSIS_DONE_EXAMPLE, false))
+                .expectNotApplicableScore()
+                .make(),
+            TestVectorBuilder.newTestVector()
+                .alias("2")
+                .set(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1))
+                .set(new IntegerValue(ExampleFeatures.NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, 1))
+                .set(new BooleanValue(ExampleFeatures.SECURITY_REVIEW_DONE_EXAMPLE, false))
+                .set(new BooleanValue(ExampleFeatures.STATIC_CODE_ANALYSIS_DONE_EXAMPLE, false))
+                .expectedScore(DoubleInterval.init().from(0.0).to(2.0).make())
+                .make(),
+            TestVectorBuilder.newTestVector()
+                .alias("3")
+                .set(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1))
+                .set(new IntegerValue(ExampleFeatures.NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, 1))
+                .set(new BooleanValue(ExampleFeatures.SECURITY_REVIEW_DONE_EXAMPLE, false))
+                .set(new BooleanValue(ExampleFeatures.STATIC_CODE_ANALYSIS_DONE_EXAMPLE, false))
+                .expectNotApplicableScore()
+                .make(),
+            TestVectorBuilder.newTestVector()
+                .alias("3")
+                .set(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1))
+                .set(new IntegerValue(ExampleFeatures.NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, 1))
+                .set(new BooleanValue(ExampleFeatures.SECURITY_REVIEW_DONE_EXAMPLE, false))
+                .set(new BooleanValue(ExampleFeatures.STATIC_CODE_ANALYSIS_DONE_EXAMPLE, false))
+                .expectedScore(DoubleInterval.init().from(0.0).to(2.0).make())
+                .make());
 
     Score score = mock(Score.class);
     when(score.calculate(any(Set.class)))
@@ -131,13 +133,17 @@ public class ScoreVerifierTest {
     assertFalse(results.get(3).scoreValue.isNotApplicable());
   }
 
-  @Test(expected = VerificationFailedException.class)
-  public void testThatVerificationFails() throws VerificationFailedException {
-    ScoreVerifier verifier = new ScoreVerifier(
-        RatingRepository.INSTANCE.rating(SecurityRatingExample.class).score(),
-        TEST_VECTORS);
+  @Test
+  public void testThatVerificationFails() {
+    assertThrows(
+        VerificationFailedException.class,
+        () -> {
+          ScoreVerifier verifier =
+              new ScoreVerifier(
+                  RatingRepository.INSTANCE.rating(SecurityRatingExample.class).score(),
+                  TEST_VECTORS);
 
-    verifier.verify();
+          verifier.verify();
+        });
   }
-
 }

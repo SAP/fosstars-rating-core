@@ -2,14 +2,15 @@ package com.sap.oss.phosphor.fosstars.data.json;
 
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class CompanySupportStorageTest {
 
@@ -38,11 +39,15 @@ public class CompanySupportStorageTest {
     assertFalse(storage.supports("https://github.com/black/horse"));
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testHttpUrl() throws IOException {
-    CompanySupportStorage storage = CompanySupportStorage.load();
-    assertNotNull(storage);
-    assertTrue(storage.supports("http://github.com/spring-projects/spring-security-oauth"));
+  @Test
+  public void testHttpUrl() {
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> {
+          CompanySupportStorage storage = CompanySupportStorage.load();
+          assertNotNull(storage);
+          assertTrue(storage.supports("http://github.com/spring-projects/spring-security-oauth"));
+        });
   }
 
   @Test
@@ -52,5 +57,4 @@ public class CompanySupportStorageTest {
     assertThat(companies, hasItem("Oracle"));
     assertThat(companies, hasItem("SAP"));
   }
-
 }

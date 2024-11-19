@@ -2,10 +2,10 @@ package com.sap.oss.phosphor.fosstars.data;
 
 import static com.sap.oss.phosphor.fosstars.model.feature.example.ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE;
 import static com.sap.oss.phosphor.fosstars.model.feature.example.ExampleFeatures.NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.ValueSet;
@@ -18,9 +18,47 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
 import java.util.Optional;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class StandardValueCacheTest {
+
+  private static <T> void testPutAndGet(StandardValueCache cache, String key, Value<T> value) {
+    cache.put(key, value);
+
+    Optional<ValueSet> someValueSet = cache.get(key);
+    assertTrue(someValueSet.isPresent());
+    ValueSet values = someValueSet.get();
+    assertTrue(values.has(value.feature()));
+    assertTrue(values.of(value.feature()).isPresent());
+    assertEquals(value, values.of(value.feature()).get());
+
+    Optional<Value<T>> someValue = cache.get(key, value.feature());
+    assertTrue(someValue.isPresent());
+    assertEquals(value, someValue.get());
+  }
+
+  @Test
+  public void testPutAndGet() {
+    StandardValueCache cache = new StandardValueCache();
+    assertEquals(0, cache.size());
+    Optional<ValueSet> someValueSet = cache.get("test");
+    assertFalse(someValueSet.isPresent());
+
+    testPutAndGet(cache, "first", NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE.value(42));
+    assertEquals(1, cache.size());
+
+    testPutAndGet(cache, "first", NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE.value(24));
+    assertEquals(1, cache.size());
+
+    testPutAndGet(cache, "second", NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE.value(24));
+    assertEquals(2, cache.size());
+
+    testPutAndGet(cache, "second", NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE.value(7));
+    assertEquals(2, cache.size());
+
+    testPutAndGet(cache, "second", NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE.value(0));
+    assertEquals(2, cache.size());
+  }
 
   @Test
   public void testStoreAndLoad() throws IOException {
@@ -52,52 +90,14 @@ public class StandardValueCacheTest {
   }
 
   @Test
-  public void testPutAndGet() {
-    StandardValueCache cache = new StandardValueCache();
-    assertEquals(0, cache.size());
-    Optional<ValueSet> someValueSet = cache.get("test");
-    assertFalse(someValueSet.isPresent());
-
-    testPutAndGet(cache, "first", NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE.value(42));
-    assertEquals(1, cache.size());
-
-    testPutAndGet(cache, "first", NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE.value(24));
-    assertEquals(1, cache.size());
-
-    testPutAndGet(cache, "second", NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE.value(24));
-    assertEquals(2, cache.size());
-
-    testPutAndGet(cache, "second", NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE.value(7));
-    assertEquals(2, cache.size());
-
-    testPutAndGet(cache, "second", NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE.value(0));
-    assertEquals(2, cache.size());
-  }
-
-  private static <T> void testPutAndGet(StandardValueCache cache, String key, Value<T> value) {
-    cache.put(key, value);
-
-    Optional<ValueSet> someValueSet = cache.get(key);
-    assertTrue(someValueSet.isPresent());
-    ValueSet values = someValueSet.get();
-    assertTrue(values.has(value.feature()));
-    assertTrue(values.of(value.feature()).isPresent());
-    assertEquals(value, values.of(value.feature()).get());
-
-    Optional<Value<T>> someValue = cache.get(key, value.feature());
-    assertTrue(someValue.isPresent());
-    assertEquals(value, someValue.get());
-  }
-
-  @Test
   public void testExpiration() throws InterruptedException {
     StandardValueCache cache = new StandardValueCache();
 
     Value<Integer> value = NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE.value(0);
     Date inTwoSecond = new Date(System.currentTimeMillis() + 2 * 1000);
     cache.put("test", value, inTwoSecond);
-    Optional<Value<Integer>> something
-        = cache.get("test", NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE);
+    Optional<Value<Integer>> something =
+        cache.get("test", NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE);
     assertTrue(something.isPresent());
     Thread.sleep(5000); // sleep for 5 seconds
     something = cache.get("test", NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE);

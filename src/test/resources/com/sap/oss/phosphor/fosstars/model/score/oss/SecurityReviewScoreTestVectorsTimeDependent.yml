@@ -1,0 +1,53 @@
+---
+defaults: [ ]
+elements:
+  - type: "StandardTestVector"
+    values:
+      - type: "SecurityReviewsValue"
+        feature:
+          type: "SecurityReviewsFeature"
+          name: "Security reviews for a project"
+        reviews:
+          - subject:
+              type: "GitHubProject"
+              name: "test"
+              url: "https://github.com/org/test"
+              organization:
+                type: "GitHubOrganization"
+                name: "org"
+            date: "$CURDATE{MINUS_DAYS(100)}"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 9.5
+      openLeft: false
+      negativeInfinity: false
+      to: 10.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "fresh_review"
+  - type: "StandardTestVector"
+    values:
+      - type: "SecurityReviewsValue"
+        feature:
+          type: "SecurityReviewsFeature"
+          name: "Security reviews for a project"
+        reviews:
+          - subject:
+              type: "GitHubProject"
+              name: "test"
+              url: "https://github.com/org/test"
+              organization:
+                type: "GitHubOrganization"
+                name: "org"
+            date: "$CURDATE{MINUS_YEARS(2)}"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 2.0
+      openLeft: false
+      negativeInfinity: false
+      to: 5.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "old_review"

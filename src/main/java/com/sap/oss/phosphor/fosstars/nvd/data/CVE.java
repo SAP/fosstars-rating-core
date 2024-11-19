@@ -32,13 +32,13 @@ import java.util.Map;
 public class CVE {
 
   @JsonProperty("data_type")
-  private CVE.DataType dataType;
+  private DataType dataType;
 
   @JsonProperty("data_format")
-  private CVE.DataFormat dataFormat;
+  private DataFormat dataFormat;
 
   @JsonProperty("data_version")
-  private CVE.DataVersion dataVersion;
+  private DataVersion dataVersion;
 
   @JsonProperty("CVE_data_meta")
   private CveMetaData cveDataMetaData;
@@ -56,7 +56,7 @@ public class CVE {
   private Description description;
 
   @JsonProperty("data_format")
-  public CVE.DataFormat getDataFormat() {
+  public DataFormat getDataFormat() {
     return dataFormat;
   }
 
@@ -84,10 +84,10 @@ public class CVE {
 
     MITRE("MITRE");
 
-    private static final Map<String, CVE.DataFormat> CONSTANTS = new HashMap<>();
+    private static final Map<String, DataFormat> CONSTANTS = new HashMap<>();
 
     static {
-      for (CVE.DataFormat c : values()) {
+      for (DataFormat c : values()) {
         CONSTANTS.put(c.value, c);
       }
     }
@@ -99,8 +99,8 @@ public class CVE {
     }
 
     @JsonCreator
-    static CVE.DataFormat fromValue(String value) {
-      CVE.DataFormat constant = CONSTANTS.get(value);
+    static DataFormat fromValue(String value) {
+      DataFormat constant = CONSTANTS.get(value);
       if (constant == null) {
         throw new IllegalArgumentException(value);
       } else {
@@ -164,10 +164,10 @@ public class CVE {
 
     _4_0("4.0");
 
-    private static final Map<String, CVE.DataVersion> CONSTANTS = new HashMap<>();
+    private static final Map<String, DataVersion> CONSTANTS = new HashMap<>();
 
     static {
-      for (CVE.DataVersion c : values()) {
+      for (DataVersion c : values()) {
         CONSTANTS.put(c.value, c);
       }
     }
@@ -179,8 +179,8 @@ public class CVE {
     }
 
     @JsonCreator
-    static CVE.DataVersion fromValue(String value) {
-      CVE.DataVersion constant = CONSTANTS.get(value);
+    static DataVersion fromValue(String value) {
+      DataVersion constant = CONSTANTS.get(value);
       if (constant == null) {
         throw new IllegalArgumentException(value);
       } else {

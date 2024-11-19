@@ -1,273 +1,273 @@
 ---
-defaults: []
+defaults: [ ]
 elements:
-- type: "StandardTestVector"
-  values:
-    - type: "UnknownValue"
-      feature:
-        type: "LanguagesFeature"
-        name: "A set of programming languages"
-    - type: "UnknownValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project uses AddressSanitizer"
-    - type: "UnknownValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project uses MemorySanitizer"
-    - type: "UnknownValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project uses UndefinedBehaviorSanitizer"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 0.0
-    openLeft: false
-    negativeInfinity: false
-    to: 0.1
-    openRight: false
-    positiveInfinity: false
-  expectedUnknownScore: true
-  expectedLabel: null
-  alias: "all_unknown"
+  - type: "StandardTestVector"
+    values:
+      - type: "UnknownValue"
+        feature:
+          type: "LanguagesFeature"
+          name: "A set of programming languages"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project uses AddressSanitizer"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project uses MemorySanitizer"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project uses UndefinedBehaviorSanitizer"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 0.1
+      openRight: false
+      positiveInfinity: false
+    expectedUnknownScore: true
+    expectedLabel: null
+    alias: "all_unknown"
 
-- type: "StandardTestVector"
-  values:
-    - type: "LanguagesValue"
-      feature:
-        type: "LanguagesFeature"
-        name: "A set of programming languages"
-      languages:
-        elements:
-        - "JAVA"
-    - type: "UnknownValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project uses AddressSanitizer"
-    - type: "UnknownValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project uses MemorySanitizer"
-    - type: "UnknownValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project uses UndefinedBehaviorSanitizer"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 0.0
-    openLeft: false
-    negativeInfinity: false
-    to: 0.1
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  expectedNotApplicableScore: true
-  alias: "java"
+  - type: "StandardTestVector"
+    values:
+      - type: "LanguagesValue"
+        feature:
+          type: "LanguagesFeature"
+          name: "A set of programming languages"
+        languages:
+          elements:
+            - "JAVA"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project uses AddressSanitizer"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project uses MemorySanitizer"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project uses UndefinedBehaviorSanitizer"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 0.1
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    expectedNotApplicableScore: true
+    alias: "java"
 
-- type: "StandardTestVector"
-  values:
-    - type: "LanguagesValue"
-      feature:
-        type: "LanguagesFeature"
-        name: "A set of programming languages"
-      languages:
-        elements:
-        - "PYTHON"
-    - type: "UnknownValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project uses AddressSanitizer"
-    - type: "UnknownValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project uses MemorySanitizer"
-    - type: "UnknownValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project uses UndefinedBehaviorSanitizer"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 0.0
-    openLeft: false
-    negativeInfinity: false
-    to: 0.1
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  expectedNotApplicableScore: true
-  alias: "python"
+  - type: "StandardTestVector"
+    values:
+      - type: "LanguagesValue"
+        feature:
+          type: "LanguagesFeature"
+          name: "A set of programming languages"
+        languages:
+          elements:
+            - "PYTHON"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project uses AddressSanitizer"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project uses MemorySanitizer"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project uses UndefinedBehaviorSanitizer"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 0.1
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    expectedNotApplicableScore: true
+    alias: "python"
 
-- type: "StandardTestVector"
-  values:
-  - type: "LanguagesValue"
-    feature:
-      type: "LanguagesFeature"
-      name: "A set of programming languages"
-    languages:
-      elements:
-      - "CPP"
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project uses MemorySanitizer"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project uses UndefinedBehaviorSanitizer"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project uses AddressSanitizer"
-    flag: true
-  expectedScore:
-    type: "DoubleInterval"
-    from: 6.0
-    openLeft: false
-    negativeInfinity: false
-    to: 8.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "address_sanitizer"
+  - type: "StandardTestVector"
+    values:
+      - type: "LanguagesValue"
+        feature:
+          type: "LanguagesFeature"
+          name: "A set of programming languages"
+        languages:
+          elements:
+            - "CPP"
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project uses MemorySanitizer"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project uses UndefinedBehaviorSanitizer"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project uses AddressSanitizer"
+        flag: true
+    expectedScore:
+      type: "DoubleInterval"
+      from: 6.0
+      openLeft: false
+      negativeInfinity: false
+      to: 8.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "address_sanitizer"
 
-- type: "StandardTestVector"
-  values:
-    - type: "LanguagesValue"
-      feature:
-        type: "LanguagesFeature"
-        name: "A set of programming languages"
-      languages:
-        elements:
-          - "CPP"
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project uses MemorySanitizer"
-      flag: true
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project uses UndefinedBehaviorSanitizer"
-      flag: false
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project uses AddressSanitizer"
-      flag: false
-  expectedScore:
-    type: "DoubleInterval"
-    from: 1.0
-    openLeft: false
-    negativeInfinity: false
-    to: 3.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "memory_sanitizer"
+  - type: "StandardTestVector"
+    values:
+      - type: "LanguagesValue"
+        feature:
+          type: "LanguagesFeature"
+          name: "A set of programming languages"
+        languages:
+          elements:
+            - "CPP"
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project uses MemorySanitizer"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project uses UndefinedBehaviorSanitizer"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project uses AddressSanitizer"
+        flag: false
+    expectedScore:
+      type: "DoubleInterval"
+      from: 1.0
+      openLeft: false
+      negativeInfinity: false
+      to: 3.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "memory_sanitizer"
 
-- type: "StandardTestVector"
-  values:
-    - type: "LanguagesValue"
-      feature:
-        type: "LanguagesFeature"
-        name: "A set of programming languages"
-      languages:
-        elements:
-          - "C"
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project uses MemorySanitizer"
-      flag: false
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project uses UndefinedBehaviorSanitizer"
-      flag: true
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project uses AddressSanitizer"
-      flag: false
-  expectedScore:
-    type: "DoubleInterval"
-    from: 1.0
-    openLeft: false
-    negativeInfinity: false
-    to: 3.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "undefined_behavior_sanitizer"
+  - type: "StandardTestVector"
+    values:
+      - type: "LanguagesValue"
+        feature:
+          type: "LanguagesFeature"
+          name: "A set of programming languages"
+        languages:
+          elements:
+            - "C"
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project uses MemorySanitizer"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project uses UndefinedBehaviorSanitizer"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project uses AddressSanitizer"
+        flag: false
+    expectedScore:
+      type: "DoubleInterval"
+      from: 1.0
+      openLeft: false
+      negativeInfinity: false
+      to: 3.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "undefined_behavior_sanitizer"
 
-- type: "StandardTestVector"
-  values:
-    - type: "LanguagesValue"
-      feature:
-        type: "LanguagesFeature"
-        name: "A set of programming languages"
-      languages:
-        elements:
-          - "CPP"
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project uses MemorySanitizer"
-      flag: true
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project uses UndefinedBehaviorSanitizer"
-      flag: false
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project uses AddressSanitizer"
-      flag: true
-  expectedScore:
-    type: "DoubleInterval"
-    from: 7.0
-    openLeft: false
-    negativeInfinity: false
-    to: 9.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "address_and_memory_sanitizers"
+  - type: "StandardTestVector"
+    values:
+      - type: "LanguagesValue"
+        feature:
+          type: "LanguagesFeature"
+          name: "A set of programming languages"
+        languages:
+          elements:
+            - "CPP"
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project uses MemorySanitizer"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project uses UndefinedBehaviorSanitizer"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project uses AddressSanitizer"
+        flag: true
+    expectedScore:
+      type: "DoubleInterval"
+      from: 7.0
+      openLeft: false
+      negativeInfinity: false
+      to: 9.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "address_and_memory_sanitizers"
 
-- type: "StandardTestVector"
-  values:
-    - type: "LanguagesValue"
-      feature:
-        type: "LanguagesFeature"
-        name: "A set of programming languages"
-      languages:
-        elements:
-          - "CPP"
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project uses MemorySanitizer"
-      flag: true
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project uses UndefinedBehaviorSanitizer"
-      flag: true
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project uses AddressSanitizer"
-      flag: true
-  expectedScore:
-    type: "DoubleInterval"
-    from: 9.9
-    openLeft: false
-    negativeInfinity: false
-    to: 10.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "all"
+  - type: "StandardTestVector"
+    values:
+      - type: "LanguagesValue"
+        feature:
+          type: "LanguagesFeature"
+          name: "A set of programming languages"
+        languages:
+          elements:
+            - "CPP"
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project uses MemorySanitizer"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project uses UndefinedBehaviorSanitizer"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project uses AddressSanitizer"
+        flag: true
+    expectedScore:
+      type: "DoubleInterval"
+      from: 9.9
+      openLeft: false
+      negativeInfinity: false
+      to: 10.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "all"

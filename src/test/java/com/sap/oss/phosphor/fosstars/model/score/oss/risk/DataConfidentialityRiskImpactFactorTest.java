@@ -4,9 +4,9 @@ import static com.sap.oss.phosphor.fosstars.TestUtils.DELTA;
 import static com.sap.oss.phosphor.fosstars.model.feature.DataConfidentialityType.PERSONAL;
 import static com.sap.oss.phosphor.fosstars.model.feature.DataConfidentialityType.TEST;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.DATA_CONFIDENTIALITY;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Score;
@@ -15,25 +15,25 @@ import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class DataConfidentialityRiskImpactFactorTest {
 
-  private static final DataConfidentialityRiskImpactFactor SCORE
-      = new DataConfidentialityRiskImpactFactor();
+  private static final DataConfidentialityRiskImpactFactor SCORE =
+      new DataConfidentialityRiskImpactFactor();
 
   @Test
   public void testJsonSerialization() throws IOException {
-    DataConfidentialityRiskImpactFactor clone
-        = Json.read(Json.toBytes(SCORE), DataConfidentialityRiskImpactFactor.class);
+    DataConfidentialityRiskImpactFactor clone =
+        Json.read(Json.toBytes(SCORE), DataConfidentialityRiskImpactFactor.class);
     assertTrue(SCORE.equals(clone) && clone.equals(SCORE));
     assertEquals(SCORE.hashCode(), clone.hashCode());
   }
 
   @Test
   public void testYamlSerialization() throws IOException {
-    DataConfidentialityRiskImpactFactor clone
-        = Yaml.read(Yaml.toBytes(SCORE), DataConfidentialityRiskImpactFactor.class);
+    DataConfidentialityRiskImpactFactor clone =
+        Yaml.read(Yaml.toBytes(SCORE), DataConfidentialityRiskImpactFactor.class);
     assertEquals(clone, SCORE);
   }
 

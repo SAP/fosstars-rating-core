@@ -10,3 +10,4 @@ src/test/shell/tool/github/*.log
 .project
 .settings
 .checkstyle
+.DS_Store

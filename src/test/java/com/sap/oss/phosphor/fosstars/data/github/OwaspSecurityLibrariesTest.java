@@ -4,9 +4,9 @@ import static com.sap.oss.phosphor.fosstars.data.github.TestGitHubDataFetcherHol
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_OWASP_ESAPI;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_OWASP_JAVA_ENCODER;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_OWASP_JAVA_HTML_SANITIZER;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -24,114 +24,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import org.apache.commons.io.IOUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class OwaspSecurityLibrariesTest extends TestGitHubDataFetcherHolder {
-
-  @Test
-  public void testSupportedFeatures() {
-    OwaspSecurityLibraries provider = new OwaspSecurityLibraries(fetcher);
-    assertEquals(3, provider.supportedFeatures().size());
-    assertTrue(provider.supportedFeatures().contains(USES_OWASP_ESAPI));
-    assertTrue(provider.supportedFeatures().contains(USES_OWASP_JAVA_ENCODER));
-    assertTrue(provider.supportedFeatures().contains(USES_OWASP_JAVA_HTML_SANITIZER));
-  }
-
-  @Test
-  public void testMavenWithoutOwaspEsapi() throws IOException {
-    try (InputStream is = getClass()
-        .getResourceAsStream("MavenWithoutOwaspEsapiDependency.xml")) {
-
-      OwaspSecurityLibraries provider = createProvider(is, "pom.xml");
-      checkValue(provider, USES_OWASP_ESAPI, false);
-      checkValue(provider, USES_OWASP_JAVA_ENCODER, false);
-      checkValue(provider, USES_OWASP_JAVA_HTML_SANITIZER, false);
-    }
-  }
-
-  @Test
-  public void testMavenWithOwaspEsapiInDefaultDependencies() throws IOException {
-    try (InputStream is = getClass()
-        .getResourceAsStream("MavenWithOwaspEsapiInDefaultDependencies.xml")) {
-
-      OwaspSecurityLibraries provider = createProvider(is, "pom.xml");
-      checkValue(provider, USES_OWASP_ESAPI, true);
-      checkValue(provider, USES_OWASP_JAVA_ENCODER, false);
-      checkValue(provider, USES_OWASP_JAVA_HTML_SANITIZER, false);
-    }
-  }
-
-  @Test
-  public void testMavenWithOwaspJavaEncoderInDefaultDependencies() throws IOException {
-    try (InputStream is = getClass()
-        .getResourceAsStream("MavenWithOwaspJavaEncoderInDefaultDependencies.xml")) {
-
-      OwaspSecurityLibraries provider = createProvider(is, "pom.xml");
-      checkValue(provider, USES_OWASP_ESAPI, false);
-      checkValue(provider, USES_OWASP_JAVA_ENCODER, true);
-      checkValue(provider, USES_OWASP_JAVA_HTML_SANITIZER, false);
-    }
-  }
-
-  @Test
-  public void testMavenWithOwaspJavaHtmlSanitizerInDefaultDependencies() throws IOException {
-    try (InputStream is = getClass()
-        .getResourceAsStream("MavenWithOwaspJavaHtmlSanitizerInDefaultDependencies.xml")) {
-
-      OwaspSecurityLibraries provider = createProvider(is, "pom.xml");
-      checkValue(provider, USES_OWASP_ESAPI, false);
-      checkValue(provider, USES_OWASP_JAVA_ENCODER, false);
-      checkValue(provider, USES_OWASP_JAVA_HTML_SANITIZER, true);
-    }
-  }
-
-  @Test
-  public void testMavenWithOwaspEsapiInProfileDependencies() throws IOException {
-    try (InputStream is = getClass()
-        .getResourceAsStream("MavenWithOwaspEsapiInProfiledDependencies.xml")) {
-
-      OwaspSecurityLibraries provider = createProvider(is, "pom.xml");
-      checkValue(provider, USES_OWASP_ESAPI, true);
-      checkValue(provider, USES_OWASP_JAVA_ENCODER, false);
-      checkValue(provider, USES_OWASP_JAVA_HTML_SANITIZER, false);
-    }
-  }
-
-  @Test
-  public void testGradleWithOwaspSecurityTools() throws IOException {
-    try (InputStream is = getClass()
-        .getResourceAsStream("GradleWithOwaspSecurityTools.gradle")) {
-
-      OwaspSecurityLibraries provider = createProvider(is, "build.gradle");
-      checkValue(provider, USES_OWASP_ESAPI, true);
-      checkValue(provider, USES_OWASP_JAVA_ENCODER, true);
-      checkValue(provider, USES_OWASP_JAVA_HTML_SANITIZER, true);
-    }
-  }
-
-  @Test
-  public void testGradleWithOwaspSecurityToolsInSubproject() throws IOException {
-    try (InputStream is = getClass()
-        .getResourceAsStream("GradleWithOwaspSecurityTools.gradle")) {
-
-      OwaspSecurityLibraries provider = createProvider(is, "subproject/build.gradle");
-      checkValue(provider, USES_OWASP_ESAPI, true);
-      checkValue(provider, USES_OWASP_JAVA_ENCODER, true);
-      checkValue(provider, USES_OWASP_JAVA_HTML_SANITIZER, true);
-    }
-  }
-
-  @Test
-  public void testGradleWithoutOwaspSecurityTools() throws IOException {
-    try (InputStream is = getClass()
-        .getResourceAsStream("GradleWithoutOwaspSecurityTools.gradle")) {
-
-      OwaspSecurityLibraries provider = createProvider(is, "build.gradle");
-      checkValue(provider, USES_OWASP_ESAPI, false);
-      checkValue(provider, USES_OWASP_JAVA_ENCODER, false);
-      checkValue(provider, USES_OWASP_JAVA_HTML_SANITIZER, false);
-    }
-  }
 
   private static void checkValue(
       OwaspSecurityLibraries provider, Feature<Boolean> feature, boolean expectedValue)
@@ -148,8 +43,111 @@ public class OwaspSecurityLibrariesTest extends TestGitHubDataFetcherHolder {
     assertEquals(expectedValue, value.get());
   }
 
-  private OwaspSecurityLibraries createProvider(
-      InputStream is, String filename) throws IOException {
+  @Test
+  public void testSupportedFeatures() {
+    OwaspSecurityLibraries provider = new OwaspSecurityLibraries(fetcher);
+    assertEquals(3, provider.supportedFeatures().size());
+    assertTrue(provider.supportedFeatures().contains(USES_OWASP_ESAPI));
+    assertTrue(provider.supportedFeatures().contains(USES_OWASP_JAVA_ENCODER));
+    assertTrue(provider.supportedFeatures().contains(USES_OWASP_JAVA_HTML_SANITIZER));
+  }
+
+  @Test
+  public void testMavenWithoutOwaspEsapi() throws IOException {
+    try (InputStream is = getClass().getResourceAsStream("MavenWithoutOwaspEsapiDependency.xml")) {
+
+      OwaspSecurityLibraries provider = createProvider(is, "pom.xml");
+      checkValue(provider, USES_OWASP_ESAPI, false);
+      checkValue(provider, USES_OWASP_JAVA_ENCODER, false);
+      checkValue(provider, USES_OWASP_JAVA_HTML_SANITIZER, false);
+    }
+  }
+
+  @Test
+  public void testMavenWithOwaspEsapiInDefaultDependencies() throws IOException {
+    try (InputStream is =
+             getClass().getResourceAsStream("MavenWithOwaspEsapiInDefaultDependencies.xml")) {
+
+      OwaspSecurityLibraries provider = createProvider(is, "pom.xml");
+      checkValue(provider, USES_OWASP_ESAPI, true);
+      checkValue(provider, USES_OWASP_JAVA_ENCODER, false);
+      checkValue(provider, USES_OWASP_JAVA_HTML_SANITIZER, false);
+    }
+  }
+
+  @Test
+  public void testMavenWithOwaspJavaEncoderInDefaultDependencies() throws IOException {
+    try (InputStream is =
+             getClass().getResourceAsStream("MavenWithOwaspJavaEncoderInDefaultDependencies.xml")) {
+
+      OwaspSecurityLibraries provider = createProvider(is, "pom.xml");
+      checkValue(provider, USES_OWASP_ESAPI, false);
+      checkValue(provider, USES_OWASP_JAVA_ENCODER, true);
+      checkValue(provider, USES_OWASP_JAVA_HTML_SANITIZER, false);
+    }
+  }
+
+  @Test
+  public void testMavenWithOwaspJavaHtmlSanitizerInDefaultDependencies() throws IOException {
+    try (InputStream is =
+             getClass()
+                 .getResourceAsStream("MavenWithOwaspJavaHtmlSanitizerInDefaultDependencies.xml")) {
+
+      OwaspSecurityLibraries provider = createProvider(is, "pom.xml");
+      checkValue(provider, USES_OWASP_ESAPI, false);
+      checkValue(provider, USES_OWASP_JAVA_ENCODER, false);
+      checkValue(provider, USES_OWASP_JAVA_HTML_SANITIZER, true);
+    }
+  }
+
+  @Test
+  public void testMavenWithOwaspEsapiInProfileDependencies() throws IOException {
+    try (InputStream is =
+             getClass().getResourceAsStream("MavenWithOwaspEsapiInProfiledDependencies.xml")) {
+
+      OwaspSecurityLibraries provider = createProvider(is, "pom.xml");
+      checkValue(provider, USES_OWASP_ESAPI, true);
+      checkValue(provider, USES_OWASP_JAVA_ENCODER, false);
+      checkValue(provider, USES_OWASP_JAVA_HTML_SANITIZER, false);
+    }
+  }
+
+  @Test
+  public void testGradleWithOwaspSecurityTools() throws IOException {
+    try (InputStream is = getClass().getResourceAsStream("GradleWithOwaspSecurityTools.gradle")) {
+
+      OwaspSecurityLibraries provider = createProvider(is, "build.gradle");
+      checkValue(provider, USES_OWASP_ESAPI, true);
+      checkValue(provider, USES_OWASP_JAVA_ENCODER, true);
+      checkValue(provider, USES_OWASP_JAVA_HTML_SANITIZER, true);
+    }
+  }
+
+  @Test
+  public void testGradleWithOwaspSecurityToolsInSubproject() throws IOException {
+    try (InputStream is = getClass().getResourceAsStream("GradleWithOwaspSecurityTools.gradle")) {
+
+      OwaspSecurityLibraries provider = createProvider(is, "subproject/build.gradle");
+      checkValue(provider, USES_OWASP_ESAPI, true);
+      checkValue(provider, USES_OWASP_JAVA_ENCODER, true);
+      checkValue(provider, USES_OWASP_JAVA_HTML_SANITIZER, true);
+    }
+  }
+
+  @Test
+  public void testGradleWithoutOwaspSecurityTools() throws IOException {
+    try (InputStream is =
+             getClass().getResourceAsStream("GradleWithoutOwaspSecurityTools.gradle")) {
+
+      OwaspSecurityLibraries provider = createProvider(is, "build.gradle");
+      checkValue(provider, USES_OWASP_ESAPI, false);
+      checkValue(provider, USES_OWASP_JAVA_ENCODER, false);
+      checkValue(provider, USES_OWASP_JAVA_HTML_SANITIZER, false);
+    }
+  }
+
+  private OwaspSecurityLibraries createProvider(InputStream is, String filename)
+      throws IOException {
 
     final LocalRepository repository = mock(LocalRepository.class);
 
@@ -157,10 +155,8 @@ public class OwaspSecurityLibrariesTest extends TestGitHubDataFetcherHolder {
 
     when(repository.read(filename))
         .thenReturn(Optional.of(IOUtils.toInputStream(String.join("\n", content))));
-    when(repository.readLinesOf(Paths.get(filename)))
-        .thenReturn(Optional.of(content));
-    when(repository.files(any()))
-        .thenReturn(Collections.singletonList(Paths.get(filename)));
+    when(repository.readLinesOf(Paths.get(filename))).thenReturn(Optional.of(content));
+    when(repository.files(any())).thenReturn(Collections.singletonList(Paths.get(filename)));
 
     GitHubProject project = new GitHubProject("org", "test");
     addForTesting(project, repository);

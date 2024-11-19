@@ -7,11 +7,11 @@ import static com.sap.oss.phosphor.fosstars.data.github.GitHubDataFetcher.loadLo
 import static com.sap.oss.phosphor.fosstars.data.github.TestGitHubDataFetcherHolder.TestGitHubDataFetcher.addForTesting;
 import static com.sap.oss.phosphor.fosstars.data.github.TestGitHubDataFetcherHolder.TestGitHubDataFetcher.addRepositoryInfoForTesting;
 import static com.sap.oss.phosphor.fosstars.data.github.TestGitHubDataFetcherHolder.TestGitHubDataFetcher.directoryFor;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.kohsuke.github.GHIssue;
 import org.kohsuke.github.GHIssueBuilder;
 import org.kohsuke.github.GHIssueSearchBuilder;
@@ -48,7 +48,46 @@ import org.kohsuke.github.GitHub;
 import org.kohsuke.github.PagedIterator;
 import org.kohsuke.github.PagedSearchIterable;
 
-public class GitHubDataFetcherTest extends TestGitHubDataFetcherHolder  {
+public class GitHubDataFetcherTest extends TestGitHubDataFetcherHolder {
+
+  private static List<GitHubProject> generateProjectsForSize(int n) {
+    List<GitHubProject> projects = new ArrayList<>();
+    for (int i = 0; i < n; i++) {
+      projects.add(new GitHubProject("test", String.format("project%s", i)));
+    }
+    return projects;
+  }
+
+  private static boolean checkLocalRepositories(
+      List<GitHubProject> projects, Map<URL, LocalRepository> localRepositories) {
+
+    Set<URL> projectUrls = projects.stream().map(GitHubProject::scm).collect(Collectors.toSet());
+    assertEquals(projects.size(), projectUrls.size());
+
+    return projectUrls.containsAll(localRepositories.keySet());
+  }
+
+  private static void checkLocalRepository(GitHubProject project, int expectedSize)
+      throws IOException {
+
+    LocalRepositoryInfo localRepositoryInfo = localRepositoryInfoFor(project, expectedSize);
+    assertNotNull(localRepositoryInfo);
+    assertEquals(project.scm(), localRepositoryInfo.url());
+  }
+
+  private static void checkCleanUp(GitHubProject project, int expectedSize) throws IOException {
+    LocalRepositoryInfo cleanRepositoryInfo = localRepositoryInfoFor(project, expectedSize);
+    assertNull(cleanRepositoryInfo);
+    assertFalse(LOCAL_REPOSITORIES.containsKey(project.scm()));
+  }
+
+  private static LocalRepositoryInfo localRepositoryInfoFor(GitHubProject project, int expectedSize)
+      throws IOException {
+
+    loadLocalRepositoriesInfo();
+    assertEquals(LOCAL_REPOSITORIES_INFO.size(), expectedSize);
+    return LOCAL_REPOSITORIES_INFO.get(project.scm());
+  }
 
   @Test
   public void testRepositoryCache() throws IOException {
@@ -63,8 +102,8 @@ public class GitHubDataFetcherTest extends TestGitHubDataFetcherHolder  {
     // fill out the cache for repositories
     int i = 0;
     while (fetcher.repositoryCache().size() < fetcher.repositoryCache().maxSize()) {
-      GitHubProject project = new GitHubProject(
-          String.format("org%d", i), String.format("project%d", i));
+      GitHubProject project =
+          new GitHubProject(String.format("org%d", i), String.format("project%d", i));
       fetcher.repositoryFor(project);
       i++;
     }
@@ -74,8 +113,8 @@ public class GitHubDataFetcherTest extends TestGitHubDataFetcherHolder  {
 
     // try to add one more
     i++;
-    GitHubProject latestProject = new GitHubProject(
-        String.format("org%d", i), String.format("project%d", i));
+    GitHubProject latestProject =
+        new GitHubProject(String.format("org%d", i), String.format("project%d", i));
     fetcher.repositoryFor(latestProject);
     assertEquals(fetcher.repositoryCache().maxSize(), fetcher.repositoryCache().size());
 
@@ -94,16 +133,15 @@ public class GitHubDataFetcherTest extends TestGitHubDataFetcherHolder  {
     Repository repository = mock(Repository.class);
     when(repository.getDirectory()).thenReturn(path.resolve(".git").toFile());
 
-    LocalRepository outdatedRepository = new LocalRepository(
-        new LocalRepositoryInfo(
-            path, threeDaysAgo, new URL("https://scm/org/test")),
-        repository);
+    LocalRepository outdatedRepository =
+        new LocalRepository(
+            new LocalRepositoryInfo(path, threeDaysAgo, new URL("https://scm/org/test")),
+            repository);
     assertTrue(GitHubDataFetcher.shouldUpdate(outdatedRepository));
 
-    LocalRepository freshRepository = new LocalRepository(
-        new LocalRepositoryInfo(
-            path, now, new URL("https://scm/org/test")),
-        repository);
+    LocalRepository freshRepository =
+        new LocalRepository(
+            new LocalRepositoryInfo(path, now, new URL("https://scm/org/test")), repository);
     assertFalse(GitHubDataFetcher.shouldUpdate(freshRepository));
   }
 
@@ -165,25 +203,27 @@ public class GitHubDataFetcherTest extends TestGitHubDataFetcherHolder  {
 
       CountDownLatch latch = new CountDownLatch(1);
 
-      Runnable cleanTask = () -> {
-        try {
-          fetcher.cleanup((url, repo, total) -> true);
-          checkCleanUp(firstProject, 0);
-          latch.countDown();
-        } catch (IOException e) {
-          throw new IllegalStateException(e);
-        }
-      };
+      Runnable cleanTask =
+          () -> {
+            try {
+              fetcher.cleanup((url, repo, total) -> true);
+              checkCleanUp(firstProject, 0);
+              latch.countDown();
+            } catch (IOException e) {
+              throw new IllegalStateException(e);
+            }
+          };
 
-      Runnable loadRepoTask = () -> {
-        try {
-          latch.await();
-          addRepositoryInfoForTesting(secondProject, secondDir);
-          GitHubDataFetcher.localRepositoryFor(secondProject);
-        } catch (InterruptedException | IOException e) {
-          throw new IllegalStateException(e);
-        }
-      };
+      Runnable loadRepoTask =
+          () -> {
+            try {
+              latch.await();
+              addRepositoryInfoForTesting(secondProject, secondDir);
+              GitHubDataFetcher.localRepositoryFor(secondProject);
+            } catch (InterruptedException | IOException e) {
+              throw new IllegalStateException(e);
+            }
+          };
 
       executorService.execute(cleanTask);
       executorService.execute(loadRepoTask);
@@ -209,14 +249,15 @@ public class GitHubDataFetcherTest extends TestGitHubDataFetcherHolder  {
       int numberOfThreads = 25;
       CountDownLatch latch = new CountDownLatch(numberOfThreads);
       for (int i = 0; i < numberOfThreads; i++) {
-        executorService.submit(() -> {
-          try {
-            GitHubDataFetcher.localRepositoryFor(project);
-          } catch (IOException e) {
-            throw new IllegalStateException(e);
-          }
-          latch.countDown();
-        });
+        executorService.submit(
+            () -> {
+              try {
+                GitHubDataFetcher.localRepositoryFor(project);
+              } catch (IOException e) {
+                throw new IllegalStateException(e);
+              }
+              latch.countDown();
+            });
       }
 
       assertTrue(latch.await(5, TimeUnit.SECONDS));
@@ -244,14 +285,15 @@ public class GitHubDataFetcherTest extends TestGitHubDataFetcherHolder  {
       int numberOfThreads = 25;
       CountDownLatch latch = new CountDownLatch(numberOfThreads);
       for (int i = 0; i < numberOfThreads; i++) {
-        executorService.submit(() -> {
-          try {
-            runCleanupFor(project);
-          } catch (IOException e) {
-            throw new IllegalStateException("Clean up exception");
-          }
-          latch.countDown();
-        });
+        executorService.submit(
+            () -> {
+              try {
+                runCleanupFor(project);
+              } catch (IOException e) {
+                throw new IllegalStateException("Clean up exception");
+              }
+              latch.countDown();
+            });
       }
 
       assertTrue(latch.await(5, TimeUnit.SECONDS));
@@ -291,16 +333,16 @@ public class GitHubDataFetcherTest extends TestGitHubDataFetcherHolder  {
     assertEquals(LOCAL_REPOSITORIES_CACHE_CAPACITY, LOCAL_REPOSITORIES.size());
     assertTrue(checkLocalRepositories(projects, LOCAL_REPOSITORIES));
   }
-  
+
   @Test
   public void testCreateGitHubIssueExpectProject() throws IOException {
     try {
       fetcher.createGitHubIssue(null, "gugl", "hupf");
     } catch (NullPointerException npe) {
       assertEquals("Oh no! The project is null!", npe.getMessage());
-    }    
+    }
   }
-  
+
   @Test
   public void testCreateGitHubIssueExpectTitle() throws IOException {
     GitHubProject myProject = new GitHubProject("gugl", "hupf");
@@ -315,7 +357,7 @@ public class GitHubDataFetcherTest extends TestGitHubDataFetcherHolder  {
       assertEquals("Oh no! The issue title is invalid!", iae.getMessage());
     }
   }
-  
+
   @Test
   public void testCreateGitHubIssueExpectBody() throws IOException {
     GitHubProject myProject = new GitHubProject("gugl", "hupf");
@@ -330,32 +372,32 @@ public class GitHubDataFetcherTest extends TestGitHubDataFetcherHolder  {
       assertEquals("Oh no! The issue body is invalid!", iae.getMessage());
     }
   }
-  
+
   @Test
   public void testCreateGitHubIssue() throws IOException {
     GHRepository repository = mock(GHRepository.class);
     GHIssueBuilder issueBuilder = mock(GHIssueBuilder.class);
     GHIssue issue = mock(GHIssue.class);
-    
+
     GitHubProject myProject = new GitHubProject("gugl", "hupf");
     when(fetcher.github().getRepository(any())).thenReturn(repository);
     when(repository.createIssue("apfel")).thenReturn(issueBuilder);
     when(issueBuilder.create()).thenReturn(issue);
-    
+
     GHIssue createdIssue = fetcher.createGitHubIssue(myProject, "apfel", "kuchen");
     assertEquals(issue, createdIssue);
-    verify(issueBuilder, times(1)).body("kuchen");    
+    verify(issueBuilder, times(1)).body("kuchen");
   }
-  
+
   @Test
   public void testGitHubIssuesForExpectProject() throws IOException {
     try {
       fetcher.gitHubIssuesFor(null, "gugl");
     } catch (NullPointerException npe) {
       assertEquals("Oh no! The project is null!", npe.getMessage());
-    }    
+    }
   }
-  
+
   @Test
   public void testGitHubIssuesForExpectQuery() throws IOException {
     GitHubProject myProject = new GitHubProject("gugl", "hupf");
@@ -370,7 +412,7 @@ public class GitHubDataFetcherTest extends TestGitHubDataFetcherHolder  {
       assertEquals("Oh no! The search query is invalid!", iae.getMessage());
     }
   }
-  
+
   @SuppressWarnings("unchecked")
   @Test
   public void testGitHubIssuesForFound() throws IOException {
@@ -382,18 +424,18 @@ public class GitHubDataFetcherTest extends TestGitHubDataFetcherHolder  {
     when(searchIterator.next()).thenReturn(issue);
     when(searchIterable.iterator()).thenReturn(searchIterator);
     when(issueSearchBuilder.list()).thenReturn(searchIterable);
-    
+
     GitHubProject myProject = new GitHubProject("gugl", "hupf");
     when(issueSearchBuilder.isOpen()).thenReturn(issueSearchBuilder);
     when(issueSearchBuilder.q(any())).thenReturn(issueSearchBuilder);
     when(fetcher.github().searchIssues()).thenReturn(issueSearchBuilder);
-    
+
     List<GHIssue> foundIssues = fetcher.gitHubIssuesFor(myProject, "apfel");
     assertNotNull(foundIssues);
     assertEquals(1, foundIssues.size());
-    assertEquals(issue, foundIssues.get(0));    
+    assertEquals(issue, foundIssues.get(0));
   }
-  
+
   @SuppressWarnings("unchecked")
   @Test
   public void testGitHubIssuesForNotFound() throws IOException {
@@ -403,45 +445,20 @@ public class GitHubDataFetcherTest extends TestGitHubDataFetcherHolder  {
     when(searchIterator.hasNext()).thenReturn(false);
     when(searchIterable.iterator()).thenReturn(searchIterator);
     when(issueSearchBuilder.list()).thenReturn(searchIterable);
-    
+
     GitHubProject myProject = new GitHubProject("gugl", "hupf");
     when(issueSearchBuilder.isOpen()).thenReturn(issueSearchBuilder);
     when(issueSearchBuilder.q(any())).thenReturn(issueSearchBuilder);
     when(fetcher.github().searchIssues()).thenReturn(issueSearchBuilder);
-    
+
     List<GHIssue> foundIssues = fetcher.gitHubIssuesFor(myProject, "apfel");
     assertNotNull(foundIssues);
-    assertEquals(0, foundIssues.size());   
-  }
-
-  private static List<GitHubProject> generateProjectsForSize(int n) {
-    List<GitHubProject> projects = new ArrayList<>();
-    for (int i = 0; i < n; i++) {
-      projects.add(new GitHubProject("test", String.format("project%s", i)));
-    }
-    return projects;
-  }
-
-  private static boolean checkLocalRepositories(
-      List<GitHubProject> projects, Map<URL, LocalRepository> localRepositories) {
-
-    Set<URL> projectUrls = projects.stream().map(GitHubProject::scm).collect(Collectors.toSet());
-    assertEquals(projects.size(), projectUrls.size());
-
-    return projectUrls.containsAll(localRepositories.keySet());
+    assertEquals(0, foundIssues.size());
   }
 
   private void testLocalRepositoryFor(GitHubProject project, int expectedSize) throws IOException {
     GitHubDataFetcher.localRepositoryFor(project);
     checkLocalRepository(project, expectedSize);
-  }
-
-  private static void checkLocalRepository(GitHubProject project, int expectedSize)
-      throws IOException {
-
-    LocalRepositoryInfo localRepositoryInfo = localRepositoryInfoFor(project, expectedSize);
-    assertNotNull(localRepositoryInfo);
-    assertEquals(project.scm(), localRepositoryInfo.url());
   }
 
   private void testCleanup(GitHubProject project, int expectedSize) throws IOException {
@@ -451,19 +468,5 @@ public class GitHubDataFetcherTest extends TestGitHubDataFetcherHolder  {
 
   private void runCleanupFor(GitHubProject project) throws IOException {
     fetcher.cleanup((url, repo, total) -> url.equals(project.scm()));
-  }
-
-  private static void checkCleanUp(GitHubProject project, int expectedSize) throws IOException {
-    LocalRepositoryInfo cleanRepositoryInfo = localRepositoryInfoFor(project, expectedSize);
-    assertNull(cleanRepositoryInfo);
-    assertFalse(LOCAL_REPOSITORIES.containsKey(project.scm()));
-  }
-
-  private static LocalRepositoryInfo localRepositoryInfoFor(GitHubProject project, int expectedSize)
-      throws IOException {
-
-    loadLocalRepositoriesInfo();
-    assertEquals(LOCAL_REPOSITORIES_INFO.size(), expectedSize);
-    return LOCAL_REPOSITORIES_INFO.get(project.scm());
   }
 }

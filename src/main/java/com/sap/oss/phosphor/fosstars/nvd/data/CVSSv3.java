@@ -48,97 +48,97 @@ import java.util.Map;
 public class CVSSv3 {
 
   @JsonProperty("version")
-  private CVSSv3.Version version;
+  private Version version;
 
   @JsonProperty("vectorString")
   private String vectorString;
 
   @JsonProperty("attackVector")
-  private CVSSv3.AttackVectorType attackVector;
+  private AttackVectorType attackVector;
 
   @JsonProperty("attackComplexity")
-  private CVSSv3.AttackComplexityType attackComplexity;
+  private AttackComplexityType attackComplexity;
 
   @JsonProperty("privilegesRequired")
-  private CVSSv3.PrivilegesRequiredType privilegesRequired;
+  private PrivilegesRequiredType privilegesRequired;
 
   @JsonProperty("userInteraction")
-  private CVSSv3.UserInteractionType userInteraction;
+  private UserInteractionType userInteraction;
 
   @JsonProperty("scope")
-  private CVSSv3.ScopeType scope;
+  private ScopeType scope;
 
   @JsonProperty("confidentialityImpact")
-  private CVSSv3.CiaType confidentialityImpact;
+  private CiaType confidentialityImpact;
 
   @JsonProperty("integrityImpact")
-  private CVSSv3.CiaType integrityImpact;
+  private CiaType integrityImpact;
 
   @JsonProperty("availabilityImpact")
-  private CVSSv3.CiaType availabilityImpact;
+  private CiaType availabilityImpact;
 
   @JsonProperty("baseScore")
   private Double baseScore;
 
   @JsonProperty("baseSeverity")
-  private CVSSv3.SeverityType baseSeverity;
+  private SeverityType baseSeverity;
 
   @JsonProperty("exploitCodeMaturity")
-  private CVSSv3.ExploitCodeMaturityType exploitCodeMaturity;
+  private ExploitCodeMaturityType exploitCodeMaturity;
 
   @JsonProperty("remediationLevel")
-  private CVSSv3.RemediationLevelType remediationLevel;
+  private RemediationLevelType remediationLevel;
 
   @JsonProperty("reportConfidence")
-  private CVSSv3.ConfidenceType reportConfidence;
+  private ConfidenceType reportConfidence;
 
   @JsonProperty("temporalScore")
   private Double temporalScore;
 
   @JsonProperty("temporalSeverity")
-  private CVSSv3.SeverityType temporalSeverity;
+  private SeverityType temporalSeverity;
 
   @JsonProperty("confidentialityRequirement")
-  private CVSSv3.CiaRequirementType confidentialityRequirement;
+  private CiaRequirementType confidentialityRequirement;
 
   @JsonProperty("integrityRequirement")
-  private CVSSv3.CiaRequirementType integrityRequirement;
+  private CiaRequirementType integrityRequirement;
 
   @JsonProperty("availabilityRequirement")
-  private CVSSv3.CiaRequirementType availabilityRequirement;
+  private CiaRequirementType availabilityRequirement;
 
   @JsonProperty("modifiedAttackVector")
-  private CVSSv3.ModifiedAttackVectorType modifiedAttackVector;
+  private ModifiedAttackVectorType modifiedAttackVector;
 
   @JsonProperty("modifiedAttackComplexity")
-  private CVSSv3.ModifiedAttackComplexityType modifiedAttackComplexity;
+  private ModifiedAttackComplexityType modifiedAttackComplexity;
 
   @JsonProperty("modifiedPrivilegesRequired")
-  private CVSSv3.ModifiedPrivilegesRequiredType modifiedPrivilegesRequired;
+  private ModifiedPrivilegesRequiredType modifiedPrivilegesRequired;
 
   @JsonProperty("modifiedUserInteraction")
-  private CVSSv3.ModifiedUserInteractionType modifiedUserInteraction;
+  private ModifiedUserInteractionType modifiedUserInteraction;
 
   @JsonProperty("modifiedScope")
-  private CVSSv3.ModifiedScopeType modifiedScope;
+  private ModifiedScopeType modifiedScope;
 
   @JsonProperty("modifiedConfidentialityImpact")
-  private CVSSv3.ModifiedCiaType modifiedConfidentialityImpact;
+  private ModifiedCiaType modifiedConfidentialityImpact;
 
   @JsonProperty("modifiedIntegrityImpact")
-  private CVSSv3.ModifiedCiaType modifiedIntegrityImpact;
+  private ModifiedCiaType modifiedIntegrityImpact;
 
   @JsonProperty("modifiedAvailabilityImpact")
-  private CVSSv3.ModifiedCiaType modifiedAvailabilityImpact;
+  private ModifiedCiaType modifiedAvailabilityImpact;
 
   @JsonProperty("environmentalScore")
   private Double environmentalScore;
 
   @JsonProperty("environmentalSeverity")
-  private CVSSv3.SeverityType environmentalSeverity;
+  private SeverityType environmentalSeverity;
 
   @JsonProperty("version")
-  public CVSSv3.Version getVersion() {
+  public Version getVersion() {
     return version;
   }
 
@@ -167,10 +167,10 @@ public class CVSSv3 {
     HIGH("HIGH"),
     LOW("LOW");
 
-    private static final Map<String, CVSSv3.AttackComplexityType> CONSTANTS = new HashMap<>();
+    private static final Map<String, AttackComplexityType> CONSTANTS = new HashMap<>();
 
     static {
-      for (CVSSv3.AttackComplexityType c : values()) {
+      for (AttackComplexityType c : values()) {
         CONSTANTS.put(c.value, c);
       }
     }
@@ -182,8 +182,8 @@ public class CVSSv3 {
     }
 
     @JsonCreator
-    static CVSSv3.AttackComplexityType fromValue(String value) {
-      CVSSv3.AttackComplexityType constant = CONSTANTS.get(value);
+    static AttackComplexityType fromValue(String value) {
+      AttackComplexityType constant = CONSTANTS.get(value);
       if (constant == null) {
         throw new IllegalArgumentException(value);
       } else {
@@ -210,10 +210,10 @@ public class CVSSv3 {
     LOCAL("LOCAL"),
     PHYSICAL("PHYSICAL");
 
-    private static final Map<String, CVSSv3.AttackVectorType> CONSTANTS = new HashMap<>();
+    private static final Map<String, AttackVectorType> CONSTANTS = new HashMap<>();
 
     static {
-      for (CVSSv3.AttackVectorType c : values()) {
+      for (AttackVectorType c : values()) {
         CONSTANTS.put(c.value, c);
       }
     }
@@ -225,8 +225,8 @@ public class CVSSv3 {
     }
 
     @JsonCreator
-    static CVSSv3.AttackVectorType fromValue(String value) {
-      CVSSv3.AttackVectorType constant = CONSTANTS.get(value);
+    static AttackVectorType fromValue(String value) {
+      AttackVectorType constant = CONSTANTS.get(value);
       if (constant == null) {
         throw new IllegalArgumentException(value);
       } else {
@@ -253,10 +253,10 @@ public class CVSSv3 {
     HIGH("HIGH"),
     NOT_DEFINED("NOT_DEFINED");
 
-    private static final Map<String, CVSSv3.CiaRequirementType> CONSTANTS = new HashMap<>();
+    private static final Map<String, CiaRequirementType> CONSTANTS = new HashMap<>();
 
     static {
-      for (CVSSv3.CiaRequirementType c : values()) {
+      for (CiaRequirementType c : values()) {
         CONSTANTS.put(c.value, c);
       }
     }
@@ -268,8 +268,8 @@ public class CVSSv3 {
     }
 
     @JsonCreator
-    static CVSSv3.CiaRequirementType fromValue(String value) {
-      CVSSv3.CiaRequirementType constant = CONSTANTS.get(value);
+    static CiaRequirementType fromValue(String value) {
+      CiaRequirementType constant = CONSTANTS.get(value);
       if (constant == null) {
         throw new IllegalArgumentException(value);
       } else {
@@ -295,10 +295,10 @@ public class CVSSv3 {
     LOW("LOW"),
     HIGH("HIGH");
 
-    private static final Map<String, CVSSv3.CiaType> CONSTANTS = new HashMap<>();
+    private static final Map<String, CiaType> CONSTANTS = new HashMap<>();
 
     static {
-      for (CVSSv3.CiaType c : values()) {
+      for (CiaType c : values()) {
         CONSTANTS.put(c.value, c);
       }
     }
@@ -310,8 +310,8 @@ public class CVSSv3 {
     }
 
     @JsonCreator
-    static CVSSv3.CiaType fromValue(String value) {
-      CVSSv3.CiaType constant = CONSTANTS.get(value);
+    static CiaType fromValue(String value) {
+      CiaType constant = CONSTANTS.get(value);
       if (constant == null) {
         throw new IllegalArgumentException(value);
       } else {
@@ -338,10 +338,10 @@ public class CVSSv3 {
     CONFIRMED("CONFIRMED"),
     NOT_DEFINED("NOT_DEFINED");
 
-    private static final Map<String, CVSSv3.ConfidenceType> CONSTANTS = new HashMap<>();
+    private static final Map<String, ConfidenceType> CONSTANTS = new HashMap<>();
 
     static {
-      for (CVSSv3.ConfidenceType c : values()) {
+      for (ConfidenceType c : values()) {
         CONSTANTS.put(c.value, c);
       }
     }
@@ -353,8 +353,8 @@ public class CVSSv3 {
     }
 
     @JsonCreator
-    static CVSSv3.ConfidenceType fromValue(String value) {
-      CVSSv3.ConfidenceType constant = CONSTANTS.get(value);
+    static ConfidenceType fromValue(String value) {
+      ConfidenceType constant = CONSTANTS.get(value);
       if (constant == null) {
         throw new IllegalArgumentException(value);
       } else {
@@ -382,10 +382,10 @@ public class CVSSv3 {
     HIGH("HIGH"),
     NOT_DEFINED("NOT_DEFINED");
 
-    private static final Map<String, CVSSv3.ExploitCodeMaturityType> CONSTANTS = new HashMap<>();
+    private static final Map<String, ExploitCodeMaturityType> CONSTANTS = new HashMap<>();
 
     static {
-      for (CVSSv3.ExploitCodeMaturityType c : values()) {
+      for (ExploitCodeMaturityType c : values()) {
         CONSTANTS.put(c.value, c);
       }
     }
@@ -397,8 +397,8 @@ public class CVSSv3 {
     }
 
     @JsonCreator
-    static CVSSv3.ExploitCodeMaturityType fromValue(String value) {
-      CVSSv3.ExploitCodeMaturityType constant = CONSTANTS.get(value);
+    static ExploitCodeMaturityType fromValue(String value) {
+      ExploitCodeMaturityType constant = CONSTANTS.get(value);
       if (constant == null) {
         throw new IllegalArgumentException(value);
       } else {
@@ -424,11 +424,11 @@ public class CVSSv3 {
     LOW("LOW"),
     NOT_DEFINED("NOT_DEFINED");
 
-    private static final Map<String, CVSSv3.ModifiedAttackComplexityType> CONSTANTS
+    private static final Map<String, ModifiedAttackComplexityType> CONSTANTS
         = new HashMap<>();
 
     static {
-      for (CVSSv3.ModifiedAttackComplexityType c : values()) {
+      for (ModifiedAttackComplexityType c : values()) {
         CONSTANTS.put(c.value, c);
       }
     }
@@ -440,8 +440,8 @@ public class CVSSv3 {
     }
 
     @JsonCreator
-    static CVSSv3.ModifiedAttackComplexityType fromValue(String value) {
-      CVSSv3.ModifiedAttackComplexityType constant = CONSTANTS.get(value);
+    static ModifiedAttackComplexityType fromValue(String value) {
+      ModifiedAttackComplexityType constant = CONSTANTS.get(value);
       if (constant == null) {
         throw new IllegalArgumentException(value);
       } else {
@@ -469,10 +469,10 @@ public class CVSSv3 {
     PHYSICAL("PHYSICAL"),
     NOT_DEFINED("NOT_DEFINED");
 
-    private static final Map<String, CVSSv3.ModifiedAttackVectorType> CONSTANTS = new HashMap<>();
+    private static final Map<String, ModifiedAttackVectorType> CONSTANTS = new HashMap<>();
 
     static {
-      for (CVSSv3.ModifiedAttackVectorType c : values()) {
+      for (ModifiedAttackVectorType c : values()) {
         CONSTANTS.put(c.value, c);
       }
     }
@@ -484,8 +484,8 @@ public class CVSSv3 {
     }
 
     @JsonCreator
-    static CVSSv3.ModifiedAttackVectorType fromValue(String value) {
-      CVSSv3.ModifiedAttackVectorType constant = CONSTANTS.get(value);
+    static ModifiedAttackVectorType fromValue(String value) {
+      ModifiedAttackVectorType constant = CONSTANTS.get(value);
       if (constant == null) {
         throw new IllegalArgumentException(value);
       } else {
@@ -512,10 +512,10 @@ public class CVSSv3 {
     HIGH("HIGH"),
     NOT_DEFINED("NOT_DEFINED");
 
-    private static final Map<String, CVSSv3.ModifiedCiaType> CONSTANTS = new HashMap<>();
+    private static final Map<String, ModifiedCiaType> CONSTANTS = new HashMap<>();
 
     static {
-      for (CVSSv3.ModifiedCiaType c : values()) {
+      for (ModifiedCiaType c : values()) {
         CONSTANTS.put(c.value, c);
       }
     }
@@ -527,8 +527,8 @@ public class CVSSv3 {
     }
 
     @JsonCreator
-    static CVSSv3.ModifiedCiaType fromValue(String value) {
-      CVSSv3.ModifiedCiaType constant = CONSTANTS.get(value);
+    static ModifiedCiaType fromValue(String value) {
+      ModifiedCiaType constant = CONSTANTS.get(value);
       if (constant == null) {
         throw new IllegalArgumentException(value);
       } else {
@@ -555,11 +555,11 @@ public class CVSSv3 {
     NONE("NONE"),
     NOT_DEFINED("NOT_DEFINED");
 
-    private static final Map<String, CVSSv3.ModifiedPrivilegesRequiredType> CONSTANTS
+    private static final Map<String, ModifiedPrivilegesRequiredType> CONSTANTS
         = new HashMap<>();
 
     static {
-      for (CVSSv3.ModifiedPrivilegesRequiredType c : values()) {
+      for (ModifiedPrivilegesRequiredType c : values()) {
         CONSTANTS.put(c.value, c);
       }
     }
@@ -571,8 +571,8 @@ public class CVSSv3 {
     }
 
     @JsonCreator
-    static CVSSv3.ModifiedPrivilegesRequiredType fromValue(String value) {
-      CVSSv3.ModifiedPrivilegesRequiredType constant = CONSTANTS.get(value);
+    static ModifiedPrivilegesRequiredType fromValue(String value) {
+      ModifiedPrivilegesRequiredType constant = CONSTANTS.get(value);
       if (constant == null) {
         throw new IllegalArgumentException(value);
       } else {
@@ -598,10 +598,10 @@ public class CVSSv3 {
     CHANGED("CHANGED"),
     NOT_DEFINED("NOT_DEFINED");
 
-    private static final Map<String, CVSSv3.ModifiedScopeType> CONSTANTS = new HashMap<>();
+    private static final Map<String, ModifiedScopeType> CONSTANTS = new HashMap<>();
 
     static {
-      for (CVSSv3.ModifiedScopeType c : values()) {
+      for (ModifiedScopeType c : values()) {
         CONSTANTS.put(c.value, c);
       }
     }
@@ -613,8 +613,8 @@ public class CVSSv3 {
     }
 
     @JsonCreator
-    static CVSSv3.ModifiedScopeType fromValue(String value) {
-      CVSSv3.ModifiedScopeType constant = CONSTANTS.get(value);
+    static ModifiedScopeType fromValue(String value) {
+      ModifiedScopeType constant = CONSTANTS.get(value);
       if (constant == null) {
         throw new IllegalArgumentException(value);
       } else {
@@ -640,11 +640,11 @@ public class CVSSv3 {
     REQUIRED("REQUIRED"),
     NOT_DEFINED("NOT_DEFINED");
 
-    private static final Map<String, CVSSv3.ModifiedUserInteractionType> CONSTANTS
+    private static final Map<String, ModifiedUserInteractionType> CONSTANTS
         = new HashMap<>();
 
     static {
-      for (CVSSv3.ModifiedUserInteractionType c : values()) {
+      for (ModifiedUserInteractionType c : values()) {
         CONSTANTS.put(c.value, c);
       }
     }
@@ -656,8 +656,8 @@ public class CVSSv3 {
     }
 
     @JsonCreator
-    static CVSSv3.ModifiedUserInteractionType fromValue(String value) {
-      CVSSv3.ModifiedUserInteractionType constant = CONSTANTS.get(value);
+    static ModifiedUserInteractionType fromValue(String value) {
+      ModifiedUserInteractionType constant = CONSTANTS.get(value);
       if (constant == null) {
         throw new IllegalArgumentException(value);
       } else {
@@ -683,10 +683,10 @@ public class CVSSv3 {
     LOW("LOW"),
     NONE("NONE");
 
-    private static final Map<String, CVSSv3.PrivilegesRequiredType> CONSTANTS = new HashMap<>();
+    private static final Map<String, PrivilegesRequiredType> CONSTANTS = new HashMap<>();
 
     static {
-      for (CVSSv3.PrivilegesRequiredType c : values()) {
+      for (PrivilegesRequiredType c : values()) {
         CONSTANTS.put(c.value, c);
       }
     }
@@ -698,8 +698,8 @@ public class CVSSv3 {
     }
 
     @JsonCreator
-    static CVSSv3.PrivilegesRequiredType fromValue(String value) {
-      CVSSv3.PrivilegesRequiredType constant = CONSTANTS.get(value);
+    static PrivilegesRequiredType fromValue(String value) {
+      PrivilegesRequiredType constant = CONSTANTS.get(value);
       if (constant == null) {
         throw new IllegalArgumentException(value);
       } else {
@@ -727,10 +727,10 @@ public class CVSSv3 {
     UNAVAILABLE("UNAVAILABLE"),
     NOT_DEFINED("NOT_DEFINED");
 
-    private static final Map<String, CVSSv3.RemediationLevelType> CONSTANTS = new HashMap<>();
+    private static final Map<String, RemediationLevelType> CONSTANTS = new HashMap<>();
 
     static {
-      for (CVSSv3.RemediationLevelType c : values()) {
+      for (RemediationLevelType c : values()) {
         CONSTANTS.put(c.value, c);
       }
     }
@@ -742,8 +742,8 @@ public class CVSSv3 {
     }
 
     @JsonCreator
-    static CVSSv3.RemediationLevelType fromValue(String value) {
-      CVSSv3.RemediationLevelType constant = CONSTANTS.get(value);
+    static RemediationLevelType fromValue(String value) {
+      RemediationLevelType constant = CONSTANTS.get(value);
       if (constant == null) {
         throw new IllegalArgumentException(value);
       } else {
@@ -768,10 +768,10 @@ public class CVSSv3 {
     UNCHANGED("UNCHANGED"),
     CHANGED("CHANGED");
 
-    private static final Map<String, CVSSv3.ScopeType> CONSTANTS = new HashMap<>();
+    private static final Map<String, ScopeType> CONSTANTS = new HashMap<>();
 
     static {
-      for (CVSSv3.ScopeType c : values()) {
+      for (ScopeType c : values()) {
         CONSTANTS.put(c.value, c);
       }
     }
@@ -783,8 +783,8 @@ public class CVSSv3 {
     }
 
     @JsonCreator
-    static CVSSv3.ScopeType fromValue(String value) {
-      CVSSv3.ScopeType constant = CONSTANTS.get(value);
+    static ScopeType fromValue(String value) {
+      ScopeType constant = CONSTANTS.get(value);
       if (constant == null) {
         throw new IllegalArgumentException(value);
       } else {
@@ -812,10 +812,10 @@ public class CVSSv3 {
     HIGH("HIGH"),
     CRITICAL("CRITICAL");
 
-    private static final Map<String, CVSSv3.SeverityType> CONSTANTS = new HashMap<>();
+    private static final Map<String, SeverityType> CONSTANTS = new HashMap<>();
 
     static {
-      for (CVSSv3.SeverityType c : values()) {
+      for (SeverityType c : values()) {
         CONSTANTS.put(c.value, c);
       }
     }
@@ -827,8 +827,8 @@ public class CVSSv3 {
     }
 
     @JsonCreator
-    static CVSSv3.SeverityType fromValue(String value) {
-      CVSSv3.SeverityType constant = CONSTANTS.get(value);
+    static SeverityType fromValue(String value) {
+      SeverityType constant = CONSTANTS.get(value);
       if (constant == null) {
         throw new IllegalArgumentException(value);
       } else {
@@ -853,10 +853,10 @@ public class CVSSv3 {
     NONE("NONE"),
     REQUIRED("REQUIRED");
 
-    private static final Map<String, CVSSv3.UserInteractionType> CONSTANTS = new HashMap<>();
+    private static final Map<String, UserInteractionType> CONSTANTS = new HashMap<>();
 
     static {
-      for (CVSSv3.UserInteractionType c : values()) {
+      for (UserInteractionType c : values()) {
         CONSTANTS.put(c.value, c);
       }
     }
@@ -868,8 +868,8 @@ public class CVSSv3 {
     }
 
     @JsonCreator
-    static CVSSv3.UserInteractionType fromValue(String value) {
-      CVSSv3.UserInteractionType constant = CONSTANTS.get(value);
+    static UserInteractionType fromValue(String value) {
+      UserInteractionType constant = CONSTANTS.get(value);
       if (constant == null) {
         throw new IllegalArgumentException(value);
       } else {
@@ -898,10 +898,10 @@ public class CVSSv3 {
     _3_0("3.0"),
     _3_1("3.1");
 
-    private static final Map<String, CVSSv3.Version> CONSTANTS = new HashMap<>();
+    private static final Map<String, Version> CONSTANTS = new HashMap<>();
 
     static {
-      for (CVSSv3.Version c : values()) {
+      for (Version c : values()) {
         CONSTANTS.put(c.value, c);
       }
     }
@@ -913,8 +913,8 @@ public class CVSSv3 {
     }
 
     @JsonCreator
-    static CVSSv3.Version fromValue(String value) {
-      CVSSv3.Version constant = CONSTANTS.get(value);
+    static Version fromValue(String value) {
+      Version constant = CONSTANTS.get(value);
       if (constant == null) {
         throw new IllegalArgumentException(value);
       } else {

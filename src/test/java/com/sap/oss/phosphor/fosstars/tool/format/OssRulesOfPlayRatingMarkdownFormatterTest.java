@@ -3,10 +3,10 @@ package com.sap.oss.phosphor.fosstars.tool.format;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.allUnknown;
 import static com.sap.oss.phosphor.fosstars.model.score.oss.OssRulesOfPlayScoreTest.allRulesPassed;
 import static java.util.Collections.emptyList;
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertNotNull;
-import static junit.framework.TestCase.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.advice.oss.OssRulesOfPlayAdvisor;
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
@@ -20,25 +20,37 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.apache.commons.io.FileUtils;
-import org.junit.AfterClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Test;
 
 public class OssRulesOfPlayRatingMarkdownFormatterTest {
 
-  private static final OssRulesOfPlayRating RATING
-      = RatingRepository.INSTANCE.rating(OssRulesOfPlayRating.class);
+  private static final OssRulesOfPlayRating RATING =
+      RatingRepository.INSTANCE.rating(OssRulesOfPlayRating.class);
 
-  private static final Path CONFIG_PATH
-      = Paths.get("OssRulesOfPlayRatingMarkdownFormatter.config.yml");
+  private static final Path CONFIG_PATH =
+      Paths.get("OssRulesOfPlayRatingMarkdownFormatter.config.yml");
 
   private static final String RULE_IDS =
-        "---\n"
-      + "ruleIds:\n"
-      + "  rl-license_file-1: If a project has a license\n"
-      + "  rl-license_file-2: If a project uses an allowed license\n"
-      + "  rl-license_file-3: If a license has disallowed text\n"
-      + "  rl-readme_file-1: If a project has a README file\n"
-      + "documentationUrl: https://wiki.local/TestPage";
+      "---\n"
+          + "ruleIds:\n"
+          + "  rl-license_file-1: If a project has a license\n"
+          + "  rl-license_file-2: If a project uses an allowed license\n"
+          + "  rl-license_file-3: If a license has disallowed text\n"
+          + "  rl-readme_file-1: If a project has a README file\n"
+          + "documentationUrl: https://wiki.local/TestPage";
+
+  private static void checkRuleIds(String text) {
+    assertTrue(text.contains("rl-license_file-1"));
+    assertTrue(text.contains("rl-license_file-2"));
+    assertTrue(text.contains("rl-license_file-3"));
+    assertTrue(text.contains("rl-readme_file-1"));
+  }
+
+  @AfterAll
+  public static void shutdown() throws IOException {
+    FileUtils.forceDeleteOnExit(CONFIG_PATH.toFile());
+  }
 
   @Test
   public void testPrintWithCompliantProject() throws IOException {
@@ -46,8 +58,8 @@ public class OssRulesOfPlayRatingMarkdownFormatterTest {
     try {
       RatingValue ratingValue = RATING.calculate(allRulesPassed());
       assertEquals(OssRulesOfPlayLabel.PASSED, ratingValue.label());
-      OssRulesOfPlayRatingMarkdownFormatter formatter
-          = new OssRulesOfPlayRatingMarkdownFormatter(CONFIG_PATH, new OssRulesOfPlayAdvisor());
+      OssRulesOfPlayRatingMarkdownFormatter formatter =
+          new OssRulesOfPlayRatingMarkdownFormatter(CONFIG_PATH, new OssRulesOfPlayAdvisor());
       String text = formatter.print(ratingValue, emptyList());
       assertNotNull(text);
       assertFalse(text.isEmpty());
@@ -72,8 +84,8 @@ public class OssRulesOfPlayRatingMarkdownFormatterTest {
       values.update(OssRulesOfPlayScore.RECOMMENDED_FALSE.iterator().next().value(true));
       RatingValue ratingValue = RATING.calculate(values);
       assertEquals(OssRulesOfPlayLabel.PASSED_WITH_WARNING, ratingValue.label());
-      OssRulesOfPlayRatingMarkdownFormatter formatter
-          = new OssRulesOfPlayRatingMarkdownFormatter(CONFIG_PATH, new OssRulesOfPlayAdvisor());
+      OssRulesOfPlayRatingMarkdownFormatter formatter =
+          new OssRulesOfPlayRatingMarkdownFormatter(CONFIG_PATH, new OssRulesOfPlayAdvisor());
       String text = formatter.print(ratingValue, emptyList());
       assertNotNull(text);
       assertFalse(text.isEmpty());
@@ -98,8 +110,8 @@ public class OssRulesOfPlayRatingMarkdownFormatterTest {
       values.update(OssRulesOfPlayScore.EXPECTED_FALSE.iterator().next().value(true));
       RatingValue ratingValue = RATING.calculate(values);
       assertEquals(OssRulesOfPlayLabel.FAILED, ratingValue.label());
-      OssRulesOfPlayRatingMarkdownFormatter formatter
-          = new OssRulesOfPlayRatingMarkdownFormatter(CONFIG_PATH, new OssRulesOfPlayAdvisor());
+      OssRulesOfPlayRatingMarkdownFormatter formatter =
+          new OssRulesOfPlayRatingMarkdownFormatter(CONFIG_PATH, new OssRulesOfPlayAdvisor());
       String text = formatter.print(ratingValue, emptyList());
       assertNotNull(text);
       assertFalse(text.isEmpty());
@@ -122,8 +134,8 @@ public class OssRulesOfPlayRatingMarkdownFormatterTest {
     try {
       RatingValue ratingValue = RATING.calculate(allUnknown(RATING.allFeatures()));
       assertEquals(OssRulesOfPlayLabel.UNCLEAR, ratingValue.label());
-      OssRulesOfPlayRatingMarkdownFormatter formatter
-          = new OssRulesOfPlayRatingMarkdownFormatter(CONFIG_PATH, new OssRulesOfPlayAdvisor());
+      OssRulesOfPlayRatingMarkdownFormatter formatter =
+          new OssRulesOfPlayRatingMarkdownFormatter(CONFIG_PATH, new OssRulesOfPlayAdvisor());
       String text = formatter.print(ratingValue, emptyList());
       assertNotNull(text);
       assertFalse(text.isEmpty());
@@ -136,17 +148,5 @@ public class OssRulesOfPlayRatingMarkdownFormatterTest {
     } finally {
       FileUtils.forceDeleteOnExit(CONFIG_PATH.toFile());
     }
-  }
-
-  private static void checkRuleIds(String text) {
-    assertTrue(text.contains("rl-license_file-1"));
-    assertTrue(text.contains("rl-license_file-2"));
-    assertTrue(text.contains("rl-license_file-3"));
-    assertTrue(text.contains("rl-readme_file-1"));
-  }
-
-  @AfterClass
-  public static void shutdown() throws IOException {
-    FileUtils.forceDeleteOnExit(CONFIG_PATH.toFile());
   }
 }

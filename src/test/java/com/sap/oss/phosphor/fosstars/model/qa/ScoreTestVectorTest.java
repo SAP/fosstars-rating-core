@@ -1,8 +1,8 @@
 package com.sap.oss.phosphor.fosstars.model.qa;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ScoreTestVectorTest {
 
@@ -27,8 +27,7 @@ public class ScoreTestVectorTest {
     values.put(ExampleScores.SECURITY_TESTING_SCORE_EXAMPLE.getClass(), 4.0);
 
     Interval expectedScore = DoubleInterval.init().from(4.0).to(6.4).closed().make();
-    ScoreTestVector vector = new ScoreTestVector(
-        values, expectedScore, null, "test", false, false);
+    ScoreTestVector vector = new ScoreTestVector(values, expectedScore, null, "test", false, false);
 
     Set<Value<?>> set = vector.valuesFor(ExampleScores.SECURITY_SCORE_EXAMPLE);
     assertNotNull(set);
@@ -44,8 +43,7 @@ public class ScoreTestVectorTest {
     values.put(ExampleScores.SECURITY_TESTING_SCORE_EXAMPLE.getClass(), 4.0);
 
     Interval expectedScore = DoubleInterval.init().from(4.0).to(6.4).closed().make();
-    ScoreTestVector vector = new ScoreTestVector(
-        values, expectedScore, null, "test", false, false);
+    ScoreTestVector vector = new ScoreTestVector(values, expectedScore, null, "test", false, false);
 
     YAMLFactory factory = new YAMLFactory();
     factory.disable(YAMLGenerator.Feature.USE_NATIVE_TYPE_ID);
@@ -58,5 +56,4 @@ public class ScoreTestVectorTest {
     assertEquals(vector, clone);
     assertEquals(vector.hashCode(), clone.hashCode());
   }
-
 }

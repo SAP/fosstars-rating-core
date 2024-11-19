@@ -1,190 +1,190 @@
 ---
-defaults: []
+defaults: [ ]
 elements:
-- type: "StandardTestVector"
-  values:
-  - type: "UnknownValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Eclipse Foundation"
-  - type: "UnknownValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Apache Foundation"
-  - type: "UnknownValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project is supported by a company"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 0.0
-    openLeft: false
-    negativeInfinity: false
-    to: 0.1
-    openRight: false
-    positiveInfinity: false
-  expectedUnknownScore: true
-  expectedLabel: null
-  alias: "all_unknown"
-- type: "StandardTestVector"
-  values:
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project is supported by a company"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Apache Foundation"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Eclipse Foundation"
-    flag: false
-  expectedScore:
-    type: "DoubleInterval"
-    from: 0.0
-    openLeft: false
-    negativeInfinity: false
-    to: 1.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_1"
-- type: "StandardTestVector"
-  values:
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project is supported by a company"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Eclipse Foundation"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Apache Foundation"
-    flag: true
-  expectedScore:
-    type: "DoubleInterval"
-    from: 5.0
-    openLeft: false
-    negativeInfinity: false
-    to: 9.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_2"
-- type: "StandardTestVector"
-  values:
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Eclipse Foundation"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project is supported by a company"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Apache Foundation"
-    flag: false
-  expectedScore:
-    type: "DoubleInterval"
-    from: 5.0
-    openLeft: false
-    negativeInfinity: false
-    to: 9.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_3"
-- type: "StandardTestVector"
-  values:
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Apache Foundation"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project is supported by a company"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Eclipse Foundation"
-    flag: false
-  expectedScore:
-    type: "DoubleInterval"
-    from: 6.0
-    openLeft: false
-    negativeInfinity: false
-    to: 9.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_4"
-- type: "StandardTestVector"
-  values:
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project is supported by a company"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Eclipse Foundation"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Apache Foundation"
-    flag: true
-  expectedScore:
-    type: "DoubleInterval"
-    from: 9.0
-    openLeft: false
-    negativeInfinity: false
-    to: 10.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_5"
-- type: "StandardTestVector"
-  values:
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Eclipse Foundation"
-    flag: true
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project belongs to Apache Foundation"
-    flag: false
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project is supported by a company"
-    flag: true
-  expectedScore:
-    type: "DoubleInterval"
-    from: 9.0
-    openLeft: false
-    negativeInfinity: false
-    to: 10.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "test_vector_6"
+  - type: "StandardTestVector"
+    values:
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project belongs to Eclipse Foundation"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project belongs to Apache Foundation"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project is supported by a company"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 0.1
+      openRight: false
+      positiveInfinity: false
+    expectedUnknownScore: true
+    expectedLabel: null
+    alias: "all_unknown"
+  - type: "StandardTestVector"
+    values:
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project is supported by a company"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project belongs to Apache Foundation"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project belongs to Eclipse Foundation"
+        flag: false
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 1.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_1"
+  - type: "StandardTestVector"
+    values:
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project is supported by a company"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project belongs to Eclipse Foundation"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project belongs to Apache Foundation"
+        flag: true
+    expectedScore:
+      type: "DoubleInterval"
+      from: 5.0
+      openLeft: false
+      negativeInfinity: false
+      to: 9.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_2"
+  - type: "StandardTestVector"
+    values:
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project belongs to Eclipse Foundation"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project is supported by a company"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project belongs to Apache Foundation"
+        flag: false
+    expectedScore:
+      type: "DoubleInterval"
+      from: 5.0
+      openLeft: false
+      negativeInfinity: false
+      to: 9.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_3"
+  - type: "StandardTestVector"
+    values:
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project belongs to Apache Foundation"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project is supported by a company"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project belongs to Eclipse Foundation"
+        flag: false
+    expectedScore:
+      type: "DoubleInterval"
+      from: 6.0
+      openLeft: false
+      negativeInfinity: false
+      to: 9.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_4"
+  - type: "StandardTestVector"
+    values:
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project is supported by a company"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project belongs to Eclipse Foundation"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project belongs to Apache Foundation"
+        flag: true
+    expectedScore:
+      type: "DoubleInterval"
+      from: 9.0
+      openLeft: false
+      negativeInfinity: false
+      to: 10.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_5"
+  - type: "StandardTestVector"
+    values:
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project belongs to Eclipse Foundation"
+        flag: true
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project belongs to Apache Foundation"
+        flag: false
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project is supported by a company"
+        flag: true
+    expectedScore:
+      type: "DoubleInterval"
+      from: 9.0
+      openLeft: false
+      negativeInfinity: false
+      to: 10.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "test_vector_6"

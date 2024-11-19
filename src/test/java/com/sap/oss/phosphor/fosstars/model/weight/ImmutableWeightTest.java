@@ -1,11 +1,12 @@
 package com.sap.oss.phosphor.fosstars.model.weight;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ImmutableWeightTest {
 
@@ -15,27 +16,43 @@ public class ImmutableWeightTest {
     assertEquals(1, new ImmutableWeight(1).value(), 0.0);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testZero() {
-    new ImmutableWeight(0);
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> {
+          new ImmutableWeight(0);
+        });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testNegative() {
-    new ImmutableWeight(-1);
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> {
+          new ImmutableWeight(-1);
+        });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testTooBig() {
-    new ImmutableWeight(2);
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> {
+          new ImmutableWeight(2);
+        });
   }
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test
   public void testUpdate() {
-    ImmutableWeight weight = new ImmutableWeight(0.5);
-    assertTrue(weight.isImmutable());
-    assertEquals(0.5, weight.value(), 0.001);
-    weight.value(0.9);
+    assertThrows(
+        UnsupportedOperationException.class,
+        () -> {
+          ImmutableWeight weight = new ImmutableWeight(0.5);
+          assertTrue(weight.isImmutable());
+          assertEquals(0.5, weight.value(), 0.001);
+          weight.value(0.9);
+        });
   }
 
   @Test

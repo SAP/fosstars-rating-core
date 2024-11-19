@@ -2,9 +2,9 @@ package com.sap.oss.phosphor.fosstars.data.github;
 
 import static com.sap.oss.phosphor.fosstars.data.github.UsesGithubForDevelopment.notGitHubUrl;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GITHUB_FOR_DEVELOPMENT;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -21,57 +21,11 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.function.Consumer;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GHRepository;
 
 public class UsesGithubForDevelopmentTest extends TestGitHubDataFetcherHolder {
-
-  private static class RepositoryMockBuilder {
-
-    GHRepository repository;
-    Set<Integer> passedChecks;
-
-    private final List<Consumer<Boolean>> checks = Arrays.asList(
-        passed -> when(repository.getDescription())
-          .thenReturn(passed ? "This is the main repository" : "This is a mirror"),
-        passed -> when(repository.hasIssues()).thenReturn(passed),
-        passed -> when(repository.hasWiki()).thenReturn(passed),
-        passed -> {
-          when(repository.getMirrorUrl()).thenReturn(passed ? "" : "https://test.com");
-          when(repository.getSvnUrl()).thenReturn(passed ? "" : "https://test.com");
-        },
-        passed -> when(repository.isArchived()).thenReturn(!passed)
-    );
-
-    RepositoryMockBuilder() {
-      init();
-    }
-
-    final void init() {
-      repository = mock(GHRepository.class);
-      passedChecks = new HashSet<>();
-      checks.forEach(check -> check.accept(false));
-    }
-
-    int allChecks() {
-      return checks.size();
-    }
-
-    int passedChecks() {
-      return passedChecks.size();
-    }
-
-    void passCheck(int i) {
-      checks.get(i).accept(true);
-      passedChecks.add(i);
-    }
-
-    GHRepository repository() {
-      return repository;
-    }
-
-  }
 
   @Test
   public void testVariousChecks() throws IOException {
@@ -84,13 +38,11 @@ public class UsesGithubForDevelopmentTest extends TestGitHubDataFetcherHolder {
     final double threshold = 0.5;
     while (i < builder.allChecks()) {
       builder.init();
-      random.ints(i, 0, builder.allChecks())
-          .forEach(builder::passCheck);
+      random.ints(i, 0, builder.allChecks()).forEach(builder::passCheck);
       boolean expected = (double) builder.passedChecks() / builder.allChecks() >= threshold;
       assertEquals(
           expected,
-          UsesGithubForDevelopment.usesGitHubForDevelopment(
-              builder.repository(), threshold));
+          UsesGithubForDevelopment.usesGitHubForDevelopment(builder.repository(), threshold));
       i++;
     }
   }
@@ -102,17 +54,13 @@ public class UsesGithubForDevelopmentTest extends TestGitHubDataFetcherHolder {
       builder.passCheck(i);
     }
     assertEquals(builder.allChecks(), builder.passedChecks());
-    assertTrue(
-        UsesGithubForDevelopment.usesGitHubForDevelopment(
-            builder.repository(), 0.99));
+    assertTrue(UsesGithubForDevelopment.usesGitHubForDevelopment(builder.repository(), 0.99));
   }
 
   @Test
   public void testAllFailedChecks() throws IOException {
     RepositoryMockBuilder builder = new RepositoryMockBuilder();
-    assertFalse(
-        UsesGithubForDevelopment.usesGitHubForDevelopment(
-            builder.repository(), 0.01));
+    assertFalse(UsesGithubForDevelopment.usesGitHubForDevelopment(builder.repository(), 0.01));
   }
 
   @Test
@@ -190,5 +138,50 @@ public class UsesGithubForDevelopmentTest extends TestGitHubDataFetcherHolder {
     assertTrue(notGitHubUrl(""));
     assertTrue(notGitHubUrl("https://test.com/test"));
     assertFalse(notGitHubUrl("https://github.com/apache/nifi"));
+  }
+
+  private static class RepositoryMockBuilder {
+
+    GHRepository repository;
+    private final List<Consumer<Boolean>> checks =
+        Arrays.asList(
+            passed ->
+                when(repository.getDescription())
+                    .thenReturn(passed ? "This is the main repository" : "This is a mirror"),
+            passed -> when(repository.hasIssues()).thenReturn(passed),
+            passed -> when(repository.hasWiki()).thenReturn(passed),
+            passed -> {
+              when(repository.getMirrorUrl()).thenReturn(passed ? "" : "https://test.com");
+              when(repository.getSvnUrl()).thenReturn(passed ? "" : "https://test.com");
+            },
+            passed -> when(repository.isArchived()).thenReturn(!passed));
+    Set<Integer> passedChecks;
+
+    RepositoryMockBuilder() {
+      init();
+    }
+
+    final void init() {
+      repository = mock(GHRepository.class);
+      passedChecks = new HashSet<>();
+      checks.forEach(check -> check.accept(false));
+    }
+
+    int allChecks() {
+      return checks.size();
+    }
+
+    int passedChecks() {
+      return passedChecks.size();
+    }
+
+    void passCheck(int i) {
+      checks.get(i).accept(true);
+      passedChecks.add(i);
+    }
+
+    GHRepository repository() {
+      return repository;
+    }
   }
 }

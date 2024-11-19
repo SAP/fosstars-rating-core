@@ -48,7 +48,7 @@ import javax.annotation.Nullable;
 
 /**
  * The class prints a rating value
- * for {@link com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating} in Markdown.
+ * for {@link OssRulesOfPlayRating} in Markdown.
  */
 public class OssRulesOfPlayRatingMarkdownFormatter extends AbstractMarkdownFormatter {
 

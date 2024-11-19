@@ -245,7 +245,7 @@ defaults:
     feature:
       type: "SecurityReviewsFeature"
       name: "Security reviews for a project"
-    reviews: []
+    reviews: [ ]
   - type: "IntegerValue"
     feature:
       type: "PositiveIntegerFeature"
@@ -261,12 +261,12 @@ defaults:
       type: "VulnerabilitiesFeature"
       name: "Info about vulnerabilities in open-source project"
     vulnerabilities:
-      entries: 
+      entries:
         - id: "VULN-123-1"
           cvss:
             type: "CVSS$V3"
             value: 9.0
-          references: []
+          references: [ ]
           resolution: "PATCHED"
           introduced: "2019-01-01"
           fixed: "2019-01-03"
@@ -278,7 +278,7 @@ defaults:
           cvss:
             type: "CVSS$V3"
             value: 9.0
-          references: []
+          references: [ ]
           resolution: "PATCHED"
           introduced: "2019-01-01"
           fixed: "2019-01-03"
@@ -290,7 +290,7 @@ defaults:
           cvss:
             type: "CVSS$V3"
             value: 7.0
-          references: []
+          references: [ ]
           resolution: "PATCHED"
           introduced: "2018-11-28"
           fixed: "2018-12-02"
@@ -302,7 +302,7 @@ defaults:
           cvss:
             type: "CVSS$V3"
             value: 9.0
-          references: []
+          references: [ ]
           resolution: "UNPATCHED"
           introduced: "2019-01-01"
           published: "2019-01-03"
@@ -422,7 +422,7 @@ elements:
     expectedUnknownScore: true
     alias: "all_unknown"
 
-# Next: Good project security, good artifact security
+  # Next: Good project security, good artifact security
   - type: "StandardTestVector"
     values:
       - type: "VulnerabilitiesValue"
@@ -435,7 +435,7 @@ elements:
               cvss:
                 type: "CVSS$V3"
                 value: 9.0
-              references: []
+              references: [ ]
               resolution: "PATCHED"
               introduced: "2019-01-01"
               fixed: "2019-01-03"
@@ -469,7 +469,7 @@ elements:
       - "GOOD"
     alias: "all_good_default"
 
-# Test vectors for: GOOD project security, BAD artifact security
+  # Test vectors for: GOOD project security, BAD artifact security
   - type: "StandardTestVector"
     values:
       - type: "VulnerabilitiesValue"
@@ -482,7 +482,7 @@ elements:
               cvss:
                 type: "CVSS$V3"
                 value: 9.0
-              references: []
+              references: [ ]
               resolution: "PATCHED"
               introduced: "2019-01-01"
               fixed: "2019-01-03"
@@ -494,7 +494,7 @@ elements:
               cvss:
                 type: "CVSS$V3"
                 value: 7.0
-              references: []
+              references: [ ]
               resolution: "PATCHED"
               introduced: "2018-11-28"
               fixed: "2018-12-02"
@@ -515,7 +515,7 @@ elements:
       - "BAD"
     alias: "good_project_bad_artifact"
 
-# Test vectors for: GOOD project security, UNKNOWN artifact security
+  # Test vectors for: GOOD project security, UNKNOWN artifact security
   - type: "StandardTestVector"
     values:
       - type: "ArtifactVersionValue"
@@ -536,7 +536,7 @@ elements:
               cvss:
                 type: "CVSS$V3"
                 value: 9.0
-              references: []
+              references: [ ]
               resolution: "PATCHED"
               introduced: "2019-01-01"
               fixed: "2019-01-03"
@@ -548,7 +548,7 @@ elements:
               cvss:
                 type: "CVSS$V3"
                 value: 7.0
-              references: []
+              references: [ ]
               resolution: "PATCHED"
               introduced: "2018-11-28"
               fixed: "2018-12-02"
@@ -568,7 +568,7 @@ elements:
     expectedUnknownScore: true
     alias: "project_good_artifact_unknown"
 
-# Test vectors for: MODERATE project security, GOOD artifact security
+  # Test vectors for: MODERATE project security, GOOD artifact security
   - type: "StandardTestVector"
     values:
       - type: "BooleanValue"
@@ -611,7 +611,7 @@ elements:
               cvss:
                 type: "CVSS$V3"
                 value: 9.0
-              references: []
+              references: [ ]
               resolution: "PATCHED"
               introduced: "2020-01-01"
               fixed: "2020-01-03"
@@ -698,7 +698,7 @@ elements:
               cvss:
                 type: "CVSS$V3"
                 value: 9.0
-              references: []
+              references: [ ]
               resolution: "UNPATCHED"
               introduced: "2019-01-01"
               published: "2019-01-03"

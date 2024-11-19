@@ -9,9 +9,9 @@ import static com.sap.oss.phosphor.fosstars.model.value.Language.JAVA;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.JAVASCRIPT;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.TYPESCRIPT;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.VISUALBASIC;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class LanguageTest {
 
@@ -28,5 +28,4 @@ public class LanguageTest {
     assertEquals(CPP, Language.parse("C++"));
     assertEquals(C, Language.parse("C"));
   }
-
 }

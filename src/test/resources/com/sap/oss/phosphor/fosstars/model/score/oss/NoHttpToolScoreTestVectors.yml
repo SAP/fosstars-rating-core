@@ -1,150 +1,150 @@
 ---
-defaults: []
+defaults: [ ]
 elements:
-- type: "StandardTestVector"
-  values:
-  - type: "UnknownValue"
-    feature:
-      type: "PackageManagersFeature"
-      name: "A set of package managers"
-  - type: "UnknownValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If a project uses nohttp tool"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 0.0
-    to: 1.0
-    openLeft: false
-    openRight: false
-    negativeInfinity: false
-    positiveInfinity: false
-  expectedUnknownScore: true
-  expectedLabel: null
-  alias: "all_unknown"
-  expectedNotApplicableScore: false
+  - type: "StandardTestVector"
+    values:
+      - type: "UnknownValue"
+        feature:
+          type: "PackageManagersFeature"
+          name: "A set of package managers"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses nohttp tool"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      to: 1.0
+      openLeft: false
+      openRight: false
+      negativeInfinity: false
+      positiveInfinity: false
+    expectedUnknownScore: true
+    expectedLabel: null
+    alias: "all_unknown"
+    expectedNotApplicableScore: false
 
-# uses nohttp
-- type: "StandardTestVector"
-  values:
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If a project uses nohttp tool"
-      flag: true
-    - type: "PackageManagersValue"
-      feature:
-        type: "PackageManagersFeature"
-        name: "A set of package managers"
-      packageManagers:
+  # uses nohttp
+  - type: "StandardTestVector"
+    values:
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses nohttp tool"
+        flag: true
+      - type: "PackageManagersValue"
+        feature:
+          type: "PackageManagersFeature"
+          name: "A set of package managers"
         packageManagers:
-          - "MAVEN"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 9.0
-    to: 10.0
-    openLeft: false
-    openRight: false
-    negativeInfinity: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "uses_nohttp"
-  expectedNotApplicableScore: false
+          packageManagers:
+            - "MAVEN"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 9.0
+      to: 10.0
+      openLeft: false
+      openRight: false
+      negativeInfinity: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "uses_nohttp"
+    expectedNotApplicableScore: false
 
-# doesn't use nohttp
-- type: "StandardTestVector"
-  values:
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If a project uses nohttp tool"
-      flag: false
-    - type: "PackageManagersValue"
-      feature:
-        type: "PackageManagersFeature"
-        name: "A set of package managers"
-      packageManagers:
+  # doesn't use nohttp
+  - type: "StandardTestVector"
+    values:
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses nohttp tool"
+        flag: false
+      - type: "PackageManagersValue"
+        feature:
+          type: "PackageManagersFeature"
+          name: "A set of package managers"
         packageManagers:
-          - "GRADLE"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 0.0
-    to: 1.0
-    openLeft: false
-    openRight: false
-    negativeInfinity: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "does_not_use_nohttp"
-  expectedNotApplicableScore: false
+          packageManagers:
+            - "GRADLE"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      to: 1.0
+      openLeft: false
+      openRight: false
+      negativeInfinity: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "does_not_use_nohttp"
+    expectedNotApplicableScore: false
 
-# doesn't know whether nohttp is used or not, but it may be used with Maven
-- type: "StandardTestVector"
-  values:
-    - type: "PackageManagersValue"
-      feature:
-        type: "PackageManagersFeature"
-        name: "A set of package managers"
-      packageManagers:
+  # doesn't know whether nohttp is used or not, but it may be used with Maven
+  - type: "StandardTestVector"
+    values:
+      - type: "PackageManagersValue"
+        feature:
+          type: "PackageManagersFeature"
+          name: "A set of package managers"
         packageManagers:
-          - "MAVEN"
-    - type: "UnknownValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If a project uses nohttp tool"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 0.0
-    to: 1.0
-    openLeft: false
-    openRight: false
-    negativeInfinity: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "unknown_but_maven"
-  expectedNotApplicableScore: false
+          packageManagers:
+            - "MAVEN"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses nohttp tool"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      to: 1.0
+      openLeft: false
+      openRight: false
+      negativeInfinity: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "unknown_but_maven"
+    expectedNotApplicableScore: false
 
-# doesn't know whether nohttp is used or not, but it may be used with Gradle
-- type: "StandardTestVector"
-  values:
-    - type: "PackageManagersValue"
-      feature:
-        type: "PackageManagersFeature"
-        name: "A set of package managers"
-      packageManagers:
+  # doesn't know whether nohttp is used or not, but it may be used with Gradle
+  - type: "StandardTestVector"
+    values:
+      - type: "PackageManagersValue"
+        feature:
+          type: "PackageManagersFeature"
+          name: "A set of package managers"
         packageManagers:
-          - "GRADLE"
-    - type: "UnknownValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If a project uses nohttp tool"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 0.0
-    to: 1.0
-    openLeft: false
-    openRight: false
-    negativeInfinity: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "unknown_but_gradle"
-  expectedNotApplicableScore: false
+          packageManagers:
+            - "GRADLE"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses nohttp tool"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      to: 1.0
+      openLeft: false
+      openRight: false
+      negativeInfinity: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "unknown_but_gradle"
+    expectedNotApplicableScore: false
 
-# doesn't know whether nohttp is used or not, but it may be used
-- type: "StandardTestVector"
-  values:
-    - type: "PackageManagersValue"
-      feature:
-        type: "PackageManagersFeature"
-        name: "A set of package managers"
-      packageManagers:
+  # doesn't know whether nohttp is used or not, but it may be used
+  - type: "StandardTestVector"
+    values:
+      - type: "PackageManagersValue"
+        feature:
+          type: "PackageManagersFeature"
+          name: "A set of package managers"
         packageManagers:
-          - "NPM"
-    - type: "UnknownValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If a project uses nohttp tool"
-  expectedScore: null
-  expectedLabel: null
-  alias: "unknown_but_unsupported_package_manager"
-  expectedNotApplicableScore: true
+          packageManagers:
+            - "NPM"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If a project uses nohttp tool"
+    expectedScore: null
+    expectedLabel: null
+    alias: "unknown_but_unsupported_package_manager"
+    expectedNotApplicableScore: true

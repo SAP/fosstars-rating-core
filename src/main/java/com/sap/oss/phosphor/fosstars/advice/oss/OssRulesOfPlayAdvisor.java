@@ -23,7 +23,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * An advisor for {@link com.sap.oss.phosphor.fosstars.model.rating.oss.OssRulesOfPlayRating}.
+ * An advisor for {@link OssRulesOfPlayRating}.
  */
 public class OssRulesOfPlayAdvisor extends AbstractOssAdvisor {
 

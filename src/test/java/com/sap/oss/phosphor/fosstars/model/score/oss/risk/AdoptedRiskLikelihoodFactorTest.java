@@ -2,9 +2,9 @@ package com.sap.oss.phosphor.fosstars.model.score.oss.risk;
 
 import static com.sap.oss.phosphor.fosstars.TestUtils.DELTA;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.IS_ADOPTED;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Score;
@@ -12,7 +12,7 @@ import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class AdoptedRiskLikelihoodFactorTest {
 
@@ -20,16 +20,16 @@ public class AdoptedRiskLikelihoodFactorTest {
 
   @Test
   public void testJsonSerialization() throws IOException {
-    AdoptedRiskLikelihoodFactor clone
-        = Json.read(Json.toBytes(SCORE), AdoptedRiskLikelihoodFactor.class);
+    AdoptedRiskLikelihoodFactor clone =
+        Json.read(Json.toBytes(SCORE), AdoptedRiskLikelihoodFactor.class);
     assertTrue(SCORE.equals(clone) && clone.equals(SCORE));
     assertEquals(SCORE.hashCode(), clone.hashCode());
   }
 
   @Test
   public void testYamlSerialization() throws IOException {
-    AdoptedRiskLikelihoodFactor clone
-        = Yaml.read(Yaml.toBytes(SCORE), AdoptedRiskLikelihoodFactor.class);
+    AdoptedRiskLikelihoodFactor clone =
+        Yaml.read(Yaml.toBytes(SCORE), AdoptedRiskLikelihoodFactor.class);
     assertEquals(clone, SCORE);
   }
 

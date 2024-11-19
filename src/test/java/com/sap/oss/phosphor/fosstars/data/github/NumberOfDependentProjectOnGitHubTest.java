@@ -3,37 +3,19 @@ package com.sap.oss.phosphor.fosstars.data.github;
 import static com.sap.oss.phosphor.fosstars.TestUtils.PROJECT;
 import static com.sap.oss.phosphor.fosstars.data.github.NumberOfDependentProjectOnGitHub.numberFrom;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.NUMBER_OF_DEPENDENT_PROJECTS_ON_GITHUB;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.io.IOException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class NumberOfDependentProjectOnGitHubTest extends TestGitHubDataFetcherHolder {
-
-  private static class TestProvider extends NumberOfDependentProjectOnGitHub {
-
-    private String content;
-
-    public TestProvider(GitHubDataFetcher fetcher) throws IOException {
-      super(fetcher);
-    }
-
-    void set(String content) {
-      this.content = content;
-    }
-
-    @Override
-    Element loadFrontPageOf(GitHubProject project) {
-      return Jsoup.parse(content);
-    }
-  }
 
   @Test
   public void testSupportedFeature() throws IOException {
@@ -59,8 +41,7 @@ public class NumberOfDependentProjectOnGitHubTest extends TestGitHubDataFetcherH
     Value<Integer> value = provider.fetchValueFor(PROJECT);
     assertTrue(value.isUnknown());
 
-    provider.set(
-        "<a href=\"/test/project/network/dependents?package_id=xyz\">nothing</a>");
+    provider.set("<a href=\"/test/project/network/dependents?package_id=xyz\">nothing</a>");
     value = provider.fetchValueFor(PROJECT);
     assertTrue(value.isUnknown());
 
@@ -91,5 +72,23 @@ public class NumberOfDependentProjectOnGitHubTest extends TestGitHubDataFetcherH
     value = provider.fetchValueFor(PROJECT);
     assertFalse(value.isUnknown());
     assertEquals(423030, (int) value.get());
+  }
+
+  private static class TestProvider extends NumberOfDependentProjectOnGitHub {
+
+    private String content;
+
+    public TestProvider(GitHubDataFetcher fetcher) throws IOException {
+      super(fetcher);
+    }
+
+    void set(String content) {
+      this.content = content;
+    }
+
+    @Override
+    Element loadFrontPageOf(GitHubProject project) {
+      return Jsoup.parse(content);
+    }
   }
 }

@@ -2,8 +2,8 @@ package com.sap.oss.phosphor.fosstars.data.github;
 
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_CONTRIBUTING_GUIDELINE;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_REQUIRED_TEXT_IN_CONTRIBUTING_GUIDELINE;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -19,9 +19,16 @@ import java.nio.file.Paths;
 import java.util.Optional;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ContributingGuidelineInfoTest extends TestGitHubDataFetcherHolder {
+
+  private static void checkValue(ValueSet values, Feature<Boolean> feature, boolean expected) {
+    Optional<Value<Boolean>> something = values.of(feature);
+    assertTrue(something.isPresent());
+    Value<Boolean> value = something.get();
+    assertEquals(expected, value.get());
+  }
 
   @Test
   public void testSupportedFeatures() throws IOException {
@@ -35,8 +42,13 @@ public class ContributingGuidelineInfoTest extends TestGitHubDataFetcherHolder {
     GitHubProject project = new GitHubProject("test", "project");
     LocalRepository localRepository = mock(LocalRepository.class);
     when(localRepository.readTextFrom("CONTRIBUTING.md"))
-        .thenReturn(Optional.of(String.join("\n",
-            "Here is how to contribute to the project.", "This is the text.", "Extra text")));
+        .thenReturn(
+            Optional.of(
+                String.join(
+                    "\n",
+                    "Here is how to contribute to the project.",
+                    "This is the text.",
+                    "Extra text")));
     TestGitHubDataFetcher.addForTesting(project, localRepository);
 
     ContributingGuidelineInfo provider = new ContributingGuidelineInfo(fetcher);
@@ -47,8 +59,10 @@ public class ContributingGuidelineInfoTest extends TestGitHubDataFetcherHolder {
     checkValue(values, HAS_REQUIRED_TEXT_IN_CONTRIBUTING_GUIDELINE, true);
 
     when(localRepository.readTextFrom("HOW_TO_CONTRIBUTE.md"))
-        .thenReturn(Optional.of(String.join("\n",
-            "Here is how to contribute to the project.", "This is the text.")));
+        .thenReturn(
+            Optional.of(
+                String.join(
+                    "\n", "Here is how to contribute to the project.", "This is the text.")));
 
     provider.knownContributingGuidelineFiles("HOW_TO_CONTRIBUTE.md");
     provider.requiredContentPatterns("Extra text.");
@@ -76,22 +90,29 @@ public class ContributingGuidelineInfoTest extends TestGitHubDataFetcherHolder {
     GitHubProject project = new GitHubProject("test", "project");
     LocalRepository localRepository = mock(LocalRepository.class);
     when(localRepository.readTextFrom("CONTRIBUTING.md"))
-        .thenReturn(Optional.of(String.join("\n",
-            "Here is how to contribute to the project.",
-            "## Contributor License Agreement",
-            "This is the text.")))
-        .thenReturn(Optional.of(String.join("\n",
-            "Here is how to contribute to the project.",
-            "## Developer Certificate of Origin",
-            "This is the text.")));
+        .thenReturn(
+            Optional.of(
+                String.join(
+                    "\n",
+                    "Here is how to contribute to the project.",
+                    "## Contributor License Agreement",
+                    "This is the text.")))
+        .thenReturn(
+            Optional.of(
+                String.join(
+                    "\n",
+                    "Here is how to contribute to the project.",
+                    "## Developer Certificate of Origin",
+                    "This is the text.")));
     TestGitHubDataFetcher.addForTesting(project, localRepository);
 
     ContributingGuidelineInfo provider = new ContributingGuidelineInfo(fetcher);
-    provider.configure(IOUtils.toInputStream(
-                    "---\n"
-                  + "requiredContentPatterns:\n"
-                  + "  - \"Developer Certificate of Origin\"\n"
-                  + "  - \"(?!Contributor(\\\\s+)License(\\\\s+)Agreement)\""));
+    provider.configure(
+        IOUtils.toInputStream(
+            "---\n"
+                + "requiredContentPatterns:\n"
+                + "  - \"Developer Certificate of Origin\"\n"
+                + "  - \"(?!Contributor(\\\\s+)License(\\\\s+)Agreement)\""));
 
     ValueSet values = provider.fetchValuesFor(project);
     checkValue(values, HAS_CONTRIBUTING_GUIDELINE, true);
@@ -104,10 +125,10 @@ public class ContributingGuidelineInfoTest extends TestGitHubDataFetcherHolder {
 
   @Test
   public void testLoadingDefaultConfig() throws IOException {
-    Path config = Paths.get(String.format("%s.config.yml",
-        ContributingGuidelineInfo.class.getSimpleName()));
+    Path config =
+        Paths.get(String.format("%s.config.yml", ContributingGuidelineInfo.class.getSimpleName()));
     String content =
-              "---\n"
+        "---\n"
             + "requiredContentPatterns:\n"
             + "  - \"Developer Certificate of Origin\"\n"
             + "  - \"(?!Contributor(\\\\s+)License(\\\\s+)Agreement)\"";
@@ -116,8 +137,7 @@ public class ContributingGuidelineInfoTest extends TestGitHubDataFetcherHolder {
       ContributingGuidelineInfo provider = new ContributingGuidelineInfo(fetcher);
       assertEquals(2, provider.requiredContentPatterns().size());
       assertEquals(
-          "Developer Certificate of Origin",
-          provider.requiredContentPatterns().get(0).pattern());
+          "Developer Certificate of Origin", provider.requiredContentPatterns().get(0).pattern());
       assertEquals(
           "(?!Contributor(\\s+)License(\\s+)Agreement)",
           provider.requiredContentPatterns().get(1).pattern());
@@ -125,12 +145,4 @@ public class ContributingGuidelineInfoTest extends TestGitHubDataFetcherHolder {
       FileUtils.forceDeleteOnExit(config.toFile());
     }
   }
-
-  private static void checkValue(ValueSet values, Feature<Boolean> feature, boolean expected) {
-    Optional<Value<Boolean>> something = values.of(feature);
-    assertTrue(something.isPresent());
-    Value<Boolean> value = something.get();
-    assertEquals(expected, value.get());
-  }
-
 }

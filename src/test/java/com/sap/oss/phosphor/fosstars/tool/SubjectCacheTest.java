@@ -1,9 +1,9 @@
 package com.sap.oss.phosphor.fosstars.tool;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.rating.example.SecurityRatingExample.SecurityLabelExample;
 import com.sap.oss.phosphor.fosstars.model.score.example.ExampleScores;
@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class SubjectCacheTest {
 
@@ -24,9 +24,9 @@ public class SubjectCacheTest {
     SubjectCache cache = SubjectCache.empty();
 
     GitHubProject project = new GitHubProject(new GitHubOrganization("netty"), "netty");
-    RatingValue ratingValue = new RatingValue(
-        new ScoreValue(ExampleScores.SECURITY_SCORE_EXAMPLE),
-        SecurityLabelExample.OKAY);
+    RatingValue ratingValue =
+        new RatingValue(
+            new ScoreValue(ExampleScores.SECURITY_SCORE_EXAMPLE), SecurityLabelExample.OKAY);
     project.set(ratingValue);
 
     cache.add(project);
@@ -50,9 +50,9 @@ public class SubjectCacheTest {
     assertEquals(0, cache.size());
 
     GitHubProject project = new GitHubProject(new GitHubOrganization("netty"), "netty");
-    RatingValue ratingValue = new RatingValue(
-        new ScoreValue(ExampleScores.SECURITY_SCORE_EXAMPLE),
-        SecurityLabelExample.OKAY);
+    RatingValue ratingValue =
+        new RatingValue(
+            new ScoreValue(ExampleScores.SECURITY_SCORE_EXAMPLE), SecurityLabelExample.OKAY);
     project.set(ratingValue);
 
     Optional<RatingValue> something = cache.cachedRatingValueFor(project);

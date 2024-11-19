@@ -2,9 +2,9 @@ package com.sap.oss.phosphor.fosstars.data.artifact;
 
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.ARTIFACT_VERSION;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.RELEASED_ARTIFACT_VERSIONS;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -21,7 +21,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ReleaseInfoFromMavenTest {
 
@@ -62,8 +62,8 @@ public class ReleaseInfoFromMavenTest {
     HttpEntity entity = mock(HttpEntity.class);
     when(response.getEntity()).thenReturn(entity);
 
-    try (InputStream content = getClass().getResourceAsStream(
-        "ReleaseInfoFromMavenNoArtifactInList.html")) {
+    try (InputStream content =
+             getClass().getResourceAsStream("ReleaseInfoFromMavenNoArtifactInList.html")) {
       when(entity.getContent()).thenReturn(content);
       processProviderNotFoundInList(provider);
     }

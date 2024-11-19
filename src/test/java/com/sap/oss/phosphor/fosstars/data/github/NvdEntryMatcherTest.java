@@ -1,12 +1,12 @@
 package com.sap.oss.phosphor.fosstars.data.github;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import java.net.URI;
 import java.net.URISyntaxException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class NvdEntryMatcherTest {
 

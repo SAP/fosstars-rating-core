@@ -1,9 +1,9 @@
 package com.sap.oss.phosphor.fosstars.tool;
 
 import static com.sap.oss.phosphor.fosstars.TestUtils.DELTA;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.spy;
 
 import com.sap.oss.phosphor.fosstars.data.NoUserCallback;
@@ -18,20 +18,29 @@ import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class MultipleRatingsCalculatorTest extends TestGitHubDataFetcherHolder {
+
+  private static void check(RatingValue ratingValue) {
+    assertEquals(SecurityLabel.UNCLEAR, ratingValue.label());
+    assertEquals(
+        Confidence.MIN,
+        Double.compare(Confidence.MIN, ratingValue.scoreValue().confidence()),
+        DELTA);
+    assertTrue(ratingValue.scoreValue().isUnknown());
+  }
 
   @Test
   public void testCalculateFor() {
     Rating rating = RatingRepository.INSTANCE.rating(OssSecurityRating.class);
 
-    SingleRatingCalculator singleRatingCalculator
-        = new SingleRatingCalculator(rating, Collections.emptyList());
+    SingleRatingCalculator singleRatingCalculator =
+        new SingleRatingCalculator(rating, Collections.emptyList());
     singleRatingCalculator.set(NoUserCallback.INSTANCE);
 
-    MultipleRatingsCalculator multipleRatingsCalculator
-        = new MultipleRatingsCalculator(singleRatingCalculator);
+    MultipleRatingsCalculator multipleRatingsCalculator =
+        new MultipleRatingsCalculator(singleRatingCalculator);
     multipleRatingsCalculator = spy(multipleRatingsCalculator);
 
     GitHubProject apacheNiFi = new GitHubProject("apache", "nifi");
@@ -50,14 +59,5 @@ public class MultipleRatingsCalculatorTest extends TestGitHubDataFetcherHolder {
     check(eclipseSteady.ratingValue().get());
 
     assertTrue(multipleRatingsCalculator.failedSubjects().isEmpty());
-  }
-
-  private static void check(RatingValue ratingValue) {
-    assertEquals(SecurityLabel.UNCLEAR, ratingValue.label());
-    assertEquals(
-        Confidence.MIN,
-        Double.compare(Confidence.MIN, ratingValue.scoreValue().confidence()),
-        DELTA);
-    assertTrue(ratingValue.scoreValue().isUnknown());
   }
 }

@@ -1,9 +1,9 @@
 package com.sap.oss.phosphor.fosstars.model.subject.oss;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,7 +11,7 @@ import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class GitHubOrganizationTest {
 
@@ -50,11 +50,11 @@ public class GitHubOrganizationTest {
     GitHubOrganization org = new GitHubOrganization("test");
     List<GitHubOrganization> list = Collections.singletonList(org);
     ObjectMapper mapper = Json.mapper();
-    TypeReference<List<GitHubOrganization>> typeReference
-        = new TypeReference<List<GitHubOrganization>>() {};
+    TypeReference<List<GitHubOrganization>> typeReference =
+        new TypeReference<List<GitHubOrganization>>() {
+        };
     byte[] bytes = mapper.writerFor(typeReference).writeValueAsBytes(list);
     List<GitHubOrganization> clone = mapper.readValue(bytes, typeReference);
     assertEquals(list, clone);
   }
-
 }

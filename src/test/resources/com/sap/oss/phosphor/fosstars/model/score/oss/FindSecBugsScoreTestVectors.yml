@@ -1,5 +1,5 @@
 ---
-defaults: []
+defaults: [ ]
 elements:
   - type: "StandardTestVector"
     values:

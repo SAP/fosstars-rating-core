@@ -15,9 +15,9 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.HA
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.INTEGRITY_IMPACT;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.IS_ADOPTED;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.PROJECT_USAGE;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Score;
@@ -29,25 +29,39 @@ import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import com.sap.oss.phosphor.fosstars.util.Yaml;
 import java.io.IOException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class CalculatedSecurityRiskIntroducedByOssTest {
 
-  private static final CalculatedSecurityRiskIntroducedByOss SCORE
-      = new CalculatedSecurityRiskIntroducedByOss();
+  private static final CalculatedSecurityRiskIntroducedByOss SCORE =
+      new CalculatedSecurityRiskIntroducedByOss();
+
+  public static ValueSet defaultValues() {
+    ValueSet values = new ValueHashSet();
+    values.update(OssSecurityScoreTest.defaultValues());
+    values.update(PROJECT_USAGE.value(QUITE_A_LOT));
+    values.update(FUNCTIONALITY.value(NETWORKING));
+    values.update(HANDLING_UNTRUSTED_DATA_LIKELIHOOD.value(MEDIUM));
+    values.update(IS_ADOPTED.no());
+    values.update(DATA_CONFIDENTIALITY.value(INTERNAL));
+    values.update(CONFIDENTIALITY_IMPACT.value(LOW));
+    values.update(INTEGRITY_IMPACT.value(LOW));
+    values.update(AVAILABILITY_IMPACT.value(HIGH));
+    return values;
+  }
 
   @Test
   public void testJsonSerialization() throws IOException {
-    CalculatedSecurityRiskIntroducedByOss clone
-        = Json.read(Json.toBytes(SCORE), CalculatedSecurityRiskIntroducedByOss.class);
+    CalculatedSecurityRiskIntroducedByOss clone =
+        Json.read(Json.toBytes(SCORE), CalculatedSecurityRiskIntroducedByOss.class);
     assertTrue(SCORE.equals(clone) && clone.equals(SCORE));
     assertEquals(SCORE.hashCode(), clone.hashCode());
   }
 
   @Test
   public void testYamlSerialization() throws IOException {
-    CalculatedSecurityRiskIntroducedByOss clone
-        = Yaml.read(Yaml.toBytes(SCORE), CalculatedSecurityRiskIntroducedByOss.class);
+    CalculatedSecurityRiskIntroducedByOss clone =
+        Yaml.read(Yaml.toBytes(SCORE), CalculatedSecurityRiskIntroducedByOss.class);
     assertEquals(clone, SCORE);
   }
 
@@ -71,19 +85,5 @@ public class CalculatedSecurityRiskIntroducedByOssTest {
     ScoreValue clone = Json.read(Json.toBytes(scoreValue), ScoreValue.class);
     assertTrue(scoreValue.equals(clone) && clone.equals(scoreValue));
     assertEquals(scoreValue.hashCode(), clone.hashCode());
-  }
-
-  public static ValueSet defaultValues() {
-    ValueSet values = new ValueHashSet();
-    values.update(OssSecurityScoreTest.defaultValues());
-    values.update(PROJECT_USAGE.value(QUITE_A_LOT));
-    values.update(FUNCTIONALITY.value(NETWORKING));
-    values.update(HANDLING_UNTRUSTED_DATA_LIKELIHOOD.value(MEDIUM));
-    values.update(IS_ADOPTED.no());
-    values.update(DATA_CONFIDENTIALITY.value(INTERNAL));
-    values.update(CONFIDENTIALITY_IMPACT.value(LOW));
-    values.update(INTEGRITY_IMPACT.value(LOW));
-    values.update(AVAILABILITY_IMPACT.value(HIGH));
-    return values;
   }
 }

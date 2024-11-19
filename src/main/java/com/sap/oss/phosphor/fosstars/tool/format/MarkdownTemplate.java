@@ -37,7 +37,7 @@ public class MarkdownTemplate extends AbstractMarkdownElement {
 
   @Override
   public String make() {
-    String[] renderedParameters = new String[parameters.size()];
+    Object[] renderedParameters = new Object[parameters.size()];
     for (int i = 0; i < parameters.size(); i++) {
       renderedParameters[i] = parameters.get(i).make();
     }

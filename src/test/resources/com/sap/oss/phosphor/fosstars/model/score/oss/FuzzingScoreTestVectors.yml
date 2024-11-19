@@ -1,222 +1,222 @@
 ---
-defaults: []
+defaults: [ ]
 elements:
-- type: "StandardTestVector"
-  values:
-    - type: "UnknownValue"
-      feature:
-        type: "LanguagesFeature"
-        name: "A set of programming languages"
-    - type: "UnknownValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project is included to OSS-Fuzz project"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 0.0
-    openLeft: false
-    negativeInfinity: false
-    to: 0.1
-    openRight: false
-    positiveInfinity: false
-  expectedUnknownScore: true
-  expectedLabel: null
-  alias: "all_unknown"
+  - type: "StandardTestVector"
+    values:
+      - type: "UnknownValue"
+        feature:
+          type: "LanguagesFeature"
+          name: "A set of programming languages"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project is included to OSS-Fuzz project"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 0.1
+      openRight: false
+      positiveInfinity: false
+    expectedUnknownScore: true
+    expectedLabel: null
+    alias: "all_unknown"
 
-- type: "StandardTestVector"
-  values:
-    - type: "LanguagesValue"
-      feature:
-        type: "LanguagesFeature"
-        name: "A set of programming languages"
-      languages:
-        elements:
-        - "JAVA"
-    - type: "UnknownValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project is included to OSS-Fuzz project"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 0.0
-    openLeft: false
-    negativeInfinity: false
-    to: 0.1
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  expectedNotApplicableScore: true
-  alias: "java"
+  - type: "StandardTestVector"
+    values:
+      - type: "LanguagesValue"
+        feature:
+          type: "LanguagesFeature"
+          name: "A set of programming languages"
+        languages:
+          elements:
+            - "JAVA"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project is included to OSS-Fuzz project"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 0.1
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    expectedNotApplicableScore: true
+    alias: "java"
 
-- type: "StandardTestVector"
-  values:
-    - type: "LanguagesValue"
-      feature:
-        type: "LanguagesFeature"
-        name: "A set of programming languages"
-      languages:
-        elements:
-        - "PYTHON"
-    - type: "UnknownValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project is included to OSS-Fuzz project"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 0.0
-    openLeft: false
-    negativeInfinity: false
-    to: 0.1
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  expectedNotApplicableScore: true
-  alias: "python"
+  - type: "StandardTestVector"
+    values:
+      - type: "LanguagesValue"
+        feature:
+          type: "LanguagesFeature"
+          name: "A set of programming languages"
+        languages:
+          elements:
+            - "PYTHON"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project is included to OSS-Fuzz project"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 0.1
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    expectedNotApplicableScore: true
+    alias: "python"
 
-- type: "StandardTestVector"
-  values:
-  - type: "LanguagesValue"
-    feature:
-      type: "LanguagesFeature"
-      name: "A set of programming languages"
-    languages:
-      elements:
-      - "CPP"
-  - type: "BooleanValue"
-    feature:
-      type: "BooleanFeature"
-      name: "If an open-source project is included to OSS-Fuzz project"
-    flag: false
-  expectedScore:
-    type: "DoubleInterval"
-    from: 0.0
-    openLeft: false
-    negativeInfinity: false
-    to: 0.1
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "cpp_not_fuzzed_in_oss_fuzz"
+  - type: "StandardTestVector"
+    values:
+      - type: "LanguagesValue"
+        feature:
+          type: "LanguagesFeature"
+          name: "A set of programming languages"
+        languages:
+          elements:
+            - "CPP"
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project is included to OSS-Fuzz project"
+        flag: false
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 0.1
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "cpp_not_fuzzed_in_oss_fuzz"
 
-- type: "StandardTestVector"
-  values:
-    - type: "LanguagesValue"
-      feature:
-        type: "LanguagesFeature"
-        name: "A set of programming languages"
-      languages:
-        elements:
-          - "CPP"
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project is included to OSS-Fuzz project"
-      flag: true
-  expectedScore:
-    type: "DoubleInterval"
-    from: 9.9
-    openLeft: false
-    negativeInfinity: false
-    to: 10.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "cpp_fuzzed_in_oss_fuzz"
+  - type: "StandardTestVector"
+    values:
+      - type: "LanguagesValue"
+        feature:
+          type: "LanguagesFeature"
+          name: "A set of programming languages"
+        languages:
+          elements:
+            - "CPP"
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project is included to OSS-Fuzz project"
+        flag: true
+    expectedScore:
+      type: "DoubleInterval"
+      from: 9.9
+      openLeft: false
+      negativeInfinity: false
+      to: 10.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "cpp_fuzzed_in_oss_fuzz"
 
-- type: "StandardTestVector"
-  values:
-    - type: "LanguagesValue"
-      feature:
-        type: "LanguagesFeature"
-        name: "A set of programming languages"
-      languages:
-        elements:
-          - "CPP"
-    - type: "UnknownValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project is included to OSS-Fuzz project"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 0.0
-    openLeft: false
-    negativeInfinity: false
-    to: 0.1
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "cpp_unknown"
+  - type: "StandardTestVector"
+    values:
+      - type: "LanguagesValue"
+        feature:
+          type: "LanguagesFeature"
+          name: "A set of programming languages"
+        languages:
+          elements:
+            - "CPP"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project is included to OSS-Fuzz project"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 0.1
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "cpp_unknown"
 
-- type: "StandardTestVector"
-  values:
-    - type: "LanguagesValue"
-      feature:
-        type: "LanguagesFeature"
-        name: "A set of programming languages"
-      languages:
-        elements:
-          - "C"
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project is included to OSS-Fuzz project"
-      flag: false
-  expectedScore:
-    type: "DoubleInterval"
-    from: 0.0
-    openLeft: false
-    negativeInfinity: false
-    to: 0.1
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "c_not_fuzzed_in_oss_fuzz"
+  - type: "StandardTestVector"
+    values:
+      - type: "LanguagesValue"
+        feature:
+          type: "LanguagesFeature"
+          name: "A set of programming languages"
+        languages:
+          elements:
+            - "C"
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project is included to OSS-Fuzz project"
+        flag: false
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 0.1
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "c_not_fuzzed_in_oss_fuzz"
 
-- type: "StandardTestVector"
-  values:
-    - type: "LanguagesValue"
-      feature:
-        type: "LanguagesFeature"
-        name: "A set of programming languages"
-      languages:
-        elements:
-          - "C"
-    - type: "BooleanValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project is included to OSS-Fuzz project"
-      flag: true
-  expectedScore:
-    type: "DoubleInterval"
-    from: 9.9
-    openLeft: false
-    negativeInfinity: false
-    to: 10.0
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "c_fuzzed_in_oss_fuzz"
+  - type: "StandardTestVector"
+    values:
+      - type: "LanguagesValue"
+        feature:
+          type: "LanguagesFeature"
+          name: "A set of programming languages"
+        languages:
+          elements:
+            - "C"
+      - type: "BooleanValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project is included to OSS-Fuzz project"
+        flag: true
+    expectedScore:
+      type: "DoubleInterval"
+      from: 9.9
+      openLeft: false
+      negativeInfinity: false
+      to: 10.0
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "c_fuzzed_in_oss_fuzz"
 
-- type: "StandardTestVector"
-  values:
-    - type: "LanguagesValue"
-      feature:
-        type: "LanguagesFeature"
-        name: "A set of programming languages"
-      languages:
-        elements:
-          - "C"
-    - type: "UnknownValue"
-      feature:
-        type: "BooleanFeature"
-        name: "If an open-source project is included to OSS-Fuzz project"
-  expectedScore:
-    type: "DoubleInterval"
-    from: 0.0
-    openLeft: false
-    negativeInfinity: false
-    to: 0.1
-    openRight: false
-    positiveInfinity: false
-  expectedLabel: null
-  alias: "c_unknown"
+  - type: "StandardTestVector"
+    values:
+      - type: "LanguagesValue"
+        feature:
+          type: "LanguagesFeature"
+          name: "A set of programming languages"
+        languages:
+          elements:
+            - "C"
+      - type: "UnknownValue"
+        feature:
+          type: "BooleanFeature"
+          name: "If an open-source project is included to OSS-Fuzz project"
+    expectedScore:
+      type: "DoubleInterval"
+      from: 0.0
+      openLeft: false
+      negativeInfinity: false
+      to: 0.1
+      openRight: false
+      positiveInfinity: false
+    expectedLabel: null
+    alias: "c_unknown"

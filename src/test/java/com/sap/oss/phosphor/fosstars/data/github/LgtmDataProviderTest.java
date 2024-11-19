@@ -2,9 +2,9 @@ package com.sap.oss.phosphor.fosstars.data.github;
 
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_LGTM_CHECKS;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_LGTM_GRADE;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -20,7 +20,7 @@ import java.io.InputStream;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.kohsuke.github.GHCheckRun;
 import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHRepository;
@@ -130,7 +130,7 @@ public class LgtmDataProviderTest extends TestGitHubDataFetcherHolder {
     when(repository.listCommits()).thenReturn(commitPagedIterable);
 
     try (InputStream content =
-        getClass().getResourceAsStream("LgtmProjectDoesNotExistReply.json")) {
+             getClass().getResourceAsStream("LgtmProjectDoesNotExistReply.json")) {
 
       when(entity.getContent()).thenReturn(content);
 
@@ -151,5 +151,4 @@ public class LgtmDataProviderTest extends TestGitHubDataFetcherHolder {
       assertTrue(values.of(WORST_LGTM_GRADE).get().isUnknown());
     }
   }
-
 }

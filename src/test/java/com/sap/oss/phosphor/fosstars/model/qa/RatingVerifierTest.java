@@ -1,10 +1,11 @@
 package com.sap.oss.phosphor.fosstars.model.qa;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
 import com.sap.oss.phosphor.fosstars.model.feature.example.ExampleFeatures;
@@ -16,20 +17,21 @@ import com.sap.oss.phosphor.fosstars.model.rating.example.SecurityRatingExampleV
 import com.sap.oss.phosphor.fosstars.model.value.BooleanValue;
 import com.sap.oss.phosphor.fosstars.model.value.IntegerValue;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class RatingVerifierTest {
 
   // an extra test vector which is supposed to fail
-  private static final TestVector FAILING_TEST_VECTOR = TestVectorBuilder.newTestVector()
-      .set(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1))
-      .set(new IntegerValue(ExampleFeatures.NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, 1))
-      .set(new BooleanValue(ExampleFeatures.SECURITY_REVIEW_DONE_EXAMPLE, false))
-      .set(new BooleanValue(ExampleFeatures.STATIC_CODE_ANALYSIS_DONE_EXAMPLE, false))
-      .expectedScore(DoubleInterval.init().from(9).to(10).make())
-      .expectedLabel(SecurityLabelExample.AWESOME)
-      .alias("test")
-      .make();
+  private static final TestVector FAILING_TEST_VECTOR =
+      TestVectorBuilder.newTestVector()
+          .set(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1))
+          .set(new IntegerValue(ExampleFeatures.NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, 1))
+          .set(new BooleanValue(ExampleFeatures.SECURITY_REVIEW_DONE_EXAMPLE, false))
+          .set(new BooleanValue(ExampleFeatures.STATIC_CODE_ANALYSIS_DONE_EXAMPLE, false))
+          .expectedScore(DoubleInterval.init().from(9).to(10).make())
+          .expectedLabel(SecurityLabelExample.AWESOME)
+          .alias("test")
+          .make();
 
   private static final TestVectors TEST_VECTORS = new TestVectors();
 
@@ -40,9 +42,9 @@ public class RatingVerifierTest {
 
   @Test
   public void failedVectors() {
-    RatingVerifier verifier = new RatingVerifier(
-        RatingRepository.INSTANCE.rating(SecurityRatingExample.class),
-        TEST_VECTORS);
+    RatingVerifier verifier =
+        new RatingVerifier(
+            RatingRepository.INSTANCE.rating(SecurityRatingExample.class), TEST_VECTORS);
 
     List<TestVectorResult> results = verifier.run();
 
@@ -65,20 +67,21 @@ public class RatingVerifierTest {
 
   @Test
   public void testWithNotApplicableScoreValue() {
-    StandardTestVector vector = TestVectorBuilder.newTestVector()
-        .alias("test")
-        .set(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1))
-        .set(new IntegerValue(ExampleFeatures.NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, 1))
-        .set(new BooleanValue(ExampleFeatures.SECURITY_REVIEW_DONE_EXAMPLE, false))
-        .set(new BooleanValue(ExampleFeatures.STATIC_CODE_ANALYSIS_DONE_EXAMPLE, false))
-        .expectNotApplicableScore()
-        .make();
+    StandardTestVector vector =
+        TestVectorBuilder.newTestVector()
+            .alias("test")
+            .set(new IntegerValue(ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE, 1))
+            .set(new IntegerValue(ExampleFeatures.NUMBER_OF_CONTRIBUTORS_LAST_MONTH_EXAMPLE, 1))
+            .set(new BooleanValue(ExampleFeatures.SECURITY_REVIEW_DONE_EXAMPLE, false))
+            .set(new BooleanValue(ExampleFeatures.STATIC_CODE_ANALYSIS_DONE_EXAMPLE, false))
+            .expectNotApplicableScore()
+            .make();
 
     assertTrue(vector.expectsNotApplicableScore());
 
-    RatingVerifier verifier = new RatingVerifier(
-        RatingRepository.INSTANCE.rating(SecurityRatingExample.class),
-        new TestVectors(vector));
+    RatingVerifier verifier =
+        new RatingVerifier(
+            RatingRepository.INSTANCE.rating(SecurityRatingExample.class), new TestVectors(vector));
 
     List<TestVectorResult> results = verifier.run();
 
@@ -89,13 +92,16 @@ public class RatingVerifierTest {
     assertFalse(result.scoreValue.isNotApplicable());
   }
 
-  @Test(expected = VerificationFailedException.class)
-  public void run() throws VerificationFailedException {
-    RatingVerifier verifier = new RatingVerifier(
-        RatingRepository.INSTANCE.rating(SecurityRatingExample.class),
-        TEST_VECTORS);
+  @Test
+  public void run() {
+    assertThrows(
+        VerificationFailedException.class,
+        () -> {
+          RatingVerifier verifier =
+              new RatingVerifier(
+                  RatingRepository.INSTANCE.rating(SecurityRatingExample.class), TEST_VECTORS);
 
-    verifier.verify();
+          verifier.verify();
+        });
   }
-
 }

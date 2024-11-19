@@ -3,7 +3,7 @@ package com.sap.oss.phosphor.fosstars.model.score.oss.risk;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssRiskFeatures.IS_ADOPTED;
 import static com.sap.oss.phosphor.fosstars.model.qa.TestScoreValue.testScoreValue;
 import static com.sap.oss.phosphor.fosstars.model.qa.TestVectorBuilder.newTestVector;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.sap.oss.phosphor.fosstars.TestUtils;
 import com.sap.oss.phosphor.fosstars.model.RatingRepository;
@@ -15,7 +15,7 @@ import com.sap.oss.phosphor.fosstars.model.qa.VerificationFailedException;
 import com.sap.oss.phosphor.fosstars.model.rating.oss.SecurityRiskIntroducedByOss;
 import com.sap.oss.phosphor.fosstars.model.score.oss.OssSecurityScore;
 import java.util.Optional;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class RiskLikelihoodCoefficientVerificationTest {
 
@@ -51,9 +51,10 @@ public class RiskLikelihoodCoefficientVerificationTest {
             .expectedScore(DoubleInterval.closed(9.5, 10))
             .make());
 
-    Optional<RiskLikelihoodCoefficient> score = TestUtils.find(
-        RiskLikelihoodCoefficient.class,
-        RatingRepository.INSTANCE.rating(SecurityRiskIntroducedByOss.class));
+    Optional<RiskLikelihoodCoefficient> score =
+        TestUtils.find(
+            RiskLikelihoodCoefficient.class,
+            RatingRepository.INSTANCE.rating(SecurityRiskIntroducedByOss.class));
 
     if (!score.isPresent()) {
       fail("Could not find the score!");

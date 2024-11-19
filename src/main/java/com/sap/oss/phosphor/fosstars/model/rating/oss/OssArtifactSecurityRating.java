@@ -13,7 +13,7 @@ import java.util.Objects;
 /**
  * This is a security rating for artifacts of an open-source project.
  * The rating is based on {@link
- * com.sap.oss.phosphor.fosstars.model.score.oss.OssArtifactSecurityScore}.
+ * OssArtifactSecurityScore}.
  */
 public class OssArtifactSecurityRating extends AbstractRating {
 
@@ -41,7 +41,7 @@ public class OssArtifactSecurityRating extends AbstractRating {
    * Initializes a new rating.
    *
    * @param score An instance of
-   *              {@link com.sap.oss.phosphor.fosstars.model.score.oss.OssArtifactSecurityScore}.
+   *              {@link OssArtifactSecurityScore}.
    * @param thresholds Thresholds for labels.
    */
   @JsonCreator

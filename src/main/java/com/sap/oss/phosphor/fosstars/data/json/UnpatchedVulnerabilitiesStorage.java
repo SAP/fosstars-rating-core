@@ -174,7 +174,7 @@ public class UnpatchedVulnerabilitiesStorage extends AbstractJsonStorage {
     storage.add(
         "https://github.com/odata4j/odata4j",
         newVulnerability("https://nvd.nist.gov/vuln/detail/CVE-2014-0171")
-            .set(new CVSS.V2(5.0, V2.UNKNOWN_IMPACT, V2.UNKNOWN_IMPACT, V2.UNKNOWN_IMPACT))
+            .set(new V2(5.0, V2.UNKNOWN_IMPACT, V2.UNKNOWN_IMPACT, V2.UNKNOWN_IMPACT))
             .set(Resolution.UNPATCHED)
             .make());
 

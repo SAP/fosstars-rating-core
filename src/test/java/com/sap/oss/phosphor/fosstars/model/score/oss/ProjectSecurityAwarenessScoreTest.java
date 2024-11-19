@@ -2,10 +2,11 @@ package com.sap.oss.phosphor.fosstars.model.score.oss;
 
 import static com.sap.oss.phosphor.fosstars.TestUtils.DELTA;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.HAS_SECURITY_TEAM;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Score;
@@ -13,17 +14,21 @@ import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.other.Utils;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import java.util.Set;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ProjectSecurityAwarenessScoreTest {
 
   private static final ProjectSecurityAwarenessScore SCORE = new ProjectSecurityAwarenessScore();
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testWithoutEnoughInfo() {
-    Set<Value<?>> values = Utils.allUnknown(SCORE.allFeatures());
-    values.remove(HAS_SECURITY_TEAM.unknown());
-    SCORE.calculate(values);
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> {
+          Set<Value<?>> values = Utils.allUnknown(SCORE.allFeatures());
+          values.remove(HAS_SECURITY_TEAM.unknown());
+          SCORE.calculate(values);
+        });
   }
 
   @Test
@@ -47,5 +52,4 @@ public class ProjectSecurityAwarenessScoreTest {
     assertEquals(Confidence.MAX, scoreValue.confidence(), DELTA);
     scoreValue.usedValues().forEach(usedValue -> assertTrue(values.contains(usedValue)));
   }
-
 }

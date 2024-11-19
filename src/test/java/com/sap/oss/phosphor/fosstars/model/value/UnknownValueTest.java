@@ -1,13 +1,14 @@
 package com.sap.oss.phosphor.fosstars.model.value;
 
 import static com.sap.oss.phosphor.fosstars.model.feature.example.ExampleFeatures.NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class UnknownValueTest {
 
@@ -22,9 +23,11 @@ public class UnknownValueTest {
     assertTrue(new UnknownValue<>(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE).isUnknown());
   }
 
-  @Test(expected = IllegalStateException.class)
+  @Test
   public void testGet() {
-    new UnknownValue<>(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE).get();
+    assertThrows(
+        IllegalStateException.class,
+        () -> new UnknownValue<>(NUMBER_OF_COMMITS_LAST_MONTH_EXAMPLE).get());
   }
 
   @Test

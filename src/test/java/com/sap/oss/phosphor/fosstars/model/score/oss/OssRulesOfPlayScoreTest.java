@@ -1,10 +1,12 @@
 package com.sap.oss.phosphor.fosstars.model.score.oss;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Feature;
@@ -20,7 +22,7 @@ import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.util.Set;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class OssRulesOfPlayScoreTest {
 
@@ -28,11 +30,20 @@ public class OssRulesOfPlayScoreTest {
 
   private static final double DELTA = 0.01;
 
+  public static ValueSet allRulesPassed() {
+    ValueSet values = new ValueHashSet();
+    OssRulesOfPlayScore.EXPECTED_TRUE.forEach(feature -> values.update(feature.value(true)));
+    OssRulesOfPlayScore.EXPECTED_FALSE.forEach(feature -> values.update(feature.value(false)));
+    OssRulesOfPlayScore.RECOMMENDED_TRUE.forEach(feature -> values.update(feature.value(true)));
+    OssRulesOfPlayScore.RECOMMENDED_FALSE.forEach(feature -> values.update(feature.value(false)));
+    return values;
+  }
+
   @Test
   public void testFeatures() {
     assertFalse(SCORE.features().isEmpty());
     for (Feature<?> feature : SCORE.features()) {
-      assertTrue(feature instanceof BooleanFeature);
+      assertInstanceOf(BooleanFeature.class, feature);
     }
   }
 
@@ -56,13 +67,13 @@ public class OssRulesOfPlayScoreTest {
     assertEquals(SCORE, Json.read(Json.toBytes(SCORE), OssRulesOfPlayScore.class));
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testCalculateWithNoValues() {
-    SCORE.calculate();
-  }
-
   // the test cases below implement verification procedure for the score
   // if necessary, they may be re-written using test vectors
+
+  @Test
+  public void testCalculateWithNoValues() {
+    assertThrows(IllegalArgumentException.class, () -> SCORE.calculate());
+  }
 
   @Test
   public void testCalculateWithUnknownValues() {
@@ -90,7 +101,7 @@ public class OssRulesOfPlayScoreTest {
   @Test
   public void testCalculateWithOneFailedRule() {
     for (Feature<?> feature : SCORE.features()) {
-      assertTrue(feature instanceof BooleanFeature);
+      assertInstanceOf(BooleanFeature.class, feature);
       ValueSet values = allRulesPassed();
       double expectedScore = Score.MIN;
       if (OssRulesOfPlayScore.EXPECTED_FALSE.contains(feature)) {
@@ -118,7 +129,7 @@ public class OssRulesOfPlayScoreTest {
   @Test
   public void testCalculateWithOneUnknownValue() {
     for (Feature<?> feature : SCORE.features()) {
-      assertTrue(feature instanceof BooleanFeature);
+      assertInstanceOf(BooleanFeature.class, feature);
       ValueSet values = allRulesPassed().update(UnknownValue.of(feature));
       ScoreValue scoreValue = SCORE.calculate(values);
       assertFalse(scoreValue.isUnknown());
@@ -129,14 +140,4 @@ public class OssRulesOfPlayScoreTest {
       assertEquals(values.size(), scoreValue.usedValues().size());
     }
   }
-
-  public static ValueSet allRulesPassed() {
-    ValueSet values = new ValueHashSet();
-    OssRulesOfPlayScore.EXPECTED_TRUE.forEach(feature -> values.update(feature.value(true)));
-    OssRulesOfPlayScore.EXPECTED_FALSE.forEach(feature -> values.update(feature.value(false)));
-    OssRulesOfPlayScore.RECOMMENDED_TRUE.forEach(feature -> values.update(feature.value(true)));
-    OssRulesOfPlayScore.RECOMMENDED_FALSE.forEach(feature -> values.update(feature.value(false)));
-    return values;
-  }
-
 }

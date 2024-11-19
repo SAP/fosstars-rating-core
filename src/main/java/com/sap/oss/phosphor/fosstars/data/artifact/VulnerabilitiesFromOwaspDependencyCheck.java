@@ -113,6 +113,18 @@ public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider {
     settings.setString(Settings.KEYS.DATA_DIRECTORY, DEFAULT_DOWNLOAD_DIRECTORY);
     settings.setString(Settings.KEYS.TEMP_DIRECTORY, TEMP_DIR);
     settings.setString(Settings.KEYS.H2_DATA_DIRECTORY, DB_DIR);
+    setNvdApiKeyIfProvidedViaEnvironmentCariable(settings);
+  }
+
+  private void setNvdApiKeyIfProvidedViaEnvironmentCariable(Settings settings) {
+    Optional<String> nvdApiKey = Optional.ofNullable(System.getenv("NVD_API_KEY"));
+    if (nvdApiKey.isPresent()) {
+      settings.setString(Settings.KEYS.NVD_API_KEY, nvdApiKey.get());
+      Optional<String> nvdApiDelay = Optional.ofNullable(System.getenv("NVD_API_DELAY"));
+      if (nvdApiDelay.isPresent()) {
+        settings.setString(Settings.KEYS.NVD_API_DELAY, nvdApiDelay.get());
+      }
+    }
   }
 
   /**
@@ -234,10 +246,13 @@ public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider {
       File file = reportPath.get().resolve(String.format("%s.json", fileName)).toFile();
 
       try {
+        engine.openDatabase();
         engine.writeReports(fileName, file, REPORT_OUTPUT_FORMAT, exceptionCollection);
         return Optional.ofNullable(Json.mapper().readValue(file, OwaspDependencyCheckEntry.class));
       } catch (ReportException e) {
         throw new IOException("Oh no! The report writing failed.", e);
+      } finally {
+        engine.close();
       }
     }
     return Optional.empty();
@@ -296,12 +311,12 @@ public class VulnerabilitiesFromOwaspDependencyCheck implements DataProvider {
    */
   private static CVSS cvssFrom(OwaspDependencyCheckVuln owaspDependencyCheckVuln) {
     if (owaspDependencyCheckVuln.getCvssv3() != null) {
-      return new CVSS.V3(owaspDependencyCheckVuln.getCvssv3().getBaseScore(),
+      return new V3(owaspDependencyCheckVuln.getCvssv3().getBaseScore(),
           V3.UNKNOWN_IMPACT, V3.UNKNOWN_IMPACT, V3.UNKNOWN_IMPACT);
     }
 
     if (owaspDependencyCheckVuln.getCvssv2() != null) {
-      return new CVSS.V2(owaspDependencyCheckVuln.getCvssv2().getScore(),
+      return new V2(owaspDependencyCheckVuln.getCvssv2().getScore(),
           V2.UNKNOWN_IMPACT, V2.UNKNOWN_IMPACT, V2.UNKNOWN_IMPACT);
     }
 

@@ -1,16 +1,22 @@
 package com.sap.oss.phosphor.fosstars.model.score;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import com.sap.oss.phosphor.fosstars.model.Feature;
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.score.example.ExampleScores;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class FeatureBasedScoreTest {
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testWithScore() {
-    new TestScore("test", ExampleScores.PROJECT_ACTIVITY_SCORE_EXAMPLE);
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> {
+          new TestScore("test", ExampleScores.PROJECT_ACTIVITY_SCORE_EXAMPLE);
+        });
   }
 
   private static class TestScore extends FeatureBasedScore {

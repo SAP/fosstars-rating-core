@@ -7,8 +7,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * This is a callback for testing purposes.
- * It can answer a number of questions with pre-defined answers.
+ * This is a callback for testing purposes. It can answer a number of questions with pre-defined
+ * answers.
  */
 public class TestUserCallback implements UserCallback {
 
@@ -17,10 +17,11 @@ public class TestUserCallback implements UserCallback {
   /**
    * An iterator over pre-defined answers.
    */
-  private Iterator<String> iterator;
+  private final Iterator<String> iterator;
 
   /**
    * Initialize a callback with a number of answers.
+   *
    * @param answers The answers.
    */
   TestUserCallback(String... answers) {

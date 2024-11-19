@@ -1,9 +1,9 @@
 package com.sap.oss.phosphor.fosstars.data.github;
 
 import static com.sap.oss.phosphor.fosstars.TestUtils.DELTA;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
@@ -26,7 +26,7 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class LocalRepositoryTest {
 
@@ -34,7 +34,7 @@ public class LocalRepositoryTest {
   public void testReadFile() throws IOException, GitAPIException {
     Path directory = Files.createTempDirectory(getClass().getSimpleName());
     try (Repository repository = FileRepositoryBuilder.create(directory.resolve(".git").toFile());
-        Git git = new Git(repository)) {
+         Git git = new Git(repository)) {
 
       repository.create();
 
@@ -46,16 +46,18 @@ public class LocalRepositoryTest {
       git.add().addFilepattern(filename).call();
       CommitCommand commit = git.commit();
       commit.setCredentialsProvider(
-              new UsernamePasswordCredentialsProvider("test", "don't tell anyone"));
-      commit.setMessage("Added " + filename)
+          new UsernamePasswordCredentialsProvider("test", "don't tell anyone"));
+      commit
+          .setMessage("Added " + filename)
           .setSign(false)
           .setAuthor("Mr. Test", "test@test.com")
           .setCommitter("Mr. Test", "test@test.com")
           .call();
 
-      LocalRepository localRepository = new LocalRepository(
-          new LocalRepositoryInfo(directory, new Date(), new URL("https://scm/org/test")),
-          repository);
+      LocalRepository localRepository =
+          new LocalRepository(
+              new LocalRepositoryInfo(directory, new Date(), new URL("https://scm/org/test")),
+              repository);
 
       Optional<String> something = localRepository.file("file");
       assertTrue(something.isPresent());
@@ -73,18 +75,18 @@ public class LocalRepositoryTest {
   public void testCommitHistory() throws IOException, GitAPIException, InterruptedException {
     Path directory = Files.createTempDirectory(getClass().getName());
     try (Repository repository = FileRepositoryBuilder.create(directory.resolve(".git").toFile());
-        Git git = new Git(repository)) {
+         Git git = new Git(repository)) {
 
       repository.create();
 
       Files.write(
-          Paths.get(repository.getDirectory().getParent()).resolve("file"),
-          "test".getBytes());
+          Paths.get(repository.getDirectory().getParent()).resolve("file"), "test".getBytes());
       git.add().addFilepattern("README.md").call();
       CommitCommand commit = git.commit();
       commit.setCredentialsProvider(
-              new UsernamePasswordCredentialsProvider("mr.white", "don't tell anyone"));
-      commit.setMessage("Old commit")
+          new UsernamePasswordCredentialsProvider("mr.white", "don't tell anyone"));
+      commit
+          .setMessage("Old commit")
           .setSign(false)
           .setAuthor("Mr. White", "mr.white@test.com")
           .setCommitter("Mr. White", "mr.white@test.com")
@@ -94,21 +96,22 @@ public class LocalRepositoryTest {
       Thread.sleep(1000);
 
       Files.write(
-          Paths.get(repository.getDirectory().getParent()).resolve("file"),
-          "test".getBytes());
+          Paths.get(repository.getDirectory().getParent()).resolve("file"), "test".getBytes());
       git.add().addFilepattern("SECURITY.md").call();
       commit = git.commit();
       commit.setCredentialsProvider(
-              new UsernamePasswordCredentialsProvider("mr.black", "don't tell anyone"));
-      commit.setMessage("Latest commit")
+          new UsernamePasswordCredentialsProvider("mr.black", "don't tell anyone"));
+      commit
+          .setMessage("Latest commit")
           .setSign(false)
           .setAuthor("Mr. Black", "mr.black@test.com")
           .setCommitter("Mr. Black", "mr.black@test.com")
           .call();
 
-      LocalRepository localRepository = new LocalRepository(
-          new LocalRepositoryInfo(directory, new Date(), new URL("https://scm/org/test")),
-          repository);
+      LocalRepository localRepository =
+          new LocalRepository(
+              new LocalRepositoryInfo(directory, new Date(), new URL("https://scm/org/test")),
+              repository);
 
       List<GitCommit> commits = localRepository.commits();
       assertNotNull(commits);
@@ -133,7 +136,7 @@ public class LocalRepositoryTest {
   public void testChanges() throws IOException, GitAPIException {
     Path directory = Files.createTempDirectory(getClass().getName());
     try (Repository repository = FileRepositoryBuilder.create(directory.resolve(".git").toFile());
-        Git git = new Git(repository)) {
+         Git git = new Git(repository)) {
 
       repository.create();
 
@@ -145,25 +148,32 @@ public class LocalRepositoryTest {
               put("Two.java", "public class Two {}");
               put("Three.java", "public class Three {}");
             }
-            }, "First commit: init", git);
+          },
+          "First commit: init",
+          git);
 
       TestUtils.commit(
           new HashMap<String, String>() {
             {
               put("App.java", "public class App { /* something new */ }");
             }
-            }, "Second commit: updated App", git);
+          },
+          "Second commit: updated App",
+          git);
 
       TestUtils.commit(
           new HashMap<String, String>() {
             {
               put("Other.java", "public class Other {}");
             }
-            }, "Third commit: added Other", git);
+          },
+          "Third commit: added Other",
+          git);
 
-      LocalRepository localRepository = new LocalRepository(
-          new LocalRepositoryInfo(directory, new Date(), new URL("https://scm/org/test")),
-          repository);
+      LocalRepository localRepository =
+          new LocalRepository(
+              new LocalRepositoryInfo(directory, new Date(), new URL("https://scm/org/test")),
+              repository);
 
       List<GitCommit> commits = localRepository.commits();
       assertNotNull(commits);
@@ -174,8 +184,8 @@ public class LocalRepositoryTest {
 
       localRepository = spy(localRepository);
       Date reviewDate = new Date();
-      Predicate<Path> forAllFiles = p -> Files.isRegularFile(p)
-          && !p.toString().contains(File.separator + ".git");
+      Predicate<Path> forAllFiles =
+          p -> Files.isRegularFile(p) && !p.toString().contains(File.separator + ".git");
 
       when(localRepository.firstCommitAfter(reviewDate)).thenReturn(Optional.of(commits.get(0)));
       Double changes = localRepository.changedSince(reviewDate, forAllFiles);

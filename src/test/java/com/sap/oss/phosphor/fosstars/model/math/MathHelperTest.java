@@ -1,10 +1,10 @@
 package com.sap.oss.phosphor.fosstars.model.math;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.function.Function;
 import org.apache.commons.math3.analysis.function.Logistic;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class MathHelperTest {
 
@@ -45,5 +45,4 @@ public class MathHelperTest {
     assertEquals(0, MathHelper.invert(g, -10, 50, 1, precision));
     assertEquals(10, MathHelper.invert(g, -10, 50, 41, precision));
   }
-
 }

@@ -1,12 +1,12 @@
 package com.sap.oss.phosphor.fosstars.model.value;
 
 import static com.sap.oss.phosphor.fosstars.model.value.SemanticVersion.create;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Optional;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class SemanticVersionTest {
 
@@ -55,7 +55,7 @@ public class SemanticVersionTest {
     assertFalse(version.isInRange(create(1, 8, 0), create(2, 5, 0)));
     assertFalse(version.isInRange(create(0, 8, 0), create(1, 4, 99)));
   }
-  
+
   @Test
   public void string() {
     SemanticVersion version = create(1, 0, 0);
@@ -63,9 +63,8 @@ public class SemanticVersionTest {
 
     SemanticVersion versionShort = create(1, 59, -1);
     assertEquals("1.59", versionShort.toString());
-    
+
     SemanticVersion versionLong = create(1, 59, 0);
     assertEquals("1.59.0", versionLong.toString());
   }
-
 }

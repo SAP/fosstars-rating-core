@@ -4,9 +4,9 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.WORST_
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.allUnknown;
 import static com.sap.oss.phosphor.fosstars.model.value.LgtmGrade.A_PLUS;
 import static com.sap.oss.phosphor.fosstars.model.value.LgtmGrade.B;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.advice.Advice;
 import com.sap.oss.phosphor.fosstars.advice.oss.OssAdviceContentYamlStorage.OssAdviceContext;
@@ -22,20 +22,23 @@ import java.util.Optional;
 
 public class LgtmScoreAdvisorTest {
 
-  //@Test
+  // @Test
   public void testAdviseForLgtmGrade() throws MalformedURLException {
-    LgtmAdvisor advisor = new LgtmAdvisor(subject -> new OssAdviceContext() {
+    LgtmAdvisor advisor =
+        new LgtmAdvisor(
+            subject ->
+                new OssAdviceContext() {
 
-      @Override
-      public Optional<String> lgtmProjectLink() {
-        return Optional.of("https://lgtm.com");
-      }
+                  @Override
+                  public Optional<String> lgtmProjectLink() {
+                    return Optional.of("https://lgtm.com");
+                  }
 
-      @Override
-      public Optional<String> suggestSecurityPolicyLink() {
-        return Optional.of("https://github.com");
-      }
-    });
+                  @Override
+                  public Optional<String> suggestSecurityPolicyLink() {
+                    return Optional.of("https://github.com");
+                  }
+                });
     GitHubProject project = new GitHubProject("org", "test");
 
     // no advice if no rating value is set

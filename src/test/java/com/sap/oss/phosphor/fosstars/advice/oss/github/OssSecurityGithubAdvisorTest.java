@@ -14,9 +14,9 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_U
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.allUnknown;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.C;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.PYTHON;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.advice.Advice;
 import com.sap.oss.phosphor.fosstars.model.Rating;
@@ -28,7 +28,7 @@ import com.sap.oss.phosphor.fosstars.model.value.Languages;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import java.io.IOException;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class OssSecurityGithubAdvisorTest {
 
@@ -75,8 +75,10 @@ public class OssSecurityGithubAdvisorTest {
     Advice advice = adviceList.get(0);
     assertFalse(advice.content().text().isEmpty());
     assertFalse(advice.content().links().isEmpty());
-    boolean foundLinkForSuggestingSecurityPolicy = advice.content().links().stream().anyMatch(
-        link -> "https://github.com/org/test/security/policy".equals(link.url.toString()));
+    boolean foundLinkForSuggestingSecurityPolicy =
+        advice.content().links().stream()
+            .anyMatch(
+                link -> "https://github.com/org/test/security/policy".equals(link.url.toString()));
     assertTrue(foundLinkForSuggestingSecurityPolicy);
   }
 
@@ -96,8 +98,9 @@ public class OssSecurityGithubAdvisorTest {
     Advice advice = adviceList.get(0);
     assertFalse(advice.content().text().isEmpty());
     assertFalse(advice.content().links().isEmpty());
-    boolean foundLinkForSuggestingSecurityPolicy = advice.content().links().stream().anyMatch(
-        link -> "https://find-sec-bugs.github.io/".equals(link.url.toString()));
+    boolean foundLinkForSuggestingSecurityPolicy =
+        advice.content().links().stream()
+            .anyMatch(link -> "https://find-sec-bugs.github.io/".equals(link.url.toString()));
     assertTrue(foundLinkForSuggestingSecurityPolicy);
   }
 
@@ -119,11 +122,19 @@ public class OssSecurityGithubAdvisorTest {
     Advice advice = adviceList.get(0);
     assertFalse(advice.content().text().isEmpty());
     assertFalse(advice.content().links().isEmpty());
-    boolean foundLinkForSuggestingRunBanditScan = advice.content().links().stream().anyMatch(
-        link -> "https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#jobsjob_idstepsrun".equals(link.url.toString()));
+    boolean foundLinkForSuggestingRunBanditScan =
+        advice.content().links().stream()
+            .anyMatch(
+                link ->
+                    "https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#jobsjob_idstepsrun"
+                        .equals(link.url.toString()));
     assertTrue(foundLinkForSuggestingRunBanditScan);
-    boolean foundLinkForExampleRunBanditScan = advice.content().links().stream().anyMatch(
-        link -> "https://github.com/TNLinc/CV/blob/main/.github/workflows/bandit.yml#L28".equals(link.url.toString()));
+    boolean foundLinkForExampleRunBanditScan =
+        advice.content().links().stream()
+            .anyMatch(
+                link ->
+                    "https://github.com/TNLinc/CV/blob/main/.github/workflows/bandit.yml#L28"
+                        .equals(link.url.toString()));
     assertTrue(foundLinkForExampleRunBanditScan);
 
     // expect an advice if the project doesn't check Bandit scans for commits
@@ -135,11 +146,19 @@ public class OssSecurityGithubAdvisorTest {
     advice = adviceList.get(0);
     assertFalse(advice.content().text().isEmpty());
     assertFalse(advice.content().links().isEmpty());
-    boolean foundLinkForSuggestingCheckBanditScanInPr = advice.content().links().stream().anyMatch(
-        link -> "https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#example-using-a-list-of-events".equals(link.url.toString()));
+    boolean foundLinkForSuggestingCheckBanditScanInPr =
+        advice.content().links().stream()
+            .anyMatch(
+                link ->
+                    "https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#example-using-a-list-of-events"
+                        .equals(link.url.toString()));
     assertTrue(foundLinkForSuggestingCheckBanditScanInPr);
-    boolean foundLinkForExampleCheckBanditScanInPr = advice.content().links().stream().anyMatch(
-        link -> "https://github.com/TNLinc/CV/blob/main/.github/workflows/bandit.yml#L3".equals(link.url.toString()));
+    boolean foundLinkForExampleCheckBanditScanInPr =
+        advice.content().links().stream()
+            .anyMatch(
+                link ->
+                    "https://github.com/TNLinc/CV/blob/main/.github/workflows/bandit.yml#L3"
+                        .equals(link.url.toString()));
     assertTrue(foundLinkForExampleCheckBanditScanInPr);
   }
 

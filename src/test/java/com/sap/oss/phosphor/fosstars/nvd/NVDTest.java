@@ -1,8 +1,8 @@
 package com.sap.oss.phosphor.fosstars.nvd;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.sap.oss.phosphor.fosstars.data.github.NvdEntryMatcher;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
@@ -10,7 +10,7 @@ import com.sap.oss.phosphor.fosstars.nvd.data.NvdEntry;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class NVDTest {
 
@@ -22,8 +22,8 @@ public class NVDTest {
       assertFalse(nvd.downloadFailed());
       nvd.preload();
 
-      List<NvdEntry> entries = nvd.search(
-          entry -> "CVE-2020-9547".equals(entry.getCve().getCveDataMeta().getId()));
+      List<NvdEntry> entries =
+          nvd.search(entry -> "CVE-2020-9547".equals(entry.getCve().getCveDataMeta().getId()));
 
       assertEquals(1, entries.size());
       NvdEntry nvdEntry = entries.get(0);
@@ -45,8 +45,8 @@ public class NVDTest {
       assertNotNull(entries);
       assertEquals(1, entries.size());
 
-      entries = nvd.search(
-          NvdEntryMatcher.entriesFor(new GitHubProject("not_existing", "something")));
+      entries =
+          nvd.search(NvdEntryMatcher.entriesFor(new GitHubProject("not_existing", "something")));
       assertNotNull(entries);
       assertEquals(0, entries.size());
     }
@@ -58,24 +58,29 @@ public class NVDTest {
     try (InputStream content = getClass().getResourceAsStream("NVD_matcher.json")) {
       nvd.add("file.json", content);
 
-      List<NvdEntry> entries = nvd.search(
-          NvdEntryMatcher.entriesFor(new GitHubProject("spring-projects", "spring-framework")));
+      List<NvdEntry> entries =
+          nvd.search(
+              NvdEntryMatcher.entriesFor(new GitHubProject("spring-projects", "spring-framework")));
       assertNotNull(entries);
       assertEquals(20, entries.size());
 
-      entries = nvd.search(
-          NvdEntryMatcher.entriesFor(new GitHubProject("spring-projects", "spring-integration")));
+      entries =
+          nvd.search(
+              NvdEntryMatcher.entriesFor(
+                  new GitHubProject("spring-projects", "spring-integration")));
       assertNotNull(entries);
       assertEquals(0, entries.size());
 
-      entries = nvd.search(
-          NvdEntryMatcher.entriesFor(
-              new GitHubProject("spring-projects", "spring-framework-issues")));
+      entries =
+          nvd.search(
+              NvdEntryMatcher.entriesFor(
+                  new GitHubProject("spring-projects", "spring-framework-issues")));
       assertNotNull(entries);
       assertEquals(0, entries.size());
 
-      entries = nvd.search(
-          NvdEntryMatcher.entriesFor(new GitHubProject("spring-projects", "spring-boot")));
+      entries =
+          nvd.search(
+              NvdEntryMatcher.entriesFor(new GitHubProject("spring-projects", "spring-boot")));
       assertNotNull(entries);
       assertEquals(0, entries.size());
 
@@ -87,14 +92,15 @@ public class NVDTest {
       assertNotNull(entries);
       assertEquals(3, entries.size());
 
-      entries = nvd.search(
-          NvdEntryMatcher.entriesFor(new GitHubProject("openssl", "openssl-book")));
+      entries =
+          nvd.search(NvdEntryMatcher.entriesFor(new GitHubProject("openssl", "openssl-book")));
       assertNotNull(entries);
       assertEquals(0, entries.size());
 
       // The below test case tests for both cpe22Uri and cpe23Uri.
-      entries = nvd.search(
-          NvdEntryMatcher.entriesFor(new GitHubProject("FasterXML", "jackson-databind")));
+      entries =
+          nvd.search(
+              NvdEntryMatcher.entriesFor(new GitHubProject("FasterXML", "jackson-databind")));
       assertNotNull(entries);
       assertEquals(5, entries.size());
 

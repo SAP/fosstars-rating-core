@@ -6,8 +6,8 @@ import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_G
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_GOSEC_WITH_RULES;
 import static com.sap.oss.phosphor.fosstars.model.other.Utils.allUnknown;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.GO;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.advice.oss.AbstractOssAdvisor.OssAdviceContextFactory;
 import com.sap.oss.phosphor.fosstars.model.Rating;
@@ -18,7 +18,7 @@ import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.Languages;
 import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import java.net.MalformedURLException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class GoSecAdvisorTest {
 
@@ -58,6 +58,5 @@ public class GoSecAdvisorTest {
     values.update(USES_GOSEC_WITH_RULES.value(true));
     project.set(rating.calculate(values));
     assertEquals(1, advisor.adviceFor(project).size());
-
   }
 }

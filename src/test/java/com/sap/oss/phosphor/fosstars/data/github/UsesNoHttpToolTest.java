@@ -2,8 +2,8 @@ package com.sap.oss.phosphor.fosstars.data.github;
 
 import static com.sap.oss.phosphor.fosstars.data.github.TestGitHubDataFetcherHolder.TestGitHubDataFetcher.addForTesting;
 import static com.sap.oss.phosphor.fosstars.model.feature.oss.OssFeatures.USES_NOHTTP;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -15,9 +15,25 @@ import com.sap.oss.phosphor.fosstars.model.value.ValueHashSet;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Optional;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class UsesNoHttpToolTest extends TestGitHubDataFetcherHolder {
+
+  private static void checkValue(UsesNoHttpTool provider, boolean expectedValue)
+      throws IOException {
+
+    GitHubProject project = new GitHubProject("org", "test");
+
+    ValueSet values = new ValueHashSet();
+    provider.update(project, values);
+
+    assertEquals(1, values.size());
+    assertTrue(values.has(USES_NOHTTP));
+    assertTrue(values.of(USES_NOHTTP).isPresent());
+
+    Value<Boolean> value = values.of(USES_NOHTTP).get();
+    assertEquals(expectedValue, value.get());
+  }
 
   @Test
   public void testMavenWithNoHttp() throws IOException {
@@ -28,8 +44,8 @@ public class UsesNoHttpToolTest extends TestGitHubDataFetcherHolder {
 
   @Test
   public void testMavenWithNoHttpInProfilesBuild() throws IOException {
-    try (InputStream is = getClass()
-        .getResourceAsStream("MavenCheckStyleWithNoHttpInProfilesBuild.xml")) {
+    try (InputStream is =
+             getClass().getResourceAsStream("MavenCheckStyleWithNoHttpInProfilesBuild.xml")) {
 
       checkValue(createProvider(is, "pom.xml"), true);
     }
@@ -67,21 +83,5 @@ public class UsesNoHttpToolTest extends TestGitHubDataFetcherHolder {
     provider.set(new SubjectValueCache());
 
     return provider;
-  }
-
-  private static void checkValue(UsesNoHttpTool provider, boolean expectedValue)
-      throws IOException {
-
-    GitHubProject project = new GitHubProject("org", "test");
-
-    ValueSet values = new ValueHashSet();
-    provider.update(project, values);
-
-    assertEquals(1, values.size());
-    assertTrue(values.has(USES_NOHTTP));
-    assertTrue(values.of(USES_NOHTTP).isPresent());
-
-    Value<Boolean> value = values.of(USES_NOHTTP).get();
-    assertEquals(expectedValue, value.get());
   }
 }

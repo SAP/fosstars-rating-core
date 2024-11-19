@@ -1,17 +1,20 @@
 package com.sap.oss.phosphor.fosstars.model.feature.oss;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ArtifactVersionFeatureTest {
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test
   public void testParseNotSupported() {
-    new ArtifactVersionFeature("name").parse("1.2.3");
+    assertThrows(
+        UnsupportedOperationException.class,
+        () -> new ArtifactVersionFeature("name").parse("1.2.3"));
   }
 
   @Test

@@ -1,7 +1,7 @@
 package com.sap.oss.phosphor.fosstars.data.github;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
@@ -9,7 +9,7 @@ import com.sap.oss.phosphor.fosstars.model.value.Vulnerabilities;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerability;
 import com.sap.oss.phosphor.fosstars.model.value.Vulnerability.Resolution;
 import java.io.IOException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class UnpatchedVulnerabilitiesTest extends TestGitHubDataFetcherHolder {
 
@@ -26,5 +26,4 @@ public class UnpatchedVulnerabilitiesTest extends TestGitHubDataFetcherHolder {
     assertEquals(Resolution.UNPATCHED, vulnerability.resolution());
     assertFalse(vulnerability.fixed().isPresent());
   }
-
 }

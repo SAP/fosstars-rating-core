@@ -3,6 +3,7 @@ package com.sap.oss.phosphor.fosstars.util;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 
+import com.fasterxml.jackson.core.StreamReadConstraints;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -127,6 +128,10 @@ import java.util.Objects;
  */
 public abstract class Deserialization {
 
+  //TODO: Make this configurable / injectable ?
+  public static final int MAX_STRING_LEN_FOR_JACKSON_DESERIALIZATION =
+      StreamReadConstraints.DEFAULT_MAX_STRING_LEN + 10000000;
+
   /**
    * A type reference for deserialization to a Map.
    */
@@ -201,6 +206,13 @@ public abstract class Deserialization {
     return list;
   }
 
+  private static void configureMaxStringLength(ObjectMapper mapper) {
+    StreamReadConstraints constraints = StreamReadConstraints.builder()
+        .maxStringLength(MAX_STRING_LEN_FOR_JACKSON_DESERIALIZATION)
+        .build();
+    mapper.getFactory().setStreamReadConstraints(constraints);
+  }
+
   /**
    * Registers known sub-types in an {@link ObjectMapper}.
    *
@@ -208,6 +220,8 @@ public abstract class Deserialization {
    * @return The same {@link ObjectMapper};
    */
   static ObjectMapper registerSubTypesIn(ObjectMapper mapper) {
+
+    configureMaxStringLength(mapper);
 
     // features
     mapper.registerSubtypes(

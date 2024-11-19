@@ -8,12 +8,13 @@ import static com.sap.oss.phosphor.fosstars.model.value.CVSS.V2.Impact.PARTIAL;
 import static com.sap.oss.phosphor.fosstars.model.value.CVSS.V3.Impact.HIGH;
 import static com.sap.oss.phosphor.fosstars.model.value.CVSS.V3.Impact.LOW;
 import static com.sap.oss.phosphor.fosstars.model.value.CVSS.V3.Impact.NONE;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class CvssTest {
 
@@ -28,14 +29,22 @@ public class CvssTest {
     assertEquals(MAX, cvss.value(), DELTA);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testWithNegativeValue() {
-    new CVSS.V3(-1.0, HIGH, LOW, NONE);
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> {
+          new CVSS.V3(-1.0, HIGH, LOW, NONE);
+        });
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testWithTooBigValue() {
-    new CVSS.V3(11.0, HIGH, LOW, NONE);
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> {
+          new CVSS.V3(11.0, HIGH, LOW, NONE);
+        });
   }
 
   @Test
@@ -62,14 +71,14 @@ public class CvssTest {
     CVSS.check(null);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testCheckWithNegativeValue() {
-    CVSS.check(-2.0);
+    assertThrows(IllegalArgumentException.class, () -> CVSS.check(-2.0));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void testCheckWithTooBigValue() {
-    CVSS.check(42.0);
+    assertThrows(IllegalArgumentException.class, () -> CVSS.check(42.0));
   }
 
   @Test

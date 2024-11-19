@@ -1,10 +1,12 @@
 package com.sap.oss.phosphor.fosstars.model.score;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.Confidence;
 import com.sap.oss.phosphor.fosstars.model.Feature;
@@ -14,7 +16,7 @@ import com.sap.oss.phosphor.fosstars.model.feature.DoubleFeature;
 import com.sap.oss.phosphor.fosstars.model.value.ScoreValue;
 import java.util.Comparator;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class AverageCompositeScoreTest {
 
@@ -53,14 +55,14 @@ public class AverageCompositeScoreTest {
     assertEquals(7.54, value.get(), PRECISION);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void negativeValue() {
-    new TestAverageCompositeScore().value(-3.0);
+    assertThrows(IllegalArgumentException.class, () -> new TestAverageCompositeScore().value(-3.0));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void tooBigValue() {
-    new TestAverageCompositeScore().value(42.0);
+    assertThrows(IllegalArgumentException.class, () -> new TestAverageCompositeScore().value(42.0));
   }
 
   @Test
@@ -81,9 +83,8 @@ public class AverageCompositeScoreTest {
     secondPreCalculatedScoreValue.set(secondValue);
     secondPreCalculatedScoreValue.confidence(secondConfidence);
 
-    ScoreValue scoreValue = score.calculate(
-        firstPreCalculatedScoreValue,
-        secondPreCalculatedScoreValue);
+    ScoreValue scoreValue =
+        score.calculate(firstPreCalculatedScoreValue, secondPreCalculatedScoreValue);
 
     assertNotNull(scoreValue);
 
@@ -117,14 +118,11 @@ public class AverageCompositeScoreTest {
 
   @Test
   public void testWithOneNotApplicable() {
-    TestAverageCompositeScore score = new TestAverageCompositeScore(
-        new FirstScore().returnsNotApplicable(),
-        new SecondScore()
-    );
+    TestAverageCompositeScore score =
+        new TestAverageCompositeScore(new FirstScore().returnsNotApplicable(), new SecondScore());
 
-    ScoreValue scoreValue = score.calculate(
-        FirstScore.FEATURE.value(5.0),
-        SecondScore.FEATURE.value(8.0));
+    ScoreValue scoreValue =
+        score.calculate(FirstScore.FEATURE.value(5.0), SecondScore.FEATURE.value(8.0));
 
     assertFalse(scoreValue.isUnknown());
     assertFalse(scoreValue.isNotApplicable());
@@ -135,10 +133,10 @@ public class AverageCompositeScoreTest {
 
     assertEquals(2, usedValues.size());
 
-    assertTrue(usedValues.get(0) instanceof ScoreValue);
+    assertInstanceOf(ScoreValue.class, usedValues.get(0));
     assertTrue(usedValues.get(0).isNotApplicable());
 
-    assertTrue(usedValues.get(1) instanceof ScoreValue);
+    assertInstanceOf(ScoreValue.class, usedValues.get(1));
     ScoreValue subScoreValue = (ScoreValue) usedValues.get(1);
     assertEquals(SecondScore.VALUE, subScoreValue.get(), PRECISION);
     assertEquals(Confidence.MAX, subScoreValue.confidence(), PRECISION);
@@ -146,14 +144,12 @@ public class AverageCompositeScoreTest {
 
   @Test
   public void testWithAllNotApplicable() {
-    TestAverageCompositeScore score = new TestAverageCompositeScore(
-        new FirstScore().returnsNotApplicable(),
-        new SecondScore().returnsNotApplicable()
-    );
+    TestAverageCompositeScore score =
+        new TestAverageCompositeScore(
+            new FirstScore().returnsNotApplicable(), new SecondScore().returnsNotApplicable());
 
-    ScoreValue scoreValue = score.calculate(
-        FirstScore.FEATURE.value(5.0),
-        SecondScore.FEATURE.value(8.0));
+    ScoreValue scoreValue =
+        score.calculate(FirstScore.FEATURE.value(5.0), SecondScore.FEATURE.value(8.0));
 
     assertFalse(scoreValue.isUnknown());
     assertTrue(scoreValue.isNotApplicable());
@@ -238,5 +234,4 @@ public class AverageCompositeScoreTest {
       super(NAME, new FirstScore(), new SecondScore());
     }
   }
-
 }

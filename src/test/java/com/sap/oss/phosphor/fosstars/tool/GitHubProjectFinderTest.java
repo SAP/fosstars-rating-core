@@ -3,8 +3,8 @@ package com.sap.oss.phosphor.fosstars.tool;
 import static com.sap.oss.phosphor.fosstars.tool.GitHubProjectFinder.EMPTY_EXCLUDE_LIST;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -21,13 +21,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.kohsuke.github.GHOrganization;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
 import org.kohsuke.github.PagedIterable;
 
 public class GitHubProjectFinderTest {
+
+  private static GHRepository mockRepository(String name) {
+    GHRepository repository = mock(GHRepository.class);
+    when(repository.getName()).thenReturn(name);
+    return repository;
+  }
 
   @Test
   public void parseValidConfig() throws IOException {
@@ -39,22 +45,19 @@ public class GitHubProjectFinderTest {
       assertEquals(3, config.organizationConfigs.size());
       assertThat(
           config.organizationConfigs,
-          hasItem(
-              new OrganizationConfig("apache", Arrays.asList("incubator", "incubating"), 100)));
-      assertThat(config.organizationConfigs,
-          hasItem(
-              new OrganizationConfig("eclipse", Collections.singletonList("incubator"), 0)));
-      assertThat(config.organizationConfigs,
-          hasItem(
-              new OrganizationConfig("spring-projects", EMPTY_EXCLUDE_LIST, 0)));
+          hasItem(new OrganizationConfig("apache", Arrays.asList("incubator", "incubating"), 100)));
+      assertThat(
+          config.organizationConfigs,
+          hasItem(new OrganizationConfig("eclipse", Collections.singletonList("incubator"), 0)));
+      assertThat(
+          config.organizationConfigs,
+          hasItem(new OrganizationConfig("spring-projects", EMPTY_EXCLUDE_LIST, 0)));
       assertNotNull(config.projectConfigs);
       assertEquals(2, config.projectConfigs.size());
       assertThat(
-          config.projectConfigs,
-          hasItem(new ProjectConfig("FasterXML", "jackson-databind")));
+          config.projectConfigs, hasItem(new ProjectConfig("FasterXML", "jackson-databind")));
       assertThat(
-          config.projectConfigs,
-          hasItem(new ProjectConfig("FasterXML", "jackson-dataformat-xml")));
+          config.projectConfigs, hasItem(new ProjectConfig("FasterXML", "jackson-dataformat-xml")));
     }
   }
 
@@ -89,15 +92,9 @@ public class GitHubProjectFinderTest {
     List<GitHubProject> projects = finder.run();
 
     assertEquals(3, projects.size());
-    assertThat(
-        projects,
-        hasItem(new GitHubProject(new GitHubOrganization(apache), "project-x")));
-    assertThat(
-        projects,
-        hasItem(new GitHubProject(new GitHubOrganization(apache), "project-y")));
-    assertThat(
-        projects,
-        hasItem(new GitHubProject(new GitHubOrganization(eclipse), "extra")));
+    assertThat(projects, hasItem(new GitHubProject(new GitHubOrganization(apache), "project-x")));
+    assertThat(projects, hasItem(new GitHubProject(new GitHubOrganization(apache), "project-y")));
+    assertThat(projects, hasItem(new GitHubProject(new GitHubOrganization(eclipse), "extra")));
   }
 
   @Test
@@ -112,18 +109,9 @@ public class GitHubProjectFinderTest {
       assertNotNull(config.projectConfigs);
       assertEquals(2, config.projectConfigs.size());
       assertThat(
-          config.projectConfigs,
-          hasItem(new ProjectConfig("FasterXML", "jackson-databind")));
+          config.projectConfigs, hasItem(new ProjectConfig("FasterXML", "jackson-databind")));
       assertThat(
-          config.projectConfigs,
-          hasItem(new ProjectConfig("FasterXML", "jackson-dataformat-xml")));
+          config.projectConfigs, hasItem(new ProjectConfig("FasterXML", "jackson-dataformat-xml")));
     }
   }
-
-  private static GHRepository mockRepository(String name) {
-    GHRepository repository = mock(GHRepository.class);
-    when(repository.getName()).thenReturn(name);
-    return repository;
-  }
-
 }

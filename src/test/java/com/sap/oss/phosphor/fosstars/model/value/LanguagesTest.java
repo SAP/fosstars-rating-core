@@ -4,15 +4,15 @@ import static com.sap.oss.phosphor.fosstars.model.value.Language.C;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.JAVA;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.OTHER;
 import static com.sap.oss.phosphor.fosstars.model.value.Language.PYTHON;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
 import java.util.Iterator;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class LanguagesTest {
 
@@ -62,5 +62,4 @@ public class LanguagesTest {
     assertNotEquals(one, three);
     assertNotEquals(two, three);
   }
-
 }

@@ -1,9 +1,9 @@
 package com.sap.oss.phosphor.fosstars.tool;
 
 import static com.sap.oss.phosphor.fosstars.TestUtils.DELTA;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.data.NoUserCallback;
 import com.sap.oss.phosphor.fosstars.data.github.TestGitHubDataFetcherHolder;
@@ -14,7 +14,7 @@ import com.sap.oss.phosphor.fosstars.model.rating.oss.OssSecurityRating.Security
 import com.sap.oss.phosphor.fosstars.model.subject.oss.GitHubProject;
 import com.sap.oss.phosphor.fosstars.model.value.RatingValue;
 import java.util.Collections;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class SingleRatingCalculatorTest extends TestGitHubDataFetcherHolder {
 
@@ -22,10 +22,9 @@ public class SingleRatingCalculatorTest extends TestGitHubDataFetcherHolder {
   public void testCalculateFor() {
     GitHubProject project = new GitHubProject("test", "project");
 
-    SingleRatingCalculator calculator
-        = new SingleRatingCalculator(
-            RatingRepository.INSTANCE.rating(OssSecurityRating.class),
-            Collections.emptyList());
+    SingleRatingCalculator calculator =
+        new SingleRatingCalculator(
+            RatingRepository.INSTANCE.rating(OssSecurityRating.class), Collections.emptyList());
     calculator.set(NoUserCallback.INSTANCE);
 
     assertFalse(project.ratingValue().isPresent());

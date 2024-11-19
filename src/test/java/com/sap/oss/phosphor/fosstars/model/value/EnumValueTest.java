@@ -1,22 +1,18 @@
 package com.sap.oss.phosphor.fosstars.model.value;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sap.oss.phosphor.fosstars.model.Value;
 import com.sap.oss.phosphor.fosstars.model.feature.EnumFeature;
 import com.sap.oss.phosphor.fosstars.util.Json;
 import java.io.IOException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class EnumValueTest {
-
-  private enum TestEnum {
-    A, B, C
-  }
 
   @Test
   public void smokeTest() {
@@ -69,4 +65,9 @@ public class EnumValueTest {
     assertEquals(a.hashCode(), clone.hashCode());
   }
 
+  private enum TestEnum {
+    A,
+    B,
+    C
+  }
 }

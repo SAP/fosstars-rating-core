@@ -18,7 +18,7 @@ import java.util.Set;
 
 /**
  * This handler calculates
- * {@link com.sap.oss.phosphor.fosstars.model.rating.oss.OssArtifactSecurityRating}.
+ * {@link OssArtifactSecurityRating}.
  */
 public class OssArtifactSecurityRatingHandler extends AbstractHandler {
 

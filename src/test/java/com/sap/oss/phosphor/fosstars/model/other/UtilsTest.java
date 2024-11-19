@@ -1,9 +1,9 @@
 package com.sap.oss.phosphor.fosstars.model.other;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.Date;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class UtilsTest {
 
