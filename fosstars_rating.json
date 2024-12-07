@@ -7,7 +7,7 @@
     },
     "value" : 9.0,
     "weight" : 1.0,
-    "confidence" : 9.130434782608695,
+    "confidence" : 10.0,
     "usedValues" : [ {
       "type" : "BooleanValue",
       "feature" : {
@@ -177,19 +177,21 @@
       "flag" : true,
       "explanation" : [ ]
     }, {
-      "type" : "UnknownValue",
+      "type" : "BooleanValue",
       "feature" : {
         "type" : "BooleanFeature",
         "name" : "If a project is registered in REUSE"
       },
-      "explanation" : [ "Could not retrieve the project's REUSE status" ]
+      "flag" : true,
+      "explanation" : [ ]
     }, {
-      "type" : "UnknownValue",
+      "type" : "BooleanValue",
       "feature" : {
         "type" : "BooleanFeature",
         "name" : "If a project is compliant with REUSE rules"
       },
-      "explanation" : [ "Could not retrieve the project's REUSE status" ]
+      "flag" : true,
+      "explanation" : [ ]
     } ],
     "explanation" : [ "Found 1 recommendations" ],
     "isUnknown" : false,
@@ -199,5 +201,5 @@
       "name" : "Open source rules or play score"
     }
   },
-  "label" : [ "OssRulesOfPlayRating$OssRulesOfPlayLabel", "UNCLEAR" ]
+  "label" : [ "OssRulesOfPlayRating$OssRulesOfPlayLabel", "PASSED_WITH_WARNING" ]
 }
