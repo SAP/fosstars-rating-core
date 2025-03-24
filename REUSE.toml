@@ -1,0 +1,10 @@
+version = 1
+SPDX-PackageName = "Fosstars Rating Core"
+SPDX-PackageSupplier = "Artem Smotrakov <artem.smotrakov@sap.com>"
+SPDX-PackageDownloadLocation = "https://github.com/SAP/fosstars-rating-core"
+
+[[annotations]]
+path = "**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2020 SAP SE or an SAP affiliate company and Fosstars Rating Core contributors"
+SPDX-License-Identifier = "Apache-2.0"

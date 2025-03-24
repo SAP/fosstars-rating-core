@@ -1,8 +1,0 @@
-Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: Fosstars Rating Core
-Upstream-Contact: Artem Smotrakov <artem.smotrakov@sap.com>
-Source: https://github.com/SAP/fosstars-rating-core
-
-Files: *
-Copyright: 2020 SAP SE or an SAP affiliate company and Fosstars Rating Core contributors
-License: Apache-2.0
